@@ -14,6 +14,17 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SearchComponent } from './feature/search/search.component';
 import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
+import { DashboardComponent } from './feature/dashboard/dashboard.component';
+import { ProductCardComponent } from './shared/product-card/product-card.component';
+import { SearchOptionsComponent } from './feature/search/search-options/search-options/search-options.component';
+import { SearchResultsComponent } from './feature/search/search-results/search-results/search-results.component';
+import { FilterButtonsComponent } from './feature/search/search-results/filter-buttons/filter-buttons.component';
+import { ResultsPaneComponent } from './feature/search/search-results/results-pane/results-pane.component';
+import { ProducerComponent } from './feature/producer/producer/producer.component';
+import { ProductComponent } from './feature/producer/product/product.component';
+import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
+import { CartComponent } from './feature/cart/cart/cart.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +35,17 @@ import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
     SigninComponent,
     SignupComponent,
     SearchComponent,
-    LearnMoreComponent
+    LearnMoreComponent,
+    DashboardComponent,
+    ProductCardComponent,
+    SearchOptionsComponent,
+    SearchResultsComponent,
+    FilterButtonsComponent,
+    ResultsPaneComponent,
+    ProducerComponent,
+    ProductComponent,
+    ScheduleComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
