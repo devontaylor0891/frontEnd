@@ -1,2 +1,178 @@
+// make my colours into variables
+// then add them to the classes that need them
+// eg $primary color to maroon
+//     .class includes the ref to the variable - see sass basics
+
+
+
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+$mdb-color: (
+  "lighten-5":  #D0D6E2,
+  "lighten-4":  #B1BACE,
+  "lighten-3":  #929FBA,
+  "lighten-2":  #7283A7,
+  "lighten-1":  #59698D,
+  "base":       #741b47,
+  "darken-1":   #3B465E, 
+  "darken-2":   #2E3951,
+  "darken-3":   #1C2A48,
+  "darken-4":   #1C2331,
+);
+
+$olf-maroon: (
+    50 : #eee4e9,
+    100 : #d5bbc8,
+    200 : #ba8da3,
+    300 : #9e5f7e,
+    400 : #893d63,
+    500 : #741b47,
+    600 : #6c1840,
+    700 : #611437,
+    800 : #57102f,
+    900 : #440820,
+    A100 : #ff7aa7,
+    A200 : #ff4786,
+    A400 : #ff1464,
+    A700 : #fa0055,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$olf-green: (
+    50 : #e8f2e2,
+    100 : #c5deb7,
+    200 : #9ec887,
+    300 : #77b257,
+    400 : #59a233,
+    500 : #3c910f,
+    600 : #36890d,
+    700 : #2e7e0b,
+    800 : #277408,
+    900 : #1a6204,
+    A100 : #a5ff92,
+    A200 : #7aff5f,
+    A400 : #50ff2c,
+    A700 : #3bff13,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$olf-red: (
+    50 : #f9e0e0,
+    100 : #f0b3b3,
+    200 : #e68080,
+    300 : #db4d4d,
+    400 : #d42626,
+    500 : #cc0000,
+    600 : #c70000,
+    700 : #c00000,
+    800 : #b90000,
+    900 : #ad0000,
+    A100 : #ffd7d7,
+    A200 : #ffa4a4,
+    A400 : #ff7171,
+    A700 : #ff5858,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$olf-grey: (
+    50 : #e0e0e0,
+    100 : #b3b3b3,
+    200 : #808080,
+    300 : #4d4d4d,
+    400 : #262626,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #a6a6a6,
+    A200 : #8c8c8c,
+    A400 : #737373,
+    A700 : #666666,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+.btn-olf-primary {
+    background-color: #893d63 !important;
+}
+
+.btn-olf-primary:hover {
+    background-color: #741b47 !important;
+    color: #ffffff !important;
+}
+
+a {
+    color: #741b47 !important;
+}
+
+a:hover {
+    color: #611437 !important;
+}
+
+
+
+footer.page-footer {
+    background-color: #9e5f7e !important;
+}
