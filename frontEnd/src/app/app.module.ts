@@ -10,8 +10,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { LandingContentComponent } from './landing-content/landing-content.component';
-import { SigninComponent } from './auth/signin/signin.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { SearchComponent } from './feature/search/search.component';
 import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
@@ -32,8 +30,6 @@ import { CartComponent } from './feature/cart/cart/cart.component';
     HeaderComponent,
     FooterComponent,
     LandingContentComponent,
-    SigninComponent,
-    SignupComponent,
     SearchComponent,
     LearnMoreComponent,
     DashboardComponent,

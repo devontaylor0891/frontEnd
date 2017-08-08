@@ -16,8 +16,6 @@ import { CartComponent } from './feature/cart/cart/cart.component';
 
 const appRoutes: Routes = [
 	{ path: '', component: LandingContentComponent, pathMatch: 'full' },
-	{ path: 'signup', component: SignupComponent },
-	{ path: 'signin', component: SigninComponent },
 	{ path: 'search', component: SearchComponent },
 	{ path: 'learn-more', component: LearnMoreComponent },
 	{ path: 'dashboard', component: DashboardComponent },
