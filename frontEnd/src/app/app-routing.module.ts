@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { LandingContentComponent } from './landing-content/landing-content.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { SigninComponent } from './auth/signin/signin.component';
 import { SearchComponent } from './feature/search/search.component';
 import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
