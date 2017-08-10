@@ -22,6 +22,14 @@ import { ProducerComponent } from './feature/producer/producer/producer.componen
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartComponent } from './feature/cart/cart/cart.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { UsersComponent } from './feature/dashboard/admin/users/users.component';
+import { ProducersComponent } from './feature/dashboard/admin/producers/producers.component';
+import { ProductsComponent } from './feature/dashboard/admin/products/products.component';
+import { DeliveriesComponent } from './feature/dashboard/admin/deliveries/deliveries.component';
+import { AccountInfoComponent } from './feature/dashboard/admin/account-info/account-info.component';
+import { OrdersComponent } from './feature/dashboard/admin/orders/orders.component';
 
 
 @NgModule({
@@ -42,6 +50,14 @@ import { CartComponent } from './feature/cart/cart/cart.component';
     ProductComponent,
     ScheduleComponent,
     CartComponent,
+    SigninComponent,
+    RegisterComponent,
+    UsersComponent,
+    ProducersComponent,
+    ProductsComponent,
+    DeliveriesComponent,
+    AccountInfoComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
