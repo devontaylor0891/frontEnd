@@ -49,9 +49,9 @@
                             <tbody>
                                 <tr *ngFor="let product of products">
                                     <td>{{ product.productName }}</td>
-                                    <td>{{ product.pricePerUnit }}</td>
+                                    <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2'}}</td>
                                     <td>{{ product.units }}</td>
-                                    <td>{{ product.totalPrice }}</td>
+                                    <td>{{ product.totalPrice | currency:'USD':true:'1.2-2' }}</td>
                                     <td>{{ product.quantityAvailable }}</td>
                                     <td>{{ product.quantityPending }}</td>
                                     <td>{{ product.producerName }}</td>
