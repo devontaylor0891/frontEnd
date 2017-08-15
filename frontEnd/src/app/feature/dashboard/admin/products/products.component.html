@@ -12,47 +12,57 @@
                             aria-expanded="true" 
                             aria-controls="currentProductsCollapse">Current Products 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
-                <div id="currentProductsCollapse" class="collapse" role="tabpanel" aria-labelledby="currentProductsHeading">
+                <div id="currentProductsCollapse" class="collapse show" role="tabpanel" aria-labelledby="currentProductsHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
+                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover tablesaw-row-border" data-tablesaw-mode="stack" data-tablesaw-sortable="">
                             <thead>
                                 <tr>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
+                                        <button class="tablesaw-sortable-btn">Product Name</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
+                                        <button class="tablesaw-sortable-btn">Price</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
+                                        <button class="tablesaw-sortable-btn">Unit</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
+                                        <button class="tablesaw-sortable-btn">Total Price</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
+                                        <button class="tablesaw-sortable-btn">Qty Available</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
+                                        <button class="tablesaw-sortable-btn">Qty Pending</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">Producer</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn"></button>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Jan 4 2017</td>
-                                    <td> Wapella</td>
-                                    <td>Off-farm pickup</td>
-                                    <td>Bob</td>
-                                    <td>$34.50</td>
+                                <tr *ngFor="let product of products">
+                                    <td>{{ product.productName }}</td>
+                                    <td>{{ product.pricePerUnit }}</td>
+                                    <td>{{ product.units }}</td>
+                                    <td>{{ product.totalPrice }}</td>
+                                    <td>{{ product.quantityAvailable }}</td>
+                                    <td>{{ product.quantityPending }}</td>
+                                    <td>{{ product.producerName }}</td>
                                     <td>
                                         <a data-toggle='modal' data-target=''>View</a>
                                     </td>
                                 </tr>
+                                
                             </tbody>
-                        </table>                    </div>
+                        </table>
+                    </div>
                 </div>
             </div>
             
