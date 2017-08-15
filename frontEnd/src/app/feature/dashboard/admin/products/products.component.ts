@@ -32,6 +32,26 @@ export class ProductsComponent implements OnInit {
         producerName: 'Frank\'s Garden'
       }  
     ]
+   
+//todo: add more products, import model, hook up these products to the loop in the template 
+    // this.products = [
+    //   {
+    //     id: 1,
+    //     name: 'Carrots',
+    //     description: 'Here is a nice little description of these carrots.',
+    //     price: 4,
+    //     unit: 'lb',
+    //     unitsPer: 1,
+    //     totalPrice: 4,
+    //     producerName: 'Garden Farms',
+    //     imagePath: 'url',
+    //     quantityAvailable: 34,
+    //     quantityPending: 4,
+    //     quantitySold: 786,
+    //     status: 'active'
+    //   }
+    // ]
+
     
   }
 
