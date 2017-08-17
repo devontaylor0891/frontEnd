@@ -48,12 +48,12 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let product of products">
-                                    <td>{{ product.productName }}</td>
+                                    <td>{{ product.name }}</td>
                                     <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2'}}</td>
-                                    <td>{{ product.units }}</td>
-                                    <td>{{ product.totalPrice | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ product.quantityAvailable }}</td>
-                                    <td>{{ product.quantityPending }}</td>
+                                    <td>{{ product.unit }}</td>
+                                    <td>{{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}</td>
+                                    <td>{{ product.qtyAvailable }}</td>
+                                    <td>{{ product.qtyPending }}</td>
                                     <td>{{ product.producerName }}</td>
                                     <td>
                                         <a data-toggle='modal' data-target=''>View</a>
