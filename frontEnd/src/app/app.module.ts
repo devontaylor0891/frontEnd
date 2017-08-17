@@ -31,7 +31,6 @@ import { DeliveriesComponent } from './feature/dashboard/admin/deliveries/delive
 import { AccountInfoComponent } from './feature/dashboard/admin/account-info/account-info.component';
 import { OrdersComponent } from './feature/dashboard/admin/orders/orders.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +66,7 @@ import { OrdersComponent } from './feature/dashboard/admin/orders/orders.compone
     MDBBootstrapModule.forRoot()
   ],
   providers: [],
-  schemas: [NO_ERRORS_SCHEMA],
+  // schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
