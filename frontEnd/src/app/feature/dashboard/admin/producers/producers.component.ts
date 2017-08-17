@@ -17,7 +17,7 @@ export class ProducersComponent implements OnInit {
   constructor(private producerService: ProducerService) { }
 
   ngOnInit() {
-    this.producers = this.producerService.producers;
+    this.producers = this.producerService.producersAdmin;
   }
 
 }

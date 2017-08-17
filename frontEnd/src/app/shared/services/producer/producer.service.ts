@@ -5,7 +5,8 @@ import { ProducerAdmin } from '../../models/producer-admin.model';
 @Injectable()
 export class ProducerService {
     
-    producers: ProducerAdmin[] = [
+    //this will be where a getAll() method is called, to populate this array
+    producersAdmin: ProducerAdmin[] = [
         new ProducerAdmin(
           4,
           'Garden Farms',
