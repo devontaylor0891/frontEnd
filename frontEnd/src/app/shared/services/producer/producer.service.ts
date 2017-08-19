@@ -10,7 +10,7 @@ export class ProducerService {
   
   url = '../../../../assets/api/producersAdmin.json';
     
-    producersAdmin: ProducerAdmin[] = [];
+    //producersAdmin: ProducerAdmin[] = [];
 
   constructor(private http: Http) { }
   

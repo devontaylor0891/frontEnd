@@ -13,17 +13,17 @@ import { ProducerService } from '../../../../shared/services/producer/producer.s
 })
 export class ProducersComponent implements OnInit {
   
-  producers: ProducerAdmin[] = [];
+  activeProducers: ProducerAdmin[] = [];
+  inactiveProducers: ProducerAdmin[] = [];
 
   constructor(private producerService: ProducerService) { }
 
   ngOnInit() {
-    this.producers = this.producerService.producersAdmin;
     this.producerService.getProducers()
       .subscribe(
         (producers: any[]) => {
           console.log(producers);
-          this.producers = producers;
+          this.activeProducers = producers;
         }  
       )
   }
