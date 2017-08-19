@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Response } from '@angular/http';
 
 import { ProducerAdmin } from '../../../../shared/models/producer-admin.model';
 
@@ -18,6 +19,13 @@ export class ProducersComponent implements OnInit {
 
   ngOnInit() {
     this.producers = this.producerService.producersAdmin;
+    this.producerService.getProducers()
+      .subscribe(
+        (producers: any[]) => {
+          console.log(producers);
+          this.producers = producers;
+        }  
+      )
   }
 
 }
