@@ -66,7 +66,7 @@ import { OrdersComponent } from './feature/dashboard/admin/orders/orders.compone
     MDBBootstrapModule.forRoot()
   ],
   providers: [],
-  // schemas: [NO_ERRORS_SCHEMA],
+  schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
