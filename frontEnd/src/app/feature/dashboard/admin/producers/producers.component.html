@@ -58,7 +58,7 @@
                 </div>
             </div>
             
-            <div class="card">
+            <div class="card" *ngIf="inactiveProducers.length > 0">
                 <div class="card-header dash-accordion" role="tab" id="inactiveProducersHeading">
                     <h5 class="mb-0">
                         <a 
@@ -74,9 +74,43 @@
                 </div>
                 <div id="inactiveProducersCollapse" class="collapse" role="tabpanel" aria-labelledby="inactiveProducersHeading">
                     <div class="card-block">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                        on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
+                            <thead>
+                                <tr>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">Name</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">City</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">Province</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">First Name</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">Email</button>
+                                    </th>
+                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
+                                        <button class="tablesaw-sortable-btn">Registration Date</button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let producer of inactiveProducers">
+                                    <td>{{ producer.name }}</td>
+                                    <td>{{ producer.location }}</td>
+                                    <td>{{ producer.province }}</td>
+                                    <td>{{ producer.firstName }}</td>
+                                    <td>{{ producer.email }}</td>
+                                    <td>{{ producer.registrationDate }}</td>
+                                    <td>
+                                        <a data-toggle='modal' data-target=''>View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

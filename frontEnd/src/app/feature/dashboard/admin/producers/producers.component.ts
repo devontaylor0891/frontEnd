@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 
+import 'rxjs/Rx';
+
 import { ProducerAdmin } from '../../../../shared/models/producer-admin.model';
 
 import { ProducerService } from '../../../../shared/services/producer/producer.service';
@@ -20,12 +22,18 @@ export class ProducersComponent implements OnInit {
 
   ngOnInit() {
     this.producerService.getProducers()
-      .subscribe(
-        (producers: any[]) => {
+      .subscribe( //returns an array
+        (producers) => {
           console.log(producers);
-          this.activeProducers = producers;
+          const active = producers.filter(producer => producer.status === 'active');
+          console.log('Active producers: ' + active);
+          this.activeProducers = active;
+          const inactive = producers.filter(producer => producer.status === 'inactive');
+          this.inactiveProducers = inactive;
+          console.log('Inctive producers: ' + inactive);
         }  
       )
-  }
 
+  }
 }
+ 
