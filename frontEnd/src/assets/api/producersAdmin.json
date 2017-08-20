@@ -2,8 +2,34 @@
 
     [
         {
-            "id": 4,
-            "name": "Garden Farms",
+            "id": 1,
+            "name": "Garden Farms1",
+            "location": "Moosomin",
+            "province": "SK",
+            "description": "This is a description",
+            "email": "email@email.com",
+            "logo": "beet.png",
+            "longitude": 444,
+            "latitude": 555,
+            "firstName": "Devon",
+            "registrationDate": "Jan 1 2017",
+            "status": "active"
+        }, {
+            "id": 2,
+            "name": "Garden Farms2",
+            "location": "Moosomin",
+            "province": "SK",
+            "description": "This is a description",
+            "email": "email@email.com",
+            "logo": "beet.png",
+            "longitude": 444,
+            "latitude": 555,
+            "firstName": "Devon",
+            "registrationDate": "Jan 1 2017",
+            "status": "active"
+        }, {
+            "id": 3,
+            "name": "Garden Farms3",
             "location": "Moosomin",
             "province": "SK",
             "description": "This is a description",
@@ -16,7 +42,7 @@
             "status": "active"
         }, {
             "id": 4,
-            "name": "Garden Farms",
+            "name": "Garden Farms4",
             "location": "Moosomin",
             "province": "SK",
             "description": "This is a description",
@@ -28,8 +54,8 @@
             "registrationDate": "Jan 1 2017",
             "status": "active"
         }, {
-            "id": 4,
-            "name": "Garden Farms",
+            "id": 5,
+            "name": "Garden Farms5",
             "location": "Moosomin",
             "province": "SK",
             "description": "This is a description",
@@ -41,34 +67,8 @@
             "registrationDate": "Jan 1 2017",
             "status": "active"
         }, {
-            "id": 4,
-            "name": "Garden Farms",
-            "location": "Moosomin",
-            "province": "SK",
-            "description": "This is a description",
-            "email": "email@email.com",
-            "logo": "beet.png",
-            "longitude": 444,
-            "latitude": 555,
-            "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
-            "status": "active"
-        }, {
-            "id": 4,
-            "name": "Garden Farms",
-            "location": "Moosomin",
-            "province": "SK",
-            "description": "This is a description",
-            "email": "email@email.com",
-            "logo": "beet.png",
-            "longitude": 444,
-            "latitude": 555,
-            "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
-            "status": "active"
-        }, {
-            "id": 4,
-            "name": "Garden Farms",
+            "id": 6,
+            "name": "Garden Farms6",
             "location": "Moosomin",
             "province": "SK",
             "description": "This is a description",
