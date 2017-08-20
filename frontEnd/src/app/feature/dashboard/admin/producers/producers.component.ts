@@ -24,13 +24,10 @@ export class ProducersComponent implements OnInit {
     this.producerService.getProducers()
       .subscribe( //returns an array
         (producers) => {
-          console.log(producers);
           const active = producers.filter(producer => producer.status === 'active');
-          console.log('Active producers: ' + active);
           this.activeProducers = active;
           const inactive = producers.filter(producer => producer.status === 'inactive');
           this.inactiveProducers = inactive;
-          console.log('Inctive producers: ' + inactive);
         }  
       )
 

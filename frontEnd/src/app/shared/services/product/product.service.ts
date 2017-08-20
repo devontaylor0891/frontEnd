@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import 'rxjs/add/operator/map';
-
 @Injectable()
-export class ProducerService {
-  
-  url = '../../../../assets/api/producersAdmin.json';
-    
+export class ProductService {
+
+  url = '../../../../assets/api/productsAdmin.json';
+
   constructor(private http: Http) { }
-  
-  getProducers() {
+
+  getProducts() {
     return this.http.get(this.url)
       .map(
         (response: Response) => {
