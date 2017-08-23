@@ -3,7 +3,7 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { ProducerAdmin } from '../../../../shared/models/producer-admin.model';
+import { ProducerAdmin } from '../../../../shared/models/dashboard-admin/producers/producer-admin.model';
 
 import { ProducerService } from '../../../../shared/services/producer/producer.service';
 

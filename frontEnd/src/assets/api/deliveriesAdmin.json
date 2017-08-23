@@ -1,0 +1,41 @@
+[
+    {
+        "id": 1,
+        "date": "Sept 1",
+        "startTime": 2,
+        "endTime": 4,
+        "type": "Door-to-door",
+        "producerName": "Garden Farms",
+        "location": "Moosomin",
+        "address": "",
+        "products": [
+            {
+                "id": 1,
+                "productName": "Carrots",
+                "pricePerUnit": 7,
+                "unit": "lb",
+                "unitsPer": 1
+            }, {
+                "id": 2,
+                "productName": "Potatoes",
+                "pricePerUnit": 3,
+                "unit": "ea",
+                "unitsPer": 1
+            },
+            {
+                "id": 3,
+                "productName": "Peas",
+                "pricePerUnit": 3,
+                "unit": "lb",
+                "unitsPer": 2
+            }
+        ],
+        "orders": [
+            
+        ],
+        "hasFee": false,
+        "fee": 0
+        "feeWaiverAmount": 0,
+        
+    }    
+]

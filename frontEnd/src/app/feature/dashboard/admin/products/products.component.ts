@@ -3,7 +3,7 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { ProductAdmin } from '../../../../shared/models/product-admin.model';
+import { ProductAdmin } from '../../../../shared/models/dashboard-admin/products/product-admin.model';
 
 import { ProductService } from '../../../../shared/services/product/product.service';
 
