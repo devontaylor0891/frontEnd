@@ -28,15 +28,11 @@ export class ProductsComponent implements OnInit {
     this.productService.getProducts()
       .subscribe( //returns an array
         (products) => {
-          console.log(products);
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
-          console.log(current);
           this.currentProducts = current;
           const outOfStock = products.filter(product => product.qtyAvailable == 0 && product.isObsolete === false);
-          console.log(outOfStock);
           this.outOfStockProducts = outOfStock;
           const deleted = products.filter(product => product.isObsolete === true);
-          console.log(deleted);
           this.deletedProducts = deleted;
         }  
       )

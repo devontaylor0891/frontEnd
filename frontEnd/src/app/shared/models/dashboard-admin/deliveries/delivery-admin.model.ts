@@ -1,5 +1,5 @@
-import { ProductAdmin } from './product-admin.model';
-import { OrderAdmin } from './order-admin.model';
+import { deliveryAdminProduct } from './delivery-admin-product.model';
+import { deliveryAdminOrder } from './delivery-admin-order.model';
 
 export class DeliveryAdmin {
     
@@ -8,15 +8,18 @@ export class DeliveryAdmin {
         public date: string,
         public startTime: number,
         public endTime: number,
+        public type: string,
         public location: string,
-        public latitude: number,
-        public longitude: number,
+        public address: string,
+        public description: string,
         public producerName: string,
         public deliveryType: string,
-        public hasDeliveryFee: boolean,
-        public deliveryFee: number,
-        public products: ProductAdmin[],
-        public orders: OrderAdmin[]
+        public hasFee: boolean,
+        public Fee: number,
+        public hasFeeWaiver: boolean,
+        public feeWaiverAmount: number,
+        public products: deliveryAdminProduct[],
+        public orders: deliveryAdminOrder[]
     ) {}
     
 }

@@ -1,4 +1,4 @@
-import { ProductAdmin } from './product-admin.model';
+import { ProductAdmin } from '../products/product-admin.model';
 
 export class OrderAdmin {
     
@@ -14,7 +14,7 @@ export class OrderAdmin {
         public deliveryLocation: string,
         public deliveryAddress: string,
         public producerName: string,
-        public productList: any[]
+        public productList: ProductAdmin[]
     ) {}
     
 }
