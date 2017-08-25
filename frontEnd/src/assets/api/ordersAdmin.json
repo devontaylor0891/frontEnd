@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "producerName": "Garden Farms",
+        "type": "Door-to-door",
+        "date": "Sep 5, 2017",
+        "startTime": 2,
+        "endTime": 4,
+        "consumer": "Devon",
+        "consumerEmail": "devon@email.com",
+        "products": [
+            {
+                ""
+            }    
+        ]
+    }    
+]

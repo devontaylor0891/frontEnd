@@ -24,10 +24,7 @@
                                         <button class="tablesaw-sortable-btn">Date</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Start</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">End</button>
+                                        <button class="tablesaw-sortable-btn">Times</button>
                                     </th>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
                                         <button class="tablesaw-sortable-btn">Location</button>
@@ -43,13 +40,18 @@
                             <tbody>
                                 <tr *ngFor="let delivery of upcomingDeliveries">
                                     <td>{{ delivery.date }}</td>
-                                    <td>{{ delivery.startTime | date }}</td>
-                                    <td>{{ delivery.endTime }}</td>
+                                    <td>{{ delivery.startTime }} - {{ delivery.endTime }}</td>
                                     <td>{{ delivery.location }}</td>
                                     <td>{{ delivery.producerName }}</td>
                                     <td>{{ delivery.orders.length }}</td>
                                     <td>
                                         <a data-toggle='modal' data-target=''>View</a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle='modal' data-target=''>Edit</a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle='modal' data-target=''>Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
