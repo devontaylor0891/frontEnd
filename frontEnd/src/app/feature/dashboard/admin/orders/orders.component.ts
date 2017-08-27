@@ -22,6 +22,10 @@ export class OrdersComponent implements OnInit {
   deniedOrders: OrderAdmin[] = [];
 
   constructor(private orderService: OrderService) { }
+  
+  toggleView(order: any) {
+    order.showView = !order.showView;
+  }
 
   ngOnInit() {
 

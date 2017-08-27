@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+    <br>
+    <div class="col-xs-12 col-md-8">
+        
+        <!--Panel-->
+        <div class="card card-body">
+            <div class="card-block">
+                <div class="row">
+                    <h4 class="card-title col">View Order Details</h4>
+                    <span class="col">
+                        <p class="text-right">Close</p>
+                    </span>
+                </div>
+                
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Producer:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.producerName }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Delivery Date:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.date }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Time:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.startTime }} - {{ order.endTime }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Delivery Type:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.type }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Consumer:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.userName }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Email:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.userEmail }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Order:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>Small order table</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Order Value:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.value | currency:'USD':true:'1.2-2' }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4 text-right">
+                        <p class="font-weight-bold">Order Date:</p>
+                    </div>
+                    <div class="col col-8">
+                        <p>{{ order.orderedDate }}</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <!--/.Panel-->
+        
+        <!--<h4>View Order Details</h4>-->
+        <!--<div class="row">-->
+        <!--    <div class="col col-4 text-right">-->
+        <!--        Producer:-->
+        <!--    </div>-->
+        <!--    <div class="col col-8">-->
+        <!--        {{ order.producerName }}-->
+        <!--    </div>-->
+        <!--</div>-->
+    </div>
+    <br>
+</div>

@@ -30,6 +30,7 @@ import { ProductsComponent } from './feature/dashboard/admin/products/products.c
 import { DeliveriesComponent } from './feature/dashboard/admin/deliveries/deliveries.component';
 import { AccountInfoComponent } from './feature/dashboard/admin/account-info/account-info.component';
 import { OrdersComponent } from './feature/dashboard/admin/orders/orders.component';
+import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/order-view-details/order-view-details.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { OrdersComponent } from './feature/dashboard/admin/orders/orders.compone
     DeliveriesComponent,
     AccountInfoComponent,
     OrdersComponent,
+    OrderViewDetailsComponent,
   ],
   imports: [
     BrowserModule,
