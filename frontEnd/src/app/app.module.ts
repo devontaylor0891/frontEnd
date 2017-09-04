@@ -31,6 +31,8 @@ import { DeliveriesComponent } from './feature/dashboard/admin/deliveries/delive
 import { AccountInfoComponent } from './feature/dashboard/admin/account-info/account-info.component';
 import { OrdersComponent } from './feature/dashboard/admin/orders/orders.component';
 import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/order-view-details/order-view-details.component';
+import { CallbackComponent } from './auth/callback/callback.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/orde
     AccountInfoComponent,
     OrdersComponent,
     OrderViewDetailsComponent,
+    CallbackComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,7 @@ import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/orde
     AppRoutingModule,
     MDBBootstrapModule.forRoot()
   ],
-  providers: [],
+  providers: [AuthService],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

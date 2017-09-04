@@ -10,6 +10,7 @@ import { ProducerComponent } from './feature/producer/producer/producer.componen
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartComponent } from './feature/cart/cart/cart.component';
+import { CallbackComponent } from './auth/callback/callback.component';
 
 
 const appRoutes: Routes = [
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
 	{ path: 'producer', component: ProducerComponent },
 	{ path: 'product', component: ProductComponent },
 	{ path: 'schedule', component: ScheduleComponent },
-	{ path: 'cart', component: CartComponent }
+	{ path: 'cart', component: CartComponent },
+	{ path: 'callback', component: CallbackComponent }
 ]
 
 @NgModule({
