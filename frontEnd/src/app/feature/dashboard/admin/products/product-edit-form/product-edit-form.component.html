@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+  <br>
+    <div class="col-xs-12 col-md-8">
+      <!--Panel-->
+      <div class="card card-body">
+        <div class="card-block">
+
+          <div class="row">
+            <h4 class="card-title col">Edit Product</h4>
+            <span class="col">
+                <button type="button" class="close" aria-label="Close" (click)="toggleEditForm(product)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </span>
+          </div>
+            
+          <hr>
+
+          <form (ngSubmit)="onEditProduct(f)" #f="ngForm"> <!-- local reference and ngForm gives us access to the angular form javascript object -->
+            <div class="form-group row">
+              <label class="col-4 col-form-label" for="name">Product Name:</label>
+              <div class="col-7">
+                <input
+                type="text"
+                id="name"
+                class="form-control"
+                name="name"
+                ngModel
+              >
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <button class="btn btn-olf-primary" type="submit">Confirm Changes</button>
+                <a (click)="toggleEditForm(product)">Cancel Changes</a>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  <br>
+</div>

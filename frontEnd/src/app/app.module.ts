@@ -33,6 +33,8 @@ import { OrdersComponent } from './feature/dashboard/admin/orders/orders.compone
 import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/order-view-details/order-view-details.component';
 import { CallbackComponent } from './auth/callback/callback.component';
 import { AuthService } from './auth/auth.service';
+import { ProductViewDetailsComponent } from './feature/dashboard/admin/products/product-view-details/product-view-details.component';
+import { ProductEditFormComponent } from './feature/dashboard/admin/products/product-edit-form/product-edit-form.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { AuthService } from './auth/auth.service';
     OrdersComponent,
     OrderViewDetailsComponent,
     CallbackComponent,
+    ProductViewDetailsComponent,
+    ProductEditFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -47,24 +47,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let product of currentProducts">
-                                    <td>{{ product.name }}</td>
-                                    <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ product.unit }}</td>
-                                    <td>{{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ product.qtyAvailable }}</td>
-                                    <td>{{ product.qtyPending }}</td>
-                                    <td>{{ product.producerName }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
+                                <ng-template ngFor let-product [ngForOf]="currentProducts">
+                                    <tr>
+                                        <td>{{ product.name }}</td>
+                                        <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}</td>
+                                        <td>{{ product.unit }}</td>
+                                        <td>{{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}</td>
+                                        <td>{{ product.qtyAvailable }}</td>
+                                        <td>{{ product.qtyPending }}</td>
+                                        <td>{{ product.producerName }}</td>
+                                        <td>
+                                            <a (click)="toggleView(product)">View</a>
+                                        </td>
+                                        <td>
+                                            <a (click)="toggleEditForm(product)">Edit</a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle='modal' data-target=''>Delete</a>
+                                        </td>
+                                    </tr>
+                                
+                                    <tr class="dashboard-details" *ngIf="product.showView">
+                                        <td colspan="100%">
+                                            <app-product-view-details [product]="product"></app-product-view-details>
+                                            <app-product-edit-form [product]="product"></app-product-edit-form>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="dashboard-details" *ngIf="product.showEditForm">
+                                        <td colspan="100%">
+                                            <app-product-edit-form [product]="product"></app-product-edit-form>
+                                        </td>
+                                    </tr>
+
+                                </ng-template>
                                 
                             </tbody>
                         </table>
