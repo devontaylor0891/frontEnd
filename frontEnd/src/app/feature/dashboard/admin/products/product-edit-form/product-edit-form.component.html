@@ -18,15 +18,15 @@
 
           <form (ngSubmit)="onEditProduct(f)" #f="ngForm"> <!-- local reference and ngForm gives us access to the angular form javascript object -->
             <div class="form-group row">
-              <label class="col-4 col-form-label" for="name">Product Name:</label>
-              <div class="col-7">
+              <label class="col col-sm-4 col-form-label text-right font-weight-bold" for="name">Product Name:</label>
+              <div class="col col-sm-8">
                 <input
                 type="text"
                 id="name"
                 class="form-control"
                 name="name"
                 ngModel
-              >
+                >
               </div>
             </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -8,8 +8,8 @@ import { NgForm } from '@angular/forms';
 })
 export class ProductEditFormComponent implements OnInit {
 
-  @Input()
-  product: any;
+  @Input() product: any;
+  @ViewChild('f') productEditForm: NgForm;
 
   constructor() { }
 
@@ -21,9 +21,15 @@ export class ProductEditFormComponent implements OnInit {
   onEditProduct(form: NgForm) {
     const value = form.value;
     console.log(value);
+    
   }
 
   ngOnInit() {
+    
+    this.productEditForm.setValue({
+      name: this.product.name
+    })
+    
   }
 
 }
