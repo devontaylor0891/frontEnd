@@ -11,18 +11,20 @@ import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartComponent } from './feature/cart/cart/cart.component';
 import { CallbackComponent } from './auth/callback/callback.component';
+import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
 
 
 const appRoutes: Routes = [
 	{ path: '', component: LandingContentComponent, pathMatch: 'full' },
 	{ path: 'search', component: SearchComponent },
 	{ path: 'learn-more', component: LearnMoreComponent },
-	{ path: 'dashboard', component: DashboardComponent },
+	{ path: 'dashboard', component: DashboardComponent},
 	{ path: 'producer', component: ProducerComponent },
 	{ path: 'product', component: ProductComponent },
 	{ path: 'schedule', component: ScheduleComponent },
 	{ path: 'cart', component: CartComponent },
-	{ path: 'callback', component: CallbackComponent }
+	{ path: 'callback', component: CallbackComponent },
+	{ path: 'add-product', component: AddProductComponent }
 ]
 
 @NgModule({
