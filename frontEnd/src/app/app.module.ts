@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +35,11 @@ import { CallbackComponent } from './auth/callback/callback.component';
 import { AuthService } from './auth/auth.service';
 import { ProductViewDetailsComponent } from './feature/dashboard/admin/products/product-view-details/product-view-details.component';
 import { ProductEditFormComponent } from './feature/dashboard/admin/products/product-edit-form/product-edit-form.component';
-import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
+import { AddProductComponent } from './feature/dashboard/admin/add-new/add-product/add-product.component';
+import { AddUserComponent } from './feature/dashboard/admin/add-new/add-user/add-user.component';
+import { AddProducerComponent } from './feature/dashboard/admin/add-new/add-producer/add-producer.component';
+import { AddDeliveryComponent } from './feature/dashboard/admin/add-new/add-delivery/add-delivery.component';
+import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/add-order.component';
 
 @NgModule({
   declarations: [
@@ -68,10 +72,15 @@ import { AddProductComponent } from './feature/dashboard/admin/products/add-prod
     ProductViewDetailsComponent,
     ProductEditFormComponent,
     AddProductComponent,
+    AddUserComponent,
+    AddProducerComponent,
+    AddDeliveryComponent,
+    AddOrderComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot()

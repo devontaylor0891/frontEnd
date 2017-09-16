@@ -11,20 +11,28 @@ import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartComponent } from './feature/cart/cart/cart.component';
 import { CallbackComponent } from './auth/callback/callback.component';
-import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
-
+import { AddUserComponent } from './feature/dashboard/admin/add-new/add-user/add-user.component';
+import { AddProducerComponent } from './feature/dashboard/admin/add-new/add-producer/add-producer.component';
+import { AddProductComponent } from './feature/dashboard/admin/add-new/add-product/add-product.component';
+import { AddDeliveryComponent } from './feature/dashboard/admin/add-new/add-delivery/add-delivery.component';
+import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/add-order.component';
 
 const appRoutes: Routes = [
 	{ path: '', component: LandingContentComponent, pathMatch: 'full' },
 	{ path: 'search', component: SearchComponent },
 	{ path: 'learn-more', component: LearnMoreComponent },
-	{ path: 'dashboard', component: DashboardComponent},
+	{ path: 'dashboard', component: DashboardComponent, children: [
+		{path: 'add-user', component: AddUserComponent },
+		{path: 'add-producer', component: AddProducerComponent },
+		{path: 'add-product', component: AddProductComponent },
+		{path: 'add-delivery', component: AddDeliveryComponent },
+		{path: 'add-order', component: AddOrderComponent }
+	]},
 	{ path: 'producer', component: ProducerComponent },
 	{ path: 'product', component: ProductComponent },
 	{ path: 'schedule', component: ScheduleComponent },
 	{ path: 'cart', component: CartComponent },
-	{ path: 'callback', component: CallbackComponent },
-	{ path: 'add-product', component: AddProductComponent }
+	{ path: 'callback', component: CallbackComponent }
 ]
 
 @NgModule({
