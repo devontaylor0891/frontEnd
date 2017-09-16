@@ -14,19 +14,34 @@ import { ProductService } from '../../../../shared/services/product/product.serv
   providers: [ProductService]
 })
 export class ProductsComponent implements OnInit {
-  
+
   currentProducts: ProductAdmin[] = [];
   outOfStockProducts: ProductAdmin[] = [];
   deletedProducts: ProductAdmin[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) {
 
+    this.productService.productAdded.subscribe(
+      (value: ProductAdmin) => {
+        this.currentProducts.push(value);
+      }
+    )
+
+  }
+
+  //view a single product right in the table
   toggleView(product: any) {
     product.showView = !product.showView;
   }
 
+  //edit a single product right in the table
   toggleEditForm(product: any) {
     product.showEditForm = !product.showEditForm;
+  }
+
+  //add a new product via the add-product component, push it to the appropriate array
+  addNewProduct(value) {
+    console.log(value);
   }
 
   ngOnInit() {
@@ -42,7 +57,7 @@ export class ProductsComponent implements OnInit {
           this.deletedProducts = deleted;
         }  
       )
-
+ 
   }
 
 }

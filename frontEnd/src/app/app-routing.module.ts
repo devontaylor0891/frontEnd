@@ -13,7 +13,7 @@ import { CartComponent } from './feature/cart/cart/cart.component';
 import { CallbackComponent } from './auth/callback/callback.component';
 import { AddUserComponent } from './feature/dashboard/admin/add-new/add-user/add-user.component';
 import { AddProducerComponent } from './feature/dashboard/admin/add-new/add-producer/add-producer.component';
-import { AddProductComponent } from './feature/dashboard/admin/add-new/add-product/add-product.component';
+import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
 import { AddDeliveryComponent } from './feature/dashboard/admin/add-new/add-delivery/add-delivery.component';
 import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/add-order.component';
 

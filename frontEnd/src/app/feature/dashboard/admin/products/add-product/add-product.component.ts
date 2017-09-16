@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
+import { ProductService } from '../../../../../shared/services/product/product.service';
+
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -11,7 +13,7 @@ export class AddProductComponent implements OnInit {
 
   form: FormGroup; //this will hold our form data in a js object
 
-  constructor(private formBuild: FormBuilder, private location: Location) {
+  constructor(private formBuild: FormBuilder, private location: Location, private productService: ProductService) {
     this.form = formBuild.group({
       'name': ['', Validators.required],
       'description': ['', Validators.required],
@@ -30,7 +32,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form.value is: ' + JSON.stringify(this.form.value));
+    this.productService.productAdded.emit(this.form.value);
   }
 
   onCancel() {
