@@ -8,7 +8,9 @@
                 <div class="row">
                     <h4 class="card-title col">View Order Details</h4>
                     <span class="col">
-                        <p class="text-right">Close</p>
+                        <button type="button" class="close" aria-label="Close" (click)="toggleView(order)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </span>
                 </div>
                 

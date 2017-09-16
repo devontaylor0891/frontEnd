@@ -19,8 +19,14 @@ export class ProductsComponent implements OnInit {
   outOfStockProducts: ProductAdmin[] = [];
   deletedProducts: ProductAdmin[] = [];
 
-  constructor(private productService: ProductService) {
-    
+  constructor(private productService: ProductService) {}
+
+  toggleView(product: any) {
+    product.showView = !product.showView;
+  }
+
+  toggleEditForm(product: any) {
+    product.showEditForm = !product.showEditForm;
   }
 
   ngOnInit() {
