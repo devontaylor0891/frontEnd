@@ -23,7 +23,11 @@ export class ProductsComponent implements OnInit {
 
     this.productService.productAdded.subscribe(
       (value: ProductAdmin) => {
-        this.currentProducts.push(value);
+        if (value.qtyAvailable > 0) {
+          this.currentProducts.push(value);
+        } else {
+          this.outOfStockProducts.push(value);
+        }
       }
     )
 

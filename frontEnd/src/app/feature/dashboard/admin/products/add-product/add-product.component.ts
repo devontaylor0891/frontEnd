@@ -24,7 +24,12 @@ export class AddProductComponent implements OnInit {
       'category': ['', Validators.required],
       'subcategory': ['', Validators.required],
       'producerName': ['', Validators.required],
-      'qtyAvailable': [null, Validators.required]
+      'dateAdded': ['September 1, 2017'],
+      'qtyAvailable': [null, Validators.required],
+      'qtyPending': [0],
+      'qtyAccepted': [0],
+      'qtyCompleted': [0],
+      'isObsolete': ['false']
     })
   }
 
@@ -33,6 +38,7 @@ export class AddProductComponent implements OnInit {
 
   onSubmit() {
     this.productService.productAdded.emit(this.form.value);
+    this.location.back();
   }
 
   onCancel() {
