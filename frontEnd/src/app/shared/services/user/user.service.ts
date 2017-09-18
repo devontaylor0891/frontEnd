@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserService {
 
-  url = '../../../../assets/api/usersAdmin.json';
+  url = '../../../../assets/api/users.json';
 
   constructor(private http:Http) { }
 

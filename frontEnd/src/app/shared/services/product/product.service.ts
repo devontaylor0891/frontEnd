@@ -6,7 +6,7 @@ import { ProductAdmin } from '../../../shared/models/dashboard-admin/products/pr
 @Injectable()
 export class ProductService implements OnInit {
 
-  url = '../../../../assets/api/productsAdmin.json';
+  url = '../../../../assets/api/products.json';
 
   constructor(private http: Http) {}
 

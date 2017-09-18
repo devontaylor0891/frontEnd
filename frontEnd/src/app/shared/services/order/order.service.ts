@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class OrderService {
 
-  url = '../../../../assets/api/ordersAdmin.json';
+  url = '../../../../assets/api/orders.json';
 
   constructor(private http: Http) { }
 

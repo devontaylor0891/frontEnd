@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ProducerService {
   
-  url = '../../../../assets/api/producersAdmin.json';
+  url = '../../../../assets/api/producers.json';
     
   constructor(private http: Http) { }
   
