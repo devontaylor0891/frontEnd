@@ -1,13 +1,14 @@
 main {
-    background-color: #9e5f7e !important;
-    // margin-left: -15px;
-    // margin-right: -15px;
-    //margin-top: -10%;
-    padding: 5em 0 5em 5em;
+    background-color: #262626 !important;
+    padding: 5em 5%;
 }
 
 img {
     max-width:95%;
     margin:auto;
     overflow: none;
+}
+
+.jumbotron-card {
+    margin-bottom: 1em;
 }

@@ -10,7 +10,7 @@ export class AppComponent {
 
   constructor (public authService: AuthService) {
     
-    this.authService.handleAuthentication();
+    this.authService.handleAuth();
     
   }
   
