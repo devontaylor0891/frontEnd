@@ -9,6 +9,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
+import { LocationService } from './shared/services/location/location.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -90,7 +91,7 @@ import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/a
     AppRoutingModule,
     MDBBootstrapModule.forRoot()
   ],
-  providers: [AuthService, ApiService],
+  providers: [AuthService, ApiService, LocationService],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
