@@ -43,6 +43,12 @@ module.exports = function(app, config) {
  |--------------------------------------
  */
 
+ // using the mock api data in assets/api folder
+ // GET list of PRODUCTS where DELIVERY DATE is in the future and DELIVERY LOCATION is within the search radius
+  app.get('http://localhost:3000/searchResults', (req, res) => {
+    res.send(res.JSON);
+  })
+
   // GET API root
   app.get('/api/', (req, res) => {
     res.send('API works');

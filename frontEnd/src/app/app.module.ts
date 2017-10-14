@@ -1,10 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+import { AuthService } from './auth/auth.service';
+import { ApiService } from './core/api.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -32,7 +36,7 @@ import { AccountInfoComponent } from './feature/dashboard/admin/account-info/acc
 import { OrdersComponent } from './feature/dashboard/admin/orders/orders.component';
 import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/order-view-details/order-view-details.component';
 import { CallbackComponent } from './auth/callback/callback.component';
-import { AuthService } from './auth/auth.service';
+
 import { ProductViewDetailsComponent } from './feature/dashboard/admin/products/product-view-details/product-view-details.component';
 import { ProductEditFormComponent } from './feature/dashboard/admin/products/product-edit-form/product-edit-form.component';
 import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
@@ -81,11 +85,12 @@ import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/a
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     HttpModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot()
   ],
-  providers: [AuthService],
+  providers: [AuthService, ApiService],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

@@ -3,29 +3,29 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { ProductCard } from '../../../../shared/models/product-card.model';
+import { SearchResultModel } from '../../../../shared/models/search-result.model';
 
-import { ProductService } from '../../../../shared/services/product/product.service';
+import { ApiService } from '../../../../core/api.service';
 
 @Component({
   selector: 'app-results-pane',
   templateUrl: './results-pane.component.html',
-  styleUrls: ['./results-pane.component.scss'],
-  providers: [ProductService]
+  styleUrls: ['./results-pane.component.scss']
 })
 export class ResultsPaneComponent implements OnInit {
 
-  products: ProductCard[] = [];
+  products: SearchResultModel[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    
-    this.productService.getProducts()
-      .subscribe( //returns an array
+
+    this.apiService.getSearchResults()
+      .subscribe(
         (products) => {
+          console.log(products);
           this.products = products;
-        }  
+        }
       )
     
   }
