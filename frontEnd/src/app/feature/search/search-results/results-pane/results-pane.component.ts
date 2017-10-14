@@ -3,7 +3,7 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { SearchResultModel } from '../../../../shared/models/search-result.model';
+import { SearchResultModel } from '../../../../core/models/search-result.model';
 
 import { ApiService } from '../../../../core/api.service';
 

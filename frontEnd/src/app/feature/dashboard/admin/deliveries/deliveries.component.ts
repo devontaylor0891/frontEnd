@@ -3,9 +3,9 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { DeliveryAdmin } from '../../../../shared/models/dashboard-admin/deliveries/delivery-admin.model';
+import { DeliveryAdmin } from '../../../../core/models/dashboard-admin/deliveries/delivery-admin.model';
 
-import { DeliveryService } from '../../../../shared/services/delivery/delivery.service';
+import { DeliveryService } from '../../../../core/services/delivery/delivery.service';
 
 @Component({
   selector: 'app-deliveries',

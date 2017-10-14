@@ -3,9 +3,9 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { ProductAdmin } from '../../../../shared/models/dashboard-admin/products/product-admin.model';
+import { ProductAdmin } from '../../../../core/models/dashboard-admin/products/product-admin.model';
 
-import { ProductService } from '../../../../shared/services/product/product.service';
+import { ProductService } from '../../../../core/services/product/product.service';
 
 @Component({
   selector: 'app-products',

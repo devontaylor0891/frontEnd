@@ -4,9 +4,9 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { OrderAdmin } from '../../../../shared/models/dashboard-admin/orders/order-admin.model';
+import { OrderAdmin } from '../../../../core/models/dashboard-admin/orders/order-admin.model';
 
-import { OrderService } from '../../../../shared/services/order/order.service';
+import { OrderService } from '../../../../core/services/order/order.service';
 
 @Component({
   selector: 'app-orders',

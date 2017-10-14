@@ -3,9 +3,9 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { UserAdmin } from '../../../../shared/models/dashboard-admin/users/user-admin.model';
+import { UserAdmin } from '../../../../core/models/dashboard-admin/users/user-admin.model';
 
-import { UserService } from '../../../../shared/services/user/user.service';
+import { UserService } from '../../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-users',

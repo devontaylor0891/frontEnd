@@ -3,9 +3,9 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { ProducerAdmin } from '../../../../shared/models/dashboard-admin/producers/producer-admin.model';
+import { ProducerAdmin } from '../../../../core/models/dashboard-admin/producers/producer-admin.model';
 
-import { ProducerService } from '../../../../shared/services/producer/producer.service';
+import { ProducerService } from '../../../../core/services/producer/producer.service';
 
 @Component({
   selector: 'app-producers',
