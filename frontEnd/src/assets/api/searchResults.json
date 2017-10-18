@@ -4,6 +4,10 @@
     {
         "id": 123,
         "name": "Carrots",
+        "category": {
+            "category": "produce",
+            "subcategory": "carrots"
+        },
         "description": "Orange, cylindrical, delicious.",
         "imageUrl": "carrots.jpg",
         "pricePerUnit": 3,
@@ -44,7 +48,7 @@
                     124,
                     125
                 ],
-                "type": "door-to-door-delivery",
+                "type": "door-to-door delivery",
                 "description": "We're gonna charge you this time.",
                 "startDateTime": "2018-05-02T00:00:00.000Z",
                 "endDateTime": "2018-05-02T03:30:00.000Z",
@@ -62,6 +66,10 @@
     }, {
         "id": 124,
         "name": "Potatoes - 3lb bag",
+        "category": {
+            "category": "produce",
+            "subcategory": "potatoes"
+        },
         "description": "Red, roundish, delicious.",
         "imageUrl": "potatoes.jpg",
         "pricePerUnit": 4,
@@ -121,7 +129,7 @@
                     124,
                     125
                 ],
-                "type": "door-to-door-delivery",
+                "type": "door-to-door delivery",
                 "description": "We're gonna charge you this time.",
                 "startDateTime": "2018-05-02T00:00:00.000Z",
                 "endDateTime": "2018-05-02T03:30:00.000Z",
@@ -138,7 +146,11 @@
         ]
     }, {
         "id": 134,
-        "name": "Potatoes",
+        "name": "Potatoes - big ones",
+        "category": {
+            "category": "produce",
+            "subcategory": "potatoes"
+        },
         "description": "Reddish, roundish, delicious.",
         "imageUrl": "potatoes.jpg",
         "pricePerUnit": 4,
@@ -175,7 +187,7 @@
                 "productList": [
                     134
                 ],
-                "type": "pickup",
+                "type": "farmgate pickup",
                 "description": "Pickup at the Wapella farmers' market.",
                 "startDateTime": "2018-05-02T00:00:00.000Z",
                 "endDateTime": "2018-05-02T03:30:00.000Z",
