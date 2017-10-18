@@ -1,7 +1,7 @@
 import { Injectable, OnInit, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { ProductAdmin } from '../../../shared/models/dashboard-admin/products/product-admin.model';
+import { ProductAdmin } from '../../../core/models/dashboard-admin/products/product-admin.model';
 
 @Injectable()
 export class ProductService implements OnInit {

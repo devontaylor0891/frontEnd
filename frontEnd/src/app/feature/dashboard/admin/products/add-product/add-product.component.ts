@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
-import { ProductService } from '../../../../../shared/services/product/product.service';
+import { ProductService } from '../../../../../core/services/product/product.service';
 
 @Component({
   selector: 'app-add-product',

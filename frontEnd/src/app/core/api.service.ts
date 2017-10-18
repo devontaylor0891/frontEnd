@@ -4,7 +4,7 @@ import { AuthService } from './../auth/auth.service';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
 import { ENV } from './env.config';
-import { SearchResultModel } from '../shared/models/search-result.model';
+import { SearchResultModel } from '../core/models/search-result.model';
 
 @Injectable()
 export class ApiService {
