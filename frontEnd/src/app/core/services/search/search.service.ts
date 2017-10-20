@@ -25,7 +25,9 @@ export class SearchService implements OnInit {
 	
 	//during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
-		this.dataStore = { searchResults: [], deliveryTypes: [], categories: [] };
+    this.dataStore = { searchResults: [], deliveryTypes: [], categories: [] };
+    console.log("datastore in constructor:");
+    console.log(this.dataStore);
     this._searchResults = <BehaviorSubject<SearchResultModel[]>>new BehaviorSubject([]);
     this._deliveryTypes = <BehaviorSubject<string[]>>new BehaviorSubject([]);
     this._categories = <BehaviorSubject<CategoryModel[]>>new BehaviorSubject([]);
@@ -36,16 +38,17 @@ export class SearchService implements OnInit {
 		this.apiService.getSearchResults()
 			.subscribe(
 				response => {
+          console.log("loadAll called");
 					//fill dataStore
           this.dataStore.searchResults = response;
-          this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.searchResults);
-          this.dataStore.categories = this.addCategories(this.dataStore.searchResults);
-          console.log("loadAll called");
           console.log("dataStore contents:");
           console.log(this.dataStore);
+          this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.searchResults);
+          this.dataStore.categories = this.addCategories(this.dataStore.searchResults);
 					//make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
           this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
           this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
+          //this._categories.next(Object.assign({}, this.dataStore).categories);
 				}, error => console.log('could not load search results')
       );
 	}
@@ -74,18 +77,70 @@ export class SearchService implements OnInit {
     return this.dataStore.deliveryTypes;
   }
 
-
-  // *************************
-  // this is just pushing all of the categories to the datastore
   addCategories(searchResults) {
-    searchResults.forEach((product) => { //for each product in search results check...
-      if (!this.dataStore.categories.includes(product.category)) { // if the product's category is listed in the dataStore category list
-        this.dataStore.categories.push(product.category); // if not, add it to the dataStore's list (this will include the subcategory)
-      } else if (this.dataStore.categories.includes(product.category.category) && !this.dataStore.categories.includes(product.category.subcategory)) {
-        this.dataStore.categories.push(product.category.subcategory);
+    let newArray: CategoryModel[] = []; //maybe try let newArray: Object[] = [];
+    console.log("old newArray: ");
+    console.log(newArray);
+    searchResults.forEach((product) => {
+
+      let category = product.category.category;  // eg: meat
+      let subcategory = product.category.subcategory; // eg: beef
+
+      //if newArray is empty, set it equal to an array containing one object
+      if (newArray.length == 0) { //it's working!!!
+        console.log("it's empty!");
+        newArray = [
+          {
+            "category": category,
+            "subcategory": [subcategory]
+          }
+        ];
+        
+      } else if (this.locationInArray(newArray, category, "category") === -1) { //the category is NOT in the array
+        console.log("it's not empty, but the category ain't in there"); // this works too!!!!
+        newArray.push(
+          {
+            "category": category,
+            "subcategory": [subcategory]
+          }
+        );
+
+      } else { //the category must then already be in the array
+        //get the index in the array of the category
+        let index = this.locationInArray(newArray, category, "category");
+        console.log(index);
+        console.log("The category already exists");
+        //test to see if the subcategory exists
+        if (this.locationInArray(newArray[index].subcategory, subcategory, "subcategory") === -1)  {//if not, push it into subcategory array
+          newArray[index].subcategory.push(subcategory);
+        }
       }
-    })
-    return this.dataStore.categories;
+    });
+    console.log("New newArray: ");
+	  console.log(newArray);
+    return newArray;
+    
+  }
+
+  locationInArray(array, searchTerm, property) {
+    for (var i = 0, len = array.length; i < len; i++) {
+      if (array[i][property] === searchTerm) {
+        return i;
+      } else {
+        return -1;
+      }
+    }
+  }
+
+  checkAndAdd(array, value) {
+    var found = array.some(function (el) {
+      return el.category === value;
+    });
+    if (!found) {
+      array.push({
+        category: value
+      });
+    }
   }
 
   ngOnInit() {}

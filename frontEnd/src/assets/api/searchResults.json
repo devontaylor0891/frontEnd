@@ -148,7 +148,7 @@
         "id": 134,
         "name": "Potatoes - big ones",
         "category": {
-            "category": "produce",
+            "category": "notProduce",
             "subcategory": "potatoes"
         },
         "description": "Reddish, roundish, delicious.",

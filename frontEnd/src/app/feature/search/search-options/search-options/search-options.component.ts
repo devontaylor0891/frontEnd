@@ -23,8 +23,8 @@ export class SearchOptionsComponent implements OnInit {
       .subscribe(
         results => {
           this.deliveryTypes = results;
-         console.log("These are the delivery types from the subscription:");
-         console.log(this.deliveryTypes);
+        //  console.log("These are the delivery types from the subscription:");
+        //  console.log(this.deliveryTypes);
         }
       );
 
@@ -33,8 +33,8 @@ export class SearchOptionsComponent implements OnInit {
       .subscribe(
         results => {
           this.categoriesList = results;
-         console.log("These are the categories from the subscription:");
-         console.log(this.categoriesList);
+        //  console.log("These are the categories from the subscription:");
+        //  console.log(this.categoriesList);
         }
       );
 

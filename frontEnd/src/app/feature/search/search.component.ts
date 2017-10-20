@@ -29,8 +29,8 @@ export class SearchComponent implements OnInit {
       .subscribe(
         response => {
           this.userLocation = response;
-          console.log(this.userLocation.coords.latitude);
-          console.log(this.userLocation.coords.longitude);
+          // console.log(this.userLocation.coords.latitude);
+          // console.log(this.userLocation.coords.longitude);
         }
       );
 
@@ -39,8 +39,8 @@ export class SearchComponent implements OnInit {
       .subscribe(
         results => {
           this.searchResults = results;
-         console.log("These are the search results from the subscription:");
-         console.log(this.searchResults);
+          // console.log("These are the search results from the subscription:");
+          // console.log(this.searchResults);
         }
       );
       
