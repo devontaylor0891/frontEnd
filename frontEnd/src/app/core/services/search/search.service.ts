@@ -26,8 +26,6 @@ export class SearchService implements OnInit {
 	//during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
     this.dataStore = { searchResults: [], deliveryTypes: [], categories: [] };
-    console.log("datastore in constructor:");
-    console.log(this.dataStore);
     this._searchResults = <BehaviorSubject<SearchResultModel[]>>new BehaviorSubject([]);
     this._deliveryTypes = <BehaviorSubject<string[]>>new BehaviorSubject([]);
     this._categories = <BehaviorSubject<CategoryModel[]>>new BehaviorSubject([]);
@@ -38,11 +36,8 @@ export class SearchService implements OnInit {
 		this.apiService.getSearchResults()
 			.subscribe(
 				response => {
-          console.log("loadAll called");
 					//fill dataStore
           this.dataStore.searchResults = response;
-          console.log("dataStore contents:");
-          console.log(this.dataStore);
           this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.searchResults);
           this.dataStore.categories = this.addCategories(this.dataStore.searchResults);
 					//make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
@@ -79,8 +74,7 @@ export class SearchService implements OnInit {
 
   addCategories(searchResults) {
     let newArray: CategoryModel[] = []; //maybe try let newArray: Object[] = [];
-    console.log("old newArray: ");
-    console.log(newArray);
+
     searchResults.forEach((product) => {
 
       let category = product.category.category;  // eg: meat
@@ -88,7 +82,6 @@ export class SearchService implements OnInit {
 
       //if newArray is empty, set it equal to an array containing one object
       if (newArray.length == 0) { //it's working!!!
-        console.log("it's empty!");
         newArray = [
           {
             "category": category,
@@ -97,7 +90,6 @@ export class SearchService implements OnInit {
         ];
         
       } else if (this.locationInArray(newArray, category, "category") === -1) { //the category is NOT in the array
-        console.log("it's not empty, but the category ain't in there"); // this works too!!!!
         newArray.push(
           {
             "category": category,
@@ -108,16 +100,12 @@ export class SearchService implements OnInit {
       } else { //the category must then already be in the array
         //get the index in the array of the category
         let index = this.locationInArray(newArray, category, "category");
-        console.log(index);
-        console.log("The category already exists");
         //test to see if the subcategory exists
         if (this.locationInArray(newArray[index].subcategory, subcategory, "subcategory") === -1)  {//if not, push it into subcategory array
           newArray[index].subcategory.push(subcategory);
         }
       }
     });
-    console.log("New newArray: ");
-	  console.log(newArray);
     return newArray;
     
   }
@@ -129,17 +117,6 @@ export class SearchService implements OnInit {
       } else {
         return -1;
       }
-    }
-  }
-
-  checkAndAdd(array, value) {
-    var found = array.some(function (el) {
-      return el.category === value;
-    });
-    if (!found) {
-      array.push({
-        category: value
-      });
     }
   }
 
