@@ -13,9 +13,7 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnChanges() {
-    console.log(this.products);
-  }
+  ngOnChanges() {}
 
   ngOnInit() {}
 

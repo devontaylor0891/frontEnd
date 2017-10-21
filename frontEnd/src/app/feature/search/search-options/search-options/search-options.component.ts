@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { SearchService } from '../../../../core/services/search/search.service';
 
@@ -9,17 +9,21 @@ import { CategoryModel } from '../../../../core/models/category.model';
   templateUrl: './search-options.component.html',
   styleUrls: ['./search-options.component.scss']
 })
-export class SearchOptionsComponent implements OnInit {
+export class SearchOptionsComponent implements OnInit, OnChanges {
 
   deliveryTypes: string[];
   categoriesList: CategoryModel[];
 
   constructor(private searchService: SearchService) { }
 
+  ngOnChanges() {
+    
+  }
+
   ngOnInit() {
 
     //subscribe to the delivery types
-    this.searchService._deliveryTypes
+    this.searchService.getDeliveryTypes()
       .subscribe(
         results => {
           this.deliveryTypes = results;

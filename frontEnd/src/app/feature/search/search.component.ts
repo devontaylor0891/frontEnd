@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
 
 import { LocationService } from '../../core/services/location/location.service';
-import { ApiService } from '../../core/api.service';
 import { SearchService } from '../../core/services/search/search.service';
 
 import { SearchResultModel } from '../../core/models/search-result.model';

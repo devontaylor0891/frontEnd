@@ -43,7 +43,7 @@ export class SearchService implements OnInit {
 					//make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
           this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
           this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
-          //this._categories.next(Object.assign({}, this.dataStore).categories);
+          this._categories.next(Object.assign({}, this.dataStore).categories);
 				}, error => console.log('could not load search results')
       );
 	}
