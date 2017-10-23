@@ -120,6 +120,23 @@ export class SearchService implements OnInit {
     }
   }
 
+  onFilter(values) {
+    console.log("Values sent to service");
+    //clear the _searchResults observable, not sure if this can be or needs to be done
+    //loop through dataStore.searchResults, when a delivery type from values is found in searchResults, push it to the _searchResults observable
+    let filteredResults = [];
+    this.dataStore.searchResults.forEach(
+      (product) => {
+        if (product.deliveries.forEach(
+          (delivery) => {
+            if(delivery.type.)
+          })
+          type.includes(values.))
+      }
+    )
+    this._searchResults.next();
+  }
+
   ngOnInit() {}
 
 }
