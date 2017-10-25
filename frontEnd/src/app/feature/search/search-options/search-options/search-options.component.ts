@@ -41,7 +41,6 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     this.searchService.getCategories()
       .subscribe(
         results => {
-          console.log(results);
           this.categoriesList = results;
         //  console.log("These are the categories from the subscription:");
         //  console.log(this.categoriesList);
@@ -51,6 +50,11 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   }
 
   onSubmit(form: NgForm) {
+    //empty the submitted values
+    this.submittedValues = {
+    categories: [],
+    deliveryTypes: []
+  };
     // separate and loop through each of the values
     for (let property in form.value) {
       if (form.value.hasOwnProperty(property)) {
@@ -68,7 +72,16 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       }
     }
     //then send the submitted values to search service to update the view
+
     this.searchService.onFilter(this.submittedValues);
+  }
+
+  reset() {
+    this.searchService.onReset();
+    this.submittedValues = {
+      categories: [],
+      deliveryTypes: []
+    };
   }
 
 }

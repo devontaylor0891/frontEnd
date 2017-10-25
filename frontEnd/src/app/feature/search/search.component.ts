@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
       );
 
     //subscribe to the copied collection
-    this.searchService._searchResults
+    this.searchService.getSearchResults()
       .subscribe(
         results => {
           this.searchResults = results;

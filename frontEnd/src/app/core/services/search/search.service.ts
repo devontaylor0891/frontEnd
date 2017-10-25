@@ -121,21 +121,54 @@ export class SearchService implements OnInit {
   }
 
   onFilter(values) {
-    console.log("Values sent to service");
-    //clear the _searchResults observable, not sure if this can be or needs to be done
-    //loop through dataStore.searchResults, when a delivery type from values is found in searchResults, push it to the _searchResults observable
-    let filteredResults = [];
-    this.dataStore.searchResults.forEach(
-      (product) => {
-        if (product.deliveries.forEach(
-          (delivery) => {
-            if(delivery.type.)
-          })
-          type.includes(values.))
+	
+    // get original searchResults, loop through each product, if it doesn't contain one of the deliveries or one of the categories, remove it
+    let results: SearchResultModel[] = this.dataStore.searchResults;
+    let catArray = [];
+    values.categories.forEach((category) => { catArray.push(category) });
+    let delArray = [];
+    values.deliveryTypes.forEach((delivery) => { delArray.push(delivery) });
+
+    //make a copy of results array to filter
+    let filteredResults: SearchResultModel[] = [];
+
+    results.forEach((product) => { //for each product
+      //if it does contain the delivery AND it does contain the category
+      if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
+        //push it to the array
+        filteredResults.push(product);
       }
-    )
-    this._searchResults.next();
-  }
+    });
+	
+    this._searchResults.next(filteredResults);
+    
+  };
+
+  containCategory(product, categoriesArray) {
+	  for (let i = 0; i < categoriesArray.length; i++) {
+		  if (product.category.category === categoriesArray[i]) {
+			  return true;
+		  }
+	  }
+	  return false;
+  };
+
+  containDelivery(product, deliveriesArray) {
+	  for (let i = 0; i < deliveriesArray.length; i++) {
+		  for (let j = 0; j < product.deliveries.length; j++) {
+			  if (product.deliveries[j].type === deliveriesArray[i]) {
+				  return true;
+			  }
+		  }
+	  }
+	  return false;
+  };
+  
+  onReset() {
+		this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
+    this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
+    this._categories.next(Object.assign({}, this.dataStore).categories);
+  };
 
   ngOnInit() {}
 

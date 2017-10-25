@@ -13,7 +13,7 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnChanges() {}
+  ngOnChanges() { }
 
   ngOnInit() {}
 
