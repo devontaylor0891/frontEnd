@@ -42,6 +42,22 @@ export class SearchComponent implements OnInit {
           // console.log(this.searchResults);
         }
       );
+
+      // this.searchService.getProducers()
+      // .subscribe(
+      //   results => {
+      //     console.log('from getProducers');
+      //     console.log(results);
+      //   }
+      // );
+
+      // this.searchService.getDeliveries()
+      // .subscribe(
+      //   results => {
+      //     console.log('from getDeliveries');
+      //     console.log(results);
+      //   }
+      // );
       
     //load all search results
     this.searchService.loadAll();

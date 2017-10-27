@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
+import { SearchService } from '../../../../core/services/search/search.service';
+
 import { SearchResultModel } from '../../../../core/models/search-result.model';
 
 @Component({
@@ -9,12 +11,36 @@ import { SearchResultModel } from '../../../../core/models/search-result.model';
 })
 export class ResultsPaneComponent implements OnInit, OnChanges {
 
-  @Input() products: SearchResultModel[] = [];
+  searchResults: SearchResultModel[] = [];
+  view: string = "product";
 
-  constructor() { }
+  constructor(private searchService: SearchService) { }
 
   ngOnChanges() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+    //subscribe to the copied collection
+    this.searchService.getSearchResults()
+      .subscribe(
+        results => {
+          this.searchResults = results;
+          // console.log("These are the search results from the subscription:");
+          // console.log(this.searchResults);
+        }
+      );
+      
+    //load all search results
+    this.searchService.loadAll();
+	
+    //get the view setting
+    this.searchService._viewStatus
+      .subscribe(
+        result => {
+          this.view = result;
+        }
+      );
+
+  }
 
 }
