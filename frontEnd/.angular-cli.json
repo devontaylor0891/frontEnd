@@ -19,9 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss",
         "../node_modules/angular-bootstrap-md/scss/mdb.scss",
-        "../node_modules/tablesaw/dist/tablesaw.css"
+        "../node_modules/tablesaw/dist/tablesaw.css",
+        "styles.scss"
       ],
       "scripts": [
         "../node_modules/tablesaw/dist/tablesaw.js",

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 import { SearchService } from '../../../../core/services/search/search.service';
 
@@ -9,9 +10,20 @@ import { SearchService } from '../../../../core/services/search/search.service';
 })
 export class FilterButtonsComponent implements OnInit {
 
+  view: string = "product";
+
   constructor(private searchService: SearchService) { }
 
   ngOnInit() {
+
+    //get the view setting
+    this.searchService._viewStatus
+      .subscribe(
+        result => {
+          this.view = result;
+        }
+      );
+
   }
 
   onClick(view) {

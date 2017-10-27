@@ -2,9 +2,21 @@
 	
 	<div class="col-xs-12 mx-auto">
 		<p>Show me: 
-			<button class="btn-olf-primary btn" (click)="onClick('products')">Products</button>
-			<button class="btn-outline-olf-primary btn" style="color:#893d63 !important;" (click)="onClick('producers')">Producer</button>
-			<button class="btn-outline-olf-primary btn" style="color:#893d63 !important;" (click)="onClick('calendar')">Calendar</button>
+			<button
+				class="btn" 
+				[ngClass]="{'btn-olf-primary': view === 'products', 'btn-outline-olf-primary': view !== 'products'}"
+				(click)="onClick('products')"
+				>Products</button>
+			<button 
+				class="btn-outline-olf-primary btn"
+				[ngClass]="{'btn-olf-primary': view === 'producers', 'btn-outline-olf-primary': view !== 'producers'}"
+				(click)="onClick('producers')"
+				>Producer</button>
+			<button 
+				class="btn-outline-olf-primary btn"
+				[ngClass]="{'btn-olf-primary': view === 'calendar', 'btn-outline-olf-primary': view !== 'calendar'}" 
+				(click)="onClick('calendar')"
+				>Calendar</button>
 		</p>
 
 	</div>
