@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
-import { SearchService } from '../../../../../core/services/search/search.service'; 
+import { SearchService } from '../../../../../core/services/search/search.service';
+
+import { SearchProducerModel } from '../../../../../core/models/search-producer.model';
 
 @Component({
   selector: 'app-search-producer',
   templateUrl: './search-producer.component.html',
   styleUrls: ['./search-producer.component.scss']
 })
-export class SearchProducerComponent implements OnInit {
+export class SearchProducerComponent implements OnInit, OnChanges {
+
+  producers: SearchProducerModel[] = [];
 
   constructor(private searchService: SearchService) { }
+
+  ngOnChanges() {}
 
   ngOnInit() {
 
      this.searchService.getProducers()
       .subscribe(
         results => {
-          console.log('from getProducers');
+          this.producers = results;
+          console.log('these are the results from search-producer comp');
           console.log(results);
         }
       );

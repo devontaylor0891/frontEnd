@@ -14,7 +14,7 @@ export class ApiService {
 
   private get _authHeader(): string {
     return `Bearer ${localStorage.getItem('access_token')}`;
-  }
+  };
 
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
@@ -22,7 +22,21 @@ export class ApiService {
 	return this.http
 		.get(`http://localhost:3000/searchResults`)
 		.catch(this._handleError);
-  }
+  };
+
+  //GET one product by id from Nikki's endpoint
+  getProductById(id): Observable<any> {
+    return this.http
+      .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/products/' + id)
+      .catch(this._handleError);
+  };
+
+  //GET one prodcuer by id
+  getProducerById(id): Observable<any> {
+    return this.http
+      .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
+      .catch(this._handleError);
+  };
 	
 	
 	//from RWAS

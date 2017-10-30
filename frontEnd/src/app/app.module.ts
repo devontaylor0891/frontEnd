@@ -48,6 +48,7 @@ import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/a
 import { SearchProducerComponent } from './feature/search/search-results/results-pane/search-producer/search-producer.component';
 import { SearchCalendarComponent } from './feature/search/search-results/results-pane/search-calendar/search-calendar.component';
 import { SearchProductComponent } from './feature/search/search-results/results-pane/search-product/search-product.component';
+import { ProducerCardComponent } from './feature/search/search-results/results-pane/search-producer/producer-card/producer-card.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { SearchProductComponent } from './feature/search/search-results/results-
     SearchProducerComponent,
     SearchCalendarComponent,
     SearchProductComponent,
+    ProducerCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -38,18 +38,18 @@ export class SearchComponent implements OnInit {
       .subscribe(
         results => {
           this.searchResults = results;
-          // console.log("These are the search results from the subscription:");
-          // console.log(this.searchResults);
+          console.log("These are the search results from the subscription:");
+          console.log(this.searchResults);
         }
       );
 
-      // this.searchService.getProducers()
-      // .subscribe(
-      //   results => {
-      //     console.log('from getProducers');
-      //     console.log(results);
-      //   }
-      // );
+      this.searchService.getProducers()
+      .subscribe(
+        results => {
+          console.log('from getProducers');
+          console.log(results);
+        }
+      );
 
       // this.searchService.getDeliveries()
       // .subscribe(

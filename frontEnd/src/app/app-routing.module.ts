@@ -22,15 +22,17 @@ const appRoutes: Routes = [
 	{ path: 'search', component: SearchComponent },
 	{ path: 'learn-more', component: LearnMoreComponent },
 	{ path: 'dashboard', component: DashboardComponent, children: [
-		{path: 'add-user', component: AddUserComponent },
-		{path: 'add-producer', component: AddProducerComponent },
-		{path: 'add-product', component: AddProductComponent },
-		{path: 'add-delivery', component: AddDeliveryComponent },
-		{path: 'add-order', component: AddOrderComponent }
+		{ path: 'add-user', component: AddUserComponent },
+		{ path: 'add-producer', component: AddProducerComponent },
+		{ path: 'add-product', component: AddProductComponent },
+		{ path: 'add-delivery', component: AddDeliveryComponent },
+		{ path: 'add-order', component: AddOrderComponent }
 	]},
-	{ path: 'producer', component: ProducerComponent },
-	{ path: 'product', component: ProductComponent },
-	{ path: 'schedule', component: ScheduleComponent },
+	{ path: 'producer/:id', component: ProducerComponent, children: [
+		{ path: 'schedule', component: ScheduleComponent }
+	]},
+	{ path: 'product/:id', component: ProductComponent },
+	//{ path: 'schedule', component: ScheduleComponent },
 	{ path: 'cart', component: CartComponent },
 	{ path: 'callback', component: CallbackComponent }
 ]

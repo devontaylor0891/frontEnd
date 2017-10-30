@@ -4,7 +4,8 @@ export class SimpleProducer {
         public id: number,
         public name: string,
         public city: string,
-        public province: string
+        public province: string,
+        public logoUrl: string
     ) {}
 
 }
