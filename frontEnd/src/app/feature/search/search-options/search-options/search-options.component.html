@@ -9,22 +9,20 @@
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div>
                 <h5 class="card-title">Categories</h5>
-                <div *ngFor="let category of categoriesList; let i = index" class="form-group">
-                    <form-group>
-                        <input type="checkbox" id="{{ category.category }}" name="c.{{ category.category }}" ngModel>
+                    <div *ngFor="let category of categoriesList; let i = index">
+                        <input type="checkbox" id="{{ category.category }}" name="c.{{ category.category }}" [ngModel]="checkboxValue">
                         <label for="c.{{ category.category }}">{{ category.category }}</label>
-                    </form-group>
-                </div>
+                    </div>
             </div>
             <hr>
             <div>
                 <h5 class="card-title">Delivery Types</h5>
-                <div *ngFor="let delivery of deliveryTypes" class="form-group">
-                    <form-group>
-                        <input type="checkbox" id="{{ delivery }}" name="d.{{ delivery }}" ngModel>
+                <form-group>
+                    <div *ngFor="let delivery of deliveryTypes">
+                        <input type="checkbox" id="{{ delivery }}" name="d.{{ delivery }}" [ngModel]="checkboxValue">
                         <label for="d.{{ delivery }}">{{ delivery }}</label>
-                    </form-group>
-                </div>
+                    </div>
+                </form-group>
             </div>
 
             <button type="submit" class="btn btn-olf-primary">Search!</button>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import 'rxjs/add/operator/switchMap';
+
 import { ProductService } from '../../../core/services/product/product.service';
 
 @Component({
@@ -24,6 +26,15 @@ export class ProductComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
 
     this.product = this.productService.getProductById(id);
+
+    
+    //this is the non-snapshot method, it doesn't work right now but that might be caused by 'undefined' data being returned right now
+    //try again after the endpoint is returning data I want
+    // this.product = this.route.paramMap
+    //   .switchMap((params: ParamMap) => {
+    //     this.productService.getProductById(params.get('id'))
+    //   });
+    // console.log(this.route.paramMap)
 
   }
 

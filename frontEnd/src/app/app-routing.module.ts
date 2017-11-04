@@ -28,11 +28,9 @@ const appRoutes: Routes = [
 		{ path: 'add-delivery', component: AddDeliveryComponent },
 		{ path: 'add-order', component: AddOrderComponent }
 	]},
-	{ path: 'producer/:id', component: ProducerComponent, children: [
-		{ path: 'schedule', component: ScheduleComponent }
-	]},
+	{ path: 'producer/:id', component: ProducerComponent },
+	{ path: 'producer/:id/schedule', component: ScheduleComponent },
 	{ path: 'product/:id', component: ProductComponent },
-	//{ path: 'schedule', component: ScheduleComponent },
 	{ path: 'cart', component: CartComponent },
 	{ path: 'callback', component: CallbackComponent }
 ]

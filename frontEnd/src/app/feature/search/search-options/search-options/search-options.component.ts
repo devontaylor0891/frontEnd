@@ -12,6 +12,8 @@ import { CategoryModel } from '../../../../core/models/category.model';
 })
 export class SearchOptionsComponent implements OnInit, OnChanges {
 
+  checkboxValue = true;
+
   deliveryTypes: string[];
   categoriesList: CategoryModel[];
   submittedValues: any = {
@@ -82,6 +84,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       categories: [],
       deliveryTypes: []
     };
+    this.checkboxValue = true;
   }
 
 }

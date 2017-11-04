@@ -111,7 +111,7 @@
                     124,
                     125
                 ],
-                "type": "pickup",
+                "type": "Pickup",
                 "description": "Pickup at the Wapella farmers' market.",
                 "startDateTime": "2018-05-02T00:00:00.000Z",
                 "endDateTime": "2018-05-02T03:30:00.000Z",
