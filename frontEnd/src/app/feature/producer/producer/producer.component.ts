@@ -11,7 +11,7 @@ import { ProducerService } from '../../../core/services/producer/producer.servic
 })
 export class ProducerComponent implements OnInit {
 
-  producer: any;
+  producer: any = {};
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -22,6 +22,8 @@ export class ProducerComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
 
     this.producer = this.producerService.getProducerById(id);
+
+    console.log(this.producer);
 
   }
 

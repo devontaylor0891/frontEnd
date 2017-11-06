@@ -19,19 +19,21 @@ export class ApiService {
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
   getSearchResults(): Observable<SearchResultModel[]> {
-	return this.http
-		.get(`http://localhost:3000/searchResults`)
-		.catch(this._handleError);
-  };
-
-  //GET one product by id from Nikki's endpoint
-  getProductById(id): Observable<any> {
     return this.http
-      .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/products/' + id)
+      .get(`http://localhost:3000/searchResults`)
       .catch(this._handleError);
   };
 
-  //GET one prodcuer by id
+  // GET one product by id from Nikki's endpoint
+  getProductById(id): Observable<any> {
+    console.log('api service called.')
+      return this.http
+        .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/products/' + id)
+        .map(response => { return response })
+        .catch(this._handleError);
+  };
+
+  // GET one prodcuer by id
   getProducerById(id): Observable<any> {
     return this.http
       .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
@@ -39,13 +41,13 @@ export class ApiService {
   };
 	
 	
-	//from RWAS
+	// from RWAS
   // GET list of public, future events
-  //getEvents$(): Observable<EventModel[]> {
-    //return this.http
-      //.get(`${ENV.BASE_API}events`)
-      //.catch(this._handleError);
-  //}
+  // getEvents$(): Observable<EventModel[]> {
+    // return this.http
+      // .get(`${ENV.BASE_API}events`)
+      // .catch(this._handleError);
+  // }
 
   private _handleError(err: HttpErrorResponse | any) {
     const errorMsg = err.message || 'Error: Unable to complete request.';
