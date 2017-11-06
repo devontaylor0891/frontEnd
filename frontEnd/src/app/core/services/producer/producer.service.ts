@@ -27,8 +27,6 @@ export class ProducerService {
   }
 
   getProducerById(id) {
-    console.log('getProduct called');
-    console.log(id);
     this.apiService.getProducerById(id).
       subscribe(
         response => {

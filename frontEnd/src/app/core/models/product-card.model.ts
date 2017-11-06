@@ -1,4 +1,4 @@
-export class ProductCard {
+export class ProductCardModel {
 
     constructor(public id: number, 
                 public name: string, 
@@ -9,6 +9,7 @@ export class ProductCard {
                 public unitsPer: number,
                 public categoryId: number,
                 public producerName: string,
+                public producerId: number,
                 public dateAdded: string,
                 public qtyAvailable: number, 
                 public qtyPending: number, 

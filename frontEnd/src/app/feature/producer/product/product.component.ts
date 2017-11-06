@@ -5,6 +5,8 @@ import 'rxjs/add/operator/switchMap';
 
 import { ProductService } from '../../../core/services/product/product.service';
 
+import { ProductCardModel } from '../../../core/models/product-card.model';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -13,7 +15,7 @@ import { ProductService } from '../../../core/services/product/product.service';
 })
 export class ProductComponent implements OnInit, OnChanges {
 
-  product: any = {};
+  product: ProductCardModel;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -29,10 +31,20 @@ export class ProductComponent implements OnInit, OnChanges {
     // see https://angular.io/guide/router#activated-route-in-action
     let id = this.route.snapshot.paramMap.get('id');
 
-    this.product = this.productService.getProductById(id);
+    // subscribe to the get method results
+    this.productService.getProductById(id)
+      .subscribe(
+        result => { this.product = result }
+      );
+
+      console.log('id being called');
+      console.log(id);
 
     console.log('this.product after call to service:')
     console.log(this.product);
+
+    // load the product in the service
+    this.productService.load(id);
 
     
     // this is the non-snapshot method, it doesn't work right now but that might be caused by 'undefined' data being returned right now
