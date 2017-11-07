@@ -7,7 +7,7 @@
 			</div>
 			<div class="col col-xs-12 col-sm-6">
 				<div class="text-center">
-					<h4><a [routerLink]="['../../producer/' + product.producerId]">{{ product.producerName }}</a></h4>
+					<h4><a [routerLink]="['../../../../producer/' + product.producerId]">{{ product.producerName }}</a></h4>
 					<h2>{{ product.name }}</h2>
 				</div>
 				<p>{{ product.description }}</p>
@@ -26,13 +26,13 @@
 		
 		<!-- Delivery Schedule -->
 			<div class="divider-new">
-	            <a [routerLink]="['../../producer/' + product.producerId + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
+	            <a [routerLink]="['../../../../producer/' + product.producerId + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
 	        </div>
 
 
 		<!-- Related Products / Other products from the same producer -->
 			<div class="divider-new">
-	            <a [routerLink]="['../../producer/' + product.producerId]" class="btn btn-olf-primary">View All Products from this Producer</a>
+	            <a [routerLink]="['../../../../producer/' + product.producerId]" class="btn btn-olf-primary">View All Products from this Producer</a>
 	        </div>
 	        
 	</div>

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
 
-import { ProductService } from '../../../core/services/product/product.service';
+import { ProducerService } from '../../../core/services/producer/producer.service';
 
 import { ProductCardModel } from '../../../core/models/product-card.model';
 
@@ -11,7 +11,7 @@ import { ProductCardModel } from '../../../core/models/product-card.model';
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
-  providers: [ProductService]
+  providers: [ProducerService]
 })
 export class ProductComponent implements OnInit, OnChanges {
 
@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit, OnChanges {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private productService: ProductService) { }
+              private producerService: ProducerService) { }
   
   ngOnChanges() {}
 
@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit, OnChanges {
     let id = this.route.snapshot.paramMap.get('id');
 
     // subscribe to the get method results
-    this.productService.getProductById(id)
+    this.producerService.getProductById(id)
       .subscribe(
         result => { this.product = result }
       );
@@ -44,7 +44,7 @@ export class ProductComponent implements OnInit, OnChanges {
     console.log(this.product);
 
     // load the product in the service
-    this.productService.load(id);
+    this.producerService.load(id);
 
     
     // this is the non-snapshot method, it doesn't work right now but that might be caused by 'undefined' data being returned right now

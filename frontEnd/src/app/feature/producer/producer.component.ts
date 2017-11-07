@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { ProducerService } from '../../../core/services/producer/producer.service';
+import { ProducerService } from '../../core/services/producer/producer.service';
 
 @Component({
   selector: 'app-producer',
@@ -22,8 +22,6 @@ export class ProducerComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
 
     this.producer = this.producerService.getProducerById(id);
-
-    console.log(this.producer);
 
   }
 

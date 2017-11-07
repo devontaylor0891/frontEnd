@@ -5,13 +5,13 @@ import 'rxjs/Rx';
 
 import { ProductAdmin } from '../../../../core/models/dashboard-admin/products/product-admin.model';
 
-import { ProductService } from '../../../../core/services/product/product.service';
+import { ProducerService } from '../../../../core/services/producer/producer.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [ProductService]
+  providers: [ProducerService]
 })
 export class ProductsComponent implements OnInit {
 
@@ -19,9 +19,9 @@ export class ProductsComponent implements OnInit {
   outOfStockProducts: ProductAdmin[] = [];
   deletedProducts: ProductAdmin[] = [];
 
-  constructor(private productService: ProductService) {
+  constructor(private producerService: ProducerService) {
 
-    this.productService.productAdded.subscribe(
+    this.producerService.productAdded.subscribe(
       (value: ProductAdmin) => {
         if (value.qtyAvailable > 0) {
           this.currentProducts.push(value);
@@ -50,7 +50,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     
-    this.productService.getProducts()
+    this.producerService.getProducts()
       .subscribe( //returns an array
         (products) => {
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);

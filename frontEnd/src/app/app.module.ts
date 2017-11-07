@@ -23,7 +23,7 @@ import { SearchOptionsComponent } from './feature/search/search-options/search-o
 import { SearchResultsComponent } from './feature/search/search-results/search-results/search-results.component';
 import { FilterButtonsComponent } from './feature/search/search-results/filter-buttons/filter-buttons.component';
 import { ResultsPaneComponent } from './feature/search/search-results/results-pane/results-pane.component';
-import { ProducerComponent } from './feature/producer/producer/producer.component';
+import { ProducerComponent } from './feature/producer/producer.component';
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartComponent } from './feature/cart/cart/cart.component';
@@ -49,6 +49,7 @@ import { SearchProducerComponent } from './feature/search/search-results/results
 import { SearchCalendarComponent } from './feature/search/search-results/results-pane/search-calendar/search-calendar.component';
 import { SearchProductComponent } from './feature/search/search-results/results-pane/search-product/search-product.component';
 import { ProducerCardComponent } from './feature/search/search-results/results-pane/search-producer/producer-card/producer-card.component';
+import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { ProducerCardComponent } from './feature/search/search-results/results-p
     SearchCalendarComponent,
     SearchProductComponent,
     ProducerCardComponent,
+    ProducerPageComponent,
   ],
   imports: [
     BrowserModule,
