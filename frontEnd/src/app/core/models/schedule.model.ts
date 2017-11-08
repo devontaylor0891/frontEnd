@@ -1,4 +1,4 @@
-export class ProducerModel {
+export class ScheduleModel {
 
     constructor(public id: number,
                 public name: string,
@@ -11,8 +11,5 @@ export class ProducerModel {
                 public latitude: number,
                 public firstName: string,
                 public registrationDate: string,
-                public status: string,
-				public productList: number[],
-                public scheduleList: number[]
-    ) {}
+                public status: string) {}
 }

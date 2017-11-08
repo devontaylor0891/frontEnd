@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
-import { ProductService } from '../../../../../core/services/product/product.service';
+import { ProducerService } from '../../../../../core/services/producer/producer.service';
 
 @Component({
   selector: 'app-add-product',
@@ -13,7 +13,9 @@ export class AddProductComponent implements OnInit {
 
   form: FormGroup; //this will hold our form data in a js object
 
-  constructor(private formBuild: FormBuilder, private location: Location, private productService: ProductService) {
+  constructor(private formBuild: FormBuilder, 
+              private location: Location, 
+              private producerService: ProducerService) {
     this.form = formBuild.group({
       'name': ['', Validators.required],
       'description': ['', Validators.required],
@@ -37,7 +39,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit() {
-    this.productService.productAdded.emit(this.form.value);
+    this.producerService.productAdded.emit(this.form.value);
     this.location.back();
   }
 
