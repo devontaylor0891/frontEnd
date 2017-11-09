@@ -44,7 +44,7 @@ export class ProductComponent implements OnInit, OnChanges {
     console.log(this.product);
 
     // load the product in the service
-    this.producerService.load(id);
+    this.producerService.loadProduct(id);
 
     
     // this is the non-snapshot method, it doesn't work right now but that might be caused by 'undefined' data being returned right now

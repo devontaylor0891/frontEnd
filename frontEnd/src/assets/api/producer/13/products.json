@@ -1,0 +1,44 @@
+[
+    {
+        "id": 43,
+        "name": "Carrots",
+        "description": "This is a description",
+        "image": "carrots.jpg",
+        "pricePerUnit": 4,
+        "unit": "lb",
+        "unitsPer": 1,
+        "category": {
+            "category": "vegetables",
+            "subcategory": "carrots"
+        },
+        "producerName": "Gardenia Farms",
+        "producerId": 13,
+        "dateAdded": "Jan 1 2017",
+        "qtyAvailable": 55,
+        "qtyPending": 12,
+        "qtyAccepted": 22,
+        "qtyCompleted": 345,
+        "isObsolete": false
+    }, {
+        "id": 88,
+        "name": "Beets",
+        "description": "This is a description",
+        "image": "potatoes.jpg",
+        "pricePerUnit": 5,
+        "unit": "pkg",
+        "unitsPer": 2,
+        "category": {
+            "category": "vegetables",
+            "subcategory": "beets"
+        },
+        "producerName": "Gardenia Farms",
+        "producerId": 13,
+        "dateAdded": "Jan 2 2017",
+        "qtyAvailable": 44,
+        "qtyPending": 0,
+        "qtyAccepted": 0,
+        "qtyCompleted": 345,
+        "isObsolete": false
+    }
+
+]

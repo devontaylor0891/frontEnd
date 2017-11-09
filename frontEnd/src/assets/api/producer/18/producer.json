@@ -1,0 +1,21 @@
+{
+	"id": 18,
+	"name": "Different Farms",
+	"location": "Whitewood",
+	"province": "SK",
+	"description": "This is a description",
+	"email": "email@different.com",
+	"logoUrl": "farm-logo-2.jpg",
+	"longitude": 333,
+	"latitude": 555,
+	"firstName": "Bob",
+	"registrationDate": "Jan 2 2017",
+	"status": "active",
+	"productList": [
+		88
+	],
+	"scheduleList": [
+		798,
+		799
+	]
+}

@@ -49,7 +49,6 @@ import { SearchProducerComponent } from './feature/search/search-results/results
 import { SearchCalendarComponent } from './feature/search/search-results/results-pane/search-calendar/search-calendar.component';
 import { SearchProductComponent } from './feature/search/search-results/results-pane/search-product/search-product.component';
 import { ProducerCardComponent } from './feature/search/search-results/results-pane/search-producer/producer-card/producer-card.component';
-import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +89,6 @@ import { ProducerPageComponent } from './feature/producer/producer-page/producer
     SearchCalendarComponent,
     SearchProductComponent,
     ProducerCardComponent,
-    ProducerPageComponent,
   ],
   imports: [
     BrowserModule,

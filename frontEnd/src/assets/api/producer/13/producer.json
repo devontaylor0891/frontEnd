@@ -1,0 +1,23 @@
+{
+	"id": 13,
+	"name": "Gardenia Farms",
+	"location": "Virden",
+	"province": "MB",
+	"description": "This is a description",
+	"email": "email@email.com",
+	"logoUrl": "farm-logo-1.jpg",
+	"longitude": 444,
+	"latitude": 555,
+	"firstName": "Devon",
+	"registrationDate": "Jan 1 2017",
+	"status": "active",
+	"productList": [
+		43,
+		95
+	],
+	"scheduleList": [
+		444,
+		445,
+		789
+	]
+}

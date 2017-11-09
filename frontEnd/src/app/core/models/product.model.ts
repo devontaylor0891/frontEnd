@@ -1,3 +1,5 @@
+import { CategoryModel } from '../../core/models/category.model';
+
 export class ProductModel {
 
     constructor(public id: number, 
@@ -7,7 +9,7 @@ export class ProductModel {
                 public pricePerUnit: number, 
                 public unit: string, 
                 public unitsPer: number,
-                public categoryId: number,
+                public category: CategoryModel,
                 public producerName: string,
                 public producerId: number,
                 public dateAdded: string,
