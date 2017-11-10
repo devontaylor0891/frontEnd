@@ -24,8 +24,6 @@ export class ProductComponent implements OnInit, OnChanges {
   ngOnChanges() {}
 
   ngOnInit() {
-    console.log('this.product at onInit:')
-    console.log(this.product);
 
     // note - the snapshot method being used here won't work if the user can navigate directly between product pages
     // see https://angular.io/guide/router#activated-route-in-action
@@ -36,12 +34,6 @@ export class ProductComponent implements OnInit, OnChanges {
       .subscribe(
         result => { this.product = result }
       );
-
-      console.log('id being called');
-      console.log(id);
-
-    console.log('this.product after call to service:')
-    console.log(this.product);
 
     // load the product in the service
     this.producerService.loadProduct(id);

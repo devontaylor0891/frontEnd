@@ -1,3 +1,47 @@
+<div class="row">
+  <div class="col-12 text-center">
+    <h2>{{ producer.name | uppercase }}</h2>
+    <p>{{ producer.location }}, {{ producer.province | uppercase }}</p>
+    <a href="#products" class="btn btn-olf-primary">Jump to Products</a>
+    <a href="#schedule" class="btn btn-olf-primary">Jump to Schedule</a>
+  </div>
+  <div class="col-10 offset-1">
+      <img src="../../../../assets/images/{{ producer.logoUrl }}" class="img-fluid" alt="food">
+  </div>
+</div>
+  
+<hr>
+
+<div class="row">
+  <p>{{ producer.description }}</p>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="divider-new">
+      <h3 id="schedule">UPCOMING SCHEDULE</h3>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="divider-new text-center">
+      <h3 id="products">PRODUCTS</h3>
+    </div>
+  </div>
+</div>
+
 <p>
   producer-page works!
 </p>
+<p>{{ producer.id }}</p>
+<p>{{ producer.name }}</p>
+<p>{{ producer.location }}</p>
+<p>{{ producer.province }}</p>
+<p>{{ producer.description }}</p>
+<p>{{ producer.logoUrl }}</p>
+<p>{{ producer.productList }}</p>
+<p>{{ producer.email }}</p>
+<p>{{ producer.firstName }}</p>
+<p>{{ producer.scheduleList }}</p>

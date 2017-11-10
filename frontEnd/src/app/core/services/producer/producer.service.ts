@@ -57,6 +57,8 @@ export class ProducerService implements OnInit {
         .subscribe(
           response => {
             this.dataStore.producer = response;
+            // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
+            this._producer.next(Object.assign({}, this.dataStore).producer);
           }
         );
         // then populate products
@@ -64,19 +66,18 @@ export class ProducerService implements OnInit {
         .subscribe(
           response => { 
             this.dataStore.products = response;
+            // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
+            this._producerProducts.next(Object.assign({}, this.dataStore).products);
           }
         );
       this.apiService.getScheduleByProducerId(id)
         .subscribe(
           response => {
             this.dataStore.schedule = response;
+            // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
+            this._producerSchedule.next(Object.assign({}, this.dataStore).schedule);
           }
         );
-      // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
-      this._producer.next(Object.assign({}, this.dataStore).producer);
-      this._producerProducts.next(Object.assign({}, this.dataStore).products);
-      this._producerSchedule.next(Object.assign({}, this.dataStore).schedule);
-      console.log(this.dataStore);
 	  } else {
       return;
 	  }

@@ -29,10 +29,10 @@ const appRoutes: Routes = [
 		{ path: 'add-delivery', component: AddDeliveryComponent },
 		{ path: 'add-order', component: AddOrderComponent }
 	]},
-	{ path: 'producer', component: ProducerComponent, children: [
-		{ path: ':id', component: ProducerPageComponent },
-		{ path: ':id/schedule', component: ScheduleComponent },
-		{ path: ':id/product/:id', component: ProductComponent }
+	{ path: 'producer/:id', component: ProducerComponent, children: [
+		{ path: '', component: ProducerPageComponent },
+		{ path: 'schedule', component: ScheduleComponent },
+		{ path: 'product/:id', component: ProductComponent }
 	]}
 	,
 	{ path: 'cart', component: CartComponent },

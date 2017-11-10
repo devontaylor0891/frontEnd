@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ProducerService } from '../../core/services/producer/producer.service';
@@ -13,7 +13,7 @@ import { ScheduleModel } from '../../core/models/schedule.model';
   styleUrls: ['./producer.component.scss'],
   providers: [ProducerService]
 })
-export class ProducerComponent implements OnInit {
+export class ProducerComponent implements OnInit, OnChanges {
 
   producer: ProducerModel;
   products: ProductModel[] = [];
@@ -23,20 +23,27 @@ export class ProducerComponent implements OnInit {
               private router: Router,
               private producerService: ProducerService) { }
 
+  ngOnChanges() {};
+
   ngOnInit() {
 
 	// NOTE - because I've moved the producer page out of this component, this 'id' won't work any more.
 	// maybe move this declaration to the producer page component and then emit it to this component
 	// then, when it is received, call the loadProducerData method
     let id = this.route.snapshot.paramMap.get('id');
-	
+    console.log(this.route.snapshot.paramMap.get('id'))
+
 	 // subscribe to the appropriate methods to populate data
     this.producerService.getProducer()
       .subscribe(
         result => {
           this.producer = result;
+          console.log('result');
+          console.log(result);
         }
       );
+
+      
 	  
 	this.producerService.getAllProducts()
       .subscribe(
