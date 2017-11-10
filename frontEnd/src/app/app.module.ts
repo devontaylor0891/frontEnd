@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
@@ -50,6 +51,7 @@ import { SearchCalendarComponent } from './feature/search/search-results/results
 import { SearchProductComponent } from './feature/search/search-results/results-pane/search-product/search-product.component';
 import { ProducerCardComponent } from './feature/search/search-results/results-pane/search-producer/producer-card/producer-card.component';
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
+import { ProducerPageProductCardComponent } from './feature/producer/producer-page/producer-page-product-card/producer-page-product-card.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,7 @@ import { ProducerPageComponent } from './feature/producer/producer-page/producer
     SearchProductComponent,
     ProducerCardComponent,
     ProducerPageComponent,
+    ProducerPageProductCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +102,8 @@ import { ProducerPageComponent } from './feature/producer/producer-page/producer
     HttpClientModule,
     HttpModule,
     AppRoutingModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    Ng2PageScrollModule
   ],
   providers: [AuthService, ApiService, LocationService],
   schemas: [NO_ERRORS_SCHEMA],

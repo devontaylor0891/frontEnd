@@ -3,6 +3,8 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { ProducerService } from '../../../core/services/producer/producer.service';
 
 import { ProducerModel } from '../../../core/models/producer.model';
+import { ProductModel } from '../../../core/models/product.model';
+import { ScheduleModel } from '../../../core/models/schedule.model';
 
 @Component({
   selector: 'app-producer-page',
@@ -12,6 +14,8 @@ import { ProducerModel } from '../../../core/models/producer.model';
 export class ProducerPageComponent implements OnInit, OnChanges {
 
   producer: ProducerModel;
+  products: ProductModel[];
+  schedule: ScheduleModel[];
 
   constructor(private producerService: ProducerService) {}
 
@@ -25,6 +29,24 @@ export class ProducerPageComponent implements OnInit, OnChanges {
           this.producer = result;
           console.log('result');
           console.log(result);
+        }
+      );
+
+    this.producerService.getAllProducts()
+      .subscribe(
+        results => {
+          this.products = results;
+          console.log('products:');
+          console.log(this.products);
+        }
+      );
+
+    this.producerService.getAllSchedule()
+      .subscribe(
+        results => {
+          this.schedule = results;
+          console.log('schedule:');
+          console.log(this.schedule);
         }
       );
   }
