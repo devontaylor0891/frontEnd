@@ -27,8 +27,6 @@ export class ProducerPageComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           this.producer = result;
-          console.log('result');
-          console.log(result);
         }
       );
 
@@ -36,8 +34,6 @@ export class ProducerPageComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           this.products = results;
-          console.log('products:');
-          console.log(this.products);
         }
       );
 
@@ -45,8 +41,6 @@ export class ProducerPageComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           this.schedule = results;
-          console.log('schedule:');
-          console.log(this.schedule);
         }
       );
   }
