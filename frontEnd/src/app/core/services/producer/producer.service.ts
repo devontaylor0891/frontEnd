@@ -119,8 +119,6 @@ export class ProducerService implements OnInit {
     this.apiService.getProductById(id)
     .subscribe(
       response => { 
-        console.log('response from api service:')
-        console.log(response);
         this._product.next(Object.assign({}, response)); }
     );
   }

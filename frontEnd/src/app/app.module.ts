@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -7,6 +8,8 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
+import { CalendarModule } from 'angular-calendar';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
@@ -97,13 +100,16 @@ import { ProducerPageProductCardComponent } from './feature/producer/producer-pa
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
-    Ng2PageScrollModule
+    Ng2PageScrollModule,
+    CalendarModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [AuthService, ApiService, LocationService],
   schemas: [NO_ERRORS_SCHEMA],

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -18,7 +18,6 @@ export class ProductComponent implements OnInit, OnChanges {
   product: ProductCardModel;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
               private producerService: ProducerService) { }
   
   ngOnChanges() {}

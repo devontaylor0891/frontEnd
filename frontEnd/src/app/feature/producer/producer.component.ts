@@ -31,15 +31,12 @@ export class ProducerComponent implements OnInit, OnChanges {
 	// maybe move this declaration to the producer page component and then emit it to this component
 	// then, when it is received, call the loadProducerData method
     let id = this.route.snapshot.paramMap.get('id');
-    console.log(this.route.snapshot.paramMap.get('id'))
 
 	 // subscribe to the appropriate methods to populate data
     this.producerService.getProducer()
       .subscribe(
         result => {
           this.producer = result;
-          console.log('result');
-          console.log(result);
         }
       );
 

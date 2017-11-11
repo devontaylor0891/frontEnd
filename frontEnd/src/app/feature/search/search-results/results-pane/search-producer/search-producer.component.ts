@@ -23,8 +23,6 @@ export class SearchProducerComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           this.producers = results;
-          console.log('these are the results from search-producer comp');
-          console.log(results);
         }
       );
 
