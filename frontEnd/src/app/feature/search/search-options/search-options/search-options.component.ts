@@ -29,7 +29,9 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    //subscribe to the delivery types
+    this.checkboxValue = true;
+
+    // subscribe to the delivery types
     this.searchService.getDeliveryTypes()
       .subscribe(
         results => {
@@ -39,7 +41,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
         }
       );
 
-      //subscribe to the category types
+    // subscribe to the category types
     this.searchService.getCategories()
       .subscribe(
         results => {
@@ -52,11 +54,12 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   }
 
   onSubmit(form: NgForm) {
+    console.log(form);
     //empty the submitted values
     this.submittedValues = {
-    categories: [],
-    deliveryTypes: []
-  };
+      categories: [],
+      deliveryTypes: []
+    };
     // separate and loop through each of the values
     for (let property in form.value) {
       if (form.value.hasOwnProperty(property)) {
@@ -74,17 +77,16 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       }
     }
     //then send the submitted values to search service to update the view
-
     this.searchService.onFilter(this.submittedValues);
   }
 
-  reset() {
+  reset(form: NgForm) {
+    form.reset();
     this.searchService.onReset();
     this.submittedValues = {
       categories: [],
       deliveryTypes: []
     };
-    this.checkboxValue = true;
   }
 
 }
