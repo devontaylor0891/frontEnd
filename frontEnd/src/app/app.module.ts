@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
 import { LocationService } from './core/services/location/location.service';
+import { CartService } from './core/services/cart-service/cart.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -111,7 +112,7 @@ import { ProducerPageProductCardComponent } from './feature/producer/producer-pa
     CalendarModule.forRoot(),
     NgbModule.forRoot()
   ],
-  providers: [AuthService, ApiService, LocationService],
+  providers: [AuthService, ApiService, LocationService, CartService],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
