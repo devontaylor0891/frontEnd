@@ -4,6 +4,7 @@ import { Response } from '@angular/http';
 import 'rxjs/Rx';
 
 import { SearchResultModel } from '../../core/models/search-result.model';
+import { ProductModel } from '../../core/models/product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -13,7 +14,7 @@ import { SearchResultModel } from '../../core/models/search-result.model';
 })
 export class ProductCardComponent implements OnInit {
   
-  @Input() product: SearchResultModel;
+  @Input() product: ProductModel;
 
   constructor() { }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { SearchProducerModel } from '../../../../../../core/models/search-producer.model';
+//import { SearchProducerModel } from '../../../../../../core/models/search-producer.model';
+import { ProducerModel } from '../../../../../../core/models/producer.model';
 
 @Component({
   selector: 'app-producer-card',
@@ -9,7 +10,7 @@ import { SearchProducerModel } from '../../../../../../core/models/search-produc
 })
 export class ProducerCardComponent implements OnInit {
 
-  @Input() producer: SearchProducerModel;
+  @Input() producer: ProducerModel;
 
   constructor() { }
 

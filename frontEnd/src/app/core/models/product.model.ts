@@ -1,4 +1,5 @@
-import { CategoryModel } from '../../core/models/category.model';
+import { ProducerModel } from './producer.model';
+import { ScheduleModel } from './schedule.model';
 
 export class ProductModel {
 
@@ -9,14 +10,15 @@ export class ProductModel {
                 public pricePerUnit: number, 
                 public unit: string, 
                 public unitsPer: number,
-                public category: CategoryModel,
-                public producerName: string,
-                public producerId: number,
+                public category: string,
+                public subcategory: string,
+                public producer: ProducerModel,
                 public dateAdded: string,
                 public qtyAvailable: number, 
                 public qtyPending: number, 
                 public qtyAccepted: number,
                 public qtyCompleted: number,
-                public isObsolete: boolean
+                public isObsolete: boolean,
+                public scheduleList: ScheduleModel[]
     ) {}
 }

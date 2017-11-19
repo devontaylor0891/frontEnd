@@ -1,0 +1,19 @@
+{
+    "id": 43,
+    "name": "Carrots",
+    "description": "This is a description",
+    "image": "carrots.jpg",
+    "pricePerUnit": 4,
+    "unit": "lb",
+    "unitsPer": 1,
+    "category": "vegetables",
+    "subcategory": "carrots",
+    "producerName": "Gardenia Farms",
+    "producerId": 13,
+    "dateAdded": "Jan 1 2017",
+    "qtyAvailable": 55,
+    "qtyPending": 12,
+    "qtyAccepted": 22,
+    "qtyCompleted": 345,
+    "isObsolete": false
+}
