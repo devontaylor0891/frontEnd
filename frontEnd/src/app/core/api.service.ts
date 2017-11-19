@@ -106,7 +106,7 @@ export class ApiService {
   };
 
   // this method will return a product from the mock data
-  getProductById(id): Observable<ProductCardModel> {
+  getProductById(id): Observable<ProductModel> {
     return this.http
       .get(this.productsUrl + id + '.json')
       .catch(this._handleError); 

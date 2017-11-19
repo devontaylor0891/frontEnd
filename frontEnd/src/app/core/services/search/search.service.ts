@@ -7,7 +7,9 @@ import { SearchResultModel } from '../../../core/models/search-result.model';
 import { CategoryModel } from '../../../core/models/category.model';
 import { SearchProducerModel } from '../../../core/models/search-producer.model';
 import { SearchDeliveryModel } from '../../../core/models/search-delivery.model';
-import { SimpleProductModel } from '../../../core/models/simple-product.model';
+import { ProductModel } from '../../../core/models/product.model';
+import { ScheduleModel } from '../../../core/models/schedule.model';
+import { ProducerModel } from '../../../core/models/producer.model';
 
 @Injectable()
 export class SearchService implements OnInit {
@@ -99,42 +101,55 @@ export class SearchService implements OnInit {
   }
 
   addCategories(searchResults) {
-    let newArray: CategoryModel[] = []; //maybe try let newArray: Object[] = [];
-
+    let newArray: string[] = [];
     searchResults.forEach((product) => {
-
-      let category = product.category.category;  // eg: meat
-      let subcategory = product.category.subcategory; // eg: beef
-
-      //if newArray is empty, set it equal to an array containing one object
-      if (newArray.length == 0) { //it's working!!!
-        newArray = [
-          {
-            "category": category,
-            "subcategory": [subcategory]
-          }
-        ];
-        
-      } else if (this.locationInArray(newArray, category, "category") === -1) { //the category is NOT in the array
-        newArray.push(
-          {
-            "category": category,
-            "subcategory": [subcategory]
-          }
-        );
-
-      } else { //the category must then already be in the array
-        //get the index in the array of the category
-        let index = this.locationInArray(newArray, category, "category");
-        //test to see if the subcategory exists
-        if (this.locationInArray(newArray[index].subcategory, subcategory, "subcategory") === -1)  {//if not, push it into subcategory array
-          newArray[index].subcategory.push(subcategory);
-        }
+      let category = product.category;
+      if (newArray.length === 0) {
+        newArray = [category];
+      } else if (newArray.indexOf(category) === -1) {
+        newArray.push(category);
       }
     });
     return newArray;
-    
   }
+
+  // addCategories(searchResults) {
+  //   let newArray: CategoryModel[] = []; //maybe try let newArray: Object[] = [];
+
+  //   searchResults.forEach((product) => {
+
+  //     let category = product.category.category;  // eg: meat
+  //     let subcategory = product.category.subcategory; // eg: beef
+
+  //     //if newArray is empty, set it equal to an array containing one object
+  //     if (newArray.length == 0) { //it's working!!!
+  //       newArray = [
+  //         {
+  //           "category": category,
+  //           "subcategory": [subcategory]
+  //         }
+  //       ];
+        
+  //     } else if (this.locationInArray(newArray, category, "category") === -1) { //the category is NOT in the array
+  //       newArray.push(
+  //         {
+  //           "category": category,
+  //           "subcategory": [subcategory]
+  //         }
+  //       );
+
+  //     } else { //the category must then already be in the array
+  //       //get the index in the array of the category
+  //       let index = this.locationInArray(newArray, category, "category");
+  //       //test to see if the subcategory exists
+  //       if (this.locationInArray(newArray[index].subcategory, subcategory, "subcategory") === -1)  {//if not, push it into subcategory array
+  //         newArray[index].subcategory.push(subcategory);
+  //       }
+  //     }
+  //   });
+  //   return newArray;
+    
+  // }
   
   addSearchProducers(searchResults) {
 	  
@@ -188,11 +203,39 @@ export class SearchService implements OnInit {
   
   getSimpleProduct(product) {
 	  //pull out the required info and return as an object
-	  let productObject: SimpleProductModel = {
+    let productObject: ProductModel = {
       "id": null,
       "name": '',
+      "description": '',
+      "image": '',
       "pricePerUnit": null,
-      "unit": null
+      "unit": null,
+      "unitsPer": null,
+      "category": '',
+      "subcategory": '',
+      "producer": {
+        "id": null,
+        "name": '',
+        "location": '',
+        "province": '',
+        "description": '',
+        "email": '',
+        "logoUrl": '',
+        "longitude": null,
+        "latitude": null,
+        "firstName": '',
+        "registrationDate": '',
+        "status": '',
+        "productList": [],
+        "scheduleList": []
+      },
+      "dateAdded": '',
+      "qtyAvailable": null,
+      "qtyPending": null,
+      "qtyAccepted": null,
+      "qtyCompleted": null,
+      "isObsolete": false,
+      "scheduleList": []
     };
 	  productObject.id = product.id;
 	  productObject.name = product.name;

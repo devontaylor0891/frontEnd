@@ -8,7 +8,6 @@ import 'rxjs/add/operator/map';
 import { ApiService } from '../../api.service';
 
 import { ProductAdmin } from '../../models/dashboard-admin/products/product-admin.model';
-import { ProductCardModel } from '../../models/product-card.model';
 import { ProducerModel } from '../../models/producer.model';
 import { ProductModel } from '../../models/product.model';
 import { ScheduleModel } from '../../models/schedule.model';
@@ -34,7 +33,7 @@ export class ProducerService implements OnInit {
   public _producerProducts: BehaviorSubject<ProductModel[]>;
   public _producerSchedule: BehaviorSubject<ScheduleModel[]>;
   // product - this is bypassing the dataStore step and being populated directly from the Api call right now.
-  public _product: BehaviorSubject<ProductCardModel>;
+  public _product: BehaviorSubject<ProductModel>;
     
   constructor(private http: Http,
               private apiService: ApiService) { 
@@ -43,7 +42,7 @@ export class ProducerService implements OnInit {
       products: [],
       schedule: []
     };
-    this._product = <BehaviorSubject<ProductCardModel>>new BehaviorSubject({});
+    this._product = <BehaviorSubject<ProductModel>>new BehaviorSubject({});
     this._producer = <BehaviorSubject<ProducerModel>>new BehaviorSubject({});
     this._producerProducts = <BehaviorSubject<ProductModel[]>>new BehaviorSubject([]);
     this._producerSchedule = <BehaviorSubject<ScheduleModel[]>>new BehaviorSubject([]);

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { ProducerService } from '../../../core/services/producer/producer.service';
 
-import { ProductCardModel } from '../../../core/models/product-card.model';
+import { ProductModel } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-product',
@@ -15,7 +15,7 @@ import { ProductCardModel } from '../../../core/models/product-card.model';
 })
 export class ProductComponent implements OnInit, OnChanges {
 
-  product: ProductCardModel;
+  product: ProductModel;
 
   constructor(private route: ActivatedRoute,
               private producerService: ProducerService) { }
