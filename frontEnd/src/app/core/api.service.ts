@@ -79,7 +79,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ENV } from './env.config';
 import { SearchResultModel } from '../core/models/search-result.model';
-import { ProductCardModel } from '../core/models/product-card.model';
+//import { ProductCardModel } from '../core/models/product-card.model';
 import { ProductModel } from '../core/models/product.model';
 import { ScheduleModel } from '../core/models/schedule.model';
 import { ProducerModel } from '../core/models/producer.model';
@@ -106,9 +106,9 @@ export class ApiService {
   };
 
   // this method will return a product from the mock data
-  getProductById(id): Observable<ProductModel> {
+  getProductById(productId, producerId): Observable<ProductModel> {
     return this.http
-      .get(this.productsUrl + id + '.json')
+      .get(this.producerUrl + producerId + '/products/' + productId + '.json')
       .catch(this._handleError); 
   };
   

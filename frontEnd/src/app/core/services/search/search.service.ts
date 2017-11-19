@@ -4,9 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../api.service';
 
 import { SearchResultModel } from '../../../core/models/search-result.model';
-import { CategoryModel } from '../../../core/models/category.model';
-import { SearchProducerModel } from '../../../core/models/search-producer.model';
-import { SearchDeliveryModel } from '../../../core/models/search-delivery.model';
 import { ProductModel } from '../../../core/models/product.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
 import { ProducerModel } from '../../../core/models/producer.model';
@@ -18,9 +15,9 @@ export class SearchService implements OnInit {
 	private dataStore: {
     searchResults: SearchResultModel[], //holds all the return products and their accompanying info
     deliveryTypes: string[], // holds a list of the unique delivery types contained in the above list
-    categories: CategoryModel[], //holds an array of category/subcategory objects
-	  searchProducers: SearchProducerModel[], //an array containing basic producer info for the producer view
-	  searchDeliveries: SearchDeliveryModel[] //an array containing basic delivery info for the calendar view
+    categories: string[], //holds an array of category/subcategory objects
+	  searchProducers: ProducerModel[], //an array containing basic producer info for the producer view
+	  searchDeliveries: ScheduleModel[] //an array containing basic delivery info for the calendar view
   }
 	
 	// use a BehaviorSubject to create an observable out of a COPY of the search results
@@ -28,9 +25,9 @@ export class SearchService implements OnInit {
   
   // create a Behavior Subject to hold all the different delivery types/categories and create an observable from them
   public _deliveryTypes: BehaviorSubject<string[]>;
-  public _categories: BehaviorSubject<CategoryModel[]>;
-  public _searchProducers: BehaviorSubject<SearchProducerModel[]>;
-  public _searchDeliveries: BehaviorSubject<SearchDeliveryModel[]>;
+  public _categories: BehaviorSubject<string[]>;
+  public _searchProducers: BehaviorSubject<ProducerModel[]>;
+  public _searchDeliveries: BehaviorSubject<ScheduleModel[]>;
 
   //****************** MODIFYING THE VIEW BASED ON FILTER BUTTONS
   // create a private property to hold the default view
@@ -42,9 +39,9 @@ export class SearchService implements OnInit {
     this.dataStore = { searchResults: [], deliveryTypes: [], categories: [], searchProducers: [], searchDeliveries: [] };
     this._searchResults = <BehaviorSubject<SearchResultModel[]>>new BehaviorSubject([]);
     this._deliveryTypes = <BehaviorSubject<string[]>>new BehaviorSubject([]);
-    this._categories = <BehaviorSubject<CategoryModel[]>>new BehaviorSubject([]);
-	  this._searchProducers = <BehaviorSubject<SearchProducerModel[]>>new BehaviorSubject([]);
-	  this._searchDeliveries = <BehaviorSubject<SearchDeliveryModel[]>>new BehaviorSubject([]);
+    this._categories = <BehaviorSubject<string[]>>new BehaviorSubject([]);
+	  this._searchProducers = <BehaviorSubject<ProducerModel[]>>new BehaviorSubject([]);
+	  this._searchDeliveries = <BehaviorSubject<ScheduleModel[]>>new BehaviorSubject([]);
   }
   
   //fill up the dataStore with a call to the API
@@ -112,49 +109,11 @@ export class SearchService implements OnInit {
     });
     return newArray;
   }
-
-  // addCategories(searchResults) {
-  //   let newArray: CategoryModel[] = []; //maybe try let newArray: Object[] = [];
-
-  //   searchResults.forEach((product) => {
-
-  //     let category = product.category.category;  // eg: meat
-  //     let subcategory = product.category.subcategory; // eg: beef
-
-  //     //if newArray is empty, set it equal to an array containing one object
-  //     if (newArray.length == 0) { //it's working!!!
-  //       newArray = [
-  //         {
-  //           "category": category,
-  //           "subcategory": [subcategory]
-  //         }
-  //       ];
-        
-  //     } else if (this.locationInArray(newArray, category, "category") === -1) { //the category is NOT in the array
-  //       newArray.push(
-  //         {
-  //           "category": category,
-  //           "subcategory": [subcategory]
-  //         }
-  //       );
-
-  //     } else { //the category must then already be in the array
-  //       //get the index in the array of the category
-  //       let index = this.locationInArray(newArray, category, "category");
-  //       //test to see if the subcategory exists
-  //       if (this.locationInArray(newArray[index].subcategory, subcategory, "subcategory") === -1)  {//if not, push it into subcategory array
-  //         newArray[index].subcategory.push(subcategory);
-  //       }
-  //     }
-  //   });
-  //   return newArray;
-    
-  // }
   
   addSearchProducers(searchResults) {
 	  
 	  //create the producers array
-	  let producers: SearchProducerModel[] = [];
+	  let producers: ProducerModel[] = [];
 	  //loop through each of the search results
 	  searchResults.forEach((product) => {
 			//get the producer's info
@@ -162,23 +121,11 @@ export class SearchService implements OnInit {
       let pId = producer.id;
       //get the index of the producer from our working array
       let pIndex = this.getProducerIndex(producer, producers);
-			//get the simple product info
-      let simpleProduct = this.getSimpleProduct(product);
-
 			//add to producers array if array is empty
 			if (producers.length === 0) {
         producers[0] = producer;
-        //also add the product info to producers.products
-        producers[0].products = [];
-        producers[0].products[0] = simpleProduct;
-      } else if (!this.findByIdInArray(pId, producers)) { //if the producer is not in the array, add them and their first product
-        producers.push(producer);
-        let i = producers.indexOf(producer);
-        producers[i].products = [];
-        producers[i].products[0] = simpleProduct;
-      } else if ((producers[pIndex].products.length < 4) && (producers[pIndex].products.indexOf(simpleProduct) === -1)) { //if producer is already in array, but producers.products.length < 4 AND the product isn't already in the array, add the product info
-        //add the product to their products
-        producers[pIndex].products.push(simpleProduct);  
+      } else if (!this.findByIdInArray(pId, producers)) { //if the producer is not in the array, add them
+        producers.push(producer);  
       } 			
     });
     //return producers array
@@ -246,7 +193,7 @@ export class SearchService implements OnInit {
   
   addSearchDeliveries(searchResults) {
 	  
-	 let deliveries: SearchDeliveryModel[] = [];
+	 let deliveries: ScheduleModel[] = [];
 	  
 	  //loop through search results
 	  searchResults.forEach((product) => {
@@ -267,17 +214,23 @@ export class SearchService implements OnInit {
   
   buildNewSearchDelivery(delivery, product) {
     let producer = product.producer;
-	  let delObject: SearchDeliveryModel = {
-      "id" : delivery.id,
-      "type" : delivery.type,
-      "startDateTime" : delivery.startDateTime,
-      "endDateTime" : delivery.endDateTime,
-      "hasFee" : delivery.hasFee,
-      "city" : delivery.city,
-      "address" : delivery.address,
-      "province" : delivery.province,
-      "orderDeadline" : delivery.orderDeadline,
-      "producer" : producer
+	  let delObject: ScheduleModel = {
+      "id": delivery.id,
+      "producerId": product.producer.id,
+      "productList": delivery.productList,
+      "type": delivery.type,
+      "description": delivery.description,
+      "startDateTime": delivery.startDateTime,
+      "endDateTime": delivery.endDateTime,
+      "hasFee": delivery.hasFee,
+      "fee": delivery.fee,
+      "feeWaiver": delivery.feeWaiver,
+      "latitude": delivery.latitude,
+      "longitude": delivery.longitude,
+      "city": delivery.city,
+      "address": delivery.address,
+      "province": delivery.province,
+      "orderDeadline": delivery.orderDeadline
     };
 	  return delObject;
   }
@@ -326,7 +279,7 @@ export class SearchService implements OnInit {
 
   containCategory(product, categoriesArray) {
 	  for (let i = 0; i < categoriesArray.length; i++) {
-		  if (product.category.category === categoriesArray[i]) {
+		  if (product.category === categoriesArray[i]) {
 			  return true;
 		  }
 	  }

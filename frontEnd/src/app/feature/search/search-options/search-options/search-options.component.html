@@ -10,8 +10,8 @@
             <div>
                 <h5 class="card-title">Categories</h5>
                     <div *ngFor="let category of categoriesList; let i = index">
-                        <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="checkboxValue">
-                        <label for="c.{{ category.category }}">{{ category.category }}</label>
+                        <input type="checkbox" id="c.{{ category }}" name="c.{{ category }}" [ngModel]="checkboxValue">
+                        <label for="c.{{ category }}">{{ category }}</label>
                     </div>
             </div>
             <hr>

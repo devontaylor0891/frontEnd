@@ -3,8 +3,6 @@ import { NgForm } from '@angular/forms';
 
 import { SearchService } from '../../../../core/services/search/search.service';
 
-import { CategoryModel } from '../../../../core/models/category.model';
-
 @Component({
   selector: 'app-search-options',
   templateUrl: './search-options.component.html',
@@ -15,7 +13,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   checkboxValue = true;
 
   deliveryTypes: string[];
-  categoriesList: CategoryModel[];
+  categoriesList: string[];
   submittedValues: any = {
     categories: [],
     deliveryTypes: []
@@ -46,15 +44,12 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           this.categoriesList = results;
-        //  console.log("These are the categories from the subscription:");
-        //  console.log(this.categoriesList);
         }
       );
 
   }
 
   onSubmit(form: NgForm) {
-    console.log(form);
     //empty the submitted values
     this.submittedValues = {
       categories: [],

@@ -19,7 +19,7 @@ import { AddDeliveryComponent } from './feature/dashboard/admin/add-new/add-deli
 import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/add-order.component';
 
 const appRoutes: Routes = [
-	{ path: '', component: LandingContentComponent, pathMatch: 'full' },
+	
 	{ path: 'search', component: SearchComponent },
 	{ path: 'learn-more', component: LearnMoreComponent },
 	{ path: 'dashboard', component: DashboardComponent, children: [
@@ -36,7 +36,8 @@ const appRoutes: Routes = [
 	]}
 	,
 	{ path: 'cart', component: CartComponent },
-	{ path: 'callback', component: CallbackComponent }
+	{ path: 'callback', component: CallbackComponent },
+	{ path: '', component: LandingContentComponent, pathMatch: 'full' }
 ]
 
 @NgModule({

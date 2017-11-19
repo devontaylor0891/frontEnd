@@ -13,7 +13,6 @@ export class ProducerPageProductCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

@@ -1,20 +1,20 @@
 {
-                "id": 798,
-				"producerId": 18,
-                "productList": [
-                    88
-                ],
-                "type": "Door-to-door Delivery",
-                "description": "Delivering to you for no charge.",
-                "startDateTime": "2018-05-01T00:00:00.000Z",
-                "endDateTime": "2018-05-01T02:00:00.000Z",
-                "hasFee": false,
-                "fee": null,
-                "feeWaiver": null,
-                "latitude": 50.1437782,
-                "longitude": -101.6671873,
-                "city": "Moosomin",
-                "address": "123 Main St",
-                "province": "SK",
-                "orderDeadline": "2018-04-01T00:00:00.000Z"
-            }
+    "id": 798,
+    "producerId": 18,
+    "productList": [
+        88
+    ],
+    "type": "Door-to-door Delivery",
+    "description": "Delivering to you for no charge.",
+    "startDateTime": "2018-05-01T00:00:00.000Z",
+    "endDateTime": "2018-05-01T02:00:00.000Z",
+    "hasFee": false,
+    "fee": null,
+    "feeWaiver": null,
+    "latitude": 50.1437782,
+    "longitude": -101.6671873,
+    "city": "Moosomin",
+    "address": "123 Main St",
+    "province": "SK",
+    "orderDeadline": "2018-04-01T00:00:00.000Z"
+}

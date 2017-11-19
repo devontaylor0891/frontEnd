@@ -114,8 +114,8 @@ export class ProducerService implements OnInit {
 
   // GET the single product with an API call, assign it as the next observable from the BehaviorSubject
   // NOTE -  first check to see if this product is in the dataStore.products array, if not, then make the API call
-  loadProduct(id) {
-    this.apiService.getProductById(id)
+  loadProduct(productId, producerId) {
+    this.apiService.getProductById(productId, producerId)
     .subscribe(
       response => { 
         this._product.next(Object.assign({}, response)); }

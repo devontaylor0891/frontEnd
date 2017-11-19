@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { SearchService } from '../../../../../core/services/search/search.service';
 
-import { SearchProducerModel } from '../../../../../core/models/search-producer.model';
+import { ProducerModel } from '../../../../../core/models/producer.model';
 
 @Component({
   selector: 'app-search-producer',
@@ -11,7 +11,7 @@ import { SearchProducerModel } from '../../../../../core/models/search-producer.
 })
 export class SearchProducerComponent implements OnInit, OnChanges {
 
-  producers: SearchProducerModel[] = [];
+  producers: ProducerModel[] = [];
 
   constructor(private searchService: SearchService) { }
 

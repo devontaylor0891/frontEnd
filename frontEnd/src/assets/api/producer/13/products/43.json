@@ -1,19 +1,45 @@
 {
     "id": 43,
     "name": "Carrots",
-    "description": "This is a description",
+    "description": "Orange, cylindrical, delicious.",
     "image": "carrots.jpg",
     "pricePerUnit": 4,
     "unit": "lb",
     "unitsPer": 1,
-    "category": "vegetables",
-    "subcategory": "carrots",
-    "producerName": "Gardenia Farms",
-    "producerId": 13,
+    "category": "Produce",
+    "subcategory": "Carrots",
+    "producer": {
+        "id": 13,
+        "name": "Gardenia Farms",
+        "location": "Virden",
+        "province": "MB",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+        "email": "email@email.com",
+        "logoUrl": "farm-logo-1.jpg",
+        "longitude": 444,
+        "latitude": 555,
+        "firstName": "Devon",
+        "registrationDate": "Jan 1 2017",
+        "status": "active",
+        "productList": [
+            43,
+            95
+        ],
+        "scheduleList": [
+            444,
+            445,
+            789
+        ]
+    },
     "dateAdded": "Jan 1 2017",
     "qtyAvailable": 55,
     "qtyPending": 12,
     "qtyAccepted": 22,
     "qtyCompleted": 345,
-    "isObsolete": false
+    "isObsolete": false,
+    "scheduleList": [
+        444,
+        445,
+        789
+    ]
 }

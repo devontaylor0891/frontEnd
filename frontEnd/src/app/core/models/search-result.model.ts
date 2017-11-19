@@ -1,6 +1,5 @@
 import { ProducerModel } from './producer.model';
 import { ScheduleModel } from './schedule.model';
-//import { CategoryModel } from './category.model';
 
 export class SearchResultModel {
 

@@ -6,8 +6,8 @@
 	],
 	"type": "Door-to-door Delivery",
 	"description": "We're gonna charge you this time.",
-	"startDateTime": "2018-05-02T00:00:00.000Z",
-	"endDateTime": "2018-05-02T03:30:00.000Z",
+	"startDateTime": "2017-12-03T00:00:00.000Z",
+	"endDateTime": "2017-12-03T03:30:00.000Z",
 	"hasFee": true,
 	"fee": 5,
 	"feeWaiver": 35,
@@ -16,5 +16,5 @@
 	"city": "Wapella",
 	"address": "123 Main St",
 	"province": "SK",
-	"orderDeadline": "2018-04-02T00:00:00.000Z"
+	"orderDeadline": "2017-12-02T00:00:00.000Z"
 }

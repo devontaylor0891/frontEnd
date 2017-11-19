@@ -31,17 +31,9 @@ import { ScheduleModel } from '../../../core/models/schedule.model';
 import { ProducerService } from '../../../core/services/producer/producer.service';
 
 const colors: any = {
-  red: {
+  green: {
     primary: '#3c910f',
     secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
   }
 };
 @Component({
@@ -66,68 +58,9 @@ export class ScheduleComponent implements OnInit, OnChanges {
       event: CalendarEvent;
     };
   
-    // actions: CalendarEventAction[] = [
-    //   {
-    //     label: '<i class="fa fa-fw fa-pencil"></i>',
-    //     onClick: ({ event }: { event: CalendarEvent }): void => {
-    //       this.handleEvent('Edited', event);
-    //     }
-    //   },
-    //   {
-    //     label: '<i class="fa fa-fw fa-times"></i>',
-    //     onClick: ({ event }: { event: CalendarEvent }): void => {
-    //       this.events = this.events.filter(iEvent => iEvent !== event);
-    //       this.handleEvent('Deleted', event);
-    //     }
-    //   }
-    // ];
-  
     refresh: Subject<any> = new Subject();
 
     events: Array<CalendarEvent<{ schedule: any }>> = [];
-
-    //  = [
-    //   {
-    //     // title: '',
-    //     // color: null,
-    //     // start: null,
-    //     // meta: {
-    //     //   schedule: {}
-    //     // }
-    //   } 
-    // ];
-      // {
-      //   start: subDays(startOfDay(new Date()), 1),
-      //   end: addDays(new Date(), 1),
-      //   title: 'A 3 day event',
-      //   color: colors.red,
-      //   //actions: this.actions
-      // },
-      // {
-      //   start: startOfDay(new Date()),
-      //   title: 'An event with no end date',
-      //   color: colors.yellow,
-      //   //actions: this.actions
-      // },
-      // {
-      //   start: subDays(endOfMonth(new Date()), 3),
-      //   end: addDays(endOfMonth(new Date()), 3),
-      //   title: 'A long event that spans 2 months',
-      //   color: colors.blue
-      // },
-      // {
-      //   start: addHours(startOfDay(new Date()), 2),
-      //   end: new Date(),
-      //   title: 'A draggable and resizable event',
-      //   color: colors.yellow,
-      //  // actions: this.actions,
-      //   resizable: {
-      //     beforeStart: true,
-      //     afterEnd: true
-      //   },
-      //   draggable: true
-      // }
-    // ];
   
     activeDayIsOpen: boolean = true;
   
@@ -151,36 +84,10 @@ export class ScheduleComponent implements OnInit, OnChanges {
       }
     }
   
-    // eventTimesChanged({
-    //   event,
-    //   newStart,
-    //   newEnd
-    // }: CalendarEventTimesChangedEvent): void {
-    //   event.start = newStart;
-    //   event.end = newEnd;
-    //   this.handleEvent('Dropped or resized', event);
-    //   this.refresh.next();
-    // }
-  
     handleEvent(action: string, event: CalendarEvent): void {
       this.modalData = { event, action };
       this.modal.open(this.modalContent, { size: 'lg' });
     }
-  
-    // addEvent(): void {
-    //   this.events.push({
-    //     title: 'New event',
-    //     start: startOfDay(new Date()),
-    //     end: endOfDay(new Date()),
-    //     color: colors.red,
-    //     draggable: true,
-    //     resizable: {
-    //       beforeStart: true,
-    //       afterEnd: true
-    //     }
-    //   });
-    //   this.refresh.next();
-    // }
 
     pathIsProducerPage(pathArray) {
       if (pathArray.length === 3) {
@@ -202,12 +109,11 @@ export class ScheduleComponent implements OnInit, OnChanges {
     this.producerService.getAllSchedule()
       .subscribe(
         result => { 
-          console.log(result);
           let data = result;
           data.forEach((result) => {
             this.events.push({
               title: result.type,
-              color: colors.red,
+              color: colors.green,
               start: new Date(result.startDateTime),
               meta: {
                 schedule: result
@@ -217,9 +123,6 @@ export class ScheduleComponent implements OnInit, OnChanges {
           this.refresh.next();
         }
       );
-      
-    // load the product in the service
-    //this.producerService.loadProduct(id);
 
   }
 

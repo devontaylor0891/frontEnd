@@ -24,16 +24,17 @@
 		</div>
 		<hr>
 		
-		<!-- Delivery Schedule -->
+		<!-- display once resolved -->
+		<div *ngIf="product?.producer"> 
+			<!-- Delivery Schedule -->
 			<div class="divider-new">
-	            <a [routerLink]="['../../../../producer/' + product.producerId + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
+	            <a [routerLink]="['../../../../producer/' + product.producer.id + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
 	        </div>
-
-
-		<!-- Related Products / Other products from the same producer -->
+			<!-- Related Products / Other products from the same producer -->
 			<div class="divider-new">
-	            <a [routerLink]="['../../../../producer/' + product.producerId]" class="btn btn-olf-primary">View All Products from this Producer</a>
-	        </div>
+	            <a [routerLink]="['../../../../producer/' + product.producer.id]" class="btn btn-olf-primary">View All Products from this Producer</a>
+			</div>
+		</div>
 	        
 	</div>
 </div>

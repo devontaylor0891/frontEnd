@@ -17,12 +17,20 @@ export class ProductComponent implements OnInit, OnChanges {
 
   product: ProductModel;
 
+  path: string;
+  pathArray: Array<string>;
+  producerId: string;
+
   constructor(private route: ActivatedRoute,
               private producerService: ProducerService) { }
   
   ngOnChanges() {}
 
   ngOnInit() {
+
+    this.path = window.location.pathname;
+    this.pathArray = this.path.split('/');
+    this.producerId = this.pathArray[2];
 
     // note - the snapshot method being used here won't work if the user can navigate directly between product pages
     // see https://angular.io/guide/router#activated-route-in-action
@@ -35,8 +43,7 @@ export class ProductComponent implements OnInit, OnChanges {
       );
 
     // load the product in the service
-    this.producerService.loadProduct(id);
-
+    this.producerService.loadProduct(id, this.producerId);
     
     // this is the non-snapshot method, it doesn't work right now but that might be caused by 'undefined' data being returned right now
     // try again after the endpoint is returning data I want
