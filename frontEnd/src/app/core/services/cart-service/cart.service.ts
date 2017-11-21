@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { ApiService } from '../../api.service';
 
@@ -13,36 +14,76 @@ export class CartService {
 
   // create the BehaviorSubject to hold the cart items
   // it will have to be an array of separate carts, one for each producer in the case that products are chosen from more than one producer, or for products not in the same delivery
-  private dataStore: OrderModel[];
+  // private dataStore: OrderModel[];
 
+  // *************** TRY SOMETHING NEW *********
+  // create the dataStore for the carts, this allows us to push new objects into it (can't push into behsubj)
+  private dataStore: {
+	  carts: OrderModel[]
+  };
+  private _carts: BehaviorSubject<OrderModel[]>;
+  // initialize the behsubj with null
+  // public cart: BehaviorSubject<OrderModel[]> = new BehaviorSubject<OrderModel[]>(null);
+  
+	// note - I think I should also create an array of available schedule choices based on the products in the cart
+	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
+	// this way, i can populate the options with an API call on checkout
+	private schedulesArray: Object[] = [];
+  
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
-    this.dataStore = [];
+    this.dataStore.carts = [];
+	  this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
+  }
+  
+  getCarts() {
+	  return this._carts.asObservable();
   }
 
   // ***********PRODUCT METHODS**********
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
   addProduct(product, quantity) {
+	// get producerId from product,
+    let producerId = product.producer.id;
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
-    let currentQtyAvailable = this.getCurrentlyAvailable(product.id);
+    let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
     // if not, inform user and make quantity = qtyAvailable
     if (quantity > currentQtyAvailable) {
       quantity = currentQtyAvailable;
       // inform user
+	  // alert?
     };
-    // get producerId from product,
-    let producerId = product.producerId;
-    // if cartContents is empty OR if the producerId is not in the cart, add the info to it
-    if ((this.dataStore === []) || (this.findProducer(producerId) === -1)) {
-
+	// change the product's quantities
+	this.makeQtyPending(quantity);
+    // if cart is empty OR if the producerId is not in the cart, add the info to it
+    if ((!this.dataStore) || (this.dataStore === null) || (this.findProducer(producerId) === -1)) {
+		// producer isn't there, so build the order from scratch
+		let newOrder = {
+			id: null,
+			chosenSchedule: null,
+			producer: product.producer,
+			consumer: null,
+			productList: [
+        null
+      ],
+			orderDetails: {
+        consumerComment: '',
+        deliveryAddress: '',
+        createdDate: '',
+        producerComment: '',
+				orderStatus: 'pending'
+			}
+		};
+		// push the new order into the cart
+		this.dataStore.carts.push(newOrder);
     } else { // if producerId is already in the cart, push the product into that array,
-
+		this.dataStore.carts[this.findProducer(producerId)].productList.push(product);
     };
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
-  }
+  };
 
   // modify the quantity in cart
   changeQty(product, quantity) {
@@ -50,7 +91,7 @@ export class CartService {
     // set a new qty,
     // clear timer and start new timer
     this.restartTimer();
-  }
+  };
 
   // remove a product from the cart
   deleteProduct(product) {
@@ -58,54 +99,59 @@ export class CartService {
     // splice it
     // clear timer and start new timer
     this.restartTimer();
-  }
+  };
 
   // ***********SCHEDULE METHODS**********
 
   // for each cart in the cart contents, select a schedule
   selectSchedule(cartId, schedule) {
     // in specified cart, push the schedule details
-  }
+  };
 
   // ***********ORDER STATUS METHODS**********
 
   // confirm and send the order from consumer to producer
-  confirmAndSendOrder() {}
+  confirmAndSendOrder(orderId) {};
 
   // producer accepts order
-  acceptOrder() {}
+  acceptOrder(orderId) {};
 
   // complete order
-  completeOrder() {}
+  completeOrder(orderId) {};
 
   // modify the status of an order
-  changeOrderStatus() {}
+  changeOrderStatus(orderId, status) {};
 
   // ***********TIMER METHODS**********
 
   restartTimer() {
     this.clearTimer(this.cartTimer);
     this.cartTimer();
-  }
+  };
 
+  // 20 minute timer
   cartTimer = function() {
     setTimeout(this.emptyCart(), 1200000);
   };
 
-  // change all product quantities from pending back to available
-  emptyCart() {}
-
-  // when timer runs out, send order to abandoned orders table
-  logAbandonedCart() {}
+  // send order to abandoned orders table
+  logAbandonedCart() {};
 
   clearTimer(timer) {
     timer.clearTimeout();
-  }
+  };
 
   // ***********OTHER METHODS**********
 
   // API call to get the qtyAvailable right now
-  getCurrentlyAvailable(productId) {};
+  getCurrentlyAvailable(productId, producerId) {
+	  this.apiService.getProductById(productId, producerId)
+		.subscribe((result) => {
+			return result.qtyAvailable;
+		})
+  };
+  
+  makeQtyPending(qty) {};
 
   // look to see if producer is in cart
   findProducer(id) {
@@ -118,4 +164,7 @@ export class CartService {
     return -1;
   };
 
+    // change all product quantities from pending back to available
+  emptyCart() {};
+  
 }

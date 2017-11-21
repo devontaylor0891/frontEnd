@@ -11,7 +11,7 @@ export class OrderModel {
         public producer?: ProducerModel,
         public consumer?: UserModel,
         public productList?: ProductModel[],
-        public cartDetails?: {
+        public orderDetails?: {
             consumerComment?: string,
             deliveryAddress?: string,
             createdDate?: string,
