@@ -232,3 +232,10 @@ input.ng-invalid.ng-touched {
     color: #611437 !important;
     font-weight: 700;
 }
+
+// remove spinner arrows on number inputs
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

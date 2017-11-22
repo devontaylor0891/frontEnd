@@ -10,20 +10,13 @@ export class CartService {
 
   // data management strategy
   // create the dataStore for the cart
+  // it will have to be an array of separate carts, one for each producer in the case that products are chosen from more than one producer, or for products not in the same delivery  
   // create the BehaviorSubject to create a copy of the dataStore and build an observable out of it
 
-  // create the BehaviorSubject to hold the cart items
-  // it will have to be an array of separate carts, one for each producer in the case that products are chosen from more than one producer, or for products not in the same delivery
-  // private dataStore: OrderModel[];
-
-  // *************** TRY SOMETHING NEW *********
-  // create the dataStore for the carts, this allows us to push new objects into it (can't push into behsubj)
   private dataStore: {
 	  carts: OrderModel[]
   };
   private _carts: BehaviorSubject<OrderModel[]>;
-  // initialize the behsubj with null
-  // public cart: BehaviorSubject<OrderModel[]> = new BehaviorSubject<OrderModel[]>(null);
   
 	// note - I think I should also create an array of available schedule choices based on the products in the cart
 	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
@@ -43,7 +36,7 @@ export class CartService {
   // ***********PRODUCT METHODS**********
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
-  addProduct(product, quantity) {
+  addToCart(product, quantity) {
 	// get producerId from product,
     let producerId = product.producer.id;
     // make sure quantity is less than or equal to qtyAvailable
