@@ -56,6 +56,7 @@ import { SearchProductComponent } from './feature/search/search-results/results-
 import { ProducerCardComponent } from './feature/search/search-results/results-pane/search-producer/producer-card/producer-card.component';
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
 import { ProducerPageProductCardComponent } from './feature/producer/producer-page/producer-page-product-card/producer-page-product-card.component';
+import { AddToCartComponent } from './shared/add-to-cart/add-to-cart.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { ProducerPageProductCardComponent } from './feature/producer/producer-pa
     ProducerCardComponent,
     ProducerPageComponent,
     ProducerPageProductCardComponent,
+    AddToCartComponent,
   ],
   imports: [
     BrowserModule,

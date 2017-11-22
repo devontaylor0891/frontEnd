@@ -28,24 +28,7 @@
     <!--Card footer-->
     <div class="card-footer text-center px-0 pb-0">
         <p>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>
-        <form>
-            <div class="row mx-0">
-                <div class="col-6 p-0">
-                    <div class="input-group h-100 m-0 p-0">
-                        <span class="input-group-btn col-4 p-0">
-                            <button class="btn m-0 p-0" type="button" (click)="lessOne()"><i class="fa fa-minus cart-button" aria-hidden="true"></i></button>
-                        </span>
-                        <input type="number" class="form-control col-4 p-0 text-center border-0" value="{{ orderQty }}" min="1" max="{{ product.qtyAvailable }}">
-                        <span class="input-group-btn col-4 p-0">
-                            <button class="btn m-0 p-0" type="button" (click)="addOne()"><i class="fa fa-plus cart-button" aria-hidden="true"></i></button>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-6 p-0">
-                    <a class="btn btn-olf-primary btn-block px-0 m-0 h-100" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                </div>
-            </div>
-        </form>
+        <app-add-to-cart [product]="product"></app-add-to-cart>
     </div>
     <!--/.Card footer-->
 

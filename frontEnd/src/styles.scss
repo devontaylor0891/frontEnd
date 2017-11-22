@@ -153,6 +153,9 @@ $olf-grey: (
     )
 );
 
+.olf-primary {
+    color: #741b47 !important;
+}
 .olf-primary-color {
     background-color: #9e5f7e !important;
 }
@@ -231,6 +234,12 @@ input.ng-invalid.ng-touched {
 .cart-button:hover {
     color: #611437 !important;
     font-weight: 700;
+}
+
+.cart-badge {
+    position: relative;
+    left: -30%;
+    top: -1rem;
 }
 
 // remove spinner arrows on number inputs
