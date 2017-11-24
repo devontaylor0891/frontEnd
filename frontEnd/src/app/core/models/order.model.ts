@@ -12,13 +12,13 @@ export class OrderModel {
         public producer: ProducerModel,
         public consumer: UserModel,
         public productList: ProductModel[],
-        public orderDetails: {
-            productQuantities: ProductQuantitiesModel[],
-            consumerComment: string,
-            deliveryAddress: string,
-            createdDate: string,
-            producerComment: string,
-            orderStatus: string
+        public orderDetails?: {
+            productQuantities?: ProductQuantitiesModel[],
+            consumerComment?: string,
+            deliveryAddress?: string,
+            createdDate?: string,
+            producerComment?: string,
+            orderStatus?: string
         }
     ) {}
 }

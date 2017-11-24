@@ -14,7 +14,7 @@ export class CartService {
   // create the BehaviorSubject to create a copy of the dataStore and build an observable out of it
 
   private dataStore: {
-	  carts: OrderModel[]
+	  carts: any[] // for some fucking reason, this can't be typed as an OrderModel or the compiler throws errors randomly
   };
   private _carts: BehaviorSubject<OrderModel[]>;
   
@@ -44,10 +44,8 @@ export class CartService {
     };
 	  // get producerId from product,
     let producerId = product.producer.id;
-    console.log('producer id: ', producerId);
     let producerIndex = this.findProducerIndex(producerId);
-    console.log('producerIndex: ', producerIndex);
-    // let productIndex = this.findProductIndex(producerIndex, product.id);
+    let productIndex = this.findProductIndex(producerIndex, product.id);
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
     // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
@@ -62,7 +60,7 @@ export class CartService {
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
       // producer isn't there, so build the order from scratch
-      let newOrder: OrderModel = {
+      let newOrder = {
         id: null,
         chosenSchedule: null,
         producer: product.producer,
@@ -81,34 +79,15 @@ export class CartService {
           orderStatus: 'pending'
         }
       };
-    //   ublic id: number,
-    //   public chosenSchedule: ScheduleModel,
-    //   public producer: ProducerModel,
-    //   public consumer: UserModel,
-    //   public productList: ProductModel[],
-    //   public orderDetails: {
-    //       productQuantities: [
-    //   {
-    //     productId: number,
-    //     orderQuantity: number
-    //   }
-    // ],
-    //       consumerComment: string,
-    //       deliveryAddress: string,
-    //       createdDate: string,
-    //       producerComment: string,
-    //       orderStatus: string
-    //   }
       // push the new order into the cart
-      console.log('newOrder: ', newOrder);
       this.dataStore.carts.push(newOrder);
-      console.log('dataStore: ', this.dataStore);
-      // } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
-      // 	this.findAndAddMoreQty(product.id, quantity, this.dataStore.carts[producerIndex].orderDetails.productQuantities);
+    } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
+      this.findAndAddMoreQty(product.id, quantity, producerIndex);
     } else { // if producerId is already in the cart, push the product into that array,
-      console.log('this.dataStore.carts[producerIndex].productList: ', this.dataStore.carts[producerIndex].productList);
-		  this.dataStore.carts[producerIndex].productList.push(product);
+      this.dataStore.carts[producerIndex].productList.push(product);
+      this.dataStore.carts[producerIndex].orderDetails.productQuantities.push(productQuantities);
     };
+    console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
   };
@@ -189,11 +168,7 @@ export class CartService {
     } else {
       this.dataStore.carts.forEach(
         (order) => {
-          console.log('order: ', order);
-          console.log('orderId: ', order.producer.id);
-          console.log('id: ', id);
           if (order.producer.id === id) {
-            console.log('this.dataStore.carts.indexOf(order) ', this.dataStore.carts.indexOf(order));
             index = (this.dataStore.carts.indexOf(order));
           }
         });
@@ -202,21 +177,32 @@ export class CartService {
   };
 
   findProductIndex(producerIndex, productId) {
-    if ((this.dataStore.carts[producerIndex].productList.indexOf(productId) === null) || (this.dataStore.carts[producerIndex].productList.indexOf(productId) === undefined)) {
+    if ((this.dataStore.carts[producerIndex] === undefined)) {
       return -1;
     } else {
-      return this.dataStore.carts[producerIndex].productList.indexOf(productId);
-    }
-  }
+      let j;
+      let length = this.dataStore.carts[producerIndex].productList.length;
+      for (j = 0; j < length; j++) {
+        if ((this.dataStore.carts[producerIndex].productList[j].id) === productId) {
+          return j;
+        };
+      };
+      return -1;
+    };
+  };
   
   // find the product in the array and add the given qty to the existing qty
-  findAndAddMoreQty(productId, quantity, array) {
-	  for (let i = 0; i < array.length; i++) {
-		  if (array[i].productId === productId) {
-			  array[i].orderQuantity += quantity;
-			  break;
-		  }
-	  }
+  findAndAddMoreQty(productId, quantity, producerIndex) {
+    // access the productQuantities array
+    let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
+    // loop through the array and return the index of the appropriate product
+    let productIndex;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].productId === productId) {
+        productIndex = i;
+      }
+    }
+	  this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
   };
 
     // change all product quantities from pending back to available
