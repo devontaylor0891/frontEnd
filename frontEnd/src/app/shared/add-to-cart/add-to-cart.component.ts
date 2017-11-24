@@ -1,20 +1,25 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
+import { CartService } from '../../core/services/cart-service/cart.service';
+
 import { ProductModel } from '../../core/models/product.model';
+
 @Component({
   selector: 'app-add-to-cart',
   templateUrl: './add-to-cart.component.html',
   styleUrls: ['./add-to-cart.component.scss']
 })
-export class AddToCartComponent implements OnInit {
+export class AddToCartComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
   
     orderQty: number;
   
-    constructor() { }
+    constructor(private cartService: CartService) { }
+	
+	ngOnChanges() {}
   
     addOne() {
       if (this.orderQty < this.product.qtyAvailable) {
@@ -33,6 +38,7 @@ export class AddToCartComponent implements OnInit {
     onAdd() {
       console.log("product: ", this.product);
       console.log("qtyAdded: ", this.orderQty);
+	  this.cartService.addToCart(this.product, this.orderQty);
       if (this.product.qtyAvailable > 0) { // this will need to update after the orderQty is sent to the cart service
         this.orderQty = 1;
       } else {

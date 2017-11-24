@@ -25,7 +25,7 @@ export class CartService {
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
-    this.dataStore.carts = [];
+    this.dataStore = { carts: [] };
 	  this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
   }
   
@@ -37,42 +37,77 @@ export class CartService {
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
   addToCart(product, quantity) {
-	// get producerId from product,
+    // create the productQuantities object
+    let productQuantities = {
+      productId: product.id,
+      orderQuantity: quantity
+    };
+	  // get producerId from product,
     let producerId = product.producer.id;
+    console.log('producer id: ', producerId);
+    let producerIndex = this.findProducerIndex(producerId);
+    console.log('producerIndex: ', producerIndex);
+    // let productIndex = this.findProductIndex(producerIndex, product.id);
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
-    let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
+    // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
     // if not, inform user and make quantity = qtyAvailable
-    if (quantity > currentQtyAvailable) {
-      quantity = currentQtyAvailable;
-      // inform user
-	  // alert?
-    };
+    // if (quantity > currentQtyAvailable) {
+    //   quantity = currentQtyAvailable;
+    //   // inform user
+	  // // alert?
+    // };
 	// change the product's quantities
-	this.makeQtyPending(quantity);
+	this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
-    if ((!this.dataStore) || (this.dataStore === null) || (this.findProducer(producerId) === -1)) {
-		// producer isn't there, so build the order from scratch
-		let newOrder = {
-			id: null,
-			chosenSchedule: null,
-			producer: product.producer,
-			consumer: null,
-			productList: [
-        null
-      ],
-			orderDetails: {
-        consumerComment: '',
-        deliveryAddress: '',
-        createdDate: '',
-        producerComment: '',
-				orderStatus: 'pending'
-			}
-		};
-		// push the new order into the cart
-		this.dataStore.carts.push(newOrder);
+    if ((producerIndex === -1) || (producerIndex === undefined)) {
+      // producer isn't there, so build the order from scratch
+      let newOrder: OrderModel = {
+        id: null,
+        chosenSchedule: null,
+        producer: product.producer,
+        consumer: null,
+        productList: [
+          product
+        ],
+        orderDetails: {
+          productQuantities: [
+            productQuantities
+          ],
+          consumerComment: '',
+          deliveryAddress: '',
+          createdDate: '',
+          producerComment: '',
+          orderStatus: 'pending'
+        }
+      };
+    //   ublic id: number,
+    //   public chosenSchedule: ScheduleModel,
+    //   public producer: ProducerModel,
+    //   public consumer: UserModel,
+    //   public productList: ProductModel[],
+    //   public orderDetails: {
+    //       productQuantities: [
+    //   {
+    //     productId: number,
+    //     orderQuantity: number
+    //   }
+    // ],
+    //       consumerComment: string,
+    //       deliveryAddress: string,
+    //       createdDate: string,
+    //       producerComment: string,
+    //       orderStatus: string
+    //   }
+      // push the new order into the cart
+      console.log('newOrder: ', newOrder);
+      this.dataStore.carts.push(newOrder);
+      console.log('dataStore: ', this.dataStore);
+      // } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
+      // 	this.findAndAddMoreQty(product.id, quantity, this.dataStore.carts[producerIndex].orderDetails.productQuantities);
     } else { // if producerId is already in the cart, push the product into that array,
-		this.dataStore.carts[this.findProducer(producerId)].productList.push(product);
+      console.log('this.dataStore.carts[producerIndex].productList: ', this.dataStore.carts[producerIndex].productList);
+		  this.dataStore.carts[producerIndex].productList.push(product);
     };
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
@@ -117,14 +152,9 @@ export class CartService {
 
   // ***********TIMER METHODS**********
 
-  restartTimer() {
-    this.clearTimer(this.cartTimer);
-    this.cartTimer();
-  };
-
   // 20 minute timer
-  cartTimer = function() {
-    setTimeout(this.emptyCart(), 1200000);
+  cartTimer = function(cart) {
+    setTimeout(this.emptyCart(cart), 1200000);
   };
 
   // send order to abandoned orders table
@@ -132,6 +162,11 @@ export class CartService {
 
   clearTimer(timer) {
     timer.clearTimeout();
+  };
+
+  restartTimer() {
+    // this.cartTimer.clearTimeout();
+    // this.cartTimer(cart);
   };
 
   // ***********OTHER METHODS**********
@@ -144,17 +179,44 @@ export class CartService {
 		})
   };
   
-  makeQtyPending(qty) {};
+  makeQtyPending(id, qty) {};
 
-  // look to see if producer is in cart
-  findProducer(id) {
-    // this.dataStore.forEach(
-    //   (order) => {
-    //     if (order.producer.id === id) {
-    //       return this.dataStore.indexOf(order);
-    //     }
-    //   })
-    return -1;
+  // look to see if producer is in cart, return the index number or -1
+  findProducerIndex(id) {
+    let index;
+    if (this.dataStore.carts.length === 0) {
+      index = -1;
+    } else {
+      this.dataStore.carts.forEach(
+        (order) => {
+          console.log('order: ', order);
+          console.log('orderId: ', order.producer.id);
+          console.log('id: ', id);
+          if (order.producer.id === id) {
+            console.log('this.dataStore.carts.indexOf(order) ', this.dataStore.carts.indexOf(order));
+            index = (this.dataStore.carts.indexOf(order));
+          }
+        });
+    }
+    return index;
+  };
+
+  findProductIndex(producerIndex, productId) {
+    if ((this.dataStore.carts[producerIndex].productList.indexOf(productId) === null) || (this.dataStore.carts[producerIndex].productList.indexOf(productId) === undefined)) {
+      return -1;
+    } else {
+      return this.dataStore.carts[producerIndex].productList.indexOf(productId);
+    }
+  }
+  
+  // find the product in the array and add the given qty to the existing qty
+  findAndAddMoreQty(productId, quantity, array) {
+	  for (let i = 0; i < array.length; i++) {
+		  if (array[i].productId === productId) {
+			  array[i].orderQuantity += quantity;
+			  break;
+		  }
+	  }
   };
 
     // change all product quantities from pending back to available
