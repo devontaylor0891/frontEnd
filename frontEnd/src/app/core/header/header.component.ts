@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
+import { CartService } from '../services/cart-service/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,24 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./header.component.scss'],
   providers: [AuthService]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
+  
+  cartCount: number;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private cartService: CartService) { }
 
-  ngOnInit() {  }
+  ngOnChanges() {}
+
+  ngOnInit() { 
+
+    this.cartService.getCartCount()
+      .subscribe( results => {
+        this.cartCount = results;
+      });
+
+    this.cartService.loadCartCount();
+
+  }
 
 }

@@ -14,9 +14,11 @@ export class CartService {
   // create the BehaviorSubject to create a copy of the dataStore and build an observable out of it
 
   private dataStore: {
-	  carts: any[] // for some fucking reason, this can't be typed as an OrderModel or the compiler throws errors randomly
+	  carts: any[], // for some fucking reason, this can't be typed as an OrderModel or the compiler throws errors randomly
+    cartCount: number
   };
   private _carts: BehaviorSubject<OrderModel[]>;
+  private _cartCount: BehaviorSubject<number>;
   
 	// note - I think I should also create an array of available schedule choices based on the products in the cart
 	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
@@ -25,18 +27,26 @@ export class CartService {
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
-    this.dataStore = { carts: [] };
-	  this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
+    this.dataStore = { carts: [], cartCount: 0 };
+    this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
+    this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
   }
   
   getCarts() {
 	  return this._carts.asObservable();
   }
 
+  getCartCount() {
+    return this._cartCount.asObservable();
+  }
+
   // ***********PRODUCT METHODS**********
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
   addToCart(product, quantity) {
+    // increase the cartCount
+    this.dataStore.cartCount += quantity;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     // create the productQuantities object
     let productQuantities = {
       productId: product.id,
@@ -207,5 +217,9 @@ export class CartService {
 
     // change all product quantities from pending back to available
   emptyCart() {};
+
+  loadCartCount() {
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+  }
   
 }
