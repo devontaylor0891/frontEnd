@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col col-md-6 offset-md-3">
+    <blockquote class="blockquote bq-warning" *ngIf="carts.length > 1">
+        <p class="bq-title">Please Note:</p>
+        <p>You have products from {{ carts.length }} producers. You will need to select how to get each order separately.</p>
+    </blockquote>
+  </div>
+  <div class="col col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+    <app-cart *ngFor="let cart of carts" [cart]="cart"></app-cart>      
+  </div>
+</div>
+

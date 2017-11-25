@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, TemplateRef, } from '@angular/core';
 import { Response } from '@angular/http';
 
-import 'rxjs/Rx';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { CartService } from '../../core/services/cart-service/cart.service';
 
@@ -13,11 +13,15 @@ import { ProductModel } from '../../core/models/product.model';
   styleUrls: ['./add-to-cart.component.scss']
 })
 export class AddToCartComponent implements OnInit, OnChanges {
+
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+
   @Input() product: ProductModel;
   
-    orderQty: number;
+  orderQty: number;
   
-    constructor(private cartService: CartService) { }
+  constructor(private modal: NgbModal,
+              private cartService: CartService) { }
 	
 	ngOnChanges() {}
   
@@ -38,14 +42,15 @@ export class AddToCartComponent implements OnInit, OnChanges {
     onAdd() {
       console.log("product: ", this.product);
       console.log("qtyAdded: ", this.orderQty);
-	  this.cartService.addToCart(this.product, this.orderQty);
+	    this.cartService.addToCart(this.product, this.orderQty);
       if (this.product.qtyAvailable > 0) { // this will need to update after the orderQty is sent to the cart service
         this.orderQty = 1;
       } else {
         this.orderQty = 0;
       }
-      
+      this.modal.open(this.modalContent, { size: 'lg' });
     }
+
   
     ngOnInit() {
       this.orderQty = 1;

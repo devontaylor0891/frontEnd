@@ -1,0 +1,8 @@
+<div class="row olf-primary-color">
+  <div class="col ">
+    <h3 class="h3-responsive text-light p-1">{{ cart.producer.name | uppercase }}</h3>
+  </div>
+</div>
+<br>
+<app-cart-product *ngFor="let product of cart.productList" [product]="product" [productQuantities]="cart.orderDetails.productQuantities"></app-cart-product>
+

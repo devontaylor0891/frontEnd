@@ -221,5 +221,9 @@ export class CartService {
   loadCartCount() {
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
   }
+
+  loadCarts() {
+    this._carts.next(Object.assign({}, this.dataStore).carts);
+  }
   
 }

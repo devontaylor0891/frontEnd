@@ -10,7 +10,7 @@ import { ProducerComponent } from './feature/producer/producer.component';
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
-import { CartComponent } from './feature/cart/cart/cart.component';
+import { CartsComponent } from './feature/cart/cart/carts.component';
 import { CallbackComponent } from './auth/callback/callback.component';
 import { AddUserComponent } from './feature/dashboard/admin/add-new/add-user/add-user.component';
 import { AddProducerComponent } from './feature/dashboard/admin/add-new/add-producer/add-producer.component';
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
 		{ path: 'product/:id', component: ProductComponent }
 	]}
 	,
-	{ path: 'cart', component: CartComponent },
+	{ path: 'cart', component: CartsComponent },
 	{ path: 'callback', component: CallbackComponent },
 	{ path: '', component: LandingContentComponent, pathMatch: 'full' }
 ]

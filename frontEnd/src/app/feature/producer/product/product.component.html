@@ -11,17 +11,20 @@
 					<h2>{{ product.name }}</h2>
 				</div>
 				<p>{{ product.description }}</p>
-				<div class="row justify-content-sm-center">
-					<div class="col col-xs-6">
-						<h3 class="text-center">{{ product.pricePerUnit }}/{{ product.unit }}</h3>
-					</div>
-					<div class="col col-xs-6">
-						<a [routerLink]="['../../cart']" class="btn btn-olf-primary">Add to Cart</a>
-					</div>
-				</div>
-				
 			</div>
 		</div>
+		<br>
+		<div class="row justify-content-sm-center">
+			<div class="col-5 col-md-3 col-offset-md-2">
+				<h3 class="text-center">{{ product.pricePerUnit }}/{{ product.unit }}</h3>
+			</div>
+			<div class="col-7 col-md-4">
+					<app-add-to-cart [product]="product"></app-add-to-cart>
+			</div>
+		</div>
+				
+			
+		
 		<hr>
 		
 		<!-- display once resolved -->

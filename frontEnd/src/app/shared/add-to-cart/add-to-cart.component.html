@@ -1,4 +1,19 @@
 <form>
+    <div class="row">
+        <div class="col-lg-8 col-offset-lg-2">
+            <ng-template #modalContent let-close="close">
+                <div class="modal-body">
+                    <div class="text-center">          
+                        <p><em>Item added to cart.</em></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-olf-primary" [routerLink]="['../cart']" (click)="close()">View Cart</a>
+                    <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Continue Shopping</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
     <div class="row mx-0">
         <div class="col-6 p-0">
             <div class="input-group h-100 m-0 p-0">

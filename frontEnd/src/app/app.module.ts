@@ -31,7 +31,7 @@ import { ResultsPaneComponent } from './feature/search/search-results/results-pa
 import { ProducerComponent } from './feature/producer/producer.component';
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
-import { CartComponent } from './feature/cart/cart/cart.component';
+import { CartsComponent } from './feature/cart/cart/carts.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { UsersComponent } from './feature/dashboard/admin/users/users.component';
@@ -57,6 +57,8 @@ import { ProducerCardComponent } from './feature/search/search-results/results-p
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
 import { ProducerPageProductCardComponent } from './feature/producer/producer-page/producer-page-product-card/producer-page-product-card.component';
 import { AddToCartComponent } from './shared/add-to-cart/add-to-cart.component';
+import { CartComponent } from './feature/cart/cart/cart/cart.component';
+import { CartProductComponent } from './feature/cart/cart/cart/cart-product/cart-product.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,7 @@ import { AddToCartComponent } from './shared/add-to-cart/add-to-cart.component';
     ProducerComponent,
     ProductComponent,
     ScheduleComponent,
-    CartComponent,
+    CartsComponent,
     SigninComponent,
     RegisterComponent,
     UsersComponent,
@@ -100,6 +102,8 @@ import { AddToCartComponent } from './shared/add-to-cart/add-to-cart.component';
     ProducerPageComponent,
     ProducerPageProductCardComponent,
     AddToCartComponent,
+    CartComponent,
+    CartProductComponent,
   ],
   imports: [
     BrowserModule,
