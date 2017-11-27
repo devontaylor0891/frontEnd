@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 import { ApiService } from '../../api.service';
 
-import { SearchResultModel } from '../../../core/models/search-result.model';
 import { ProductModel } from '../../../core/models/product.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
 import { ProducerModel } from '../../../core/models/producer.model';
@@ -13,11 +12,11 @@ export class SearchService implements OnInit {
 
   // create a place to store the original search results in memory
 	private dataStore: {
-    searchResults: ProductModel[], //holds all the return products and their accompanying info
+    searchResults: ProductModel[], // holds all the return products and their accompanying info
     deliveryTypes: string[], // holds a list of the unique delivery types contained in the above list
-    categories: string[], //holds an array of category/subcategory objects
-	  searchProducers: ProducerModel[], //an array containing basic producer info for the producer view
-	  searchDeliveries: ScheduleModel[] //an array containing basic delivery info for the calendar view
+    categories: string[], // holds an array of category/subcategory objects
+	  searchProducers: ProducerModel[], // an array containing basic producer info for the producer view
+	  searchDeliveries: ScheduleModel[] // an array containing basic delivery info for the calendar view
   }
 	
 	// use a BehaviorSubject to create an observable out of a COPY of the search results
@@ -29,12 +28,12 @@ export class SearchService implements OnInit {
   public _searchProducers: BehaviorSubject<ProducerModel[]>;
   public _searchDeliveries: BehaviorSubject<ScheduleModel[]>;
 
-  //****************** MODIFYING THE VIEW BASED ON FILTER BUTTONS
+  // ****************** MODIFYING THE VIEW BASED ON FILTER BUTTONS
   // create a private property to hold the default view
   private viewStatus = new BehaviorSubject<string>("products");
   public _viewStatus = this.viewStatus.asObservable();
 	
-	//during construction of service, create a empty dataStore and various BehaviorSubjects
+	// during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
     this.dataStore = { searchResults: [], deliveryTypes: [], categories: [], searchProducers: [], searchDeliveries: [] };
     this._searchResults = <BehaviorSubject<ProductModel[]>>new BehaviorSubject([]);
@@ -44,18 +43,18 @@ export class SearchService implements OnInit {
 	  this._searchDeliveries = <BehaviorSubject<ScheduleModel[]>>new BehaviorSubject([]);
   }
   
-  //fill up the dataStore with a call to the API
+  // fill up the dataStore with a call to the API
 	loadAll() {
 		this.apiService.getSearchResults()
 			.subscribe(
 				response => {
-					//fill dataStore
+					// fill dataStore
           this.dataStore.searchResults = response;
           this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.searchResults);
           this.dataStore.categories = this.addCategories(this.dataStore.searchResults);
 		      this.dataStore.searchProducers = this.addSearchProducers(this.dataStore.searchResults);
 		      this.dataStore.searchDeliveries = this.addSearchDeliveries(this.dataStore.searchResults);
-					//make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
+					// make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
           this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
           this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
           this._categories.next(Object.assign({}, this.dataStore).categories);
@@ -65,7 +64,7 @@ export class SearchService implements OnInit {
       );
 	}
 	
-	//create an observable out of the copy of the results
+	// create an observable out of the copy of the results
 	getSearchResults() {
     return this._searchResults.asObservable();
   }
@@ -112,23 +111,23 @@ export class SearchService implements OnInit {
   
   addSearchProducers(searchResults) {
 	  
-	  //create the producers array
+	  // create the producers array
 	  let producers: ProducerModel[] = [];
-	  //loop through each of the search results
+	  // loop through each of the search results
 	  searchResults.forEach((product) => {
-			//get the producer's info
+			// get the producer's info
       let producer = product.producer;
       let pId = producer.id;
-      //get the index of the producer from our working array
+      // get the index of the producer from our working array
       let pIndex = this.getProducerIndex(producer, producers);
-			//add to producers array if array is empty
+			// add to producers array if array is empty
 			if (producers.length === 0) {
         producers[0] = producer;
-      } else if (!this.findByIdInArray(pId, producers)) { //if the producer is not in the array, add them
+      } else if (!this.findByIdInArray(pId, producers)) { // if the producer is not in the array, add them
         producers.push(producer);  
       } 			
     });
-    //return producers array
+    // return producers array
 	  return producers;
   };
 
@@ -149,7 +148,7 @@ export class SearchService implements OnInit {
   }
   
   getSimpleProduct(product) {
-	  //pull out the required info and return as an object
+	  // pull out the required info and return as an object
     let productObject: ProductModel = {
       "id": null,
       "name": '',
@@ -195,20 +194,20 @@ export class SearchService implements OnInit {
 	  
 	 let deliveries: ScheduleModel[] = [];
 	  
-	  //loop through search results
+	  // loop through search results
 	  searchResults.forEach((product) => {
-		  //loop through each product's deliveries
+		  // loop through each product's deliveries
 		  product.scheduleList.forEach((delivery) => {
-			  //if deliveries array is empty, add the delivery
+			  // if deliveries array is empty, add the delivery
 			  if (deliveries.length === 0) {
 				  deliveries[0] = this.buildNewSearchDelivery(delivery, product);
 			  } else if (!this.findByIdInArray(delivery.id, deliveries)) { // if delivery is not in array
-				//add it
+				// add it
 				  deliveries.push(this.buildNewSearchDelivery(delivery, product));
 			  }
 		  })
 	  })
-	  //return the completed array
+	  // return the completed array
 		return deliveries;
   };
   
@@ -254,24 +253,24 @@ export class SearchService implements OnInit {
     let delArray = [];
     values.deliveryTypes.forEach((delivery) => { delArray.push(delivery) });
 
-    //make a copy of results array to filter
+    // make a copy of results array to filter
     let filteredResults: ProductModel[] = [];
 
     results.forEach((product) => { //for each product
-      //if it does contain the delivery AND it does contain the category
+      // if it does contain the delivery AND it does contain the category
       if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
-        //push it to the array
+        // push it to the array
         filteredResults.push(product);
       }
     });
 	
     this._searchResults.next(filteredResults);
 
-    //create a new array for producers
+    // create a new array for producers
     let filteredProducers = this.addSearchProducers(filteredResults);
     this._searchProducers.next(filteredProducers);
 
-    //ditto for deliveries
+    // ditto for deliveries
     let filteredDeliveries = this.addSearchDeliveries(filteredResults);
     this._searchDeliveries.next(filteredDeliveries);
     
