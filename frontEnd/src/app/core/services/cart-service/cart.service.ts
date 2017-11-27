@@ -15,21 +15,22 @@ export class CartService {
 
   private dataStore: {
 	  carts: any[], // for some fucking reason, this can't be typed as an OrderModel or the compiler throws errors randomly
-    cartCount: number
+    cartCount: number,
+    schedulesArray: Object[]
   };
   private _carts: BehaviorSubject<OrderModel[]>;
   private _cartCount: BehaviorSubject<number>;
-  
 	// note - I think I should also create an array of available schedule choices based on the products in the cart
 	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
 	// this way, i can populate the options with an API call on checkout
-	private schedulesArray: Object[] = [];
+	private _schedulesArray: BehaviorSubject<Object[]>;
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
-    this.dataStore = { carts: [], cartCount: 0 };
+    this.dataStore = { carts: [], cartCount: 0, schedulesArray: [] };
     this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
+    this._schedulesArray = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
   }
   
   getCarts() {
@@ -65,8 +66,8 @@ export class CartService {
     //   // inform user
 	  // // alert?
     // };
-	// change the product's quantities
-	this.makeQtyPending(product.id, quantity);
+	  // change the product's quantities
+	  this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
       // producer isn't there, so build the order from scratch
@@ -97,6 +98,12 @@ export class CartService {
       this.dataStore.carts[producerIndex].productList.push(product);
       this.dataStore.carts[producerIndex].orderDetails.productQuantities.push(productQuantities);
     };
+    // add to the schedules array as necessary
+    this.addToSchedulesArray(producerId, product.scheduleList);
+    // create an array to hold the productIds
+    let productIdList: number[];
+    // for each schedule, get it's list of productIds
+    
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
@@ -214,6 +221,11 @@ export class CartService {
     }
 	  this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
   };
+
+  addToSchedulesArray(producerId, schedulesList) {
+    console.log('producerId: ', producerId);
+    console.log('schedulesList: ', schedulesList);
+  }
 
     // change all product quantities from pending back to available
   emptyCart() {};

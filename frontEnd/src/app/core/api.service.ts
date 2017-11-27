@@ -99,7 +99,7 @@ export class ApiService {
 
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
-  getSearchResults(): Observable<SearchResultModel[]> {
+  getSearchResults(): Observable<ProductModel[]> {
     return this.http
       .get(`http://localhost:3000/searchResults`)
       .catch(this._handleError);

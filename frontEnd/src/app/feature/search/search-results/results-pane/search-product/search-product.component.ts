@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { SearchResultModel } from '../../../../../core/models/search-result.model';
+import { ProductModel } from '../../../../../core/models/product.model';
 
 @Component({
   selector: 'app-search-product',
@@ -9,7 +9,7 @@ import { SearchResultModel } from '../../../../../core/models/search-result.mode
 })
 export class SearchProductComponent implements OnInit {
 
-  @Input() products: SearchResultModel[] = [];
+  @Input() products: ProductModel[] = [];
 
   constructor() { }
 

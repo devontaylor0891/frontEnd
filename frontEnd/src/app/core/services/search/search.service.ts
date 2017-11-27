@@ -13,7 +13,7 @@ export class SearchService implements OnInit {
 
   // create a place to store the original search results in memory
 	private dataStore: {
-    searchResults: SearchResultModel[], //holds all the return products and their accompanying info
+    searchResults: ProductModel[], //holds all the return products and their accompanying info
     deliveryTypes: string[], // holds a list of the unique delivery types contained in the above list
     categories: string[], //holds an array of category/subcategory objects
 	  searchProducers: ProducerModel[], //an array containing basic producer info for the producer view
@@ -21,7 +21,7 @@ export class SearchService implements OnInit {
   }
 	
 	// use a BehaviorSubject to create an observable out of a COPY of the search results
-  public _searchResults: BehaviorSubject<SearchResultModel[]>;
+  public _searchResults: BehaviorSubject<ProductModel[]>;
   
   // create a Behavior Subject to hold all the different delivery types/categories and create an observable from them
   public _deliveryTypes: BehaviorSubject<string[]>;
@@ -37,7 +37,7 @@ export class SearchService implements OnInit {
 	//during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
     this.dataStore = { searchResults: [], deliveryTypes: [], categories: [], searchProducers: [], searchDeliveries: [] };
-    this._searchResults = <BehaviorSubject<SearchResultModel[]>>new BehaviorSubject([]);
+    this._searchResults = <BehaviorSubject<ProductModel[]>>new BehaviorSubject([]);
     this._deliveryTypes = <BehaviorSubject<string[]>>new BehaviorSubject([]);
     this._categories = <BehaviorSubject<string[]>>new BehaviorSubject([]);
 	  this._searchProducers = <BehaviorSubject<ProducerModel[]>>new BehaviorSubject([]);
@@ -88,7 +88,7 @@ export class SearchService implements OnInit {
   
   addDeliveryTypes(searchResults) {
     searchResults.forEach((product) => {
-      product.deliveries.forEach((delivery) => {
+      product.scheduleList.forEach((delivery) => {
         if (!this.dataStore.deliveryTypes.includes(delivery.type)) {
           this.dataStore.deliveryTypes.push(delivery.type)
         }
@@ -198,7 +198,7 @@ export class SearchService implements OnInit {
 	  //loop through search results
 	  searchResults.forEach((product) => {
 		  //loop through each product's deliveries
-		  product.deliveries.forEach((delivery) => {
+		  product.scheduleList.forEach((delivery) => {
 			  //if deliveries array is empty, add the delivery
 			  if (deliveries.length === 0) {
 				  deliveries[0] = this.buildNewSearchDelivery(delivery, product);
@@ -248,14 +248,14 @@ export class SearchService implements OnInit {
   onFilter(values) {
 	
     // get original searchResults, loop through each product, if it doesn't contain one of the deliveries or one of the categories, remove it
-    let results: SearchResultModel[] = this.dataStore.searchResults;
+    let results: ProductModel[] = this.dataStore.searchResults;
     let catArray = [];
     values.categories.forEach((category) => { catArray.push(category) });
     let delArray = [];
     values.deliveryTypes.forEach((delivery) => { delArray.push(delivery) });
 
     //make a copy of results array to filter
-    let filteredResults: SearchResultModel[] = [];
+    let filteredResults: ProductModel[] = [];
 
     results.forEach((product) => { //for each product
       //if it does contain the delivery AND it does contain the category
@@ -288,8 +288,8 @@ export class SearchService implements OnInit {
 
   containDelivery(product, deliveriesArray) {
 	  for (let i = 0; i < deliveriesArray.length; i++) {
-		  for (let j = 0; j < product.deliveries.length; j++) {
-			  if (product.deliveries[j].type === deliveriesArray[i]) {
+		  for (let j = 0; j < product.scheduleList.length; j++) {
+			  if (product.scheduleList[j].type === deliveriesArray[i]) {
 				  return true;
 			  }
 		  }

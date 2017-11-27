@@ -19,7 +19,7 @@
             "province": "MB",
             "logoUrl": "farm-logo-1.jpg"
         },
-        "deliveries": [
+        "scheduleList": [
             {
                 "id": 789,
                 "producerId": 13,
@@ -80,7 +80,7 @@
             "province": "MB",
             "logoUrl": "farm-logo-1.png"
         },
-        "deliveries": [
+        "scheduleList": [
             {
                 "id": 789,
                 "producerId": 13,
@@ -160,7 +160,7 @@
             "province": "SK",
             "logoUrl": "farm-logo-2.png"            
         },
-        "deliveries": [
+        "scheduleList": [
             {
                 "id": 798,
                 "producerId": 18,

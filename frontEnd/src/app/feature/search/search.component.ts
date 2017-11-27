@@ -5,6 +5,7 @@ import { LocationService } from '../../core/services/location/location.service';
 import { SearchService } from '../../core/services/search/search.service';
 
 import { SearchResultModel } from '../../core/models/search-result.model';
+import { ProductModel } from '../../core/models/product.model';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,7 @@ export class SearchComponent implements OnInit {
 
   userLocation;
 
-  searchResults: SearchResultModel[] = [];
+  searchResults: ProductModel[] = [];
 
   constructor(private locationService: LocationService,
               private searchService: SearchService) { }

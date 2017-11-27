@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges} from '@angular/core';
 
-import { SearchResultModel } from '../../../../core/models/search-result.model';
+import { ProductModel } from '../../../../core/models/product.model';
 
 @Component({
   selector: 'app-search-results',
@@ -9,7 +9,7 @@ import { SearchResultModel } from '../../../../core/models/search-result.model';
 })
 export class SearchResultsComponent implements OnInit, OnChanges {
 
-  @Input() searchResults: SearchResultModel[] = [];
+  @Input() searchResults: ProductModel[] = [];
 
   constructor() { }
 
