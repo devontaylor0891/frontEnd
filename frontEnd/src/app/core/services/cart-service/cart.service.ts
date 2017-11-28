@@ -226,6 +226,30 @@ export class CartService {
 	  this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
   };
 
+  findAndMakeQuantity(productId, quantity, producerId) {
+    // make sure quantity is less than or equal to qtyAvailable
+    // get current qtyAvailable
+    // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
+    // if not, inform user and make quantity = qtyAvailable
+    // if (quantity > currentQtyAvailable) {
+    //   quantity = currentQtyAvailable;
+    //   // inform user
+	  // // alert?
+    // };
+	  // change the product's quantities
+	  this.makeQtyPending(productId, quantity);
+    let producerIndex = this.findProducerIndex(producerId);
+    let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
+    let productIndex;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].productId === productId) {
+        productIndex = i;
+      };
+    };
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity = quantity;
+    console.log('new quantity: ', this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity);
+  }
+
   findProducerInSchedList(id) { // return true if producerId is already in scheduleList array, false if not
     let result;
     this.dataStore.schedulesArray.forEach((scheduleObject) => {
