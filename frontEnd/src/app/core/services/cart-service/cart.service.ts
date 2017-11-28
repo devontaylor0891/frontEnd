@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../api.service';
 
 import { OrderModel } from '../../models/order.model';
+import { ScheduleModel } from '../../models/schedule.model';
 
 @Injectable()
 export class CartService {
@@ -16,7 +17,10 @@ export class CartService {
   private dataStore: {
 	  carts: any[], // for some fucking reason, this can't be typed as an OrderModel or the compiler throws errors randomly
     cartCount: number,
-    schedulesArray: Object[]
+    schedulesArray: [{
+      producerId: number,
+      scheduleList: ScheduleModel[]
+    }]
   };
   private _carts: BehaviorSubject<OrderModel[]>;
   private _cartCount: BehaviorSubject<number>;
@@ -27,7 +31,7 @@ export class CartService {
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
-    this.dataStore = { carts: [], cartCount: 0, schedulesArray: [] };
+    this.dataStore = { carts: [], cartCount: 0, schedulesArray: [{ producerId: null, scheduleList: []}] };
     this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
     this._schedulesArray = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
@@ -103,7 +107,7 @@ export class CartService {
     // create an array to hold the productIds
     let productIdList: number[];
     // for each schedule, get it's list of productIds
-    
+
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
@@ -222,10 +226,31 @@ export class CartService {
 	  this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
   };
 
-  addToSchedulesArray(producerId, schedulesList) {
-    console.log('producerId: ', producerId);
-    console.log('schedulesList: ', schedulesList);
-  }
+  findProducerInSchedList(id) { // return true if producerId is already in scheduleList array, false if not
+    let result;
+    this.dataStore.schedulesArray.forEach((scheduleObject) => {
+      if (scheduleObject.producerId === id) {
+        result = true;
+      }
+    });
+    return result;
+  };
+
+  addToSchedulesArray(producerId, scheduleList) {
+    // if dataStore.scheduleList is empty
+    if (this.dataStore.schedulesArray[0].producerId === null) {
+      this.dataStore.schedulesArray = [{ // build the object and put it in the dataStore
+        producerId: producerId,
+        scheduleList: scheduleList
+      }];
+    } else if (!this.findProducerInSchedList(producerId)) { // producerId is not in the dataStore yet
+      let newObject = { // build the new object and push it into the array
+        producerId: producerId,
+        scheduleList: scheduleList
+      };
+      this.dataStore.schedulesArray.push(newObject);
+    }
+  };
 
     // change all product quantities from pending back to available
   emptyCart() {};
