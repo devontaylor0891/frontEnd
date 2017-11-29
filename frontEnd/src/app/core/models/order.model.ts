@@ -18,7 +18,8 @@ export class OrderModel {
             deliveryAddress?: string,
             createdDate?: string,
             producerComment?: string,
-            orderStatus?: string
+            orderStatus?: string,
+            orderValue?: number
         }
     ) {}
 }

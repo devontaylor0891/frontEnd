@@ -52,10 +52,13 @@ export class CartService {
     // increase the cartCount
     this.dataStore.cartCount += quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+    // calculate the total value of this addition
+  	let productValue = this.calculateProductValue(product.pricePerUnit, product.unitsPer, quantity);
     // create the productQuantities object
     let productQuantities = {
       productId: product.id,
-      orderQuantity: quantity
+      orderQuantity: quantity,
+      orderValue: productValue
     };
 	  // get producerId from product,
     let producerId = product.producer.id;
@@ -91,23 +94,22 @@ export class CartService {
           deliveryAddress: '',
           createdDate: '',
           producerComment: '',
-          orderStatus: 'pending'
+          orderStatus: 'pending',
+          orderValue: productValue // set to product value only for the first addition
         }
       };
       // push the new order into the cart
       this.dataStore.carts.push(newOrder);
     } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
-      this.findAndAddMoreQty(product.id, quantity, producerIndex);
+      this.findAndAddMoreQty(product.id, quantity, producerIndex, productValue);
     } else { // if producerId is already in the cart, push the product into that array,
       this.dataStore.carts[producerIndex].productList.push(product);
       this.dataStore.carts[producerIndex].orderDetails.productQuantities.push(productQuantities);
     };
     // add to the schedules array as necessary
     this.addToSchedulesArray(producerId, product.scheduleList);
-    // create an array to hold the productIds
-    let productIdList: number[];
-    // for each schedule, get it's list of productIds
-
+    // calculate/recalc the totalValue of the cart
+// this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
@@ -119,6 +121,19 @@ export class CartService {
     // set a new qty,
     // clear timer and start new timer
     this.restartTimer();
+  };
+
+  // calculate the total value of the additional product ordered
+  calculateProductValue (pricePerUnit, unitsPer, quantity) {
+    return (pricePerUnit * unitsPer * quantity);
+  };
+
+  calculateTotalOrderValue(cart) {
+	  let totalValue;
+	  cart.orderDetails.productQuantities.forEach((object) => {
+		  totalValue += object.orderValue;
+	  });
+	  return totalValue;
   };
 
   // remove a product from the cart
@@ -213,7 +228,7 @@ export class CartService {
   };
   
   // find the product in the array and add the given qty to the existing qty
-  findAndAddMoreQty(productId, quantity, producerIndex) {
+  findAndAddMoreQty(productId, quantity, producerIndex, productValue) {
     // access the productQuantities array
     let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
     // loop through the array and return the index of the appropriate product
@@ -223,7 +238,8 @@ export class CartService {
         productIndex = i;
       }
     }
-	  this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
   };
 
   findAndMakeQuantity(productId, quantity, producerId) {
