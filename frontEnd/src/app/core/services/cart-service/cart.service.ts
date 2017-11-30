@@ -9,6 +9,10 @@ import { ScheduleModel } from '../../models/schedule.model';
 @Injectable()
 export class CartService {
 
+  // id maker for each cart in the cart service instance
+  // start it at negative one so that the tempId will be the index as well
+  private tempId: number = -1;
+
   // data management strategy
   // create the dataStore for the cart
   // it will have to be an array of separate carts, one for each producer in the case that products are chosen from more than one producer, or for products not in the same delivery  
@@ -27,7 +31,8 @@ export class CartService {
 	// note - I think I should also create an array of available schedule choices based on the products in the cart
 	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
 	// this way, i can populate the options with an API call on checkout
-	private _schedulesArray: BehaviorSubject<Object[]>;
+  private _schedulesArray: BehaviorSubject<Object[]>;
+  private _cart: BehaviorSubject<OrderModel>;
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
@@ -35,10 +40,19 @@ export class CartService {
     this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
     this._schedulesArray = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
+    this._cart = <BehaviorSubject<OrderModel>>new BehaviorSubject({});
   }
   
   getCarts() {
 	  return this._carts.asObservable();
+  }
+
+  getCartById() {
+    return this._cart.asObservable();
+  }
+
+  loadCartById(id) {
+    this._cart.next(Object.assign({}, this.dataStore).carts[id]);
   }
 
   getCartCount() {
@@ -77,9 +91,12 @@ export class CartService {
 	  this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
+      // add one to the tempIds variable
+      this.tempId += 1;
       // producer isn't there, so build the order from scratch
       let newOrder = {
         id: null,
+        tempId: this.tempId,
         chosenSchedule: null,
         producer: product.producer,
         consumer: null,
