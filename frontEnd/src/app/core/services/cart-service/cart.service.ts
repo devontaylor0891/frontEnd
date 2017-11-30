@@ -53,7 +53,7 @@ export class CartService {
     this.dataStore.cartCount += quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     // calculate the total value of this addition
-  	let productValue = this.calculateProductValue(product.pricePerUnit, product.unitsPer, quantity);
+  	let productValue = this.calculateProductOrderValue(product, quantity);
     // create the productQuantities object
     let productQuantities = {
       productId: product.id,
@@ -95,21 +95,23 @@ export class CartService {
           createdDate: '',
           producerComment: '',
           orderStatus: 'pending',
-          orderValue: productValue // set to product value only for the first addition
+          orderValue: productValue // set to product value only for the first product added to the cart
         }
       };
       // push the new order into the cart
       this.dataStore.carts.push(newOrder);
     } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
       this.findAndAddMoreQty(product.id, quantity, producerIndex, productValue);
+      this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
     } else { // if producerId is already in the cart, push the product into that array,
       this.dataStore.carts[producerIndex].productList.push(product);
       this.dataStore.carts[producerIndex].orderDetails.productQuantities.push(productQuantities);
+      this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
     };
     // add to the schedules array as necessary
     this.addToSchedulesArray(producerId, product.scheduleList);
     // calculate/recalc the totalValue of the cart
-// this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
+    console.log('producerIndex: ', producerIndex);
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
@@ -124,15 +126,16 @@ export class CartService {
   };
 
   // calculate the total value of the additional product ordered
-  calculateProductValue (pricePerUnit, unitsPer, quantity) {
-    return (pricePerUnit * unitsPer * quantity);
+  calculateProductOrderValue (product, quantity) {
+    let value = product.pricePerUnit * product.unitsPer * quantity; 
+    return value;
   };
 
   calculateTotalOrderValue(cart) {
-	  let totalValue;
+	  let totalValue = 0;
 	  cart.orderDetails.productQuantities.forEach((object) => {
 		  totalValue += object.orderValue;
-	  });
+    });
 	  return totalValue;
   };
 
@@ -242,7 +245,7 @@ export class CartService {
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
   };
 
-  findAndMakeQuantity(productId, quantity, producerId) {
+  findAndMakeQuantity(productId, quantity, producerId, cartCountAdjustment) {
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
     // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
@@ -253,17 +256,25 @@ export class CartService {
 	  // // alert?
     // };
 	  // change the product's quantities
-	  this.makeQtyPending(productId, quantity);
+    this.makeQtyPending(productId, quantity);
+    // increase the cartCount
+    this.dataStore.cartCount += cartCountAdjustment;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     let producerIndex = this.findProducerIndex(producerId);
+    let productIndex = this.findProductIndex(producerIndex, productId);
     let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
-    let productIndex;
+    let productQuantitiesIndex;
+    // find the target product in the productQuantities array
     for (let i = 0; i < array.length; i++) {
       if (array[i].productId === productId) {
-        productIndex = i;
+        productQuantitiesIndex = i;
       };
     };
-    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity = quantity;
-    console.log('new quantity: ', this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity);
+    // change the quantity of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity = quantity;
+    // calculate the new order value of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderValue = this.calculateProductOrderValue(this.dataStore.carts[producerIndex].productList[productIndex], quantity);
+    this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
   }
 
   findProducerInSchedList(id) { // return true if producerId is already in scheduleList array, false if not
