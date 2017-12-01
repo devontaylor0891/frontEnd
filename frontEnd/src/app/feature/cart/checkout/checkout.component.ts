@@ -1,11 +1,17 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+<<<<<<< HEAD
 import { Location } from '@angular/common';
+=======
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
 
 import { CartService } from '../../../core/services/cart-service/cart.service';
 
 import { OrderModel } from '../../../core/models/order.model';
+<<<<<<< HEAD
 import { ScheduleModel } from '../../../core/models/schedule.model';
+=======
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +22,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
   order: OrderModel;
   id: number;
+<<<<<<< HEAD
   communityList: any[];
   showSchedules: boolean = false;
   selectedSchedulesList: ScheduleModel[];
@@ -48,6 +55,14 @@ export class CheckoutComponent implements OnInit, OnChanges {
     return this.communityList[index].scheduleList;
   }
 
+=======
+
+  constructor(private cartService: CartService,
+              private route: ActivatedRoute) { }
+
+  ngOnChanges() {}
+
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
   ngOnInit() {
 
     this.id = +this.route.snapshot.paramMap.get('tempId');
@@ -59,6 +74,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.loadCartById(this.id);
 
+<<<<<<< HEAD
     this.cartService.getCommunityList()
       .subscribe(
         result => {
@@ -71,6 +87,10 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     console.log('this order: ', this.order); 
     console.log('communityList: ', this.communityList);
+=======
+      console.log('this order: ', this.order);  
+
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
   }
 
 }

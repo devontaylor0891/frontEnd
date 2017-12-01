@@ -37,8 +37,11 @@ export class CartService {
 	// this way, i can populate the options with an API call on checkout
   private _schedulesArray: BehaviorSubject<Object[]>;
   private _cart: BehaviorSubject<OrderModel>;
+<<<<<<< HEAD
   private _scheduleList: BehaviorSubject<any[]>;
   private _communityList: BehaviorSubject<any[]>;
+=======
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
@@ -47,8 +50,11 @@ export class CartService {
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
     this._schedulesArray = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
     this._cart = <BehaviorSubject<OrderModel>>new BehaviorSubject({});
+<<<<<<< HEAD
     this._scheduleList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
     this._communityList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
+=======
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
   }
   
   getCarts() {
@@ -148,6 +154,10 @@ export class CartService {
     // add to the schedules array as necessary
     this.addToSchedulesArray(this.tempId, producerId, product.scheduleList);
     // calculate/recalc the totalValue of the cart
+<<<<<<< HEAD
+=======
+    console.log('producerIndex: ', producerIndex);
+>>>>>>> bce2d401fce9ea7bff0f85b51f742f7b2d9488d8
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
