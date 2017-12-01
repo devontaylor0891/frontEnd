@@ -59,6 +59,7 @@ import { ProducerPageProductCardComponent } from './feature/producer/producer-pa
 import { AddToCartComponent } from './shared/add-to-cart/add-to-cart.component';
 import { CartComponent } from './feature/cart/cart/cart/cart.component';
 import { CartProductComponent } from './feature/cart/cart/cart/cart-product/cart-product.component';
+import { CheckoutComponent } from './feature/cart/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { CartProductComponent } from './feature/cart/cart/cart/cart-product/cart
     AddToCartComponent,
     CartComponent,
     CartProductComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

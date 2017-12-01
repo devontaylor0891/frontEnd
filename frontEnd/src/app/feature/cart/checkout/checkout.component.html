@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col col-md-6 offset-md-3 col-lg-4 offset-lg-4 mb-2">
+      <div>
+          <a (click) ="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+        </div>
+    <div class="row olf-primary-color">
+      <div class="col">
+        <div class="w-100 text-center">
+          <h3 class="h3-responsive text-light pt-2">Checkout</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+    <h4>Choose How and When to Get Your Order:</h4>
+    <div class="row">
+      <div class="col-12 mb-2">
+        <p><strong>First, select your community:</strong></p>
+        <select class="custom-select w-100" (change)="onSelect($event)">
+          <option selected disabled>Select:</option>
+          <option 
+            class="dropdown-item" 
+            value="{{ community.city }}" 
+            *ngFor="let community of communityList" 
+            >{{ community.city }}</option>
+        </select>
+      </div>
+      <div class="col-12" *ngIf="showSchedules">
+        <p><strong>Then, select how and when to get your order: </strong></p>
+        <label class="custom-control custom-radio"  *ngFor="let schedule of selectedSchedulesList">
+            <input id="{{ schedule.startDateTime }}" name="{{ schedule.startDateTime }}" type="radio" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">
+              <div class="row">
+                <div class="col-12">
+                  <span><strong>{{ schedule.type }}</strong></span>
+                  <span><strong>{{ schedule.startDateTime | date:'fullDate' }}</strong></span>
+                  <span>{{ schedule.startDateTime | date:'shortTime' }} - {{ schedule.endDateTime | date:'shortTime' }}</span>
+                </div>
+              </div>
+              {{ schedule.startDateTime }}</span>
+          </label>
+      </div>
+    </div> 
+  </div>
+</div>

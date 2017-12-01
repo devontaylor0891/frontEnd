@@ -8,6 +8,7 @@ export class OrderModel {
 
     constructor(
         public id: number,
+        public tempId: number,
         public chosenSchedule: ScheduleModel,
         public producer: ProducerModel,
         public consumer: UserModel,

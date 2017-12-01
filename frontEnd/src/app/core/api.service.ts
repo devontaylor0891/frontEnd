@@ -78,8 +78,6 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ENV } from './env.config';
-import { SearchResultModel } from '../core/models/search-result.model';
-//import { ProductCardModel } from '../core/models/product-card.model';
 import { ProductModel } from '../core/models/product.model';
 import { ScheduleModel } from '../core/models/schedule.model';
 import { ProducerModel } from '../core/models/producer.model';

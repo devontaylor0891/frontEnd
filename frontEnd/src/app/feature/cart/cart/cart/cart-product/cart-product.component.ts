@@ -15,6 +15,7 @@ export class CartProductComponent implements OnInit, OnChanges {
   @Input() productQuantities: Object[];
   quantityOrdered: number;
   totalPrice: number;
+  cartCountAdjustment: number = 0;
 
   constructor(private cartService: CartService) { }
 
@@ -23,7 +24,8 @@ export class CartProductComponent implements OnInit, OnChanges {
   addOne() {
     if (this.quantityOrdered < this.product.qtyAvailable) {
       this.quantityOrdered += 1;
-      this.cartService.findAndMakeQuantity(this.product.id, this.quantityOrdered, this.product.producer.id);
+      this.cartCountAdjustment += 1;
+      this.cartService.findAndMakeQuantity(this.product.id, this.quantityOrdered, this.product.producer.id, this.cartCountAdjustment);
     }
     this.totalPrice = this.calculateTotal();
   }
@@ -31,7 +33,8 @@ export class CartProductComponent implements OnInit, OnChanges {
   lessOne() {
     if (this.quantityOrdered > 0) {
       this.quantityOrdered -= 1;
-      this.cartService.findAndMakeQuantity(this.product.id, this.quantityOrdered, this.product.producer.id);
+      this.cartCountAdjustment -= 1;
+      this.cartService.findAndMakeQuantity(this.product.id, this.quantityOrdered, this.product.producer.id, this.cartCountAdjustment);
     }
     this.totalPrice = this.calculateTotal();
   }

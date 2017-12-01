@@ -9,6 +9,10 @@ import { ScheduleModel } from '../../models/schedule.model';
 @Injectable()
 export class CartService {
 
+  // id maker for each cart in the cart service instance
+  // start it at negative one so that the tempId will be the index as well
+  private tempId: number = -1;
+
   // data management strategy
   // create the dataStore for the cart
   // it will have to be an array of separate carts, one for each producer in the case that products are chosen from more than one producer, or for products not in the same delivery  
@@ -18,8 +22,12 @@ export class CartService {
 	  carts: any[], // for some fucking reason, this can't be typed as an OrderModel or the compiler throws errors randomly
     cartCount: number,
     schedulesArray: [{
+      tempId: number,
       producerId: number,
-      scheduleList: ScheduleModel[]
+      communityList: [{
+        city: string,
+        scheduleList: ScheduleModel[]
+      }]
     }]
   };
   private _carts: BehaviorSubject<OrderModel[]>;
@@ -27,22 +35,48 @@ export class CartService {
 	// note - I think I should also create an array of available schedule choices based on the products in the cart
 	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
 	// this way, i can populate the options with an API call on checkout
-	private _schedulesArray: BehaviorSubject<Object[]>;
+  private _schedulesArray: BehaviorSubject<Object[]>;
+  private _cart: BehaviorSubject<OrderModel>;
+  private _scheduleList: BehaviorSubject<any[]>;
+  private _communityList: BehaviorSubject<any[]>;
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService) {
-    this.dataStore = { carts: [], cartCount: 0, schedulesArray: [{ producerId: null, scheduleList: []}] };
+    this.dataStore = { carts: [], cartCount: 0, schedulesArray: [{ tempId: null, producerId: null, communityList: [{ city: null, scheduleList: [] }] }] };
     this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
     this._schedulesArray = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
+    this._cart = <BehaviorSubject<OrderModel>>new BehaviorSubject({});
+    this._scheduleList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
+    this._communityList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
   }
   
   getCarts() {
 	  return this._carts.asObservable();
   }
 
+  getCartById() {
+    return this._cart.asObservable();
+  }
+
+  loadCartById(id) {
+    this._cart.next(Object.assign({}, this.dataStore).carts[id]);
+  }
+
   getCartCount() {
     return this._cartCount.asObservable();
+  }
+
+  getSchedulesByIdAndCommunity(id, community) {
+    
+  }
+
+  getCommunityList() {
+    return this._communityList.asObservable();
+  };
+
+  loadCommunityList(id) {
+    this._communityList.next(Object.assign({}, this.dataStore).schedulesArray[id].communityList);
   }
 
   // ***********PRODUCT METHODS**********
@@ -53,7 +87,7 @@ export class CartService {
     this.dataStore.cartCount += quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     // calculate the total value of this addition
-  	let productValue = this.calculateProductValue(product.pricePerUnit, product.unitsPer, quantity);
+  	let productValue = this.calculateProductOrderValue(product, quantity);
     // create the productQuantities object
     let productQuantities = {
       productId: product.id,
@@ -77,9 +111,12 @@ export class CartService {
 	  this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
+      // add one to the tempIds variable
+      this.tempId += 1;
       // producer isn't there, so build the order from scratch
       let newOrder = {
         id: null,
+        tempId: this.tempId,
         chosenSchedule: null,
         producer: product.producer,
         consumer: null,
@@ -95,21 +132,22 @@ export class CartService {
           createdDate: '',
           producerComment: '',
           orderStatus: 'pending',
-          orderValue: productValue // set to product value only for the first addition
+          orderValue: productValue // set to product value only for the first product added to the cart
         }
       };
       // push the new order into the cart
       this.dataStore.carts.push(newOrder);
     } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
       this.findAndAddMoreQty(product.id, quantity, producerIndex, productValue);
+      this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
     } else { // if producerId is already in the cart, push the product into that array,
       this.dataStore.carts[producerIndex].productList.push(product);
       this.dataStore.carts[producerIndex].orderDetails.productQuantities.push(productQuantities);
+      this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
     };
     // add to the schedules array as necessary
-    this.addToSchedulesArray(producerId, product.scheduleList);
+    this.addToSchedulesArray(this.tempId, producerId, product.scheduleList);
     // calculate/recalc the totalValue of the cart
-// this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     this.restartTimer();
@@ -124,15 +162,16 @@ export class CartService {
   };
 
   // calculate the total value of the additional product ordered
-  calculateProductValue (pricePerUnit, unitsPer, quantity) {
-    return (pricePerUnit * unitsPer * quantity);
+  calculateProductOrderValue (product, quantity) {
+    let value = product.pricePerUnit * product.unitsPer * quantity; 
+    return value;
   };
 
   calculateTotalOrderValue(cart) {
-	  let totalValue;
+	  let totalValue = 0;
 	  cart.orderDetails.productQuantities.forEach((object) => {
 		  totalValue += object.orderValue;
-	  });
+    });
 	  return totalValue;
   };
 
@@ -242,7 +281,7 @@ export class CartService {
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
   };
 
-  findAndMakeQuantity(productId, quantity, producerId) {
+  findAndMakeQuantity(productId, quantity, producerId, cartCountAdjustment) {
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
     // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
@@ -253,17 +292,25 @@ export class CartService {
 	  // // alert?
     // };
 	  // change the product's quantities
-	  this.makeQtyPending(productId, quantity);
+    this.makeQtyPending(productId, quantity);
+    // increase the cartCount
+    this.dataStore.cartCount += cartCountAdjustment;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     let producerIndex = this.findProducerIndex(producerId);
+    let productIndex = this.findProductIndex(producerIndex, productId);
     let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
-    let productIndex;
+    let productQuantitiesIndex;
+    // find the target product in the productQuantities array
     for (let i = 0; i < array.length; i++) {
       if (array[i].productId === productId) {
-        productIndex = i;
+        productQuantitiesIndex = i;
       };
     };
-    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity = quantity;
-    console.log('new quantity: ', this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity);
+    // change the quantity of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity = quantity;
+    // calculate the new order value of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderValue = this.calculateProductOrderValue(this.dataStore.carts[producerIndex].productList[productIndex], quantity);
+    this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
   }
 
   findProducerInSchedList(id) { // return true if producerId is already in scheduleList array, false if not
@@ -276,20 +323,61 @@ export class CartService {
     return result;
   };
 
-  addToSchedulesArray(producerId, scheduleList) {
+  addToSchedulesArray(tempId, producerId, scheduleList) {
+    let communityList;
     // if dataStore.scheduleList is empty
     if (this.dataStore.schedulesArray[0].producerId === null) {
+      //build the communityList array
+      communityList = this.buildCommunityList(scheduleList);
       this.dataStore.schedulesArray = [{ // build the object and put it in the dataStore
+        tempId: tempId,
         producerId: producerId,
-        scheduleList: scheduleList
+        communityList: communityList
       }];
     } else if (!this.findProducerInSchedList(producerId)) { // producerId is not in the dataStore yet
+      //build the communityList array
+      communityList = this.buildCommunityList(scheduleList);
       let newObject = { // build the new object and push it into the array
+        tempId: tempId,
         producerId: producerId,
-        scheduleList: scheduleList
+        communityList: communityList
       };
       this.dataStore.schedulesArray.push(newObject);
     }
+  };
+
+  buildCommunityList(scheduleList) {
+    let city;
+    let communityList;
+    // for each item in the scheduleList
+    scheduleList.forEach((sched) => {
+      // get the city
+      city = sched.city;
+      if (!communityList) { // if the communityList is empty, add a new one
+        communityList = [{
+          city: city,
+          scheduleList: [sched]
+        }];
+      } else {
+        // get the index of the city
+        let index = this.findCityInCommunityList(city, communityList);
+        if (index === -1) { // if city isn't in there, add it
+          communityList.push({city: city, scheduleList: [sched]});
+        } else {
+          communityList[index].scheduleList.push(sched);
+        }
+      }
+    })
+    return communityList;
+  };
+
+  findCityInCommunityList(city, communityList) {
+    for (let i = 0; i < communityList.length; i++) {
+      if (communityList[i].city === city) {
+        return i;
+      }
+    };
+    return -1;
   };
 
     // change all product quantities from pending back to available

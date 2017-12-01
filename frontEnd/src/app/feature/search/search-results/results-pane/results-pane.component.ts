@@ -2,7 +2,6 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { SearchService } from '../../../../core/services/search/search.service';
 
-import { SearchResultModel } from '../../../../core/models/search-result.model';
 import { ProductModel } from '../../../../core/models/product.model';
 
 

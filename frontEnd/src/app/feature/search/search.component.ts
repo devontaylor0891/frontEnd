@@ -4,7 +4,6 @@ import 'rxjs/Rx';
 import { LocationService } from '../../core/services/location/location.service';
 import { SearchService } from '../../core/services/search/search.service';
 
-import { SearchResultModel } from '../../core/models/search-result.model';
 import { ProductModel } from '../../core/models/product.model';
 
 @Component({
