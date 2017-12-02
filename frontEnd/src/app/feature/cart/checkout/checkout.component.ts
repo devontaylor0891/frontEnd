@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 import { CartService } from '../../../core/services/cart-service/cart.service';
 
@@ -39,8 +40,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
   }
 
   onSelectSchedule($event) {
-    console.log('onSelectSchedule: ', $event); // this logs the index of the selectedSchedulesList
-    // make order.chosenSchedule = selectedSchedulesList[$event]
+    let index = $event;
+    this.order.chosenSchedule = this.selectedSchedulesList[index];
   }
 
   returnSchedules(community) {
@@ -52,6 +53,29 @@ export class CheckoutComponent implements OnInit, OnChanges {
       }
     }
     return this.communityList[index].scheduleList;
+  }
+
+  onSubmitTest(f: NgForm) {
+    console.log(f.value);  // { first: '', last: '' }
+    console.log(f.valid);  // false
+  }
+
+  onSubmit(form: NgForm) {
+    console.log('form: ', form.value);
+    //empty the submitted values
+    // this.submittedValues = {
+    //   categories: [],
+    //   deliveryTypes: []
+    // };
+    // // separate and loop through each of the values
+    // for (let property in form.value) {
+    //   if (form.value.hasOwnProperty(property)) {
+    //     console.log('formval: ', form.value);
+    //     let propValue = form.value[property]; //get the returned values
+    // //     // if the returned value is true
+    //     if (propValue) {
+    //       console.log('prop value: ', propValue);
+    //     }}
   }
 
   ngOnInit() {
@@ -68,7 +92,6 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.cartService.getCommunityList()
       .subscribe(
         result => {
-          console.log('checkout communityList: ', result);
           this.communityList = result;
         }
       );
@@ -76,7 +99,6 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.cartService.loadCommunityList(this.id);
 
     console.log('this order: ', this.order); 
-    console.log('communityList: ', this.communityList);
   }
 
 }

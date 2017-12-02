@@ -75,27 +75,48 @@
       <app-checkout-product *ngFor="let product of order.productList" [product]="product" [productQuantities]="order.orderDetails.productQuantities"></app-checkout-product>
     </div>
   </div>
-  <div class="col col-md-6 offset-md-3 card bg-light mb-2">
-    <div class="row grey lighten-2">
-      <h5 class="h5-responsive mx-auto pt-2 card-title">3. Add Final Details:</h5>
-    </div>
-    <div class="card-body pt-3">
-      <div class="form-check">
-        <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="option1">
-          <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </label>
+
+<!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+    <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+      <div class="row grey lighten-2">
+        <h5 class="h5-responsive mx-auto pt-2 card-title">3. Add Final Details:</h5>
+      </div>
+      <div class="card-body pt-3">
+        <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
+          <p>fee details for door to door</p>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="agreement">
+            <input class="form-check-input" type="checkbox" name="agreement" id="agreement">
+            <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </label>
+          <input type="checkbox" id="test" name="test">
+          <label for="test">test</label>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col col-md-6 offset-md-3 mb-2">
-    <div class="row grey lighten-2 mb-3">
-      <div class="col-6 p-2 text-center">
-        <span>Your Order Total: <strong>{{ order.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
-      </div>
-      <div class="col-6 p-0">
-          <a class="btn btn-olf-primary btn-block px-0 m-0 h-100" [routerLink]="">Send Order</a>
+    <div class="col col-md-6 offset-md-3 mb-2">
+      <div class="row grey lighten-2 mb-3">
+        <div class="col-6 p-2 text-center">
+          <span>Your Order Total: <strong>{{ order.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
+        </div>
+        <div class="col-6 p-0">
+          <button class="btn btn-olf-primary btn-block px-0 m-0 h-100">Send Order</button>
+        </div>
       </div>
     </div>
-  </div>
+
+</form> --> 
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+  <label for="agreement">
+    <input type="checkbox" name="agreement" id="agreement" value="agreed" ngModel>
+    <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </label>
+  <input name="first" ngModel #first="ngModel">
+  <input name="last" ngModel>
+  <button>Submit</button>
+</form>
+  
 </div>
