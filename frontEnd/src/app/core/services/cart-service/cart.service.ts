@@ -32,9 +32,6 @@ export class CartService {
   };
   private _carts: BehaviorSubject<OrderModel[]>;
   private _cartCount: BehaviorSubject<number>;
-	// note - I think I should also create an array of available schedule choices based on the products in the cart
-	// as a product is added to the cart, the schedule id's on that product are pushed to an array based on producer
-	// this way, i can populate the options with an API call on checkout
   private _schedulesArray: BehaviorSubject<Object[]>;
   private _cart: BehaviorSubject<OrderModel>;
   private _scheduleList: BehaviorSubject<any[]>;
@@ -151,14 +148,6 @@ export class CartService {
 
     console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
-    this.restartTimer();
-  };
-
-  // modify the quantity in cart
-  changeQty(product, quantity) {
-    // find the product in the cartContents,
-    // set a new qty,
-    // clear timer and start new timer
     this.restartTimer();
   };
 

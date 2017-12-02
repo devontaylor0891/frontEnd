@@ -38,6 +38,10 @@ export class CheckoutComponent implements OnInit, OnChanges {
     console.log('selectedSchedules: ', this.selectedSchedulesList);
   }
 
+  onSelectSchedule($event) {
+    console.log('onSelectSchedule: ', $event);
+  }
+
   returnSchedules(community) {
     // get the index of the community
     let index;
