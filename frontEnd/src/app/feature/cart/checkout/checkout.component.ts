@@ -39,7 +39,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
   }
 
   onSelectSchedule($event) {
-    console.log('onSelectSchedule: ', $event);
+    console.log('onSelectSchedule: ', $event); // this logs the index of the selectedSchedulesList
+    // make order.chosenSchedule = selectedSchedulesList[$event]
   }
 
   returnSchedules(community) {
