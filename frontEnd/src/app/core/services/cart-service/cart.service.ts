@@ -207,6 +207,20 @@ export class CartService {
     this.dataStore.carts[cartId].orderDetails.createdDate = date;
   }
 
+  getCartCountOfSingleCart(cartId) {
+    let count: number = 0;
+    // get the cart
+    let cart = this.dataStore.carts[cartId];
+    console.log('cart: ', cart);
+    // loop through the productQuantities, adding them to count
+    for (let i = 0; i < cart.orderDetails.productQuantities.length; i++) {
+      console.log('cart.orderDetails.productQuantities[i].orderQuantity; ', cart.orderDetails.productQuantities[i].orderQuantity);
+      count += cart.orderDetails.productQuantities[i].orderQuantity;
+    }
+    console.log('count: ', count);
+    return count;
+  }
+
   // ***********ORDER STATUS METHODS**********
 
   // confirm and send the order from consumer to producer
@@ -224,6 +238,10 @@ export class CartService {
       this.addDeliveryAddress(cartId, deliveryAddress);
     }
     console.log('finished cart: ', this.dataStore.carts);
+    // remove the cart contents from the cart count
+    this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId);
+    console.log('new cartCount: ', this.dataStore.cartCount);
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
   };
 
   // producer accepts order

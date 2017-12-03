@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
 
@@ -28,6 +28,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   deliveryAddress: string;
 
   constructor(private cartService: CartService,
+              private router: Router,
               private route: ActivatedRoute,
               private location: Location) { }
 
@@ -66,6 +67,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
   onSubmit(form: NgForm) {
     this.cartService.confirmAndSendOrder(this.order.tempId, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
+    this.router.navigateByUrl('confirmation');
   }
 
   ngOnInit() {
