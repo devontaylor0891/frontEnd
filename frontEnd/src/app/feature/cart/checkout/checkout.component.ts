@@ -21,6 +21,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   communityList: any[];
   showSchedules: boolean = false;
   selectedSchedulesList: ScheduleModel[];
+  radioSelected: any;
 
   constructor(private cartService: CartService,
               private route: ActivatedRoute,
@@ -42,6 +43,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
   onSelectSchedule($event) {
     let index = $event;
     this.order.chosenSchedule = this.selectedSchedulesList[index];
+    // if there is a fee and the order total is below the fee waiver, add the fee to the total
+    console.log('chosenSchedule: ', this.order.chosenSchedule);
   }
 
   returnSchedules(community) {

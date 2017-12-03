@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col col-md-6 offset-md-3 mb-2">
     <div>
-      <a (click) ="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+      <a (click)="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
     </div>
     <div class="row olf-primary-color">
       <div class="col">
@@ -31,71 +31,129 @@
         <hr>
       </div>
       <div class="col-12 col-md-8 offset-md-2 card-body" *ngIf="showSchedules">
-          <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
-          <div *ngFor="let schedule of selectedSchedulesList, let i = index">
-              <label class="custom-control custom-radio w-100"  >
-                  <input id="{{ schedule.id }}" name="{{ schedule.id }}" type="radio" class="custom-control-input" (click)="onSelectSchedule(i)">
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description w-100">
-                    <div class="row">
-                      <div class="col-12">
-                        <p class="card-text"><strong>{{ schedule.type }}</strong></p>
-                        <p class="card-text">{{ schedule.startDateTime | date:'fullDate' }}, {{ schedule.startDateTime | date:'shortTime' }} - {{ schedule.endDateTime | date:'shortTime' }}</p>
-                        <div class="row">
-                          <div class="col-3">
-                            <p class="card-text"><strong>Description:</strong></p>
-                          </div>
-                          <div class="col-9">
-                            <p class="card-text">{{ schedule.description }}</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-3">
-                            <p class="card-text"><strong>Order Deadline:</strong></p>
-                          </div>
-                          <div class="col-9">
-                            <p class="card-text">{{ schedule.orderDeadline | date: 'medium' }}</p>
-                          </div>
-                        </div>
-                        <hr>
-                      </div>
+        <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
+        <div *ngFor="let schedule of selectedSchedulesList, let i = index">
+          <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
+            <input 
+              id="{{schedule.id}}" 
+              [value]='schedule.id' 
+              type="radio" 
+              name="{{schedule.id}}" 
+              [(ngModel)]="radioSelected" 
+              class="custom-control-input" 
+              (click)="onSelectSchedule(i)">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description w-100">
+              <div class="row">
+                <div class="col-12">
+                  <p class="card-text"><strong>{{ schedule.type }}</strong></p>
+                  <p class="card-text">{{ schedule.startDateTime | date:'fullDate' }}, {{ schedule.startDateTime | date:'shortTime' }} - {{ schedule.endDateTime | date:'shortTime' }}</p>
+                  <div class="row">
+                    <div class="col-3">
+                      <p class="card-text"><strong>Description:</strong></p>
                     </div>
-                  </span>
-                </label>
-          </div>
-        
+                    <div class="col-9">
+                      <p class="card-text">{{ schedule.description }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <p class="card-text"><strong>Order Deadline:</strong></p>
+                    </div>
+                    <div class="col-9">
+                      <p class="card-text">{{ schedule.orderDeadline | date: 'medium' }}</p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div> 
+            </span>
+          </label>
+        </div>
       </div>
     </div> 
   </div>
+
   <div class="col col-md-6 offset-md-3 card bg-light mb-2">
     <div class="row grey lighten-2">
       <h5 class="h5-responsive mx-auto pt-2 card-title">2. Review Your Products:</h5>
     </div>
     <div class="card-body pt-3">
-      <app-checkout-product *ngFor="let product of order.productList" [product]="product" [productQuantities]="order.orderDetails.productQuantities"></app-checkout-product>
+      <app-checkout-product 
+        *ngFor="let product of order.productList" 
+        [product]="product" 
+        [productQuantities]="order.orderDetails.productQuantities"
+        ></app-checkout-product>
     </div>
   </div>
 
-<!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
     <div class="col col-md-6 offset-md-3 card bg-light mb-2">
       <div class="row grey lighten-2">
         <h5 class="h5-responsive mx-auto pt-2 card-title">3. Add Final Details:</h5>
       </div>
       <div class="card-body pt-3">
         <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
-          <p>fee details for door to door</p>
+          <div class="col-12">
+            <blockquote class="blockquote bq-warning p-0">
+              <p class="card-text">You have chosen a door-to-door delivery, which will require a delivery address and may involve a delivery fee.</p>
+            </blockquote>
+          </div>
+          <div class="col-12 col-md-4">
+            <label for="deliveryAddress" class="text-muted">
+              Delivery Address:
+            </label>
+          </div>
+          <div class="col-12 col-md-8">
+            <input
+              type="text" 
+              name="deliveryAddress" 
+              id="deliveryAddress" 
+              ngModel>
+          </div>
+          <div class="mt-2 col-12">
+            <div class="row">
+              <div class="col-12 col-md-4" *ngIf="order.chosenSchedule.hasFee">
+                <label class="text-muted">
+                  Delivery Fee:
+                </label>
+              </div>
+              <div class="col-12 col-md-8"  *ngIf="order.chosenSchedule.hasFee">
+                <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':true:'1.2-2' }} has been added to your order.</p>
+                <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue >= order.chosenSchedule.feeWaiver)" class="card-text">Your order qualifies for free delivery!</p>
+                <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue < order.chosenSchedule.feeWaiver)" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':true:'1.2-2' }} has been added to your order.</p>   
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <label for="consumerComment" class="text-muted">
+              Enter any comments or special instructions for the producer:
+            </label>
+          </div>
+          <div class="col-12 col-md-8">
+            <textarea 
+              name="consumerComment" 
+              id="consumerComment" 
+              ngModel></textarea>
+          </div>
         </div>
         <div class="form-check">
-          <label class="form-check-label" for="agreement">
-            <input class="form-check-input" type="checkbox" name="agreement" id="agreement">
+          <label for="agreement" class="form-check-label">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              name="agreement" 
+              id="agreement" 
+              value="agreed" 
+              ngModel>
             <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </label>
-          <input type="checkbox" id="test" name="test">
-          <label for="test">test</label>
         </div>
       </div>
     </div>
+
     <div class="col col-md-6 offset-md-3 mb-2">
       <div class="row grey lighten-2 mb-3">
         <div class="col-6 p-2 text-center">
@@ -107,16 +165,6 @@
       </div>
     </div>
 
-</form> --> 
-
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-  <label for="agreement">
-    <input type="checkbox" name="agreement" id="agreement" value="agreed" ngModel>
-    <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  </label>
-  <input name="first" ngModel #first="ngModel">
-  <input name="last" ngModel>
-  <button>Submit</button>
-</form>
+  </form>
   
 </div>
