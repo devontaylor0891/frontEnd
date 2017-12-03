@@ -22,6 +22,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   showSchedules: boolean = false;
   selectedSchedulesList: ScheduleModel[];
   radioSelected: any;
+  tempOrderValue: number;
 
   constructor(private cartService: CartService,
               private route: ActivatedRoute,
@@ -43,8 +44,13 @@ export class CheckoutComponent implements OnInit, OnChanges {
   onSelectSchedule($event) {
     let index = $event;
     this.order.chosenSchedule = this.selectedSchedulesList[index];
-    // if there is a fee and the order total is below the fee waiver, add the fee to the total
     console.log('chosenSchedule: ', this.order.chosenSchedule);
+    if ((this.order.chosenSchedule.hasFee) && (this.order.orderDetails.orderValue < this.order.chosenSchedule.feeWaiver)) {
+      this.tempOrderValue = this.order.orderDetails.orderValue + this.order.chosenSchedule.fee;
+    } else {
+      this.tempOrderValue = this.order.orderDetails.orderValue;
+    }
+    
   }
 
   returnSchedules(community) {
@@ -59,8 +65,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
   }
 
   onSubmitTest(f: NgForm) {
-    console.log(f.value);  // { first: '', last: '' }
-    console.log(f.valid);  // false
+    console.log(f.value);
+    console.log(f.valid);
   }
 
   onSubmit(form: NgForm) {
@@ -101,7 +107,9 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.loadCommunityList(this.id);
 
-    console.log('this order: ', this.order); 
+    console.log('this order: ', this.order);
+
+    this.tempOrderValue = this.order.orderDetails.orderValue;
   }
 
 }

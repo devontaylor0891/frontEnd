@@ -49,7 +49,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
 
   
     ngOnInit() {
-      this.orderQty = 1;
+      this.orderQty = 1; // no, this needs to be initialized as the value in the cart, or one if none exists
     }
 
 }
