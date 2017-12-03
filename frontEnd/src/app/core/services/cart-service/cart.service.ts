@@ -126,6 +126,7 @@ export class CartService {
           ],
           consumerComment: '',
           deliveryAddress: '',
+          deliveryFee: null,
           createdDate: '',
           producerComment: '',
           orderStatus: 'pending',
@@ -178,12 +179,52 @@ export class CartService {
   // for each cart in the cart contents, select a schedule
   selectSchedule(cartId, schedule) {
     // in specified cart, push the schedule details
+    this.dataStore.carts[cartId].orderDetails.chosenSchedule = schedule;
   };
+
+  addConsumerComment(cartId, comment) {
+    this.dataStore.carts[cartId].orderDetails.consumerComment = comment;
+  };
+
+  addDeliveryAddress(cartId, address) {
+    this.dataStore.carts[cartId].orderDetails.deliveryAddress = address;
+  };
+
+  addDeliveryFee(cartId, fee) {
+    this.dataStore.carts[cartId].orderDetails.deliveryFee = fee;
+  };
+
+  changeCartStatus(cartId, status) {
+    this.dataStore.carts[cartId].orderDetails.orderStatus = status;
+  }
+
+  returnCartById(id) {
+    return this.dataStore.carts[id];
+  }
+
+  dateStampCart(cartId) {
+    let date = new Date();
+    this.dataStore.carts[cartId].orderDetails.createdDate = date;
+  }
 
   // ***********ORDER STATUS METHODS**********
 
   // confirm and send the order from consumer to producer
-  confirmAndSendOrder(orderId) {};
+  confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
+    // add the chosen schedule to the cart
+    this.selectSchedule(cartId, chosenSchedule);
+    // add the consumer comment to the cart
+    this.addConsumerComment(cartId, consumerComment);
+    // date stamp the cart
+    this.dateStampCart(cartId);
+    if (chosenSchedule.type === "Door-to-door Delivery") {
+      // add the delivery fee, if required
+      this.addDeliveryFee(cartId, chosenSchedule.fee);
+      // add the delivery address, if it exists
+      this.addDeliveryAddress(cartId, deliveryAddress);
+    }
+    console.log('finished cart: ', this.dataStore.carts);
+  };
 
   // producer accepts order
   acceptOrder(orderId) {};
@@ -270,6 +311,52 @@ export class CartService {
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
   };
+
+  addOne(productId, producerId) {
+    // change the product's quantities
+    this.makeQtyPending(productId, 1);
+    // increase the cartCount
+    this.dataStore.cartCount += 1;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+    let producerIndex = this.findProducerIndex(producerId);
+    let productIndex = this.findProductIndex(producerIndex, productId);
+    let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
+    let productQuantitiesIndex;
+    // find the target product in the productQuantities array
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].productId === productId) {
+        productQuantitiesIndex = i;
+      };
+    };
+    // change the quantity of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity += 1;
+    // calculate the new order value of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderValue = this.calculateProductOrderValue(this.dataStore.carts[producerIndex].productList[productIndex], this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity);
+    this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
+  }
+
+  minusOne(productId, producerId) {
+    // change the product's quantities
+    this.makeQtyPending(productId, -1);
+    // increase the cartCount
+    this.dataStore.cartCount -= 1;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+    let producerIndex = this.findProducerIndex(producerId);
+    let productIndex = this.findProductIndex(producerIndex, productId);
+    let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
+    let productQuantitiesIndex;
+    // find the target product in the productQuantities array
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].productId === productId) {
+        productQuantitiesIndex = i;
+      };
+    };
+    // change the quantity of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity -= 1;
+    // calculate the new order value of that product
+    this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderValue = this.calculateProductOrderValue(this.dataStore.carts[producerIndex].productList[productIndex], this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity);
+    this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
+  }
 
   findAndMakeQuantity(productId, quantity, producerId, cartCountAdjustment) {
     // make sure quantity is less than or equal to qtyAvailable

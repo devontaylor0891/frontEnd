@@ -108,8 +108,13 @@
             <input
               type="text" 
               name="deliveryAddress" 
-              id="deliveryAddress" 
-              ngModel>
+              id="deliveryAddress"
+              required
+              #delAddress="ngModel"
+              [(ngModel)]="deliveryAddress">
+              <p class="help-block" *ngIf="delAddress.touched && delAddress.invalid">
+                Please enter your delivery address so the Producer can find you!
+              </p>
           </div>
           <div class="mt-2 col-12">
             <div class="row">
@@ -136,7 +141,7 @@
             <textarea 
               name="consumerComment" 
               id="consumerComment" 
-              ngModel></textarea>
+              [(ngModel)]="consumerComment"></textarea>
           </div>
         </div>
         <div class="form-check">
@@ -146,8 +151,8 @@
               type="checkbox" 
               name="agreement" 
               id="agreement" 
-              value="agreed" 
-              ngModel>
+              value="agreement" 
+              [(ngModel)]="agreement">
             <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </label>
         </div>
@@ -160,7 +165,10 @@
           <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
         </div>
         <div class="col-6 p-0">
-          <button class="btn btn-olf-primary btn-block px-0 m-0 h-100">Send Order</button>
+          <button 
+            class="btn btn-olf-primary btn-block px-0 m-0 h-100"
+            [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid)"
+            >Send Order</button>
         </div>
       </div>
     </div>

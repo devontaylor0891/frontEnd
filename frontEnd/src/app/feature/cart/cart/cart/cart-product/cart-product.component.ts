@@ -13,30 +13,27 @@ export class CartProductComponent implements OnInit, OnChanges {
 
   @Input() product: ProductModel;
   @Input() productQuantities: Object[];
-  quantityOrdered: number;
-  totalPrice: number;
-  cartCountAdjustment: number = 0;
+  productQuantity: number;
+  totalProductValue: number;
 
   constructor(private cartService: CartService) { }
 
   ngOnChanges() {}
   
   addOne() {
-    if (this.quantityOrdered < this.product.qtyAvailable) {
-      this.quantityOrdered += 1;
-      this.cartCountAdjustment += 1;
-      this.cartService.findAndMakeQuantity(this.product.id, this.quantityOrdered, this.product.producer.id, this.cartCountAdjustment);
+    if (this.product.qtyAvailable > 0) {
+      this.cartService.addOne(this.product.id, this.product.producer.id);
+      this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
+      this.totalProductValue = this.calculateTotal();
     }
-    this.totalPrice = this.calculateTotal();
   }
 
   lessOne() {
-    if (this.quantityOrdered > 0) {
-      this.quantityOrdered -= 1;
-      this.cartCountAdjustment -= 1;
-      this.cartService.findAndMakeQuantity(this.product.id, this.quantityOrdered, this.product.producer.id, this.cartCountAdjustment);
+    if (this.productQuantity > 0) {
+      this.cartService.minusOne(this.product.id, this.product.producer.id);
+      this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
+      this.totalProductValue = this.calculateTotal();
     }
-    this.totalPrice = this.calculateTotal();
   }
 
   returnQuantity(array, id) {
@@ -48,15 +45,12 @@ export class CartProductComponent implements OnInit, OnChanges {
   }
 
   calculateTotal() {
-    return (this.product.pricePerUnit) * (this.product.unitsPer) * (this.quantityOrdered);
+    return (this.productQuantity) * (this.product.pricePerUnit) * (this.product.unitsPer);
   }
 
   ngOnInit() {
-
-    this.quantityOrdered = this.returnQuantity(this.productQuantities, this.product.id);
-
-    this.totalPrice = this.calculateTotal();
-
+    this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
+    this.totalProductValue = this.calculateTotal();
   }
 
 }

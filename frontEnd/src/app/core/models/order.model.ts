@@ -17,6 +17,7 @@ export class OrderModel {
             productQuantities?: ProductQuantitiesModel[],
             consumerComment?: string,
             deliveryAddress?: string,
+            deliveryFee?: number,
             createdDate?: string,
             producerComment?: string,
             orderStatus?: string,

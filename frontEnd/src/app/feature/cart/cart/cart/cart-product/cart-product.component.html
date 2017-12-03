@@ -13,8 +13,8 @@
         <button class="btn btn-outline-olf-primary m-0 p-2" type="button" (click)="lessOne()"><i class="fa fa-minus" aria-hidden="true"></i></button>
       </div>
       <div class="col-6">
-          <p class="m-0">{{ quantityOrdered }} x {{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>
-          <p class="m-0"><b>{{ totalPrice | currency:'USD':true:'1.2-2' }}</b></p>
+          <p class="m-0">{{ productQuantity }} x {{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>
+          <p class="m-0"><b>{{ totalProductValue | currency:'USD':true:'1.2-2' }}</b></p>
       </div>
       <div class="col-3">
           <button class="btn btn-outline-olf-primary m-0 p-2" type="button" (click)="addOne()"><i class="fa fa-plus cart-button" aria-hidden="true"></i></button>

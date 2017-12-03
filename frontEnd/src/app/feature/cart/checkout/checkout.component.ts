@@ -23,6 +23,9 @@ export class CheckoutComponent implements OnInit, OnChanges {
   selectedSchedulesList: ScheduleModel[];
   radioSelected: any;
   tempOrderValue: number;
+  agreement: boolean = false;
+  consumerComment: string;
+  deliveryAddress: string;
 
   constructor(private cartService: CartService,
               private route: ActivatedRoute,
@@ -38,19 +41,16 @@ export class CheckoutComponent implements OnInit, OnChanges {
     let selectedCommunity = $event.target.value;
     this.selectedSchedulesList = this.returnSchedules(selectedCommunity);
     this.showSchedules = true;
-    console.log('selectedSchedules: ', this.selectedSchedulesList);
   }
 
   onSelectSchedule($event) {
     let index = $event;
     this.order.chosenSchedule = this.selectedSchedulesList[index];
-    console.log('chosenSchedule: ', this.order.chosenSchedule);
     if ((this.order.chosenSchedule.hasFee) && (this.order.orderDetails.orderValue < this.order.chosenSchedule.feeWaiver)) {
       this.tempOrderValue = this.order.orderDetails.orderValue + this.order.chosenSchedule.fee;
     } else {
       this.tempOrderValue = this.order.orderDetails.orderValue;
     }
-    
   }
 
   returnSchedules(community) {
@@ -64,27 +64,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
     return this.communityList[index].scheduleList;
   }
 
-  onSubmitTest(f: NgForm) {
-    console.log(f.value);
-    console.log(f.valid);
-  }
-
   onSubmit(form: NgForm) {
-    console.log('form: ', form.value);
-    //empty the submitted values
-    // this.submittedValues = {
-    //   categories: [],
-    //   deliveryTypes: []
-    // };
-    // // separate and loop through each of the values
-    // for (let property in form.value) {
-    //   if (form.value.hasOwnProperty(property)) {
-    //     console.log('formval: ', form.value);
-    //     let propValue = form.value[property]; //get the returned values
-    // //     // if the returned value is true
-    //     if (propValue) {
-    //       console.log('prop value: ', propValue);
-    //     }}
+    this.cartService.confirmAndSendOrder(this.order.tempId, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
   }
 
   ngOnInit() {
@@ -107,9 +88,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.loadCommunityList(this.id);
 
-    console.log('this order: ', this.order);
-
     this.tempOrderValue = this.order.orderDetails.orderValue;
+
   }
 
 }
