@@ -10,6 +10,8 @@ import { CartService } from '../services/cart-service/cart.service';
   providers: [AuthService]
 })
 export class HeaderComponent implements OnInit, OnChanges {
+
+  loggedIn: boolean;
   
   cartCount: number;
 
@@ -26,6 +28,13 @@ export class HeaderComponent implements OnInit, OnChanges {
       });
 
     this.cartService.loadCartCount();
+
+    this.authService.loggedIn$
+      .subscribe(
+        result => {
+          this.loggedIn = result;
+        }
+      );
 
   }
 

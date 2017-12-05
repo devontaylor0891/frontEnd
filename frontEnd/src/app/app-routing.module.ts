@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './auth/auth-guards/auth.guard';
+import { AdminGuard } from './auth/auth-guards/admin.guard';
+
 import { LandingContentComponent } from './landing-content/landing-content.component';
 import { SearchComponent } from './feature/search/search.component';
 import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
@@ -24,12 +27,21 @@ const appRoutes: Routes = [
 	
 	{ path: 'search', component: SearchComponent },
 	{ path: 'learn-more', component: LearnMoreComponent },
-	{ path: 'dashboard', component: DashboardComponent, children: [
-		{ path: 'add-user', component: AddUserComponent },
-		{ path: 'add-producer', component: AddProducerComponent },
-		{ path: 'add-product', component: AddProductComponent },
-		{ path: 'add-delivery', component: AddDeliveryComponent },
-		{ path: 'add-order', component: AddOrderComponent }
+	{ path: 'dashboard',
+	canActivate: [
+		AuthGuard,
+		AdminGuard
+	  ],
+	  children: [
+		{
+		  path: '',
+		  component: DashboardComponent, children: [
+			{ path: 'add-user', component: AddUserComponent },
+			{ path: 'add-producer', component: AddProducerComponent },
+			{ path: 'add-product', component: AddProductComponent },
+			{ path: 'add-delivery', component: AddDeliveryComponent },
+			{ path: 'add-order', component: AddOrderComponent }
+		]}
 	]},
 	{ path: 'producer/:id', component: ProducerComponent, children: [
 		{ path: '', component: ProducerPageComponent },
@@ -50,6 +62,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   declarations: [],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+	AuthGuard,
+	AdminGuard
+	]
 })
 export class AppRoutingModule { }

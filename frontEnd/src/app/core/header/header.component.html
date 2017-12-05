@@ -26,15 +26,15 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="learn-more">Learn More</a>
                     </li>
-                    <li class="nav-item" *ngIf="authService.loggedIn">
+                    <li class="nav-item" *ngIf="loggedIn">
                         <a class="nav-link" routerLink="dashboard">My Account</a>
                     </li>
                     <!--<li class="nav-item">-->
                     <!--    <button class="btn btn-olf-primary" data-toggle="modal" data-target="#modalLRForm">Sign in/Register</button>-->
                     <!--</li>-->
                     <li class="nav-item">
-                        <button class="btn btn-olf-primary" *ngIf="!authService.loggedIn" (click)="authService.login()">Sign in/Register</button>
-                        <button class="btn btn-olf-primary" *ngIf="authService.loggedIn" (click)="authService.logout()">Logout</button>
+                        <button class="btn btn-olf-primary" *ngIf="!loggedIn" (click)="authService.login()">Sign in/Register</button>
+                        <button class="btn btn-olf-primary" *ngIf="loggedIn" (click)="authService.logout()">Logout</button>
                     </li>
 			
                 </ul>
