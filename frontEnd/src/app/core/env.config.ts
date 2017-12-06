@@ -7,7 +7,8 @@ const getHost = () => {
   const host = window.location.host;
   return `${protocol}//${host}`;
 };
-const apiURI = _isDev ? 'http://localhost:8083/api/' : `/api/`;
+// const apiURI = _isDev ? 'http://localhost:8083/api/' : `/api/`; // modify the first option to return http://localhost:3000/searchResults
+const apiURI = _isDev ? 'http://localhost:3000/' : `/api/`;
 
 export const ENV = {
   BASE_URI: getHost(),
