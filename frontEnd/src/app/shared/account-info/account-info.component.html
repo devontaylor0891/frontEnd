@@ -1,7 +1,6 @@
 <div class="row">
     <div class="col col-xs-12">
         <div role="tablist" aria-multiselectable="true">
-            
             <div class="card">
                 <div class="card-header dash-accordion" role="tab">
                     <h5 class="mb-0 text-white">Account Information</h5>
@@ -9,15 +8,13 @@
                 <div role="tabpanel" aria-labelledby="accountInfoHeading">
                     <div class="card-block">
                         <img src="{{profile?.picture}}" class="avatar" alt="avatar">
-    <div>
-      <label><i class="glyphicon glyphicon-user"></i> Nickname</label>
-      <h3 class="nickname">{{ profile?.nickname }}</h3>
-    </div>
-    <pre class="full-profile">{{ profile | json }}</pre>
+                        <div>
+                            <h3 class="nickname">{{ profile?.nickname }}</h3>
+                        </div>
+                        <pre class="full-profile">{{ profile | json }}</pre>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>

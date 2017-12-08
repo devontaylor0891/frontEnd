@@ -62,6 +62,7 @@ import { CartProductComponent } from './feature/cart/cart/cart/cart-product/cart
 import { CheckoutComponent } from './feature/cart/checkout/checkout.component';
 import { CheckoutProductComponent } from './feature/cart/checkout/checkout-product/checkout-product.component';
 import { ConfirmationComponent } from './feature/cart/confirmation/confirmation.component';
+import { UpdateProfileComponent } from './auth/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import { ConfirmationComponent } from './feature/cart/confirmation/confirmation.
     CheckoutComponent,
     CheckoutProductComponent,
     ConfirmationComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

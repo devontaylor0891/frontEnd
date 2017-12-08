@@ -99,8 +99,8 @@ export class ApiService {
   // this is using the mock data via json-server
   getSearchResults(): Observable<ProductModel[]> {
     return this.http
-      // .get(`http://localhost:3000/searchResults`)
-      .get(`${ENV.BASE_API}searchResults`)
+      .get(`http://localhost:3000/searchResults`)
+      // .get(`${ENV.BASE_API}searchResults`)
       .catch(this._handleError);
   };
 

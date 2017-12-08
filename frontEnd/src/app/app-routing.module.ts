@@ -17,6 +17,7 @@ import { CartsComponent } from './feature/cart/cart/carts.component';
 import { CheckoutComponent } from './feature/cart/checkout/checkout.component';
 import { ConfirmationComponent } from './feature/cart/confirmation/confirmation.component';
 import { CallbackComponent } from './auth/callback/callback.component';
+import { UpdateProfileComponent } from './auth/update-profile/update-profile.component';
 import { AddUserComponent } from './feature/dashboard/admin/add-new/add-user/add-user.component';
 import { AddProducerComponent } from './feature/dashboard/admin/add-new/add-producer/add-producer.component';
 import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
 	{ path: 'checkout/:tempId', component: CheckoutComponent },
 	{ path: 'confirmation', component: ConfirmationComponent },
 	{ path: 'callback', component: CallbackComponent },
+	{ path: 'update-profile', component: UpdateProfileComponent	},
 	{ path: '', component: LandingContentComponent, pathMatch: 'full' }
 ]
 

@@ -1,7 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Response } from '@angular/http';
-
-import 'rxjs/Rx';
 
 import { ProductModel } from '../../core/models/product.model';
 
@@ -17,6 +14,6 @@ export class ProductCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
 
 }
