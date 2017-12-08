@@ -7,7 +7,7 @@
 			</div>
 			<div class="col col-xs-12 col-sm-6">
 				<div class="text-center">
-					<h4><a [routerLink]="['../../../../producer/' + product.producerId]">{{ product.producerName }}</a></h4>
+					<h4><a [routerLink]="['../../../../producer/' + product.producer.id]">{{ product.producer.name }}</a></h4>
 					<h2>{{ product.name }}</h2>
 				</div>
 				<p>{{ product.description }}</p>
