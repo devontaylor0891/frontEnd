@@ -10,8 +10,7 @@ import { ProductModel } from '../../../core/models/product.model';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss'],
-  providers: [ProducerService]
+  styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit, OnChanges {
 
@@ -24,7 +23,7 @@ export class ProductComponent implements OnInit, OnChanges {
   constructor(private route: ActivatedRoute,
               private producerService: ProducerService) { }
   
-  ngOnChanges() {}
+  ngOnChanges() {  }
 
   ngOnInit() {
 
@@ -35,6 +34,8 @@ export class ProductComponent implements OnInit, OnChanges {
     // note - the snapshot method being used here won't work if the user can navigate directly between product pages
     // see https://angular.io/guide/router#activated-route-in-action
     let id = this.route.snapshot.paramMap.get('id');
+    console.log(id);
+    console.log(this.producerId);
 
     // subscribe to the get method results
     this.producerService.getProductById(id)
@@ -54,5 +55,6 @@ export class ProductComponent implements OnInit, OnChanges {
     // console.log(this.route.paramMap)
 
   }
+  
 
 }

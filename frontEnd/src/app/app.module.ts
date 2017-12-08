@@ -38,7 +38,7 @@ import { UsersComponent } from './feature/dashboard/admin/users/users.component'
 import { ProducersComponent } from './feature/dashboard/admin/producers/producers.component';
 import { ProductsComponent } from './feature/dashboard/admin/products/products.component';
 import { DeliveriesComponent } from './feature/dashboard/admin/deliveries/deliveries.component';
-import { AccountInfoComponent } from './feature/dashboard/admin/account-info/account-info.component';
+import { AccountInfoComponent } from './shared/account-info/account-info.component';
 import { OrdersComponent } from './feature/dashboard/admin/orders/orders.component';
 import { OrderViewDetailsComponent } from './feature/dashboard/admin/orders/order-view-details/order-view-details.component';
 import { CallbackComponent } from './auth/callback/callback.component';
