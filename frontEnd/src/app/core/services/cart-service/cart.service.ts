@@ -12,6 +12,7 @@ export class CartService {
   // id maker for each cart in the cart service instance
   // start it at negative one so that the tempId will be the index as well
   private tempId: number = -1;
+  
 
   // data management strategy
   // create the dataStore for the cart
