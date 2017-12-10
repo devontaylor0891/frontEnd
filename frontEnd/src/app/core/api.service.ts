@@ -87,6 +87,7 @@ export class ApiService {
 
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
+  producersUrl = '../../../../assets/api/producers.json';
 
   constructor(private http: HttpClient,
               private auth: AuthService) { }
@@ -134,6 +135,13 @@ export class ApiService {
   //       .map(response => { return response })
   //       .catch(this._handleError);
   // };
+
+  // get all producers
+  getProducers(): Observable<ProducerModel[]> {
+    return this.http
+      .get(this.producersUrl)
+      .catch(this._handleError);
+  };
 
   // GET one producer by id
   getProducerById(id): Observable<ProducerModel> {
