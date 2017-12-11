@@ -16,6 +16,9 @@ import { ApiService } from './core/api.service';
 import { LocationService } from './core/services/location/location.service';
 import { CartService } from './core/services/cart-service/cart.service';
 
+import { FormatCellPipe } from './shared/format-cell.pipe';
+import { CurrencyPipe } from '@angular/common';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
@@ -63,6 +66,7 @@ import { CheckoutComponent } from './feature/cart/checkout/checkout.component';
 import { CheckoutProductComponent } from './feature/cart/checkout/checkout-product/checkout-product.component';
 import { ConfirmationComponent } from './feature/cart/confirmation/confirmation.component';
 import { UpdateProfileComponent } from './auth/update-profile/update-profile.component';
+import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +116,8 @@ import { UpdateProfileComponent } from './auth/update-profile/update-profile.com
     CheckoutProductComponent,
     ConfirmationComponent,
     UpdateProfileComponent,
+    TableLayoutComponent,
+    FormatCellPipe
   ],
   imports: [
     BrowserModule,
@@ -126,7 +132,7 @@ import { UpdateProfileComponent } from './auth/update-profile/update-profile.com
     CalendarModule.forRoot(),
     NgbModule.forRoot()
   ],
-  providers: [AuthService, ApiService, LocationService, CartService],
+  providers: [AuthService, ApiService, LocationService, CartService, CurrencyPipe],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

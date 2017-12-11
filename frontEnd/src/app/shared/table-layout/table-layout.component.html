@@ -1,3 +1,21 @@
-<p>
-  table-layout works!
-</p>
+<table class="table table-hover">
+    <thead >
+        <tr>
+            <th *ngFor="let map of columnMaps">{{ map.header }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let record of records">
+            <td *ngFor="let map of columnMaps">{{ record[map.primaryKey] | formatCell }}</td>
+            <td>
+                <a data-toggle='modal' data-target=''>View</a>
+            </td>
+            <td *ngIf="editable">
+                <a data-toggle='modal' data-target=''>Edit</a>
+            </td>
+            <td *ngIf="deletable">
+                <a data-toggle='modal' data-target=''>Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ProducerModel } from '../../core/models/producer.model';
 
@@ -18,7 +18,7 @@ export class DashboardService {
 
   // during construction, create the empty datastore and initialize behaviour subjects
   constructor(private apiService: ApiService) {
-    this.dataStore.producers = [];
+    this.dataStore = { producers: [] };
     this._producers = <BehaviorSubject<ProducerModel[]>>new BehaviorSubject([]);
   }
 

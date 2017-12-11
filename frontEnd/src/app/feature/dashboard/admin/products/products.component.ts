@@ -33,17 +33,17 @@ export class ProductsComponent implements OnInit {
 
   }
 
-  //view a single product right in the table
+  // view a single product right in the table
   toggleView(product: any) {
     product.showView = !product.showView;
   }
 
-  //edit a single product right in the table
+  // edit a single product right in the table
   toggleEditForm(product: any) {
     product.showEditForm = !product.showEditForm;
   }
 
-  //add a new product via the add-product component, push it to the appropriate array
+  // add a new product via the add-product component, push it to the appropriate array
   addNewProduct(value) {
     console.log(value);
   }
@@ -51,7 +51,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     
     this.producerService.getProducts()
-      .subscribe( //returns an array
+      .subscribe( // returns an array
         (products) => {
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
           this.currentProducts = current;
