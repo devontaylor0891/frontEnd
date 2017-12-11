@@ -12,10 +12,12 @@
         </ng-template>
     </div>
 </div>
-<table class="table table-hover">
-    <thead >
+<table class="table table-hover tablesaw tablesaw-stack data-tablesaw">
+    <thead>
         <tr>
-            <th *ngFor="let map of columnMaps">{{ map.header }}</th>
+            <th *ngFor="let map of columnMaps" class="data-tablesaw-sortable-head" scope="col">
+                <button class="tablesaw-sortable-btn">{{ map.header }}</button>
+            </th>
         </tr>
     </thead>
     <tbody>
