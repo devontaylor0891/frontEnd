@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, TemplateRef, } from '@angular/core';
-import { Response } from '@angular/http';
+import { Component, OnInit, Input, OnChanges, ViewChild, TemplateRef } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 

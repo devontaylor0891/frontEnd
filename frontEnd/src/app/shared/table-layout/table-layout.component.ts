@@ -1,4 +1,6 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef } from '@angular/core';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ColumnSettingModel } from '../../shared/table-layout/layout.model';
 
@@ -11,6 +13,8 @@ import { FormatCellPipe } from '../../shared/format-cell.pipe';
 })
 export class TableLayoutComponent implements OnInit, OnChanges {
 
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+
   @Input() records: any[];
   @Input() caption: string;
   keys: string[];
@@ -18,6 +22,7 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   columnMaps: ColumnSettingModel[];
   @Input() editable: boolean;
   @Input() deletable: boolean;
+  record: Object;
 
   ngOnChanges() {
     if (this.settings) { // when settings provided
@@ -34,9 +39,15 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   }
   }
 
-  constructor() { }
+  constructor(private modal: NgbModal) { }
 
   ngOnInit() {
+  }
+
+  onOpen(record) {
+    console.log(record);
+    this.record = record;
+    this.modal.open(this.modalContent, { size: 'lg' });
   }
 
 }
