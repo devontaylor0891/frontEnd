@@ -1,8 +1,9 @@
 <div class="row">
     <div class="col-lg-8 col-offset-lg-2">
-        <ng-template #modalContent let-close="close">
+        <ng-template #viewModalContent let-close="close">
             <div class="modal-body">
-                <div class="text-center">          
+                <div class="text-center"> 
+                    <p>View</p>         
                     <pre>{{ record.id }}</pre>
                 </div>
             </div>
@@ -10,13 +11,35 @@
                 <button type="button" class="btn btn-olf-primary" (click)="close()">Close</button>
             </div>
         </ng-template>
+        <ng-template #editModalContent let-close="close">
+            <div class="modal-body">
+                <div class="text-center"> 
+                    <p>Edit</p>         
+                    <pre>{{ record.id }}</pre>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-olf-primary" (click)="close()">Close</button>
+            </div>
+        </ng-template>
+        <ng-template #deleteModalContent let-close="close">
+                <div class="modal-body">
+                    <div class="text-center"> 
+                        <p>Are you sure you want to delete this item?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-olf-primary" (click)="close()">Cancel Delete</button>
+                    <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Confirm Delete</button>
+                </div>
+            </ng-template>
     </div>
 </div>
-<table class="table table-hover tablesaw tablesaw-stack data-tablesaw">
+<table class="table table-responsive-md table-hover">
     <thead>
         <tr>
-            <th *ngFor="let map of columnMaps" class="data-tablesaw-sortable-head" scope="col">
-                <button class="tablesaw-sortable-btn">{{ map.header }}</button>
+            <th *ngFor="let map of columnMaps">
+                <a (click)="onSort(map)">{{ map.header }}</a>
             </th>
         </tr>
     </thead>
@@ -24,13 +47,13 @@
         <tr *ngFor="let record of records">
             <td *ngFor="let map of columnMaps">{{ record[map.primaryKey] | formatCell }}</td>
             <td>
-                <a (click)="onOpen(record)">View</a>
+                <a (click)="onOpenView(record)">View</a>
             </td>
             <td *ngIf="editable">
-                <a data-toggle='modal' data-target=''>Edit</a>
+                <a (click)="onOpenEdit(record)">Edit</a>
             </td>
             <td *ngIf="deletable">
-                <a data-toggle='modal' data-target=''>Delete</a>
+                <a (click)="onSelectDelete(record)">Delete</a>
             </td>
         </tr>
     </tbody>

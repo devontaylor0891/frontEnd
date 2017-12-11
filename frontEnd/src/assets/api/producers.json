@@ -12,11 +12,11 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": 99,
             "status": "active"
         }, {
             "id": 2,
-            "name": "Garden Farms2",
+            "name": "Harden Farms2",
             "location": "Moosomin",
             "province": "SK",
             "description": "This is a description",
@@ -25,11 +25,11 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": 88,
             "status": "active"
         }, {
             "id": 3,
-            "name": "Garden Farms3",
+            "name": "Darden Farms3",
             "location": "Moosomin",
             "province": "SK",
             "description": "This is a description",
@@ -38,12 +38,12 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": 7,
             "status": "active"
         }, {
             "id": 4,
-            "name": "Garden Farms4",
-            "location": "Moosomin",
+            "name": "Karden Farms4",
+            "location": "Goosomin",
             "province": "SK",
             "description": "This is a description",
             "email": "email@email.com",
@@ -51,12 +51,12 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": 4,
             "status": "active"
         }, {
             "id": 5,
-            "name": "Garden Farms5",
-            "location": "Moosomin",
+            "name": "Zarden Farms5",
+            "location": "Roosomin",
             "province": "SK",
             "description": "This is a description",
             "email": "email@email.com",
@@ -64,12 +64,12 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": 3,
             "status": "active"
         }, {
             "id": 6,
             "name": "Garden Farms6",
-            "location": "Moosomin",
+            "location": "Aoosomin",
             "province": "SK",
             "description": "This is a description",
             "email": "email@email.com",
@@ -77,7 +77,7 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": 1,
             "status": "inactive"
         }
     ]
