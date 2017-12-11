@@ -15,6 +15,7 @@ import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
 import { LocationService } from './core/services/location/location.service';
 import { CartService } from './core/services/cart-service/cart.service';
+import { UtilityService } from './core/services/utility/utility.service';
 
 import { FormatCellPipe } from './shared/format-cell.pipe';
 import { CurrencyPipe } from '@angular/common';
@@ -132,7 +133,7 @@ import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.compo
     CalendarModule.forRoot(),
     NgbModule.forRoot()
   ],
-  providers: [AuthService, ApiService, LocationService, CartService, CurrencyPipe],
+  providers: [AuthService, ApiService, LocationService, CartService, CurrencyPipe, UtilityService],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

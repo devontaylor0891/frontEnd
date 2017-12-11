@@ -2,6 +2,8 @@ import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef } from '@an
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { UtilityService } from '../../core/services/utility/utility.service';
+
 import { ColumnSettingModel } from '../../shared/table-layout/layout.model';
 
 import { FormatCellPipe } from '../../shared/format-cell.pipe';
@@ -42,11 +44,15 @@ export class TableLayoutComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(private modal: NgbModal) {
+  constructor(private modal: NgbModal,
+              private utility: UtilityService) {
     //this.sortDirection = [{ columnMap: ''}]
    }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  download(records) {
+    this.utility.convertAndDownload(records);
   }
 
   onOpenView(record) {

@@ -43,7 +43,13 @@
                 </div>
                 <div id="inactiveProducersCollapse" class="collapse" role="tabpanel" aria-labelledby="inactiveProducersHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
+                            <app-table-layout
+                            [records]="inactiveProducers"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
+                        <!-- <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
                             <thead>
                                 <tr>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
@@ -85,7 +91,7 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> -->
                     </div>
                 </div>
             </div>

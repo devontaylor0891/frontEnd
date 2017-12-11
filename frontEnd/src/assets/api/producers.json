@@ -26,7 +26,7 @@
             "latitude": 555,
             "firstName": "Devon",
             "registrationDate": 88,
-            "status": "active"
+            "status": "inactive"
         }, {
             "id": 3,
             "name": "Darden Farms3",
