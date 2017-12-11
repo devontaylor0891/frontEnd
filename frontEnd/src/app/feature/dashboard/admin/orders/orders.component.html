@@ -17,7 +17,13 @@
                 </div>
                 <div id="pendingOrdersCollapse" class="collapse show" role="tabpanel" aria-labelledby="pendingOrdersHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
+                        <app-table-layout
+                            [records]="pendingOrders"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
+                        <!-- <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
                             <thead>
                                 <tr>
                                     <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
@@ -63,15 +69,15 @@
                                             <a data-toggle='modal' data-target=''>Delete</a>
                                         </td>
                                     </tr>
-                                    <!-- .. your new table will be shown under that 'data-row' .. -->
-                                    <tr class="dashboard-details" *ngIf="order.showView"> <!-- any condition here to show details .. ! -->
-                                        <td colspan="100%">
+                                    
+                                     <tr class="dashboard-details" *ngIf="order.showView">
+                                         <td colspan="100%">
                                             <app-order-view-details [order]="order"></app-order-view-details>
                                         </td>
                                     </tr>
                                 </ng-template>
                             </tbody>
-                        </table>
+                        </table> -->
                     </div>
                 </div>
             </div>

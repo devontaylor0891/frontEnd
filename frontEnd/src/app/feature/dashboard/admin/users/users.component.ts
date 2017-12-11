@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { UserAdmin } from '../../../../core/models/dashboard-admin/users/user-admin.model';
+import { UserModel } from '../../../../core/models/user.model';
+import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 import { UserService } from '../../../../core/services/user/user.service';
 
@@ -13,12 +14,32 @@ import { UserService } from '../../../../core/services/user/user.service';
   styleUrls: ['./users.component.scss'],
   providers: [UserService]
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnChanges {
 
-  producers: UserAdmin[] = [];
-  consumers: UserAdmin[] = [];
+  producers: UserModel[] = [];
+  consumers: UserModel[] = [];
+
+  editable: boolean = true;
+  deletable: boolean = true;
+
+  projectSettings: ColumnSettingModel[] = 
+  [
+      {
+        primaryKey: 'firstName',
+        header: 'Name'
+      },
+      {
+        primaryKey: 'email',
+        header: 'Email'
+      }, {
+        primaryKey: 'registrationDate',
+        header: 'Reg. Date'
+      }
+  ];
 
   constructor(private userService: UserService) { }
+
+  ngOnChanges() {}
 
   ngOnInit() {
 

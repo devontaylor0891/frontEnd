@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
-import { Response } from '@angular/http';
-
-import 'rxjs/Rx';
-
-import { OrderAdmin } from '../../../../core/models/dashboard-admin/orders/order-admin.model';
+import { OrderModel } from '../../../../core/models/order.model';
 
 import { OrderService } from '../../../../core/services/order/order.service';
+import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 @Component({
   selector: 'app-orders',
@@ -14,14 +11,43 @@ import { OrderService } from '../../../../core/services/order/order.service';
   styleUrls: ['./orders.component.scss'],
   providers: [OrderService]
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnChanges {
 
-  pendingOrders: OrderAdmin[] = [];
-  acceptedOrders: OrderAdmin[] = [];
-  completedOrders: OrderAdmin[] = [];
-  deniedOrders: OrderAdmin[] = [];
+  pendingOrders: OrderModel[] = [];
+  acceptedOrders: OrderModel[] = [];
+  completedOrders: OrderModel[] = [];
+  deniedOrders: OrderModel[] = [];
+
+  projectSettings: ColumnSettingModel[] = 
+  [
+      {
+          primaryKey: 'producer',
+          header: 'Producer'
+      },
+      {
+          primaryKey: 'location',
+          header: 'Location'
+      },
+      {
+          primaryKey: 'province',
+          header: 'Province'
+      },
+      {
+        primaryKey: 'firstName',
+        header: 'First Name'
+      },
+      {
+        primaryKey: 'email',
+        header: 'Email'
+      }, {
+        primaryKey: 'registrationDate',
+        header: 'Reg. Date'
+      }
+  ];
 
   constructor(private orderService: OrderService) { }
+
+  ngOnChanges() {}
   
   toggleView(order: any) {
     order.showView = !order.showView;

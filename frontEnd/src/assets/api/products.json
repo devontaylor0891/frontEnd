@@ -10,7 +10,10 @@
             "unitsPer": 1,
             "category": "vegetables",
             "subcategory": "carrots",
-            "producerName": "Garden Farms",
+            "producer": {
+                "name": "Garden Farms",
+                "id": 1
+            },
             "dateAdded": "Jan 1 2017",
             "qtyAvailable": 55,
             "qtyPending": 12,
@@ -27,7 +30,10 @@
             "unitsPer": 2,
             "category": "vegetables",
             "subcategory": "beets",
-            "producerName": "Garden Farms",
+            "producer": {
+                "name": "Garden Farms",
+                "id": 1
+            }, 
             "dateAdded": "Jan 2 2017",
             "qtyAvailable": 44,
             "qtyPending": 0,
@@ -44,7 +50,10 @@
             "unitsPer": 1,
             "category": "vegetables",
             "subcategory": "potatoes",
-            "producerName": "Garden Farms",
+            "producer": {
+                "name": "D Farms",
+                "id": 3
+            },
             "dateAdded": "Jan 1 2017",
             "qtyAvailable": 0,
             "qtyPending": 12,
@@ -61,7 +70,10 @@
             "unitsPer": 1,
             "category": "meat",
             "subcategory": "pork",
-            "producerName": "Meaty Farms",
+            "producer": {
+                "name": "Hello Farms",
+                "id": 9
+            },
             "dateAdded": "Jan 1 2017",
             "qtyAvailable": 55,
             "qtyPending": 12,
@@ -78,7 +90,10 @@
             "unitsPer": 1,
             "category": "vegetables",
             "subcategory": "carrots",
-            "producerName": "Meaty Farms",
+            "producer": {
+                "name": "Hello Farms",
+                "id": 9
+            },
             "dateAdded": "Jan 1 2017",
             "qtyAvailable": 55,
             "qtyPending": 12,
@@ -95,7 +110,10 @@
             "unitsPer": 3,
             "category": "vegetables",
             "subcategory": "tomatoes",
-            "producerName": "Gardenia Farms",
+            "producer": {
+                "name": "Hello Farms",
+                "id": 9
+            },
             "dateAdded": "Jan 1 2017",
             "qtyAvailable": 2,
             "qtyPending": 0,

@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { UtilityService } from '../../core/services/utility/utility.service';
 
-import { ColumnSettingModel } from '../../shared/table-layout/layout.model';
+import { ColumnSettingModel, ColumnMap } from '../../shared/table-layout/layout.model';
 
 import { FormatCellPipe } from '../../shared/format-cell.pipe';
 
@@ -23,31 +23,28 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   @Input() caption: string;
   keys: string[];
   @Input() settings: ColumnSettingModel[];
-  columnMaps: ColumnSettingModel[];
-  @Input() editable: boolean;
-  @Input() deletable: boolean;
-  record: Object;
-  sortedRecords: any[];
-  sortDirection: any[];
+  // columnMaps: ColumnSettingModel[];
+  columnMaps: ColumnMap[];
+  @Input() editable: boolean; // governs display of Edit button
+  @Input() deletable: boolean; // display of Delete button
+  record: Object; // single record
+  sortedRecords: any[]; 
+  sortDirection: any[]; // array of the column and it's sort value
 
   ngOnChanges() {
     if (this.settings) { // when settings provided in the parent component property binding
-      this.columnMaps = this.settings;
+      this.columnMaps = this.settings
+        .map( col => new ColumnMap(col) );
     } else { // no settings, create column maps with defaults
       this.columnMaps = Object.keys(this.records[0])
         .map( key => {
-          return {
-            primaryKey: key,
-            header: key.slice(0, 1).toUpperCase() + key.replace(/_/g, ' ' ).slice(1)
-          };
+          return new ColumnMap( { primaryKey: key } );
       });
     }
   }
 
   constructor(private modal: NgbModal,
-              private utility: UtilityService) {
-    //this.sortDirection = [{ columnMap: ''}]
-   }
+              private utility: UtilityService) {}
 
   ngOnInit() {}
 
@@ -56,19 +53,16 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   }
 
   onOpenView(record) {
-    console.log(record);
     this.record = record;
     this.modal.open(this.viewModalContent, { size: 'lg' });
   }
 
   onOpenEdit(record) {
-    console.log(record);
     this.record = record;
     this.modal.open(this.editModalContent, { size: 'lg' });
   }
 
   onSelectDelete(record) {
-    console.log(record);
     this.record = record;
     this.modal.open(this.deleteModalContent, { size: 'lg' });
   }
@@ -103,29 +97,59 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
   sortAscending(array, sortColumn) {
     return array.sort(function (a,b) {
-      let first = a[sortColumn].toLowerCase();
-      let second = b[sortColumn].toLowerCase();
-      if (first < second) {
-        return -1
-      } else if (first > second) {
-        return 1
+      let first;
+      let second;
+      // if the sortColumn is an Object
+      if (typeof a[sortColumn] === 'object') {
+        first = a[sortColumn].name.toLowerCase();
+        second = b[sortColumn].name.toLowerCase();
+        if (first < second) {
+          return -1
+        } else if (first > second) {
+          return 1
+        } else {
+          return 0
+        };
       } else {
-        return 0
-      };
+        first = a[sortColumn].toLowerCase();
+        second = b[sortColumn].toLowerCase();
+        if (first < second) {
+          return -1
+        } else if (first > second) {
+          return 1
+        } else {
+          return 0
+        };
+      } 
     });
   }
 
   sortDescending(array, sortColumn) {
     return array.sort(function (a,b) {
-      let first = a[sortColumn].toLowerCase();
-      let second = b[sortColumn].toLowerCase();
-      if (first > second) {
-        return -1
-      } else if (first < second) {
-        return 1
+      let first;
+      let second;
+      // if the sortColumn is an Object
+      if (typeof a[sortColumn] === 'object') {
+        first = a[sortColumn].name.toLowerCase();
+        second = b[sortColumn].name.toLowerCase();
+        if (first > second) {
+          return -1
+        } else if (first < second) {
+          return 1
+        } else {
+          return 0
+        };
       } else {
-        return 0
-      };
+        first = a[sortColumn].toLowerCase();
+        second = b[sortColumn].toLowerCase();
+        if (first > second) {
+          return -1
+        } else if (first < second) {
+          return 1
+        } else {
+          return 0
+        };
+      } 
     });
   }
 
@@ -143,7 +167,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
     if (this.sortDirection) {
       for (let i = 0; i < this.sortDirection.length; i++) {
         if (this.sortDirection[i].key == map.primaryKey) {
-          
           index = i;
           break;
         } else {

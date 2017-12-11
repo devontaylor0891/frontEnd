@@ -51,7 +51,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let record of records">
-            <td *ngFor="let map of columnMaps">{{ record[map.primaryKey] | formatCell }}</td>
+            <td *ngFor="let map of columnMaps">{{ record[map.access(record)] | formatCell:map.format }}</td>
             <td>
                 <a (click)="onOpenView(record)">View</a>
             </td>

@@ -30,69 +30,12 @@
                 </div>
                 <div id="currentProductsCollapse" class="collapse show" role="tabpanel" aria-labelledby="currentProductsHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover tablesaw-row-border" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Product Name</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Price</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Unit</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Total Price</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Qty Available</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Qty Pending</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-template ngFor let-product [ngForOf]="currentProducts">
-                                    <tr>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}</td>
-                                        <td>{{ product.unit }}</td>
-                                        <td>{{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}</td>
-                                        <td>{{ product.qtyAvailable }}</td>
-                                        <td>{{ product.qtyPending }}</td>
-                                        <td>{{ product.producerName }}</td>
-                                        <td>
-                                            <a (click)="toggleView(product)">View</a>
-                                        </td>
-                                        <td>
-                                            <a (click)="toggleEditForm(product)">Edit</a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle='modal' data-target=''>Delete</a>
-                                        </td>
-                                    </tr>
-                                
-                                    <tr class="dashboard-details" *ngIf="product.showView">
-                                        <td colspan="100%">
-                                            <app-product-view-details [product]="product"></app-product-view-details>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="dashboard-details" *ngIf="product.showEditForm">
-                                        <td colspan="100%">
-                                            <app-product-edit-form [product]="product"></app-product-edit-form>
-                                        </td>
-                                    </tr>
-
-                                </ng-template>
-                                
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="currentProducts"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
@@ -113,57 +56,12 @@
                 </div>
                 <div id="outOfStockProductsCollapse" class="collapse" role="tabpanel" aria-labelledby="outOfStockProductsHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover tablesaw-row-border" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Product Name</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Price</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Unit</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Total Price</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Qty Available</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Qty Pending</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn"></button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let product of outOfStockProducts">
-                                    <td>{{ product.name }}</td>
-                                    <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2'}}</td>
-                                    <td>{{ product.unit }}</td>
-                                    <td>{{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ product.qtyAvailable }}</td>
-                                    <td>{{ product.qtyPending }}</td>
-                                    <td>{{ product.producerName }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="outOfStockProducts"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
@@ -184,61 +82,15 @@
                 </div>
                 <div id="deletedProductsCollapse" class="collapse" role="tabpanel" aria-labelledby="deletedProductsHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover tablesaw-row-border" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Product Name</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Price</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Unit</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Total Price</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Qty Available</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Qty Pending</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn"></button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let product of deletedProducts">
-                                    <td>{{ product.name }}</td>
-                                    <td>{{ product.pricePerUnit | currency:'USD':true:'1.2-2'}}</td>
-                                    <td>{{ product.unit }}</td>
-                                    <td>{{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ product.qtyAvailable }}</td>
-                                    <td>{{ product.qtyPending }}</td>
-                                    <td>{{ product.producerName }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="deletedProducts"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>

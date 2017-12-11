@@ -3,7 +3,8 @@ import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { ProductAdmin } from '../../../../core/models/dashboard-admin/products/product-admin.model';
+import { ProductModel } from '../../../../core/models/product.model';
+import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 import { ProducerService } from '../../../../core/services/producer/producer.service';
 
@@ -15,14 +16,58 @@ import { ProducerService } from '../../../../core/services/producer/producer.ser
 })
 export class ProductsComponent implements OnInit {
 
-  currentProducts: ProductAdmin[] = [];
-  outOfStockProducts: ProductAdmin[] = [];
-  deletedProducts: ProductAdmin[] = [];
+  currentProducts: ProductModel[] = [];
+  outOfStockProducts: ProductModel[] = [];
+  deletedProducts: ProductModel[] = [];
+
+  editable: boolean = true;
+  deletable: boolean = true;
+
+  projectSettings: ColumnSettingModel[] = 
+  [
+      {
+        primaryKey: 'name',
+        header: 'Name'
+      },
+      {
+        primaryKey: 'pricePerUnit',
+        header: 'Price Per',
+        format: 'currency'
+      },
+      {
+        primaryKey: 'unit',
+        header: 'Unit'
+      },
+      {
+        primaryKey: 'unitsPer',
+        header: 'Units Per'
+      },
+      {
+        primaryKey: 'category',
+        header: 'Category'
+      },
+      {
+        primaryKey: 'subcategory',
+        header: 'Subcat'
+      },
+      {
+        primaryKey: 'qtyAvailable',
+        header: 'Available'
+      },
+      {
+        primaryKey: 'qtyPending',
+        header: 'Pending'
+      },
+      {
+        primaryKey: 'producer',
+        header: 'Producer'
+      }
+  ];
 
   constructor(private producerService: ProducerService) {
 
     this.producerService.productAdded.subscribe(
-      (value: ProductAdmin) => {
+      (value: ProductModel) => {
         if (value.qtyAvailable > 0) {
           this.currentProducts.push(value);
         } else {
