@@ -6,13 +6,14 @@ import 'rxjs/Rx';
 import { UserModel } from '../../../../core/models/user.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
-import { UserService } from '../../../../core/services/user/user.service';
+import { DashboardService } from '../../dashboard.service';
+import { DashboardComponent } from 'app/feature/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  providers: [UserService]
+  providers: []
 })
 export class UsersComponent implements OnInit, OnChanges {
 
@@ -37,22 +38,23 @@ export class UsersComponent implements OnInit, OnChanges {
       }
   ];
 
-  constructor(private userService: UserService) { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnChanges() {}
 
   ngOnInit() {
 
-    this.userService.getUsers()
-      .subscribe( //returns an array
+    this.dashboardService.getAllUsers()
+      .subscribe( // returns an array
         (users) => {
-          const producerList = users.filter(user => user.userType === 'producer');
+          const producerList = users.filter(user => user.role === 'producer');
           this.producers = producerList;
-          const consumerList = users.filter(user => user.userType === 'consumer');
+          const consumerList = users.filter(user => user.role === 'consumer');
           this.consumers = consumerList;
-        }  
-      )
+        }
+      );
 
+    this.dashboardService.loadAllUsers();
   }
 
 }

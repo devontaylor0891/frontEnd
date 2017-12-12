@@ -54,16 +54,19 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
   onOpenView(record) {
     this.record = record;
+    console.log('record: ', record);
     this.modal.open(this.viewModalContent, { size: 'lg' });
   }
 
   onOpenEdit(record) {
     this.record = record;
+    console.log('record: ', record);
     this.modal.open(this.editModalContent, { size: 'lg' });
   }
 
   onSelectDelete(record) {
     this.record = record;
+    console.log('record: ', record);
     this.modal.open(this.deleteModalContent, { size: 'lg' });
   }
 

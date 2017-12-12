@@ -6,31 +6,31 @@
             "firstName": "Devon",
             "email": "email@email.com",
             "registrationDate": "Jan 1 2017",
-            "userType": "consumer"
+            "role": "consumer"
         }, {
             "id": 1,
             "firstName": "Devon",
             "email": "email@email.com",
             "registrationDate": "Jan 1 2017",
-            "userType": "producer"
+            "role": "producer"
         }, {
             "id": 1,
             "firstName": "Bob",
             "email": "email@email.com",
             "registrationDate": "Jan 1 2017",
-            "userType": "consumer"
+            "role": "consumer"
         }, {
             "id": 1,
             "firstName": "Fred",
             "email": "email@email.com",
             "registrationDate": "Jan 1 2017",
-            "userType": "producer"
+            "role": "producer"
         }, {
             "id": 1,
             "firstName": "JImmy",
             "email": "email@email.com",
             "registrationDate": "Jan 1 2017",
-            "userType": "consumer"
+            "role": "consumer"
         }
     ]
 

@@ -1,34 +1,63 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
 
-import 'rxjs/Rx';
+import { ScheduleModel } from '../../../../core/models/schedule.model';
+import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
-import { DeliveryAdmin } from '../../../../core/models/dashboard-admin/deliveries/delivery-admin.model';
-
-import { DeliveryService } from '../../../../core/services/delivery/delivery.service';
+import { DashboardService } from '../../dashboard.service';
 
 @Component({
   selector: 'app-deliveries',
   templateUrl: './deliveries.component.html',
-  styleUrls: ['./deliveries.component.scss'],
-  providers: [DeliveryService]
+  styleUrls: ['./deliveries.component.scss']
 })
-export class DeliveriesComponent implements OnInit {
-  
-  upcomingDeliveries: DeliveryAdmin[] = [];
-  completedDeliveries: DeliveryAdmin[] = [];
 
-  constructor(private deliveryService: DeliveryService) { }
+export class DeliveriesComponent implements OnInit {
+
+  upcomingSchedule: ScheduleModel[] = [];
+  completedSchedule: ScheduleModel[] = [];
+
+  projectSettings: ColumnSettingModel[] = 
+  [
+      {
+        primaryKey: 'type',
+        header: 'Type'
+      },
+      {
+        primaryKey: 'startDateTime',
+        header: 'Start'
+      },
+      {
+        primaryKey: 'endDateTime',
+        header: 'End'
+      },
+      {
+        primaryKey: 'city',
+        header: 'Location'
+      },
+      {
+        primaryKey: 'orderDeadline',
+        header: 'Deadline'
+      }, {
+        primaryKey: 'producerId',
+        header: 'Producer ID'
+      }
+  ];
+
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    
-    this.deliveryService.getDeliveries()
-      .subscribe( //returns an array
-        (deliveries) => {
-          this.upcomingDeliveries = deliveries;
-        }  
-      )
-    
+
+    let date = new Date().toISOString();
+
+    this.dashboardService.getAllSchedules()
+      .subscribe( // returns an array
+        results => {
+          this.upcomingSchedule = results;
+        }
+      );
+
+    this.dashboardService.loadAllSchedules();
+
   }
 
 }

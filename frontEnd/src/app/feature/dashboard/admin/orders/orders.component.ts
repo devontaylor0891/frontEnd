@@ -2,6 +2,8 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { OrderModel } from '../../../../core/models/order.model';
 
+import { DashboardService } from '../../dashboard.service';
+
 import { OrderService } from '../../../../core/services/order/order.service';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
@@ -45,7 +47,8 @@ export class OrdersComponent implements OnInit, OnChanges {
       }
   ];
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService,
+              private dashboardService: DashboardService) { }
 
   ngOnChanges() {}
   
@@ -55,19 +58,21 @@ export class OrdersComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    this.orderService.getOrders()
-      .subscribe( //returns an array
+    this.dashboardService.getAllOrders()
+      .subscribe( // returns an array
         (orders) => {
-          const pending = orders.filter(order => order.status === 'pending');
+          const pending = orders.filter(order => order.orderDetails.orderStatus === 'pending');
           this.pendingOrders = pending;
-          const accepted = orders.filter(order => order.status === 'accepted');
+          const accepted = orders.filter(order => order.orderDetails.orderStatus === 'accepted');
           this.acceptedOrders = accepted;
-          const completed = orders.filter(order => order.status === 'completed');
+          const completed = orders.filter(order => order.orderDetails.orderStatus === 'completed');
           this.completedOrders = completed;
-          const denied = orders.filter(order => order.status === 'denied');
+          const denied = orders.filter(order => order.orderDetails.orderStatus === 'denied');
           this.deniedOrders = denied;
         }  
-      )
+      );
+
+    this.dashboardService.loadAllOrders();
 
   }
 

@@ -1,7 +1,7 @@
 export class ScheduleModel {
     constructor(
-		public id: number,
-		public producerId: number,
+        public id: number,
+        public producerId: number,
         public productList: number[],
         public type: string,
         public description: string,
