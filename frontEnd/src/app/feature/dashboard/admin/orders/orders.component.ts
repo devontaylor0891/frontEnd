@@ -23,27 +23,27 @@ export class OrdersComponent implements OnInit, OnChanges {
   projectSettings: ColumnSettingModel[] = 
   [
       {
-          primaryKey: 'producer',
-          header: 'Producer'
+        primaryKey: 'producer',
+        header: 'Producer'
       },
       {
-          primaryKey: 'location',
-          header: 'Location'
+        primaryKey: 'orderDetails',
+        header: 'Order Date',
+        format: 'mediumDate,createdDate'
       },
       {
-          primaryKey: 'province',
-          header: 'Province'
+        primaryKey: 'orderDetails',
+        header: 'Order Time',
+        format: 'shortTime,createdDate'
       },
       {
-        primaryKey: 'firstName',
-        header: 'First Name'
+        primaryKey: 'orderDetails',
+        header: 'Order Total',
+        format: 'currency,orderValue'
       },
       {
-        primaryKey: 'email',
-        header: 'Email'
-      }, {
-        primaryKey: 'registrationDate',
-        header: 'Reg. Date'
+        primaryKey: 'consumer',
+        header: 'Consumer'
       }
   ];
 

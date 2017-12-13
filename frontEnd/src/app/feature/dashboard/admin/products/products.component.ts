@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
-
-import 'rxjs/Rx';
 
 import { ProductModel } from '../../../../core/models/product.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';

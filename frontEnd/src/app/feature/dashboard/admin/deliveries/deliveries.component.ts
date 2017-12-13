@@ -24,11 +24,18 @@ export class DeliveriesComponent implements OnInit {
       },
       {
         primaryKey: 'startDateTime',
-        header: 'Start'
+        header: 'Date',
+        format: 'mediumDate'
+      },
+      {
+        primaryKey: 'startDateTime',
+        header: 'Start Time',
+        format: 'shortTime'
       },
       {
         primaryKey: 'endDateTime',
-        header: 'End'
+        header: 'End Time',
+        format: 'shortTime'
       },
       {
         primaryKey: 'city',
@@ -36,8 +43,15 @@ export class DeliveriesComponent implements OnInit {
       },
       {
         primaryKey: 'orderDeadline',
-        header: 'Deadline'
-      }, {
+        header: 'Deadline Date',
+        format: 'mediumDate'
+      },
+      {
+        primaryKey: 'orderDeadline',
+        header: 'Deadline Time',
+        format: 'shortTime'
+      }, 
+      {
         primaryKey: 'producerId',
         header: 'Producer ID'
       }

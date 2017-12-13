@@ -1,261 +1,123 @@
 [
     {
         "id": 1,
-        "date": "Sept 1",
-        "startTime": 2,
-        "endTime": 4,
-        "type": "Door-to-door",
-        "producerName": "Garden Farms",
-        "location": "Moosomin",
-        "address": "",
-        "description": "This is a quick description.",
-        "hasFee": false,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
         "fee": 0,
-        "hasFeeWaiver": false,
-        "feeWaiverAmount": 0,
-        "products": [
-            {
-                "id": 1,
-                "productName": "Carrots",
-                "pricePerUnit": 7,
-                "unit": "lb",
-                "unitsPer": 1
-            }, {
-                "id": 2,
-                "productName": "Potatoes",
-                "pricePerUnit": 3,
-                "unit": "ea",
-                "unitsPer": 1
-            },
-            {
-                "id": 3,
-                "productName": "Peas",
-                "pricePerUnit": 3,
-                "unit": "lb",
-                "unitsPer": 2
-            }
-        ],
-        "orders": [
-            {
-                "id": 1,
-                "userName": "Dave",
-                "orderStatus": "pending",
-                "dateOrdered": "Sep 1 2017",
-                "orderValue": 34,
-                "products": [
-                    {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }   
-                ]
-            }, {
-                "id": 1,
-                "userName": "Dave",
-                "orderStatus": "pending",
-                "dateOrdered": "Sep 1 2017",
-                "orderValue": 34,
-                "products": [
-                    {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }   
-                ]
-            }, {
-                "id": 1,
-                "userName": "Dave",
-                "orderStatus": "pending",
-                "dateOrdered": "Sep 1 2017",
-                "orderValue": 34,
-                "products": [
-                    {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }   
-                ]
-            }
-        ]
-    }, {
-        "id": 2,
-        "date": "Sept 2",
-        "startTime": 3,
-        "endTime": 4,
-        "type": "Door-to-door",
-        "producerName": "Garden Farms",
-        "location": "Moosomin",
-        "address": "",
-        "description": "This is a quick description.",
-        "hasFee": false,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
         "fee": 0,
-        "hasFeeWaiver": false,
-        "feeWaiverAmount": 0,
-        "products": [
-            {
-                "id": 1,
-                "productName": "Carrots",
-                "pricePerUnit": 7,
-                "unit": "lb",
-                "unitsPer": 1
-            }, {
-                "id": 2,
-                "productName": "Potatoes",
-                "pricePerUnit": 3,
-                "unit": "ea",
-                "unitsPer": 1
-            },
-            {
-                "id": 3,
-                "productName": "Peas",
-                "pricePerUnit": 3,
-                "unit": "lb",
-                "unitsPer": 2
-            }
-        ],
-        "orders": [
-            {
-                "id": 1,
-                "userName": "Dave",
-                "orderStatus": "pending",
-                "dateOrdered": "Sep 1 2017",
-                "orderValue": 34,
-                "products": [
-                    {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }   
-                ]
-            }, {
-                "id": 1,
-                "userName": "Dave",
-                "orderStatus": "pending",
-                "dateOrdered": "Sep 1 2017",
-                "orderValue": 34,
-                "products": [
-                    {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }   
-                ]
-            }, {
-                "id": 1,
-                "userName": "Dave",
-                "orderStatus": "pending",
-                "dateOrdered": "Sep 1 2017",
-                "orderValue": 34,
-                "products": [
-                    {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }, {
-                        "id": 3,
-                        "productName": "Peas",
-                        "pricePerUnit": 3,
-                        "unit": "lb",
-                        "unitsPer": 2,
-                        "qtyOrdered": 4
-                    }   
-                ]
-            }
-        ]
-    }
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}
 ]

@@ -8,11 +8,11 @@ export class OrderModel {
 
     constructor(
         public id: number,
-        public tempId: number,
         public chosenSchedule: ScheduleModel,
         public producer: ProducerModel,
         public consumer: UserModel,
-        public productList: ProductModel[],
+        public tempId?: number,
+        public productList?: ProductModel[],
         public orderDetails?: {
             productQuantities?: ProductQuantitiesModel[],
             consumerComment?: string,
