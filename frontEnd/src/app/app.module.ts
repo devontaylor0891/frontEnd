@@ -68,6 +68,9 @@ import { CheckoutProductComponent } from './feature/cart/checkout/checkout-produ
 import { ConfirmationComponent } from './feature/cart/confirmation/confirmation.component';
 import { UpdateProfileComponent } from './auth/update-profile/update-profile.component';
 import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.component';
+import { AdminDashboardComponent } from './feature/dashboard/admin/admin-dashboard.component';
+import { ConsumerDashboardComponent } from './feature/dashboard/consumer/consumer-dashboard.component';
+import { ProducerDashboardComponent } from './feature/dashboard/producer/producer-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +121,10 @@ import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.compo
     ConfirmationComponent,
     UpdateProfileComponent,
     TableLayoutComponent,
-    FormatCellPipe
+    FormatCellPipe,
+    AdminDashboardComponent,
+    ConsumerDashboardComponent,
+    ProducerDashboardComponent
   ],
   imports: [
     BrowserModule,

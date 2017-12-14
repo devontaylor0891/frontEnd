@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { DashboardService } from './dashboard.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,12 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   ngOnChanges() {};
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    console.log('userType: ', this.auth.returnUserType);
+
+  }
 
 }

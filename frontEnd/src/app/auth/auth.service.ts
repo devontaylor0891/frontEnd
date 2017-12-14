@@ -110,6 +110,11 @@ export class AuthService {
     return roles.indexOf('admin') > -1;
   }
 
+  returnUserType() {
+    let type = this.userProfile.user_metadata.userType;
+    return type;
+  }
+
   logout() {
     // Ensure all auth items removed from localStorage
     localStorage.removeItem('access_token');
