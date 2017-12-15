@@ -11,13 +11,17 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class DashboardComponent implements OnInit, OnChanges {
 
+  userType: string;
+  isAdmin: boolean;
+
   ngOnChanges() {};
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
 
-    console.log('userType: ', this.auth.userProfile['http://myapp.com/userType']);
+    this.userType = this.auth.userProfile['http://myapp.com/userType'];
+    this.isAdmin = this.auth.isAdmin;
 
   }
 

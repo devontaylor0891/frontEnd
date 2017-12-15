@@ -1,6 +1,8 @@
 <div class="container">
 
-    <app-admin-dashbaord></app-admin-dashbaord>
+    <app-admin-dashbaord *ngIf="this.isAdmin"></app-admin-dashbaord>
+    <app-consumer-dashboard *ngIf="this.userType === 'consumer'"></app-consumer-dashboard>
+    <app-producer-dashboard *ngIf="this.userType === 'producer'"></app-producer-dashboard>
 
         <br>
         <!-- Nav tabs -->
