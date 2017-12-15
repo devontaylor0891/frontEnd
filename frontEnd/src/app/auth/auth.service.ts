@@ -19,7 +19,7 @@ export class AuthService {
     scope: AUTH_CONFIG.SCOPE
   });
   userProfile: any;
-  //for admin routes
+  // for admin routes
   isAdmin: boolean;
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
@@ -111,7 +111,7 @@ export class AuthService {
   }
 
   returnUserType() {
-    let type = this.userProfile.user_metadata.userType;
+    let type = this.userProfile.userType;
     return type;
   }
 

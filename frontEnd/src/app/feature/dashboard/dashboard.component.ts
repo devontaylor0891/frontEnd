@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    console.log('userType: ', this.auth.returnUserType);
+    console.log('userType: ', this.auth.userProfile['http://myapp.com/userType']);
 
   }
 
