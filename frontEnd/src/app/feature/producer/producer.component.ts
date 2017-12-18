@@ -40,16 +40,14 @@ export class ProducerComponent implements OnInit, OnChanges {
         }
       );
 
-      
-	  
-	this.producerService.getAllProducts()
+    this.producerService.getAllProducts()
       .subscribe(
         result => {
           this.products = result;
         }
       );
-	  
-	this.producerService.getAllSchedule()
+
+    this.producerService.getAllSchedule()
       .subscribe(
         result => {
           this.schedule = result;
@@ -57,7 +55,7 @@ export class ProducerComponent implements OnInit, OnChanges {
       );
 
     // load the producer's information
-    this.producerService.loadProducerData(id);
+    this.producerService.loadProducerData(+id);
 
   }
 }

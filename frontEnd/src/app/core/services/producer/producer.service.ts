@@ -34,7 +34,7 @@ export class ProducerService implements OnInit {
   public _producerSchedule: BehaviorSubject<ScheduleModel[]>;
   // product - this is bypassing the dataStore step and being populated directly from the Api call right now.
   public _product: BehaviorSubject<ProductModel>;
-    
+
   constructor(private http: Http,
               private apiService: ApiService) { 
     this.dataStore = { 
@@ -51,6 +51,8 @@ export class ProducerService implements OnInit {
   // **************************** LOAD ALL INTO DATASTORE ************************ 
   // GET the producer and store the info in the dataStore, if it's not already in there
   loadProducerData(id) {
+    console.log('id: ', id);
+    console.log('datastore: ', this.dataStore);
 	  if ((this.dataStore.producer === null) || (id !== this.dataStore.producer.id)) {
       this.apiService.getProducerById(id)
         .subscribe(

@@ -1,15 +1,15 @@
 {
-    "id": 95,
-    "name": "Potatoes - 3lb bag",
-    "description": "Red, roundish, delicious.",
-    "image": "potatoes2.jpg",
+    "id": 43,
+    "name": "Carrots",
+    "description": "Orange, cylindrical, delicious.",
+    "image": "carrots.jpg",
     "pricePerUnit": 4,
     "unit": "lb",
-    "unitsPer": 3,
+    "unitsPer": 1,
     "category": "Produce",
-    "subcategory": "Potatoes",
+    "subcategory": "Carrots",
     "producer": {
-        "id": 10156726911823275,
+        "id": 10156726911823276,
         "name": "Gardenzia Farms",
         "location": "Virden",
         "province": "MB",
@@ -32,13 +32,13 @@
         ]
     },
     "dateAdded": "Jan 1 2017",
-    "qtyAvailable": 324,
+    "qtyAvailable": 55,
     "qtyPending": 12,
     "qtyAccepted": 22,
     "qtyCompleted": 345,
     "isObsolete": false,
     "scheduleList": [
-        445,
+        444,
         445,
         789
     ]
