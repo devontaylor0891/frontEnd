@@ -30,6 +30,15 @@ const appRoutes: Routes = [
 	{ path: 'learn-more', component: LearnMoreComponent },
 	{ path: 'dashboard',
 	canActivate: [
+		AuthGuard
+	  ],
+	  children: [
+		{
+		  path: '',
+		  component: DashboardComponent }
+	]},
+	{ path: 'admin',
+	canActivate: [
 		AuthGuard,
 		AdminGuard
 	  ],

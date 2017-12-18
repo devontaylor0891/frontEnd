@@ -71,6 +71,10 @@ import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.compo
 import { AdminDashboardComponent } from './feature/dashboard/admin/admin-dashboard.component';
 import { ConsumerDashboardComponent } from './feature/dashboard/consumer/consumer-dashboard.component';
 import { ProducerDashboardComponent } from './feature/dashboard/producer/producer-dashboard.component';
+import { ConsumerOrdersComponent } from './feature/dashboard/consumer/consumer-orders/consumer-orders.component';
+import { ProducerOrdersComponent } from './feature/dashboard/producer/producer-orders/producer-orders.component';
+import { ProducerProductsComponent } from './feature/dashboard/producer/producer-products/producer-products.component';
+import { ProducerScheduleComponent } from './feature/dashboard/producer/producer-schedule/producer-schedule.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +128,11 @@ import { ProducerDashboardComponent } from './feature/dashboard/producer/produce
     FormatCellPipe,
     AdminDashboardComponent,
     ConsumerDashboardComponent,
-    ProducerDashboardComponent
+    ProducerDashboardComponent,
+    ConsumerOrdersComponent,
+    ProducerOrdersComponent,
+    ProducerProductsComponent,
+    ProducerScheduleComponent
   ],
   imports: [
     BrowserModule,

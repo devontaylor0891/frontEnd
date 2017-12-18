@@ -9,6 +9,8 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
 
+  isAdmin: boolean;
+
   constructor (public authService: AuthService,
                 private router: Router) {
     
@@ -22,7 +24,9 @@ export class AppComponent implements OnInit {
       if(event instanceof NavigationEnd) {
         window.scrollTo(0, 0);
       }
-    })
+    });
+
+    this.isAdmin = this.authService.isAdmin;
 
   }
   

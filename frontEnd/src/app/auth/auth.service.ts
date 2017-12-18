@@ -21,6 +21,7 @@ export class AuthService {
   userProfile: any;
   // for admin routes
   isAdmin: boolean;
+  isAdmin$ = new BehaviorSubject<boolean>(this.isAdmin);
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
@@ -35,6 +36,7 @@ export class AuthService {
     if (this.tokenValid) {
       this.userProfile = JSON.parse(lsProfile);
       this.isAdmin = localStorage.getItem('isAdmin') === 'true';
+      this.isAdmin$.next(this.isAdmin);
       this.setLoggedIn(true);
     } else if (!this.tokenValid && lsProfile) {
       this.logout();

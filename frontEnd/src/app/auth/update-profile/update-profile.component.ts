@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateProfileComponent implements OnInit {
 
+  state: string;
+
   constructor() { }
 
-  ngOnInit() {
 
-    console.log('update profile called!')
+  ngOnInit() {
 
   }
 

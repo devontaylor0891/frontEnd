@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
 import { CartService } from '../services/cart-service/cart.service';
@@ -11,6 +11,7 @@ import { CartService } from '../services/cart-service/cart.service';
 export class HeaderComponent implements OnInit, OnChanges {
 
   loggedIn: boolean;
+  @Input() isAdmin: boolean;
   
   cartCount: number;
 

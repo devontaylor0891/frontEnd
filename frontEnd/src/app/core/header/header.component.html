@@ -29,6 +29,9 @@
                     <li class="nav-item" *ngIf="loggedIn">
                         <a class="nav-link" routerLink="dashboard">My Account</a>
                     </li>
+                    <li class="nav-item" *ngIf="loggedIn">
+                        <a *ngIf="isAdmin" class="nav-link" routerLink="admin">Admin</a>
+                    </li>
                     <!--<li class="nav-item">-->
                     <!--    <button class="btn btn-olf-primary" data-toggle="modal" data-target="#modalLRForm">Sign in/Register</button>-->
                     <!--</li>-->
