@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { ProducerDashboardService } from '../producer-dashboard.service';
 
@@ -10,9 +10,14 @@ import { ProducerDashboardService } from '../producer-dashboard.service';
 })
 export class ProducerDashboardComponent implements OnInit {
 
-  constructor(private dashboard: ProducerDashboardService) { }
+  @Input() id: number;
+
+  constructor(private dashboardService: ProducerDashboardService) { }
 
   ngOnInit() {
+
+    this.dashboardService.loadData(this.id);
+
   }
 
 }

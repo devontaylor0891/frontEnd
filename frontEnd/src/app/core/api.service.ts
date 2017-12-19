@@ -113,12 +113,26 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // single user by id
+  getUserById(id) {
+    return this.http
+      .get('../../../../assets/api/user/' + id + '.json')
+      .catch(this._handleError);
+  }
+
   // **************** ORDERS *******************
   
   // get all orders for admin
   getOrders(): Observable<OrderModel[]> {
     return this.http
       .get(this.allOrdersUrl)
+      .catch(this._handleError);
+  };
+
+  // get all orders for a single producer
+  getOrdersByProducerId(id) {
+    return this.http
+      .get(this.producerUrl + id + '/orders.json')
       .catch(this._handleError);
   };
 

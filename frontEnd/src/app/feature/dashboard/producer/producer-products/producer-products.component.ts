@@ -4,7 +4,7 @@ import { ProductModel } from '../../../../core/models/product.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 // import { ProducerService } from '../../../../core/services/producer/producer.service';
-import { DashboardService } from '../../dashboard.service';
+import { ProducerDashboardService } from '../../producer-dashboard.service';
 
 @Component({
   selector: 'app-producer-products',
@@ -62,7 +62,7 @@ export class ProducerProductsComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: DashboardService) {
+  constructor(private dashboardService: ProducerDashboardService) {
 
     // this.producerService.productAdded.subscribe(
     //   (value: ProductModel) => {
@@ -93,7 +93,7 @@ export class ProducerProductsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dashboardService.getAllProducts()
+    this.dashboardService.getProducts()
       .subscribe( // returns an array
         (products) => {
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
@@ -105,7 +105,7 @@ export class ProducerProductsComponent implements OnInit {
         }
       );
 
-    this.dashboardService.loadAllProducts();
+    // this.dashboardService.loadAllProducts();
 
   }
 
