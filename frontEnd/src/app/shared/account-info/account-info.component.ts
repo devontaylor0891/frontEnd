@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
+
+import { UserModel } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-account-info',
@@ -10,6 +12,7 @@ import { AuthService } from '../../auth/auth.service';
 export class AccountInfoComponent implements OnInit {
 
   profile: any;
+  @Input() user: UserModel;
 
   constructor(private auth: AuthService) { }
 

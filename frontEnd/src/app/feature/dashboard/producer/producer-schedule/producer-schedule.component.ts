@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DashboardService } from '../../dashboard.service';
+import { ProducerDashboardService } from '../../producer-dashboard.service';
 
 import { ScheduleModel } from '../../../../core/models/schedule.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
@@ -11,6 +11,7 @@ import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model
   styleUrls: ['./producer-schedule.component.scss']
 })
 export class ProducerScheduleComponent implements OnInit {
+	
   upcomingSchedule: ScheduleModel[] = [];
   completedSchedule: ScheduleModel[] = [];
 
@@ -55,20 +56,21 @@ export class ProducerScheduleComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: ProducerDashboardService) { }
 
   ngOnInit() {
 
     let date = new Date().toISOString();
 
-    this.dashboardService.getAllSchedules()
+    this.dashboardService.getSchedules()
       .subscribe( // returns an array
-        results => {
-          this.upcomingSchedule = results;
+        (schedules) => {
+          const upcoming = schedules.filter(schedule => schedule.endDateTime > date);
+          this.upcomingSchedule = upcoming;
+          const completed = schedules.filter(schedule => schedule.endDateTime < date);
+          this.completedSchedule = completed;
         }
       );
-
-    this.dashboardService.loadAllSchedules();
 
   }
 }

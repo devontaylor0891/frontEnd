@@ -116,7 +116,7 @@ export class ApiService {
   // single user by id
   getUserById(id) {
     return this.http
-      .get('../../../../assets/api/user/' + id + '.json')
+      .get('../../../../assets/api/user/' + id + '/user.json')
       .catch(this._handleError);
   }
 

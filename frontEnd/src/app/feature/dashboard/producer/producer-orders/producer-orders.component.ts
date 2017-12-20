@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DashboardService } from '../../dashboard.service';
+import { ProducerDashboardService } from '../../producer-dashboard.service';
 
 import { OrderModel } from '../../../../core/models/order.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
@@ -44,7 +44,7 @@ export class ProducerOrdersComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: ProducerDashboardService) { }
 
   ngOnChanges() {}
   
@@ -54,7 +54,7 @@ export class ProducerOrdersComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dashboardService.getAllOrders()
+    this.dashboardService.getOrders()
       .subscribe( // returns an array
         (orders) => {
           const pending = orders.filter(order => order.orderDetails.orderStatus === 'pending');
@@ -67,8 +67,6 @@ export class ProducerOrdersComponent implements OnInit {
           this.deniedOrders = denied;
         }  
       );
-
-    this.dashboardService.loadAllOrders();
 
   }
 
