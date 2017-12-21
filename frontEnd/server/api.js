@@ -49,6 +49,32 @@ module.exports = function(app, config) {
     res.send(res.JSON);
   })
 
+  // POST a new product - from RWAS 6
+  app.post('/api/product/new', jwtCheck, (req, res) => {
+    Product.findOne({
+      name: req.body.name,
+      producerId: req.body.producer.id}, (err, existingProduct) => {
+      if (err) {
+        return res.status(500).send({message: err.message});
+      }
+      if (existingProduct) {
+        return res.status(409).send({message: 'You already have a product with that name.'});
+      }
+      const product = new Product({
+        name: req.body.name,
+        producerId: req.body.producer.id,
+        image: req.body.image,
+        description: req.body.description
+      });
+      product.save((err) => {
+        if (err) {
+          return res.status(500).send({message: err.message});
+        }
+        res.send(product);
+      });
+    });	
+  });
+
   // GET API root
   app.get('/api/', (req, res) => {
     res.send('API works');

@@ -9,15 +9,14 @@
 	"longitude": 444,
 	"latitude": 555,
 	"firstName": "Devon",
-	"registrationDate": "Jan 1 2017",
+	"registrationDate": "2017-12-20T14:17:36.255Z",
 	"status": "active",
 	"productList": [
-		43,
-		95
+		66,
+		67
 	],
 	"scheduleList": [
-		444,
-		445,
-		789
+		666,
+		667
 	]
 }

@@ -1,37 +1,35 @@
-
-
-    [
-        {
-            "id": 1,
-            "firstName": "Devon",
-            "email": "email@email.com",
-            "registrationDate": "Jan 1 2017",
-            "role": "consumer"
-        }, {
-            "id": 1,
-            "firstName": "Devon",
-            "email": "email@email.com",
-            "registrationDate": "Jan 1 2017",
-            "role": "producer"
-        }, {
-            "id": 1,
-            "firstName": "Bob",
-            "email": "email@email.com",
-            "registrationDate": "Jan 1 2017",
-            "role": "consumer"
-        }, {
-            "id": 1,
-            "firstName": "Fred",
-            "email": "email@email.com",
-            "registrationDate": "Jan 1 2017",
-            "role": "producer"
-        }, {
-            "id": 1,
-            "firstName": "JImmy",
-            "email": "email@email.com",
-            "registrationDate": "Jan 1 2017",
-            "role": "consumer"
-        }
-    ]
+[
+	{
+		"id": 1,
+		"firstName": "Garfield",
+		"email": "email@email.com",
+		"registrationDate": "2016-12-20T14:17:36.255Z",
+		"role": "consumer"
+	}, {
+		"id": 2,
+		"firstName": "Devon",
+		"email": "email@email.com",
+		"registrationDate": "2015-12-20T14:17:36.255Z",
+		"role": "producer"
+	}, {
+		"id": 3,
+		"firstName": "Bob",
+		"email": "email@email.com",
+		"registrationDate": "2017-12-20T14:17:36.255Z",
+		"role": "consumer"
+	}, {
+		"id": 4,
+		"firstName": "Fred",
+		"email": "email@email.com",
+		"registrationDate": "2017-12-19T14:17:36.255Z",
+		"role": "producer"
+	}, {
+		"id": 10156726911823276,
+		"firstName": "Devon",
+		"email": "devontaylor0891@gmail.com",
+		"registrationDate": "2017-12-20T14:17:36.255Z",
+		"role": "producer"
+	}
+]
 
 
