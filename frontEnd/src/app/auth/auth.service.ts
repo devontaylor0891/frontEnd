@@ -4,11 +4,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth.config';
 import * as auth0 from 'auth0-js';
 
+
 // Avoid name not found warnings
 declare var auth0: any;
 
 @Injectable()
 export class AuthService {
+
+
   // Create Auth0 web auth instance
   private _auth0 = new auth0.WebAuth({
     clientID: AUTH_CONFIG.CLIENT_ID,
@@ -27,6 +30,7 @@ export class AuthService {
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
   constructor(private router: Router) {
+
     // If authenticated, set local profile property
     // and update login status subject.
     // If not authenticated but there are still items

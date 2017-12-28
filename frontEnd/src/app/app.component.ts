@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   isAdmin: boolean;
 
   constructor (public authService: AuthService,
-                private router: Router) {
+              private router: Router) {
     
     this.authService.handleAuth();
     

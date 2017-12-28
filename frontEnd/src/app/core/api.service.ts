@@ -61,8 +61,8 @@ export class ApiService {
   // GET all products from a single producers
   getProductsByProducerId(id): Observable<ProductModel[]> {
   return this.http
-    // .get(`${ENV.BASE_API}producer/` + id + '/products')
-		.get(this.producerUrl + id + '/products.json')
+    .get(`${ENV.BASE_API}producer/` + id + '/products')
+		// .get(this.producerUrl + id + '/products.json')
 		.catch(this._handleError);
   }
 
@@ -71,14 +71,16 @@ export class ApiService {
   // get all schedules for admin
   getSchedules(): Observable<ScheduleModel[]> {
     return this.http
-      .get(this.allSchedulesUrl)
+      .get(`${ENV.BASE_API}schedules`)
+      // .get(this.allSchedulesUrl)
       .catch(this._handleError);
   }
 
   // GET entire schedule from a single producers
   getScheduleByProducerId(id): Observable<ScheduleModel[]> {
     return this.http
-      .get(this.producerUrl + id + '/schedule.json')
+      .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
+      // .get(this.producerUrl + id + '/schedule.json')
       .catch(this._handleError);
   }
 
@@ -97,7 +99,8 @@ export class ApiService {
   // get all producers
   getProducers(): Observable<ProducerModel[]> {
     return this.http
-      .get(this.producersUrl)
+      .get(`${ENV.BASE_API}producer/`)
+      // .get(this.producersUrl)
       .catch(this._handleError);
   };
 
@@ -115,14 +118,16 @@ export class ApiService {
   // get all users for admin
   getUsers(): Observable<UserModel[]> {
     return this.http
-      .get(this.allUsersUrl)
+      .get(`${ENV.BASE_API}users/`)
+      // .get(this.allUsersUrl)
       .catch(this._handleError);
   };
 
   // single user by id
   getUserById(id) {
     return this.http
-      .get('../../../../assets/api/user/' + id + '/user.json')
+      .get(`${ENV.BASE_API}users/` + id)
+      // .get('../../../../assets/api/user/' + id + '/user.json')
       .catch(this._handleError);
   }
 
@@ -131,14 +136,16 @@ export class ApiService {
   // get all orders for admin
   getOrders(): Observable<OrderModel[]> {
     return this.http
-      .get(this.allOrdersUrl)
+      .get(`${ENV.BASE_API}orders`)
+      // .get(this.allOrdersUrl)
       .catch(this._handleError);
   };
 
   // get all orders for a single producer
   getOrdersByProducerId(id) {
     return this.http
-      .get(this.producerUrl + id + '/orders.json')
+      .get(`${ENV.BASE_API}producer/`+ id + '/orders')
+      // .get(this.producerUrl + id + '/orders.json')
       .catch(this._handleError);
   };
 

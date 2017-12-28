@@ -445,7 +445,8 @@
 			]
 		}
     ], 
-    "producer": [
+    "producer": 
+    [
         {
             "id": 13,
             "name": "Gardenia Farms",
@@ -906,6 +907,7 @@
                 "province": "SK",
                 "orderDeadline": "2017-12-02T00:00:00.000Z"
             },
+            "producerId": 13,
             "producer": {
                 "id": 13,
                 "name": "Gardenia Farms",
@@ -1023,6 +1025,7 @@
                 "province": "SK",
                 "orderDeadline": "2017-12-02T00:00:00.000Z"
             },
+            "producerId": 13,
             "producer": {
                 "id": 13,
                 "name": "Gardenia Farms",
@@ -1140,6 +1143,7 @@
                 "province": "SK",
                 "orderDeadline": "2017-12-02T00:00:00.000Z"
             },
+            "producerId": 13,
             "producer": {
                 "id": 13,
                 "name": "Gardenia Farms",
@@ -1257,6 +1261,7 @@
                 "province": "SK",
                 "orderDeadline": "2017-12-02T00:00:00.000Z"
             },
+            "producerId": 13,
             "producer": {
                 "id": 13,
                 "name": "Gardenia Farms",
@@ -1374,6 +1379,7 @@
                 "province": "SK",
                 "orderDeadline": "2017-12-02T00:00:00.000Z"
             },
+            "producerId":10156726911823276,
             "producer": {
                 "id": 13,
                 "name": "Gardenia Farms",
@@ -1491,6 +1497,7 @@
                 "province": "SK",
                 "orderDeadline": "2017-12-02T00:00:00.000Z"
             },
+            "producerId": 10156726911823276,
             "producer": {
                 "id": 13,
                 "name": "Gardenia Farms",
@@ -1586,7 +1593,8 @@
             }
         }
     ],
-    "users": [
+    "users": 
+    [
         {
             "id": 1,
             "firstName": "Garfield",
@@ -1623,6 +1631,7 @@
     [
         {
             "id": 88,
+            "producerId": 18,
             "name": "Beets",
             "description": "This is a description",
             "image": "beet.png",
@@ -1664,6 +1673,7 @@
             ]
         }, {
             "id": 66,
+            "producerId": 10156726911823276,
             "name": "Bacon",
             "description": "Great stuff.",
             "image": "bacon.jpg",
@@ -1706,6 +1716,7 @@
             ]
         }, {
             "id": 67,
+            "producerId": 10156726911823276,
             "name": "Ground Beef",
             "description": "Great beefy stuff.",
             "image": "ground-beef.jpg",
@@ -1748,6 +1759,7 @@
             ]
         }, {
             "id": 43,
+            "producerId": 13,
             "name": "Carrots",
             "description": "Orange, cylindrical, delicious.",
             "image": "carrots.jpg",
@@ -1792,6 +1804,7 @@
             ]
         }, {
             "id": 95,
+            "producerId": 13,
             "name": "Potatoes - 3lb bag",
             "description": "Red, roundish, delicious.",
             "image": "potatoes2.jpg",
@@ -1836,127 +1849,145 @@
             ]
         }
     ],
-    "schedules": [
+    "schedules": 
+    [
         {
-            "id": 1,
+            "id": 444,
             "producerId": 13,
             "productList": [
                 43,
                 95
             ],
             "type": "Door-to-door Delivery",
-            "description": "This is a quick description.",
-            "startDateTime": "2017-12-22T19:05:01.455Z",
-            "endDateTime": "2017-12-22T20:05:01.455Z",
-            "hasFee": false,
-            "fee": 0,
-            "feeWaiver": 0,
-            "latitude": 3333,
-            "longitude": 3333,
-            "city": "Moosomin",
-            "address": "123 Main Street",
+            "description": "We're gonna charge you this time.",
+            "startDateTime": "2017-12-02T01:00:00.000Z",
+            "endDateTime": "2017-12-02T02:00:00.000Z",
+            "hasFee": true,
+            "fee": 5,
+            "feeWaiver": 35,
+            "latitude": 50.2615563,
+            "longitude": -101.9720143,
+            "city": "Wapella",
+            "address": "123 Main St",
             "province": "SK",
-            "orderDeadline": "2017-12-21T19:05:01.455Z"
+            "orderDeadline": "2017-12-02T00:00:00.000Z"
         }, {
-            "id": 1,
+            "id": 445,
             "producerId": 13,
             "productList": [
-                43,
-                95
+            43
             ],
             "type": "Door-to-door Delivery",
-            "description": "This is a quick description.",
-            "startDateTime": "2017-12-22T19:05:01.455Z",
-            "endDateTime": "2017-12-22T20:05:01.455Z",
-            "hasFee": false,
-            "fee": 0,
-            "feeWaiver": 0,
-            "latitude": 3333,
-            "longitude": 3333,
-            "city": "Moosomin",
-            "address": "123 Main Street",
+            "description": "We're gonna charge you this time.",
+            "startDateTime": "2017-12-03T00:00:00.000Z",
+            "endDateTime": "2017-12-03T03:30:00.000Z",
+            "hasFee": true,
+            "fee": 5,
+            "feeWaiver": 35,
+            "latitude": 50.2615563,
+            "longitude": -101.9720143,
+            "city": "Wapella",
+            "address": "123 Main St",
             "province": "SK",
-            "orderDeadline": "2017-12-21T19:05:01.455Z"
+            "orderDeadline": "2017-12-02T00:00:00.000Z"
         }, {
-            "id": 1,
+            "id": 789,
             "producerId": 13,
             "productList": [
                 43,
                 95
             ],
             "type": "Door-to-door Delivery",
-            "description": "This is a quick description.",
-            "startDateTime": "2017-12-22T19:05:01.455Z",
-            "endDateTime": "2017-12-22T20:05:01.455Z",
+            "description": "Delivering to you for no charge.",
+            "startDateTime": "2017-12-01T00:00:00.000Z",
+            "endDateTime": "2017-12-01T02:00:00.000Z",
             "hasFee": false,
-            "fee": 0,
-            "feeWaiver": 0,
-            "latitude": 3333,
-            "longitude": 3333,
+            "fee": null,
+            "feeWaiver": null,
+            "latitude": 50.1437782,
+            "longitude": -101.6671873,
             "city": "Moosomin",
-            "address": "123 Main Street",
+            "address": "123 Main St",
             "province": "SK",
-            "orderDeadline": "2017-12-21T19:05:01.455Z"
+            "orderDeadline": "2017-12-01T00:00:00.000Z"
         }, {
-            "id": 1,
-            "producerId": 13,
+            "id": 798,
+            "producerId": 18,
             "productList": [
-                43,
-                95
+                88
             ],
             "type": "Door-to-door Delivery",
-            "description": "This is a quick description.",
-            "startDateTime": "2017-12-22T19:05:01.455Z",
-            "endDateTime": "2017-12-22T20:05:01.455Z",
+            "description": "Delivering to you for no charge.",
+            "startDateTime": "2018-05-01T00:00:00.000Z",
+            "endDateTime": "2018-05-01T02:00:00.000Z",
             "hasFee": false,
-            "fee": 0,
-            "feeWaiver": 0,
-            "latitude": 3333,
-            "longitude": 3333,
+            "fee": null,
+            "feeWaiver": null,
+            "latitude": 50.1437782,
+            "longitude": -101.6671873,
             "city": "Moosomin",
-            "address": "123 Main Street",
+            "address": "123 Main St",
             "province": "SK",
-            "orderDeadline": "2017-12-21T19:05:01.455Z"
+            "orderDeadline": "2018-04-01T00:00:00.000Z"
         }, {
-            "id": 1,
-            "producerId": 13,
+            "id": 799,
+            "producerId": 18,
             "productList": [
-                43,
-                95
+                88
             ],
-            "type": "Door-to-door Delivery",
-            "description": "This is a quick description.",
-            "startDateTime": "2017-12-22T19:05:01.455Z",
-            "endDateTime": "2017-12-22T20:05:01.455Z",
+            "type": "Farmgate Pickup",
+            "description": "Pickup at the Wapella farmers' market.",
+            "startDateTime": "2017-12-02T00:00:00.000Z",
+            "endDateTime": "2017-12-02T03:30:00.000Z",
             "hasFee": false,
-            "fee": 0,
-            "feeWaiver": 0,
-            "latitude": 3333,
-            "longitude": 3333,
-            "city": "Moosomin",
-            "address": "123 Main Street",
+            "fee": null,
+            "feeWaiver": null,
+            "latitude": 50.2615563,
+            "longitude": -101.9720143,
+            "city": "Wapella",
+            "address": "123 Main St",
             "province": "SK",
-            "orderDeadline": "2017-12-21T19:05:01.455Z"
+            "orderDeadline": "2018-04-02T00:00:00.000Z"
         }, {
-            "id": 1,
-            "producerId": 13,
+            "id": 666,
+            "producerId": 10156726911823276,
             "productList": [
-                43,
-                95
+                66,
+                67
             ],
             "type": "Door-to-door Delivery",
-            "description": "This is a quick description.",
-            "startDateTime": "2017-12-22T19:05:01.455Z",
-            "endDateTime": "2017-12-22T20:05:01.455Z",
-            "hasFee": false,
-            "fee": 0,
-            "feeWaiver": 0,
-            "latitude": 3333,
-            "longitude": 3333,
+            "description": "A description.",
+            "startDateTime": "2017-12-28T01:00:00.000Z",
+            "endDateTime": "2017-12-28T02:00:00.000Z",
+            "hasFee": true,
+            "fee": 10,
+            "feeWaiver": 25,
+            "latitude": 50.2615563,
+            "longitude": -101.9720143,
             "city": "Moosomin",
-            "address": "123 Main Street",
+            "address": "555 Main St",
             "province": "SK",
-            "orderDeadline": "2017-12-21T19:05:01.455Z"
+            "orderDeadline": "2017-12-28T00:00:00.000Z"
+        }, {
+            "id": 667,
+            "producerId": 10156726911823276,
+            "productList": [
+                66,
+                67
+            ],
+            "type": "On-farm Pickup",
+            "description": "A long description.",
+            "startDateTime": "2017-12-27T01:00:00.000Z",
+            "endDateTime": "2017-12-27T02:00:00.000Z",
+            "hasFee": false,
+            "fee": null,
+            "feeWaiver": null,
+            "latitude": 50.2615563,
+            "longitude": -104.9720143,
+            "city": "Timbuktu",
+            "address": "",
+            "province": "ON",
+            "orderDeadline": "2017-12-27T00:00:00.000Z"
         }
     ]
 }
