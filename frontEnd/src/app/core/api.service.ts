@@ -14,6 +14,8 @@ import { OrderModel } from '../core/models/order.model';
 @Injectable()
 export class ApiService {
 
+  apiUrl = 'http://localhost:3000';
+
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
   producersUrl = '../../../../assets/api/producers.json';
@@ -33,8 +35,8 @@ export class ApiService {
   // this is using the mock data via json-server
   getSearchResults(): Observable<ProductModel[]> {
     return this.http
-      .get(`http://localhost:3000/searchResults`)
-      // .get(`${ENV.BASE_API}searchResults`)
+      // .get(`http://localhost:3000/searchResults`)
+      .get(`${ENV.BASE_API}searchResults`)
       .catch(this._handleError);
   };
 
@@ -43,20 +45,23 @@ export class ApiService {
   // get all products for admin dash
   getProducts(): Observable<ProductModel[]> {
     return this.http
-      .get(this.allProductsUrl)
+      .get(`${ENV.BASE_API}products`)
+      // .get(this.allProductsUrl)
       .catch(this._handleError);
   }
 
   // this method will return a product from the mock data
   getProductById(productId, producerId): Observable<ProductModel> {
     return this.http
-      .get(this.producerUrl + producerId + '/products/' + productId + '.json')
+      .get(`${ENV.BASE_API}products/` + productId)
+      // .get(this.producerUrl + producerId + '/products/' + productId + '.json')
       .catch(this._handleError); 
   };
   
   // GET all products from a single producers
   getProductsByProducerId(id): Observable<ProductModel[]> {
-	return this.http
+  return this.http
+    // .get(`${ENV.BASE_API}producer/` + id + '/products')
 		.get(this.producerUrl + id + '/products.json')
 		.catch(this._handleError);
   }
@@ -98,8 +103,9 @@ export class ApiService {
 
   // GET one producer by id
   getProducerById(id): Observable<ProducerModel> {
-	  return this.http
-		.get(this.producerUrl + id + '/producer.json')
+    return this.http
+    .get(`${ENV.BASE_API}producer/` + id)
+		// .get(this.producerUrl + id + '/producer.json')
 		// .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
 		.catch(this._handleError);
   };

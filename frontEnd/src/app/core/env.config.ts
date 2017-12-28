@@ -1,4 +1,4 @@
-//file added in step 2 of Real World Angular Series
+// file added in step 2 of Real World Angular Series
 // this is to ensure that our dev env doesn't break our prod env and vice versa
 
 const _isDev = window.location.port.indexOf('4200') > -1;
