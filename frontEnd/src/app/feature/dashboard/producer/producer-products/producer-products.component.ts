@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductModel } from '../../../../core/models/product.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
@@ -13,6 +16,9 @@ import { ProducerDashboardService } from '../../producer-dashboard.service';
 })
 export class ProducerProductsComponent implements OnInit {
 
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+
+  form: FormGroup; //this will hold our form data in a js object
   
   currentProducts: ProductModel[] = [];
   outOfStockProducts: ProductModel[] = [];
@@ -62,7 +68,27 @@ export class ProducerProductsComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: ProducerDashboardService) {
+  constructor(private dashboardService: ProducerDashboardService,
+              private modal: NgbModal,
+              private formBuild: FormBuilder) {
+
+    this.form = formBuild.group({
+      'name': ['', Validators.required],
+      'description': ['', Validators.required],
+      'image': [''],
+      'pricePerUnit': [null, Validators.required],
+      'unit': ['', Validators.required],
+      'unitsPer': [1, Validators.required],
+      'category': ['', Validators.required],
+      'subcategory': ['', Validators.required],
+      'producerName': ['', Validators.required],
+      'dateAdded': ['September 1, 2017'],
+      'qtyAvailable': [null, Validators.required],
+      'qtyPending': [0],
+      'qtyAccepted': [0],
+      'qtyCompleted': [0],
+      'isObsolete': ['false']
+    })
 
     // this.producerService.productAdded.subscribe(
     //   (value: ProductModel) => {
@@ -74,6 +100,14 @@ export class ProducerProductsComponent implements OnInit {
     //   }
     // );
 
+  }
+
+  openModal() {
+    this.modal.open(this.modalContent, { size: 'lg' });    
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
   }
 
   // view a single product right in the table
