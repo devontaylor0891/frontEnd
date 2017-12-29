@@ -91,7 +91,8 @@ export class ProducerProductsComponent implements OnInit {
       'qtyCompleted': [0],
       'isObsolete': [false],
       'producerId': [''],
-      'producer': ['']
+      'producer': [''],
+      'scheduleList': ['']
     })
 
     // this.producerService.productAdded.subscribe(
@@ -114,6 +115,7 @@ export class ProducerProductsComponent implements OnInit {
     console.log(this.form.value);
     this.form.value.producerId = this.producer.id;
     this.form.value.producer = this.producer;
+    this.form.value.scheduleList = this.producer.scheduleList;
     console.log(this.form.value);
     this.dashboardService.addNewProduct(this.form.value);
   }
@@ -126,11 +128,6 @@ export class ProducerProductsComponent implements OnInit {
   // edit a single product right in the table
   toggleEditForm(product: any) {
     product.showEditForm = !product.showEditForm;
-  }
-
-  // add a new product via the add-product component, push it to the appropriate array
-  addNewProduct(value) {
-    console.log(value);
   }
 
   ngOnInit() {
