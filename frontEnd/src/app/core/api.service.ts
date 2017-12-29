@@ -58,13 +58,22 @@ export class ApiService {
       .catch(this._handleError); 
   };
   
-  // GET all products from a single producers
+  // GET all products from a single producer
   getProductsByProducerId(id): Observable<ProductModel[]> {
   return this.http
     .get(`${ENV.BASE_API}producer/` + id + '/products')
 		// .get(this.producerUrl + id + '/products.json')
 		.catch(this._handleError);
   }
+
+  // POST new product - producer or admin only
+  postProduct(product: ProductModel): Observable<ProductModel> {
+    return this.http
+      .post(`${ENV.BASE_API}products/`, product, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
 
   // ************** SCHEDULES ****************
   

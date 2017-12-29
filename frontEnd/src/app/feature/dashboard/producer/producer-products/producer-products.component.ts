@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductModel } from '../../../../core/models/product.model';
+import { ProducerModel } from '../../../../core/models/producer.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 // import { ProducerService } from '../../../../core/services/producer/producer.service';
@@ -19,6 +20,8 @@ export class ProducerProductsComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   form: FormGroup; //this will hold our form data in a js object
+
+  producer: ProducerModel;
   
   currentProducts: ProductModel[] = [];
   outOfStockProducts: ProductModel[] = [];
@@ -81,13 +84,14 @@ export class ProducerProductsComponent implements OnInit {
       'unitsPer': [1, Validators.required],
       'category': ['', Validators.required],
       'subcategory': ['', Validators.required],
-      'producerName': ['', Validators.required],
-      'dateAdded': ['September 1, 2017'],
+      'dateAdded': [new Date().toISOString()],
       'qtyAvailable': [null, Validators.required],
       'qtyPending': [0],
       'qtyAccepted': [0],
       'qtyCompleted': [0],
-      'isObsolete': ['false']
+      'isObsolete': [false],
+      'producerId': [''],
+      'producer': ['']
     })
 
     // this.producerService.productAdded.subscribe(
@@ -108,6 +112,10 @@ export class ProducerProductsComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value);
+    this.form.value.producerId = this.producer.id;
+    this.form.value.producer = this.producer;
+    console.log(this.form.value);
+    this.dashboardService.addNewProduct(this.form.value);
   }
 
   // view a single product right in the table
@@ -126,6 +134,13 @@ export class ProducerProductsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.dashboardService.getProducer()
+      .subscribe(
+        result => {
+          this.producer = result;
+        }
+      )
 
     this.dashboardService.getProducts()
       .subscribe( // returns an array

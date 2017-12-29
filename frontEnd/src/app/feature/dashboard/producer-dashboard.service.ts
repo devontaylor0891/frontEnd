@@ -94,5 +94,14 @@ export class ProducerDashboardService {
   getSchedules() {
     return this._schedules.asObservable();
   };
+
+  addNewProduct(product: ProductModel) {
+    this.apiService.postProduct(product)
+      .subscribe(
+        result => {
+          console.log('posted successfully')
+        }
+      );
+  }
   
 }
