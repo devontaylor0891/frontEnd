@@ -75,6 +75,7 @@ import { ConsumerOrdersComponent } from './feature/dashboard/consumer/consumer-o
 import { ProducerOrdersComponent } from './feature/dashboard/producer/producer-orders/producer-orders.component';
 import { ProducerProductsComponent } from './feature/dashboard/producer/producer-products/producer-products.component';
 import { ProducerScheduleComponent } from './feature/dashboard/producer/producer-schedule/producer-schedule.component';
+import { EditProductModalComponent } from './shared/edit-product-modal/edit-product-modal.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { ProducerScheduleComponent } from './feature/dashboard/producer/producer
     ConsumerOrdersComponent,
     ProducerOrdersComponent,
     ProducerProductsComponent,
-    ProducerScheduleComponent
+    ProducerScheduleComponent,
+    EditProductModalComponent
   ],
   imports: [
     BrowserModule,

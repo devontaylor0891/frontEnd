@@ -12,7 +12,8 @@
             </div>
         </ng-template>
         <ng-template #editModalContent let-close="close">
-            <div class="modal-body">
+                <app-edit-product-modal [record]="record"></app-edit-product-modal>
+            <!-- <div class="modal-body">
                 <div class="text-center"> 
                     <p>Edit</p>         
                     <pre>{{ record.id }}</pre>
@@ -20,7 +21,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-olf-primary" (click)="close()">Close</button>
-            </div>
+            </div> -->
         </ng-template>
         <ng-template #deleteModalContent let-close="close">
                 <div class="modal-body">

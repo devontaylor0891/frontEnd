@@ -1875,24 +1875,6 @@
       ]
     },
     {
-      "name": "name",
-      "description": "desc",
-      "image": "url",
-      "pricePerUnit": 3.33,
-      "unit": "kg",
-      "unitsPer": 1,
-      "category": "vegetables",
-      "subcategory": "carrots",
-      "producerName": "bbbb",
-      "dateAdded": "September 1, 2017",
-      "qtyAvailable": 33,
-      "qtyPending": 0,
-      "qtyAccepted": 0,
-      "qtyCompleted": 0,
-      "isObsolete": "false",
-      "id": 96
-    },
-    {
       "name": "new product",
       "description": "desc",
       "image": "bacon.jpg",
