@@ -281,3 +281,8 @@ input[type=number]::-webkit-outer-spin-button {
 .dash-nav > .nav-item a {
     padding: .5rem 0 !important;
 }
+
+.dash-modal-body {
+    max-height: calc(100vh - 310px);
+    overflow-y: auto;
+}
