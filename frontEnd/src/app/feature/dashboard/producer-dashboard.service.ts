@@ -46,6 +46,7 @@ export class ProducerDashboardService {
         }, error => console.log('could not load producer')
       );
     this.apiService.getUserById(id)
+    // add a new product via the add-product component, push it to the appropriate array
       .subscribe(
         result => {
           this.dataStore.user = result;

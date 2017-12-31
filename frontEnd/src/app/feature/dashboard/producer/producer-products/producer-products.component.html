@@ -171,7 +171,7 @@
 
         <div id="productsAccordion" role="tablist" aria-multiselectable="true">
 
-            <!-- Here are the links to trigger the 'add new whatever' form to appear, which appears in the router-outlet tag -->
+            <!-- Add new product button -->
             <div class="row text-center">
                 <div class="col col-xs-12">
                     <div class="btn-group">
@@ -183,6 +183,7 @@
 
             <br>
             
+            <!-- Current Product Table -->
             <div class="card">
                 <div class="card-header dash-accordion" role="tab" id="currentProductsHeading">
                     <h5 class="mb-0">
@@ -208,6 +209,7 @@
                 </div>
             </div>
             
+            <!-- Out of stock Product Table -->
             <div class="card" *ngIf="outOfStockProducts.length > 0">
                 <div class="card-header dash-accordion" role="tab" id="outOfStockProductsHeading">
                     <h5 class="mb-0">
@@ -219,7 +221,7 @@
                             aria-expanded="false" 
                             aria-controls="outOfStockProductsCollapse">Out-of-stock Products 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
                 <div id="outOfStockProductsCollapse" class="collapse" role="tabpanel" aria-labelledby="outOfStockProductsHeading">
@@ -234,6 +236,7 @@
                 </div>
             </div>
             
+            <!-- Deleted Product Table -->
             <div class="card" *ngIf="deletedProducts.length > 0">
                 <div class="card-header dash-accordion" role="tab" id="deletedProductsHeading">
                     <h5 class="mb-0">
@@ -245,7 +248,7 @@
                             aria-expanded="false" 
                             aria-controls="deletedProductsCollapse">Deleted Products 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
                 <div id="deletedProductsCollapse" class="collapse" role="tabpanel" aria-labelledby="deletedProductsHeading">
@@ -259,6 +262,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

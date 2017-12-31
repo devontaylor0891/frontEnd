@@ -75,6 +75,24 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // PUT existing product - producer or admin only
+  putProduct(id: number, product: ProductModel): Observable<ProductModel> {
+    return this.http
+      .put(`${ENV.BASE_API}products/${id}`, product, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
+  // DELETE existing event and all associated RSVPs (admin only)
+  deleteProduct(id: string): Observable<any> {
+    return this.http
+      .delete(`${ENV.BASE_API}product/${id}`, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
   // ************** SCHEDULES ****************
   
   // get all schedules for admin
