@@ -1,8 +1,177 @@
-<div class="modal-body">
+<div class="modal-body dash-modal-body">
   <div class="text-center"> 
       <p>Edit</p>         
       <pre>{{ record.id }}</pre>
   </div>
+
+  <form *ngIf="!submitting" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Name -->
+      <div class="row">
+          <label for="name" class="col-4 col-form-label text-right">Name:</label>
+          <div class="col-8">
+              <input 
+                id="name"
+                type="text"
+                class="form-control"
+                formControlName="name">
+          </div>
+      </div>
+    
+      <!-- Description -->
+      <div class="row">
+          <label for="description" class="col-4 col-form-label text-right">Description</label>
+          <div class="col-8">
+              <textarea 
+                class="form-control" 
+                rows="3" 
+                id="description" 
+                formControlName="description"></textarea>
+          </div>
+      </div>
+
+      <div class="row">
+          <label for="image" class="col-4 col-form-label text-right">Image URL:</label>
+          <div class="col-8">
+              <input 
+                  class="form-control" 
+                  type="text" 
+                  id="image" 
+                  formControlName="image">
+          </div>
+      </div>
+
+      <div class="row">
+          <label for="pricePerUnit" class="col-4 col-form-label text-right">Price Per Unit</label>
+          <div class="col-8 input-group">
+              <div class="input-group-addon">$</div>
+              <input 
+                  class="form-control" 
+                  type="number"
+                  min="0"
+                  step="any"
+                  id="pricePerUnit" 
+                  formControlName="pricePerUnit">
+          </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+          <label for="unit" class="col-4 col-form-label text-right">Pricing Unit</label>
+          <div class="col-8">
+              <select class="custom-select float-left" name="unit" formControlName="unit">
+                  <option selected value="">Select a Unit</option>
+                  <option value="lb">Pound</option>
+                  <option value="kg">Kilo</option>
+                  <option value="ea">Each</option>
+                  <option value="pkg">Package</option>
+              </select>
+          </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+          <label for="unitsPer" class="col-4 col-form-label text-right">Units Per Final Product</label>
+          <div class="col-8 input-group">
+              <input 
+                  class="form-control" 
+                  type="number"
+                  min="0"
+                  step=".1"
+                  id="unitsPer" 
+                  formControlName="unitsPer">
+          </div>
+          <div class="col-8 offset-4">
+              <small class="form-text text-muted text-right">If your final product contains more than 1 unit (like a 5 lb chicken), change this to the average number of units per final product. We can use this to calculate an estimated final price for the consumer.</small>
+          </div>
+      </div>
+
+      <br>
+      
+      <div class="row">
+          <label for="category" class="col-4 col-form-label text-right">Category:</label>
+          <div class="col-8">
+              <select 
+                class="custom-select float-left" 
+                name="category" 
+                formControlName="category">
+                  <option selected value="">Choose a Category</option>
+                  <option value="meat">Meat</option>
+                  <option value="vegetables">Vegetables</option>
+                  <option value="dairy">Dairy</option>
+              </select>
+          </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+          <label for="subcategory" class="col-4 col-form-label text-right">Subcategory</label>
+          <!-- meat subcategories -->
+          <div class="col-8" *ngIf="productForm.value.category === 'meat'">
+              <select class="custom-select float-left" name="subcategory" formControlName="subcategory">
+                  <option selected value="">Choose a Subcategory</option>
+                  <option value="pork">Pork</option>
+                  <option value="beef">Beef</option>
+              </select>
+          </div>
+          <!-- vegetable subcategories -->
+          <div class="col-8" *ngIf="productForm.value.category === 'vegetables'">
+              <select class="custom-select float-left" name="subcategory" formControlName="subcategory">
+                  <option selected value="">Choose a Subcategory</option>
+                  <option value="carrots">Carrots</option>
+                  <option value="potatoes">Potatoes</option>
+              </select>
+          </div>
+          <!-- dairy subs -->
+          <div class="col-8" *ngIf="productForm.value.category === 'dairy'">
+              <select class="custom-select float-left" name="subcategory" formControlName="subcategory">
+                  <option selected value="">Choose a Subcategory</option>
+                  <option value="cheese">Cheese</option>
+                  <option value="yogurt">Yogurt</option>
+              </select>
+          </div>
+      </div>
+
+      <div class="row">
+          <label for="qtyAvailable" class="col-4 col-form-label text-right">Quantity Available:</label>
+          <div class="col-8 input-group">
+              <input 
+                  class="form-control" 
+                  type="number"
+                  min="0"
+                  step="1"
+                  id="qtyAvailable" 
+                  formControlName="qtyAvailable">
+          </div>
+      </div>
+    
+      <!-- Submit -->
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-olf-primary"
+          [attr.disabled]="productForm.invalid || submitting ? true : null"
+        >Submit Changes</button>
+          <!-- https://github.com/angular/angular/issues/11271#issuecomment-289806196 -->
+        
+        <a
+          *ngIf="!submitting"
+          class="btn btn-link"
+          tabindex="0"
+        >Reset Form</a>
+    
+        <!-- API submission error -->
+        <p *ngIf="error" class="mt-3 alert alert-danger">
+          <strong>Error:</strong> There was a problem submitting the event. Please try again.
+        </p>
+      </div>
+    </form>
+
+    <app-loading *ngIf="submitting"></app-loading>
+
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-olf-primary" (click)="close()">Close</button>
