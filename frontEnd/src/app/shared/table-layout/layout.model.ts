@@ -18,10 +18,10 @@ export class ColumnMap {
         this.alternativeKeys = settings.alternativeKeys;
     }
     set header(setting: string) {
-        this._header = setting ? 
+        this._header = setting ?
             setting :
-            this.primaryKey.slice(0, 1).toUpperCase() + 
-                this.primaryKey.replace(/_/g, ' ' ).slice(1)
+            this.primaryKey.slice(0, 1).toUpperCase() +
+                this.primaryKey.replace(/_/g, ' ' ).slice(1);
     }
     get header() {
         return this._header;
@@ -36,12 +36,12 @@ export class ColumnMap {
         if (object[this.primaryKey] || !this.alternativeKeys) {
             return this.primaryKey;
         }
-        for (let key of this.alternativeKeys) { 
+        for (let key of this.alternativeKeys) {
             if (object[key]) {
                 return key;
             }
         }
         return this.primaryKey;
-    }
+    };
 
 }
