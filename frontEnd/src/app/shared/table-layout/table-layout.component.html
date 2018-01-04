@@ -1,37 +1,3 @@
-<!-- MODALS -->
-<div class="row">
-    <div class="col-lg-8 col-offset-lg-2">
-        <!-- VIEW MODAL -->
-        <ng-template #viewModalContent let-close="close">
-            <div class="modal-body dash-modal-body">
-                <div class="text-center"> 
-                    <p>View</p>         
-                    <pre>{{ record.id }}</pre>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-olf-primary" (click)="close()">Close</button>
-            </div>
-        </ng-template>
-        <!-- EDIT MODAL -->
-        <ng-template #editModalContent let-close="close">
-            <app-edit-product-modal [record]="record"></app-edit-product-modal>
-        </ng-template>
-        <!-- DELETE MODAL -->
-        <ng-template #deleteModalContent let-close="close">
-            <div class="modal-body dash-modal-body">
-                <div class="text-center"> 
-                    <p>Are you sure you want to delete this item?</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-olf-primary" (click)="close()">Cancel Delete</button>
-                <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Confirm Delete</button>
-            </div>
-        </ng-template>
-    </div>
-</div>
-
 <!-- TABLES -->
 <div class="row">
     <div class="col-12">

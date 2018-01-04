@@ -2,6 +2,10 @@ import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef } from '@an
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { EditProductModalComponent } from '../edit-product-modal/edit-product-modal.component';
+import { ViewProductModalComponent } from '../view-product-modal/view-product-modal.component';
+import { DeleteProductModalComponent } from '../delete-product-modal/delete-product-modal.component';
+
 import { UtilityService } from '../../core/services/utility/utility.service';
 
 import { ColumnSettingModel, ColumnMap } from '../../shared/table-layout/layout.model';
@@ -55,19 +59,25 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   onOpenView(record) {
     this.record = record;
     console.log('record: ', record);
-    this.modal.open(this.viewModalContent, { size: 'lg' });
+    // this.modal.open(this.viewModalContent, { size: 'lg' });
+    const modalRef = this.modal.open(ViewProductModalComponent, { size: 'lg' });
+    modalRef.componentInstance.record = record;
   }
 
   onOpenEdit(record) {
     this.record = record;
     console.log('record: ', record);
-    this.modal.open(this.editModalContent, { size: 'lg' });
+    // this.modal.open(this.editModalContent, { size: 'lg' });
+    const modalRef = this.modal.open(EditProductModalComponent, { size: 'lg' });
+    modalRef.componentInstance.record = record;
   }
 
   onSelectDelete(record) {
     this.record = record;
     console.log('record: ', record);
-    this.modal.open(this.deleteModalContent, { size: 'lg' });
+    // this.modal.open(this.deleteModalContent, { size: 'lg' });
+    const modalRef = this.modal.open(DeleteProductModalComponent, { size: 'lg' });
+    modalRef.componentInstance.record = record;
   }
 
   onSort(map) {

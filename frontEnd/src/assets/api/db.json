@@ -1741,7 +1741,7 @@
     {
       "id": 67,
       "producerId": 10156726911823276,
-      "name": "Ground Beef",
+      "name": "Groundy Beef",
       "description": "Great beefy stuff.",
       "image": "ground-beef.jpg",
       "pricePerUnit": 4,
@@ -1772,7 +1772,7 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": 34,
+      "qtyAvailable": 88,
       "qtyPending": 0,
       "qtyAccepted": 45,
       "qtyCompleted": 0,
@@ -1875,188 +1875,16 @@
       ]
     },
     {
-      "name": "new product",
-      "description": "desc",
+      "name": "product",
+      "description": "test",
       "image": "bacon.jpg",
-      "pricePerUnit": 2.99,
-      "unit": "ea",
+      "pricePerUnit": 4,
+      "unit": "lb",
       "unitsPer": 1,
       "category": "meat",
       "subcategory": "pork",
-      "dateAdded": "2017-12-29T18:01:10.858Z",
+      "dateAdded": "2018-01-04T01:27:01.475Z",
       "qtyAvailable": 44,
-      "qtyPending": 0,
-      "qtyAccepted": 0,
-      "qtyCompleted": 0,
-      "isObsolete": false,
-      "producerId": 10156726911823276,
-      "producer": {
-        "id": 10156726911823276,
-        "name": "Gardenzia Farms",
-        "location": "Timbuktu",
-        "province": "ON",
-        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-        "email": "email@email.com",
-        "logoUrl": "farm-logo-3.jpg",
-        "longitude": 444,
-        "latitude": 555,
-        "firstName": "Devon",
-        "registrationDate": "2017-12-20T14:17:36.255Z",
-        "status": "active",
-        "productList": [
-          66,
-          67
-        ],
-        "scheduleList": [
-          666,
-          667
-        ],
-        "products": [
-          {
-            "id": 66,
-            "name": "Bacon",
-            "description": "Great stuff.",
-            "image": "bacon.jpg",
-            "pricePerUnit": 12,
-            "unit": "kg",
-            "unitsPer": 1,
-            "category": "Meat",
-            "subcategory": "Pork",
-            "producer": {
-              "id": 10156726911823276,
-              "name": "Gardenzia Farms",
-              "location": "Virden",
-              "province": "MB",
-              "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-              "email": "email@email.com",
-              "logoUrl": "farm-logo-1.jpg",
-              "longitude": 444,
-              "latitude": 555,
-              "firstName": "Devon",
-              "registrationDate": "2017-12-20T14:17:36.255Z",
-              "status": "active",
-              "productList": [
-                66,
-                67
-              ],
-              "scheduleList": [
-                666,
-                667
-              ]
-            },
-            "dateAdded": "2017-12-20T14:17:36.255Z",
-            "qtyAvailable": 23,
-            "qtyPending": 1,
-            "qtyAccepted": 0,
-            "qtyCompleted": 2,
-            "isObsolete": false,
-            "scheduleList": [
-              666,
-              667
-            ]
-          },
-          {
-            "id": 67,
-            "name": "Ground Beef",
-            "description": "Great beefy stuff.",
-            "image": "ground-beef.jpg",
-            "pricePerUnit": 4,
-            "unit": "lb",
-            "unitsPer": 1,
-            "category": "Meat",
-            "subcategory": "Beef",
-            "producer": {
-              "id": 10156726911823276,
-              "name": "Gardenzia Farms",
-              "location": "Virden",
-              "province": "MB",
-              "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-              "email": "email@email.com",
-              "logoUrl": "farm-logo-1.jpg",
-              "longitude": 444,
-              "latitude": 555,
-              "firstName": "Devon",
-              "registrationDate": "2017-12-20T14:17:36.255Z",
-              "status": "active",
-              "productList": [
-                66,
-                67
-              ],
-              "scheduleList": [
-                666,
-                667
-              ]
-            },
-            "dateAdded": "2017-12-20T14:17:36.255Z",
-            "qtyAvailable": 34,
-            "qtyPending": 0,
-            "qtyAccepted": 45,
-            "qtyCompleted": 0,
-            "isObsolete": false,
-            "scheduleList": [
-              666,
-              667
-            ]
-          }
-        ],
-        "schedule": [
-          {
-            "id": 666,
-            "producerId": 10156726911823276,
-            "productList": [
-              66,
-              67
-            ],
-            "type": "Door-to-door Delivery",
-            "description": "A description.",
-            "startDateTime": "2017-12-28T01:00:00.000Z",
-            "endDateTime": "2017-12-28T02:00:00.000Z",
-            "hasFee": true,
-            "fee": 10,
-            "feeWaiver": 25,
-            "latitude": 50.2615563,
-            "longitude": -101.9720143,
-            "city": "Moosomin",
-            "address": "555 Main St",
-            "province": "SK",
-            "orderDeadline": "2017-12-28T00:00:00.000Z"
-          },
-          {
-            "id": 667,
-            "producerId": 10156726911823276,
-            "productList": [
-              66,
-              67
-            ],
-            "type": "On-farm Pickup",
-            "description": "A long description.",
-            "startDateTime": "2017-12-27T01:00:00.000Z",
-            "endDateTime": "2017-12-27T02:00:00.000Z",
-            "hasFee": false,
-            "fee": null,
-            "feeWaiver": null,
-            "latitude": 50.2615563,
-            "longitude": -104.9720143,
-            "city": "Timbuktu",
-            "address": "",
-            "province": "ON",
-            "orderDeadline": "2017-12-27T00:00:00.000Z"
-          }
-        ]
-      },
-      "id": 97
-    },
-    {
-      "name": "another new product",
-      "description": "dlsskjdlkjf",
-      "image": "beet.png",
-      "pricePerUnit": 4.44,
-      "unit": "pkg",
-      "unitsPer": 1,
-      "category": "vegetables",
-      "subcategory": "carrots",
-      "dateAdded": "2017-12-29T18:10:29.224Z",
-      "qtyAvailable": 33,
       "qtyPending": 0,
       "qtyAccepted": 0,
       "qtyCompleted": 0,
@@ -2220,7 +2048,7 @@
         666,
         667
       ],
-      "id": 98
+      "id": 96
     }
   ],
   "schedules": [

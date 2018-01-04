@@ -1,25 +1,9 @@
-// import { Component, OnInit, Input } from '@angular/core';
-
-// @Component({
-//   selector: 'app-edit-product-modal',
-//   templateUrl: './edit-product-modal.component.html',
-//   styleUrls: ['./edit-product-modal.component.scss']
-// })
-// export class EditProductModalComponent implements OnInit {
-
-//   @Input() record: any;
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
-// }
-
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService } from '../../core/api.service';
 
@@ -44,7 +28,8 @@ export class EditProductModalComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
 				private router: Router,
-				private api: ApiService) { }
+				private api: ApiService,
+				private activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     this.initialProduct = this.setInitialProduct();
@@ -127,10 +112,26 @@ export class EditProductModalComponent implements OnInit {
 			  err => this.handleSubmitError(err)
 			);
   };
+
+  onRenew() {
+    this.submitting = true;
+    this.setSubmitObject();
+    this.submitObject.isObsolete = false;
+    this.api.putProduct(this.record.id, this.submitObject)
+      .subscribe(
+        response => {
+          this.submitting = false;
+          this.activeModal.close();
+        }, err => {
+          this.handleSubmitError(err)
+        }
+      )
+  }
   
   handleSubmitSuccess(res) {
 		this.submitting = false;
 		// close modal
+		this.activeModal.close();
   };
   
   handleSubmitError(err) {

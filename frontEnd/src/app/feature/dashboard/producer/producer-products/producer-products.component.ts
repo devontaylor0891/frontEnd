@@ -76,6 +76,7 @@ export class ProducerProductsComponent implements OnInit {
               private formBuild: FormBuilder) {
 
     this.form = formBuild.group({
+      'id':[''],
       'name': ['', Validators.required],
       'description': ['', Validators.required],
       'image': [''],
@@ -113,11 +114,16 @@ export class ProducerProductsComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value);
+    this.form.value.id = this.generateRandomId();
     this.form.value.producerId = this.producer.id;
     this.form.value.producer = this.producer;
     this.form.value.scheduleList = this.producer.scheduleList;
     console.log(this.form.value);
     this.dashboardService.addNewProduct(this.form.value);
+  }
+
+  generateRandomId() {
+    return Math.floor( Math.random() * 1000000 )
   }
 
   // view a single product right in the table

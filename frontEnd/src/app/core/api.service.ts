@@ -85,9 +85,9 @@ export class ApiService {
   }
 
   // DELETE existing event and all associated RSVPs (admin only)
-  deleteProduct(id: string): Observable<any> {
+  deleteProduct(id: number): Observable<any> {
     return this.http
-      .delete(`${ENV.BASE_API}product/${id}`, {
+      .delete(`${ENV.BASE_API}products/${id}`, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);

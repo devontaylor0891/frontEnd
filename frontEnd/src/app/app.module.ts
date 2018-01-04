@@ -77,6 +77,9 @@ import { ProducerProductsComponent } from './feature/dashboard/producer/producer
 import { ProducerScheduleComponent } from './feature/dashboard/producer/producer-schedule/producer-schedule.component';
 import { EditProductModalComponent } from './shared/edit-product-modal/edit-product-modal.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import { ViewProductModalComponent } from './shared/view-product-modal/view-product-modal.component';
+import { DeleteProductModalComponent } from './shared/delete-product-modal/delete-product-modal.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +139,9 @@ import { LoadingComponent } from './shared/loading/loading.component';
     ProducerProductsComponent,
     ProducerScheduleComponent,
     EditProductModalComponent,
-    LoadingComponent
+    LoadingComponent,
+    ViewProductModalComponent,
+    DeleteProductModalComponent
   ],
   imports: [
     BrowserModule,
@@ -151,8 +156,25 @@ import { LoadingComponent } from './shared/loading/loading.component';
     CalendarModule.forRoot(),
     NgbModule.forRoot()
   ],
-  providers: [AuthService, ApiService, LocationService, CartService, CurrencyPipe, DatePipe, UtilityService],
+  providers: [
+    AuthService, 
+    ApiService, 
+    LocationService, 
+    CartService, 
+    CurrencyPipe, 
+    DatePipe, 
+    UtilityService,
+    EditProductModalComponent,
+    NgbActiveModal,
+    ViewProductModalComponent,
+    DeleteProductModalComponent
+  ],
   schemas: [NO_ERRORS_SCHEMA],
+  entryComponents: [
+    EditProductModalComponent,
+    ViewProductModalComponent,
+    DeleteProductModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
