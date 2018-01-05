@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { OrderModel } from '../../../../core/models/order.model';
+import { OrderModel } from '../../../../../../core/models/order.model';
 
 @Component({
   selector: 'app-view-order-modal',

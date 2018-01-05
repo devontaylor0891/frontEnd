@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ApiService } from '../../../../core/api.service';
+import { ApiService } from '../../../../../../core/api.service';
 
-import { ProductModel } from '../../../../core/models/product.model';
+import { ProductModel } from '../../../../../../core/models/product.model';
 
 @Component({
   selector: 'app-edit-product-modal',

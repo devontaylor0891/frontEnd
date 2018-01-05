@@ -1884,11 +1884,11 @@
       "category": "meat",
       "subcategory": "pork",
       "dateAdded": "2018-01-04T01:27:01.475Z",
-      "qtyAvailable": 44,
+      "qtyAvailable": 0,
       "qtyPending": 0,
       "qtyAccepted": 0,
       "qtyCompleted": 0,
-      "isObsolete": false,
+      "isObsolete": true,
       "producerId": 10156726911823276,
       "producer": {
         "id": 10156726911823276,
@@ -2163,8 +2163,8 @@
       ],
       "type": "Door-to-door Delivery",
       "description": "A description.",
-      "startDateTime": "2017-12-28T01:00:00.000Z",
-      "endDateTime": "2017-12-28T02:00:00.000Z",
+      "startDateTime": "2018-01-28T01:00:00.000Z",
+      "endDateTime": "2018-01-28T02:00:00.000Z",
       "hasFee": true,
       "fee": 10,
       "feeWaiver": 25,
@@ -2173,7 +2173,7 @@
       "city": "Moosomin",
       "address": "555 Main St",
       "province": "SK",
-      "orderDeadline": "2017-12-28T00:00:00.000Z"
+      "orderDeadline": "2018-01-28T00:00:00.000Z"
     },
     {
       "id": 667,

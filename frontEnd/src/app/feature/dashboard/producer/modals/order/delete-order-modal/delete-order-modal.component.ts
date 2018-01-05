@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ApiService } from '../../../../core/api.service';
+import { ApiService } from '../../../../../../core/api.service';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProductModel } from '../../../../core/models/product.model';
+import { ProductModel } from '../../../../../../core/models/product.model';
 
 @Component({
   selector: 'app-delete-order-modal',

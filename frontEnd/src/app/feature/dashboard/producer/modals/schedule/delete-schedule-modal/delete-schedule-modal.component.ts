@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ApiService } from '../../../../core/api.service';
+import { ApiService } from '../../../../../../core/api.service';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ScheduleModel } from '../../../../core/models/schedule.model';
+import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 
 @Component({
   selector: 'app-delete-schedule-modal',

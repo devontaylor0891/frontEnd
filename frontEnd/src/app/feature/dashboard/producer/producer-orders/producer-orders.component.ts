@@ -17,6 +17,8 @@ export class ProducerOrdersComponent implements OnInit {
   completedOrders: OrderModel[] = [];
   deniedOrders: OrderModel[] = [];
 
+  recordType: string = 'order';
+
   projectSettings: ColumnSettingModel[] = 
   [
       {

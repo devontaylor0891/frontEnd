@@ -10,6 +10,8 @@ import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model
 // import { ProducerService } from '../../../../core/services/producer/producer.service';
 import { ProducerDashboardService } from '../../producer-dashboard.service';
 
+import { AddProductModalComponent } from '../modals/product/add-product-modal/add-product-modal.component';
+
 @Component({
   selector: 'app-producer-products',
   templateUrl: './producer-products.component.html',
@@ -27,6 +29,7 @@ export class ProducerProductsComponent implements OnInit {
   outOfStockProducts: ProductModel[] = [];
   deletedProducts: ProductModel[] = [];
 
+  recordType: string = 'product';
   editable: boolean = true;
   deletable: boolean = true;
 
@@ -64,10 +67,6 @@ export class ProducerProductsComponent implements OnInit {
       {
         primaryKey: 'qtyPending',
         header: 'Pending'
-      },
-      {
-        primaryKey: 'producer',
-        header: 'Producer'
       }
   ];
 
@@ -109,12 +108,14 @@ export class ProducerProductsComponent implements OnInit {
   }
 
   openModal() {
-    this.modal.open(this.modalContent, { size: 'lg' });    
+    // this.modal.open(this.modalContent, { size: 'lg' });  
+    const modalRef = this.modal.open(AddProductModalComponent, { size: 'lg' });
+    // modalRef.componentInstance.form = this.form;  
   }
 
   onSubmit() {
     console.log(this.form.value);
-    this.form.value.id = this.generateRandomId();
+    this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
     this.form.value.producerId = this.producer.id;
     this.form.value.producer = this.producer;
     this.form.value.scheduleList = this.producer.scheduleList;

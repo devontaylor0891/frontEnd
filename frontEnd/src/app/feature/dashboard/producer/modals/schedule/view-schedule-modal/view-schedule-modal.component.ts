@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ScheduleModel } from '../../../../core/models/schedule.model';
+import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 
 @Component({
   selector: 'app-view-schedule-modal',

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProductModel } from '../../../../core/models/product.model';
+import { ProductModel } from '../../../../../../core/models/product.model';
 
 @Component({
   selector: 'app-view-product-modal',

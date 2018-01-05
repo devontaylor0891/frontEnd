@@ -19,9 +19,10 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="upcomingSchedule"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
-                            [deletable]="deletable">
+                            [pending]="true"
+                            [deletable]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -45,9 +46,9 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="completedSchedule"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="false">
                         </app-table-layout>
                     </div>
                 </div>

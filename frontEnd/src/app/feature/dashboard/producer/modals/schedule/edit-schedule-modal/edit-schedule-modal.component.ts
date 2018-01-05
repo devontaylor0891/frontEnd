@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ApiService } from '../../../../core/api.service';
+import { ApiService } from '../../../../../../core/api.service';
 
-import { ScheduleModel } from '../../../../core/models/schedule.model';
+import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 
 @Component({
   selector: 'app-edit-schedule-modal',

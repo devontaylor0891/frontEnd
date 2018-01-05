@@ -15,6 +15,8 @@ export class ProducerScheduleComponent implements OnInit {
   upcomingSchedule: ScheduleModel[] = [];
   completedSchedule: ScheduleModel[] = [];
 
+  recordType: string = 'schedule';
+
   projectSettings: ColumnSettingModel[] = 
   [
       {
@@ -49,10 +51,6 @@ export class ProducerScheduleComponent implements OnInit {
         primaryKey: 'orderDeadline',
         header: 'Deadline Time',
         format: 'shortTime'
-      }, 
-      {
-        primaryKey: 'producerId',
-        header: 'Producer ID'
       }
   ];
 

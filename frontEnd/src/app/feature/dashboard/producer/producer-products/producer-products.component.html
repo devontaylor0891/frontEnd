@@ -201,6 +201,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="currentProducts"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">
@@ -228,6 +229,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="outOfStockProducts"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">
@@ -255,6 +257,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="deletedProducts"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">

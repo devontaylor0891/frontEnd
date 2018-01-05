@@ -2,9 +2,15 @@ import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef } from '@an
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { EditProductModalComponent } from '../modals/product/edit-product-modal/edit-product-modal.component';
-import { ViewProductModalComponent } from '../modals/product/view-product-modal/view-product-modal.component';
-import { DeleteProductModalComponent } from '../modals/product/delete-product-modal/delete-product-modal.component';
+import { EditProductModalComponent } from '../../feature/dashboard/producer/modals/product/edit-product-modal/edit-product-modal.component';
+import { ViewProductModalComponent } from '../../feature/dashboard/producer/modals/product/view-product-modal/view-product-modal.component';
+import { DeleteProductModalComponent } from '../../feature/dashboard/producer/modals/product/delete-product-modal/delete-product-modal.component';
+import { EditScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/edit-schedule-modal/edit-schedule-modal.component';
+import { ViewScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/view-schedule-modal/view-schedule-modal.component';
+import { DeleteScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
+import { EditOrderModalComponent } from '../../feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
+import { ViewOrderModalComponent } from '../../feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
+import { DeleteOrderModalComponent } from '../../feature/dashboard/producer/modals/order/delete-order-modal/delete-order-modal.component';
 
 import { UtilityService } from '../../core/services/utility/utility.service';
 
@@ -19,9 +25,9 @@ import { FormatCellPipe } from '../../shared/format-cell.pipe';
 })
 export class TableLayoutComponent implements OnInit, OnChanges {
 
-  @ViewChild('viewModalContent') viewModalContent: TemplateRef<any>;
-  @ViewChild('editModalContent') editModalContent: TemplateRef<any>;
-  @ViewChild('deleteModalContent') deleteModalContent: TemplateRef<any>;
+  // @ViewChild('viewModalContent') viewModalContent: TemplateRef<any>;
+  // @ViewChild('editModalContent') editModalContent: TemplateRef<any>;
+  // @ViewChild('deleteModalContent') deleteModalContent: TemplateRef<any>;
 
   @Input() records: any[];
   @Input() caption: string;
@@ -31,7 +37,9 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   columnMaps: ColumnMap[];
   @Input() editable: boolean; // governs display of Edit button
   @Input() deletable: boolean; // display of Delete button
+  @Input() pending: boolean // for orders that are pending
   record: Object; // single record
+  @Input() recordType: string; // this will hold the type of record so that the proper modals can be shown
   sortedRecords: any[]; 
   sortDirection: any[]; // array of the column and it's sort value
 
@@ -59,25 +67,56 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   onOpenView(record) {
     this.record = record;
     console.log('record: ', record);
+    console.log('recordType: ', this.recordType);
     // this.modal.open(this.viewModalContent, { size: 'lg' });
-    const modalRef = this.modal.open(ViewProductModalComponent, { size: 'lg' });
-    modalRef.componentInstance.record = record;
+    if (this.recordType === 'product') {
+      const modalRef = this.modal.open(ViewProductModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
+    if (this.recordType === 'schedule') {
+      const modalRef = this.modal.open(ViewScheduleModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
+    if (this.recordType === 'order') {
+      const modalRef = this.modal.open(ViewOrderModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
   }
 
   onOpenEdit(record) {
     this.record = record;
     console.log('record: ', record);
     // this.modal.open(this.editModalContent, { size: 'lg' });
-    const modalRef = this.modal.open(EditProductModalComponent, { size: 'lg' });
-    modalRef.componentInstance.record = record;
+    if (this.recordType === 'product') {
+      const modalRef = this.modal.open(EditProductModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
+    if (this.recordType === 'schedule') {
+      const modalRef = this.modal.open(EditScheduleModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
+    if (this.recordType === 'order') {
+      const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
   }
 
   onSelectDelete(record) {
     this.record = record;
     console.log('record: ', record);
     // this.modal.open(this.deleteModalContent, { size: 'lg' });
-    const modalRef = this.modal.open(DeleteProductModalComponent, { size: 'lg' });
-    modalRef.componentInstance.record = record;
+    if (this.recordType === 'product') {
+      const modalRef = this.modal.open(DeleteProductModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
+    if (this.recordType === 'schedule') {
+      const modalRef = this.modal.open(DeleteScheduleModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
+    if (this.recordType === 'order') {
+      const modalRef = this.modal.open(DeleteOrderModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    }
   }
 
   onSort(map) {
