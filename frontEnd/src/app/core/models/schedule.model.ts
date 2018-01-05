@@ -15,6 +15,7 @@ export class ScheduleModel {
         public city: string,
         public address: string,
         public province: string,
-        public orderDeadline: string
+        public orderDeadline: string,
+        public orderList?: number[]
     ) {}
 }

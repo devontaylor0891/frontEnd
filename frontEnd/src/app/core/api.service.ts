@@ -111,6 +111,14 @@ export class ApiService {
       .catch(this._handleError);
   }
 
+  deleteSchedule(id): Observable<any> {
+    return this.http
+      .delete(`${ENV.BASE_API}schedules/${id}`, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
   // this is returning the proper results, but I will use a mock endpoint for development so we can design proper data
   // GET one product by id from Nikki's endpoint
   // getProductById(id): Observable<ProductCardModel> {

@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ApiService } from '../../core/api.service';
+import { ApiService } from '../../../../core/api.service';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProductModel } from '../../core/models/product.model';
+import { ProductModel } from '../../../../core/models/product.model';
 
 @Component({
-  selector: 'app-delete-product-modal',
-  templateUrl: './delete-product-modal.component.html',
-  styleUrls: ['./delete-product-modal.component.scss']
+  selector: 'app-delete-order-modal',
+  templateUrl: './delete-order-modal.component.html',
+  styleUrls: ['./delete-order-modal.component.scss']
 })
-export class DeleteProductModalComponent implements OnInit {
+export class DeleteOrderModalComponent implements OnInit {
 
   @Input() record: ProductModel;
   submitObject: ProductModel;

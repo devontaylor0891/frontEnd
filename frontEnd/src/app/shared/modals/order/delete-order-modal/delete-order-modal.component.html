@@ -1,0 +1,52 @@
+  <div class="modal-header">
+    <h4 class="modal-title">Delete (obsolete) this product</h4>
+  </div>
+
+  <div class="modal-body dash-modal-body">
+    <app-submitting *ngIf="submitting"></app-submitting>
+
+    <div *ngIf="!submitting">
+
+      <div *ngIf="!record.isObsolete">
+        <div *ngIf="hasPending">
+          <p class="mt-3 alert alert-danger">
+            <strong>Uh Oh!</strong> It looks like this order has pending. That means it can't be marked as obsolete. Once the outstanding orders are complete, you can try again.
+          </p>
+        </div>
+    
+        <div *ngIf="!hasPending">
+          <p class="mt-3 alert alert-danger">
+            <strong>Are you sure?</strong> By clicking 'Confirm' below, you will be marking <strong>{{ record.name }}</strong> 'Obsolete'. It will no longer show up in your Product List.
+            <br>
+            <small>(But don't worry, you can always 'unobsolete' it later!)</small>
+          </p>
+          <button
+            type="button" 
+            class="btn btn-danger" 
+            (click)="onObsolete()"
+            >Confirm</button>
+        </div>
+      </div>
+
+      <div *ngIf="record.isObsolete">
+          <p class="mt-3 alert alert-danger">
+            <strong>Last chance!</strong> Once you click 'Confirm' below, <strong>{{ record.name }}</strong> will be deleted...Forever.
+          </p>
+          <button
+            type="button" 
+            class="btn btn-danger" 
+            (click)="onDelete()"
+            >Confirm</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button" 
+      class="btn btn-olf-primary" 
+      (click)="activeModal.close()"
+      >Cancel Delete</button>
+  </div>

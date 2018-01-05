@@ -2,9 +2,9 @@ import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef } from '@an
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { EditProductModalComponent } from '../edit-product-modal/edit-product-modal.component';
-import { ViewProductModalComponent } from '../view-product-modal/view-product-modal.component';
-import { DeleteProductModalComponent } from '../delete-product-modal/delete-product-modal.component';
+import { EditProductModalComponent } from '../modals/product/edit-product-modal/edit-product-modal.component';
+import { ViewProductModalComponent } from '../modals/product/view-product-modal/view-product-modal.component';
+import { DeleteProductModalComponent } from '../modals/product/delete-product-modal/delete-product-modal.component';
 
 import { UtilityService } from '../../core/services/utility/utility.service';
 
