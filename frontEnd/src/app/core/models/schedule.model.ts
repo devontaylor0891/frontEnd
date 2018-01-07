@@ -8,14 +8,15 @@ export class ScheduleModel {
         public startDateTime: string,
         public endDateTime: string,
         public hasFee: boolean,
-        public fee: number,
-        public feeWaiver: number,
+        public hasWaiver: boolean,
         public latitude: number,
         public longitude: number,
         public city: string,
-        public address: string,
         public province: string,
         public orderDeadline: string,
+        public address?: string,        
+        public fee?: number,
+        public feeWaiver?: number,
         public orderList?: number[]
     ) {}
 }

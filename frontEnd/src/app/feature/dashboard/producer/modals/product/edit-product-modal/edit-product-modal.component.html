@@ -1,8 +1,11 @@
-<div class="modal-body dash-modal-body">
+<div class="modal-header">
+    <h5 class="modal-title">Edit: {{ record.name | uppercase }}</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    <div class="modal-header">
-        <h4 class="modal-title">Edit this product</h4>
-    </div>
+<div class="modal-body dash-modal-body">
 
     <div *ngIf="record.isObsolete">
         <p>
@@ -183,13 +186,6 @@
             [attr.disabled]="productForm.invalid || submitting ? true : null"
           >Submit Changes</button>
             <!-- https://github.com/angular/angular/issues/11271#issuecomment-289806196 -->
-        
-      <!-- Cancel -->
-          <button
-        type="button" 
-        class="btn btn-olf-primary" 
-        (click)="activeModal.close()"
-      >Cancel Changes</button>
       
           <!-- API submission error -->
           <p *ngIf="error" class="mt-3 alert alert-danger">
@@ -200,4 +196,12 @@
   
       <app-loading *ngIf="submitting"></app-loading>
   
+  </div>
+
+  <div class="modal-footer justify-content-center">
+    <div class="row">
+        <div>
+            <a (click)="activeModal.close()">Cancel Changes</a>
+        </div>
+    </div>
   </div>

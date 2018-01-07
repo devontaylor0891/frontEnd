@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { ProductModel } from '../../../../../../core/models/product.model';
 import { ProducerModel } from '../../../../../../core/models/producer.model';
 
@@ -18,7 +20,8 @@ export class AddProductModalComponent implements OnInit {
   producer: ProducerModel;
 
   constructor(private dashboardService: ProducerDashboardService,
-              private formBuild: FormBuilder) {
+              private formBuild: FormBuilder,
+              private activeModal: NgbActiveModal) {
 
     this.form = formBuild.group({
     'id':[''],
@@ -51,6 +54,7 @@ export class AddProductModalComponent implements OnInit {
     this.form.value.scheduleList = this.producer.scheduleList;
     console.log(this.form.value);
     this.dashboardService.addNewProduct(this.form.value);
+    this.activeModal.close();
   }
 
   generateRandomId() {

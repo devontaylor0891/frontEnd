@@ -10,7 +10,7 @@ import { SearchService } from '../../../../core/services/search/search.service';
 })
 export class SearchOptionsComponent implements OnInit, OnChanges {
 
-  checkboxValue = true;
+  checkboxValue: boolean;
 
   deliveryTypes: string[];
   categoriesList: string[];
@@ -76,7 +76,8 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   }
 
   reset(form: NgForm) {
-    form.reset();
+    // form.reset();
+    this.checkboxValue = true;
     this.searchService.onReset();
     this.submittedValues = {
       categories: [],

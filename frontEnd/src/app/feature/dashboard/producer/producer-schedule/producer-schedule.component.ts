@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { ProducerDashboardService } from '../../producer-dashboard.service';
 
 import { ScheduleModel } from '../../../../core/models/schedule.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
+
+import { AddScheduleModalComponent } from '../modals/schedule/add-schedule-modal/add-schedule-modal.component';
 
 @Component({
   selector: 'app-producer-schedule',
@@ -54,7 +58,14 @@ export class ProducerScheduleComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: ProducerDashboardService) { }
+  constructor(private dashboardService: ProducerDashboardService,
+              private modal: NgbModal) { }
+
+  openModal() {
+    // this.modal.open(this.modalContent, { size: 'lg' });  
+    const modalRef = this.modal.open(AddScheduleModalComponent, { size: 'lg' });
+    // modalRef.componentInstance.form = this.form;  
+  }
 
   ngOnInit() {
 

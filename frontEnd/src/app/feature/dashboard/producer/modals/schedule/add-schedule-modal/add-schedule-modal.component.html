@@ -1,0 +1,258 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add a New Schedule</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+            
+  <form [formGroup]="form" (ngSubmit)="onSubmit()"> <!-- this binds the viewed form to the form we build in the component class --> 
+    <div class="modal-body dash-modal-body">
+        <div>
+            <div class="row">
+                <label for="type" class="col-4 col-form-label text-right">Schedule Type</label>
+                <div class="col-8">
+                  <select class="custom-select float-left" name="type" [(ngModel)]="type" [formControl]="form.controls['type']">
+                      <option selected value="">Select a Type</option>
+                      <option value="Door-to-door Delivery">Door-to-door Delivery</option>
+                      <option value="Market Pickup">Market Pickup</option>
+                      <option value="On-farm Pickup">On-farm Pickup</option>
+                      <option value="Off-farm Pickup">Other Pickup</option>
+                  </select>
+                  <small 
+                      *ngIf="!form.get('type').valid && form.get('type').touched"
+                      class="help-block"
+                      >Please select the type of delivery or pickup you are planning.</small>
+                </div>
+            </div>
+
+            <!-- options required for ALL types -->
+            <div *ngIf="type">
+                
+              <div class="row">
+                  <label for="description" class="col-4 col-form-label text-right">Description</label>
+                  <div class="col-8">
+                      <textarea 
+                          class="form-control" 
+                          type="text" 
+                          id="description" 
+                          [formControl]="form.controls['description']"></textarea>
+                  </div>
+              </div>
+    
+              <div class="row">
+                  <label for="imagePath" class="col-4 col-form-label text-right">Date</label>
+                  <div class="col-8">
+                      <p>Placeholder for Date Picker</p>
+                  </div>
+              </div>
+    
+              <div class="row">
+                  <label for="pricePerUnit" class="col-4 col-form-label text-right">Start Time</label>
+                  <div class="col-8">
+                      <p>Placeholder for time picker</p>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <label for="pricePerUnit" class="col-4 col-form-label text-right">End Time</label>
+                  <div class="col-8">
+                      <p>Placeholder for time picker</p>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <label for="imagePath" class="col-4 col-form-label text-right">Order Deadline Date</label>
+                  <div class="col-8">
+                      <p>Placeholder for Date Picker</p>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <label for="pricePerUnit" class="col-4 col-form-label text-right">Order Deadline Time</label>
+                  <div class="col-8">
+                      <p>Placeholder for time picker</p>
+                  </div>
+              </div>
+
+              <br>
+    
+              <!-- options for everything but farmgates -->
+              <div *ngIf="type !== 'On-farm Pickup'">
+
+                <div class="row">
+                  <input id="pac-input" type="text" placeholder="Start typing the community here">
+                </div>
+
+                  <div class="row">
+                      <label for="city" class="col-4 col-form-label text-right">City/Town:</label>
+                      <div class="col-8 input-group">
+                          <input 
+                              class="form-control" 
+                              type="text"
+                              id="city" 
+                              [formControl]="form.controls['city']">
+                      </div>
+                  </div>
+    
+                  <br>
+
+                  <div class="row">
+                      <label for="province" class="col-4 col-form-label text-right">Province:</label>
+                      <div class="col-8">
+                          <select class="custom-select float-left" name="province" [formControl]="form.controls['province']">
+                              <option selected value=""></option>
+                              <option value="Saskatchewan">SK</option>
+                              <option value="Manitoba">MB</option>
+                          </select>
+                      </div>
+                  </div>
+        
+                  <br>
+        
+                  <div *ngIf="city" class="row">
+                      <label for="address" class="col-4 col-form-label text-right">Address:</label>
+                      <div class="col-8 input-group">
+                          <input 
+                              class="form-control" 
+                              type="text"
+                              id="address" 
+                              [formControl]="form.controls['address']">
+                      </div>
+                  </div>
+              </div>
+
+              <!-- options only for D2D deliveries -->
+            <div *ngIf="type == 'Door-to-door Delivery'">
+                <p>D2D</p>
+                <div class="row">
+                    <label for="unit" class="col-4 col-form-label text-right">Does this delivery have a fee?</label>
+                    <div class="col-8 pl-5">
+                        <div class="form-check form-check-inline">
+                          <input 
+                            [formControl]="form.controls['hasFee']" 
+                            type="radio" 
+                            name="hasFee" 
+                            [(ngModel)]="hasDelFee"
+                            id="feeYes" 
+                            [value]="true">
+                          <label class="form-check-label" for="feeYes">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input 
+                            [formControl]="form.controls['hasFee']" 
+                            type="radio" 
+                            name="hasFee"
+                            [(ngModel)]="hasDelFee" 
+                            id="feeNo" 
+                            [value]="false">
+                          <label class="form-check-label" for="feeNo">No</label>
+                        </div>
+                    </div>
+                </div>
+  
+                <div *ngIf="hasDelFee">
+                  <div class="row">
+                    <label for="fee" class="col-4 col-form-label text-right">What is the fee?</label>
+                    <div class="col-8 input-group">
+                      <div class="input-group-addon">$</div>
+                      <input 
+                        class="form-control" 
+                        type="number"
+                        min="0"
+                        step="1"
+                        id="fee" 
+                        [formControl]="form.controls['fee']">
+                    </div>
+                  </div>
+
+                  <br>
+  
+                  <div class="row">
+                      <label for="hasWaiver" class="col-4 col-form-label text-right">Is there an order value at which you will waive the fee?</label>
+                      <div class="col-8 pl-5">
+                          <div class="form-check form-check-inline">
+                            <input 
+                              [formControl]="form.controls['hasWaiver']" 
+                              type="radio" 
+                              name="hasWaiver" 
+                              [(ngModel)]="hasFeeWaiver"
+                              id="waiverYes" 
+                              [value]="true">
+                            <label class="form-check-label" for="waiverYes">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input 
+                              [formControl]="form.controls['hasWaiver']" 
+                              type="radio" 
+                              name="hasWaiver"
+                              [(ngModel)]="hasFeeWaiver" 
+                              id="waiverNo" 
+                              [value]="false">
+                            <label class="form-check-label" for="waiverNo">No</label>
+                          </div>
+                      </div>
+                  </div>
+  
+                  <div *ngIf="hasFeeWaiver">
+                    <div class="row">
+                        <label for="feeWaiver" class="col-4 col-form-label text-right">What is the order amount?</label>
+                        <div class="col-8 input-group">
+                            <div class="input-group-addon">$</div>
+                            <input 
+                                class="form-control" 
+                                type="number"
+                                min="0"
+                                step="1"
+                                id="feeWaiver" 
+                                [formControl]="form.controls['feeWaiver']">
+                        </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+  
+              <!-- options only for farmgate -->
+              <div *ngIf="type === 'On-farm Pickup'">
+                <div class="row">
+                    <label for="address" class="col-4 col-form-label text-right">Your Address:</label>
+                    <div class="col-8 input-group">
+                      <p>{{ producer.address }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="address" class="col-4 col-form-label text-right">City, Province:</label>
+                    <div class="col-8 input-group">
+                      <p>{{ producer.location }}, {{ producer.province }}</p>
+                    </div>
+                </div>
+                
+              </div>
+  
+                <!-- options only for Market or other pickups -->
+              <div *ngIf="type === 'Market Pickup' || type === 'Other Pickup'">
+                <p>Market or other pickups</p>
+              </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer justify-content-center">
+        <div class="row">
+            <div>
+                <button 
+                  class="btn btn-olf-primary" 
+                  type="submit"
+                  >Add to Schedule</button>
+                  <!-- <button 
+                  class="btn btn-olf-primary" 
+                  type="submit"
+                  [disabled]="(form.invalid)"
+                  >Add to Schedule</button> -->
+                <a (click)="close()">Cancel Changes</a>
+            </div>
+        </div>
+    </div>
+  </form>
+  

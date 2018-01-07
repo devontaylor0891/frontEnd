@@ -10,7 +10,6 @@ import { ViewScheduleModalComponent } from '../../feature/dashboard/producer/mod
 import { DeleteScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
 import { EditOrderModalComponent } from '../../feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
 import { ViewOrderModalComponent } from '../../feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
-import { DeleteOrderModalComponent } from '../../feature/dashboard/producer/modals/order/delete-order-modal/delete-order-modal.component';
 
 import { UtilityService } from '../../core/services/utility/utility.service';
 
@@ -111,10 +110,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
     }
     if (this.recordType === 'schedule') {
       const modalRef = this.modal.open(DeleteScheduleModalComponent, { size: 'lg' });
-      modalRef.componentInstance.record = record;
-    }
-    if (this.recordType === 'order') {
-      const modalRef = this.modal.open(DeleteOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
   }

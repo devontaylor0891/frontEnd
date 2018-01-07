@@ -17,6 +17,8 @@ import { ApiService } from './core/api.service';
 import { LocationService } from './core/services/location/location.service';
 import { CartService } from './core/services/cart-service/cart.service';
 import { UtilityService } from './core/services/utility/utility.service';
+import { ProducerDashboardService } from './feature/dashboard/producer-dashboard.service';
+import { PlacesService } from './core/services/places/places.service';
 
 import { FormatCellPipe } from './shared/format-cell.pipe';
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -84,11 +86,11 @@ import { ViewProductModalComponent } from './feature/dashboard/producer/modals/p
 import { DeleteProductModalComponent } from './feature/dashboard/producer/modals/product/delete-product-modal/delete-product-modal.component';
 import { EditOrderModalComponent } from './feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
 import { ViewOrderModalComponent } from './feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
-import { DeleteOrderModalComponent } from './feature/dashboard/producer/modals/order/delete-order-modal/delete-order-modal.component';
 import { EditScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/edit-schedule-modal/edit-schedule-modal.component';
 import { ViewScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/view-schedule-modal/view-schedule-modal.component';
 import { DeleteScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
 import { AddProductModalComponent } from './feature/dashboard/producer/modals/product/add-product-modal/add-product-modal.component';
+import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/add-schedule-modal/add-schedule-modal.component';
 
 @NgModule({
   declarations: [
@@ -153,11 +155,11 @@ import { AddProductModalComponent } from './feature/dashboard/producer/modals/pr
     DeleteProductModalComponent,
     EditOrderModalComponent,
     ViewOrderModalComponent,
-    DeleteOrderModalComponent,
     EditScheduleModalComponent,
     ViewScheduleModalComponent,
     DeleteScheduleModalComponent,
-    AddProductModalComponent
+    AddProductModalComponent,
+    AddScheduleModalComponent
   ],
   imports: [
     BrowserModule,
@@ -180,17 +182,19 @@ import { AddProductModalComponent } from './feature/dashboard/producer/modals/pr
     CurrencyPipe, 
     DatePipe, 
     UtilityService,
+    ProducerDashboardService,
     EditProductModalComponent,
     NgbActiveModal,
     ViewProductModalComponent,
     DeleteProductModalComponent,
     EditOrderModalComponent,
     ViewOrderModalComponent,
-    DeleteOrderModalComponent,
     EditScheduleModalComponent,
     ViewScheduleModalComponent,
     DeleteScheduleModalComponent,
-    AddProductModalComponent
+    AddProductModalComponent,
+    AddScheduleModalComponent,
+    PlacesService
   ],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [
@@ -199,11 +203,11 @@ import { AddProductModalComponent } from './feature/dashboard/producer/modals/pr
     DeleteProductModalComponent,
     EditOrderModalComponent,
     ViewOrderModalComponent,
-    DeleteOrderModalComponent,
     EditScheduleModalComponent,
     ViewScheduleModalComponent,
     DeleteScheduleModalComponent,
-    AddProductModalComponent
+    AddProductModalComponent,
+    AddScheduleModalComponent
   ],
   bootstrap: [AppComponent]
 })

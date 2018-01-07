@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col col-xs-12">
 
-            <ng-template #modalContent let-close="close">
+            <!-- <ng-template #modalContent let-close="close">
                     
                 <div class="modal-header">
                     <h5 class="modal-title">Add a New Product</h5>
@@ -10,7 +10,7 @@
                     </button>
                 </div>
                             
-                <form [formGroup]="form" (ngSubmit)="onSubmit(); close()"> <!-- this binds the viewed form to the form we build in the component class --> 
+                <form [formGroup]="form" (ngSubmit)="onSubmit(); close()">  
                     <div class="modal-body dash-modal-body">
                         <div>
                             <div class="row">
@@ -114,7 +114,6 @@
         
                             <div class="row">
                                 <label for="subcategory" class="col-4 col-form-label text-right">Subcategory</label>
-                                <!-- meat subcategories -->
                                 <div class="col-8" *ngIf="form.value.category === 'meat'">
                                     <select class="custom-select float-left" name="subcategory" [formControl]="form.controls['subcategory']">
                                         <option selected value="">Choose a Subcategory</option>
@@ -122,7 +121,6 @@
                                         <option value="beef">Beef</option>
                                     </select>
                                 </div>
-                                <!-- vegetable subcategories -->
                                 <div class="col-8" *ngIf="form.value.category === 'vegetables'">
                                     <select class="custom-select float-left" name="subcategory" [formControl]="form.controls['subcategory']">
                                         <option selected value="">Choose a Subcategory</option>
@@ -130,7 +128,6 @@
                                         <option value="potatoes">Potatoes</option>
                                     </select>
                                 </div>
-                                <!-- dairy subs -->
                                 <div class="col-8" *ngIf="form.value.category === 'dairy'">
                                     <select class="custom-select float-left" name="subcategory" [formControl]="form.controls['subcategory']">
                                         <option selected value="">Choose a Subcategory</option>
@@ -167,7 +164,7 @@
                     </div>
                 </form>
 
-            </ng-template>
+            </ng-template> -->
 
         <div id="productsAccordion" role="tablist" aria-multiselectable="true">
 

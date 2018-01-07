@@ -103,6 +103,15 @@ export class ProducerDashboardService {
           console.log('posted successfully')
         }
       );
-  }
+  };
+
+  addNewSchedule(schedule: ScheduleModel) {
+    this.apiService.postSchedule(schedule)
+      .subscribe(
+        result => {
+          console.log('posted sched successfully')
+        }
+      );
+  };
   
 }

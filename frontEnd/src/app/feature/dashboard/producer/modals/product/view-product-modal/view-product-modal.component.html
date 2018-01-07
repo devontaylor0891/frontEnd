@@ -1,13 +1,28 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ record.name | uppercase }}</h5>
+  <button type="button" class="close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
 <div class="modal-body dash-modal-body">
   <div> 
     <p>View</p>         
     <pre>{{ record | json }}</pre>
   </div>
 
-  <button
+  <!-- <button
     type="button" 
     class="btn btn-olf-primary" 
     (click)="activeModal.close()"
-    >Close</button>
+    >Close</button> -->
+</div>
+
+<div class="modal-footer justify-content-center">
+  <div class="row">
+      <div>
+          <a (click)="activeModal.close()">Close</a>
+      </div>
+  </div>
 </div>
 

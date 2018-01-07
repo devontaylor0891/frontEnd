@@ -8,7 +8,7 @@ import { UserModel } from '../../../core/models/user.model';
   selector: 'app-producer-dashboard',
   templateUrl: './producer-dashboard.component.html',
   styleUrls: ['./producer-dashboard.component.scss'],
-  providers: [ProducerDashboardService]
+  providers: []
 })
 export class ProducerDashboardComponent implements OnInit {
 

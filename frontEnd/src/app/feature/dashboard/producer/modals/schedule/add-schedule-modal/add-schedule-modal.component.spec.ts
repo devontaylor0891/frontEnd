@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteProductModalComponent } from './delete-product-modal.component';
+import { AddScheduleModalComponent } from './add-schedule-modal.component';
 
-describe('DeleteProductModalComponent', () => {
-  let component: DeleteProductModalComponent;
-  let fixture: ComponentFixture<DeleteProductModalComponent>;
+describe('AddScheduleModalComponent', () => {
+  let component: AddScheduleModalComponent;
+  let fixture: ComponentFixture<AddScheduleModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteProductModalComponent ]
+      declarations: [ AddScheduleModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteProductModalComponent);
+    fixture = TestBed.createComponent(AddScheduleModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,6 +4,7 @@ export class ProducerModel {
                 public name: string,
                 public location: string,
                 public province: string,
+                public address: string,
                 public description: string,
                 public email: string,
                 public logoUrl: string,

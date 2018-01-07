@@ -223,13 +223,15 @@ export class SearchService implements OnInit {
       "endDateTime": delivery.endDateTime,
       "hasFee": delivery.hasFee,
       "fee": delivery.fee,
+      "hasWaiver": null,
       "feeWaiver": delivery.feeWaiver,
       "latitude": delivery.latitude,
       "longitude": delivery.longitude,
       "city": delivery.city,
       "address": delivery.address,
       "province": delivery.province,
-      "orderDeadline": delivery.orderDeadline
+      "orderDeadline": delivery.orderDeadline,
+      "orderList": []
     };
 	  return delObject;
   }

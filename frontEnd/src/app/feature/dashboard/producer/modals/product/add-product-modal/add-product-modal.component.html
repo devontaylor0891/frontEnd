@@ -1,11 +1,11 @@
 <div class="modal-header">
   <h5 class="modal-title">Add a New Product</h5>
-  <button type="button" class="close" (click)="close()">
+  <button type="button" class="close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
   </button>
 </div>
           
-<form [formGroup]="form" (ngSubmit)="onSubmit(); close()"> <!-- this binds the viewed form to the form we build in the component class --> 
+<form [formGroup]="form" (ngSubmit)="onSubmit()"> <!-- this binds the viewed form to the form we build in the component class --> 
   <div class="modal-body dash-modal-body">
       <div>
           <div class="row">

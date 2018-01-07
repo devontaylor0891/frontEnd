@@ -747,6 +747,7 @@
       "name": "Gardenzia Farms",
       "location": "Timbuktu",
       "province": "ON",
+      "address": "123 Main St",
       "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
       "email": "email@email.com",
       "logoUrl": "farm-logo-3.jpg",
@@ -1018,7 +1019,7 @@
       }
     },
     {
-      "id": 1,
+      "id": 2,
       "tempId": 1,
       "chosenSchedule": {
         "id": 444,
@@ -1137,51 +1138,50 @@
       }
     },
     {
-      "id": 1,
+      "id": 3,
       "tempId": 1,
       "chosenSchedule": {
-        "id": 444,
-        "producerId": 13,
+        "id": 666,
+        "producerId": 10156726911823276,
         "productList": [
-          43,
-          95
+          66,
+          67
         ],
         "type": "Door-to-door Delivery",
-        "description": "We're gonna charge you this time.",
-        "startDateTime": "2017-12-02T01:00:00.000Z",
-        "endDateTime": "2017-12-02T02:00:00.000Z",
+        "description": "A description.",
+        "startDateTime": "2018-01-28T01:00:00.000Z",
+        "endDateTime": "2018-01-28T02:00:00.000Z",
         "hasFee": true,
-        "fee": 5,
-        "feeWaiver": 35,
+        "fee": 10,
+        "feeWaiver": 25,
         "latitude": 50.2615563,
         "longitude": -101.9720143,
-        "city": "Wapella",
-        "address": "123 Main St",
+        "city": "Moosomin",
+        "address": "555 Main St",
         "province": "SK",
-        "orderDeadline": "2017-12-02T00:00:00.000Z"
+        "orderDeadline": "2018-01-28T00:00:00.000Z"
       },
-      "producerId": 13,
+      "producerId": 10156726911823276,
       "producer": {
-        "id": 13,
-        "name": "Gardenia Farms",
-        "location": "Virden",
-        "province": "MB",
+        "id": 10156726911823276,
+        "name": "Gardenzia Farms",
+        "location": "Timbuktu",
+        "province": "ON",
         "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
         "email": "email@email.com",
-        "logoUrl": "farm-logo-1.jpg",
+        "logoUrl": "farm-logo-3.jpg",
         "longitude": 444,
         "latitude": 555,
         "firstName": "Devon",
-        "registrationDate": "Jan 1 2017",
+        "registrationDate": "2017-12-20T14:17:36.255Z",
         "status": "active",
         "productList": [
-          43,
-          95
+          66,
+          67
         ],
         "scheduleList": [
-          444,
-          445,
-          789
+          666,
+          667
         ]
       },
       "consumer": {
@@ -1193,18 +1193,19 @@
       },
       "productList": [
         {
-          "id": 43,
-          "name": "Carrots",
-          "description": "Orange, cylindrical, delicious.",
-          "image": "carrots.jpg",
-          "pricePerUnit": 4,
-          "unit": "lb",
+          "id": 66,
+          "producerId": 10156726911823276,
+          "name": "Bacon",
+          "description": "Great stuff.",
+          "image": "bacon.jpg",
+          "pricePerUnit": 12,
+          "unit": "kg",
           "unitsPer": 1,
-          "category": "Produce",
-          "subcategory": "Carrots",
+          "category": "Meat",
+          "subcategory": "Pork",
           "producer": {
-            "id": 13,
-            "name": "Gardenia Farms",
+            "id": 10156726911823276,
+            "name": "Gardenzia Farms",
             "location": "Virden",
             "province": "MB",
             "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
@@ -1213,35 +1214,33 @@
             "longitude": 444,
             "latitude": 555,
             "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
+            "registrationDate": "2017-12-20T14:17:36.255Z",
             "status": "active",
             "productList": [
-              43,
-              95
+              66,
+              67
             ],
             "scheduleList": [
-              444,
-              445,
-              789
+              666,
+              667
             ]
           },
-          "dateAdded": "Jan 1 2017",
-          "qtyAvailable": 55,
-          "qtyPending": 12,
-          "qtyAccepted": 22,
-          "qtyCompleted": 345,
+          "dateAdded": "2017-12-20T14:17:36.255Z",
+          "qtyAvailable": 233,
+          "qtyPending": 1,
+          "qtyAccepted": 0,
+          "qtyCompleted": 2,
           "isObsolete": false,
           "scheduleList": [
-            444,
-            445,
-            789
+            666,
+            667
           ]
         }
       ],
       "orderDetails": {
         "productQuantities": [
           {
-            "productId": 43,
+            "productId": 66,
             "orderQuantity": 3,
             "orderValue": 12
           }
@@ -1256,7 +1255,7 @@
       }
     },
     {
-      "id": 1,
+      "id": 4,
       "tempId": 1,
       "chosenSchedule": {
         "id": 444,
@@ -1375,7 +1374,7 @@
       }
     },
     {
-      "id": 1,
+      "id": 5,
       "tempId": 1,
       "chosenSchedule": {
         "id": 444,
@@ -1494,7 +1493,7 @@
       }
     },
     {
-      "id": 1,
+      "id": 6,
       "tempId": 1,
       "chosenSchedule": {
         "id": 444,
@@ -2071,7 +2070,10 @@
       "city": "Wapella",
       "address": "123 Main St",
       "province": "SK",
-      "orderDeadline": "2017-12-02T00:00:00.000Z"
+      "orderDeadline": "2017-12-02T00:00:00.000Z",
+      "orderList": [
+        
+      ]
     },
     {
       "id": 445,
@@ -2091,7 +2093,10 @@
       "city": "Wapella",
       "address": "123 Main St",
       "province": "SK",
-      "orderDeadline": "2017-12-02T00:00:00.000Z"
+      "orderDeadline": "2017-12-02T00:00:00.000Z",
+      "orderList": [
+        
+      ]
     },
     {
       "id": 789,
@@ -2112,7 +2117,10 @@
       "city": "Moosomin",
       "address": "123 Main St",
       "province": "SK",
-      "orderDeadline": "2017-12-01T00:00:00.000Z"
+      "orderDeadline": "2017-12-01T00:00:00.000Z",
+      "orderList": [
+        
+      ]
     },
     {
       "id": 798,
@@ -2132,7 +2140,10 @@
       "city": "Moosomin",
       "address": "123 Main St",
       "province": "SK",
-      "orderDeadline": "2018-04-01T00:00:00.000Z"
+      "orderDeadline": "2018-04-01T00:00:00.000Z",
+      "orderList": [
+        
+      ]
     },
     {
       "id": 799,
@@ -2152,7 +2163,10 @@
       "city": "Wapella",
       "address": "123 Main St",
       "province": "SK",
-      "orderDeadline": "2018-04-02T00:00:00.000Z"
+      "orderDeadline": "2018-04-02T00:00:00.000Z",
+      "orderList": [
+        
+      ]
     },
     {
       "id": 666,
@@ -2173,7 +2187,10 @@
       "city": "Moosomin",
       "address": "555 Main St",
       "province": "SK",
-      "orderDeadline": "2018-01-28T00:00:00.000Z"
+      "orderDeadline": "2018-01-28T00:00:00.000Z",
+      "orderList": [
+        3
+      ]
     },
     {
       "id": 667,
@@ -2194,7 +2211,10 @@
       "city": "Timbuktu",
       "address": "",
       "province": "ON",
-      "orderDeadline": "2017-12-27T00:00:00.000Z"
+      "orderDeadline": "2017-12-27T00:00:00.000Z",
+      "orderList": [
+        
+      ]
     }
   ]
 }

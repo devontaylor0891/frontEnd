@@ -113,19 +113,19 @@ export class ProducerProductsComponent implements OnInit {
     // modalRef.componentInstance.form = this.form;  
   }
 
-  onSubmit() {
-    console.log(this.form.value);
-    this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
-    this.form.value.producerId = this.producer.id;
-    this.form.value.producer = this.producer;
-    this.form.value.scheduleList = this.producer.scheduleList;
-    console.log(this.form.value);
-    this.dashboardService.addNewProduct(this.form.value);
-  }
+  // onSubmit() {
+  //   console.log(this.form.value);
+  //   this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
+  //   this.form.value.producerId = this.producer.id;
+  //   this.form.value.producer = this.producer;
+  //   this.form.value.scheduleList = this.producer.scheduleList;
+  //   console.log(this.form.value);
+  //   this.dashboardService.addNewProduct(this.form.value);
+  // }
 
-  generateRandomId() {
-    return Math.floor( Math.random() * 1000000 )
-  }
+  // generateRandomId() {
+  //   return Math.floor( Math.random() * 1000000 )
+  // }
 
   // view a single product right in the table
   toggleView(product: any) {

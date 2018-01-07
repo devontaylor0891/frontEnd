@@ -111,6 +111,15 @@ export class ApiService {
       .catch(this._handleError);
   }
 
+  // POST new schedule - producer or admin only
+  postSchedule(schedule: ScheduleModel): Observable<ScheduleModel> {
+    return this.http
+      .post(`${ENV.BASE_API}schedules/`, schedule, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
   deleteSchedule(id): Observable<any> {
     return this.http
       .delete(`${ENV.BASE_API}schedules/${id}`, {

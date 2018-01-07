@@ -11,7 +11,7 @@
                 <div class="col-6 col-md-12">
                     <h5 class="card-title">Categories</h5>
                         <div *ngFor="let category of categoriesList; let i = index">
-                            <input type="checkbox" id="c.{{ category }}" name="c.{{ category }}" [ngModel]="checkboxValue">
+                            <input type="checkbox" id="c.{{ category }}" name="c.{{ category }}" [ngModel]="checkboxValue" [checked]="checkboxValue">
                             <label for="c.{{ category }}">{{ category }}</label>
                         </div>
                 </div>
@@ -22,7 +22,7 @@
                     <h5 class="card-title">Delivery Types</h5>
                     <form-group>
                         <div *ngFor="let delivery of deliveryTypes">
-                            <input type="checkbox" id="d.{{ delivery }}" name="d.{{ delivery }}" [ngModel]="checkboxValue">
+                            <input type="checkbox" id="d.{{ delivery }}" name="d.{{ delivery }}" [ngModel]="checkboxValue" [checked]="checkboxValue">
                             <label for="d.{{ delivery }}">{{ delivery }}</label>
                         </div>
                     </form-group>
