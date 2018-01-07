@@ -286,3 +286,11 @@ input[type=number]::-webkit-outer-spin-button {
     max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
+
+.pac-container {
+    z-index: 9999999999 !important;
+}
+
+.hidden {
+    display: none !important;
+}

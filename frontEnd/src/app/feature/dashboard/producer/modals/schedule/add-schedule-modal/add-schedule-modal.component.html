@@ -25,8 +25,45 @@
                 </div>
             </div>
 
+            <div class="row" [class.hidden]="!type || type === 'On-farm Pickup'">
+                  <label for="search" class="col-4 col-form-label text-right">Search for Community:</label>
+                  <input  
+                    autocorrect="off" 
+                    autocapitalize="off" 
+                    spellcheck="off" 
+                    type="text" 
+                    class="form-control col-8" 
+                    #search 
+                    id="search"
+                    [formControl]="searchControl">
+                <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                  </agm-map> -->
+            </div>
+
             <!-- options required for ALL types -->
             <div *ngIf="type">
+
+              <!-- options for everything but farmgates -->
+              <div *ngIf="type !== 'On-farm Pickup'">
+
+                  <div *ngIf="this.form.value.address" class="row">
+                      <label for="address" class="col-4 col-form-label text-right">Address:</label>
+                      <div class="col-8 input-group">
+                          <p>{{ this.form.value.address }}</p>
+                      </div>
+                  </div>
+
+                  <div *ngIf="this.form.value.city" class="row">
+                      <label for="city" class="col-4 col-form-label text-right">City/Town:</label>
+                      <div class="col-8 input-group">
+                          <p>{{ this.form.value.city }}, {{ this.form.value.province }}</p>
+                      </div>
+                  </div>
+        
+                  <br>
+                  
+              </div>
                 
               <div class="row">
                   <label for="description" class="col-4 col-form-label text-right">Description</label>
@@ -76,50 +113,7 @@
 
               <br>
     
-              <!-- options for everything but farmgates -->
-              <div *ngIf="type !== 'On-farm Pickup'">
-
-                <div class="row">
-                  <input id="pac-input" type="text" placeholder="Start typing the community here">
-                </div>
-
-                  <div class="row">
-                      <label for="city" class="col-4 col-form-label text-right">City/Town:</label>
-                      <div class="col-8 input-group">
-                          <input 
-                              class="form-control" 
-                              type="text"
-                              id="city" 
-                              [formControl]="form.controls['city']">
-                      </div>
-                  </div>
-    
-                  <br>
-
-                  <div class="row">
-                      <label for="province" class="col-4 col-form-label text-right">Province:</label>
-                      <div class="col-8">
-                          <select class="custom-select float-left" name="province" [formControl]="form.controls['province']">
-                              <option selected value=""></option>
-                              <option value="Saskatchewan">SK</option>
-                              <option value="Manitoba">MB</option>
-                          </select>
-                      </div>
-                  </div>
-        
-                  <br>
-        
-                  <div *ngIf="city" class="row">
-                      <label for="address" class="col-4 col-form-label text-right">Address:</label>
-                      <div class="col-8 input-group">
-                          <input 
-                              class="form-control" 
-                              type="text"
-                              id="address" 
-                              [formControl]="form.controls['address']">
-                      </div>
-                  </div>
-              </div>
+              
 
               <!-- options only for D2D deliveries -->
             <div *ngIf="type == 'Door-to-door Delivery'">
