@@ -24,7 +24,7 @@ export class AddScheduleModalComponent implements OnInit {
   public zoom: number;
 
   @ViewChild("search") public searchElementRef: ElementRef;
-
+  @ViewChild("input2") public datePickerRef: ElementRef;
 
   form: FormGroup; //this will hold our form data in a js object
   
@@ -40,6 +40,30 @@ export class AddScheduleModalComponent implements OnInit {
   country: string;
   lat: number;
   long: number;
+
+  public moment: Date = new Date();
+  
+      public min = new Date(2017, 7, 9);
+      public max = new Date(2017, 8, 10);
+      public disabledDates = [new Date(2017, 7, 9),
+          new Date(2017, 7, 12), new Date(2017, 7, 15), new Date(2017, 7, 20)];
+  
+      public pickerColor: string = '#0070ba';
+
+      public input1Moment: any;
+      public input2Moment: any;
+      public input3Moment: any;
+      public input4Moment: any;
+      public input5Moment: any;
+      public input6Moment: any;
+      public input7Moment: any;
+      public input8Moment: any;
+      public input9Moment: any;
+      public input10Moment: any;
+      public input11Moment: any;
+      public input12Moment: any;
+      public input13Moment: any;
+      public input14Moment: any = new Date(2017, 8, 10, 13, 30, 30);
 
   constructor(private dashboardService: ProducerDashboardService,
                 private formBuild: FormBuilder,
@@ -183,14 +207,11 @@ export class AddScheduleModalComponent implements OnInit {
     }
   };
 
-  // private setCurrentPosition() {
-  //   if ("geolocation" in navigator) {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       this.latitude = position.coords.latitude;
-  //       this.longitude = position.coords.longitude;
-  //       this.zoom = 12;
-  //     });
-  //   }
-  // }
-
+  onChooseDate() {
+    console.log('date chosen: ', this.input2Moment);
+    console.log('js date: ', new Date(this.input2Moment));
+    console.log('day: ', this.input2Moment.getDate());
+    console.log('month: ', this.input2Moment.getMonth());
+    console.log('year: ', this.input2Moment.getFullYear());
+  }
 }

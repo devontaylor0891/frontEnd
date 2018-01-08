@@ -77,16 +77,33 @@
               </div>
     
               <div class="row">
-                  <label for="imagePath" class="col-4 col-form-label text-right">Date</label>
+                  <label for="input2" class="col-4 col-form-label text-right">Date</label>
                   <div class="col-8">
-                      <p>Placeholder for Date Picker</p>
+                          <owl-date-time 
+                            [(ngModel)]="input2Moment"
+                            [ngModelOptions]="{standalone: true}"
+                            [dateFormat]="'YYYY-MM-DD'"
+                            [type]="'calendar'" 
+                            [placeHolder]="'yyyy/mm/dd'"
+                            (onSelect)="onChooseDate()"
+                            [autoClose]="true"
+                            [inputId]="'input2'"></owl-date-time>
                   </div>
               </div>
     
               <div class="row">
-                  <label for="pricePerUnit" class="col-4 col-form-label text-right">Start Time</label>
+                  <label for="input3" class="col-4 col-form-label text-right">Start Time</label>
                   <div class="col-8">
                       <p>Placeholder for time picker</p>
+                          <owl-date-time 
+                            [(ngModel)]="input3Moment" 
+                            [ngModelOptions]="{standalone: true}"
+                            [type]="'timer'"
+                            [dateFormat]="'hh:mm'"
+                            [placeHolder]="'hh:mm'" 
+                            (onSelect)="onChooseStartTime()"
+                            [autoClose]="true"
+                            [inputId]="'input3'"></owl-date-time>
                   </div>
               </div>
 

@@ -12,6 +12,7 @@ import { CalendarModule } from 'angular-calendar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import { AgmCoreModule } from '@agm/core';
+import { DateTimePickerModule } from 'ng-pick-datetime';
 
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
@@ -177,7 +178,8 @@ import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/s
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAgN6Tt6BxP2Q-iNCNe7HiHfIGotu1j_uY',
       libraries: ["places"]
-    })
+    }),
+    DateTimePickerModule
   ],
   providers: [
     AuthService, 
