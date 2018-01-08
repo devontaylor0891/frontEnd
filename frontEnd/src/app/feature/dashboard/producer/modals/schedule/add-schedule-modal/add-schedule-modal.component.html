@@ -27,15 +27,18 @@
 
             <div class="row" [class.hidden]="!type || type === 'On-farm Pickup'">
                   <label for="search" class="col-4 col-form-label text-right">Search for Community:</label>
-                  <input  
-                    autocorrect="off" 
-                    autocapitalize="off" 
-                    spellcheck="off" 
-                    type="text" 
-                    class="form-control col-8" 
-                    #search 
-                    id="search"
-                    [formControl]="searchControl">
+                  <div class="col-8">
+                        <input  
+                            autocorrect="off" 
+                            autocapitalize="off" 
+                            spellcheck="off" 
+                            type="text" 
+                            class="form-control" 
+                            #search 
+                            id="search"
+                            [formControl]="searchControl">
+                  </div>
+                  
                 <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
                     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
                   </agm-map> -->
@@ -94,24 +97,31 @@
               <div class="row">
                   <label for="input3" class="col-4 col-form-label text-right">Start Time</label>
                   <div class="col-8">
-                      <p>Placeholder for time picker</p>
-                          <owl-date-time 
-                            [(ngModel)]="input3Moment" 
-                            [ngModelOptions]="{standalone: true}"
-                            [type]="'timer'"
-                            [dateFormat]="'hh:mm'"
-                            [placeHolder]="'hh:mm'" 
-                            (onSelect)="onChooseStartTime()"
-                            [autoClose]="true"
-                            [inputId]="'input3'"></owl-date-time>
+                    <owl-date-time 
+                        [(ngModel)]="input3Moment" 
+                        [ngModelOptions]="{standalone: true}"
+                        [type]="'timer'"
+                        [dateFormat]="'hh:mm'"
+                        [placeHolder]="'hh:mm'" 
+                        (onSelect)="onChooseStartTime()"
+                        [autoClose]="true"
+                        [inputId]="'input3'"></owl-date-time>
                   </div>
               </div>
 
               <div class="row">
-                  <label for="pricePerUnit" class="col-4 col-form-label text-right">End Time</label>
+                  <label for="input4" class="col-4 col-form-label text-right">End Time</label>
                   <div class="col-8">
-                      <p>Placeholder for time picker</p>
-                  </div>
+                    <owl-date-time 
+                        [(ngModel)]="input4Moment" 
+                        [ngModelOptions]="{standalone: true}"
+                        [type]="'timer'"
+                        [dateFormat]="'hh:mm'"
+                        [placeHolder]="'hh:mm'" 
+                        (onSelect)="onChooseEndTime()"
+                        [autoClose]="true"
+                        [inputId]="'input4'"></owl-date-time>
+                </div>
               </div>
 
               <div class="row">

@@ -164,6 +164,7 @@ export class SearchService implements OnInit {
         "name": '',
         "location": '',
         "province": '',
+        "address": '',
         "description": '',
         "email": '',
         "logoUrl": '',

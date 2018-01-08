@@ -51,9 +51,9 @@ export class AddScheduleModalComponent implements OnInit {
       public pickerColor: string = '#0070ba';
 
       public input1Moment: any;
-      public input2Moment: any;
-      public input3Moment: any;
-      public input4Moment: any;
+      public input2Moment: any = new Date();
+      public input3Moment: any = new Date(0, 0, 0, 12, 0, 0, 0);
+      public input4Moment: any = new Date(0, 0, 0, 13, 0, 0, 0);
       public input5Moment: any;
       public input6Moment: any;
       public input7Moment: any;
@@ -132,7 +132,7 @@ export class AddScheduleModalComponent implements OnInit {
           //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          //verify result
+          // verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
@@ -140,7 +140,7 @@ export class AddScheduleModalComponent implements OnInit {
           console.log('place: ', place);
           this.fillAddress(place);
 
-          //set latitude, longitude and zoom
+          // set latitude, longitude and zoom
           // this.latitude = place.geometry.location.lat();
           // this.longitude = place.geometry.location.lng();
           // this.zoom = 12;
@@ -213,5 +213,18 @@ export class AddScheduleModalComponent implements OnInit {
     console.log('day: ', this.input2Moment.getDate());
     console.log('month: ', this.input2Moment.getMonth());
     console.log('year: ', this.input2Moment.getFullYear());
+  };
+
+  onChooseStartTime() {
+    console.log('start time chosen: ', this.input3Moment);
+    console.log('hour: ', this.input3Moment.getHours());
+    console.log('minute: ', this.input3Moment.getMinutes());
+  };
+
+  onChooseEndTime() {
+    console.log('end time chosen: ', this.input4Moment);
+    console.log('hour: ', this.input4Moment.getHours());
+    console.log('minute: ', this.input4Moment.getMinutes());
   }
+
 }
