@@ -276,7 +276,7 @@ export class AddScheduleModalComponent implements OnInit {
   submitting: boolean = false;
 
   // properties to hold dates chosen, used in build methods
-  schedDay: number;
+  schedDay: number; // default to input2Moment day
   schedMonth: number;
   schedYear: number;
   schedStartHour: number;
@@ -365,7 +365,19 @@ export class AddScheduleModalComponent implements OnInit {
     // this.form.value.producerId = this.producer.id;
     // this.form.value.productList = this.producer.productList;
     console.log('submit object: ', this.submitObject); // this doesn't contain address/location details
-    // this.dashboardService.addNewSchedule(this.form.value);
+    this.dashboardService.addNewSchedule(this.submitObject)
+		  // .subscribe(
+      //   response => {
+      //     this.submitting = false;
+      //     this.activeModal.close();
+      //   },
+      //   err => {
+      //     console.error(err);
+      //     this.submitting = false;
+      //     // this.error = true;
+      //   }
+      // )
+	;
     this.activeModal.close();
   }
 
@@ -439,6 +451,13 @@ export class AddScheduleModalComponent implements OnInit {
         this.producer = result;
       }
     )
+
+    // set the defaults
+    this.onChooseDate();
+    this.onChooseStartTime();
+    this.onChooseEndTime();
+    this.onChooseDeadlineDate();
+    this.onChooseDeadlineTime();
   }
 
   private fillAddress(place) {

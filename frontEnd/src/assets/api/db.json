@@ -2071,9 +2071,7 @@
       "address": "123 Main St",
       "province": "SK",
       "orderDeadline": "2017-12-02T00:00:00.000Z",
-      "orderList": [
-        
-      ]
+      "orderList": []
     },
     {
       "id": 445,
@@ -2094,9 +2092,7 @@
       "address": "123 Main St",
       "province": "SK",
       "orderDeadline": "2017-12-02T00:00:00.000Z",
-      "orderList": [
-        
-      ]
+      "orderList": []
     },
     {
       "id": 789,
@@ -2118,9 +2114,7 @@
       "address": "123 Main St",
       "province": "SK",
       "orderDeadline": "2017-12-01T00:00:00.000Z",
-      "orderList": [
-        
-      ]
+      "orderList": []
     },
     {
       "id": 798,
@@ -2141,9 +2135,7 @@
       "address": "123 Main St",
       "province": "SK",
       "orderDeadline": "2018-04-01T00:00:00.000Z",
-      "orderList": [
-        
-      ]
+      "orderList": []
     },
     {
       "id": 799,
@@ -2164,9 +2156,7 @@
       "address": "123 Main St",
       "province": "SK",
       "orderDeadline": "2018-04-02T00:00:00.000Z",
-      "orderList": [
-        
-      ]
+      "orderList": []
     },
     {
       "id": 666,
@@ -2212,9 +2202,7 @@
       "address": "",
       "province": "ON",
       "orderDeadline": "2017-12-27T00:00:00.000Z",
-      "orderList": [
-        
-      ]
+      "orderList": []
     }
   ]
 }
