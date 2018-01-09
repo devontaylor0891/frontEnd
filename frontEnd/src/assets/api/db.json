@@ -2203,6 +2203,52 @@
       "province": "ON",
       "orderDeadline": "2017-12-27T00:00:00.000Z",
       "orderList": []
+    },
+    {
+      "id": 609825,
+      "producerId": 10156726911823276,
+      "productList": [
+        66,
+        67
+      ],
+      "type": "Door-to-door Delivery",
+      "description": "d2d test",
+      "startDateTime": "2018-01-17T19:00:00.000Z",
+      "endDateTime": "2018-01-17T20:15:00.000Z",
+      "hasFee": true,
+      "hasWaiver": true,
+      "latitude": 50.2615563,
+      "longitude": -101.97201430000001,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-01-10T15:00:00.000Z",
+      "address": "",
+      "fee": 5,
+      "feeWaiver": 35,
+      "orderList": []
+    },
+    {
+      "id": 112505,
+      "producerId": 10156726911823276,
+      "productList": [
+        66,
+        67
+      ],
+      "type": "Door-to-door Delivery",
+      "description": "desc",
+      "startDateTime": "2018-01-09T18:00:00.000Z",
+      "endDateTime": "2018-01-09T19:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": 50.2615563,
+      "longitude": -101.97201430000001,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-01-08T12:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
     }
   ]
 }
