@@ -36,7 +36,7 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   columnMaps: ColumnMap[];
   @Input() editable: boolean; // governs display of Edit button
   @Input() deletable: boolean; // display of Delete button
-  @Input() pending: boolean // for orders that are pending
+  @Input() pending: boolean; // for orders that are pending
   record: Object; // single record
   @Input() recordType: string; // this will hold the type of record so that the proper modals can be shown
   sortedRecords: any[]; 
