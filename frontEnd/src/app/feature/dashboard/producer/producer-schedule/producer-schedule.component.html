@@ -33,7 +33,7 @@
                             [records]="upcomingSchedule"
                             [recordType]="recordType"
                             [settings]="projectSettings"
-                            [pending]="true"
+                            [editable]="true"
                             [deletable]="true">
                         </app-table-layout>
                     </div>
@@ -60,6 +60,7 @@
                             [records]="completedSchedule"
                             [recordType]="recordType"
                             [settings]="projectSettings"
+                            [editable]="false"
                             [deletable]="false">
                         </app-table-layout>
                     </div>

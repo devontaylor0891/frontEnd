@@ -1,110 +1,111 @@
 <div class="modal-header">
-    <h5 class="modal-title">Order from {{ record.consumer.firstName }}</h5>
-    <button type="button" class="close" (click)="activeModal.close()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+  <h5 class="modal-title">Order from {{ record.consumer.firstName }}</h5>
+  <button type="button" class="close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
   
-  <div class="modal-body dash-modal-body">
-  
-    <div class="row">
+<div class="modal-body dash-modal-body">
 
-      <div class="col-12">
-        <h3>Consumer Details</h3>
-      </div>
+  <div class="row">
 
-      <div class="col-12">
-        <div class="row">
-            <div class="col-4 text-right">
-                <strong>Name:</strong>
-              </div>
-              <div class="col-8">
-                <p>{{ record.consumer.firstName }}</p>
-              </div>
-        </div>
-        
+    <div class="col-12">
+      <h4>Consumer Details</h4>
+    </div>
+
+    <div class="col-12">
+      <div class="row">
+          <div class="col-4 text-right">
+              <strong>Name:</strong>
+            </div>
+            <div class="col-8">
+              <p>{{ record.consumer.firstName }}</p>
+            </div>
       </div>
-      
-      <hr>
-      
     </div>
     
-    <div class="row">
-
-      <div class="col-12">
-        <h3>Order Details</h3>
-      </div>
-
-      <div class="col-12">
-          <div class="row">
-              <div class="col-4 text-right">
-                <strong>Order Status:</strong>
-              </div>
-              <div class="col-8">
-                <p>{{ record.orderDetails.orderStatus }}</p>
-              </div>
-            </div>
-            
-            <div class="row">
-              <div class="col-4 text-right">
-                <strong>Consumer Comment:</strong>
-              </div>
-              <div class="col-8">
-                <p *ngIf="record.consumerComment">{{ record.orderDetails.consumerComment }}</p>
-                <p *ngIf="!record.consumerComment">No comments entered.</p>
-              </div>
-            </div>
-            
-            <div class="row">
-              <div class="col-4 text-right">
-                <strong>Producer Comment:</strong>
-              </div>
-              <div class="col-8">
-                <p *ngIf="record.producerComment">{{ record.orderDetails.producerComment }}</p>
-                <p *ngIf="!record.producerComment">No comments entered.</p>
-              </div>
-            </div>
-      </div>
-
-      
-      <div class="col-12">
-          <div class="row">
-              <div class="col-8 offset-2 justify-content-center">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Value</th>
-                    </tr>
-                    </thead>
-                  <tbody>
-                    <tr *ngFor="let product of products">
-                      <td>{{ product.name }}</td>
-                      <td>{{ product.quantity }}</td>
-                      <td>{{ product.value | currency:'USD':true:'1.2-2' }}</td>
-                    </tr>
-                    <tr>
-                    <td></td>
-                    <td></td>
-                    <td><strong>{{ record.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></td>
-                    </tr>
-                  </tbody>
-                </table>
-                
-              </div>
-            </div>
-
-            <hr>
-      </div>
-      
-      
-      
-          
-    <div class="row">
+    <hr>
     
-      <h3>Schedule Details</h3>
+  </div>
+    
+  <div class="row">
+
+    <div class="col-12">
+      <h4>Order Details</h4>
+    </div>
+
+    <div class="col-12">
+      <div class="row">
+        <div class="col-4 text-right">
+          <strong>Order Status:</strong>
+        </div>
+        <div class="col-8">
+          <p>{{ record.orderDetails.orderStatus }}</p>
+        </div>
+      </div>
+        
+      <div class="row">
+        <div class="col-4 text-right">
+          <strong>Consumer Comment:</strong>
+        </div>
+        <div class="col-8">
+          <p *ngIf="record.consumerComment">{{ record.orderDetails.consumerComment }}</p>
+          <p *ngIf="!record.consumerComment">No comments entered.</p>
+        </div>
+      </div>
+            
+      <div class="row">
+        <div class="col-4 text-right">
+          <strong>Producer Comment:</strong>
+        </div>
+        <div class="col-8">
+          <p *ngIf="record.producerComment">{{ record.orderDetails.producerComment }}</p>
+          <p *ngIf="!record.producerComment">No comments entered.</p>
+        </div>
+      </div>
+    </div>
+
       
+    <div class="col-12">
+      <div class="row">
+        <div class="col-8 offset-2 justify-content-center">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products">
+                <td>{{ product.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.value | currency:'USD':true:'1.2-2' }}</td>
+              </tr>
+              <tr>
+              <td></td>
+              <td></td>
+              <td><strong>{{ record.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <hr>
+
+    </div>
+  </div>
+ 
+  <div class="row">
+
+    <div class="col-12">
+      <h4>Schedule Details</h4>
+    </div>  
+      
+    <div class="col-12">
+
       <div class="row">
         <div class="col-4 text-right">
           <strong>Schedule Type:</strong>
@@ -113,7 +114,7 @@
           <p>{{ record.chosenSchedule.type }}</p>
         </div>
       </div>
-      
+
       <div *ngIf="record.chosenSchedule.address" class="row">
         <div class="col-4 text-right">
           <strong>Address:</strong>
@@ -122,6 +123,7 @@
           <p>{{ record.chosenSchedule.address }}</p>
         </div>
       </div>
+
       <div class="row">
         <div class="col-4 text-right">
           <strong>Location:</strong>
@@ -130,6 +132,7 @@
           <p>{{ record.chosenSchedule.city }}, {{ record.chosenSchedule.province }}</p>
         </div>
       </div>
+
       <div class="row">
         <div class="col-4 text-right">
           <strong>Date:</strong>
@@ -138,6 +141,7 @@
           <p>{{ record.chosenSchedule.startDateTime | date:'mediumDate' }}</p>
         </div>
       </div>
+
       <div class="row">
         <div class="col-4 text-right">
           <strong>Time:</strong>
@@ -146,6 +150,7 @@
           <p>{{ record.chosenSchedule.startDateTime | date:'shortTime' }} - {{ record.chosenSchedule.endDateTime | date:'shortTime' }}</p>
         </div>
       </div>
+
       <div class="row">
         <div class="col-4 text-right">
           <strong>Order Deadline:</strong>
@@ -154,9 +159,9 @@
           <p>{{ record.chosenSchedule.orderDeadline | date:'mediumDate' }} - {{ record.chosenSchedule.orderDeadline | date:'shortTime' }}</p>
         </div>
       </div>
-      
+
       <div *ngIf="record.chosenSchedule.type === 'Door-to-door Delivery'">
-    
+            
         <div class="row">
           <div class="col-4 text-right">
             <strong>Delivery Fee:</strong>
@@ -176,18 +181,20 @@
           </div>
         </div>
       
-        </div>
+      </div>
       
-      <hr>
-      
+      <hr>                
+
     </div>
+
+  </div>
     
-  </div>
+</div>
   
-  <div class="modal-footer justify-content-center">
-    <div class="row">
-        <div>
-            <a (click)="activeModal.close()">Close</a>
-        </div>
-    </div>
+<div class="modal-footer justify-content-center">
+  <div class="row">
+      <div>
+          <a (click)="activeModal.close()">Close</a>
+      </div>
   </div>
+</div>

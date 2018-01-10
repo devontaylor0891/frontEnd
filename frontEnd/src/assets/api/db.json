@@ -2205,29 +2205,6 @@
       "orderList": []
     },
     {
-      "id": 609825,
-      "producerId": 10156726911823276,
-      "productList": [
-        66,
-        67
-      ],
-      "type": "Door-to-door Delivery",
-      "description": "d2d test",
-      "startDateTime": "2018-01-17T19:00:00.000Z",
-      "endDateTime": "2018-01-17T20:15:00.000Z",
-      "hasFee": true,
-      "hasWaiver": true,
-      "latitude": 50.2615563,
-      "longitude": -101.97201430000001,
-      "city": "",
-      "province": "",
-      "orderDeadline": "2018-01-10T15:00:00.000Z",
-      "address": "",
-      "fee": 5,
-      "feeWaiver": 35,
-      "orderList": []
-    },
-    {
       "id": 112505,
       "producerId": 10156726911823276,
       "productList": [
@@ -2337,6 +2314,29 @@
       "city": "",
       "province": "",
       "orderDeadline": "2018-01-09T12:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
+    },
+    {
+      "id": 289121,
+      "producerId": 10156726911823276,
+      "productList": [
+        66,
+        67
+      ],
+      "type": "Door-to-door Delivery",
+      "description": "description",
+      "startDateTime": "2018-01-11T17:59:00.000Z",
+      "endDateTime": "2018-01-11T21:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": 50.1395742,
+      "longitude": -101.66365380000002,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-01-10T05:00:00.000Z",
       "address": "",
       "fee": 0,
       "feeWaiver": 0,
