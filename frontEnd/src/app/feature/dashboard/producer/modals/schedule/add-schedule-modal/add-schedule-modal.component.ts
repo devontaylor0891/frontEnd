@@ -310,26 +310,7 @@ export class AddScheduleModalComponent implements OnInit {
               private mapsAPILoader: MapsAPILoader,
             private ngZone: NgZone) {
 
-    this.submitObject = {
-      'id': null,
-      'producerId': null,
-      'productList': [],
-      'type': '',
-      'description': '',
-      'startDateTime': '',
-      'endDateTime': '',
-      'hasFee': null,
-      'hasWaiver': null,
-      'latitude': null,
-      'longitude': null,
-      'city': '',
-      'province': '',
-      'orderDeadline': '',
-      'address': '',
-      'fee': null,
-      'feeWaiver': null,
-      'orderList': []
-    };
+    this.buildBlankSubmitObject();
 
     this.form = formBuild.group({
       'id':[''],
@@ -359,12 +340,13 @@ export class AddScheduleModalComponent implements OnInit {
 
   onSubmit() {
     this.submitting = true;
-    console.log(this.form.value);
+    console.log('form value at start of submit: ', this.form.value);
+    console.log('submit object before: ', this.submitObject);
     this.buildSubmitObject();
     // this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
     // this.form.value.producerId = this.producer.id;
     // this.form.value.productList = this.producer.productList;
-    console.log('submit object: ', this.submitObject); // this doesn't contain address/location details
+    console.log('submit object after: ', this.submitObject); // this doesn't contain address/location details
     this.dashboardService.addNewSchedule(this.submitObject)
 		  // .subscribe(
       //   response => {
@@ -377,12 +359,36 @@ export class AddScheduleModalComponent implements OnInit {
       //     // this.error = true;
       //   }
       // )
-	;
+    ;
+    this.buildBlankSubmitObject();
     this.activeModal.close();
   }
 
   generateRandomId() {
     return Math.floor( Math.random() * 1000000 )
+  }
+
+  buildBlankSubmitObject() {
+    this.submitObject = {
+      'id': null,
+      'producerId': null,
+      'productList': [],
+      'type': '',
+      'description': '',
+      'startDateTime': '',
+      'endDateTime': '',
+      'hasFee': null,
+      'hasWaiver': null,
+      'latitude': null,
+      'longitude': null,
+      'city': '',
+      'province': '',
+      'orderDeadline': '',
+      'address': '',
+      'fee': null,
+      'feeWaiver': null,
+      'orderList': []
+    };
   }
 
   buildSubmitObject() {
@@ -452,7 +458,7 @@ export class AddScheduleModalComponent implements OnInit {
       }
     )
 
-    // set the defaults
+    // set the defaults for dates
     this.onChooseDate();
     this.onChooseStartTime();
     this.onChooseEndTime();
@@ -465,12 +471,14 @@ export class AddScheduleModalComponent implements OnInit {
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
-    this.form.value.address = this.streetNumber + ' ' + this.route;
+    if (this.streetNumber && this.route) {
+      this.form.value.address = this.streetNumber + ' ' + this.route;
+    };
     this.form.value.city = this.city;
     this.form.value.province = this.province;
     this.form.value.latitude = this.lat;
     this.form.value.longitude = this.lng;
-    console.log('form.value: ', this.form.value);
+    console.log('form.value after fillAddress: ', this.form.value);
   };
 
   private clearAddress() {

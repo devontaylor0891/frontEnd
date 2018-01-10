@@ -151,7 +151,7 @@ export class ProducerProductsComponent implements OnInit {
         (products) => {
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
           this.currentProducts = current;
-          const outOfStock = products.filter(product => product.qtyAvailable == 0 && product.isObsolete === false);
+          const outOfStock = products.filter(product => product.qtyAvailable === 0 && product.isObsolete === false);
           this.outOfStockProducts = outOfStock;
           const deleted = products.filter(product => product.isObsolete === true);
           this.deletedProducts = deleted;

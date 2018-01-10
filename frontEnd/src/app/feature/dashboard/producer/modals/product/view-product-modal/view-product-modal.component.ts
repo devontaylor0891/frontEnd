@@ -12,10 +12,18 @@ import { ProductModel } from '../../../../../../core/models/product.model';
 export class ViewProductModalComponent implements OnInit {
 
   @Input() record: ProductModel;
+  totalPrice: number;
 
   constructor(private activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+
+    this.totalPrice = this.calculateTotalPrice();
+
   }
+
+  calculateTotalPrice() {
+    return (this.record.pricePerUnit * this.record.unitsPer); 
+  };
 
 }
