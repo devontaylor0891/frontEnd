@@ -332,7 +332,6 @@ export class AddScheduleModalComponent implements OnInit {
       'city': ['', Validators.required],
       'address': [''],
       'province': ['', Validators.required],
-      'orderDeadline': ['', Validators.required],
       'orderList': ['']
     });
 
@@ -340,14 +339,14 @@ export class AddScheduleModalComponent implements OnInit {
 
   onSubmit() {
     this.submitting = true;
-    console.log('form value at start of submit: ', this.form.value);
+    console.log('form value at start of submit: ', this.form.value); // this doesn't have address
     console.log('submit object before: ', this.submitObject);
     this.buildSubmitObject();
     // this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
     // this.form.value.producerId = this.producer.id;
     // this.form.value.productList = this.producer.productList;
     console.log('submit object after: ', this.submitObject); // this doesn't contain address/location details
-    this.dashboardService.addNewSchedule(this.submitObject)
+    // this.dashboardService.addNewSchedule(this.submitObject)
 		  // .subscribe(
       //   response => {
       //     this.submitting = false;
@@ -359,7 +358,7 @@ export class AddScheduleModalComponent implements OnInit {
       //     // this.error = true;
       //   }
       // )
-    ;
+    // ;
     this.buildBlankSubmitObject();
     this.activeModal.close();
   }
@@ -369,6 +368,7 @@ export class AddScheduleModalComponent implements OnInit {
   }
 
   buildBlankSubmitObject() {
+    console.log('buildBlankSubmitObject called');
     this.submitObject = {
       'id': null,
       'producerId': null,
@@ -403,7 +403,11 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.hasWaiver = this.form.value.hasWaiver;
     this.submitObject.latitude = this.lat;
     this.submitObject.longitude = this.lng;
+    console.log('submitCity before: ', this.submitObject.city);
+    console.log('form.city before: ', this.form.value.city);
     this.submitObject.city = this.form.value.city;
+    console.log('submitCity after: ', this.submitObject.city);
+    console.log('form.city after: ', this.form.value.city);
     this.submitObject.province = this.form.value.province;
     this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
     this.submitObject.address = this.form.value.address;
@@ -473,15 +477,21 @@ export class AddScheduleModalComponent implements OnInit {
     this.lng = place.geometry.location.lng();
     if (this.streetNumber && this.route) {
       this.form.value.address = this.streetNumber + ' ' + this.route;
+      this.submitObject.address = this.streetNumber + ' ' + this.route;
     };
     this.form.value.city = this.city;
+    this.submitObject.city = this.city; // still not working
     this.form.value.province = this.province;
+    this.submitObject.province = this.province;
     this.form.value.latitude = this.lat;
     this.form.value.longitude = this.lng;
-    console.log('form.value after fillAddress: ', this.form.value);
+    this.submitObject.latitude = this.lat;
+    this.submitObject.longitude = this.lng;
+    console.log('form.value after fillAddress: ', this.form.value); // this address is filled out properly, then go to onSubmit
   };
 
   private clearAddress() {
+    console.log('clearAddress called');
     this.streetNumber = '';
     this.route = '';
     this.city = '';
@@ -493,6 +503,7 @@ export class AddScheduleModalComponent implements OnInit {
   }
 
   private parseAddressComponents(components) {
+    console.log('parseAddress called');
     for (let i = 0; i < components.length; i++) {
       let types = components[i].types;
       for (let j = 0; j < types.length; j++) {
@@ -519,28 +530,8 @@ export class AddScheduleModalComponent implements OnInit {
     }
   };
 
-  // onChooseDate() {
-  //   console.log('date chosen: ', this.input2Moment);
-  //   console.log('js date: ', new Date(this.input2Moment));
-  //   console.log('day: ', this.input2Moment.getDate());
-  //   console.log('month: ', this.input2Moment.getMonth());
-  //   console.log('year: ', this.input2Moment.getFullYear());
-  // };
-
-  // onChooseStartTime() {
-  //   console.log('start time chosen: ', this.input3Moment);
-  //   console.log('hour: ', this.input3Moment.getHours());
-  //   console.log('minute: ', this.input3Moment.getMinutes());
-  // };
-
-  // onChooseEndTime() {
-  //   console.log('end time chosen: ', this.input4Moment);
-  //   console.log('hour: ', this.input4Moment.getHours());
-  //   console.log('minute: ', this.input4Moment.getMinutes());
-  // }
-
   onChooseDate() {
-      console.log('start date chosen: ', this.input2Moment);
+    console.log('start date chosen: ', this.input2Moment);
     this.schedDay = this.input2Moment.getDate();
     this.schedMonth = this.input2Moment.getMonth();
     this.schedYear = this.input2Moment.getFullYear();
