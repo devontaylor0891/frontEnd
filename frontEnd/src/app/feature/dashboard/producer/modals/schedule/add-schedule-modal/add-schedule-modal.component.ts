@@ -401,16 +401,16 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
     this.submitObject.hasFee = this.form.value.hasFee;
     this.submitObject.hasWaiver = this.form.value.hasWaiver;
-    this.submitObject.latitude = this.lat;
-    this.submitObject.longitude = this.lng;
+    // this.submitObject.latitude = this.lat;
+    // this.submitObject.longitude = this.lng;
     console.log('submitCity before: ', this.submitObject.city);
     console.log('form.city before: ', this.form.value.city);
-    this.submitObject.city = this.form.value.city;
+    // this.submitObject.city = this.form.value.city;
     console.log('submitCity after: ', this.submitObject.city);
     console.log('form.city after: ', this.form.value.city);
-    this.submitObject.province = this.form.value.province;
+    // this.submitObject.province = this.form.value.province;
     this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-    this.submitObject.address = this.form.value.address;
+    // this.submitObject.address = this.form.value.address;
     this.submitObject.fee = this.form.value.fee;
     this.submitObject.feeWaiver = this.form.value.feeWaiver;
     this.submitObject.orderList = [];
