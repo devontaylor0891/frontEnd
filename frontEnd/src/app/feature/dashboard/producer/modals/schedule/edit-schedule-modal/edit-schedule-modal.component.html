@@ -8,7 +8,337 @@
 <div class="modal-body dash-modal-body">
   
     <app-loading *ngIf="submitting"></app-loading>
+	
+	
+	<form *ngIf="!submitting" [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+	
+		<div class="row">
+		
+			<div class="col-12">
+			
+				<div *ngIf="hasOrders" class="row">
+					<div class="col-12">
+						<p>This {{ record.type }} already has at least one order attached to it. Therefore the dates, times, and fee settings cannot be changed. The deadline and details can still be modified, however.</p>
+					</div>
+				</div>
+			
+				<p>PLEASE NOTE: The location details of a scheduled pickup or delivery cannot be modified. If necessary, please delete this instance and create a new one.</p>
+				<!-- Type -->
+				<div class="row">
+					<div class="col-4 text-right">
+					  <strong>Schedule Type:</strong>
+					</div>
+					<div class="col-8">
+					  <p>{{ record.type }}</p>
+					</div>
+				</div>
+				<!-- Description -->
+				<div class="row">
+					<label for="description" class="col-4 col-form-label text-right"><strong>Details:</strong></label>
+					<div class="col-8">
+						<textarea 
+						  class="form-control" 
+						  rows="3" 
+						  id="description" 
+						  formControlName="description"></textarea>
+					</div>
+				</div>
+				<!-- Address -->
+				<div *ngIf="record.address" class="row">
+					<div class="col-4 text-right">
+					  <strong>Address:</strong>
+					</div>
+					<div class="col-8">
+					  <p>{{ record.address }}</p>
+					</div>
+				</div>
+				<!-- City -->
+				<div class="row">
+					<div class="col-4 text-right">
+					  <strong>Location:</strong>
+					</div>
+					<div class="col-8">
+					  <p>{{ record.city }}, {{ record.province }}</p>
+					</div>
+				</div>
+				
+				<hr>
+				
+				<!-- Dates -->
+				<div class="row">
+				
+					<!-- IF THE SCHED ALREADY HAS ORDERS, DATES ARE NOT CHANGEABLE -->
+					<div *ngIf="hasOrders"  class="col-12">
+					
+						<div class="row">
+							
+							<div class="col-12">
+								<div class="row">
+									<div class="col-4 text-right">
+									  <strong>Date:</strong>
+									</div>
+									<div class="col-8">
+									  <p>{{ record.startDateTime | date:'mediumDate' }}</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-4 text-right">
+									  <strong>Time:</strong>
+									</div>
+									<div class="col-8">
+									  <p>{{ record.startDateTime | date:'shortTime' }} - {{ record.endDateTime | date:'shortTime' }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+					
+					<!-- IF THE SCHED DOES NOT HAVE ORDERS, DATES ARE CHANGEABLE -->
+					<div *ngIf="!hasOrders" class="col-12">
+					
+						<!-- DATE - USES DATEPICKER MODULE -->
+						  <div class="row">
+							  <label for="date" class="col-4 col-form-label text-right">Date: </label>
+							  <div class="col-8">
+								<owl-date-time 
+								  [(ngModel)]="dateMoment"
+								  [ngModelOptions]="{standalone: true}"
+								  [dateFormat]="'YYYY-MM-DD'"
+								  [type]="'calendar'" 
+								  [placeHolder]="'YYYY-MM-DD'"
+								  (onSelect)="onChooseDate()"
+								  [autoClose]="true"
+								  [inputId]="'date'"
+								  [min]="dateMin"
+								  [formControl]="scheduleForm.controls['date']"></owl-date-time>
+							  </div>
+						  </div>
+				
+						<!-- START TIME - USES DATEPICKER MODULE -->
+						  <div class="row">
+							  <label for="startTime" class="col-4 col-form-label text-right">Start Time:</label>
+							  <div class="col-8">
+								<owl-date-time 
+									[(ngModel)]="startTimeMoment" 
+									[ngModelOptions]="{standalone: true}"
+									[type]="'timer'"
+									[dateFormat]="'hh:mm'"
+									[placeHolder]="'HH:MM'" 
+									(onSelect)="onChooseStartTime()"
+									[autoClose]="true"
+									[inputId]="'startTime'"
+									[formControl]="scheduleForm.controls['startTime']"></owl-date-time>
+							  </div>
+						  </div>
+
+						<!-- END TIME - USES DATEPICKER MODULE -->
+						  <div class="row">
+							  <label for="endTime" class="col-4 col-form-label text-right">End Time:</label>
+							  <div class="col-8">
+								<owl-date-time 
+									[(ngModel)]="endTimeMoment" 
+									[ngModelOptions]="{standalone: true}"
+									[type]="'timer'"
+									[dateFormat]="'hh:mm'"
+									[placeHolder]="'hh:mm'" 
+									(onSelect)="onChooseEndTime()"
+									[autoClose]="true"
+									[inputId]="'endTime'"
+									[formControl]="scheduleForm.controls['endTime']"></owl-date-time>
+							</div>
+						  </div>
+					
+					</div>
+					
+                    <!-- DEADLINE DATE - USES DATEPICKER MODULE -->
+                    <div class="col-12">
+
+                        <div class="row">
+                            <label for="deadlineDate" class="col-4 col-form-label text-right">Order Deadline Date:</label>
+                            <div class="col-8">
+                              <owl-date-time 
+                                [(ngModel)]="deadlineDateMoment"
+                                [ngModelOptions]="{standalone: true}"
+                                [dateFormat]="'YYYY-MM-DD'"
+                                [type]="'calendar'" 
+                                (onSelect)="onChooseDeadlineDate()"
+                                [autoClose]="true"
+                                [inputId]="'deadlineDate'"
+                                [max]="deadlineDateMax"
+                                [formControl]="scheduleForm.controls['deadlineDate']"></owl-date-time>
+                            </div>
+                        </div>
   
+                      <!-- DEADLINE TIME - USES DATEPICKER MODULE -->
+                        <div class="row">
+                            <label for="deadlineTime" class="col-4 col-form-label text-right">Order Deadline Time:</label>
+                            <div class="col-8">
+                                <owl-date-time 
+                                  [(ngModel)]="deadlineTimeMoment" 
+                                  [ngModelOptions]="{standalone: true}"
+                                  [type]="'timer'"
+                                  [dateFormat]="'hh:mm'"
+                                  (onSelect)="onChooseDeadlineTime()"
+                                  [autoClose]="true"
+                                  [inputId]="'deadlineTime'"
+                                  [formControl]="scheduleForm.controls['deadlineTime']"></owl-date-time>
+                            </div>
+                        </div>
+
+                    </div>
+					  
+				
+				</div>
+			
+				<!-- Fees -->
+				<div class="row" *ngIf="record.type === 'Door-to-door Delivery'">
+				
+					<!-- there are orders, so fees cannot be changed -->
+					<div *ngIf="hasOrders" class="col-12">
+
+                        <hr>
+					
+						<div *ngIf="record.type === 'Door-to-door Delivery'">
+    
+						  <div class="row">
+							<div class="col-4 text-right">
+							  <strong>Delivery Fee:</strong>
+							</div>
+							<div class="col-8">
+							  <p>{{ record.fee | currency:'USD':true:'1.2-2' }}</p>
+							</div>
+						  </div>
+						  
+						  <div class="row">
+							<div class="col-4 text-right">
+							  <strong>Fee Waiver Amount:</strong>
+							</div>
+							<div class="col-8">
+							  <p *ngIf="record.feeWiaver">{{ record.feeWaiver | currency:'USD':true:'1.2-2' }}</p>
+							  <p *ngIf="!record.feeWiaver">None. Fee applies to all orders.</p>
+							</div>
+						  </div>
+						
+						</div>
+					
+					</div>
+					
+					<!-- there are NO orders, so fees can be changed -->
+					<div *ngIf="!hasOrders" class="col-12">
+                    
+                        <hr>                        
+
+						<div class="row">
+							<label for="unit" class="col-4 col-form-label text-right">Delivery fee?</label>
+							<div class="col-8 pl-5">
+								<div class="form-check form-check-inline">
+								  <input 
+									[formControl]="scheduleForm.controls['hasFee']" 
+									type="radio" 
+									name="hasFee" 
+									[(ngModel)]="hasDelFee"
+									id="feeYes" 
+									[value]="true">
+								  <label class="form-check-label" for="feeYes">Yes</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input 
+									[formControl]="scheduleForm.controls['hasFee']" 
+									type="radio" 
+									name="hasFee"
+									[(ngModel)]="hasDelFee" 
+									id="feeNo" 
+									[value]="false">
+								  <label class="form-check-label" for="feeNo">No</label>
+								</div>
+							</div>
+						</div>
+		  
+						<div *ngIf="hasDelFee">
+						  <div class="row">
+							<label for="fee" class="col-4 col-form-label text-right">Fee amount?</label>
+							<div class="col-8 input-group">
+							  <div class="input-group-addon">$</div>
+							  <input 
+								class="form-control" 
+								type="number"
+								min="0"
+								step="1"
+								id="fee" 
+								[formControl]="scheduleForm.controls['fee']">
+							</div>
+						  </div>
+
+						  <br>
+		  
+						  <div class="row">
+							  <label for="hasWaiver" class="col-4 col-form-label text-right">Is there an order value at which you will waive the fee?</label>
+							  <div class="col-8 pl-5">
+								  <div class="form-check form-check-inline">
+									<input 
+									  [formControl]="scheduleForm.controls['hasWaiver']" 
+									  type="radio" 
+									  name="hasWaiver" 
+									  [(ngModel)]="hasFeeWaiver"
+									  id="waiverYes" 
+									  [value]="true">
+									<label class="form-check-label" for="waiverYes">Yes</label>
+								  </div>
+								  <div class="form-check form-check-inline">
+									<input 
+									  [formControl]="scheduleForm.controls['hasWaiver']" 
+									  type="radio" 
+									  name="hasWaiver"
+									  [(ngModel)]="hasFeeWaiver" 
+									  id="waiverNo" 
+									  [value]="false">
+									<label class="form-check-label" for="waiverNo">No</label>
+								  </div>
+							  </div>
+						  </div>
+		  
+						  <div *ngIf="hasFeeWaiver">
+							<div class="row">
+								<label for="feeWaiver" class="col-4 col-form-label text-right">What is the order amount?</label>
+								<div class="col-8 input-group">
+									<div class="input-group-addon">$</div>
+									<input 
+										class="form-control" 
+										type="number"
+										min="0"
+										step="1"
+										id="feeWaiver" 
+										[formControl]="scheduleForm.controls['feeWaiver']">
+								</div>
+							</div>
+						  </div>
+						  
+						</div>
+					
+					</div>
+					
+				</div>
+			
+				<div class="row justify-content-center">
+					<button 
+					  class="btn btn-olf-primary" 
+					  type="submit"
+					  >Update this Schedule</button>
+					  <!-- <button 
+					  class="btn btn-olf-primary" 
+					  type="submit"
+					  [disabled]="(form.invalid)"
+					  >Add to Schedule</button> -->
+				</div>
+				
+			</div>
+		
+		</div>
+	
+	</form>
+		
+	
 </div>
 
 <div class="modal-footer justify-content-center">
