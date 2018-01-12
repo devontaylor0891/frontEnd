@@ -127,7 +127,7 @@
                           [dateFormat]="'YYYY-MM-DD'"
                           [type]="'calendar'" 
                           [placeHolder]="'YYYY-MM-DD'"
-                          (onSelect)="onChooseMultipleDates()"
+                          (onConfirm)="onChooseMultipleDates(value)"
                           [inputId]="'dates'"
                             [min]="moment"
                           [formControl]="form.controls['dates']"></owl-date-time>
@@ -185,38 +185,57 @@
                             [formControl]="form.controls['endTime']"></owl-date-time>
                     </div>
                   </div>
+
+                  <!-- DEADLINE DATE - only if  a repeat - get hours to calculate a deadline for each repeat -->
+                <div *ngIf="isRepeat">
+                    <div class="row">
+                        <label for="deadlineCalcHours" class="col-4 col-form-label text-right">Order deadline: How many hours before the scheduled start time?</label>
+                        <div class="col-8 input-group">
+                            <input 
+                            class="form-control" 
+                            type="number"
+                            min="0"
+                            step="1"
+                            id="deadlineCalcHours" 
+                            [formControl]="form.controls['deadlineCalcHours']">
+                        </div>
+                    </div>
+                </div>
     
-                <!-- DEADLINE DATE - USES DATEPICKER MODULE -->
-                  <div class="row">
-                      <label for="input5" class="col-4 col-form-label text-right">Order Deadline Date</label>
-                      <div class="col-8">
-                        <owl-date-time 
-                          [(ngModel)]="deadlineDateMoment"
-                          [ngModelOptions]="{standalone: true}"
-                          [dateFormat]="'YYYY-MM-DD'"
-                          [type]="'calendar'" 
-                          (onSelect)="onChooseDeadlineDate()"
-                          [autoClose]="true"
-                          [inputId]="'input5'"
-                          [formControl]="form.controls['deadlineDate']"></owl-date-time>
-                      </div>
-                  </div>
-    
-                <!-- DEADLINE TIME - USES DATEPICKER MODULE -->
-                  <div class="row">
-                      <label for="input6" class="col-4 col-form-label text-right">Order Deadline Time</label>
-                      <div class="col-8">
-                          <owl-date-time 
-                            [(ngModel)]="deadlineTimeMoment" 
+                <!-- DEADLINE DATE - only if not a repeat - USES DATEPICKER MODULE -->
+                <div *ngIf="!isRepeat">
+                    <div class="row">
+                        <label for="input5" class="col-4 col-form-label text-right">Order Deadline Date</label>
+                        <div class="col-8">
+                            <owl-date-time 
+                            [(ngModel)]="deadlineDateMoment"
                             [ngModelOptions]="{standalone: true}"
-                            [type]="'timer'"
-                            [dateFormat]="'hh:mm'"
-                            (onSelect)="onChooseDeadlineTime()"
+                            [dateFormat]="'YYYY-MM-DD'"
+                            [type]="'calendar'" 
+                            (onSelect)="onChooseDeadlineDate()"
                             [autoClose]="true"
-                            [inputId]="'input6'"
-                            [formControl]="form.controls['deadlineTime']"></owl-date-time>
-                      </div>
-                  </div>
+                            [inputId]="'input5'"
+                            [formControl]="form.controls['deadlineDate']"></owl-date-time>
+                        </div>
+                    </div>
+        
+                    <!-- DEADLINE TIME - USES DATEPICKER MODULE -->
+                    <div class="row">
+                        <label for="input6" class="col-4 col-form-label text-right">Order Deadline Time</label>
+                        <div class="col-8">
+                            <owl-date-time 
+                                [(ngModel)]="deadlineTimeMoment" 
+                                [ngModelOptions]="{standalone: true}"
+                                [type]="'timer'"
+                                [dateFormat]="'hh:mm'"
+                                (onSelect)="onChooseDeadlineTime()"
+                                [autoClose]="true"
+                                [inputId]="'input6'"
+                                [formControl]="form.controls['deadlineTime']"></owl-date-time>
+                        </div>
+                    </div>
+                </div>
+                  
     
                   <br>
         
