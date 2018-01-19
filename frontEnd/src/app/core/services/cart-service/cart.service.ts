@@ -98,13 +98,13 @@ export class CartService {
     let productIndex = this.findProductIndex(producerIndex, product.id);
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
-    // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
+    let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
     // if not, inform user and make quantity = qtyAvailable
-    // if (quantity > currentQtyAvailable) {
-    //   quantity = currentQtyAvailable;
-    //   // inform user
-	  // // alert?
-    // };
+    if (quantity > currentQtyAvailable) {
+      quantity = currentQtyAvailable;
+      // inform user
+	  // alert?
+    };
 	  // change the product's quantities
 	  this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it

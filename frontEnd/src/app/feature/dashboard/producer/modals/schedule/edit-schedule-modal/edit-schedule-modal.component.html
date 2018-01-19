@@ -15,17 +15,18 @@
 		<div class="row">
 		
 			<div class="col-12">
+
+				<p>The location details of a scheduled pickup or delivery cannot be modified. If necessary, please delete this instance and create a new one.</p>			
 			
 				<div *ngIf="hasOrders" class="row">
 						<div class="col-8 offset-2">
 								<blockquote class="blockquote bq-warning p-0">
 									<p class="bq-title pb-0">Please Note:</p>
-									<p>This {{ record.type }} already has at least one order attached to it. Therefore the dates, times, and fee settings cannot be changed. The deadline and details can still be modified, however.</p>
+									<p>This {{ record.type }} already has at least one order attached to it. Therefore the date, times, and fee settings cannot be changed. The deadline and details can still be modified, however.</p>
 								</blockquote>
 							</div>
 				</div>
 			
-				<p>The location details of a scheduled pickup or delivery cannot be modified. If necessary, please delete this instance and create a new one.</p>
 				<!-- Type -->
 				<div class="row">
 					<div class="col-4 text-right">

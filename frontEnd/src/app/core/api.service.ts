@@ -120,6 +120,15 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // PUT existing schedule - producer or admin only
+  putSchedule(id: number, schedule: ScheduleModel): Observable<ScheduleModel> {
+    return this.http
+      .put(`${ENV.BASE_API}schedules/${id}`, schedule, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
   deleteSchedule(id): Observable<any> {
     return this.http
       .delete(`${ENV.BASE_API}schedules/${id}`, {
@@ -192,6 +201,15 @@ export class ApiService {
       // .get(this.producerUrl + id + '/orders.json')
       .catch(this._handleError);
   };
+
+  // PUT existing order - producer or admin only
+  putOrder(id: number, order: OrderModel): Observable<OrderModel> {
+    return this.http
+      .put(`${ENV.BASE_API}orders/${id}`, order, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
 
 	// from RWAS
   // GET list of public, future events

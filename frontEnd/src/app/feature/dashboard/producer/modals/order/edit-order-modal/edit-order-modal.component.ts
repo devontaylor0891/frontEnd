@@ -7,7 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService } from '../../../../../../core/api.service';
 
-import { ProductModel } from '../../../../../../core/models/product.model';
+import { OrderModel } from '../../../../../../core/models/order.model';
 
 @Component({
   selector: 'app-edit-order-modal',
@@ -16,15 +16,15 @@ import { ProductModel } from '../../../../../../core/models/product.model';
 })
 export class EditOrderModalComponent implements OnInit {
 
-  @Input() record: ProductModel;
-  productForm: FormGroup;
-  initialProduct: ProductModel;
-  totalProductValue: number;
+  @Input() record: OrderModel;
+  orderForm: FormGroup;
+  initialOrder: OrderModel;
   formChangeSub: Subscription;
-  submitProductSub: Subscription;
+  submitOrderSub: Subscription;
   submitting: boolean = false;
-  submitObject: ProductModel;
+  submitObject: OrderModel;
   error: boolean;
+  orderStatusInput: string;
 
   constructor(private fb: FormBuilder,
 				private router: Router,
@@ -32,104 +32,78 @@ export class EditOrderModalComponent implements OnInit {
 				private activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    this.initialProduct = this.setInitialProduct();
+    // this.initialOrder = this.setInitialOrder();
 	  this.buildForm();
-	  this.calculateTotalValue();
   }
 
-  private setInitialProduct() {
-    return new ProductModel(
-      this.record.id,
-      this.record.name,
-      this.record.description,
-      this.record.image,
-      this.record.pricePerUnit,
-      this.record.unit,
-      this.record.unitsPer,
-      this.record.category,
-      this.record.subcategory,
-      this.record.producer,
-      this.record.dateAdded,
-      this.record.qtyAvailable,
-      this.record.qtyPending,
-      this.record.qtyAccepted,
-      this.record.qtyCompleted,
-      this.record.isObsolete,
-      this.record.scheduleList
-    );
+  private setInitialOrder() {
+    // return new OrderModel(
+    //   // this.record.id,
+    //   // this.record.name,
+    //   // this.record.description,
+    //   // this.record.image,
+    //   // this.record.pricePerUnit,
+    //   // this.record.unit,
+    //   // this.record.unitsPer,
+    //   // this.record.category,
+    //   // this.record.subcategory,
+    //   // this.record.producer,
+    //   // this.record.dateAdded,
+    //   // this.record.qtyAvailable,
+    //   // this.record.qtyPending,
+    //   // this.record.qtyAccepted,
+    //   // this.record.qtyCompleted,
+    //   // this.record.isObsolete,
+    //   // this.record.scheduleList
+    // );
   }
 
   private buildForm() {
-		this.productForm = this.fb.group({
-			name: [this.record.name, [Validators.required]],
-			description: [this.record.description, [Validators.required]],
-			image: [this.record.image, [Validators.required]],
-			pricePerUnit: [this.record.pricePerUnit, [Validators.required]],
-			unit: [this.record.unit, [Validators.required]],
-			unitsPer: [this.record.unitsPer, [Validators.required]],
-			category: [this.record.category, [Validators.required]],
-			subcategory: [this.record.subcategory, [Validators.required]],
-			qtyAvailable: [this.record.qtyAvailable, [Validators.required]]
+		this.orderForm = this.fb.group({
+			producerComment: [this.record.orderDetails.producerComment, [Validators.required]]
 		});
 		
 		// Subscribe to form value changes
-		this.formChangeSub = this.productForm
+		this.formChangeSub = this.orderForm
 			.valueChanges
 			.subscribe(data => this.onValueChanged());
   };
   
-  private calculateTotalValue() {
-	  this.totalProductValue = this.productForm.value.pricePerUnit * this.productForm.value.unitsPer;
-  }
-  
   onValueChanged() {
-	  this.calculateTotalValue();
+
   };
   
   setSubmitObject() {
 	  // make it equal to the original record
 	  this.submitObject = this.record;
 	  // then add the fields from the form
-	  this.submitObject.name = this.productForm.value.name;
-	  this.submitObject.description = this.productForm.value.description;
-	  this.submitObject.image = this.productForm.value.image;
-	  this.submitObject.pricePerUnit = this.productForm.value.pricePerUnit;
-	  this.submitObject.unit = this.productForm.value.unit;
-	  this.submitObject.unitsPer = this.productForm.value.unitsPer;
-	  this.submitObject.category = this.productForm.value.category;
-	  this.submitObject.subcategory = this.productForm.value.subcategory;
-	  this.submitObject.qtyAvailable = this.productForm.value.qtyAvailable;
+	  this.submitObject.orderDetails.producerComment = this.orderForm.value.producerComment;
+	  this.submitObject.orderDetails.orderStatus = this.orderStatusInput;
+  }
+
+  onAccept() {
+    this.orderStatusInput = 'accepted';
+  }
+
+  onDeny() {
+    this.orderStatusInput = 'denied';
   }
   
   onSubmit() {
 		this.submitting = true;
     this.setSubmitObject();
     console.log('submitted object: ', this.submitObject);
-		this.submitProductSub = this.api
-			.putProduct(this.record.id, this.submitObject)
+		this.submitOrderSub = this.api
+			.putOrder(this.record.id, this.submitObject)
 			.subscribe(
 			  data => this.handleSubmitSuccess(data),
 			  err => this.handleSubmitError(err)
 			);
   };
-
-  onRenew() {
-    this.submitting = true;
-    this.setSubmitObject();
-    this.submitObject.isObsolete = false;
-    this.api.putProduct(this.record.id, this.submitObject)
-      .subscribe(
-        response => {
-          this.submitting = false;
-          this.activeModal.close();
-        }, err => {
-          this.handleSubmitError(err)
-        }
-      )
-  }
   
   handleSubmitSuccess(res) {
-		this.submitting = false;
+    this.submitting = false;
+    console.log('put!: ', res);
 		// close modal
 		this.activeModal.close();
   };
@@ -141,8 +115,8 @@ export class EditOrderModalComponent implements OnInit {
   };
   
   ngOnDestroy() {
-    if (this.submitProductSub) {
-      this.submitProductSub.unsubscribe();
+    if (this.submitOrderSub) {
+      this.submitOrderSub.unsubscribe();
     }
     this.formChangeSub.unsubscribe();
   }
