@@ -48,6 +48,12 @@ export class CartProductComponent implements OnInit, OnChanges {
     return (this.productQuantity) * (this.product.pricePerUnit) * (this.product.unitsPer);
   }
 
+  onDeleteProduct() {
+    this.cartService.deleteProduct(this.product.id, this.product.producer.id);
+    this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
+    this.totalProductValue = this.calculateTotal();
+  }
+
   ngOnInit() {
     this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
     this.totalProductValue = this.calculateTotal();

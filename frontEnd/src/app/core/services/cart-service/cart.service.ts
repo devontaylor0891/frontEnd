@@ -49,8 +49,15 @@ export class CartService {
     this._communityList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
   }
   
+  
+// ***********DATE LOADING AND OBSERVABLE CREATION**********
+  
   getCarts() {
 	  return this._carts.asObservable();
+  }
+  
+  loadCarts() {
+    this._carts.next(Object.assign({}, this.dataStore).carts);
   }
 
   getCartById() {
@@ -64,6 +71,10 @@ export class CartService {
   getCartCount() {
     return this._cartCount.asObservable();
   }
+  
+  loadCartCount() {
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+  }
 
   getSchedulesByIdAndCommunity(id, community) {
     
@@ -76,8 +87,10 @@ export class CartService {
   loadCommunityList(id) {
     this._communityList.next(Object.assign({}, this.dataStore).schedulesArray[id].communityList);
   }
-
-  // ***********PRODUCT METHODS**********
+  
+  
+  
+// ***********PRODUCT METHODS**********
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
   addToCart(product, quantity) {
@@ -103,7 +116,7 @@ export class CartService {
     if (quantity > currentQtyAvailable) {
       quantity = currentQtyAvailable;
       // inform user
-	  // alert?
+	  // set a property here as an observable that the component can subscribe to, then it can trigger an alert
     };
 	  // change the product's quantities
 	  this.makeQtyPending(product.id, quantity);
@@ -168,14 +181,75 @@ export class CartService {
   };
 
   // remove a product from the cart
-  deleteProduct(product) {
-    // find the product in the cartContents,
-    // splice it
+  deleteProduct(productId, producerId) { // not working when hit more than once
+	  // remove the product from the cart
+	  // return it's quantity to qtyAvailable
+	  // change the cartCount
+	  // restart the cart timer
+    
+    // if only one cart in datastore, set it equal to cart, otherwise loop through each until you find the productId
+    let cart;
+    let cartIndex;
+    let productIndex;
+    if (this.dataStore.carts.length === 1 ) {
+      cart = this.dataStore.carts[0];
+      for (let j = 0; j < cart.orderDetails.productQuantities.length; j++) {
+        if (cart.orderDetails.productQuantities[j].productId === productId) {
+          cartIndex = 0;
+          productIndex = j;
+        };
+      };
+    } else {
+      for (let i = 0; i < this.dataStore.carts.length; i++) {
+        for (let j = 0; j < this.dataStore.carts[i].orderDetails.productQuantities.length; j++) {
+          if (this.dataStore.carts[i].orderDetails.productQuantities[j].productId === productId) {
+            cart = this.dataStore.carts[i];
+            cartIndex = i;
+            productIndex = j;
+          };
+        };
+      };
+    };
+    console.log('cart: ', cart); // works
+    console.log('cartIndex: ', cartIndex); // undefined
+    console.log('productIndex: ', productIndex); // undefined
+    // get the quantity
+    console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
+    let quantity = cart.orderDetails.productQuantities[productIndex].orderQuantity;
+    // splice the product out of the array
+    this.dataStore.carts[cartIndex].orderDetails.productQuantities.splice(productIndex, 1);
+    this._carts.next(Object.assign({}, this.dataStore).carts);
+    // change the qtyAvailable
+    this.makeQtyAvailable(productId, quantity);
+    // decrease the cartCount
+    this.dataStore.cartCount -= quantity;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     // clear timer and start new timer
     this.restartTimer();
   };
 
-  // ***********SCHEDULE METHODS**********
+  
+  
+  
+// ***********CART MODIFICATION METHODS**********
+
+	// build the cart
+	buildCart(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
+		// add the chosen schedule to the cart
+		this.selectSchedule(cartId, chosenSchedule);
+		// add the consumer comment to the cart
+		this.addConsumerComment(cartId, consumerComment);
+		// date stamp the cart
+		this.dateStampCart(cartId);
+		if (chosenSchedule.type === "Door-to-door Delivery") {
+		  // add the delivery fee, if required
+		  this.addDeliveryFee(cartId, chosenSchedule.fee);
+		  // add the delivery address, if it exists
+		  this.addDeliveryAddress(cartId, deliveryAddress);
+		}
+		// change status to pending
+		this.makeCartPending(cartId);
+	};
 
   // for each cart in the cart contents, select a schedule
   selectSchedule(cartId, schedule) {
@@ -195,12 +269,8 @@ export class CartService {
     this.dataStore.carts[cartId].orderDetails.deliveryFee = fee;
   };
 
-  changeCartStatus(cartId, status) {
-    this.dataStore.carts[cartId].orderDetails.orderStatus = status;
-  }
-
-  returnCartById(id) {
-    return this.dataStore.carts[id];
+  makeCartPending(cartId) {
+    this.dataStore.carts[cartId].orderDetails.orderStatus = 'pending';
   }
 
   dateStampCart(cartId) {
@@ -222,58 +292,68 @@ export class CartService {
     return count;
   }
 
-  // ***********ORDER STATUS METHODS**********
+  clearCart(cardId) {};
+  
+  
+  
+// ***********ORDER CONFIRMATION**********
 
   // confirm and send the order from consumer to producer
   confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
-    // add the chosen schedule to the cart
-    this.selectSchedule(cartId, chosenSchedule);
-    // add the consumer comment to the cart
-    this.addConsumerComment(cartId, consumerComment);
-    // date stamp the cart
-    this.dateStampCart(cartId);
-    if (chosenSchedule.type === "Door-to-door Delivery") {
-      // add the delivery fee, if required
-      this.addDeliveryFee(cartId, chosenSchedule.fee);
-      // add the delivery address, if it exists
-      this.addDeliveryAddress(cartId, deliveryAddress);
-    }
-    console.log('finished cart: ', this.dataStore.carts);
-    // remove the cart contents from the cart count
-    this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId);
-    console.log('new cartCount: ', this.dataStore.cartCount);
-    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+	  // build the cart
+	  this.buildCart(cartId, chosenSchedule, consumerComment, deliveryAddress);
+    
+		// send the cart via the api
+		console.log('finished cart: ', this.dataStore.carts);
+		// remove the cart from the dataStore on success
+		this.clearCart(cartId);
+		// remove the cart contents from the cart count
+		this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId);
+		console.log('new cartCount: ', this.dataStore.cartCount);
+		this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
   };
+  
+  
+  
+// ***********ORDER ABANDONMENT METHODS**********
+	onAbandonOrder() {
+		// log the abandoned order
+		this.logAbandonedCart();
+	}
+  
+  
+  
+  
+// ***********TIMER METHODS**********
 
-  // producer accepts order
-  acceptOrder(orderId) {};
-
-  // complete order
-  completeOrder(orderId) {};
-
-  // modify the status of an order
-  changeOrderStatus(orderId, status) {};
-
-  // ***********TIMER METHODS**********
-
-  // 20 minute timer
-  cartTimer = function(cart) {
-    setTimeout(this.emptyCart(cart), 1200000);
+  // 20 minute timer, then mark as abandoned
+  cartTimer() {
+    setTimeout(this.logAbandonedCart(), 1200000);
   };
 
   // send order to abandoned orders table
-  logAbandonedCart() {};
-
-  clearTimer(timer) {
-    timer.clearTimeout();
+  logAbandonedCart() {
+	  // api method to log cart in abandoned cart table
+	  // return quantities to qtyAvailable
+	  let cart = this.dataStore.carts;
+	  // for (let i = 0; i < cart.orderDetails.productQuantities.length; i++) {
+		//   this.makeQtyAvailable(cart.orderDetails.productQuantities[i].productId, cart.orderDetails.productQuantities[i].orderQuantity);
+	  // }
+	  // empty the cart
+	  this.emptyAbandonedCart();
   };
 
   restartTimer() {
-    // this.cartTimer.clearTimeout();
-    // this.cartTimer(cart);
+    // clear the old timer
+	  // this.cartTimer.clearTimeout();
+    // restart as new
+    this.cartTimer();
   };
 
-  // ***********OTHER METHODS**********
+  
+  
+  
+// ***********OTHER METHODS**********
 
   // API call to get the qtyAvailable right now
   getCurrentlyAvailable(productId, producerId) {
@@ -284,6 +364,8 @@ export class CartService {
   };
   
   makeQtyPending(id, qty) {};
+  
+  makeQtyAvailable(id, qty) {};
 
   // look to see if producer is in cart, return the index number or -1
   findProducerIndex(id) {
@@ -477,14 +559,6 @@ export class CartService {
   };
 
     // change all product quantities from pending back to available
-  emptyCart() {};
-
-  loadCartCount() {
-    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-  }
-
-  loadCarts() {
-    this._carts.next(Object.assign({}, this.dataStore).carts);
-  }
+  emptyAbandonedCart() {};
   
 }
