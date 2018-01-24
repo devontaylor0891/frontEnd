@@ -299,3 +299,13 @@ input[type=number]::-webkit-outer-spin-button {
     z-index: 9999999999 !important;
     background-color: lightgray;
 }
+
+.vertical-center-parent {
+	position: relative;
+}
+
+.vertical-center-child {
+	position: absolute;
+	top: 50%;
+    transform: translateY(-50%);
+}

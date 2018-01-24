@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
 
 import { CartService } from '../../../core/services/cart-service/cart.service';
+import { AuthService } from '../../../auth/auth.service';
 
 import { OrderModel } from '../../../core/models/order.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
@@ -26,11 +27,13 @@ export class CheckoutComponent implements OnInit, OnChanges {
   agreement: boolean = false;
   consumerComment: string;
   deliveryAddress: string;
+  isLoggedIn: boolean = false;
 
   constructor(private cartService: CartService,
               private router: Router,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private location: Location,
+              private authService: AuthService) { }
 
   ngOnChanges() {}
 
@@ -76,7 +79,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.getCartById()
       .subscribe(
-        result => { this.order = result }
+        result => { this.order = result; }
       );
 
     this.cartService.loadCartById(this.id);
@@ -91,6 +94,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.cartService.loadCommunityList(this.id);
 
     this.tempOrderValue = this.order.orderDetails.orderValue;
+
+    this.isLoggedIn = this.authService.loggedIn; // this should really be a sub to the behaviour subject, but I kept getting an error
 
   }
 

@@ -111,7 +111,7 @@ export class CartService {
     let productIndex = this.findProductIndex(producerIndex, product.id);
     // make sure quantity is less than or equal to qtyAvailable
     // get current qtyAvailable
-    let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
+    let currentQtyAvailable = this.getCurrentlyAvailable(product.id);
     // if not, inform user and make quantity = qtyAvailable
     if (quantity > currentQtyAvailable) {
       quantity = currentQtyAvailable;
@@ -356,8 +356,8 @@ export class CartService {
 // ***********OTHER METHODS**********
 
   // API call to get the qtyAvailable right now
-  getCurrentlyAvailable(productId, producerId) {
-	  this.apiService.getProductById(productId, producerId)
+  getCurrentlyAvailable(productId) {
+	  this.apiService.getProductById(productId)
 		.subscribe((result) => {
 			return result.qtyAvailable;
 		})
@@ -562,3 +562,4 @@ export class CartService {
   emptyAbandonedCart() {};
   
 }
+

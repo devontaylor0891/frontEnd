@@ -51,7 +51,7 @@ export class ApiService {
   }
 
   // this method will return a product from the mock data
-  getProductById(productId, producerId): Observable<ProductModel> {
+  getProductById(productId): Observable<ProductModel> {
     return this.http
       .get(`${ENV.BASE_API}products/` + productId)
       // .get(this.producerUrl + producerId + '/products/' + productId + '.json')
@@ -83,6 +83,15 @@ export class ApiService {
       })
       .catch(this._handleError);
   }
+
+  // PATCH product fields
+  patchProduct(id: number, newFieldAndValue: Object): Observable<any> {
+    return this.http
+      .patch(`${ENV.BASE_API}products/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
 
   // DELETE existing event and all associated RSVPs (admin only)
   deleteProduct(id: number): Observable<any> {
@@ -185,6 +194,15 @@ export class ApiService {
   }
 
   // **************** ORDERS *******************
+
+  // POST order
+  postOrder(order: OrderModel): Observable<OrderModel> {
+    return this.http
+      .post(`${ENV.BASE_API}orders/`, order, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
   
   // get all orders for admin
   getOrders(): Observable<OrderModel[]> {
@@ -210,6 +228,24 @@ export class ApiService {
       })
       .catch(this._handleError);
   }
+
+  // PATCH order
+  patchOrder(id: number, newFieldAndValue: Object): Observable<any> {
+    return this.http
+      .patch(`${ENV.BASE_API}orders/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  // POST abandoned order
+  postAbandonedOrder(order: OrderModel): Observable<OrderModel> {
+    return this.http
+      .post(`${ENV.BASE_API}abandonedOrders/`, order, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
 
 	// from RWAS
   // GET list of public, future events

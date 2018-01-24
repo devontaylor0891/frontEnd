@@ -160,6 +160,9 @@
     </div>
 
     <div class="col col-md-6 offset-md-3 mb-2">
+      <div class="row bg-warning" *ngIf="!isLoggedIn">
+        <p>In order to send the proper information to the Producer, please <a (click)="authService.login()">Log in or Sign up</a>.</p>
+      </div>
       <div class="row grey lighten-2 mb-3">
         <div class="col-6 p-2 text-center">
           <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
