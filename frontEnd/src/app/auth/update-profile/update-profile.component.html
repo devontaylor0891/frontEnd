@@ -1,16 +1,65 @@
-<p>
-  update-profile works!
-</p>
-<form id="signup">
-    <fieldset>
-      <legend>Sign up</legend>
+<div class="row modal-background">
+
+    <div class="col mt-5">
+    
+      <form
+        #f="ngForm"  
+        (ngSubmit)="onSubmit(f.value)">
+   
+        <div class="field">  
+          <label for="firstName">First Name:</label>  
+          <input
+            type="text"  
+            id="firstName"  
+            name="firstName"
+            ngModel>  
+        </div>
+     
+        <button type="submit" class="ui button">Complete Signup</button>  
+        
+      </form>
+    
+    </div> 
       
-      <p>
-        <input type="text" id="name" placeholder="Full name" required/>
-      </p>
-      <p>
-        <input type="text" id="color" placeholder="Favorite color"/>
-      </p>
-      <input type="submit" value="Sign up"/>
-    </fieldset>
-  </form>
+  </div>
+  
+  <!-- or, if I want to throw it in a modal, see the plunker in my bookmarks bar -->
+  <!--
+  <div class="modal-body">
+      <div class="md-form form-sm">
+          <i class="fa fa-user prefix"></i>
+          <input type="text" id="name" class="form-control">
+          <label for="name">Your First Name</label>
+      </div>
+      
+      <div class="md-form form-sm">
+          <i class="fa fa-envelope prefix"></i>
+          <input type="text" id="form24" class="form-control">
+          <label for="form24">Your email</label>
+      </div>
+  
+      <div class="md-form form-sm">
+          <i class="fa fa-lock prefix"></i>
+          <input type="password" id="form25" class="form-control">
+          <label for="form25">Your password</label>
+      </div>
+  
+      <div class="md-form form-sm">
+          <i class="fa fa-lock prefix"></i>
+          <input type="password" id="form26" class="form-control">
+          <label for="form26">Repeat password</label>
+      </div>
+  
+      <div class="text-center form-sm mt-2">
+          <button routerLink="dashboard" class="btn btn-olf-primary">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+      </div>
+  
+  </div>
+  
+  <div class="modal-footer">
+      <div class="options text-right">
+          <p class="pt-1">Already have an account? <a routerLink="login">Log In</a></p>
+      </div>
+      <button type="button" class="btn btn-outline-olf-primary waves-effect ml-auto" style="color:#893d63 !important;" data-dismiss="modal">Close</button>
+  </div>
+  -->

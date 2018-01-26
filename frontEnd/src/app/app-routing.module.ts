@@ -70,7 +70,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, { useHash: false, enableTracing: true })
   ],
   declarations: [],
   exports: [RouterModule],

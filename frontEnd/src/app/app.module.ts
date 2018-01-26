@@ -182,7 +182,6 @@ import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/s
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
-    AppRoutingModule,
     MDBBootstrapModule.forRoot(),
     Ng2PageScrollModule,
     CalendarModule.forRoot(),
@@ -191,7 +190,8 @@ import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/s
       apiKey: 'AIzaSyAgN6Tt6BxP2Q-iNCNe7HiHfIGotu1j_uY',
       libraries: ["places"]
     }),
-    DateTimePickerModule
+    DateTimePickerModule,
+    AppRoutingModule
   ],
   providers: [
     AuthService, 
