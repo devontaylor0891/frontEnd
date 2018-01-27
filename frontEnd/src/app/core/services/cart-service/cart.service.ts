@@ -220,11 +220,15 @@ export class CartService {
     // get the quantity
     console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
     let quantity = cart.orderDetails.productQuantities[productIndex].orderQuantity;
-    // splice the product out of the array
+    // splice the product out of the arrays
     this.dataStore.carts[cartIndex].orderDetails.productQuantities.splice(productIndex, 1);
+    this.dataStore.carts[cartIndex].productList.splice(productIndex, 1);
+    // update the order value
+    this.dataStore.carts[cartIndex].orderDetails.orderValue = this.calculateTotalOrderValue(cart);
+    // emit the new carts
     this._carts.next(Object.assign({}, this.dataStore).carts);
     // change the qtyAvailable
-    // this.makeQtyAvailable(productId, quantity);
+    this.makeQtyAvailable(productId, quantity);
     // decrease the cartCount
     this.dataStore.cartCount -= quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
@@ -375,6 +379,34 @@ export class CartService {
           console.log('newVals: ', newVals); // working
           newVals.qtyAvailable -= qty;
           newVals.qtyPending += qty;
+          console.log('qty: ', qty);
+          console.log('newVals: ', newVals); // not working
+          this.apiService.patchProduct(productId, newVals)
+      		.subscribe(
+      			result => {
+      				console.log('successfully patched product: ', result);
+      			}, error => console.log('could not patch product')
+      		)
+        }
+      );
+  };
+
+  makeQtyAvailable(productId, qty) {
+    console.log('productId: ', productId);
+    console.log('qty: ', qty);
+    let newVals = {
+      'qtyAvailable': null,
+      'qtyPending': null
+    };
+    // call the API
+    this.apiService.getProductById(productId)
+      .subscribe(
+        result => {
+          newVals.qtyAvailable = result.qtyAvailable;
+          newVals.qtyPending = result.qtyPending;
+          console.log('newVals: ', newVals); // working
+          newVals.qtyAvailable += qty;
+          newVals.qtyPending -= qty;
           console.log('qty: ', qty);
           console.log('newVals: ', newVals); // not working
           this.apiService.patchProduct(productId, newVals)
