@@ -232,9 +232,9 @@ export class CartService {
     this.restartTimer();
   };
 
-  
-  
-  
+
+
+
 // ***********CART MODIFICATION METHODS**********
 
 	// build the cart
@@ -360,6 +360,7 @@ export class CartService {
 // ***********OTHER METHODS**********
 
   makeQtyPending(productId, qty) {
+    console.log('productId: ', productId);
     console.log('qty: ', qty);
     let newVals = {
       'qtyAvailable': null,
@@ -376,76 +377,15 @@ export class CartService {
           newVals.qtyPending += qty;
           console.log('qty: ', qty);
           console.log('newVals: ', newVals); // not working
-        },
-        () => this.apiService.patchProduct(productId, newVals)
+          this.apiService.patchProduct(productId, newVals)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);
       			}, error => console.log('could not patch product')
       		)
+        }
       );
   };
-
-  // API call to get the qtyAvailable right now
-  // getCurrentlyAvailable(productId) {
-	//   this.apiService.getProductById(productId)
-	// 	.subscribe((result) => {
-  //     console.log('getCurrentlyAvailable: ', result.qtyAvailable);
-	// 		return result.qtyAvailable;
-	// 	})
-  // };
-  
-  // getCurrentlyPending(productId) {
-	//   this.apiService.getProductById(productId)
-	// 	.subscribe((result) => {
-	// 		return result.qtyPending;
-	// 	})
-  // }
-  
-  // makeQtyPending(productId, qty) {
-  //   // get the currently available and pending
-  //   let currentlyAvailable = +this.getCurrentlyAvailable(productId);
-  //   console.log('currentlyAvailable: ', currentlyAvailable);
-  //   let currentlyPending = +this.getCurrentlyPending(productId);
-  //   console.log('currentlyPending: ', currentlyPending);
-	// 	// calc new values
-	// 	let newAvailable: number = currentlyAvailable - qty;
-	// 	let newPending = currentlyPending + qty;
-	// 	// create the object to send
-	// 	let newValues = {
-	// 		'qtyAvailable': newAvailable,
-	// 		'qtyPending': newPending
-	// 	};
-  //   // send new values
-  //   console.log('newValues: ', newValues);
-	// 	this.apiService.patchProduct(productId, newValues)
-	// 		.subscribe(
-	// 			result => {
-	// 				console.log('successfully patched product: ', result);
-	// 			}, error => console.log('could not patch product')
-	// 		);
-  // };
-  
-  // makeQtyAvailable(productId, qty) {
-	// 	// get the currently available and pending
-	// 	let currentlyAvailable = +this.getCurrentlyAvailable(productId);
-	// 	let currentlyPending = +this.getCurrentlyPending(productId);
-	// 	// calc new values
-	// 	let newAvailable = currentlyAvailable + qty;
-	// 	let newPending = currentlyPending - qty;
-	// 	// create the object to send
-	// 	let newValues = {
-	// 		'qtyAvailable': newAvailable,
-	// 		'qtyPending': newPending
-	// 	};
-	// 	// send new values
-	// 	this.apiService.patchProduct(productId, newValues)
-	// 		.subscribe(
-	// 			result => {
-	// 				console.log('successfully patched product: ', result);
-	// 			}, error => console.log('could not patch product')
-	// 		);
-  // };
 
   // look to see if producer is in cart, return the index number or -1
   findProducerIndex(id) {
@@ -538,38 +478,6 @@ export class CartService {
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderValue = this.calculateProductOrderValue(this.dataStore.carts[producerIndex].productList[productIndex], this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity);
     this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
   }
-
-  // findAndMakeQuantity(productId, quantity, producerId, cartCountAdjustment) {
-    // make sure quantity is less than or equal to qtyAvailable
-    // get current qtyAvailable
-    // let currentQtyAvailable = this.getCurrentlyAvailable(product.id, producerId);
-    // if not, inform user and make quantity = qtyAvailable
-    // if (quantity > currentQtyAvailable) {
-    //   quantity = currentQtyAvailable;
-    //   // inform user
-	  // // alert?
-    // };
-	  // change the product's quantities
-  //   this.makeQtyPending(productId, quantity);
-  //   // increase the cartCount
-  //   this.dataStore.cartCount += cartCountAdjustment;
-  //   this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-  //   let producerIndex = this.findProducerIndex(producerId);
-  //   let productIndex = this.findProductIndex(producerIndex, productId);
-  //   let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
-  //   let productQuantitiesIndex;
-  //   // find the target product in the productQuantities array
-  //   for (let i = 0; i < array.length; i++) {
-  //     if (array[i].productId === productId) {
-  //       productQuantitiesIndex = i;
-  //     };
-  //   };
-  //   // change the quantity of that product
-  //   this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderQuantity = quantity;
-  //   // calculate the new order value of that product
-  //   this.dataStore.carts[producerIndex].orderDetails.productQuantities[productQuantitiesIndex].orderValue = this.calculateProductOrderValue(this.dataStore.carts[producerIndex].productList[productIndex], quantity);
-  //   this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
-  // }
 
   findProducerInSchedList(id) { // return true if producerId is already in scheduleList array, false if not
     let result;

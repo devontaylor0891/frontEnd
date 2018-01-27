@@ -1727,8 +1727,8 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": null,
-      "qtyPending": null,
+      "qtyAvailable": 43,
+      "qtyPending": 57,
       "qtyAccepted": 0,
       "qtyCompleted": 2,
       "isObsolete": false,
@@ -1771,8 +1771,8 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": 100,
-      "qtyPending": 100,
+      "qtyAvailable": 89,
+      "qtyPending": 111,
       "qtyAccepted": 45,
       "qtyCompleted": 0,
       "isObsolete": false,
