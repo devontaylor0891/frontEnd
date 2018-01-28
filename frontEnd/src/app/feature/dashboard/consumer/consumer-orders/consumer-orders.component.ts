@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { ConsumerDashboardService } from '../consumer-dashboard.service';
+
+import { OrderModel } from '../../../../core/models/order.model';
 
 @Component({
   selector: 'app-consumer-orders',
@@ -7,9 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsumerOrdersComponent implements OnInit {
 
-  constructor() { }
+  @Input() id: number;
+  orders: OrderModel[];
+
+  constructor(private dashboardService: ConsumerDashboardService) { }
 
   ngOnInit() {
+
+    this.dashboardService.loadData(this.id);
+
+    this.dashboardService._orders
+      .subscribe(
+        result => {
+          this.orders = result;
+          console.log('orders: ', this.orders);
+        }
+      );
+
+    
+    console.log('id: ', this.id);
+
   }
 
 }

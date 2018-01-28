@@ -220,6 +220,13 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // get all orders for a single producer
+  getOrdersByConsumerId(id) {
+    return this.http
+      .get(`${ENV.BASE_API}users/`+ id + '/orders')
+      .catch(this._handleError);
+  };
+
   // PUT existing order - producer or admin only
   putOrder(id: number, order: OrderModel): Observable<OrderModel> {
     return this.http
