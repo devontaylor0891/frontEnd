@@ -37,6 +37,7 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   @Input() editable: boolean; // governs display of Edit button
   @Input() deletable: boolean; // display of Delete button
   @Input() pending: boolean; // for orders that are pending
+  @Input() isConsumer: boolean = false; // to display the proper modals if a consumer
   record: Object; // single record
   @Input() recordType: string; // this will hold the type of record so that the proper modals can be shown
   sortedRecords: any[]; 
