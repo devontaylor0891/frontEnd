@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 
     this.userType = this.auth.userProfile['http://myapp.com/userType'];
     this.isAdmin = this.auth.isAdmin;
-    this.id = +this.auth.userProfile.sub.slice(this.auth.userProfile.sub.indexOf('|') + 1);
+    this.id = this.auth.userProfile.sub.slice(this.auth.userProfile.sub.indexOf('|') + 1);
     console.log('id: ', this.id);
     console.log('userType: ', this.userType);
 

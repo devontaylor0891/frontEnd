@@ -131,7 +131,9 @@ export class CartService {
         id: null,
         tempId: this.tempId,
         chosenSchedule: null,
+        producerId: producerId,
         producer: product.producer,
+        consumerId: null,
         consumer: null,
         productList: [
           product
@@ -269,7 +271,9 @@ export class CartService {
   };
   
   addConsumer(cartId) {
-	  this.dataStore.carts[cartId].consumer = this.authService.userProfile;
+    this.dataStore.carts[cartId].consumer = this.authService.userProfile;
+    let idArray = this.authService.userProfile.sub.split('|');
+    this.dataStore.carts[cartId].consumerId = idArray[1];
   };
 
   addConsumerComment(cartId, comment) {
@@ -335,7 +339,7 @@ export class CartService {
 					// remove the cart from the dataStore on success
 					this.clearCart(cartId);
 					// remove the cart contents from the cart count
-					this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId);
+					this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId); // unnecessary??? throws error on single cart checkout, not sure about multi
 					console.log('new cartCount: ', this.dataStore.cartCount);
 					this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
 				}, error => console.log('could not add new order')

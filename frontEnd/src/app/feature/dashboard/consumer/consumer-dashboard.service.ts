@@ -32,6 +32,7 @@ export class ConsumerDashboardService {
         result => {
           this.dataStore.user = result;
           this._user.next(Object.assign({}, this.dataStore).user);
+          console.log('user: ', this.dataStore.user);
         }, error => console.log('could not load user')
       );
     this.apiService.getOrdersByConsumerId(id)
