@@ -105,6 +105,8 @@ import { ViewScheduleModalComponent } from './feature/dashboard/producer/modals/
 import { DeleteScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
 import { AddProductModalComponent } from './feature/dashboard/producer/modals/product/add-product-modal/add-product-modal.component';
 import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/add-schedule-modal/add-schedule-modal.component';
+import { ConsumerViewOrderModalComponent } from './feature/dashboard/consumer/modals/order/view-order-modal/view-order-modal.component';
+import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/modals/order/edit-order-modal/edit-order-modal.component';
 
 @NgModule({
   declarations: [
@@ -173,7 +175,9 @@ import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/s
     ViewScheduleModalComponent,
     DeleteScheduleModalComponent,
     AddProductModalComponent,
-    AddScheduleModalComponent
+    AddScheduleModalComponent,
+    ConsumerViewOrderModalComponent,
+    ConsumerEditOrderModalComponent
   ],
   imports: [
     BrowserModule,
@@ -213,6 +217,8 @@ import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/s
     DeleteScheduleModalComponent,
     AddProductModalComponent,
     AddScheduleModalComponent,
+    ConsumerViewOrderModalComponent,
+    ConsumerEditOrderModalComponent,
     PlacesService
   ],
   schemas: [NO_ERRORS_SCHEMA],
@@ -226,7 +232,9 @@ import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/s
     ViewScheduleModalComponent,
     DeleteScheduleModalComponent,
     AddProductModalComponent,
-    AddScheduleModalComponent
+    AddScheduleModalComponent,
+    ConsumerViewOrderModalComponent,
+    ConsumerEditOrderModalComponent
   ],
   bootstrap: [AppComponent]
 })

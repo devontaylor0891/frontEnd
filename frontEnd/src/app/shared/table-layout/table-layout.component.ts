@@ -10,6 +10,8 @@ import { ViewScheduleModalComponent } from '../../feature/dashboard/producer/mod
 import { DeleteScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
 import { EditOrderModalComponent } from '../../feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
 import { ViewOrderModalComponent } from '../../feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
+import { ConsumerViewOrderModalComponent } from '../../feature/dashboard/consumer/modals/order/view-order-modal/view-order-modal.component';
+import { ConsumerEditOrderModalComponent } from '../../feature/dashboard/consumer/modals/order/edit-order-modal/edit-order-modal.component';
 
 import { UtilityService } from '../../core/services/utility/utility.service';
 
@@ -77,8 +79,11 @@ export class TableLayoutComponent implements OnInit, OnChanges {
       const modalRef = this.modal.open(ViewScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
-    if (this.recordType === 'order') {
+    if (this.recordType === 'order' && this.isConsumer === false) {
       const modalRef = this.modal.open(ViewOrderModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    } else if (this.recordType === 'order' && this.isConsumer === true) {
+      const modalRef = this.modal.open(ConsumerViewOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
   }
@@ -95,8 +100,11 @@ export class TableLayoutComponent implements OnInit, OnChanges {
       const modalRef = this.modal.open(EditScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
-    if (this.recordType === 'order') {
+    if (this.recordType === 'order' && this.isConsumer === false) {
       const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    } else if (this.recordType === 'order' && this.isConsumer === true) {
+      const modalRef = this.modal.open(ConsumerEditOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
   }
