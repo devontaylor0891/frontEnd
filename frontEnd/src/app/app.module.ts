@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -195,6 +196,7 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
       libraries: ["places"]
     }),
     DateTimePickerModule,
+    RouterModule,
     AppRoutingModule
   ],
   providers: [
