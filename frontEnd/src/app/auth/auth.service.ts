@@ -29,6 +29,12 @@ export class AuthService {
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
+  // properties to attempt to update profile on signup
+  userType: string;
+  userType$ = new BehaviorSubject<string>(this.userType);
+  profileComplete: boolean;
+  profileComplete$ = new BehaviorSubject<boolean>(this.profileComplete);
+
   constructor(private router: Router) {
 
     // If authenticated, set local profile property
@@ -81,9 +87,17 @@ export class AuthService {
     // Use access token to retrieve user's profile and set session
     this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if (profile) {
-        this._setSession(authResult, profile);
-        this.router.navigate([localStorage.getItem('authRedirect') || '/']);
-        this._clearRedirect();
+        // if no userType or firstName, mark profile as incomplete
+        if (!profile['http://myapp.com/userType'] || !profile['http://myapp.com/firstName']) {
+          this.profileComplete = false;
+          this.profileComplete$.next(this.profileComplete);
+        } else {
+          this.userType = profile['http://myapp.com/userType'];
+          console.log('http://myapp.com/userType: ', profile['http://myapp.com/userType']);
+          this._setSession(authResult, profile);
+          this.router.navigate([localStorage.getItem('authRedirect') || '/']);
+          this._clearRedirect();
+        }
       } else if (err) {
         console.error(`Error authenticating: ${err.error}`);
       }

@@ -1,3 +1,5 @@
+<div *ngIf="profileComplete">
+
     <!--Navbar-->
     <app-header [isAdmin]="isAdmin"></app-header>
 
@@ -9,3 +11,9 @@
 
     <!--Footer-->
     <app-footer></app-footer>
+
+</div>
+
+<div *ngIf="!profileComplete">
+    <app-update-profile></app-update-profile>
+</div>

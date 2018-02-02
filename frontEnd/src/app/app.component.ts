@@ -11,6 +11,7 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
 
   isAdmin: boolean;
+  profileComplete: boolean;
 
   constructor (public authService: AuthService,
               private router: Router) {
@@ -28,6 +29,13 @@ export class AppComponent implements OnInit {
     });
 
     this.isAdmin = this.authService.isAdmin;
+
+    this.authService.profileComplete$
+      .subscribe(
+        result => {
+          this.profileComplete = result;
+        }
+      )
 
   }
   

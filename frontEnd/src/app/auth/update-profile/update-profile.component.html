@@ -14,8 +14,37 @@
             name="firstName"
             ngModel>  
         </div>
+
+        <div class="row">
+            <div class="col">
+
+                <label>
+                    Consumer: 
+                    <input
+                        type="radio" 
+                        name="userType" 
+                        value="consumer" 
+                        ngModel 
+                        required
+                    />
+                </label>
+            
+                <label>
+                    Producer: 
+                    <input 
+                        type="radio" 
+                        name="userType" 
+                        value="producer" 
+                        ngModel 
+                        required
+                    />
+                </label>
+
+            </div>
+        </div>
+        
      
-        <button type="submit" class="ui button">Complete Signup</button>  
+        <button type="submit" class="btn btn-olf-primary">Complete Signup</button>  
         
       </form>
     
