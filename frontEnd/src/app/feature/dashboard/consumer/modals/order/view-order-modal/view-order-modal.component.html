@@ -6,35 +6,14 @@
 </div>
   
 <div class="modal-body dash-modal-body">
-
-  <div class="row">
-
-    <div class="col-12">
-      <h4>Consumer Details</h4>
-    </div>
-
-    <div class="col-12">
-      <div class="row">
-          <div class="col-4 text-right">
-              <strong>Name:</strong>
-            </div>
-            <div class="col-8">
-              <p>{{ record.consumer.firstName }}</p>
-            </div>
-      </div>
-    </div>
     
-    <hr>
-    
-  </div>
-    
-  <div class="row">
+	<div class="row"> <!-- ORDER DETAILS -->
 
-    <div class="col-12">
-      <h4>Order Details</h4>
-    </div>
+		<div class="col-12">
+		  <h4>Order Details</h4>
+		</div>
 
-    <div class="col-12">
+		<div class="col-12">
       <div class="row">
         <div class="col-4 text-right">
           <strong>Order Status:</strong>
@@ -46,7 +25,7 @@
         
       <div class="row">
         <div class="col-4 text-right">
-          <strong>Consumer Comment:</strong>
+          <strong>Your Comments:</strong>
         </div>
         <div class="col-8">
           <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
@@ -56,7 +35,7 @@
             
       <div class="row">
         <div class="col-4 text-right">
-          <strong>Producer Comment:</strong>
+          <strong>Producer Comments:</strong>
         </div>
         <div class="col-8">
           <p *ngIf="record.orderDetails.producerComment">{{ record.orderDetails.producerComment }}</p>
@@ -64,41 +43,47 @@
         </div>
       </div>
     </div>
-
-      
-    <div class="col-12">
-      <div class="row">
-        <div class="col-8 offset-2 justify-content-center">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let product of products">
-                <td>{{ product.name }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ product.value | currency:'USD':true:'1.2-2' }}</td>
-              </tr>
-              <tr>
-              <td></td>
-              <td></td>
-              <td><strong>{{ record.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <hr>
-
+	<hr>
     </div>
-  </div>
+	
+	
+	<div class="row"> <!-- ORDER CONTENTS -->
+		<div class="col-12">
+			<h4>Your Order Contents</h4>
+		</div>
+		<div class="col-12">
+		  <div class="row">
+			<div class="col-8 offset-2 justify-content-center">
+			  <table class="table">
+				<thead>
+				  <tr>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th>Value</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr *ngFor="let product of products">
+					<td>{{ product.name }}</td>
+					<td>{{ product.quantity }}</td>
+					<td>{{ product.value | currency:'USD':true:'1.2-2' }}</td>
+				  </tr>
+				  <tr>
+				  <td></td>
+				  <td></td>
+				  <td><strong>{{ record.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+		  </div>
+
+		  <hr>
+
+		</div>
+	</div>
  
-  <div class="row">
+  <div class="row"> <!-- SCHEDULE DETAILS -->
 
     <div class="col-12">
       <h4>Schedule Details</h4>
@@ -157,6 +142,15 @@
         </div>
         <div class="col-8">
           <p>{{ record.chosenSchedule.orderDeadline | date:'mediumDate' }} - {{ record.chosenSchedule.orderDeadline | date:'shortTime' }}</p>
+        </div>
+      </div>
+	  
+	  <div class="row" *ngIf="record.chosenSchedule.description">
+        <div class="col-4 text-right">
+          <strong>Details:</strong>
+        </div>
+        <div class="col-8">
+          <p>{{ record.chosenSchedule.description }}</p>
         </div>
       </div>
 
