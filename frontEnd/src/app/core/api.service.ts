@@ -108,7 +108,6 @@ export class ApiService {
   getSchedules(): Observable<ScheduleModel[]> {
     return this.http
       .get(`${ENV.BASE_API}schedules`)
-      // .get(this.allSchedulesUrl)
       .catch(this._handleError);
   }
 
@@ -116,7 +115,6 @@ export class ApiService {
   getScheduleByProducerId(id): Observable<ScheduleModel[]> {
     return this.http
       .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
-      // .get(this.producerUrl + id + '/schedule.json')
       .catch(this._handleError);
   }
 
@@ -162,7 +160,6 @@ export class ApiService {
   getProducers(): Observable<ProducerModel[]> {
     return this.http
       .get(`${ENV.BASE_API}producer/`)
-      // .get(this.producersUrl)
       .catch(this._handleError);
   };
 
@@ -170,7 +167,6 @@ export class ApiService {
   getProducerById(id): Observable<ProducerModel> {
     return this.http
     .get(`${ENV.BASE_API}producer/` + id)
-		// .get(this.producerUrl + id + '/producer.json')
 		// .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
 		.catch(this._handleError);
   };
@@ -181,7 +177,6 @@ export class ApiService {
   getUsers(): Observable<UserModel[]> {
     return this.http
       .get(`${ENV.BASE_API}users/`)
-      // .get(this.allUsersUrl)
       .catch(this._handleError);
   };
 
@@ -189,7 +184,6 @@ export class ApiService {
   getUserById(id) {
     return this.http
       .get(`${ENV.BASE_API}users/` + id)
-      // .get('../../../../assets/api/user/' + id + '/user.json')
       .catch(this._handleError);
   }
 
@@ -208,7 +202,6 @@ export class ApiService {
   getOrders(): Observable<OrderModel[]> {
     return this.http
       .get(`${ENV.BASE_API}orders`)
-      // .get(this.allOrdersUrl)
       .catch(this._handleError);
   };
 
@@ -216,7 +209,6 @@ export class ApiService {
   getOrdersByProducerId(id) {
     return this.http
       .get(`${ENV.BASE_API}producer/`+ id + '/orders')
-      // .get(this.producerUrl + id + '/orders.json')
       .catch(this._handleError);
   };
 

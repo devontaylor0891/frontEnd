@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AUTH_CONFIG } from './auth.config';
 import * as auth0 from 'auth0-js';
 
+import { UserModel } from '../core/models/user.model';
 
 // Avoid name not found warnings
 declare var auth0: any;
@@ -32,8 +33,9 @@ export class AuthService {
   // properties to attempt to update profile on signup
   userType: string;
   userType$ = new BehaviorSubject<string>(this.userType);
-  profileComplete: boolean;
-  profileComplete$ = new BehaviorSubject<boolean>(this.profileComplete);
+  user$ = new BehaviorSubject<any>(this.userProfile);
+
+  authResult: any;
 
   constructor(private router: Router) {
 
@@ -52,6 +54,14 @@ export class AuthService {
       this.logout();
     }
   }
+
+  getLoggedIn() {
+    return this.loggedIn$.asObservable();
+  };
+
+  getUser() {
+    return this.user$.asObservable();
+  };
 
   setLoggedIn(value: boolean) {
     // Update login status subject
@@ -83,26 +93,59 @@ export class AuthService {
     });
   }
 
+  // private _getProfile(authResult) {
+  //   // Use access token to retrieve user's profile and set session
+  //   this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+  //     if (profile) {
+  //       // if no userType or firstName, mark profile as incomplete
+  //       if (!profile['http://myapp.com/userType'] || !profile['http://myapp.com/firstName']) {
+  //         console.log('incomplete profile');
+  //         console.log('profile: ', profile);
+  //         this.profileComplete = false;
+  //         this.profileComplete$.next(false);
+  //         console.log('sub: ', this.profileComplete$);
+  //       } else {
+  //         this.userType = profile['http://myapp.com/userType'];
+  //         console.log('http://myapp.com/userType: ', profile['http://myapp.com/userType']);
+  //         this._setSession(authResult, profile);
+  //         this.router.navigate([localStorage.getItem('authRedirect') || '/']);
+  //         this._clearRedirect();
+  //       }
+  //     } else if (err) {
+  //       console.error(`Error authenticating: ${err.error}`);
+  //     }
+  //   });
+  // }
+
   private _getProfile(authResult) {
     // Use access token to retrieve user's profile and set session
     this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if (profile) {
-        // if no userType or firstName, mark profile as incomplete
-        if (!profile['http://myapp.com/userType'] || !profile['http://myapp.com/firstName']) {
-          this.profileComplete = false;
-          this.profileComplete$.next(this.profileComplete);
-        } else {
-          this.userType = profile['http://myapp.com/userType'];
-          console.log('http://myapp.com/userType: ', profile['http://myapp.com/userType']);
-          this._setSession(authResult, profile);
-          this.router.navigate([localStorage.getItem('authRedirect') || '/']);
-          this._clearRedirect();
-        }
+        this._setSession(authResult, profile);
+        this.router.navigate([localStorage.getItem('authRedirect') || '/']);
+        this._clearRedirect();
       } else if (err) {
         console.error(`Error authenticating: ${err.error}`);
       }
     });
   }
+
+  private _isProfileComplete(id) {
+    // call the getUser from the api
+    let user;
+    // this.apiService.getUserById(id)
+    //   .subscribe(
+    //     result => {
+    //       user = result;
+    //     }
+    //   );
+    // if the user doesn't exist, return false
+    if (!user) {
+      return null;
+    } else {
+      return user;
+    }
+  };
 
   private _clearRedirect() {
     // Remove redirect from localStorage

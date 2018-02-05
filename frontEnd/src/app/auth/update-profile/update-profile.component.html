@@ -1,24 +1,35 @@
 <div class="row modal-background">
 
-    <div class="col mt-5">
+    <div class="col-6 offset-3 mt-5">
     
       <form
         #f="ngForm"  
         (ngSubmit)="onSubmit(f.value)">
    
-        <div class="field">  
-          <label for="firstName">First Name:</label>  
-          <input
-            type="text"  
-            id="firstName"  
-            name="firstName"
-            ngModel>  
+        <div class="row">  
+          <div class="col-4 text-right pr-1">
+            <label for="firstName">First Name:</label>
+          </div>
+          <div class="col-8">
+            <input
+                type="text"  
+                id="firstName"  
+                name="firstName"
+                ngModel
+                required>
+          </div>
+            
         </div>
 
-        <div class="row">
-            <div class="col">
+        <br>
 
-                <label>
+        <div class="row text-center">
+            <div class="col-6 text-right pr-1">
+                <p>Are you sign up as a Consumer or a Producer?</p>
+            </div>
+            <div class="col-6">
+           
+                <label class="pr-3">
                     Consumer: 
                     <input
                         type="radio" 
@@ -39,12 +50,13 @@
                         required
                     />
                 </label>
-
             </div>
         </div>
         
-     
-        <button type="submit" class="btn btn-olf-primary">Complete Signup</button>  
+        <div class="text-center">
+            <button type="submit" class="btn btn-olf-primary" [disabled]="!f.valid">Complete Signup</button>
+        </div>
+          
         
       </form>
     

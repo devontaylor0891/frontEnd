@@ -1,4 +1,4 @@
-<div *ngIf="profileComplete">
+<div *ngIf="(authService.loggedIn && !profileIncomplete) || !authService.loggedIn">
 
     <!--Navbar-->
     <app-header [isAdmin]="isAdmin"></app-header>
@@ -14,6 +14,6 @@
 
 </div>
 
-<div *ngIf="!profileComplete">
+<div *ngIf="profileIncomplete">
     <app-update-profile></app-update-profile>
 </div>
