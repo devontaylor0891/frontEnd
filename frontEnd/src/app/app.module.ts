@@ -26,6 +26,7 @@ import { CartService } from './core/services/cart-service/cart.service';
 import { UtilityService } from './core/services/utility/utility.service';
 import { ProducerDashboardService } from './feature/dashboard/producer-dashboard.service';
 import { PlacesService } from './core/services/places/places.service';
+import { UserService } from './core/services/user/user.service';
 
 // PIPES
 import { FormatCellPipe } from './shared/format-cell.pipe';
@@ -221,7 +222,8 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     AddScheduleModalComponent,
     ConsumerViewOrderModalComponent,
     ConsumerEditOrderModalComponent,
-    PlacesService
+    PlacesService,
+    UserService
   ],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [
