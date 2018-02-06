@@ -201,6 +201,7 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     AppRoutingModule
   ],
   providers: [
+    UserService,
     AuthService, 
     ApiService, 
     LocationService, 
@@ -222,8 +223,7 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     AddScheduleModalComponent,
     ConsumerViewOrderModalComponent,
     ConsumerEditOrderModalComponent,
-    PlacesService,
-    UserService
+    PlacesService
   ],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [

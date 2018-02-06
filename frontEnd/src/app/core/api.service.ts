@@ -181,6 +181,12 @@ export class ApiService {
   };
 
   // single user by id
+  // getUserById(id) {
+  //   return this.http
+  //     .get(`${ENV.BASE_API}users/` + id)
+  //     .catch(this._handleError);
+  // }
+
   getUserById(id) {
     return this.http
       .get(`${ENV.BASE_API}users/` + id)
