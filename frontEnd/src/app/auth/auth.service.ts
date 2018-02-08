@@ -4,6 +4,8 @@
 // import { AUTH_CONFIG } from './auth.config';
 // import * as auth0 from 'auth0-js';
 
+// import { Observable } from 'rxjs/Observable';
+
 // import { UserModel } from '../core/models/user.model';
 
 // // Avoid name not found warnings
@@ -29,11 +31,18 @@
 //   // Create a stream of logged in status to communicate throughout app
 //   loggedIn: boolean;
 //   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+//   firstLogin: boolean;
+//   firstLogin$ = new BehaviorSubject<boolean>(this.firstLogin);
 
-//   // properties to attempt to update profile on signup
-//   userType: string;
-//   userType$ = new BehaviorSubject<string>(this.userType);
-//   user$ = new BehaviorSubject<any>(this.userProfile);
+//   parsedId: number;
+//   parsedId$ = new BehaviorSubject<number>(this.parsedId);
+
+//   idAndFirstLoginStatus: Array<any> = [
+// 		this.parsedId,
+// 		this.firstLogin,
+// 		this.userProfile
+// 	  ]
+//   idAndFirstLoginStatus$ = new BehaviorSubject<any>(this.idAndFirstLoginStatus);
 
 //   authResult: any;
 
@@ -58,16 +67,25 @@
 //   getLoggedIn() {
 //     return this.loggedIn$.asObservable();
 //   };
-
-//   getUser() {
-//     return this.user$.asObservable();
-//   };
+  
+//   getParsedId() {
+// 	  return this.parsedId$.asObservable();
+//   }
+  
+//   getIsAdmin() {
+// 	  return this.isAdmin$.asObservable();
+//   }
 
 //   setLoggedIn(value: boolean) {
 //     // Update login status subject
 //     this.loggedIn$.next(value);
 //     this.loggedIn = value;
-//   }
+//     if (this.userProfile) {
+//       // parse the id and assign it
+//       this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
+//       this.parsedId$.next(this.parsedId);
+//     }
+// 	};
 
 //   login(redirect?: string) {
 //     // Set redirect after login
@@ -93,30 +111,6 @@
 //     });
 //   }
 
-//   // private _getProfile(authResult) {
-//   //   // Use access token to retrieve user's profile and set session
-//   //   this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
-//   //     if (profile) {
-//   //       // if no userType or firstName, mark profile as incomplete
-//   //       if (!profile['http://myapp.com/userType'] || !profile['http://myapp.com/firstName']) {
-//   //         console.log('incomplete profile');
-//   //         console.log('profile: ', profile);
-//   //         this.profileComplete = false;
-//   //         this.profileComplete$.next(false);
-//   //         console.log('sub: ', this.profileComplete$);
-//   //       } else {
-//   //         this.userType = profile['http://myapp.com/userType'];
-//   //         console.log('http://myapp.com/userType: ', profile['http://myapp.com/userType']);
-//   //         this._setSession(authResult, profile);
-//   //         this.router.navigate([localStorage.getItem('authRedirect') || '/']);
-//   //         this._clearRedirect();
-//   //       }
-//   //     } else if (err) {
-//   //       console.error(`Error authenticating: ${err.error}`);
-//   //     }
-//   //   });
-//   // }
-
 //   private _getProfile(authResult) {
 //     // Use access token to retrieve user's profile and set session
 //     this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
@@ -129,23 +123,6 @@
 //       }
 //     });
 //   }
-
-//   private _isProfileComplete(id) {
-//     // call the getUser from the api
-//     let user;
-//     // this.apiService.getUserById(id)
-//     //   .subscribe(
-//     //     result => {
-//     //       user = result;
-//     //     }
-//     //   );
-//     // if the user doesn't exist, return false
-//     if (!user) {
-//       return null;
-//     } else {
-//       return user;
-//     }
-//   };
 
 //   private _clearRedirect() {
 //     // Remove redirect from localStorage
@@ -203,6 +180,7 @@
 
 // }
 
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -236,9 +214,18 @@ export class AuthService {
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+  firstLogin: boolean;
+  firstLogin$ = new BehaviorSubject<boolean>(this.firstLogin);
 
   parsedId: number;
   parsedId$ = new BehaviorSubject<number>(this.parsedId);
+
+  idAndFirstLoginStatus: Array<any> = [
+		this.parsedId,
+		this.firstLogin,
+		this.userProfile
+	  ]
+  idAndFirstLoginStatus$ = new BehaviorSubject<any>(this.idAndFirstLoginStatus);
 
   authResult: any;
 
@@ -264,22 +251,53 @@ export class AuthService {
     return this.loggedIn$.asObservable();
   };
   
+  getIsFirstLogin() {
+	  return this.firstLogin$.asObservable();
+  }
+  
   getParsedId() {
 	  return this.parsedId$.asObservable();
+  }
+  
+  getIdAndFirstLoginStatus() {
+	  return this.idAndFirstLoginStatus$.asObservable();
   }
   
   getIsAdmin() {
 	  return this.isAdmin$.asObservable();
   }
 
+  // setLoggedIn(value: boolean) {
+  //   // Update login status subject
+  //   this.loggedIn$.next(value);
+  //   this.loggedIn = value;
+  //   if (this.userProfile) {
+  //     // parse the id and assign it
+  //     this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
+  //     this.parsedId$.next(this.parsedId);
+  //   }
+	// };
+
   setLoggedIn(value: boolean) {
     // Update login status subject
     this.loggedIn$.next(value);
     this.loggedIn = value;
     if (this.userProfile) {
-      // parse the id and assign it
-      this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
-      this.parsedId$.next(this.parsedId);
+		this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
+		this.parsedId$.next(this.parsedId);
+		// if login count is less than 1, set firstLogin to true
+		if (this.userProfile.logins_count = 1) {
+			this.firstLogin = true;
+			// this.firstLogin$.next(true);
+			this.idAndFirstLoginStatus$.next(
+				[ this.parsedId, this.firstLogin, this.userProfile ]
+			);
+		} else {
+			this.firstLogin = false;
+			this.idAndFirstLoginStatus$.next(
+				[ this.parsedId, this.firstLogin, this.userProfile ]
+			);
+		}
     }
 	};
 

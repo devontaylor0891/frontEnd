@@ -191,7 +191,16 @@ export class ApiService {
     return this.http
       .get(`${ENV.BASE_API}users/` + id)
       .catch(this._handleError);
-  }
+  };
+
+  // create a new user
+  createUser(user: UserModel): Observable<UserModel> {
+    return this.http
+    .post(`${ENV.BASE_API}users/`, user, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
 
   // **************** ORDERS *******************
 

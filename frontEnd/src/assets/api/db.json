@@ -2424,6 +2424,11 @@
       "registrationDate": "2017-12-20T14:17:36.255Z",
       "role": "consumer",
       "orders": []
+    },
+    {
+      "id": "|5a7baec8ebf64a46ecddadd1",
+      "firstName": "",
+      "role": ""
     }
   ],
   "products": [
