@@ -8,6 +8,8 @@ import { AdminGuard } from './auth/auth-guards/admin.guard';
 import { LandingContentComponent } from './landing-content/landing-content.component';
 import { SearchComponent } from './feature/search/search.component';
 import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
+import { LearnMoreConsumerComponent } from './feature/learn-more/learn-more-consumer/learn-more-consumer.component';
+import { LearnMoreProducerComponent } from './feature/learn-more/learn-more-producer/learn-more-producer.component';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { ProducerComponent } from './feature/producer/producer.component';
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
@@ -27,7 +29,8 @@ import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/a
 const appRoutes: Routes = [
 	
 	{ path: 'search', component: SearchComponent },
-	{ path: 'learn-more', component: LearnMoreComponent },
+	{ path: 'learn-more-consumer', component: LearnMoreConsumerComponent },
+	{ path: 'learn-more-producer', component: LearnMoreProducerComponent },
 	{ path: 'dashboard',
 	canActivate: [
 		AuthGuard

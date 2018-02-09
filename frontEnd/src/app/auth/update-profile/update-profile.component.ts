@@ -14,11 +14,18 @@ export class UpdateProfileComponent implements OnInit {
   constructor(private auth: AuthService,
               private apiService: ApiService) { }
 
+  ngOnInit() { 
 
-  ngOnInit() { }
+    this.auth.getParsedId()
+      .subscribe(
+        result => {
+          this.id = result;
+        }
+      );
+
+  }
   
   onSubmit(form: any): void {
-    this.id = this.auth.userProfile.sub.slice(this.auth.userProfile.sub.indexOf('|') + 1);
     console.log('form value: ', form);
     console.log(this.id);
     // this.apiService.updateUserMetadata(this.id, this.auth.authResult.accessToken, { "user_metadata": { form }})

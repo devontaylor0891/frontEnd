@@ -64,6 +64,8 @@ import { CheckoutProductComponent } from './feature/cart/checkout/checkout-produ
 import { ConfirmationComponent } from './feature/cart/confirmation/confirmation.component';
 // feature/learnmore
 import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
+import { LearnMoreConsumerComponent } from './feature/learn-more/learn-more-consumer/learn-more-consumer.component';
+import { LearnMoreProducerComponent } from './feature/learn-more/learn-more-producer/learn-more-producer.component';
 // auth
 import { SigninComponent } from './auth/signin/signin.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -179,7 +181,9 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     AddProductModalComponent,
     AddScheduleModalComponent,
     ConsumerViewOrderModalComponent,
-    ConsumerEditOrderModalComponent
+    ConsumerEditOrderModalComponent,
+    LearnMoreConsumerComponent,
+    LearnMoreProducerComponent
   ],
   imports: [
     BrowserModule,

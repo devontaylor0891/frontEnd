@@ -23,9 +23,18 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/search">Search</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" routerLink="learn-more">Learn More</a>
-                    </li>
+                    </li> -->
+                    <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
+							Learn More...
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" routerLink="learn-more-consumer">For Buyers</a>
+							<a class="dropdown-item" routerLink="learn-more-producer">For Producers</a>
+						</div>
+					</li>
                     <li class="nav-item" *ngIf="loggedIn">
                         <a class="nav-link" routerLink="dashboard">My Account</a>
                     </li>

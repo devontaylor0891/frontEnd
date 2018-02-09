@@ -4,6 +4,7 @@ export class UserModel {
                 public firstName: string,
                 public email: string,
                 public registrationDate: string,
-                public role: string
+                public role: string,
+                public orders?: any[]
     ) {}
 }

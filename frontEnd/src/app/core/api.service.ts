@@ -194,9 +194,9 @@ export class ApiService {
   };
 
   // create a new user
-  createUser(user: UserModel): Observable<UserModel> {
+  createUser(id: any, user: UserModel): Observable<UserModel> {
     return this.http
-    .post(`${ENV.BASE_API}users/`, user, {
+    .put(`${ENV.BASE_API}users/${id}`, user, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);

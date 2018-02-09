@@ -309,3 +309,11 @@ input[type=number]::-webkit-outer-spin-button {
 	top: 50%;
     transform: translateY(-50%);
 }
+
+.dropdown.show .dropdown-menu {
+    opacity: 100 !important;
+}
+
+.navbar .dropdown-menu a:hover {
+    color: #741b47 !important;
+}

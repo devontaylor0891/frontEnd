@@ -19,19 +19,59 @@
 //   firstName: string;
 //   profileIncomplete: boolean;
 //   profileIncomplete$ = new BehaviorSubject<boolean>(this.profileIncomplete);
+//   isFirstLogin: boolean;
+//   userProfile: any;
 
 //   constructor(private apiService: ApiService,
 //               private authService: AuthService) {
-
-//     this.authService.getParsedId()
+				  
+//     // get isFirstLogin, get getParseId, then either get user from db or add and then get
+//     this.authService.getIdAndFirstLoginStatus()
 //       .subscribe(
 //         result => {
-//           console.log('getParsedId result: ', result); // not being called
-//           this.getUserFromDb(result);
+//           console.log('getIdAndFirstLoginStatus: ', result);
+//           this.userId = result[0];
+//           this.isFirstLogin = result[1];
+//           this.userProfile = result[2];
+//           if (!this.isFirstLogin) {
+//             console.log('not first login');
+//             this.getUserFromDb(this.userId);
+//           } else {
+//             console.log('userProfile: ', this.userProfile);
+//             let newUser = this.buildNewUser(this.userProfile);
+//             console.log('new user: ', newUser);
+//             this.apiService.createUser(newUser)
+//               .subscribe(
+//                 result => {
+//                   this.getUserFromDb(this.userId);
+//                 }
+//               );
+//           };
 //         }
 //       );
 
+//       // this.authService.getParsedId()
+//       //   .subscribe(
+//       //     result => {
+//       //       console.log('getParsedId result: ', result);
+//     // 	  if (result) {
+//     // 		  this.getUserFromDb(result);
+//     // 	  }
+//       //     }
+//       //   );
+
 //   }
+  
+//   buildNewUser(profile) {
+// 	  let newUser = {
+// 		  'id': profile.sub.slice(this.userProfile.sub.indexOf('|', 1)),
+// 		  'firstName': profile.given_name || '',
+// 		  'email': profile.email,
+// 		  'registrationDate': profile.created_at,
+// 		  'role': ''
+// 	  }
+// 	  return newUser;
+//   };
 
 //   ngOnChanges() {}
 
@@ -51,12 +91,6 @@
 //     this.apiService.getUserById(id)
 //       .subscribe(
 //         result => {
-//           // if no user returned, call api to add
-//           if (result === 'no user') {
-//             console.log('no user');
-//             // add the user
-//             // then call this function again
-//           } else {
 //             this.user = result;
 //             console.log('user from db: ', this.user);
 //             if (this.user.role && this.user.firstName) {
@@ -70,59 +104,9 @@
 //               this.profileIncomplete$.next(true);
 //             }
 //             console.log('user from app comp: ', this.user);
-//           }
 //         }
 //       );
 //   };
-// }
-
-// import { Injectable } from '@angular/core';
-// import { Http, Response } from '@angular/http';
-
-// import { ApiService } from '../../api.service';
-
-// import { UserModel } from '../../../core/models/user.model';
-
-// import 'rxjs/add/operator/map';
-
-// @Injectable()
-// export class UserService {
-
-//   userType: string;
-//   user: UserModel;
-//   profileIncomplete: boolean;
-
-//   url = '../../../../assets/api/users.json';
-
-//   constructor(private http:Http,
-//               private apiService: ApiService) { }
-
-//   getUsers() {
-//     return this.http.get(this.url)
-//       .map(
-//         (response: Response) => {
-//           const data = response.json();
-//           return data;
-//         }  
-//       )
-//   }
-
-//   getUserFromDb(profile) {
-//     console.log('profile from subscription: ', profile);
-//     this.apiService.getUserById(profile.sub.slice(profile.sub.indexOf('|') + 1))
-//       .subscribe(
-//         result => {
-//           this.user = result;
-//           if (this.user.role && this.user.firstName) {
-//             this.userType = this.user.role;
-//             this.profileIncomplete = false;
-//           } else {
-//             this.profileIncomplete = true;
-//           }
-//           console.log('user from app comp: ', this.user);
-//         }
-//       );
-//   }
 
 
 
@@ -164,42 +148,35 @@ export class UserService implements OnInit, OnChanges  {
           this.userId = result[0];
           this.isFirstLogin = result[1];
           this.userProfile = result[2];
-          if (!this.isFirstLogin) {
+          if (this.isFirstLogin === false) {
             console.log('not first login');
             this.getUserFromDb(this.userId);
-          } else {
+          } else if (this.isFirstLogin) {
             console.log('userProfile: ', this.userProfile);
             let newUser = this.buildNewUser(this.userProfile);
             console.log('new user: ', newUser);
-            this.apiService.createUser(newUser)
+            this.apiService.createUser(this.userId, newUser)
               .subscribe(
                 result => {
+                  this.isFirstLogin = false;
                   this.getUserFromDb(this.userId);
+                  console.log('user from db: ', result);
                 }
               );
           };
         }
       );
 
-      // this.authService.getParsedId()
-      //   .subscribe(
-      //     result => {
-      //       console.log('getParsedId result: ', result);
-    // 	  if (result) {
-    // 		  this.getUserFromDb(result);
-    // 	  }
-      //     }
-      //   );
-
   }
   
   buildNewUser(profile) {
 	  let newUser = {
-		  'id': profile.sub.slice(this.userProfile.sub.indexOf('|', 1)),
+		  'id': this.userId,
 		  'firstName': profile.given_name || '',
-		  'email': profile.email,
-		  'registrationDate': profile.created_at,
-		  'role': ''
+		  'email': profile.email || profile.name,
+		  'registrationDate': profile.created_at || profile.updated_at,
+      'role': '',
+      'orders': []
 	  }
 	  return newUser;
   };
