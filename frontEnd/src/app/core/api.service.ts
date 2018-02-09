@@ -194,9 +194,18 @@ export class ApiService {
   };
 
   // create a new user
-  createUser(id: any, user: UserModel): Observable<UserModel> {
+  createUser(user: UserModel): Observable<UserModel> {
     return this.http
-    .put(`${ENV.BASE_API}users/${id}`, user, {
+    .post(`${ENV.BASE_API}users/`, user, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  // PATCH user
+  patchUser(id: number, newFieldAndValue: Object): Observable<any> {
+    return this.http
+      .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -227,7 +236,7 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  // get all orders for a single producer
+  // get all orders for a single consumer
   getOrdersByConsumerId(id) {
     return this.http
       .get(`${ENV.BASE_API}consumer/`+ id + '/orders')

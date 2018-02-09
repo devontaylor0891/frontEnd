@@ -1,186 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-// import { AUTH_CONFIG } from './auth.config';
-// import * as auth0 from 'auth0-js';
-
-// import { Observable } from 'rxjs/Observable';
-
-// import { UserModel } from '../core/models/user.model';
-
-// // Avoid name not found warnings
-// declare var auth0: any;
-
-// @Injectable()
-// export class AuthService {
-
-
-//   // Create Auth0 web auth instance
-//   private _auth0 = new auth0.WebAuth({
-//     clientID: AUTH_CONFIG.CLIENT_ID,
-//     domain: AUTH_CONFIG.CLIENT_DOMAIN,
-//     responseType: 'token id_token',
-//     redirectUri: AUTH_CONFIG.REDIRECT,
-//     audience: AUTH_CONFIG.AUDIENCE,
-//     scope: AUTH_CONFIG.SCOPE
-//   });
-//   userProfile: any;
-//   // for admin routes
-//   isAdmin: boolean;
-//   isAdmin$ = new BehaviorSubject<boolean>(this.isAdmin);
-//   // Create a stream of logged in status to communicate throughout app
-//   loggedIn: boolean;
-//   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
-//   firstLogin: boolean;
-//   firstLogin$ = new BehaviorSubject<boolean>(this.firstLogin);
-
-//   parsedId: number;
-//   parsedId$ = new BehaviorSubject<number>(this.parsedId);
-
-//   idAndFirstLoginStatus: Array<any> = [
-// 		this.parsedId,
-// 		this.firstLogin,
-// 		this.userProfile
-// 	  ]
-//   idAndFirstLoginStatus$ = new BehaviorSubject<any>(this.idAndFirstLoginStatus);
-
-//   authResult: any;
-
-//   constructor(private router: Router) {
-
-//     // If authenticated, set local profile property
-//     // and update login status subject.
-//     // If not authenticated but there are still items
-//     // in localStorage, log out.
-//     const lsProfile = localStorage.getItem('profile');
-
-//     if (this.tokenValid) {
-//       this.userProfile = JSON.parse(lsProfile);
-//       this.isAdmin = localStorage.getItem('isAdmin') === 'true';
-//       this.isAdmin$.next(this.isAdmin);
-//       this.setLoggedIn(true);
-//     } else if (!this.tokenValid && lsProfile) {
-//       this.logout();
-//     }
-//   }
-
-//   getLoggedIn() {
-//     return this.loggedIn$.asObservable();
-//   };
-  
-//   getParsedId() {
-// 	  return this.parsedId$.asObservable();
-//   }
-  
-//   getIsAdmin() {
-// 	  return this.isAdmin$.asObservable();
-//   }
-
-//   setLoggedIn(value: boolean) {
-//     // Update login status subject
-//     this.loggedIn$.next(value);
-//     this.loggedIn = value;
-//     if (this.userProfile) {
-//       // parse the id and assign it
-//       this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
-//       this.parsedId$.next(this.parsedId);
-//     }
-// 	};
-
-//   login(redirect?: string) {
-//     // Set redirect after login
-//     const _redirect = redirect ? redirect : this.router.url;
-//     localStorage.setItem('authRedirect', _redirect);
-//     // Auth0 authorize request
-//     this._auth0.authorize();
-//   }
-
-//   handleAuth() {
-//     // When Auth0 hash parsed, get profile
-//     this._auth0.parseHash((err, authResult) => {
-//       if (authResult && authResult.accessToken && authResult.idToken) {
-//         window.location.hash = '';
-//         this._getProfile(authResult);
-//       } else if (err) {
-//         this._clearRedirect();
-//         this.router.navigate(['/']);
-//         console.error(`Error authenticating: ${err.error}`);
-//       }
-//       //may have to remove the following line to make logins not redirect to home page
-//       this.router.navigate(['/']);
-//     });
-//   }
-
-//   private _getProfile(authResult) {
-//     // Use access token to retrieve user's profile and set session
-//     this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
-//       if (profile) {
-//         this._setSession(authResult, profile);
-//         this.router.navigate([localStorage.getItem('authRedirect') || '/']);
-//         this._clearRedirect();
-//       } else if (err) {
-//         console.error(`Error authenticating: ${err.error}`);
-//       }
-//     });
-//   }
-
-//   private _clearRedirect() {
-//     // Remove redirect from localStorage
-//     localStorage.removeItem('authRedirect');
-//   }
-
-//   private _setSession(authResult, profile) {
-//     // Save session data and update login status subject
-//     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + Date.now());
-//     // Set tokens and expiration in localStorage and props
-//     this.isAdmin = this._checkAdmin(profile);
-//     localStorage.setItem('isAdmin', this.isAdmin.toString());
-//     localStorage.setItem('access_token', authResult.accessToken);
-//     localStorage.setItem('id_token', authResult.idToken);
-//     localStorage.setItem('expires_at', expiresAt);
-//     localStorage.setItem('profile', JSON.stringify(profile));
-//     this.userProfile = profile;
-//     // Update login status in loggedIn$ stream
-//     this.setLoggedIn(true);
-//   }
-
-//   private _checkAdmin(profile) {
-//     // Check if the user has admin role
-//     const roles = profile[AUTH_CONFIG.NAMESPACE] || [];
-//     return roles.indexOf('admin') > -1;
-//   }
-
-//   returnUserType() {
-//     let type = this.userProfile.userType;
-//     return type;
-//   }
-
-//   logout() {
-//     // Ensure all auth items removed from localStorage
-//     localStorage.removeItem('access_token');
-//     localStorage.removeItem('id_token');
-//     localStorage.removeItem('profile');
-//     localStorage.removeItem('expires_at');
-//     localStorage.removeItem('authRedirect');
-//     localStorage.removeItem('isAdmin');
-//     this._clearRedirect();
-//     // Reset local properties, update loggedIn$ stream
-//     this.userProfile = undefined;
-//     this.isAdmin = undefined;
-//     this.setLoggedIn(false);
-//     // Return to homepage
-//     this.router.navigate(['/']);
-//   }
-
-//   get tokenValid(): boolean {
-//     // Check if current time is past access token's expiration
-//     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-//     return Date.now() < expiresAt;
-//   }
-
-// }
-
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -214,18 +31,15 @@ export class AuthService {
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
-  firstLogin: boolean;
-  firstLogin$ = new BehaviorSubject<boolean>(this.firstLogin);
 
   parsedId: number;
   parsedId$ = new BehaviorSubject<number>(this.parsedId);
 
-  idAndFirstLoginStatus: Array<any> = [
+  idAndProfile: Array<any> = [
 		this.parsedId,
-		this.firstLogin,
 		this.userProfile
 	  ]
-  idAndFirstLoginStatus$ = new BehaviorSubject<any>(this.idAndFirstLoginStatus);
+  idAndProfile$ = new BehaviorSubject<any>(this.idAndProfile);
 
   authResult: any;
 
@@ -245,22 +59,19 @@ export class AuthService {
     } else if (!this.tokenValid && lsProfile) {
       this.logout();
     }
+
   }
 
   getLoggedIn() {
     return this.loggedIn$.asObservable();
   };
   
-  getIsFirstLogin() {
-	  return this.firstLogin$.asObservable();
-  }
-  
   getParsedId() {
 	  return this.parsedId$.asObservable();
   }
   
-  getIdAndFirstLoginStatus() {
-	  return this.idAndFirstLoginStatus$.asObservable();
+  getIdAndProfile() {
+	  return this.idAndProfile$.asObservable();
   }
   
   getIsAdmin() {
@@ -283,21 +94,11 @@ export class AuthService {
     this.loggedIn$.next(value);
     this.loggedIn = value;
     if (this.userProfile) {
-		this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
+    this.parsedId = this.userProfile.sub.slice(this.userProfile.sub.indexOf('|') + 1);
 		this.parsedId$.next(this.parsedId);
-		// if login count is less than 1, set firstLogin to true
-		if (this.userProfile.logins_count = 1) {
-			this.firstLogin = true;
-			// this.firstLogin$.next(true);
-			this.idAndFirstLoginStatus$.next(
-				[ this.parsedId, this.firstLogin, this.userProfile ]
+		this.idAndProfile$.next(
+				[ this.parsedId, this.userProfile ]
 			);
-		} else {
-			this.firstLogin = false;
-			this.idAndFirstLoginStatus$.next(
-				[ this.parsedId, this.firstLogin, this.userProfile ]
-			);
-		}
     }
 	};
 
@@ -364,10 +165,10 @@ export class AuthService {
     return roles.indexOf('admin') > -1;
   }
 
-  returnUserType() {
-    let type = this.userProfile.userType;
-    return type;
-  }
+  // returnUserType() {
+  //   let type = this.userProfile.userType;
+  //   return type;
+  // }
 
   logout() {
     // Ensure all auth items removed from localStorage

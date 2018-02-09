@@ -15,11 +15,26 @@
                 type="text"  
                 id="firstName"  
                 name="firstName"
-                ngModel
+                [(ngModel)]="firstName"
                 required>
           </div>
             
         </div>
+
+        <div class="row">  
+            <div class="col-4 text-right pr-1">
+              <label for="email">Email:</label>
+            </div>
+            <div class="col-8">
+              <input
+                  type="text"  
+                  id="email"  
+                  name="email"
+                  [(ngModel)]="email"
+                  required>
+            </div>
+              
+          </div>
 
         <br>
 
@@ -33,7 +48,7 @@
                     Consumer: 
                     <input
                         type="radio" 
-                        name="userType" 
+                        name="role" 
                         value="consumer" 
                         ngModel 
                         required
@@ -44,7 +59,7 @@
                     Producer: 
                     <input 
                         type="radio" 
-                        name="userType" 
+                        name="role" 
                         value="producer" 
                         ngModel 
                         required

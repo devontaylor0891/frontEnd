@@ -2265,21 +2265,24 @@
       "firstName": "Devon",
       "email": "email@email.com",
       "registrationDate": "2015-12-20T14:17:36.255Z",
-      "role": "producer"
+      "role": "producer",
+      "orders": []
     },
     {
       "id": "3",
       "firstName": "Bob",
       "email": "email@email.com",
       "registrationDate": "2017-12-20T14:17:36.255Z",
-      "role": "consumer"
+      "role": "consumer",
+      "orders": []
     },
     {
       "id": "4",
       "firstName": "Fred",
       "email": "email@email.com",
       "registrationDate": "2017-12-19T14:17:36.255Z",
-      "role": "producer"
+      "role": "producer",
+      "orders": []
     },
     {
       "id": "10156726911823276",
@@ -2291,131 +2294,11 @@
     },
     {
       "id": "109851661706181130520",
-      "firstName": "DevonTheConsumer",
+      "firstName": "Devon",
       "email": "devontaylor0891@gmail.com",
-      "registrationDate": "2017-12-20T14:17:36.255Z",
+      "registrationDate": "2018-02-09T16:14:28.101Z",
       "role": "consumer",
-      "orders": [
-        {
-          "id": 1,
-          "tempId": 1,
-          "chosenSchedule": {
-            "id": 444,
-            "producerId": 13,
-            "productList": [
-              43,
-              95
-            ],
-            "type": "Door-to-door Delivery",
-            "description": "We're gonna charge you this time.",
-            "startDateTime": "2017-12-02T01:00:00.000Z",
-            "endDateTime": "2017-12-02T02:00:00.000Z",
-            "hasFee": true,
-            "fee": 5,
-            "feeWaiver": 35,
-            "latitude": 50.2615563,
-            "longitude": -101.9720143,
-            "city": "Wapella",
-            "address": "123 Main St",
-            "province": "SK",
-            "orderDeadline": "2017-12-02T00:00:00.000Z"
-          },
-          "producerId": 13,
-          "producer": {
-            "id": 13,
-            "name": "Gardenia Farms",
-            "location": "Virden",
-            "province": "MB",
-            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            "email": "email@email.com",
-            "logoUrl": "farm-logo-1.jpg",
-            "longitude": 444,
-            "latitude": 555,
-            "firstName": "Devon",
-            "registrationDate": "Jan 1 2017",
-            "status": "active",
-            "productList": [
-              43,
-              95
-            ],
-            "scheduleList": [
-              444,
-              445,
-              789
-            ]
-          },
-          "consumer": {
-            "id": 1,
-            "firstName": "Devon",
-            "email": "email@email.com",
-            "registrationDate": "Jan 1 2017",
-            "role": "consumer"
-          },
-          "productList": [
-            {
-              "id": 43,
-              "name": "Carrots",
-              "description": "Orange, cylindrical, delicious.",
-              "image": "carrots.jpg",
-              "pricePerUnit": 4,
-              "unit": "lb",
-              "unitsPer": 1,
-              "category": "Produce",
-              "subcategory": "Carrots",
-              "producer": {
-                "id": 13,
-                "name": "Gardenia Farms",
-                "location": "Virden",
-                "province": "MB",
-                "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-                "email": "email@email.com",
-                "logoUrl": "farm-logo-1.jpg",
-                "longitude": 444,
-                "latitude": 555,
-                "firstName": "Devon",
-                "registrationDate": "Jan 1 2017",
-                "status": "active",
-                "productList": [
-                  43,
-                  95
-                ],
-                "scheduleList": [
-                  444,
-                  445,
-                  789
-                ]
-              },
-              "dateAdded": "Jan 1 2017",
-              "qtyAvailable": 55,
-              "qtyPending": 12,
-              "qtyAccepted": 22,
-              "qtyCompleted": 345,
-              "isObsolete": false,
-              "scheduleList": [
-                444,
-                445,
-                789
-              ]
-            }
-          ],
-          "orderDetails": {
-            "productQuantities": [
-              {
-                "productId": 43,
-                "orderQuantity": 3,
-                "orderValue": 12
-              }
-            ],
-            "consumerComment": "blah blah",
-            "deliveryAddress": "",
-            "deliveryFee": null,
-            "createdDate": "2017-12-12T18:55:47.490Z",
-            "producerComment": "",
-            "orderStatus": "accepted",
-            "orderValue": 12.45
-          }
-        }
-      ]
+      "orders": []
     },
     {
       "id": "5a6d065f2442774d62e442fd",
@@ -2426,16 +2309,27 @@
       "orders": []
     },
     {
-      "id": "|5a7baec8ebf64a46ecddadd1",
-      "firstName": "",
-      "role": ""
-    },
-    {
       "id": "5a7d03bc7b941d6ad5ca8be2",
       "firstName": "",
       "email": "ooiuy@onlylocalfood.com",
       "registrationDate": "2018-02-09T02:13:17.366Z",
       "role": "",
+      "orders": []
+    },
+    {
+      "id": "5a7df4216937c173755359bf",
+      "firstName": "Frankie",
+      "email": "1fraqaaqqank@onlylocalfood.com",
+      "registrationDate": "2018-02-09T19:18:57.522Z",
+      "role": "consumer",
+      "orders": []
+    },
+    {
+      "id": "5a7df5fa7b941d6ad5cab601",
+      "firstName": "Yves",
+      "email": "1fryvyank@onlylocalfood.com",
+      "registrationDate": "2018-02-09T19:26:50.858Z",
+      "role": "consumer",
       "orders": []
     }
   ],
@@ -3481,25 +3375,11 @@
       "orders": []
     },
     {
-      "id": "2",
-      "firstName": "Devon",
-      "email": "email@email.com",
-      "registrationDate": "2015-12-20T14:17:36.255Z",
-      "role": "producer"
-    },
-    {
       "id": "3",
       "firstName": "Bob",
       "email": "email@email.com",
       "registrationDate": "2017-12-20T14:17:36.255Z",
       "role": "consumer"
-    },
-    {
-      "id": "4",
-      "firstName": "Fred",
-      "email": "email@email.com",
-      "registrationDate": "2017-12-19T14:17:36.255Z",
-      "role": "producer"
     },
     {
       "id": "10156726911823276",
