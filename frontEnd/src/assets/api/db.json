@@ -3365,7 +3365,7 @@
       }
     }
   ],
-  "consumer": [
+  "consumer": [ // this is a temporary array so that the api can return all orders by a consumer id (in the real version, we'll just get a list of order id's)
     {
       "id": "1",
       "firstName": "Garfield",
