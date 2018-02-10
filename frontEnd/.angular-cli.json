@@ -19,15 +19,18 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss",
-        "../node_modules/angular-bootstrap-md/scss/mdb.scss",
-        "../node_modules/tablesaw/dist/tablesaw.css"
+        "../node_modules/font-awesome/scss/font-awesome.scss",
+        "../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
+        "../node_modules/angular-bootstrap-md/scss/mdb-free.scss",
+        "../node_modules/angular-calendar/dist/css/angular-calendar.css",
+        "../node_modules/ng-pick-datetime/assets/style/picker.min.css",
+        "styles.scss"
       ],
       "scripts": [
-        "../node_modules/tablesaw/dist/tablesaw.js",
-        "../node_modules/tablesaw/dist/tablesaw-init.js",
-        "../node_modules/auth0-js/build/auth0.js"
-        ],
+        "../node_modules/auth0-js/build/auth0.js",
+        "../node_modules/chart.js/dist/Chart.js",
+        "../node_modules/hammerjs/hammer.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

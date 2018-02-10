@@ -6,7 +6,7 @@
 
 
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+//@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 $mdb-color: (
   "lighten-5":  #D0D6E2,
@@ -153,12 +153,16 @@ $olf-grey: (
     )
 );
 
+.olf-primary {
+    color: #741b47 !important;
+}
 .olf-primary-color {
     background-color: #9e5f7e !important;
 }
 
 .btn-olf-primary {
     background-color: #893d63 !important;
+    color: #ffffff !important;
 }
 
 .btn-olf-primary:hover {
@@ -213,4 +217,103 @@ input.ng-invalid.ng-touched {
 .help-block {
     color: #cc0000;
     font-size: 80%;
+}
+
+.cal-month-view .cal-open-day-events {
+    background-color: white !important;
+}
+
+.cal-day-badge {
+    background-color: #3c910f !important;
+}
+
+.cart-button {
+    color: #741b47 !important;
+}
+
+.cart-button:hover {
+    color: #611437 !important;
+    font-weight: 700;
+}
+
+.cart-badge {
+    position: relative;
+    left: -30%;
+    top: -1rem;
+}
+
+// remove spinner arrows on number inputs
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.cover-div {
+    width: 100%;
+}
+
+.cover-div:after {
+    content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.cover {
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.text-light {
+    color: whitesmoke !important;
+}
+
+.custom-control-input:checked~.custom-control-indicator {
+    background-color: #741b47 !important;
+}
+
+.bg-dark {
+    background-color: #343a40!important;
+}
+
+.dash-nav > .nav-item a {
+    padding: .5rem 0 !important;
+}
+
+.dash-modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.pac-container {
+    z-index: 9999999999 !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.owl-dateTime-dialog {
+    z-index: 9999999999 !important;
+    background-color: lightgray;
+}
+
+.vertical-center-parent {
+	position: relative;
+}
+
+.vertical-center-child {
+	position: absolute;
+	top: 50%;
+    transform: translateY(-50%);
+}
+
+.dropdown.show .dropdown-menu {
+    opacity: 100 !important;
+}
+
+.navbar .dropdown-menu a:hover {
+    color: #741b47 !important;
 }

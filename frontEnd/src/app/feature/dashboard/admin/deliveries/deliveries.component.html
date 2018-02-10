@@ -10,52 +10,19 @@
                             data-parent="#deliveriesAccordion" 
                             href="#upcomingDeliveriesCollapse" 
                             aria-expanded="true" 
-                            aria-controls="upcomingDeliveriesCollapse">Upcoming Deliveries  
+                            aria-controls="upcomingDeliveriesCollapse">Upcoming Schedule  
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
                         </a>
                     </h5>
                 </div>
                 <div id="upcomingDeliveriesCollapse" class="collapse show" role="tabpanel" aria-labelledby="upcomingDeliveriesHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Date</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Times</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Location</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn"># of Orders</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let delivery of upcomingDeliveries">
-                                    <td>{{ delivery.date }}</td>
-                                    <td>{{ delivery.startTime }} - {{ delivery.endTime }}</td>
-                                    <td>{{ delivery.location }}</td>
-                                    <td>{{ delivery.producerName }}</td>
-                                    <td>{{ delivery.orders.length }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="upcomingSchedule"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
@@ -69,16 +36,19 @@
                             data-parent="#deliveriesAccordion" 
                             href="#completedDeliveriesCollapse" 
                             aria-expanded="false" 
-                            aria-controls="completedDeliveriesCollapse">Completed Deliveries 
+                            aria-controls="completedDeliveriesCollapse">Completed Schedule 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
                 <div id="completedDeliveriesCollapse" class="collapse" role="tabpanel" aria-labelledby="completedDeliveriesHeading">
                     <div class="card-block">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                        on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <app-table-layout
+                            [records]="completedSchedule"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>

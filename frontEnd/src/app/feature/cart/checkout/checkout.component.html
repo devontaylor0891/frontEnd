@@ -1,0 +1,181 @@
+<div class="row">
+  <div class="col col-md-6 offset-md-3 mb-2">
+    <div>
+      <a (click)="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+    </div>
+    <div class="row olf-primary-color">
+      <div class="col">
+        <div class="w-100 text-center">
+          <h3 class="h3-responsive text-light pt-2">Checkout</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+    <div class="row grey lighten-2">
+      <h5 class="h5-responsive mx-auto pt-2 card-title">1. Choose How and When to Get Your Order:</h5>
+    </div>
+    <div class="row my-3">
+      <div class="col-12 col-md-8 offset-md-2 card-body">
+        <h6 class="card-subtitle mb-2 text-muted">First, select your community:</h6>
+        <select class="custom-select w-100" (change)="onSelect($event)">
+          <option selected disabled>Select:</option>
+          <option 
+            class="dropdown-item" 
+            value="{{ community.city }}" 
+            *ngFor="let community of communityList" 
+            >{{ community.city }}</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <hr>
+      </div>
+      <div class="col-12 col-md-8 offset-md-2 card-body" *ngIf="showSchedules">
+        <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
+        <div *ngFor="let schedule of selectedSchedulesList, let i = index">
+          <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
+            <input 
+              id="{{schedule.id}}" 
+              [value]='schedule.id' 
+              type="radio" 
+              name="{{schedule.id}}" 
+              [(ngModel)]="radioSelected" 
+              class="custom-control-input" 
+              (click)="onSelectSchedule(i)">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description w-100">
+              <div class="row">
+                <div class="col-12">
+                  <p class="card-text"><strong>{{ schedule.type }}</strong></p>
+                  <p class="card-text">{{ schedule.startDateTime | date:'fullDate' }}, {{ schedule.startDateTime | date:'shortTime' }} - {{ schedule.endDateTime | date:'shortTime' }}</p>
+                  <div class="row">
+                    <div class="col-3">
+                      <p class="card-text"><strong>Description:</strong></p>
+                    </div>
+                    <div class="col-9">
+                      <p class="card-text">{{ schedule.description }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <p class="card-text"><strong>Order Deadline:</strong></p>
+                    </div>
+                    <div class="col-9">
+                      <p class="card-text">{{ schedule.orderDeadline | date: 'medium' }}</p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div> 
+            </span>
+          </label>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+    <div class="row grey lighten-2">
+      <h5 class="h5-responsive mx-auto pt-2 card-title">2. Review Your Products:</h5>
+    </div>
+    <div class="card-body pt-3">
+      <app-checkout-product 
+        *ngFor="let product of order.productList" 
+        [product]="product" 
+        [productQuantities]="order.orderDetails.productQuantities"
+        ></app-checkout-product>
+    </div>
+  </div>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+      <div class="row grey lighten-2">
+        <h5 class="h5-responsive mx-auto pt-2 card-title">3. Add Final Details:</h5>
+      </div>
+      <div class="card-body pt-3">
+        <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
+          <div class="col-12">
+            <blockquote class="blockquote bq-warning p-0">
+              <p class="card-text">You have chosen a door-to-door delivery, which will require a delivery address and may involve a delivery fee.</p>
+            </blockquote>
+          </div>
+          <div class="col-12 col-md-4">
+            <label for="deliveryAddress" class="text-muted">
+              Enter the Delivery Address:
+            </label>
+          </div>
+          <div class="col-12 col-md-8">
+            <input
+              type="text" 
+              name="deliveryAddress" 
+              id="deliveryAddress"
+              required
+              #delAddress="ngModel"
+              [(ngModel)]="deliveryAddress">
+              <p class="help-block" *ngIf="delAddress.touched && delAddress.invalid">
+                Please enter your delivery address so the Producer can find you!
+              </p>
+          </div>
+          <div class="mt-2 col-12">
+            <div class="row">
+              <div class="col-12 col-md-4" *ngIf="order.chosenSchedule.hasFee">
+                <label class="text-muted">
+                  Delivery Fee:
+                </label>
+              </div>
+              <div class="col-12 col-md-8"  *ngIf="order.chosenSchedule.hasFee">
+                <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':true:'1.2-2' }} has been added to your order.</p>
+                <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue >= order.chosenSchedule.feeWaiver)" class="card-text">Your order qualifies for free delivery!</p>
+                <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue < order.chosenSchedule.feeWaiver)" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':true:'1.2-2' }} has been added to your order.</p>   
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <label for="consumerComment" class="text-muted">
+              Enter any comments or special instructions for the producer:
+            </label>
+          </div>
+          <div class="col-12 col-md-8">
+            <textarea 
+              name="consumerComment" 
+              id="consumerComment" 
+              [(ngModel)]="consumerComment"></textarea>
+          </div>
+        </div>
+        <div class="form-check">
+          <label for="agreement" class="form-check-label">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              name="agreement" 
+              id="agreement" 
+              value="agreement" 
+              [(ngModel)]="agreement">
+            <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col col-md-6 offset-md-3 mb-2">
+      <div class="row bg-warning" *ngIf="!isLoggedIn">
+        <p>In order to send the proper information to the Producer, please <a (click)="authService.login()">Log in or Sign up</a>.</p>
+      </div>
+      <div class="row grey lighten-2 mb-3">
+        <div class="col-6 p-2 text-center">
+          <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
+        </div>
+        <div class="col-6 p-0">
+          <button 
+            class="btn btn-olf-primary btn-block px-0 m-0 h-100"
+            [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid)"
+            >Send Order</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  
+</div>

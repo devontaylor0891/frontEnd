@@ -1,33 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-import 'rxjs/Rx';
+import { SearchService } from '../../../../core/services/search/search.service';
 
-import { ProductCard } from '../../../../shared/models/product-card.model';
+import { ProductModel } from '../../../../core/models/product.model';
 
-import { ProductService } from '../../../../shared/services/product/product.service';
 
 @Component({
   selector: 'app-results-pane',
   templateUrl: './results-pane.component.html',
-  styleUrls: ['./results-pane.component.scss'],
-  providers: [ProductService]
+  styleUrls: ['./results-pane.component.scss']
 })
-export class ResultsPaneComponent implements OnInit {
+export class ResultsPaneComponent implements OnInit, OnChanges {
 
-  products: ProductCard[] = [];
+  searchResults: ProductModel[] = [];
+  view: string = "product";
 
-  constructor(private productService: ProductService) { }
+  constructor(private searchService: SearchService) { }
+
+  ngOnChanges() { }
 
   ngOnInit() {
     
-    this.productService.getProducts()
-      .subscribe( //returns an array
-        (products) => {
-          this.products = products;
-        }  
-      )
-    
+    //subscribe to the copied collection
+    this.searchService.getSearchResults()
+      .subscribe(
+        results => {
+          this.searchResults = results;
+          // console.log("These are the search results from the subscription:");
+          // console.log(this.searchResults);
+        }
+      );
+      
+    //load all search results
+    this.searchService.loadAll();
+	
+    //get the view setting
+    this.searchService._viewStatus
+      .subscribe(
+        result => {
+          this.view = result;
+        }
+      );
+
   }
 
 }

@@ -1,0 +1,33 @@
+<!-- TABLES -->
+<div class="row">
+    <div class="col-12">
+        <button *ngIf="!sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(records)">Export as CSV</button>
+        <button *ngIf="sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(sortedRecords)">Export as CSV</button>
+    </div>
+</div>
+<table class="table table-responsive-md table-hover">
+    <thead>
+        <tr>
+            <th *ngFor="let map of columnMaps">
+                <a (click)="onSort(map)">{{ map.header }}</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let record of records">
+            <td *ngFor="let map of columnMaps">{{ record[map.access(record)] | formatCell:map.format }}</td>
+            <td *ngIf="!pending">
+                <a (click)="onOpenView(record)">View</a>
+            </td>
+            <td *ngIf="editable">
+                <a (click)="onOpenEdit(record)">Edit</a>
+            </td>
+            <td *ngIf="pending">
+                <a (click)="onOpenEdit(record)">Accept/Deny</a>
+            </td>
+            <td *ngIf="deletable">
+                <a (click)="onSelectDelete(record)">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

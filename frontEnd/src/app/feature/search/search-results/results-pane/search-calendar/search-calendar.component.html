@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="col-12">
+      <ng-template #modalContent let-close="close">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ modalData.event.meta.schedule.type }}</h5>
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <h4>Event Details:</h4> 
+            <br>           
+            <p><b>Where: </b>{{ modalData.event.meta.schedule.address }}, {{ modalData.event.meta.schedule.city }}, {{ modalData.event.meta.schedule.province }}</p>
+            <p><b>Date: </b>{{ modalData.event.meta.schedule.startDateTime | date:'fullDate' }}</p>
+            <p><b>Time: </b>{{ modalData.event.meta.schedule.startDateTime | date:'shortTime' }} - {{ modalData.event.meta.schedule.endDateTime | date:'shortTime' }}</p>
+            <p><b>Description: </b>{{ modalData.event.meta.schedule.description }}</p>
+            <p><b>Order Deadline: </b>{{ modalData.event.meta.schedule.orderDeadline | date:'shortTime' }}, {{ modalData.event.meta.schedule.orderDeadline | date:'fullDate' }}</p>
+            <div *ngIf="modalData.event.meta.schedule.type === 'Door-to-door Delivery' && modalData.event.meta.schedule.hasFee">
+              <p><b>Delivery Fee: </b>{{ modalData.event.meta.schedule.fee | currency:'USD':true:'1.2-2' }}</p>
+              <p *ngIf="modalData.event.meta.schedule.feeWaiver"><b>Fee Waiver: </b>{{ modalData.event.meta.schedule.feeWaiver | currency:'USD':true:'1.2-2' }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-olf-primary" [routerLink]="['../producer/' + modalData.event.meta.schedule.producerId]" (click)="close()">Visit their Store</a>
+          <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Close</button>
+        </div>
+      </ng-template>
+
+      <!-- Custom template for day in month view -->
+      <ng-template
+        #defaultTemplate
+        let-day="day"
+        let-openDay="openDay"
+        let-locale="locale"
+        let-tooltipPlacement="tooltipPlacement"
+        let-highlightDay="highlightDay"
+        let-unhighlightDay="unhighlightDay"
+        let-eventClicked="eventClicked"
+        let-tooltipTemplate="tooltipTemplate"
+        let-tooltipAppendToBody="tooltipAppendToBody">
+        <div class="cal-cell-top">
+          <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+          <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+        </div>
+        <div class="cal-events" *ngIf="day.events.length > 0">
+          <div
+            class="cal-event"
+            *ngFor="let event of day.events"
+            
+            [ngClass]="event?.cssClass"
+            (mouseenter)="highlightDay.emit({event: event})"
+            (mouseleave)="unhighlightDay.emit({event: event})"
+            [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+            [tooltipPlacement]="tooltipPlacement"
+            [tooltipEvent]="event"
+            [tooltipTemplate]="tooltipTemplate"
+            [tooltipAppendToBody]="tooltipAppendToBody"
+            mwlDraggable
+            [dropData]="{event: event}"
+            [dragAxis]="{x: event.draggable, y: event.draggable}"
+            (mwlClick)="onEventClick($event, event)">
+          </div>
+        </div>
+      </ng-template>
+        
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="btn-group">
+            <div
+              class="btn btn-olf-primary"
+              mwlCalendarPreviousView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="activeDayIsOpen = false">
+              Previous
+            </div>
+            <!-- <div
+              class="btn btn-outline-secondary"
+              mwlCalendarToday
+              [(viewDate)]="viewDate">
+              Today
+            </div> -->
+            <div
+              class="btn btn-olf-primary"
+              mwlCalendarNextView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="activeDayIsOpen = false">
+              Next
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        </div>
+        <!-- <div class="col-md-4">
+          <div class="btn-group">
+            <div
+              class="btn btn-primary"
+              (click)="view = 'month'"
+              [class.active]="view === 'month'">
+              Month
+            </div>
+            <div
+              class="btn btn-primary"
+              (click)="view = 'week'"
+              [class.active]="view === 'week'">
+              Week
+            </div>
+            <div
+              class="btn btn-primary"
+              (click)="view = 'day'"
+              [class.active]="view === 'day'">
+              Day
+            </div>
+          </div>
+        </div> -->
+      </div>
+
+      <br>
+
+      <div >
+          <div [ngSwitch]="view">
+              <mwl-calendar-month-view
+                *ngSwitchCase="'month'"
+                [viewDate]="viewDate"
+                [events]="events"
+                [refresh]="refresh"
+                [activeDayIsOpen]="activeDayIsOpen"
+                (dayClicked)="dayClicked($event.day)"
+                (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)"
+                [cellTemplate]="defaultTemplate">
+              </mwl-calendar-month-view>
+              <!-- <mwl-calendar-week-view
+                *ngSwitchCase="'week'"
+                [viewDate]="viewDate"
+                [events]="events"
+                [refresh]="refresh"
+                (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-week-view>
+              <mwl-calendar-day-view
+                *ngSwitchCase="'day'"
+                [viewDate]="viewDate"
+                [events]="events"
+                [refresh]="refresh"
+                (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-day-view> -->
+            </div>
+      </div>
+      
+        
+  </div>
+</div>
+

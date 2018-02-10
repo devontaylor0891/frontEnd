@@ -1,37 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Response } from '@angular/http';
 
 import 'rxjs/Rx';
 
-import { UserAdmin } from '../../../../shared/models/dashboard-admin/users/user-admin.model';
+import { UserModel } from '../../../../core/models/user.model';
+import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
-import { UserService } from '../../../../shared/services/user/user.service';
+import { DashboardService } from '../../dashboard.service';
+import { DashboardComponent } from 'app/feature/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  providers: [UserService]
+  providers: []
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnChanges {
 
-  producers: UserAdmin[] = [];
-  consumers: UserAdmin[] = [];
+  producers: UserModel[] = [];
+  consumers: UserModel[] = [];
 
-  constructor(private userService: UserService) { }
+  editable: boolean = true;
+  deletable: boolean = true;
+
+  projectSettings: ColumnSettingModel[] = 
+  [
+      {
+        primaryKey: 'firstName',
+        header: 'Name'
+      },
+      {
+        primaryKey: 'email',
+        header: 'Email'
+      }, {
+        primaryKey: 'registrationDate',
+        header: 'Reg. Date'
+      }
+  ];
+
+  constructor(private dashboardService: DashboardService) { }
+
+  ngOnChanges() {}
 
   ngOnInit() {
 
-    this.userService.getUsers()
-      .subscribe( //returns an array
+    this.dashboardService.getAllUsers()
+      .subscribe( // returns an array
         (users) => {
-          const producerList = users.filter(user => user.userType === 'producer');
+          const producerList = users.filter(user => user.role === 'producer');
           this.producers = producerList;
-          const consumerList = users.filter(user => user.userType === 'consumer');
+          const consumerList = users.filter(user => user.role === 'consumer');
           this.consumers = consumerList;
-        }  
-      )
+        }
+      );
 
+    this.dashboardService.loadAllUsers();
   }
 
 }

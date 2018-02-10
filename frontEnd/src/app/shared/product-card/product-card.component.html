@@ -2,9 +2,9 @@
 <div class="card">
 
     <!--Card image-->
-    <div class="view overlay hm-white-slight">
-        <img src="../../assets/images/{{ product.image }}" class="img-fluid" alt="">
-        <a href="product">
+    <div class="view overlay hm-white-slight cover-div">
+        <img src="../../assets/images/{{ product.image }}" class="img-fluid cover" alt="">
+        <a [routerLink]="['../producer/' + product.producer.id + '/product/' + product.id]">
             <div class="mask waves-effect waves-light"></div>
         </a>
     </div>
@@ -14,22 +14,23 @@
     <div class="card-block text-center">
         <!--Product Name-->
         
-        <h5 class="card-title"><strong><a [routerLink]="['../product']">{{ product.name }}</a></strong></h5>
+        <h5 class="card-title text-truncate"><strong><a [routerLink]="['../producer/' + product.producer.id + '/product/' + product.id]">{{ product.name }}</a></strong></h5>
 
         <!--Description-->
         <p class="card-text text-left text-truncate small">{{ product.description }}</p>
         
         <!--Producer Name-->
-        <h6><a [routerLink]="['../producer']">{{ product.producerName }}</a></h6>
-
-        <!--Card footer-->
-        <div class="card-footer">
-            <span class="left">{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</span>
-            <a class="btn btn-olf-primary btn-sm" [routerLink]="['../cart']">Add to Cart</a>
-        </div>
+        <h6 class="text-truncate"><a [routerLink]="['../producer/' + product.producer.id]">{{ product.producer.name }}</a></h6>
 
     </div>
     <!--/.Card content-->
+
+    <!--Card footer-->
+    <div class="card-footer text-center px-0 pb-0">
+        <p>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>
+        <app-add-to-cart [product]="product"></app-add-to-cart>
+    </div>
+    <!--/.Card footer-->
 
 </div>
 <!--/.Card-->

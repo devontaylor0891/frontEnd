@@ -1,31 +1,49 @@
 <nav class="navbar navbar-toggleable-md grey lighten-2">
         <div class="container flex-center">
         <div class="row">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <!-- Button that appears on collapse  -->
+            <button class="navbar-toggler navbar-toggler-right btn btn-olf-primary btn-sm" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars fa-lg"></span>
             </button>
-            <div class="col-6 col-lg-4">
+            <!-- Logo  -->
+            <div class="col-5 col-sm-4">
                 <a routerLink="">
                     <img src="../../assets/images/logo.png" style="max-width: 100%">
                 </a>
             </div>
+            <!-- Collapsible Content  -->
             <div class="collapse navbar-collapse col-6 col-lg-8" id="navbarNav1">
-                <ul class="navbar-nav  flex-center">
+                <ul class="navbar-nav flex-center ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="search">Search</a>
+                        <a class="nav-link" routerLink="cart">
+                            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                            <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="learn-more">Learn More</a>
+                        <a class="nav-link" routerLink="/search">Search</a>
                     </li>
-                    <li class="nav-item" *ngIf="authService.isAuthenticated()">
+                    <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
+							Learn More...
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" routerLink="learn-more-consumer">For Buyers</a>
+							<a class="dropdown-item" routerLink="learn-more-producer">For Producers</a>
+						</div>
+					</li>
+                    <li class="nav-item" *ngIf="loggedIn">
                         <a class="nav-link" routerLink="dashboard">My Account</a>
+                    </li>
+                    <li class="nav-item" *ngIf="loggedIn">
+                        <a *ngIf="isAdmin" class="nav-link" routerLink="admin">Admin</a>
                     </li>
                     <!--<li class="nav-item">-->
                     <!--    <button class="btn btn-olf-primary" data-toggle="modal" data-target="#modalLRForm">Sign in/Register</button>-->
                     <!--</li>-->
                     <li class="nav-item">
-                        <button class="btn btn-olf-primary" *ngIf="!authService.isAuthenticated()" (click)="login()">Sign in/Register</button>
-                        <button class="btn btn-olf-primary" *ngIf="authService.isAuthenticated()" (click)="logout()">Logout</button>
+                        <button class="btn btn-olf-primary" *ngIf="!loggedIn" (click)="authService.login()">Sign in/Register</button>
+                        <button class="btn btn-olf-primary" *ngIf="loggedIn" (click)="authService.logout()">Logout</button>
                     </li>
 			
                 </ul>

@@ -1,24 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+
 import { AuthService } from '../../auth/auth.service';
+import { CartService } from '../services/cart-service/cart.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  providers: [AuthService]
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
 
-  constructor(private authService: AuthService) { }
+  loggedIn: boolean;
+  @Input() isAdmin: boolean;
+  
+  cartCount: number;
 
-  ngOnInit() {}
-  
-  login() {
-    this.authService.login();
-  };
-  
-  logout() {
-    this.authService.logout()
-  };
+  constructor(private authService: AuthService,
+              private cartService: CartService) { }
+
+  ngOnChanges() {}
+
+  ngOnInit() { 
+
+    this.cartService.getCartCount()
+      .subscribe( results => {
+        this.cartCount = results;
+      });
+
+    this.cartService.loadCartCount();
+
+    this.authService.loggedIn$
+      .subscribe(
+        result => {
+          this.loggedIn = result;
+        }
+      );
+
+  }
 
 }

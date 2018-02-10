@@ -1,0 +1,35 @@
+[
+	{
+		"id": 1,
+		"firstName": "Garfield",
+		"email": "email@email.com",
+		"registrationDate": "2016-12-20T14:17:36.255Z",
+		"role": "consumer"
+	}, {
+		"id": 2,
+		"firstName": "Devon",
+		"email": "email@email.com",
+		"registrationDate": "2015-12-20T14:17:36.255Z",
+		"role": "producer"
+	}, {
+		"id": 3,
+		"firstName": "Bob",
+		"email": "email@email.com",
+		"registrationDate": "2017-12-20T14:17:36.255Z",
+		"role": "consumer"
+	}, {
+		"id": 4,
+		"firstName": "Fred",
+		"email": "email@email.com",
+		"registrationDate": "2017-12-19T14:17:36.255Z",
+		"role": "producer"
+	}, {
+		"id": 10156726911823276,
+		"firstName": "Devon",
+		"email": "devontaylor0891@gmail.com",
+		"registrationDate": "2017-12-20T14:17:36.255Z",
+		"role": "producer"
+	}
+]
+
+

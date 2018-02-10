@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
-import { Response } from '@angular/http';
+import { OrderModel } from '../../../../core/models/order.model';
 
-import 'rxjs/Rx';
+import { DashboardService } from '../../dashboard.service';
 
-import { OrderAdmin } from '../../../../shared/models/dashboard-admin/orders/order-admin.model';
-
-import { OrderService } from '../../../../shared/services/order/order.service';
+import { OrderService } from '../../../../core/services/order/order.service';
+import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 @Component({
   selector: 'app-orders',
@@ -14,14 +13,44 @@ import { OrderService } from '../../../../shared/services/order/order.service';
   styleUrls: ['./orders.component.scss'],
   providers: [OrderService]
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnChanges {
 
-  pendingOrders: OrderAdmin[] = [];
-  acceptedOrders: OrderAdmin[] = [];
-  completedOrders: OrderAdmin[] = [];
-  deniedOrders: OrderAdmin[] = [];
+  pendingOrders: OrderModel[] = [];
+  acceptedOrders: OrderModel[] = [];
+  completedOrders: OrderModel[] = [];
+  deniedOrders: OrderModel[] = [];
 
-  constructor(private orderService: OrderService) { }
+  projectSettings: ColumnSettingModel[] = 
+  [
+      {
+        primaryKey: 'producer',
+        header: 'Producer'
+      },
+      {
+        primaryKey: 'orderDetails',
+        header: 'Order Date',
+        format: 'mediumDate,createdDate'
+      },
+      {
+        primaryKey: 'orderDetails',
+        header: 'Order Time',
+        format: 'shortTime,createdDate'
+      },
+      {
+        primaryKey: 'orderDetails',
+        header: 'Order Total',
+        format: 'currency,orderValue'
+      },
+      {
+        primaryKey: 'consumer',
+        header: 'Consumer'
+      }
+  ];
+
+  constructor(private orderService: OrderService,
+              private dashboardService: DashboardService) { }
+
+  ngOnChanges() {}
   
   toggleView(order: any) {
     order.showView = !order.showView;
@@ -29,19 +58,21 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
 
-    this.orderService.getOrders()
-      .subscribe( //returns an array
+    this.dashboardService.getAllOrders()
+      .subscribe( // returns an array
         (orders) => {
-          const pending = orders.filter(order => order.status === 'pending');
+          const pending = orders.filter(order => order.orderDetails.orderStatus === 'pending');
           this.pendingOrders = pending;
-          const accepted = orders.filter(order => order.status === 'accepted');
+          const accepted = orders.filter(order => order.orderDetails.orderStatus === 'accepted');
           this.acceptedOrders = accepted;
-          const completed = orders.filter(order => order.status === 'completed');
+          const completed = orders.filter(order => order.orderDetails.orderStatus === 'completed');
           this.completedOrders = completed;
-          const denied = orders.filter(order => order.status === 'denied');
+          const denied = orders.filter(order => order.orderDetails.orderStatus === 'denied');
           this.deniedOrders = denied;
         }  
-      )
+      );
+
+    this.dashboardService.loadAllOrders();
 
   }
 

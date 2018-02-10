@@ -1,0 +1,142 @@
+<div class="modal-header">
+    <h5 class="modal-title"> Viewing {{ record.name | uppercase }}</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="modal-body dash-modal-body">
+  
+    <div class="row">
+      <div class="col-4 offset-4">
+        <img src="../../assets/images/{{ record.image }}" class="img-fluid" alt="">
+      </div>
+    </div>
+
+    <br>
+    
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Name:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.name }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Category:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.category }} > {{ record.subcategory }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Description:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.description }}</p>
+    </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Price per Unit:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.pricePerUnit | currency:'USD':true:'1.2-2' }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Unit:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.unit | uppercase }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Units Per Product:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.unitsPer }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Average Product Price:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ totalPrice | currency:'USD':true:'1.2-2' }}</p>
+    </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Available:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.qtyAvailable }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Pending:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.qtyPending }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Accepted:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.qtyAccepted }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Completed:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.qtyCompleted }}</p>
+    </div>
+    </div>
+      
+    <hr>
+    
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Date Added:</strong>
+    </div>
+    <div class="col-8">
+      <p>{{ record.dateAdded | date:'mediumDate' }}</p>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-4 text-right">
+      <strong>Status:</strong>
+    </div>
+    <div class="col-8">
+      <p *ngIf="!record.isObsolete">Active</p>
+      <p *ngIf="record.isObsolete">Obsolete</p>
+    </div>
+    </div>
+  
+  </div>
+  
+  <div class="modal-footer justify-content-center">
+    <div class="row">
+        <div>
+            <a (click)="activeModal.close()">Close</a>
+        </div>
+    </div>
+  </div>
+  

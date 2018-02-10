@@ -17,61 +17,12 @@
                 </div>
                 <div id="pendingOrdersCollapse" class="collapse show" role="tabpanel" aria-labelledby="pendingOrdersHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Date</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Type</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer Email</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Value</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Date</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-template ngFor let-order [ngForOf]="pendingOrders">
-                                    <tr>
-                                        <td>{{ order.producerName }}</td>
-                                        <td>{{ order.date }}</td>
-                                        <td>{{ order.type }}</td>
-                                        <td>{{ order.userName }}</td>
-                                        <td>{{ order.userEmail }}</td>
-                                        <td>{{ order.value | currency:'USD':true:'1.2-2' }}</td>
-                                        <td>{{ order.orderedDate }}</td>
-                                        <td>
-                                            <a (click)="toggleView(order)">View</a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle='modal' data-target=''>Edit</a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle='modal' data-target=''>Delete</a>
-                                        </td>
-                                    </tr>
-                                    <!-- .. your new table will be shown under that 'data-row' .. -->
-                                    <tr class="dashboard-details" *ngIf="order.showView"> <!-- any condition here to show details .. ! -->
-                                        <td colspan="100%">
-                                            <app-order-view-details [order]="order"></app-order-view-details>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="pendingOrders"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
@@ -87,58 +38,17 @@
                             aria-expanded="false" 
                             aria-controls="acceptedOrdersCollapse">Accepted Orders 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
                 <div id="acceptedOrdersCollapse" class="collapse" role="tabpanel" aria-labelledby="acceptedOrdersHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Date</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Type</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer Email</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Value</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Date</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let order of acceptedOrders">
-                                    <td>{{ order.producerName }}</td>
-                                    <td>{{ order.date }}</td>
-                                    <td>{{ order.type }}</td>
-                                    <td>{{ order.userName }}</td>
-                                    <td>{{ order.userEmail }}</td>
-                                    <td>{{ order.value | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ order.orderedDate }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="acceptedOrders"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
@@ -154,58 +64,17 @@
                             aria-expanded="false" 
                             aria-controls="completedOrdersCollapse">Completed Orders 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
                 <div id="completedOrdersCollapse" class="collapse" role="tabpanel" aria-labelledby="completedOrdersHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Date</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Type</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer Email</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Value</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Date</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let order of completedOrders">
-                                    <td>{{ order.producerName }}</td>
-                                    <td>{{ order.date }}</td>
-                                    <td>{{ order.type }}</td>
-                                    <td>{{ order.userName }}</td>
-                                    <td>{{ order.userEmail }}</td>
-                                    <td>{{ order.value | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ order.orderedDate }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="completedOrders"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
@@ -221,58 +90,17 @@
                             aria-expanded="false" 
                             aria-controls="deniedOrdersCollapse">Denied Orders 
                                 <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-                </a>
+                        </a>
                     </h5>
                 </div>
                 <div id="deniedOrdersCollapse" class="collapse" role="tabpanel" aria-labelledby="deniedOrdersHeading">
                     <div class="card-block">
-                        <table class="tablesaw tablesaw-stack data-tablesaw table tablesaw-row-zebra table-hover" data-tablesaw-mode="stack" data-tablesaw-sortable="">
-                            <thead>
-                                <tr>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Producer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Date</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Del. Type</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Consumer Email</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Value</button>
-                                    </th>
-                                    <th class="data-tablesaw-sortable-head" scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">
-                                        <button class="tablesaw-sortable-btn">Order Date</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let order of deniedOrders">
-                                    <td>{{ order.producerName }}</td>
-                                    <td>{{ order.date }}</td>
-                                    <td>{{ order.type }}</td>
-                                    <td>{{ order.userName }}</td>
-                                    <td>{{ order.userEmail }}</td>
-                                    <td>{{ order.value | currency:'USD':true:'1.2-2' }}</td>
-                                    <td>{{ order.orderedDate }}</td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>View</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a data-toggle='modal' data-target=''>Delete</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <app-table-layout
+                            [records]="deniedOrders"
+                            [settings]="projectSettings"
+                            [editable]="editable"
+                            [deletable]="deletable">
+                        </app-table-layout>
                     </div>
                 </div>
             </div>
