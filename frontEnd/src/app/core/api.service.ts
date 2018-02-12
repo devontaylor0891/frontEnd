@@ -171,6 +171,15 @@ export class ApiService {
 		.catch(this._handleError);
   };
 
+  // POST a new producer
+  createProducer(producer: ProducerModel): Observable<ProducerModel> {
+    return this.http
+      .post(`${ENV.BASE_API}producer/`, producer, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
   // ***************** USERS *****************
 
   // get all users for admin

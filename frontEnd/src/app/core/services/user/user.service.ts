@@ -35,28 +35,32 @@ export class UserService implements OnInit, OnChanges  {
           console.log('getIdAndFirstLoginStatus: ', result);
           this.userId = result[0];
           this.userProfile = result[1];
+          console.log('userId: ', this.userId);
           console.log('userProfile: ', this.userProfile);
           if (this.userId) {
+            console.log('there is an id');
             this.apiService.getUserById(this.userId)
-            .subscribe(
-              result => { this.user = result },
-              error => {
-                // if the user isn't yet in the db, add them
-                if (error.indexOf('404') > -1) {
-                  console.log('error: ', error.indexOf('404'))                  
-                  let newUser = this.buildNewUser(this.userProfile);
-                  console.log('new user: ', newUser);
-                  this.apiService.createUser(newUser)
-                    .subscribe(
-                      result => {
-                        this.isFirstLogin = false;
-                        this.getUserFromDb(this.userId);
-                        console.log('user from db: ', result);
-                      }
-                    );
+              .subscribe(
+                result => { this.user = result;
+                            console.log('returned used: ', result);
+                            this.getUserFromDb(this.userId); },
+                error => {
+                  // if the user isn't yet in the db, add them
+                  if (error.indexOf('404') > -1) {
+                    console.log('error: ', error.indexOf('404'))                  
+                    let newUser = this.buildNewUser(this.userProfile);
+                    console.log('new user: ', newUser);
+                    this.apiService.createUser(newUser)
+                      .subscribe(
+                        result => {
+                          this.isFirstLogin = false;
+                          this.getUserFromDb(this.userId);
+                          console.log('user from db: ', result);
+                        }
+                      );
+                  }
                 }
-              }
-            )
+              );
           }
           
           // if (this.isFirstLogin === false) {

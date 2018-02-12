@@ -2331,6 +2331,22 @@
       "registrationDate": "2018-02-09T19:26:50.858Z",
       "role": "consumer",
       "orders": []
+    },
+    {
+      "id": "5a7f539f7b941d6ad5cada5d",
+      "firstName": "Devon",
+      "email": "test@onlylocalfood.com",
+      "registrationDate": "2018-02-10T20:18:39.592Z",
+      "role": "consumer",
+      "orders": []
+    },
+    {
+      "id": "5a809aa96e903156b30d84bf",
+      "firstName": "fff",
+      "email": "teest@onlylocalfood.com",
+      "registrationDate": "2018-02-11T19:34:02.362Z",
+      "role": "",
+      "orders": []
     }
   ],
   "products": [
@@ -2455,8 +2471,8 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": 74,
-      "qtyPending": 126,
+      "qtyAvailable": 72,
+      "qtyPending": 128,
       "qtyAccepted": 45,
       "qtyCompleted": 0,
       "isObsolete": false,
@@ -3365,7 +3381,7 @@
       }
     }
   ],
-  "consumer": [ // this is a temporary array so that the api can return all orders by a consumer id (in the real version, we'll just get a list of order id's)
+  "consumer": [
     {
       "id": "1",
       "firstName": "Garfield",
