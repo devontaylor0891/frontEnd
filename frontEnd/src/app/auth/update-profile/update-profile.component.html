@@ -1,4 +1,4 @@
-<div class="row modal-background">
+<!-- <div class="row modal-background">
 
     <div class="col-6 offset-3 mt-5">
     
@@ -7,7 +7,7 @@
         (ngSubmit)="onSubmit(f.value)">
    
         <!-- First name -->
-        <div class="row">  
+        <!-- <div class="row">  
           <div class="col-4 text-right pr-1">
             <label for="firstName">First Name:</label>
           </div>
@@ -23,7 +23,7 @@
         </div>
 
         <!-- email -->
-        <div class="row">  
+        <!-- <div class="row">  
             <div class="col-4 text-right pr-1">
               <label for="email">Email:</label>
             </div>
@@ -38,9 +38,10 @@
               
           </div>
 
-        <br>
+        <br> -->
 
         <!-- P or C? -->
+        <!--
         <div class="row text-center">
             <div class="col-6 text-right pr-1">
                 <p>Are you sign up as a Consumer or a Producer?</p>
@@ -119,7 +120,7 @@
     
     </div> 
       
-  </div>
+  </div> -->
   
   <!-- or, if I want to throw it in a modal, see the plunker in my bookmarks bar -->
   <!--
@@ -160,4 +161,151 @@
       </div>
       <button type="button" class="btn btn-outline-olf-primary waves-effect ml-auto" style="color:#893d63 !important;" data-dismiss="modal">Close</button>
   </div>
-  -->
+  --> 
+
+
+<div class="row">
+    <div class="col-12 col-md-6 mx-auto">
+        <div class="jumbotron">
+            <h2 class="h2-responsive"><strong>Complete your Profile</strong></h2>
+            <p>We just need a little bit more information so that you can get the most out of Onlylocalfood.com.</p>
+            <!-- <hr class="m-y-2"> -->
+
+            <!--Naked Form-->
+            <div class="card-block">
+
+                <!--Body-->
+                <form
+                    #f="ngForm"  
+                    (ngSubmit)="onSubmit(f.value)">
+
+                    <h5 class="h5-responsive">
+                        <label for="firstName" class="">First Name</label>
+                    </h5>
+                    <!-- Basic textbox -->
+                    <div class="md-form">
+                        <input type="text"  
+                        id="firstName"  
+                        name="firstName"
+                        [(ngModel)]="firstName"
+                        required
+                        class="form-control">
+                        
+                    </div>
+                    <!-- /.Basic textbox -->
+
+                    <!-- <h5 class="h5-responsive">Textbox with icon</h5>
+                    <div class="md-form">
+                        <i class="fa fa-user prefix"></i>
+                        <input type="text" id="form2" class="form-control">
+                        <label for="form2">Your name</label>
+                    </div> -->
+
+                    <!--Email validation-->
+                    <h5 class="h5-responsive">
+                        <label for="form9" data-error="wrong" data-success="right">Your email</label>
+                    </h5>
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input
+                            type="email"  
+                            id="email"  
+                            name="email"
+                            [(ngModel)]="email"
+                            required
+                            class="form-control">
+                    </div>
+
+                    <h5 class="h5-responsive">
+                        <p>Are you signing up as a Consumer or a Producer?</p>
+                    </h5>
+                        <div class="col-6">
+                       
+                            <label class="pr-3">
+                                Consumer: 
+                                <input
+                                    type="radio" 
+                                    name="role" 
+                                    value="consumer" 
+                                    [(ngModel)]="role"
+                                    required
+                                    (change)="resizeMap()"/>
+                            </label>
+                        
+                            <label>
+                                Producer: 
+                                <input 
+                                    type="radio" 
+                                    name="role" 
+                                    value="producer"
+                                    id="producer"
+                                    [(ngModel)]="role" 
+                                    required
+                                    (change)="resizeMap()"/>
+                            </label>
+                        </div>
+
+                        <div [class.hidden]="role !== 'producer'" class="row">
+
+                                <hr>
+                    
+                                <div class="col-12">
+                                    <h3>Welcome to Onlylocalfood.com!</h3>
+                                    <p>We're always happy to have new producers.</p>
+                                    <p>We'll just need a bit more info to finish filling out your profile:</p>
+                                </div>
+                    
+                                <div class="col-12">
+                                    <div class="row">
+                                        <label for="search" class="col-4 col-form-label text-right">Your Location:</label>
+                                        <div class="col-8">
+                                            <input  
+                                                autocorrect="off" 
+                                                autocapitalize="off" 
+                                                spellcheck="off" 
+                                                type="text" 
+                                                class="form-control" 
+                                                #search 
+                                                id="search"
+                                                [formControl]="searchControl">
+                                            <small>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</small>                            
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                                    <agm-marker [latitude]="latitude" [longitude]="longitude">
+                                        <agm-info-window>Börk</agm-info-window>
+                                    </agm-marker>
+                                </agm-map>
+                    
+                            </div>
+
+                    <!--Textarea with icon-->
+                    <!-- <h5 class="h5-responsive">
+                        <label for="form7"></label>
+                    </h5>
+                    <div class="md-form">
+                        <i class="fa fa-pencil prefix"></i>
+                        <textarea type="text" id="form7" class="md-textarea"></textarea>
+                        
+                    </div>
+
+                    <h5 class="h5-responsive">Disabled field</h5>
+                    <div class="md-form">
+                        <input type="text" id="form11" class="form-control" disabled>
+                        <label for="form11" class="disabled">Example label</label>
+                    </div> -->
+
+                    <div class="text-center">
+                        <button class="btn btn-olf-primary">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+            <!--Naked Form-->
+
+        </div>
+    </div>
+</div>
+

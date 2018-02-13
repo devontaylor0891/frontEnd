@@ -61,9 +61,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
     // ***** LOCATION INIT CODE ******
     //set google maps defaults
-    this.zoom = 4;
-    this.latitude = 101.6668;
-    this.longitude = 50.1436;
+    this.zoom = 8;
+    this.latitude = 50.5555;
+    this.longitude = -100.5555;
 
     //create search FormControl
     this.searchControl = new FormControl();
@@ -174,6 +174,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   private fillAddress(place) {
     // this.clearAddress();
     this.parseAddressComponents(place.address_components);
+    console.log('address components: ', place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
     if (this.streetNumber && this.route) {
@@ -199,6 +200,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
         }
         if (result === 'locality' || result === 'sublocality') {
           this.city = components[i].short_name;
+          console.log('city: ', this.city);
         }
         if (result === 'administrative_area_level_1') {
           this.province = components[i].short_name;
