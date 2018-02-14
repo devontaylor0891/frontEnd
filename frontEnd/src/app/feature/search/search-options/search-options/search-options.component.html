@@ -1,5 +1,4 @@
-<!--Panel-->
-<div class="card">
+<!-- <div class="card">
     <div class="card-header olf-primary-color white-text">
         Search Options
     </div>
@@ -35,5 +34,44 @@
         </form>
         
     </div>
-</div>
-<!--/.Panel-->
+</div> -->
+
+<!--Panel-->
+<div class="card">
+        <div class="card-header olf-primary-color white-text">
+            Search Options
+        </div>
+        <div class="card-block grey lighten-3">
+            <p class="card-text">Modify the settings below to narrow your search.</p>
+            <hr>
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <div class="row">
+                    <div class="col-6 col-md-12">
+                        <h5 class="card-title">Categories</h5>
+                            <div *ngFor="let category of categoriesList; let i = index">
+                                <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
+                                <label for="c.{{ category.category }}">{{ category.category }}</label>
+                            </div>
+                    </div>
+                    <hr>
+                    
+                    <hr>
+                    <div class="col-6 col-md-12">
+                        <h5 class="card-title">Delivery Types</h5>
+                        <form-group>
+                            <div *ngFor="let delivery of deliveryTypes">
+                                <input type="checkbox" id="d.{{ delivery.type }}" name="d.{{ delivery.type }}" [(ngModel)]="delivery.checkboxValue" [checked]="delivery.checkboxValue">
+                                <label for="d.{{ delivery.type }}">{{ delivery.type }}</label>
+                            </div>
+                        </form-group>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-olf-primary mx-auto">Search!</button>
+                    <button type="button" class="btn btn-olf-primary mx-auto" (click)="reset(f)">Reset Search</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    <!--/.Panel-->

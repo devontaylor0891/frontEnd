@@ -896,6 +896,17 @@
           "orderDeadline": "2017-12-27T00:00:00.000Z"
         }
       ]
+    },
+    {
+      "id": "5a809aa96e903156b30d84bf",
+      "name": "Onlylocalfood.com",
+      "description": "",
+      "email": "teest@onlylocalfood.com",
+      "logoUrl": "",
+      "firstName": "fff",
+      "status": "active",
+      "productList": [],
+      "scheduleList": []
     }
   ],
   "orders": [
@@ -2345,7 +2356,7 @@
       "firstName": "fff",
       "email": "teest@onlylocalfood.com",
       "registrationDate": "2018-02-11T19:34:02.362Z",
-      "role": "",
+      "role": "producer",
       "orders": []
     }
   ],

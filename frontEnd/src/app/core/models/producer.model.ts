@@ -5,15 +5,15 @@ export class ProducerModel {
                 public location: string,
                 public province: string,
                 public address: string,
-                public description: string,
                 public email: string,
-                public logoUrl: string,
                 public longitude: number,
                 public latitude: number,
                 public firstName: string,
-                public registrationDate: string,
                 public status: string,
-				public productList: number[],
-                public scheduleList: number[]
+                public productList: number[],
+                public scheduleList: number[],
+                public description?: string,
+                public logoUrl?: string,
+                public registrationDate?: string
     ) {}
 }

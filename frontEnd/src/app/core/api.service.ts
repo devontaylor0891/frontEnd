@@ -31,6 +31,7 @@ export class ApiService {
     return `Bearer ${localStorage.getItem('access_token')}`;
   };
 
+// ********** SEARCH *******
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
   getSearchResults(): Observable<ProductModel[]> {
@@ -40,7 +41,7 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  // ********** PRODUCTS *******
+// ********** PRODUCTS *******
 
   // get all products for admin dash
   getProducts(): Observable<ProductModel[]> {
@@ -102,7 +103,7 @@ export class ApiService {
       .catch(this._handleError);
   }
 
-  // ************** SCHEDULES ****************
+// ************** SCHEDULES ****************
   
   // get all schedules for admin
   getSchedules(): Observable<ScheduleModel[]> {
@@ -154,7 +155,7 @@ export class ApiService {
   //       .catch(this._handleError);
   // };
 
-  // **************** PRODUCERS ***************
+// **************** PRODUCERS ***************
 
   // get all producers
   getProducers(): Observable<ProducerModel[]> {
@@ -180,7 +181,7 @@ export class ApiService {
       .catch(this._handleError);
   }
 
-  // ***************** USERS *****************
+// ***************** USERS *****************
 
   // get all users for admin
   getUsers(): Observable<UserModel[]> {
@@ -220,7 +221,7 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  // **************** ORDERS *******************
+// **************** ORDERS *******************
 
   // POST order
   postOrder(order: OrderModel): Observable<OrderModel> {
@@ -287,6 +288,7 @@ export class ApiService {
       // .catch(this._handleError);
   // }
 
+// ******** ERROR HANDLING *******
   private _handleError(err: HttpErrorResponse | any) {
     const errorMsg = err.message || 'Error: Unable to complete request.';
     if (err.message && err.message.indexOf('No JWT present') > -1) {
