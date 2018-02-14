@@ -73,6 +73,10 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.router.navigateByUrl('confirmation');
   }
 
+  storeCart() {
+    this.cartService.storeCart(this.order.tempId, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
+  };
+
   ngOnInit() {
 
     this.id = +this.route.snapshot.paramMap.get('tempId');

@@ -90,7 +90,7 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
     <div class="col col-md-6 offset-md-3 card bg-light mb-2">
       <div class="row grey lighten-2">
-        <h5 class="h5-responsive mx-auto pt-2 card-title">3. Add Final Details:</h5>
+        <h5 class="h5-responsive mx-auto pt-2 card-title">3. Add Comments and Agree to Terms & Conditions:</h5>
       </div>
       <div class="card-body pt-3">
         <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
@@ -159,18 +159,25 @@
       </div>
     </div>
 
+    <div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
+        <div class="row bg-dark py-5">
+          <div class="col-10 offset-1 bg-light py-2 text-center">
+            <p>In order to send the proper information to the Producer, please</p>
+            <button class="btn btn-olf-primary" type="button" (click)="authService.login(); storeCart(); $event.preventDefault()">Log in or Sign up</button>
+          </div>
+        </div>
+    </div>
+
     <div class="col col-md-6 offset-md-3 mb-2">
-      <div class="row bg-warning" *ngIf="!isLoggedIn">
-        <p>In order to send the proper information to the Producer, please <a (click)="authService.login()">Log in or Sign up</a>.</p>
-      </div>
       <div class="row grey lighten-2 mb-3">
         <div class="col-6 p-2 text-center">
           <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
         </div>
         <div class="col-6 p-0">
           <button 
+            type="submit"
             class="btn btn-olf-primary btn-block px-0 m-0 h-100"
-            [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid)"
+            [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
             >Send Order</button>
         </div>
       </div>

@@ -346,6 +346,22 @@ export class CartService {
 			);
   };
   
+  storeCart(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
+    localStorage.setItem('cartId', cartId);
+    localStorage.setItem('chosenSchedule', JSON.stringify(chosenSchedule));
+    localStorage.setItem('consumerComment', consumerComment);
+    if (deliveryAddress) {
+      localStorage.setItem('deliveryAddress', deliveryAddress);
+    };
+    console.log('local cartId:', localStorage.getItem('cartId'));
+    console.log('local chosenSchedule:', JSON.parse(localStorage.getItem('chosenSchedule')));
+    console.log('local consumerComment:', localStorage.getItem('consumerComment'));
+  };
+
+  retrieveCart() {
+    return localStorage.getItem('cart');
+  };
+
   
   
 // ***********TIMER METHODS**********
