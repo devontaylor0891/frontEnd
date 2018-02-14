@@ -18,7 +18,7 @@ import { ScheduleModel } from '../../../core/models/schedule.model';
 export class CheckoutComponent implements OnInit, OnChanges {
 
   order: OrderModel;
-  id: number;
+  id: any;
   communityList: any[];
   showSchedules: boolean = false;
   selectedSchedulesList: ScheduleModel[];
@@ -74,12 +74,31 @@ export class CheckoutComponent implements OnInit, OnChanges {
   }
 
   storeCart() {
-    this.cartService.storeCart(this.order.tempId, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
+    this.cartService.storeCarts();
   };
+
+  onLogin(e) {
+    this.authService.login(this.id);
+    this.storeCart();
+    e.preventDefault();
+  }
 
   ngOnInit() {
 
+    this.authService.getLoggedIn()
+      .subscribe(
+        result => {
+          this.isLoggedIn = result;
+        }
+      );
+
+    if (this.isLoggedIn) {
+      this.cartService.retrieveCarts();
+    }
+
     this.id = +this.route.snapshot.paramMap.get('tempId');
+
+    console.log('tempId: ', this.id);
 
     this.cartService.getCartById()
       .subscribe(
@@ -99,7 +118,9 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.tempOrderValue = this.order.orderDetails.orderValue;
 
-    this.isLoggedIn = this.authService.loggedIn; // this should really be a sub to the behaviour subject, but I kept getting an error
+    if (this.isLoggedIn) {
+      this.cartService.retrieveCarts();
+    }
 
   }
 

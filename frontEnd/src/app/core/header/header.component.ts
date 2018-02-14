@@ -20,21 +20,32 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngOnChanges() {}
 
+  onLogin(e) {
+    this.authService.login();
+    this.cartService.storeCarts();
+    e.preventDefault();
+  }
+
   ngOnInit() { 
-
-    this.cartService.getCartCount()
-      .subscribe( results => {
-        this.cartCount = results;
-      });
-
-    this.cartService.loadCartCount();
 
     this.authService.loggedIn$
       .subscribe(
         result => {
           this.loggedIn = result;
+          if (this.loggedIn) {
+            this.cartService.retrieveCarts();
+          };
         }
       );
+
+    this.cartService.getCartCount()
+      .subscribe(
+        results => {
+          this.cartCount = results;
+        }
+      );
+
+    this.cartService.loadCartCount();
 
   }
 

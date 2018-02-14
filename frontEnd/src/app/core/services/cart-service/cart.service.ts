@@ -13,7 +13,6 @@ export class CartService {
   // id maker for each cart in the cart service instance
   // start it at negative one so that the tempId will be the index as well
   private tempId: number = -1;
-  
 
   // data management strategy
   // create the dataStore for the cart
@@ -38,6 +37,14 @@ export class CartService {
   private _cart: BehaviorSubject<OrderModel>;
   private _scheduleList: BehaviorSubject<any[]>;
   private _communityList: BehaviorSubject<any[]>;
+
+  // properties for holding values retreived from localStorage
+  chosenSchedule: ScheduleModel;
+  consumerComment: string;
+  cartId: any;
+  _chosenSchedule: BehaviorSubject<ScheduleModel>;
+  _consumerComment: BehaviorSubject<string>;
+  _cartId: BehaviorSubject<number>;
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService,
@@ -49,6 +56,9 @@ export class CartService {
     this._cart = <BehaviorSubject<OrderModel>>new BehaviorSubject({});
     this._scheduleList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
     this._communityList = <BehaviorSubject<any[]>>new BehaviorSubject([]);
+    this._chosenSchedule = <BehaviorSubject<ScheduleModel>>new BehaviorSubject(null);
+    this._consumerComment = <BehaviorSubject<string>>new BehaviorSubject('');
+    this._cartId = <BehaviorSubject<any>>new BehaviorSubject(null);
   }
   
   
@@ -89,8 +99,7 @@ export class CartService {
   loadCommunityList(id) {
     this._communityList.next(Object.assign({}, this.dataStore).schedulesArray[id].communityList);
   }
-  
-  
+
   
 // ***********PRODUCT METHODS**********
 
@@ -324,10 +333,6 @@ export class CartService {
 
   // confirm and send the order from consumer to producer
   confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
-		// authenticate the user/ login/ signup
-		// I tried to do this right in the checkout component, but maybe I can do it here????
-		// use the authService to check if logged in, if yes, do the below steps
-		// if no, call the login method on authService, then just recursively call confirmAndSendOrder()
 		// build the cart
 		let newOrder = this.buildCart(cartId, chosenSchedule, consumerComment, deliveryAddress);
 		// send the cart via the api
@@ -335,31 +340,33 @@ export class CartService {
 		this.apiService.postOrder(newOrder)
 			.subscribe(
 				result => {
-					console.log('successfully posted: ', result);
+          console.log('successfully posted: ', result);
+          // remove the cart contents from the cart count
+					this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId); // unnecessary??? throws error on single cart checkout, not sure about multi
 					// remove the cart from the dataStore on success
 					this.clearCart(cartId);
-					// remove the cart contents from the cart count
-					this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId); // unnecessary??? throws error on single cart checkout, not sure about multi
 					console.log('new cartCount: ', this.dataStore.cartCount);
 					this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
 				}, error => console.log('could not add new order')
 			);
   };
   
-  storeCart(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
-    localStorage.setItem('cartId', cartId);
-    localStorage.setItem('chosenSchedule', JSON.stringify(chosenSchedule));
-    localStorage.setItem('consumerComment', consumerComment);
-    if (deliveryAddress) {
-      localStorage.setItem('deliveryAddress', deliveryAddress);
-    };
-    console.log('local cartId:', localStorage.getItem('cartId'));
-    console.log('local chosenSchedule:', JSON.parse(localStorage.getItem('chosenSchedule')));
-    console.log('local consumerComment:', localStorage.getItem('consumerComment'));
+  storeCarts() {
+    // store all carts in datastore
+    localStorage.setItem('dataStore', JSON.stringify(this.dataStore));
   };
 
-  retrieveCart() {
-    return localStorage.getItem('cart');
+  retrieveCarts() {
+    let localCarts = JSON.parse(localStorage.getItem('dataStore'));
+    if (localCarts) {
+      console.log('carts in local storage: ', localCarts);
+      // add it/them to the carts array in datastore
+      this.dataStore = localCarts;
+      this.loadCarts();
+      this.loadCartCount();
+    } else {
+      console.log('no carts in local storage');
+    }
   };
 
   
