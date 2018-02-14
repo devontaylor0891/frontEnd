@@ -255,6 +255,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   lng: number;
   streetNumber: number;
   route: any;
+  address: string;
   city: string;
   province: string;
   postalCode: string;
@@ -382,6 +383,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
         email: form.email,
         role: form.role
       };
+      this.buildSubmitObject(form);
+      console.log('submitObject built: ', this.submitObject);
       this.apiService.patchUser(this.id, this.newValues)
         .subscribe(
           result => {
@@ -406,18 +409,20 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     this.submitObject = {
       id: this.id,
       name: form.name,
-      location: form.location,
-      province: form.province,
-      address: form.address,
+      location: this.city,
+      province: this.province,
+      address: this.address,
       description: form.description,
       email: form.email,
       logoUrl: form.logoUrl,
-      longitude: form.longitude,
-      latitude: form.latitude,
+      longitude: this.longitude,
+      latitude: this.latitude,
       firstName: form.firstName,
       status: 'active',
       productList: [],
-      scheduleList: []
+      scheduleList: [],
+      products: [],
+      schedule: []
     }
   }
 
@@ -428,12 +433,10 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
     if (this.streetNumber && this.route) {
-      this.submitObject.address = this.streetNumber + ' ' + this.route;
+      this.address = this.streetNumber + ' ' + this.route;
     };
-    this.submitObject.location = this.city; // still not working
-    this.submitObject.province = this.province;
-    this.submitObject.latitude = this.lat;
-    this.submitObject.longitude = this.lng;
+    this.latitude = this.lat;
+    this.longitude = this.lng;
   };
 
   private parseAddressComponents(components) {

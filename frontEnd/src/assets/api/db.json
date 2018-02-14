@@ -900,13 +900,20 @@
     {
       "id": "5a809aa96e903156b30d84bf",
       "name": "Onlylocalfood.com",
-      "description": "",
+      "location": "Moosomin",
+      "province": "SK",
+      "address": "818 Alberni St",
+      "description": "description of this business",
       "email": "teest@onlylocalfood.com",
       "logoUrl": "",
+      "longitude": -101.66362779999997,
+      "latitude": 50.1395529,
       "firstName": "fff",
       "status": "active",
       "productList": [],
-      "scheduleList": []
+      "scheduleList": [],
+      "products": [],
+      "schedule": []
     }
   ],
   "orders": [

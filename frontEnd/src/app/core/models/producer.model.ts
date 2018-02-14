@@ -14,6 +14,8 @@ export class ProducerModel {
                 public scheduleList: number[],
                 public description?: string,
                 public logoUrl?: string,
-                public registrationDate?: string
+                public registrationDate?: string,
+                public products?: any[],
+                public schedule?: any[]
     ) {}
 }
