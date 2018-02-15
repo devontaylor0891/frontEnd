@@ -369,6 +369,10 @@ export class CartService {
     }
   };
 
+  removeCarts() {
+    localStorage.removeItem('dataStore');
+  }
+
   
   
 // ***********TIMER METHODS**********

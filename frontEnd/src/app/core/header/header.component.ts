@@ -26,6 +26,11 @@ export class HeaderComponent implements OnInit, OnChanges {
     e.preventDefault();
   }
 
+  onLogout() {
+    this.authService.logout();
+    this.cartService.removeCarts();
+  }
+
   ngOnInit() { 
 
     this.authService.loggedIn$
