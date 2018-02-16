@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ConsumerDashboardService } from './consumer-dashboard.service';
+import { UserModel } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-consumer-dashboard',
@@ -11,6 +12,7 @@ import { ConsumerDashboardService } from './consumer-dashboard.service';
 export class ConsumerDashboardComponent implements OnInit {
 
   @Input() id: number;
+  @Input() user: UserModel;
 
   constructor() { }
 

@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col col-xs-12">
         <div role="tablist" aria-multiselectable="true">
             <div class="card">
@@ -20,4 +20,112 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+<div class="row">
+        <div class="col col-xs-12">
+            <div role="tablist" aria-multiselectable="true">
+    
+                <div class="col-12 col-md-6 mx-auto my-2">
+                    <div class="jumbotron">
+                        <div>
+                            <h2 class="h2-responsive">
+                                <img src="{{profile?.picture}}" class="avatar" alt="avatar">
+                                <strong>Your Profile</strong>
+                                <button class="pull-right btn btn-olf-primary">Edit</button>
+                            </h2>
+                            <p></p>
+        
+                            <div class="card-block">
+                                
+                                <div class="row">
+                                    <h5 class="h5-responsive">
+                                        Name
+                                    </h5>
+                                    <div class="pl-3">
+                                        <i class="fa fa-user prefix"></i>
+                                        <p>{{ user.firstName }}</p>
+                                    </div>
+                                </div>
+    
+                                <div class="row">
+                                    <h5 class="h5-responsive">
+                                        Email
+                                    </h5>
+                                    <div class="pl-3">
+                                        <i class="fa fa-user prefix"></i>
+                                        <p>{{ user.email }}</p>
+                                    </div>
+                                </div>
+    
+                                <div class="row">
+                                    <h5 class="h5-responsive">
+                                        Role
+                                    </h5>
+                                    <div class="pl-3">
+                                        <i class="fa fa-user prefix"></i>
+                                        <p>{{ user.role }}</p>
+                                    </div>
+                                </div>
+    
+                                <div class="row">
+                                    <p>You have been a member of OLF since {{ user.registrationDate | date:'fullDate' }}.</p>
+                                </div>
+    
+                                <div *ngIf="user?.role === 'producer'">
+                                    <hr>
+                                    <div class="row">
+                                        <h5 class="h5-responsive">
+                                            Business Name
+                                        </h5>
+                                        <div class="pl-3">
+                                            <i class="fa fa-user prefix"></i>
+                                            <p>{{ producer.name }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h5 class="h5-responsive">
+                                            Location
+                                        </h5>
+                                        <div class="pl-3">
+                                            <i class="fa fa-user prefix"></i>
+                                            <p>{{ producer.location }}, {{ producer.province }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="producer.address">
+                                        <h5 class="h5-responsive">
+                                            Address
+                                        </h5>
+                                        <div class="pl-3">
+                                            <i class="fa fa-user prefix"></i>
+                                            <p>{{ producer.address }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="producer.description">
+                                        <h5 class="h5-responsive">
+                                            Description
+                                        </h5>
+                                        <div class="pl-3">
+                                            <i class="fa fa-user prefix"></i>
+                                            <p>{{ producer.description }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="producer.logoUrl">
+                                        <h5 class="h5-responsive">
+                                            Logo
+                                        </h5>
+                                        <div class="pl-3">
+                                            <i class="fa fa-user prefix"></i>
+                                            <p>{{ producer.logoUrl }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
