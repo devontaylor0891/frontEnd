@@ -45,7 +45,7 @@ export class AccountInfoComponent implements OnInit {
 
   profile: any;
   @Input() user: UserModel;
-  producer: ProducerModel;
+  @Input() producer: ProducerModel;
 
   constructor(private auth: AuthService,
               private userService: UserService,
@@ -57,21 +57,24 @@ export class AccountInfoComponent implements OnInit {
       this.profile = this.auth.userProfile;
     }
 
-    this.userService.getUser()
-      .subscribe(
-        result => {
-          this.user = result;
-          console.log('user: ', this.user);
-        }
-      );
+    console.log('user: ', this.user);
+    console.log('producer: ', this.producer);
 
-    this.producerService.getProducer()
-      .subscribe(
-        result => {
-          this.producer = result;
-          console.log('producer: ', this.producer);
-        }
-      );
+    // this.userService.getUser()
+    //   .subscribe(
+    //     result => {
+    //       this.user = result;
+    //       console.log('user: ', this.user);
+    //     }
+    //   );
+
+    // this.producerService.getProducer()
+    //   .subscribe(
+    //     result => {
+    //       this.producer = result;
+    //       console.log('producer: ', this.producer);
+    //     }
+    //   );
 
   }
 
