@@ -5,7 +5,8 @@
 	</div>
 
 	<div class="col-12 col-md-9">
-		<app-search-results [searchResults]="searchResults"></app-search-results>
+		<app-loading *ngIf="!searchResults"></app-loading>
+		<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
 	</div>
 
 </div>

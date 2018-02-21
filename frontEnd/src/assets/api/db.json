@@ -406,7 +406,7 @@
         ]
       },
       "dateAdded": "Jan 2 2017",
-      "qtyAvailable": 44,
+      "qtyAvailable": 0,
       "qtyPending": 0,
       "qtyAccepted": 0,
       "qtyCompleted": 345,
@@ -2725,8 +2725,8 @@
         ]
       },
       "dateAdded": "Jan 2 2017",
-      "qtyAvailable": 44,
-      "qtyPending": 0,
+      "qtyAvailable": -1,
+      "qtyPending": 1,
       "qtyAccepted": 0,
       "qtyCompleted": 345,
       "isObsolete": false,
