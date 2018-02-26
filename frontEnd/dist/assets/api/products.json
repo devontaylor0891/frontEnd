@@ -1,0 +1,126 @@
+
+    [
+        {
+            "id": 123,
+            "name": "Carrots",
+            "description": "This is a description",
+            "image": "carrot.jpg",
+            "pricePerUnit": 4,
+            "unit": "lb",
+            "unitsPer": 1,
+            "category": "vegetables",
+            "subcategory": "carrots",
+            "producer": {
+                "name": "Garden Farms",
+                "id": 1
+            },
+            "dateAdded": "Jan 1 2017",
+            "qtyAvailable": 55,
+            "qtyPending": 12,
+            "qtyAccepted": 22,
+            "qtyCompleted": 345,
+            "isObsolete": false
+        },{
+            "id": 124,
+            "name": "Beets",
+            "description": "This is a description",
+            "image": "beet.png",
+            "pricePerUnit": 5,
+            "unit": "pkg",
+            "unitsPer": 2,
+            "category": "vegetables",
+            "subcategory": "beets",
+            "producer": {
+                "name": "Garden Farms",
+                "id": 1
+            }, 
+            "dateAdded": "Jan 2 2017",
+            "qtyAvailable": 44,
+            "qtyPending": 0,
+            "qtyAccepted": 0,
+            "qtyCompleted": 345,
+            "isObsolete": false
+        }, {
+            "id": 134,
+            "name": "Potatoes",
+            "description": "This is a description",
+            "image": "carrot.jpg",
+            "pricePerUnit": 5,
+            "unit": "lb",
+            "unitsPer": 1,
+            "category": "vegetables",
+            "subcategory": "potatoes",
+            "producer": {
+                "name": "D Farms",
+                "id": 3
+            },
+            "dateAdded": "Jan 1 2017",
+            "qtyAvailable": 0,
+            "qtyPending": 12,
+            "qtyAccepted": 22,
+            "qtyCompleted": 345,
+            "isObsolete": false
+        }, {
+            "id": 4,
+            "name": "Bacon",
+            "description": "This is a description",
+            "image": "beet.png",
+            "pricePerUnit": 7,
+            "unit": "lb",
+            "unitsPer": 1,
+            "category": "meat",
+            "subcategory": "pork",
+            "producer": {
+                "name": "Hello Farms",
+                "id": 9
+            },
+            "dateAdded": "Jan 1 2017",
+            "qtyAvailable": 55,
+            "qtyPending": 12,
+            "qtyAccepted": 22,
+            "qtyCompleted": 345,
+            "isObsolete": false
+        }, {
+            "id": 5,
+            "name": "Carrots",
+            "description": "This is a description",
+            "image": "carrot.jpg",
+            "pricePerUnit": 4,
+            "unit": "lb",
+            "unitsPer": 1,
+            "category": "vegetables",
+            "subcategory": "carrots",
+            "producer": {
+                "name": "Hello Farms",
+                "id": 9
+            },
+            "dateAdded": "Jan 1 2017",
+            "qtyAvailable": 55,
+            "qtyPending": 12,
+            "qtyAccepted": 22,
+            "qtyCompleted": 345,
+            "isObsolete": false
+        }, {
+            "id": 6,
+            "name": "Tomatoes",
+            "description": "This is a description",
+            "image": "beet.png",
+            "pricePerUnit": 4,
+            "unit": "lb",
+            "unitsPer": 3,
+            "category": "vegetables",
+            "subcategory": "tomatoes",
+            "producer": {
+                "name": "Hello Farms",
+                "id": 9
+            },
+            "dateAdded": "Jan 1 2017",
+            "qtyAvailable": 2,
+            "qtyPending": 0,
+            "qtyAccepted": 22,
+            "qtyCompleted": 0,
+            "isObsolete": false
+        }
+    ]
+
+

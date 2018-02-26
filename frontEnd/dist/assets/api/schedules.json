@@ -1,0 +1,123 @@
+[
+    {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}, {
+        "id": 1,
+		"producerId": 13,
+		"productList": [
+			43,
+			95
+		],
+		"type": "Door-to-door Delivery",
+		"description": "This is a quick description.",
+		"startDateTime": "2017-12-22T19:05:01.455Z",
+		"endDateTime": "2017-12-22T20:05:01.455Z",
+		"hasFee": false,
+        "fee": 0,
+        "feeWaiver": 0,
+		"latitude": 3333,
+		"longitude": 3333,
+		"city": "Moosomin",
+		"address": "123 Main Street",
+		"province": "SK",
+		"orderDeadline": "2017-12-21T19:05:01.455Z"
+	}
+]
