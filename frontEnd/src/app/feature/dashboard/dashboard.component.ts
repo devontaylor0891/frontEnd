@@ -3,6 +3,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../core/services/user/user.service';
+import { UserModel } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,8 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   userType: string;
   isAdmin: boolean;
-  id: number;
+	id: number;
+	user: UserModel;
 
   ngOnChanges() {};
 
@@ -24,12 +26,12 @@ export class DashboardComponent implements OnInit, OnChanges {
   ngOnInit() {
 
 	  this.userService.getUserType()
-		.subscribe(
-			result => {
-        console.log('usertype result: ', result);
-				this.userType = result;
-			}
-		);
+			.subscribe(
+				result => {
+					console.log('usertype result: ', result);
+					this.userType = result;
+				}
+			);
 		
 		this.auth.getIsAdmin()
 			.subscribe(
@@ -42,6 +44,13 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.id = result;
+				}
+			);
+
+		this.userService.getUser()
+			.subscribe(
+				result => {
+					this.user = result;
 				}
 			);
 

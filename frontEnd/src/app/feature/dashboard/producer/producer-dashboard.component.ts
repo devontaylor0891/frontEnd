@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { ProducerDashboardService } from '../producer-dashboard.service';
 
 import { UserModel } from '../../../core/models/user.model';
+import { ProducerModel } from '../../../core/models/producer.model';
 
 @Component({
   selector: 'app-producer-dashboard',
@@ -10,18 +11,24 @@ import { UserModel } from '../../../core/models/user.model';
   styleUrls: ['./producer-dashboard.component.scss'],
   providers: []
 })
-export class ProducerDashboardComponent implements OnInit {
+export class ProducerDashboardComponent implements OnInit, OnChanges {
 
   @Input() id: number;
-  user: UserModel;
+  @Input() user: UserModel;
+  producer: ProducerModel;
+
+  ngOnChanges() {};
 
   constructor(private dashboardService: ProducerDashboardService) { }
 
   ngOnInit() {
 
-    this.dashboardService._user
+    this.dashboardService.getProducer()
       .subscribe(
-        result => this.user = result
+        result => {
+          this.producer = result;
+          console.log('producer subscription result: ', this.producer);
+        }
       );
 
     this.dashboardService.loadData(this.id);

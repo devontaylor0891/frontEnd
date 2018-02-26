@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-olf-primary" [routerLink]="['../cart']" (click)="close()">View Cart</a>
+                    <a class="btn btn-olf-primary" [routerLink]="['/cart']" (click)="close()">View Cart</a>
                     <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Continue Shopping</button>
                 </div>
             </ng-template>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-6 p-0">
-            <a class="btn btn-olf-primary btn-block px-0 m-0 h-100" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            <button class="btn btn-olf-primary btn-block px-0 m-0 h-100" [disabled]="product.qtyAvailable < 1" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
         </div>
     </div>
 </form>

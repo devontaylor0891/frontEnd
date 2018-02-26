@@ -42,8 +42,8 @@
                     <!--    <button class="btn btn-olf-primary" data-toggle="modal" data-target="#modalLRForm">Sign in/Register</button>-->
                     <!--</li>-->
                     <li class="nav-item">
-                        <button class="btn btn-olf-primary" *ngIf="!loggedIn" (click)="authService.login()">Sign in/Register</button>
-                        <button class="btn btn-olf-primary" *ngIf="loggedIn" (click)="authService.logout()">Logout</button>
+                        <button class="btn btn-olf-primary" *ngIf="!loggedIn" (click)="onLogin($event)">Sign in/Register</button>
+                        <button class="btn btn-olf-primary" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
                     </li>
 			
                 </ul>

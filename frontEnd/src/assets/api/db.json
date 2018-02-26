@@ -406,7 +406,7 @@
         ]
       },
       "dateAdded": "Jan 2 2017",
-      "qtyAvailable": 44,
+      "qtyAvailable": 0,
       "qtyPending": 0,
       "qtyAccepted": 0,
       "qtyCompleted": 345,
@@ -896,6 +896,42 @@
           "orderDeadline": "2017-12-27T00:00:00.000Z"
         }
       ]
+    },
+    {
+      "id": "5a809aa96e903156b30d84bf",
+      "name": "Onlylocalfood.com",
+      "location": "Moosomin",
+      "province": "SK",
+      "address": "818 Alberni St",
+      "description": "description of this business",
+      "email": "teest@onlylocalfood.com",
+      "logoUrl": "",
+      "longitude": -101.66362779999997,
+      "latitude": 50.1395529,
+      "firstName": "fff",
+      "status": "active",
+      "productList": [],
+      "scheduleList": [],
+      "products": [],
+      "schedule": []
+    },
+    {
+      "id": "10156726911823275",
+      "name": "Onlylocalfood.com",
+      "location": "Moosomin",
+      "province": "SK",
+      "address": "818 Alberni St",
+      "description": "this is a description of my business.",
+      "email": "devontaylor0891@gmail.com",
+      "logoUrl": "",
+      "longitude": -101.66362779999997,
+      "latitude": 50.1395529,
+      "firstName": "Devon",
+      "status": "active",
+      "productList": [],
+      "scheduleList": [],
+      "products": [],
+      "schedule": []
     }
   ],
   "orders": [
@@ -2249,6 +2285,330 @@
           "orderDeadline": "2017-12-27T00:00:00.000Z"
         }
       }
+    },
+    {
+      "id": 10,
+      "tempId": 0,
+      "chosenSchedule": null,
+      "producerId": 10156726911823276,
+      "producer": {
+        "id": 10156726911823276,
+        "name": "Gardenzia Farms",
+        "location": "Virden",
+        "province": "MB",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+        "email": "email@email.com",
+        "logoUrl": "farm-logo-3.jpg",
+        "longitude": 444,
+        "latitude": 555,
+        "firstName": "Devon",
+        "registrationDate": "2017-12-20T14:17:36.255Z",
+        "status": "active",
+        "productList": [
+          66,
+          67
+        ],
+        "scheduleList": [
+          666,
+          667
+        ]
+      },
+      "consumerId": "5a809aa96e903156b30d84bf",
+      "consumer": {
+        "sub": "auth0|5a809aa96e903156b30d84bf",
+        "nickname": "teest",
+        "name": "teest@onlylocalfood.com",
+        "picture": "https://s.gravatar.com/avatar/3815174ea82ccb13208c218c40273463?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fte.png",
+        "updated_at": "2018-02-14T21:17:32.132Z",
+        "http://myapp.com/roles": [
+          "user"
+        ],
+        "http://myapp.com/email": "teest@onlylocalfood.com"
+      },
+      "productList": [
+        {
+          "id": 66,
+          "name": "Bacon",
+          "description": "Great stuff.",
+          "image": "bacon.jpg",
+          "pricePerUnit": 12,
+          "unit": "kg",
+          "unitsPer": 1,
+          "category": "Meat",
+          "subcategory": "Pork",
+          "producer": {
+            "id": 10156726911823276,
+            "name": "Gardenzia Farms",
+            "location": "Virden",
+            "province": "MB",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            "email": "email@email.com",
+            "logoUrl": "farm-logo-3.jpg",
+            "longitude": 444,
+            "latitude": 555,
+            "firstName": "Devon",
+            "registrationDate": "2017-12-20T14:17:36.255Z",
+            "status": "active",
+            "productList": [
+              66,
+              67
+            ],
+            "scheduleList": [
+              666,
+              667
+            ]
+          },
+          "dateAdded": "2017-12-20T14:17:36.255Z",
+          "qtyAvailable": 23,
+          "qtyPending": 1,
+          "qtyAccepted": 0,
+          "qtyCompleted": 2,
+          "isObsolete": false,
+          "scheduleList": [
+            {
+              "id": 666,
+              "producerId": 10156726911823276,
+              "productList": [
+                66,
+                67
+              ],
+              "type": "Door-to-door Delivery",
+              "description": "A description.",
+              "startDateTime": "2017-12-28T01:00:00.000Z",
+              "endDateTime": "2017-12-28T02:00:00.000Z",
+              "hasFee": true,
+              "fee": 10,
+              "feeWaiver": 25,
+              "latitude": 50.2615563,
+              "longitude": -101.9720143,
+              "city": "Moosomin",
+              "address": "555 Main St",
+              "province": "SK",
+              "orderDeadline": "2017-12-28T00:00:00.000Z"
+            },
+            {
+              "id": 667,
+              "producerId": 10156726911823276,
+              "productList": [
+                66,
+                67
+              ],
+              "type": "On-farm Pickup",
+              "description": "A long description.",
+              "startDateTime": "2017-12-27T01:00:00.000Z",
+              "endDateTime": "2017-12-27T02:00:00.000Z",
+              "hasFee": false,
+              "fee": null,
+              "feeWaiver": null,
+              "latitude": 50.2615563,
+              "longitude": -104.9720143,
+              "city": "Timbuktu",
+              "address": "",
+              "province": "ON",
+              "orderDeadline": "2017-12-27T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "orderDetails": {
+        "productQuantities": [
+          {
+            "productId": 66,
+            "orderQuantity": 2,
+            "orderValue": 24
+          }
+        ],
+        "consumerComment": "some comments",
+        "deliveryAddress": "",
+        "deliveryFee": null,
+        "createdDate": "2018-02-14T21:18:12.604Z",
+        "producerComment": "",
+        "orderStatus": "pending",
+        "orderValue": 24,
+        "chosenSchedule": {
+          "id": 667,
+          "producerId": 10156726911823276,
+          "productList": [
+            66,
+            67
+          ],
+          "type": "On-farm Pickup",
+          "description": "A long description.",
+          "startDateTime": "2017-12-27T01:00:00.000Z",
+          "endDateTime": "2017-12-27T02:00:00.000Z",
+          "hasFee": false,
+          "fee": null,
+          "feeWaiver": null,
+          "latitude": 50.2615563,
+          "longitude": -104.9720143,
+          "city": "Timbuktu",
+          "address": "",
+          "province": "ON",
+          "orderDeadline": "2017-12-27T00:00:00.000Z"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "tempId": 0,
+      "chosenSchedule": null,
+      "producerId": 10156726911823276,
+      "producer": {
+        "id": 10156726911823276,
+        "name": "Gardenzia Farms",
+        "location": "Virden",
+        "province": "MB",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+        "email": "email@email.com",
+        "logoUrl": "farm-logo-3.jpg",
+        "longitude": 444,
+        "latitude": 555,
+        "firstName": "Devon",
+        "registrationDate": "2017-12-20T14:17:36.255Z",
+        "status": "active",
+        "productList": [
+          66,
+          67
+        ],
+        "scheduleList": [
+          666,
+          667
+        ]
+      },
+      "consumerId": "5a809aa96e903156b30d84bf",
+      "consumer": {
+        "sub": "auth0|5a809aa96e903156b30d84bf",
+        "nickname": "teest",
+        "name": "teest@onlylocalfood.com",
+        "picture": "https://s.gravatar.com/avatar/3815174ea82ccb13208c218c40273463?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fte.png",
+        "updated_at": "2018-02-14T21:23:08.847Z",
+        "http://myapp.com/roles": [
+          "user"
+        ],
+        "http://myapp.com/email": "teest@onlylocalfood.com"
+      },
+      "productList": [
+        {
+          "id": 66,
+          "name": "Bacon",
+          "description": "Great stuff.",
+          "image": "bacon.jpg",
+          "pricePerUnit": 12,
+          "unit": "kg",
+          "unitsPer": 1,
+          "category": "Meat",
+          "subcategory": "Pork",
+          "producer": {
+            "id": 10156726911823276,
+            "name": "Gardenzia Farms",
+            "location": "Virden",
+            "province": "MB",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            "email": "email@email.com",
+            "logoUrl": "farm-logo-3.jpg",
+            "longitude": 444,
+            "latitude": 555,
+            "firstName": "Devon",
+            "registrationDate": "2017-12-20T14:17:36.255Z",
+            "status": "active",
+            "productList": [
+              66,
+              67
+            ],
+            "scheduleList": [
+              666,
+              667
+            ]
+          },
+          "dateAdded": "2017-12-20T14:17:36.255Z",
+          "qtyAvailable": 23,
+          "qtyPending": 1,
+          "qtyAccepted": 0,
+          "qtyCompleted": 2,
+          "isObsolete": false,
+          "scheduleList": [
+            {
+              "id": 666,
+              "producerId": 10156726911823276,
+              "productList": [
+                66,
+                67
+              ],
+              "type": "Door-to-door Delivery",
+              "description": "A description.",
+              "startDateTime": "2017-12-28T01:00:00.000Z",
+              "endDateTime": "2017-12-28T02:00:00.000Z",
+              "hasFee": true,
+              "fee": 10,
+              "feeWaiver": 25,
+              "latitude": 50.2615563,
+              "longitude": -101.9720143,
+              "city": "Moosomin",
+              "address": "555 Main St",
+              "province": "SK",
+              "orderDeadline": "2017-12-28T00:00:00.000Z"
+            },
+            {
+              "id": 667,
+              "producerId": 10156726911823276,
+              "productList": [
+                66,
+                67
+              ],
+              "type": "On-farm Pickup",
+              "description": "A long description.",
+              "startDateTime": "2017-12-27T01:00:00.000Z",
+              "endDateTime": "2017-12-27T02:00:00.000Z",
+              "hasFee": false,
+              "fee": null,
+              "feeWaiver": null,
+              "latitude": 50.2615563,
+              "longitude": -104.9720143,
+              "city": "Timbuktu",
+              "address": "",
+              "province": "ON",
+              "orderDeadline": "2017-12-27T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "orderDetails": {
+        "productQuantities": [
+          {
+            "productId": 66,
+            "orderQuantity": 2,
+            "orderValue": 24
+          }
+        ],
+        "consumerComment": "cccc",
+        "deliveryAddress": "",
+        "deliveryFee": null,
+        "createdDate": "2018-02-14T21:23:28.240Z",
+        "producerComment": "",
+        "orderStatus": "pending",
+        "orderValue": 24,
+        "chosenSchedule": {
+          "id": 667,
+          "producerId": 10156726911823276,
+          "productList": [
+            66,
+            67
+          ],
+          "type": "On-farm Pickup",
+          "description": "A long description.",
+          "startDateTime": "2017-12-27T01:00:00.000Z",
+          "endDateTime": "2017-12-27T02:00:00.000Z",
+          "hasFee": false,
+          "fee": null,
+          "feeWaiver": null,
+          "latitude": 50.2615563,
+          "longitude": -104.9720143,
+          "city": "Timbuktu",
+          "address": "",
+          "province": "ON",
+          "orderDeadline": "2017-12-27T00:00:00.000Z"
+        }
+      }
     }
   ],
   "users": [
@@ -2331,6 +2691,30 @@
       "registrationDate": "2018-02-09T19:26:50.858Z",
       "role": "consumer",
       "orders": []
+    },
+    {
+      "id": "5a7f539f7b941d6ad5cada5d",
+      "firstName": "Devon",
+      "email": "test@onlylocalfood.com",
+      "registrationDate": "2018-02-10T20:18:39.592Z",
+      "role": "consumer",
+      "orders": []
+    },
+    {
+      "id": "5a809aa96e903156b30d84bf",
+      "firstName": "fff",
+      "email": "teest@onlylocalfood.com",
+      "registrationDate": "2018-02-11T19:34:02.362Z",
+      "role": "producer",
+      "orders": []
+    },
+    {
+      "id": "10156726911823275",
+      "firstName": "Devon",
+      "email": "devontaylor0891@gmail.com",
+      "registrationDate": "2018-02-24T17:21:30.798Z",
+      "role": "producer",
+      "orders": []
     }
   ],
   "products": [
@@ -2367,8 +2751,8 @@
         ]
       },
       "dateAdded": "Jan 2 2017",
-      "qtyAvailable": 44,
-      "qtyPending": 0,
+      "qtyAvailable": -1,
+      "qtyPending": 1,
       "qtyAccepted": 0,
       "qtyCompleted": 345,
       "isObsolete": false,
@@ -2411,8 +2795,8 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": 41,
-      "qtyPending": 59,
+      "qtyAvailable": -13,
+      "qtyPending": 113,
       "qtyAccepted": 0,
       "qtyCompleted": 2,
       "isObsolete": false,
@@ -2455,8 +2839,8 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": 74,
-      "qtyPending": 126,
+      "qtyAvailable": 66,
+      "qtyPending": 134,
       "qtyAccepted": 45,
       "qtyCompleted": 0,
       "isObsolete": false,
@@ -2546,8 +2930,8 @@
         ]
       },
       "dateAdded": "Jan 1 2017",
-      "qtyAvailable": 324,
-      "qtyPending": 12,
+      "qtyAvailable": 323,
+      "qtyPending": 13,
       "qtyAccepted": 22,
       "qtyCompleted": 345,
       "isObsolete": false,
@@ -2732,6 +3116,43 @@
         667
       ],
       "id": 96
+    },
+    {
+      "id": 90173,
+      "name": "Devon Product 1",
+      "description": "fancy description",
+      "image": "bacon.jpg",
+      "pricePerUnit": 1.11,
+      "unit": "lb",
+      "unitsPer": 1,
+      "category": "meat",
+      "subcategory": "pork",
+      "dateAdded": "2018-02-24T17:27:41.589Z",
+      "qtyAvailable": 111,
+      "qtyPending": 0,
+      "qtyAccepted": 0,
+      "qtyCompleted": 0,
+      "isObsolete": false,
+      "producerId": "10156726911823275",
+      "producer": {
+        "id": "10156726911823275",
+        "name": "Onlylocalfood.com",
+        "location": "Moosomin",
+        "province": "SK",
+        "address": "818 Alberni St",
+        "description": "this is a description of my business.",
+        "email": "devontaylor0891@gmail.com",
+        "logoUrl": "",
+        "longitude": -101.66362779999997,
+        "latitude": 50.1395529,
+        "firstName": "Devon",
+        "status": "active",
+        "productList": [],
+        "scheduleList": [],
+        "products": [],
+        "schedule": []
+      },
+      "scheduleList": []
     }
   ],
   "schedules": [
@@ -3232,6 +3653,46 @@
       "fee": 0,
       "feeWaiver": 0,
       "orderList": []
+    },
+    {
+      "id": 29462,
+      "producerId": "10156726911823275",
+      "productList": [],
+      "type": "On-farm Pickup",
+      "description": "desc",
+      "startDateTime": "2018-03-01T18:00:00.000Z",
+      "endDateTime": "2018-03-01T19:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": null,
+      "longitude": null,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-03-01T06:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
+    },
+    {
+      "id": 547147,
+      "producerId": "10156726911823275",
+      "productList": [],
+      "type": "On-farm Pickup",
+      "description": "desc",
+      "startDateTime": "2018-03-08T18:00:00.000Z",
+      "endDateTime": "2018-03-08T19:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": null,
+      "longitude": null,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-03-08T06:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
     }
   ],
   "abandonedOrders": [
@@ -3365,7 +3826,7 @@
       }
     }
   ],
-  "consumer": [ // this is a temporary array so that the api can return all orders by a consumer id (in the real version, we'll just get a list of order id's)
+  "consumer": [
     {
       "id": "1",
       "firstName": "Garfield",
