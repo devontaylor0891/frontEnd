@@ -450,6 +450,33 @@ export class CartService {
       );
   };
 
+  makeQtyAccepted(productId, qty) {
+    console.log('productId: ', productId);
+    console.log('qty: ', qty);
+    let newVals = {
+      'qtyAccepted': null,
+      'qtyPending': null
+    };
+    this.apiService.getProductById(productId)
+      .subscribe(
+        result => {
+          newVals.qtyAccepted = result.qtyAccepted;
+          newVals.qtyPending = result.qtyPending;
+          console.log('newVals: ', newVals); // working
+          newVals.qtyAccepted += qty;
+          newVals.qtyPending -= qty;
+          console.log('qty: ', qty);
+          console.log('newVals: ', newVals); // not working
+          this.apiService.patchProduct(productId, newVals)
+      		.subscribe(
+      			result => {
+      				console.log('successfully patched product: ', result);
+      			}, error => console.log('could not patch product')
+      		)
+        }
+      );
+  };
+
   // look to see if producer is in cart, return the index number or -1
   findProducerIndex(id) {
     let index;

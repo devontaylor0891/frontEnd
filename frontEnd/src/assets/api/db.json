@@ -914,6 +914,24 @@
       "scheduleList": [],
       "products": [],
       "schedule": []
+    },
+    {
+      "id": "10156726911823275",
+      "name": "Onlylocalfood.com",
+      "location": "Moosomin",
+      "province": "SK",
+      "address": "818 Alberni St",
+      "description": "this is a description of my business.",
+      "email": "devontaylor0891@gmail.com",
+      "logoUrl": "",
+      "longitude": -101.66362779999997,
+      "latitude": 50.1395529,
+      "firstName": "Devon",
+      "status": "active",
+      "productList": [],
+      "scheduleList": [],
+      "products": [],
+      "schedule": []
     }
   ],
   "orders": [
@@ -2689,6 +2707,14 @@
       "registrationDate": "2018-02-11T19:34:02.362Z",
       "role": "producer",
       "orders": []
+    },
+    {
+      "id": "10156726911823275",
+      "firstName": "Devon",
+      "email": "devontaylor0891@gmail.com",
+      "registrationDate": "2018-02-24T17:21:30.798Z",
+      "role": "producer",
+      "orders": []
     }
   ],
   "products": [
@@ -2813,8 +2839,8 @@
         ]
       },
       "dateAdded": "2017-12-20T14:17:36.255Z",
-      "qtyAvailable": 71,
-      "qtyPending": 129,
+      "qtyAvailable": 66,
+      "qtyPending": 134,
       "qtyAccepted": 45,
       "qtyCompleted": 0,
       "isObsolete": false,
@@ -2904,8 +2930,8 @@
         ]
       },
       "dateAdded": "Jan 1 2017",
-      "qtyAvailable": 324,
-      "qtyPending": 12,
+      "qtyAvailable": 323,
+      "qtyPending": 13,
       "qtyAccepted": 22,
       "qtyCompleted": 345,
       "isObsolete": false,
@@ -3090,6 +3116,43 @@
         667
       ],
       "id": 96
+    },
+    {
+      "id": 90173,
+      "name": "Devon Product 1",
+      "description": "fancy description",
+      "image": "bacon.jpg",
+      "pricePerUnit": 1.11,
+      "unit": "lb",
+      "unitsPer": 1,
+      "category": "meat",
+      "subcategory": "pork",
+      "dateAdded": "2018-02-24T17:27:41.589Z",
+      "qtyAvailable": 111,
+      "qtyPending": 0,
+      "qtyAccepted": 0,
+      "qtyCompleted": 0,
+      "isObsolete": false,
+      "producerId": "10156726911823275",
+      "producer": {
+        "id": "10156726911823275",
+        "name": "Onlylocalfood.com",
+        "location": "Moosomin",
+        "province": "SK",
+        "address": "818 Alberni St",
+        "description": "this is a description of my business.",
+        "email": "devontaylor0891@gmail.com",
+        "logoUrl": "",
+        "longitude": -101.66362779999997,
+        "latitude": 50.1395529,
+        "firstName": "Devon",
+        "status": "active",
+        "productList": [],
+        "scheduleList": [],
+        "products": [],
+        "schedule": []
+      },
+      "scheduleList": []
     }
   ],
   "schedules": [
@@ -3586,6 +3649,46 @@
       "city": "Moosomin",
       "province": "SK",
       "orderDeadline": "2018-01-19T12:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
+    },
+    {
+      "id": 29462,
+      "producerId": "10156726911823275",
+      "productList": [],
+      "type": "On-farm Pickup",
+      "description": "desc",
+      "startDateTime": "2018-03-01T18:00:00.000Z",
+      "endDateTime": "2018-03-01T19:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": null,
+      "longitude": null,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-03-01T06:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
+    },
+    {
+      "id": 547147,
+      "producerId": "10156726911823275",
+      "productList": [],
+      "type": "On-farm Pickup",
+      "description": "desc",
+      "startDateTime": "2018-03-08T18:00:00.000Z",
+      "endDateTime": "2018-03-08T19:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": null,
+      "longitude": null,
+      "city": "",
+      "province": "",
+      "orderDeadline": "2018-03-08T06:00:00.000Z",
       "address": "",
       "fee": 0,
       "feeWaiver": 0,
