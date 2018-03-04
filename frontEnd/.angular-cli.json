@@ -22,7 +22,7 @@
         "../node_modules/font-awesome/scss/font-awesome.scss",
         "../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
         "../node_modules/angular-bootstrap-md/scss/mdb-free.scss",
-        "../node_modules/angular-calendar/dist/css/angular-calendar.css",
+        "../node_modules/angular-calendar/css/angular-calendar.css",
         "../node_modules/ng-pick-datetime/assets/style/picker.min.css",
         "styles.scss"
       ],
