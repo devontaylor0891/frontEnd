@@ -10,9 +10,18 @@ import { ProductModel } from '../../../../core/models/product.model';
 export class ProducerPageProductCardComponent implements OnInit {
 
   @Input() product: ProductModel;
+  isOutOfStock: boolean;
 
-  constructor() { }
+  constructor() {
 
-  ngOnInit() {}
+    
+
+  }
+
+  ngOnInit() {
+
+    this.isOutOfStock = this.product.qtyAvailable < 1;
+
+  }
 
 }
