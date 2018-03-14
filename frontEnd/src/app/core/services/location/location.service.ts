@@ -1,3 +1,8 @@
+// provided in App Module
+
+// called in ...
+// Table Layout Comp
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 

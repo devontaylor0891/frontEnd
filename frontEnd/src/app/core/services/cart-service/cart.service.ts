@@ -1,3 +1,13 @@
+// imported in AppModule
+
+// called in ...
+// Header Component
+// Cart Product Component
+// Carts Component
+// Checkout Component
+// Edit Order Modal Component
+// Add to Cart Component
+
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

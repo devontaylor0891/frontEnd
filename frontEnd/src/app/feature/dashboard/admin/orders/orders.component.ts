@@ -4,14 +4,12 @@ import { OrderModel } from '../../../../core/models/order.model';
 
 import { DashboardService } from '../../dashboard.service';
 
-import { OrderService } from '../../../../core/services/order/order.service';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss'],
-  providers: [OrderService]
+  styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit, OnChanges {
 
@@ -47,8 +45,7 @@ export class OrdersComponent implements OnInit, OnChanges {
       }
   ];
 
-  constructor(private orderService: OrderService,
-              private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnChanges() {}
   
