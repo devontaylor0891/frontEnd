@@ -2715,6 +2715,17 @@
       "registrationDate": "2018-02-24T17:21:30.798Z",
       "role": "producer",
       "orders": []
+    },
+    {
+      "id": "59b16d2e4fe7b66e81c27373",
+      "firstName": "Devon",
+      "email": "devon@onlylocalfood.com",
+      "registrationDate": "2018-03-14T02:07:17.052Z",
+      "role": "consumer",
+      "orders": [],
+      "name": "",
+      "description": "",
+      "logoUrl": ""
     }
   ],
   "products": [
