@@ -5,11 +5,11 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ENV } from './env.config';
-import { ProductModel } from '../core/models/product.model';
-import { ScheduleModel } from '../core/models/schedule.model';
-import { ProducerModel } from '../core/models/producer.model';
-import { UserModel } from '../core/models/user.model';
-import { OrderModel } from '../core/models/order.model';
+// import { ProductModel } from '../core/models/product.model';
+// import { ScheduleModel } from '../core/models/schedule.model';
+// import { ProducerModel } from '../core/models/producer.model';
+// import { UserModel } from '../core/models/user.model';
+// import { OrderModel } from '../core/models/order.model';
 
 @Injectable()
 export class ApiService {
@@ -34,7 +34,7 @@ export class ApiService {
 // ********** SEARCH *******
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
-  getSearchResults(): Observable<ProductModel[]> {
+  getSearchResults(): Observable<any[]> {
     return this.http
       // .get(`http://localhost:3000/searchResults`)
       .get(`${ENV.BASE_API}searchResults`)
@@ -44,7 +44,7 @@ export class ApiService {
 // ********** PRODUCTS *******
 
   // get all products for admin dash
-  getProducts(): Observable<ProductModel[]> {
+  getProducts(): Observable<any[]> {
     return this.http
       .get(`${ENV.BASE_API}products`)
       // .get(this.allProductsUrl)
@@ -52,7 +52,7 @@ export class ApiService {
   }
 
   // this method will return a product from the mock data
-  getProductById(productId): Observable<ProductModel> {
+  getProductById(productId): Observable<any> {
     return this.http
       .get(`${ENV.BASE_API}products/` + productId)
       // .get(this.producerUrl + producerId + '/products/' + productId + '.json')
@@ -60,7 +60,7 @@ export class ApiService {
   };
   
   // GET all products from a single producer
-  getProductsByProducerId(id): Observable<ProductModel[]> {
+  getProductsByProducerId(id): Observable<any[]> {
   return this.http
     .get(`${ENV.BASE_API}producer/` + id + '/products')
 		// .get(this.producerUrl + id + '/products.json')
@@ -68,7 +68,7 @@ export class ApiService {
   }
 
   // POST new product - producer or admin only
-  postProduct(product: ProductModel): Observable<ProductModel> {
+  postProduct(product: any): Observable<any> {
     return this.http
       .post(`${ENV.BASE_API}products/`, product, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -77,7 +77,7 @@ export class ApiService {
   };
 
   // PUT existing product - producer or admin only
-  putProduct(id: number, product: ProductModel): Observable<ProductModel> {
+  putProduct(id: number, product: any): Observable<any> {
     return this.http
       .put(`${ENV.BASE_API}products/${id}`, product, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -106,21 +106,21 @@ export class ApiService {
 // ************** SCHEDULES ****************
   
   // get all schedules for admin
-  getSchedules(): Observable<ScheduleModel[]> {
+  getSchedules(): Observable<any[]> {
     return this.http
       .get(`${ENV.BASE_API}schedules`)
       .catch(this._handleError);
   }
 
   // GET entire schedule from a single producers
-  getScheduleByProducerId(id): Observable<ScheduleModel[]> {
+  getScheduleByProducerId(id): Observable<any[]> {
     return this.http
       .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
       .catch(this._handleError);
   }
 
   // POST new schedule - producer or admin only
-  postSchedule(schedule: ScheduleModel): Observable<ScheduleModel> {
+  postSchedule(schedule: any): Observable<any> {
     return this.http
       .post(`${ENV.BASE_API}schedules/`, schedule, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -129,7 +129,7 @@ export class ApiService {
   };
 
   // PUT existing schedule - producer or admin only
-  putSchedule(id: number, schedule: ScheduleModel): Observable<ScheduleModel> {
+  putSchedule(id: number, schedule: any): Observable<any> {
     return this.http
       .put(`${ENV.BASE_API}schedules/${id}`, schedule, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -158,14 +158,14 @@ export class ApiService {
 // **************** PRODUCERS ***************
 
   // get all producers
-  getProducers(): Observable<ProducerModel[]> {
+  getProducers(): Observable<any[]> {
     return this.http
       .get(`${ENV.BASE_API}producer/`)
       .catch(this._handleError);
   };
 
   // GET one producer by id
-  getProducerById(id): Observable<ProducerModel> {
+  getProducerById(id): Observable<any> {
     return this.http
     .get(`${ENV.BASE_API}producer/` + id)
 		// .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
@@ -173,7 +173,7 @@ export class ApiService {
   };
 
   // POST a new producer
-  createProducer(producer: ProducerModel): Observable<ProducerModel> {
+  createProducer(producer: any): Observable<any> {
     return this.http
       .post(`${ENV.BASE_API}producer/`, producer, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -184,7 +184,7 @@ export class ApiService {
 // ***************** USERS *****************
 
   // get all users for admin
-  getUsers(): Observable<UserModel[]> {
+  getUsers(): Observable<any[]> {
     return this.http
       .get(`${ENV.BASE_API}users/`)
       .catch(this._handleError);
@@ -204,7 +204,7 @@ export class ApiService {
   };
 
   // create a new user
-  createUser(user: UserModel): Observable<UserModel> {
+  createUser(user: any): Observable<any> {
     return this.http
     .post(`${ENV.BASE_API}users/`, user, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -224,7 +224,7 @@ export class ApiService {
 // **************** ORDERS *******************
 
   // POST order
-  postOrder(order: OrderModel): Observable<OrderModel> {
+  postOrder(order: any): Observable<any> {
     return this.http
       .post(`${ENV.BASE_API}orders/`, order, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -233,7 +233,7 @@ export class ApiService {
   };
   
   // get all orders for admin
-  getOrders(): Observable<OrderModel[]> {
+  getOrders(): Observable<any[]> {
     return this.http
       .get(`${ENV.BASE_API}orders`)
       .catch(this._handleError);
@@ -254,7 +254,7 @@ export class ApiService {
   };
 
   // PUT existing order - producer or admin only
-  putOrder(id: number, order: OrderModel): Observable<OrderModel> {
+  putOrder(id: number, order: any): Observable<any> {
     return this.http
       .put(`${ENV.BASE_API}orders/${id}`, order, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -272,7 +272,7 @@ export class ApiService {
   };
 
   // POST abandoned order
-  postAbandonedOrder(order: OrderModel): Observable<OrderModel> {
+  postAbandonedOrder(order: any): Observable<any> {
     return this.http
       .post(`${ENV.BASE_API}abandonedOrders/`, order, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
