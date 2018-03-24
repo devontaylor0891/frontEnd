@@ -1,3 +1,14 @@
+// provided in Producer Component
+
+// called in ...
+// Add Product Comp
+// Products Comp
+// Producer Products Comp
+// Producer Page Comp
+// Producer Comp, obviously
+// Product Component
+// Schedule Component
+
 import { Injectable, OnInit, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';

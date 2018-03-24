@@ -16,7 +16,8 @@ import { CalendarModule } from 'angular-calendar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import { AgmCoreModule } from '@agm/core';
-import { DateTimePickerModule } from 'ng-pick-datetime';
+//import { DateTimePickerModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 // SERVICES
 import { AuthService } from './auth/auth.service';
@@ -200,7 +201,8 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
       apiKey: 'AIzaSyAgN6Tt6BxP2Q-iNCNe7HiHfIGotu1j_uY',
       libraries: ["places"]
     }),
-    DateTimePickerModule,
+    //DateTimePickerModule,
+    OwlDateTimeModule, OwlNativeDateTimeModule,
     RouterModule,
     AppRoutingModule
   ],

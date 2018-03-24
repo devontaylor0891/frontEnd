@@ -284,9 +284,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       longitude: null,
       latitude: null,
       firstName: '',
-      status: '',
-      productList: [],
-      scheduleList: []
+      status: ''
+      // productList: [],
+      // scheduleList: []
     }
 
   }
@@ -419,8 +419,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       latitude: this.latitude,
       firstName: form.firstName,
       status: 'active',
-      productList: [],
-      scheduleList: [],
+      // productList: [],
+      // scheduleList: [],
       products: [],
       schedule: []
     }

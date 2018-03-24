@@ -1,3 +1,13 @@
+// provided in Search Comp
+
+// called in...
+// Search Options Comp
+// Filter Buttons Comp
+// Results Pane Comp
+// Search Calendar Comp
+// Search Producer Comp
+// Search Comp
+
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

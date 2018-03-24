@@ -14,8 +14,9 @@ import { ScheduleModel } from '../../../core/models/schedule.model';
 export class ProducerPageComponent implements OnInit, OnChanges {
 
   producer: ProducerModel;
-  products: ProductModel[];
+  products: ProductModel[] = [];
   schedule: ScheduleModel[];
+  outOfStockProducts: ProductModel[] = [];
 
   constructor(private producerService: ProducerService) {}
 
@@ -33,7 +34,14 @@ export class ProducerPageComponent implements OnInit, OnChanges {
     this.producerService.getAllProducts()
       .subscribe(
         results => {
-          this.products = results;
+          for (let i = 0; i < results.length; i++) {
+            if (results[i].qtyAvailable < 1) {
+              this.outOfStockProducts.push(results[i]);
+            } else {
+              this.products.push(results[i]);
+            }
+          }
+          // this.products = results;
         }
       );
 

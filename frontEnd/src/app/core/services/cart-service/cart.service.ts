@@ -1,3 +1,13 @@
+// imported in AppModule
+
+// called in ...
+// Header Component
+// Cart Product Component
+// Carts Component
+// Checkout Component
+// Edit Order Modal Component
+// Add to Cart Component
+
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -276,7 +286,9 @@ export class CartService {
   // for each cart in the cart contents, select a schedule
   selectSchedule(cartId, schedule) {
     // in specified cart, push the schedule details
-    this.dataStore.carts[cartId].orderDetails.chosenSchedule = schedule;
+    console.log('chosen sched given to select schedule method: ', schedule);
+    this.dataStore.carts[cartId].chosenSchedule = schedule;
+    console.log('cart in dataStore after sched added: ', this.dataStore.carts[cartId]);
   };
   
   addConsumer(cartId) {
