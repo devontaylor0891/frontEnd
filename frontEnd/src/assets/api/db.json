@@ -469,6 +469,7 @@
       "firstName": "Devon",
       "registrationDate": "Jan 1 2017",
       "status": "active",
+
       "products": [
         {
           "id": 43,
@@ -2594,6 +2595,9 @@
     {
       "id": 67,
       "producerId": 10156726911823276,
+      "producer": {
+        "id": 10156726911823276
+      },
       "name": "Groundy Beef",
       "description": "Great beefy stuff.",
       "image": "ground-beef.jpg",
@@ -2602,9 +2606,7 @@
       "unitsPer": 1,
       "category": "Meat",
       "subcategory": "Beef",
-      "producer": {
-        "id": 10156726911823276
-      },
+
       "dateAdded": "2017-12-20T14:17:36.255Z",
       "qtyAvailable": 60,
       "qtyPending": 140,
