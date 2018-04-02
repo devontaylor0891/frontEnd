@@ -1,0 +1,197 @@
+<div class="row bg-dark">
+        <div class="col-12 col-md-6 mx-auto my-2">
+            <div class="jumbotron">
+                <h2 class="h2-responsive"><strong>Complete your Profile</strong></h2>
+                <p>We just need a little bit more information so that you can get the most out of Onlylocalfood.com.</p>
+                <!-- <hr class="m-y-2"> -->
+    
+                <!--Naked Form-->
+                <div class="card-block">
+    
+                    <!--Body-->
+                    <form
+                        #f="ngForm"  
+                        (ngSubmit)="onSubmit(f.value)">
+    
+                        <h5 class="h5-responsive">
+                            <label for="firstName" class="">First Name</label>
+                        </h5>
+                        <!-- Basic textbox -->
+                        <div class="md-form pl-3">
+                            <i class="fa fa-user prefix"></i>
+                            <input type="text"  
+                            id="firstName"  
+                            name="firstName"
+                            [(ngModel)]="firstName"
+                            required
+                            class="form-control">
+                            
+                        </div>
+                        <!-- /.Basic textbox -->
+    
+                        <!-- <h5 class="h5-responsive">Textbox with icon</h5>
+                        <div class="md-form">
+                            <i class="fa fa-user prefix"></i>
+                            <input type="text" id="form2" class="form-control">
+                            <label for="form2">Your name</label>
+                        </div> -->
+    
+                        <!--Email validation-->
+                        <h5 class="h5-responsive">
+                            <label for="form9" data-error="wrong" data-success="right">Your email</label>
+                        </h5>
+                        <div class="md-form pl-3">
+                            <i class="fa fa-envelope prefix"></i>
+                            <input
+                                type="email"  
+                                id="email"  
+                                name="email"
+                                [(ngModel)]="email"
+                                required
+                                class="form-control">
+                        </div>
+    
+                        <h5 class="h5-responsive">
+                            <label for="role">Are you signing up as a Consumer or a Producer?</label>
+                        </h5>
+                        <div class="pl-3">
+                        
+                            <label class="pr-3">
+                                Consumer: 
+                                <input
+                                    type="radio" 
+                                    name="role" 
+                                    value="consumer" 
+                                    [(ngModel)]="role"
+                                    />
+                            </label>
+                        
+                            <label>
+                                Producer: 
+                                <input 
+                                    type="radio" 
+                                    name="role" 
+                                    value="producer"
+                                    id="producer"
+                                    [(ngModel)]="role" 
+                                    required
+                                    (change)="resizeMap()"/>
+                            </label>
+                        </div>
+    
+                        <!-- if producer -->
+                        <div [class.hidden]="role !== 'producer'" class="row">
+
+                            <br>
+                
+                            <div class="col-12">
+                                <h2 class="h2-responsive"><strong>Welcome to Onlylocalfood.com!</strong></h2>
+                                <p>We're always happy to have new producers.</p>
+                            </div>
+    
+                            <!-- business name -->
+                            <div class="col-12">
+                                <h5 class="h5-responsive">
+                                    <label for="name" class="">Business Name</label>
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-user prefix"></i>
+                                    <input type="text"  
+                                    id="name"  
+                                    name="name"
+                                    ngModel
+                                    class="form-control">
+                                </div>
+                            </div>
+    
+                            <!-- description -->
+                            <div class="col-12">
+                                <h5 class="h5-responsive">
+                                    <label for="description">Description of your Business</label>
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-align-justify prefix"></i>
+                                    <textarea
+                                        type="text" 
+                                        id="description" 
+                                        class="md-textarea"
+                                        name="description"
+                                        ngModel
+                                        class="form-control"></textarea>
+                                </div>
+                            </div>
+    
+                            <!-- logo upload -->
+                            <div class="col-12">
+                                <h5 class="h5-responsive">
+                                    <label for="logoUrl" class="">Upload a Logo</label>
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-image prefix"></i>
+                                    <input type="file"  
+                                    id="logoUrl"  
+                                    name="logoUrl"
+                                    ngModel
+                                    class="form-control">
+                                </div>
+                            </div>
+                
+                            <!-- location -->
+                            <div class="col-12">
+    
+                                <h5 class="h5-responsive">
+                                    <label for="search">Enter Your Location</label>
+                                    <p><small>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</small></p>                                    
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-map-marker prefix"></i>
+                                    <input  
+                                        autocorrect="off" 
+                                        autocapitalize="off" 
+                                        spellcheck="off" 
+                                        type="text" 
+                                        class="form-control" 
+                                        #search 
+                                        id="search"
+                                        [formControl]="searchControl">
+                                </div>
+    
+                            </div>
+                    
+                            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                                <agm-marker [latitude]="latitude" [longitude]="longitude">
+                                    <!-- <agm-info-window>Börk</agm-info-window> -->
+                                </agm-marker>
+                            </agm-map>
+                    
+                        </div>
+    
+                        <!--Textarea with icon-->
+                        <!-- <h5 class="h5-responsive">
+                            <label for="form7"></label>
+                        </h5>
+                        <div class="md-form">
+                            <i class="fa fa-pencil prefix"></i>
+                            <textarea type="text" id="form7" class="md-textarea"></textarea>
+                            
+                        </div>
+    
+                        <h5 class="h5-responsive">Disabled field</h5>
+                        <div class="md-form">
+                            <input type="text" id="form11" class="form-control" disabled>
+                            <label for="form11" class="disabled">Example label</label>
+                        </div> -->
+
+                        <hr>
+    
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-olf-primary" [disabled]="!f.valid">Complete Signup</button>
+                        </div>
+                    </form>
+    
+                </div>
+                <!--Naked Form-->
+    
+            </div>
+        </div>
+    </div>

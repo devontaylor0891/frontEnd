@@ -469,7 +469,6 @@
       "firstName": "Devon",
       "registrationDate": "Jan 1 2017",
       "status": "active",
-
       "products": [
         {
           "id": 43,
@@ -901,6 +900,19 @@
       "logoUrl": "",
       "longitude": -101.66362779999997,
       "latitude": 50.1395529,
+      "firstName": "Devon",
+      "status": "active",
+      "products": [],
+      "schedule": []
+    },
+    {
+      "id": "5abd722b3d8f01209c970a40",
+      "name": "",
+      "description": "",
+      "email": "aa@onlylocalfood.com",
+      "logoUrl": "",
+      "longitude": -100.5555,
+      "latitude": 50.5555,
       "firstName": "Devon",
       "status": "active",
       "products": [],
@@ -2539,6 +2551,22 @@
       "name": "",
       "description": "",
       "logoUrl": ""
+    },
+    {
+      "id": "5abd722b3d8f01209c970a40",
+      "firstName": "Devon",
+      "email": "aa@onlylocalfood.com",
+      "registrationDate": "2018-03-29T23:09:32.296Z",
+      "role": "producer",
+      "orders": []
+    },
+    {
+      "id": "5abd765f3d8f01209c970ade",
+      "firstName": "",
+      "email": "bb@onlylocalfood.com",
+      "registrationDate": "2018-03-29T23:27:27.802Z",
+      "role": "",
+      "orders": []
     }
   ],
   "products": [
@@ -2606,7 +2634,6 @@
       "unitsPer": 1,
       "category": "Meat",
       "subcategory": "Beef",
-
       "dateAdded": "2017-12-20T14:17:36.255Z",
       "qtyAvailable": 60,
       "qtyPending": 140,
