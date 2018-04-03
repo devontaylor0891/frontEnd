@@ -917,6 +917,12 @@
       "status": "active",
       "products": [],
       "schedule": []
+    },
+    {
+      "id": "5ac2d7a449c317236e3c1b7a",
+      "name": "bizname",
+      "description": "description",
+      "logoUrl": ""
     }
   ],
   "orders": [
@@ -2566,6 +2572,14 @@
       "email": "bb@onlylocalfood.com",
       "registrationDate": "2018-03-29T23:27:27.802Z",
       "role": "",
+      "orders": []
+    },
+    {
+      "id": "5ac2d7a449c317236e3c1b7a",
+      "firstName": "devon",
+      "email": "cc@onlylocalfood.com",
+      "registrationDate": "2018-04-03T01:23:48.421Z",
+      "role": "producer",
       "orders": []
     }
   ],

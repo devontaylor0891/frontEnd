@@ -12,133 +12,149 @@
                     (ngSubmit)="onSubmit(userForm)"
                     [formGroup]="userForm">
 
-                    <h5 class="h5-responsive">
-                        <label for="firstName" class="">First Name</label>
-                    </h5>
-                    <!-- first name -->
-                    <div class="md-form pl-3">
-                        <i class="fa fa-user prefix"></i>
-                        <input type="text"  
-                        formControlName="userForm.controls.user.controls.firstName"
-                        class="form-control">
-                    </div>
+                    <!-- User Form Group -->
+                    <div formGroupName="user">
 
-                    <!-- email -->
-                    <h5 class="h5-responsive">
-                        <label for="email" data-error="wrong" data-success="right">Your email</label>
-                    </h5>
-                    <div class="md-form pl-3">
-                        <i class="fa fa-envelope prefix"></i>
-                        <input
-                            type="email"  
-                            [formControlName]="email"
-                            class="form-control">
-                    </div>
-
-                    <!-- consumer or producer -->
-                    <h5 class="h5-responsive">
-                        <label for="role">Are you signing up as a Consumer or a Producer?</label>
-                    </h5>
-                    <div class="pl-3">
-                    
-                        <label class="pr-3">
-                            Consumer: 
+                        <h5 class="h5-responsive">
+                            <label for="firstName" class="">First Name</label>
+                        </h5>
+                        <!-- first name -->
+                        <div class="md-form pl-3">
+                            <i class="fa fa-user prefix"></i>
                             <input
-                                type="radio" 
-                                value="consumer"
-                                [formControlName]="role"
-                                (change)="onSelectConsumer()"/>
-                        </label>
-                    
-                        <label>
-                            Producer: 
-                            <input 
-                                type="radio" 
-                                [formControlName]="role"
-                                value="producer"
-                                (change)="resizeMap(); onSelectProducer()"/>
-                        </label>
+                                type="text"  
+                                formControlName="firstName"
+                                class="form-control">
+                        </div>
+    
+                        <!-- email -->
+                        <h5 class="h5-responsive">
+                            <label for="email" data-error="wrong" data-success="right">Your email</label>
+                        </h5>
+                        <div class="md-form pl-3">
+                            <i class="fa fa-envelope prefix"></i>
+                            <input
+                                type="email"  
+                                formControlName="email"
+                                class="form-control">
+                        </div>
+    
+                        <!-- consumer or producer -->
+                        <h5 class="h5-responsive">
+                            <label for="role">Are you signing up as a Consumer or a Producer?</label>
+                        </h5>
+                        <div class="pl-3">
+                        
+                            <label class="pr-3">
+                                Consumer: 
+                                <input
+                                    type="radio" 
+                                    value="consumer"
+                                    formControlName="role"
+                                    (change)="onSelectConsumer()"/>
+                            </label>
+                        
+                            <label>
+                                Producer: 
+                                <input 
+                                    type="radio" 
+                                    formControlName="role"
+                                    value="producer"
+                                    (change)="resizeMap(); onSelectProducer()"/>
+                            </label>
+                        </div>
+
                     </div>
 
-                    <!-- if producer -->
+                    <!-- producer only form -->
                     <div [class.hidden]="role !== 'producer'" class="row">
 
-                        <br>
-            
-                        <div class="col-12">
-                            <h2 class="h2-responsive"><strong>Welcome to Onlylocalfood.com!</strong></h2>
-                            <p>We're always happy to have new producers.</p>
-                        </div>
+                        <!-- Producer Form Group -->
+                        <div formGroupName="producer">
 
-                        <!-- business name -->
-                        <div class="col-12">
-                            <h5 class="h5-responsive">
-                                <label for="name" class="">Business Name</label>
-                            </h5>
-                            <div class="md-form pl-3">
-                                <i class="fa fa-user prefix"></i>
-                                <input type="text"  
-                                [formControlName]="name"
-                                class="form-control">
-                            </div>
-                        </div>
+                            <br>
 
-                        <!-- description -->
-                        <div class="col-12">
-                            <h5 class="h5-responsive">
-                                <label for="description">Description of your Business</label>
-                            </h5>
-                            <div class="md-form pl-3">
-                                <i class="fa fa-align-justify prefix"></i>
-                                <textarea
-                                    type="text" 
-                                    class="md-textarea"
-                                    [formControlName]="description"
-                                    class="form-control"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- logo upload -->
-                        <div class="col-12">
-                            <h5 class="h5-responsive">
-                                <label for="logoUrl" class="">Upload a Logo</label>
-                            </h5>
-                            <div class="md-form pl-3">
-                                <i class="fa fa-image prefix"></i>
-                                <input type="file"  
-                                [formControlName]="logoUrl"
-                                class="form-control">
-                            </div>
-                        </div>
-            
-                        <!-- location -->
-                        <div class="col-12">
-
-                            <h5 class="h5-responsive">
-                                <label for="search">Enter Your Location</label>
-                                <p><small>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</small></p>                                    
-                            </h5>
-                            <div class="md-form pl-3">
-                                <i class="fa fa-map-marker prefix"></i>
-                                <input  
-                                    autocorrect="off" 
-                                    autocapitalize="off" 
-                                    spellcheck="off" 
-                                    type="text" 
-                                    class="form-control" 
-                                    #search 
-                                    id="search"
-                                    [formControl]="searchControl">
+                            <div class="col-12">
+                                <h2 class="h2-responsive"><strong>Welcome to Onlylocalfood.com!</strong></h2>
+                                <p>We're always happy to have new producers.</p>
                             </div>
 
+                            <!-- business name -->
+                            <div class="col-12">
+                                <h5 class="h5-responsive">
+                                    <label for="name" class="">Business Name</label>
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-user prefix"></i>
+                                    <input type="text"  
+                                        formControlName="name"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- description -->
+                            <div class="col-12">
+                                <h5 class="h5-responsive">
+                                    <label for="description">Description of your Business</label>
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-align-justify prefix"></i>
+                                    <textarea
+                                        type="text" 
+                                        class="md-textarea"
+                                        formControlName="description"
+                                        class="form-control"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- logo upload -->
+                            <div class="col-12">
+                                <h5 class="h5-responsive">
+                                    <label for="logoUrl" class="">Upload a Logo</label>
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-image prefix"></i>
+                                    <input
+                                        type="file"  
+                                        formControlName="logoUrl"
+                                        class="form-control">
+                                </div>
+                            </div>
                         </div>
-                
-                        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-                            <agm-marker [latitude]="latitude" [longitude]="longitude">
-                                <!-- <agm-info-window>Börk</agm-info-window> -->
-                            </agm-marker>
-                        </agm-map>
-                
+                        <!-- producer form group end -->
+
+                        <div>
+
+                            <!-- location -->
+                            <div class="col-12">
+
+                                <h5 class="h5-responsive">
+                                    <label for="search">Enter Your Location</label>
+                                    <p><small>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</small></p>                                    
+                                </h5>
+                                <div class="md-form pl-3">
+                                    <i class="fa fa-map-marker prefix"></i>
+                                    <input  
+                                        autocorrect="off" 
+                                        autocapitalize="off" 
+                                        spellcheck="off" 
+                                        type="text" 
+                                        class="form-control" 
+                                        #search 
+                                        id="search"
+                                        [formControl]="searchControl">
+                                </div>
+
+                            </div>
+
+                            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                                <agm-marker [latitude]="latitude" [longitude]="longitude">
+                                    <!-- <agm-info-window>Börk</agm-info-window> -->
+                                </agm-marker>
+                            </agm-map>
+
+                        </div>
+
                     </div>
 
                     <hr>

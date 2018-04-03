@@ -385,20 +385,20 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     // instantiate the formgroup
     this.userForm = new FormGroup({
       user: new FormGroup({
-        firstName: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required]),
+        firstName: new FormControl(this.firstName, [Validators.required]),
+        email: new FormControl(this.email, [Validators.required]),
         role: new FormControl('consumer', [Validators.required])
       }),
       producer: new FormGroup({
         id: new FormControl(this.id),
         name: new FormControl('', [Validators.required]),
-        location: new FormControl('', [Validators.required]),
-        province: new FormControl('', [Validators.required]),
-        address: new FormControl(''),
+        // location: new FormControl('', [Validators.required]),
+        // province: new FormControl('', [Validators.required]),
+        // address: new FormControl(''),
         description: new FormControl('', [Validators.required]),
         logoUrl: new FormControl(''),
-        longitude: new FormControl('', [Validators.required]),
-        latitude: new FormControl('', [Validators.required])
+        // longitude: new FormControl('', [Validators.required]),
+        // latitude: new FormControl('', [Validators.required])
       }),
       status: new FormControl('active')
     });
@@ -453,7 +453,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           console.log('user updated: ', result);
-          if (form.value.role === 'producer') {
+          if (form.value.user.role === 'producer') {
             this.apiService.createProducer(form.value.producer)
               .subscribe(
                 result => {
