@@ -921,8 +921,18 @@
     {
       "id": "5ac2d7a449c317236e3c1b7a",
       "name": "bizname",
-      "description": "description",
-      "logoUrl": ""
+      "location": "Moosomin",
+      "province": "SK",
+      "address": "",
+      "description": "desc",
+      "email": "cc@onlylocalfood.com",
+      "logoUrl": "",
+      "longitude": -101.6668282,
+      "latitude": 50.1435671,
+      "firstName": "Devon",
+      "status": "active",
+      "products": [],
+      "schedule": []
     }
   ],
   "orders": [
@@ -2576,9 +2586,9 @@
     },
     {
       "id": "5ac2d7a449c317236e3c1b7a",
-      "firstName": "devon",
+      "firstName": "Devon",
       "email": "cc@onlylocalfood.com",
-      "registrationDate": "2018-04-03T01:23:48.421Z",
+      "registrationDate": "2018-04-04T01:17:33.641Z",
       "role": "producer",
       "orders": []
     }
