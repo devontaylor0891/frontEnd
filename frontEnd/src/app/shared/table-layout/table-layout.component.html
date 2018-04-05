@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let record of records">
+        <tr *ngFor="let record of sortedRecords">
             <td *ngFor="let map of columnMaps">{{ record[map.access(record)] | formatCell:map.format }}</td>
             <td *ngIf="!pending">
                 <a (click)="onOpenView(record)">View</a>
@@ -31,3 +31,14 @@
         </tr>
     </tbody>
 </table>
+<!-- 
+<app-pagination 
+    *ngIf="recordsCount > perPage"
+    [count]="recordsCount"
+    [page]="currentPage"
+    [perPage]="perPage"
+    [pagesToShow]="5"
+    (onPrev)="prevPage()"
+    (onNext)="nextPage()"
+    (onPage)="goToPage($event)">
+</app-pagination> -->
