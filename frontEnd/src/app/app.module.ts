@@ -77,6 +77,7 @@ import { AccountInfoComponent } from './shared/account-info/account-info.compone
 import { ProductCardComponent } from './shared/product-card/product-card.component';
 import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 // dashboards - good candidate for lazy loading
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { UsersComponent } from './feature/dashboard/admin/users/users.component';
@@ -184,7 +185,8 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     ConsumerViewOrderModalComponent,
     ConsumerEditOrderModalComponent,
     LearnMoreConsumerComponent,
-    LearnMoreProducerComponent
+    LearnMoreProducerComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

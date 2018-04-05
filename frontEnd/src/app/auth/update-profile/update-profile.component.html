@@ -115,8 +115,11 @@
                                 <div class="md-form pl-3">
                                     <i class="fa fa-image prefix"></i>
                                     <input
-                                        type="file"  
+                                        #logoUrl
+                                        type="file"
+                                        accept=".png, .jpg, .jpeg"
                                         formControlName="logoUrl"
+                                        (change)="fileChange($event)"
                                         class="form-control">
                                 </div>
                             </div>

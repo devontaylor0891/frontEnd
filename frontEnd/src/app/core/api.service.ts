@@ -41,6 +41,18 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+// ********** FILE UPLOAD *******
+  // upload the file
+  uploadFile(formData): Observable<any> {
+    return this.http
+      .post(`${ENV.BASE_API}images/`, formData, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+        .append('Content-Type', 'multipart/form-data')
+        .append('Accept', 'application/json')
+      })
+      .catch(this._handleError);
+  };
+
 // ********** PRODUCTS *******
 
   // get all products for admin dash
