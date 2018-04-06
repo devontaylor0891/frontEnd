@@ -65,7 +65,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
     this.sortedRecords = this.records; // set sorted records to initial record list
     this.recordsCount = this.records.length; // get the count
     this.getPaginatedRecords(this.currentPage); // get the first page of records
-    console.log('paged records: ', this.paginatedRecords);
   }
 
   constructor(private modal: NgbModal,
@@ -139,6 +138,7 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   }
 
   onSort(map) {
+    console.log('onSort called: ', map);
     this.setSortDirection(map);
     // get the sorting column
     let sortColumn = map.primaryKey;
@@ -164,6 +164,7 @@ export class TableLayoutComponent implements OnInit, OnChanges {
         return b[sortColumn] - a[sortColumn];
       });
     };
+    this.getPaginatedRecords(this.currentPage);
   }
 
   sortAscending(array, sortColumn) {
@@ -272,10 +273,8 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
   getPaginatedRecords(pageNumber) {
     if (this.recordsCount <= this.perPage) {
-      console.log('records less than per page');
       this.paginatedRecords = this.sortedRecords;
     } else {
-      console.log('records more than per page');
       let startIndex = ((pageNumber * this.perPage) - this.perPage);
       let endIndex = (pageNumber * this.perPage || this.recordsCount);
       console.log(startIndex);
@@ -285,21 +284,18 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   };
 
   goToPage(n: number): void {
-    console.log('gotopage clicked: ', n);
     this.currentPage = n;
     this.getPaginatedRecords(this.currentPage);
   };
 
 
   nextPage(): void {
-    console.log('next clicked');
     this.currentPage++;
     this.getPaginatedRecords(this.currentPage);
   };
 
 
-  onPrev(): void {
-    console.log('prev clicked');
+  prevPage(): void {
     this.currentPage--;
     this.getPaginatedRecords(this.currentPage);
   };
