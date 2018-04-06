@@ -45,6 +45,12 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   sortedRecords: any[]; 
   sortDirection: any[]; // array of the column and it's sort value
 
+  // for pagination
+  recordsCount: number = 0; // total quantity of records
+  currentPage: number = 1; // current page number
+  perPage: number = 5; // number of records to show per page
+  paginatedRecords: any[]; // the array that will hold the current page's records
+
   ngOnChanges() {
     if (this.settings) { // when settings provided in the parent component property binding
       this.columnMaps = this.settings
@@ -55,12 +61,21 @@ export class TableLayoutComponent implements OnInit, OnChanges {
           return new ColumnMap( { primaryKey: key } );
       });
     }
+
+    this.sortedRecords = this.records; // set sorted records to initial record list
+    this.recordsCount = this.records.length; // get the count
+    this.getPaginatedRecords(this.currentPage); // get the first page of records
+    console.log('paged records: ', this.paginatedRecords);
   }
 
   constructor(private modal: NgbModal,
               private utility: UtilityService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+
+
+  }
 
   download(records) {
     this.utility.convertAndDownload(records);
@@ -252,5 +267,41 @@ export class TableLayoutComponent implements OnInit, OnChanges {
     }
     return index;
   }
+
+  // ********* PAGINATION *********
+
+  getPaginatedRecords(pageNumber) {
+    if (this.recordsCount <= this.perPage) {
+      console.log('records less than per page');
+      this.paginatedRecords = this.sortedRecords;
+    } else {
+      console.log('records more than per page');
+      let startIndex = ((pageNumber * this.perPage) - this.perPage);
+      let endIndex = (pageNumber * this.perPage || this.recordsCount);
+      console.log(startIndex);
+      console.log(endIndex);
+      this.paginatedRecords = this.sortedRecords.slice(startIndex, endIndex);
+    }
+  };
+
+  goToPage(n: number): void {
+    console.log('gotopage clicked: ', n);
+    this.currentPage = n;
+    this.getPaginatedRecords(this.currentPage);
+  };
+
+
+  nextPage(): void {
+    console.log('next clicked');
+    this.currentPage++;
+    this.getPaginatedRecords(this.currentPage);
+  };
+
+
+  onPrev(): void {
+    console.log('prev clicked');
+    this.currentPage--;
+    this.getPaginatedRecords(this.currentPage);
+  };
 
 }

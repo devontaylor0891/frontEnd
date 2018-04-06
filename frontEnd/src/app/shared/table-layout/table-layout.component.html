@@ -1,7 +1,7 @@
 <!-- TABLES -->
 <div class="row">
     <div class="col-12">
-        <button *ngIf="!sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(records)">Export as CSV</button>
+        <!-- <button *ngIf="!sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(records)">Export as CSV</button> -->
         <button *ngIf="sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(sortedRecords)">Export as CSV</button>
     </div>
 </div>
@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let record of sortedRecords">
+        <tr *ngFor="let record of paginatedRecords">
             <td *ngFor="let map of columnMaps">{{ record[map.access(record)] | formatCell:map.format }}</td>
             <td *ngIf="!pending">
                 <a (click)="onOpenView(record)">View</a>
@@ -31,14 +31,14 @@
         </tr>
     </tbody>
 </table>
-<!-- 
+
 <app-pagination 
     *ngIf="recordsCount > perPage"
     [count]="recordsCount"
     [page]="currentPage"
     [perPage]="perPage"
     [pagesToShow]="5"
-    (onPrev)="prevPage()"
-    (onNext)="nextPage()"
-    (onPage)="goToPage($event)">
-</app-pagination> -->
+    (goPrev)="prevPage()"
+    (goNext)="nextPage()"
+    (goPage)="goToPage($event)">
+</app-pagination>

@@ -76,8 +76,10 @@ export class ProducerScheduleComponent implements OnInit {
         (schedules) => {
           const upcoming = schedules.filter(schedule => schedule.endDateTime > date);
           this.upcomingSchedule = upcoming;
+          console.log('upcoming: ', this.upcomingSchedule);
           const completed = schedules.filter(schedule => schedule.endDateTime < date);
           this.completedSchedule = completed;
+          console.log('completed: ', this.completedSchedule);
         }
       );
 

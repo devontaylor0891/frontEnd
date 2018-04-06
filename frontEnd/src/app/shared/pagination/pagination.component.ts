@@ -11,9 +11,9 @@ export class PaginationComponent {
     @Input() count: number; // how many total items there are in all pages
     @Input() perPage: number; // how many items we want to show per page
 
-    @Output() goPrev = new EventEmitter<boolean>();
-    @Output() goNext = new EventEmitter<boolean>();
-    @Output() goPage = new EventEmitter<number>();
+    @Output() goPrev: EventEmitter<any> = new EventEmitter();
+    @Output() goNext: EventEmitter<any> = new EventEmitter();
+    @Output() goPage: EventEmitter<any> = new EventEmitter();
 
     pagesToShow: number = 5; // how many pages between next/prev
 
@@ -39,8 +39,8 @@ export class PaginationComponent {
         this.goPrev.emit(true);
     };
 
-    onNext(next: boolean): void {
-        this.goNext.emit(next);
+    onNext(): void {
+        this.goNext.emit(true);
     };
 
     totalPages(): number {
