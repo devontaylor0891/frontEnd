@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-12">
         <!-- <button *ngIf="!sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(records)">Export as CSV</button> -->
-        <button *ngIf="sortedRecords" class="btn btn-sm btn-olf-primary" (click)="download(sortedRecords)">Export as CSV</button>
+        <button *ngIf="sortedRecords.length !== 0" class="btn btn-sm btn-olf-primary" (click)="download(sortedRecords)">Export as CSV</button>
     </div>
 </div>
 <table class="table table-responsive-md table-hover">

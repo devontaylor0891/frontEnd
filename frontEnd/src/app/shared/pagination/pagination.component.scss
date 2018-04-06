@@ -2,6 +2,7 @@
 	flex: 0 0 30px;
 	display: flex;
 	.pagination {
+		padding: 0.5em 1em;
 		width: 100%;
 		position: relative;
 		flex: 1;
@@ -39,9 +40,10 @@
 				cursor: pointer;
 
 
-				// &.active {
-				// 	@extend .h6;
-				// }
+				&.active {
+					font-weight: bold;
+					font-size: 120%;
+				}
 
 
 				&.disabled {
