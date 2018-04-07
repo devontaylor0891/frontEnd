@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { } from 'googlemaps';
@@ -10,6 +10,7 @@ import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 import { ProducerModel } from '../../../../../../core/models/producer.model';
 
 import { ProducerDashboardService } from '../../../../producer-dashboard.service';
+import { ApiService } from '../../../../../../core/api.service';
 
 @Component({
   selector: 'app-add-schedule-modal',
@@ -25,6 +26,8 @@ export class AddScheduleModalComponent implements OnInit {
 
   @ViewChild("search") public searchElementRef: ElementRef;
   @ViewChild("input2") public datePickerRef: ElementRef;
+
+  @Output() itemCreated = new EventEmitter<ScheduleModel>();
 
   form: FormGroup; //this will hold our form data in a js object
   
@@ -77,19 +80,20 @@ export class AddScheduleModalComponent implements OnInit {
   public deadlineTimeMoment: any = new Date(0, 0, 0, (this.startTimeMoment.getHours() - 6), this.startTimeMoment.getMinutes(), 0, 0); // defaults to 12 hours before start time
 
   constructor(private dashboardService: ProducerDashboardService,
-                private formBuild: FormBuilder,
-                private activeModal: NgbActiveModal,
+              private formBuild: FormBuilder,
+              private activeModal: NgbActiveModal,
               private mapsAPILoader: MapsAPILoader,
-            private ngZone: NgZone) {
+              private ngZone: NgZone,
+              private apiService: ApiService) {
 
     this.buildBlankSubmitObject();
 
     this.form = formBuild.group({
       'type': ['', Validators.required],
       'description': [''],
-	  'repeat': [this.isRepeat, Validators.required],
+	    'repeat': [this.isRepeat, Validators.required],
       'date': [this.dateMoment],
-	  'dates': [this.dateMoments],
+	    'dates': [this.dateMoments],
       'startTime': [this.startTimeMoment, Validators.required],
       'endTime': [this.endTimeMoment, Validators.required],
       'deadlineCalcHours': [12],
@@ -112,13 +116,26 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitting = true;
     if (!this.isRepeat) {
       this.buildSubmitObject();
-      this.dashboardService.addNewSchedule(this.submitObject);
+      // this.dashboardService.addNewSchedule(this.submitObject);
+      this.apiService.postSchedule(this.submitObject)
+      .subscribe(
+        result => {
+          this.itemCreated.emit(result);
+        }
+      );
     } else {
       console.log('datesArray: ', this.datesArray);
       for (let i = 0; i < this.datesArray.length; i++) {
         this.buildRepeatSubmitObject(i, this.form.value.deadlineCalcHours);
         console.log('submit object: ', i, this.submitObject);
-        this.dashboardService.addNewSchedule(this.submitObject);
+        // this.dashboardService.addNewSchedule(this.submitObject);
+        this.apiService.postSchedule(this.submitObject)
+          .subscribe(
+            result => {
+              console.log('emitting: ', result);
+              this.itemCreated.emit(result);
+            }
+          );
       }
     }
     

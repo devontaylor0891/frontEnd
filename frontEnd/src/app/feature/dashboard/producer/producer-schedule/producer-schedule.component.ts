@@ -64,7 +64,11 @@ export class ProducerScheduleComponent implements OnInit {
   openModal() {
     // this.modal.open(this.modalContent, { size: 'lg' });  
     const modalRef = this.modal.open(AddScheduleModalComponent, { size: 'lg' });
-    // modalRef.componentInstance.form = this.form;  
+    modalRef.componentInstance.itemCreated.subscribe((schedule) => {
+      console.log('schedule from event emitter: ', schedule);
+      this.createNew(schedule);
+      // if console log works, call createNew(schedule) to add it to the schedule list
+    });
   }
 
   ngOnInit() {
@@ -84,4 +88,8 @@ export class ProducerScheduleComponent implements OnInit {
       );
 
   }
+
+  createNew(schedule: ScheduleModel) {
+    this.upcomingSchedule.push(schedule);
+  };
 }

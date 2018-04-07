@@ -331,3 +331,16 @@ input[type=number]::-webkit-outer-spin-button {
     background-repeat: no-repeat;
     position: absolute
 }
+
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 1090;
+  }
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    background-color: #741b47 !important;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-today:not(.owl-dt-calendar-cell-selected) {
+    border-color: #741b47 !important;
+}

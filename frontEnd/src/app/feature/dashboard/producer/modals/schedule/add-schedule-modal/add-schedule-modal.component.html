@@ -119,18 +119,22 @@
                   <div *ngIf="isRepeat" class="row">
                       <label for="dates" class="col-4 col-form-label text-right">Dates:</label>
                       <div class="col-8">
-                        <owl-date-time
-                            [selectionMode]="'multiple'"
+                        <input [owlDateTime]="dates" [owlDateTimeTrigger]="dates" [selectMode]="'range'">
+                        <owl-date-time 
+                            #dates
+                            
                             [showButtons]="true"
-                          [(ngModel)]="dateMoments"
-                          [ngModelOptions]="{standalone: true}"
-                          [dateFormat]="'YYYY-MM-DD'"
-                          [type]="'calendar'" 
-                          [placeHolder]="'YYYY-MM-DD'"
-                          (onConfirm)="onChooseMultipleDates(value)"
-                          [inputId]="'dates'"
+                            [(ngModel)]="dateMoments"
+                            [ngModelOptions]="{standalone: true}"
+                            [dateFormat]="'YYYY-MM-DD'"
+                            [pickerType]="'calendar'" 
+                            [placeHolder]="'YYYY-MM-DD'"
+                            (onConfirm)="onChooseMultipleDates(value)"
+                            [inputId]="'dates'"
                             [min]="moment"
-                          [formControl]="form.controls['dates']"></owl-date-time>
+                            formControlName="dates"
+                            ngDefaultControl
+                            ></owl-date-time>
                       </div>
                   </div>
         
@@ -138,34 +142,57 @@
                   <div *ngIf="!isRepeat" class="row">
                       <label for="input2" class="col-4 col-form-label text-right">Date:</label>
                       <div class="col-8">
-                        <owl-date-time 
-                          [(ngModel)]="dateMoment"
-                          [ngModelOptions]="{standalone: true}"
-                          [dateFormat]="'YYYY-MM-DD'"
-                          [type]="'calendar'" 
-                          [placeHolder]="'YYYY-MM-DD'"
-                          (onSelect)="onChooseDate()"
-                          [autoClose]="true"
-                          [inputId]="'input2'"
-                          [min]="moment"
-                          [formControl]="form.controls['date']"></owl-date-time>
+                        <input [owlDateTime]="date" [owlDateTimeTrigger]="date">
+                        <owl-date-time
+                            #date
+                            [(ngModel)]="dateMoment"
+                            [ngModelOptions]="{standalone: true}"
+                            [dateFormat]="'YYYY-MM-DD'"
+                            [pickerType]="'calendar'" 
+                            [placeHolder]="'YYYY-MM-DD'"
+                            (onSelect)="onChooseDate()"
+                            [autoClose]="true"
+                            [inputId]="'date'"
+                            [min]="moment"
+                            [formControl]="form.controls['date']"
+                            ngDefaultControl
+                            ></owl-date-time>
+                        <!-- <owl-date-time 
+                            #date
+                            [pickerMode]="'dialog'"
+                            [(ngModel)]="dateMoment"
+                            [ngModelOptions]="{standalone: true}"
+                            [dateFormat]="'YYYY-MM-DD'"
+                            [type]="'calendar'" 
+                            [placeHolder]="'YYYY-MM-DD'"
+                            (onSelect)="onChooseDate()"
+                            [autoClose]="true"
+                            [inputId]="'input2'"
+                            [min]="moment"
+                            [formControl]="form.controls['date']"
+                            ngDefaultControl
+                            ></owl-date-time> -->
                       </div>
                   </div>
-        
-                <!-- START TIME - USES DATEPICKER MODULE -->
+
+                  <!-- START TIME - USES DATEPICKER MODULE -->
                   <div class="row">
                       <label for="input3" class="col-4 col-form-label text-right">Start Time:</label>
                       <div class="col-8">
-                        <owl-date-time 
-                            [(ngModel)]="startTimeMoment" 
-                            [ngModelOptions]="{standalone: true}"
-                            [type]="'timer'"
-                            [dateFormat]="'hh:mm'"
-                            [placeHolder]="'HH:MM'" 
-                            (onSelect)="onChooseStartTime()"
-                            [autoClose]="true"
-                            [inputId]="'input3'"
-                            [formControl]="form.controls['startTime']"></owl-date-time>
+                            <input [owlDateTime]="startTime" [owlDateTimeTrigger]="startTime">
+                            <owl-date-time 
+                                #startTime
+                                [(ngModel)]="startTimeMoment" 
+                                [ngModelOptions]="{standalone: true}"
+                                [pickerType]="'timer'"
+                                [dateFormat]="'hh:mm'"
+                                [stepMinute]="15"
+                                (onSelect)="onChooseStartTime()"
+                                [autoClose]="true"
+                                [inputId]="'input3'"
+                                [formControl]="form.controls['startTime']"
+                                ngDefaultControl
+                                ></owl-date-time>
                       </div>
                   </div>
     
@@ -173,16 +200,20 @@
                   <div class="row">
                       <label for="input4" class="col-4 col-form-label text-right">End Time</label>
                       <div class="col-8">
-                        <owl-date-time 
-                            [(ngModel)]="endTimeMoment" 
-                            [ngModelOptions]="{standalone: true}"
-                            [type]="'timer'"
-                            [dateFormat]="'hh:mm'"
-                            [placeHolder]="'hh:mm'" 
-                            (onSelect)="onChooseEndTime()"
-                            [autoClose]="true"
-                            [inputId]="'input4'"
-                            [formControl]="form.controls['endTime']"></owl-date-time>
+                            <input [owlDateTime]="endTime" [owlDateTimeTrigger]="endTime">
+                            <owl-date-time 
+                                #endTime
+                                [(ngModel)]="endTimeMoment" 
+                                [ngModelOptions]="{standalone: true}"
+                                [pickerType]="'timer'"
+                                [dateFormat]="'hh:mm'"
+                                [stepMinute]="15"
+                                (onSelect)="onChooseEndTime()"
+                                [autoClose]="true"
+                                [inputId]="'input4'"
+                                [formControl]="form.controls['endTime']"
+                                ngDefaultControl
+                                ></owl-date-time>
                     </div>
                   </div>
 
@@ -207,15 +238,19 @@
                     <div class="row">
                         <label for="input5" class="col-4 col-form-label text-right">Order Deadline Date</label>
                         <div class="col-8">
-                            <owl-date-time 
-                            [(ngModel)]="deadlineDateMoment"
-                            [ngModelOptions]="{standalone: true}"
-                            [dateFormat]="'YYYY-MM-DD'"
-                            [type]="'calendar'" 
-                            (onSelect)="onChooseDeadlineDate()"
-                            [autoClose]="true"
-                            [inputId]="'input5'"
-                            [formControl]="form.controls['deadlineDate']"></owl-date-time>
+                            <input [owlDateTime]="deadlineDate" [owlDateTimeTrigger]="deadlineDate">
+                            <owl-date-time
+                                #deadlineDate
+                                [(ngModel)]="deadlineDateMoment"
+                                [ngModelOptions]="{standalone: true}"
+                                [dateFormat]="'YYYY-MM-DD'"
+                                [pickerType]="'calendar'" 
+                                (onSelect)="onChooseDeadlineDate()"
+                                [autoClose]="true"
+                                [inputId]="'input5'"
+                                [formControl]="form.controls['deadlineDate']"
+                                ngDefaultControl
+                                ></owl-date-time>
                         </div>
                     </div>
         
@@ -223,15 +258,19 @@
                     <div class="row">
                         <label for="input6" class="col-4 col-form-label text-right">Order Deadline Time</label>
                         <div class="col-8">
+                            <input [owlDateTime]="deadlineTime" [owlDateTimeTrigger]="deadlineTime">
                             <owl-date-time 
+                                #deadlineTime
                                 [(ngModel)]="deadlineTimeMoment" 
                                 [ngModelOptions]="{standalone: true}"
-                                [type]="'timer'"
+                                [pickerType]="'timer'"
                                 [dateFormat]="'hh:mm'"
                                 (onSelect)="onChooseDeadlineTime()"
                                 [autoClose]="true"
                                 [inputId]="'input6'"
-                                [formControl]="form.controls['deadlineTime']"></owl-date-time>
+                                [formControl]="form.controls['deadlineTime']"
+                                ngDefaultControl
+                                ></owl-date-time>
                         </div>
                     </div>
                 </div>
