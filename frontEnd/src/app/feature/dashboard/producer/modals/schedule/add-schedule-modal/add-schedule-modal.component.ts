@@ -25,12 +25,12 @@ export class AddScheduleModalComponent implements OnInit {
   public zoom: number;
 
   @ViewChild("search") public searchElementRef: ElementRef;
-  @ViewChild("input2") public datePickerRef: ElementRef;
+  @ViewChild("date") public datePickerRef: ElementRef;
 
   @Output() itemCreated = new EventEmitter<ScheduleModel>();
 
-  form: FormGroup; //this will hold our form data in a js object
-  
+  form: FormGroup; // this will hold our form data in a js object
+
   producer: ProducerModel;
   type: string;
   hasDelFee: boolean = false;
@@ -62,12 +62,6 @@ export class AddScheduleModalComponent implements OnInit {
   deadlineMinute: number;
   datesArray: Array<any> = []; // to hold dates if repeat is selected
   deadlineCalcHours: number;
-  
-      // public min = new Date(2017, 7, 9);
-      // public max = new Date(2017, 8, 10);
-      // public disabledDates = [new Date(2017, 7, 9), new Date(2017, 7, 12), new Date(2017, 7, 15), new Date(2017, 7, 20)];
-  
-     //  public pickerColor: string = '#0070ba';
 
   // DATE/TIME PICKER SETTINGS
   public moment: any = new Date();
@@ -76,7 +70,7 @@ export class AddScheduleModalComponent implements OnInit {
   public dateMoments: any; // throws error if initialized with a date
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
   public endTimeMoment: any = new Date(0, 0, 0, 13, 0, 0, 0); // default end time is 1pm
-  public deadlineDateMoment: any = new Date(); // default is now because input2 is tomorrow, just for ease of coding
+  public deadlineDateMoment: any = new Date(); // default is now because date is tomorrow, just for ease of coding
   public deadlineTimeMoment: any = new Date(0, 0, 0, (this.startTimeMoment.getHours() - 6), this.startTimeMoment.getMinutes(), 0, 0); // defaults to 12 hours before start time
 
   constructor(private dashboardService: ProducerDashboardService,
@@ -116,7 +110,7 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitting = true;
     if (!this.isRepeat) {
       this.buildSubmitObject();
-      // this.dashboardService.addNewSchedule(this.submitObject);
+      this.dashboardService.addNewSchedule(this.submitObject);
       this.apiService.postSchedule(this.submitObject)
       .subscribe(
         result => {
@@ -127,8 +121,7 @@ export class AddScheduleModalComponent implements OnInit {
       console.log('datesArray: ', this.datesArray);
       for (let i = 0; i < this.datesArray.length; i++) {
         this.buildRepeatSubmitObject(i, this.form.value.deadlineCalcHours);
-        console.log('submit object: ', i, this.submitObject);
-        // this.dashboardService.addNewSchedule(this.submitObject);
+        this.dashboardService.addNewSchedule(this.submitObject);
         this.apiService.postSchedule(this.submitObject)
           .subscribe(
             result => {
@@ -192,7 +185,6 @@ export class AddScheduleModalComponent implements OnInit {
   clearDatesFromSubmitObject() {
     this.submitObject.startDateTime = '';
     this.submitObject.endDateTime = '';
-    console.log('clearing date: ', this.submitObject.startDateTime, this.submitObject.endDateTime)
   }
 
   buildSubmitObject() {
@@ -205,16 +197,7 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
     this.submitObject.hasFee = this.form.value.hasFee;
     this.submitObject.hasWaiver = this.form.value.hasWaiver;
-    // this.submitObject.latitude = this.lat;
-    // this.submitObject.longitude = this.lng;
-    console.log('submitCity before: ', this.submitObject.city);
-    console.log('form.city before: ', this.form.value.city);
-    // this.submitObject.city = this.form.value.city;
-    console.log('submitCity after: ', this.submitObject.city);
-    console.log('form.city after: ', this.form.value.city);
-    // this.submitObject.province = this.form.value.province;
     this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-    // this.submitObject.address = this.form.value.address;
     this.submitObject.fee = this.form.value.fee;
     this.submitObject.feeWaiver = this.form.value.feeWaiver;
     this.submitObject.orderList = [];
@@ -222,25 +205,25 @@ export class AddScheduleModalComponent implements OnInit {
 
   ngOnInit() {
 
-    //set google maps defaults
+    // set google maps defaults
     this.zoom = 4;
     this.latitude = 39.8282;
     this.longitude = -98.5795;
 
-    //create search FormControl
+    // create search FormControl
     this.searchControl = new FormControl();
 
-    //set current position
+    // set current position
     // this.setCurrentPosition();
 
-    //load Places Autocomplete
+    // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["geocode"]
       });
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
-          //get the place result
+          // get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
           // verify result
@@ -292,11 +275,9 @@ export class AddScheduleModalComponent implements OnInit {
     // this.form.value.longitude = this.lng;
     this.submitObject.latitude = this.lat;
     this.submitObject.longitude = this.lng;
-    console.log('form.value after fillAddress: ', this.form.value); // this address is filled out properly, then go to onSubmit
   };
 
   private clearAddress() {
-    console.log('clearAddress called');
     this.streetNumber = '';
     this.route = '';
     this.city = '';
@@ -308,7 +289,6 @@ export class AddScheduleModalComponent implements OnInit {
   }
 
   private parseAddressComponents(components) {
-    console.log('parseAddress called');
     for (let i = 0; i < components.length; i++) {
       let types = components[i].types;
       for (let j = 0; j < types.length; j++) {
@@ -338,9 +318,10 @@ export class AddScheduleModalComponent implements OnInit {
   onChooseDate() {
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
-    this.schedYear = this.dateMoment.getFullYear();
+    this.schedYear = th    console.log('onChooseDeadlineTime: ', this.deadlineTimeMoment);
+    is.dateMoment.getFullYear();
   };
-  
+
   onChooseMultipleDates(value) {
     let valueArray = this.form.controls['dates'].value;
     // for each object in valueArray, get its year, month, and day separated
@@ -366,13 +347,13 @@ export class AddScheduleModalComponent implements OnInit {
     this.schedEndHour = this.endTimeMoment.getHours();
     this.schedEndMinute = this.endTimeMoment.getMinutes();
   }
-  
+
   onChooseDeadlineDate() {
     this.deadlineDateDay = this.deadlineDateMoment.getDate();
     this.deadlineDateMonth = this.deadlineDateMoment.getMonth();
     this.deadlineDateYear = this.deadlineDateMoment.getFullYear();
   };
-  
+
   onChooseDeadlineTime() {
     this.deadlineHour = this.deadlineTimeMoment.getHours();
     this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
@@ -381,11 +362,11 @@ export class AddScheduleModalComponent implements OnInit {
   buildStartDateTime(year, month, day, hour, minute) {
     return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   }
-  
+
   buildEndDateTime(year, month, day, hour, minute) {
     return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   }
-  
+
   buildOrderDeadline(year, month, day, hour, minute) {
     return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   }

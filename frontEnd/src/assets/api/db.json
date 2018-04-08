@@ -3716,6 +3716,25 @@
       "fee": 0,
       "feeWaiver": 0,
       "orderList": []
+    },
+    {
+      "id": 622641,
+      "producerId": "10156726911823275",
+      "type": "Market Pickup",
+      "description": "desc",
+      "startDateTime": "2018-04-08T18:00:00.000Z",
+      "endDateTime": "2018-04-08T19:00:00.000Z",
+      "hasFee": false,
+      "hasWaiver": false,
+      "latitude": 50.1435671,
+      "longitude": -101.6668282,
+      "city": "Moosomin",
+      "province": "SK",
+      "orderDeadline": "2018-04-07T12:00:00.000Z",
+      "address": "",
+      "fee": 0,
+      "feeWaiver": 0,
+      "orderList": []
     }
   ],
   "abandonedOrders": [
