@@ -21,10 +21,10 @@ export class ProducerProductsComponent implements OnInit {
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
-  form: FormGroup; //this will hold our form data in a js object
+  form: FormGroup; // this will hold our form data in a js object
 
   producer: ProducerModel;
-  
+
   currentProducts: ProductModel[] = [];
   outOfStockProducts: ProductModel[] = [];
   deletedProducts: ProductModel[] = [];
@@ -33,7 +33,7 @@ export class ProducerProductsComponent implements OnInit {
   editable: boolean = true;
   deletable: boolean = true;
 
-  projectSettings: ColumnSettingModel[] = 
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'name',
@@ -71,71 +71,35 @@ export class ProducerProductsComponent implements OnInit {
   ];
 
   constructor(private dashboardService: ProducerDashboardService,
-              private modal: NgbModal,
-              private formBuild: FormBuilder) {
-
-    this.form = formBuild.group({
-      'id':[''],
-      'name': ['', Validators.required],
-      'description': ['', Validators.required],
-      'image': [''],
-      'pricePerUnit': [null, Validators.required],
-      'unit': ['', Validators.required],
-      'unitsPer': [1, Validators.required],
-      'category': ['', Validators.required],
-      'subcategory': ['', Validators.required],
-      'dateAdded': [new Date().toISOString()],
-      'qtyAvailable': [null, Validators.required],
-      'qtyPending': [0],
-      'qtyAccepted': [0],
-      'qtyCompleted': [0],
-      'isObsolete': [false],
-      'producerId': [''],
-      'producer': [''],
-      'scheduleList': ['']
-    })
-
-    // this.producerService.productAdded.subscribe(
-    //   (value: ProductModel) => {
-    //     if (value.qtyAvailable > 0) {
-    //       this.currentProducts.push(value);
-    //     } else {
-    //       this.outOfStockProducts.push(value);
-    //     }
-    //   }
-    // );
-
-  }
+              private modal: NgbModal) {  };
 
   openModal() {
-    // this.modal.open(this.modalContent, { size: 'lg' });  
     const modalRef = this.modal.open(AddProductModalComponent, { size: 'lg' });
-    // modalRef.componentInstance.form = this.form;  
-  }
+    modalRef.componentInstance.itemCreated
+      .subscribe(
+        (product) => {
+          this.createNew(product);
+        }
+      );
+  };
 
-  // onSubmit() {
-  //   console.log(this.form.value);
-  //   this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
-  //   this.form.value.producerId = this.producer.id;
-  //   this.form.value.producer = this.producer;
-  //   this.form.value.scheduleList = this.producer.scheduleList;
-  //   console.log(this.form.value);
-  //   this.dashboardService.addNewProduct(this.form.value);
-  // }
-
-  // generateRandomId() {
-  //   return Math.floor( Math.random() * 1000000 )
-  // }
+  createNew(product: ProductModel) {
+    if (product.qtyAvailable > 0) {
+      this.currentProducts.push(product);
+    } else {
+      this.outOfStockProducts.push(product);
+    };
+  };
 
   // view a single product right in the table
   toggleView(product: any) {
     product.showView = !product.showView;
-  }
+  };
 
   // edit a single product right in the table
   toggleEditForm(product: any) {
     product.showEditForm = !product.showEditForm;
-  }
+  };
 
   ngOnInit() {
 
@@ -158,9 +122,6 @@ export class ProducerProductsComponent implements OnInit {
         }
       );
 
-    // this.dashboardService.loadAllProducts();
-
-  }
-
+  };
 
 }

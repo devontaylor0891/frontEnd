@@ -67,7 +67,6 @@ export class ProducerScheduleComponent implements OnInit {
     modalRef.componentInstance.itemCreated.subscribe((schedule) => {
       console.log('schedule from event emitter: ', schedule);
       this.createNew(schedule);
-      // if console log works, call createNew(schedule) to add it to the schedule list
     });
   }
 

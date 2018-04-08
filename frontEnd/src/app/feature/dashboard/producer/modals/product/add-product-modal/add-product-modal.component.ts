@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -7,6 +7,7 @@ import { ProductModel } from '../../../../../../core/models/product.model';
 import { ProducerModel } from '../../../../../../core/models/producer.model';
 
 import { ProducerDashboardService } from '../../../../producer-dashboard.service';
+import { ApiService } from '../../../../../../core/api.service';
 
 @Component({
   selector: 'app-add-product-modal',
@@ -15,16 +16,19 @@ import { ProducerDashboardService } from '../../../../producer-dashboard.service
 })
 export class AddProductModalComponent implements OnInit {
 
-  form: FormGroup; //this will hold our form data in a js object
+  form: FormGroup; // this will hold our form data in a js object
 
   producer: ProducerModel;
 
+  @Output() itemCreated = new EventEmitter<ProductModel>();
+
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
-              private activeModal: NgbActiveModal) {
+              private activeModal: NgbActiveModal,
+              private apiService: ApiService) {
 
     this.form = formBuild.group({
-    'id':[''],
+    'id': [''],
     'name': ['', Validators.required],
     'description': ['', Validators.required],
     'image': [''],
@@ -48,17 +52,18 @@ export class AddProductModalComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value);
-    this.form.value.id = this.generateRandomId(); // remove for production as API should do this for us
     this.form.value.producerId = this.producer.id;
     this.form.value.producer = this.producer;
     this.form.value.scheduleList = this.producer.scheduleList;
-    console.log(this.form.value);
-    this.dashboardService.addNewProduct(this.form.value);
-    this.activeModal.close();
-  }
-
-  generateRandomId() {
-    return Math.floor( Math.random() * 1000000 )
+    // console.log(this.form.value);
+    // this.dashboardService.addNewProduct(this.form.value);
+    this.apiService.postProduct(this.form.value)
+      .subscribe(
+        result => {
+          this.itemCreated.emit(result);
+          this.activeModal.close();
+        }
+      );
   }
 
   ngOnInit() {

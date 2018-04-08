@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -24,17 +24,12 @@ import { FormatCellPipe } from '../../shared/format-cell.pipe';
   templateUrl: './table-layout.component.html',
   styleUrls: ['./table-layout.component.scss']
 })
-export class TableLayoutComponent implements OnInit, OnChanges {
-
-  // @ViewChild('viewModalContent') viewModalContent: TemplateRef<any>;
-  // @ViewChild('editModalContent') editModalContent: TemplateRef<any>;
-  // @ViewChild('deleteModalContent') deleteModalContent: TemplateRef<any>;
+export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
 
   @Input() records: any[];
   @Input() caption: string;
   keys: string[];
   @Input() settings: ColumnSettingModel[];
-  // columnMaps: ColumnSettingModel[];
   columnMaps: ColumnMap[];
   @Input() editable: boolean; // governs display of Edit button
   @Input() deletable: boolean; // display of Delete button
@@ -51,6 +46,8 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   perPage: number = 5; // number of records to show per page
   paginatedRecords: any[]; // the array that will hold the current page's records
 
+  iterableDiffer: any;
+
   ngOnChanges() {
     if (this.settings) { // when settings provided in the parent component property binding
       this.columnMaps = this.settings
@@ -64,17 +61,28 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
     this.sortedRecords = this.records; // set sorted records to initial record list
     this.recordsCount = this.records.length; // get the count
-    this.getPaginatedRecords(this.currentPage); // get the first page of records
+    this.getPaginatedRecords(this.currentPage); // get the page of records
+  }
+
+  ngDoCheck() { // update the pagination count when a record is added.
+    let changes = this.iterableDiffer.diff(this.records);
+    if (changes) {
+      this.recordsCount = this.records.length;
+    }
   }
 
   constructor(private modal: NgbModal,
-              private utility: UtilityService) {}
+              private utility: UtilityService,
+              private _iterableDiffers: IterableDiffers) {
 
-  ngOnInit() {
-
-
+    this.iterableDiffer = this._iterableDiffers.find([]).create(null);
 
   }
+
+  ngOnInit() {
+  }
+
+ 
 
   download(records) {
     this.utility.convertAndDownload(records);
@@ -82,9 +90,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
   onOpenView(record) {
     this.record = record;
-    console.log('record: ', record);
-    console.log('recordType: ', this.recordType);
-    // this.modal.open(this.viewModalContent, { size: 'lg' });
     if (this.recordType === 'product') {
       const modalRef = this.modal.open(ViewProductModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
@@ -104,8 +109,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
   onOpenEdit(record) {
     this.record = record;
-    console.log('record: ', record);
-    // this.modal.open(this.editModalContent, { size: 'lg' });
     if (this.recordType === 'product') {
       const modalRef = this.modal.open(EditProductModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
@@ -125,8 +128,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
 
   onSelectDelete(record) {
     this.record = record;
-    console.log('record: ', record);
-    // this.modal.open(this.deleteModalContent, { size: 'lg' });
     if (this.recordType === 'product') {
       const modalRef = this.modal.open(DeleteProductModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
@@ -138,7 +139,6 @@ export class TableLayoutComponent implements OnInit, OnChanges {
   }
 
   onSort(map) {
-    console.log('onSort called: ', map);
     this.setSortDirection(map);
     // get the sorting column
     let sortColumn = map.primaryKey;
