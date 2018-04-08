@@ -108,9 +108,15 @@ export class AddScheduleModalComponent implements OnInit {
 
   onSubmit() {
     this.submitting = true;
+    if (this.form.value.type === 'On-farm Pickup') {
+      this.submitObject.latitude = this.latitude;
+      this.submitObject.longitude = this.longitude;
+      this.submitObject.address = this.producer.address;
+      this.submitObject.city = this.producer.location;
+      this.submitObject.province = this.producer.province;
+    }
     if (!this.isRepeat) {
       this.buildSubmitObject();
-      this.dashboardService.addNewSchedule(this.submitObject);
       this.apiService.postSchedule(this.submitObject)
       .subscribe(
         result => {
@@ -121,7 +127,6 @@ export class AddScheduleModalComponent implements OnInit {
       console.log('datesArray: ', this.datesArray);
       for (let i = 0; i < this.datesArray.length; i++) {
         this.buildRepeatSubmitObject(i, this.form.value.deadlineCalcHours);
-        this.dashboardService.addNewSchedule(this.submitObject);
         this.apiService.postSchedule(this.submitObject)
           .subscribe(
             result => {
@@ -137,14 +142,14 @@ export class AddScheduleModalComponent implements OnInit {
     this.activeModal.close();
   }
 
-  generateRandomId() {
-    return Math.floor( Math.random() * 1000000 )
-  }
+  // generateRandomId() {
+  //   return Math.floor( Math.random() * 1000000 )
+  // }
 
   // for repeat dates
   buildRepeatSubmitObject(i, deadlineHours) {
     this.clearDatesFromSubmitObject();
-    this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
+    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
     this.submitObject.producerId = this.producer.id;
     this.submitObject.productList = this.producer.productList;
     this.submitObject.type = this.form.value.type;
@@ -188,7 +193,7 @@ export class AddScheduleModalComponent implements OnInit {
   }
 
   buildSubmitObject() {
-    this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
+    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
     this.submitObject.producerId = this.producer.id;
     this.submitObject.productList = this.producer.productList;
     this.submitObject.type = this.form.value.type;
@@ -207,8 +212,6 @@ export class AddScheduleModalComponent implements OnInit {
 
     // set google maps defaults
     this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
 
     // create search FormControl
     this.searchControl = new FormControl();
@@ -246,6 +249,8 @@ export class AddScheduleModalComponent implements OnInit {
     .subscribe(
       result => {
         this.producer = result;
+        this.latitude = this.producer.latitude;
+        this.longitude = this.producer.longitude;
       }
     )
 
@@ -318,8 +323,7 @@ export class AddScheduleModalComponent implements OnInit {
   onChooseDate() {
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
-    this.schedYear = th    console.log('onChooseDeadlineTime: ', this.deadlineTimeMoment);
-    is.dateMoment.getFullYear();
+    this.schedYear = this.dateMoment.getFullYear();
   };
 
   onChooseMultipleDates(value) {
