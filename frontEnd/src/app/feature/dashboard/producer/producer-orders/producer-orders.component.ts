@@ -4,6 +4,7 @@ import { ProducerDashboardService } from '../../producer-dashboard.service';
 
 import { OrderModel } from '../../../../core/models/order.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
+import { UtilityService } from '../../../../core/services/utility/utility.service';
 
 @Component({
   selector: 'app-producer-orders',
@@ -46,7 +47,8 @@ export class ProducerOrdersComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: ProducerDashboardService) { }
+  constructor(private dashboardService: ProducerDashboardService,
+              private utilityService: UtilityService) { }
 
   ngOnChanges() {}
   
@@ -67,9 +69,23 @@ export class ProducerOrdersComponent implements OnInit {
           this.completedOrders = completed;
           const denied = orders.filter(order => order.orderDetails.orderStatus === 'denied');
           this.deniedOrders = denied;
-        }  
+        }
       );
 
   }
+
+  onAcceptOrder(order) { // move order from pending array to accepted array
+    // remove from pending array
+    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', order.id);
+    // add to accepted orders
+    this.acceptedOrders.push(order);
+  };
+
+  onDenyOrder(order) { // move order from pending array to denied array
+    // remove from pending array
+    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', order.id);
+    // add to denied orders
+    this.deniedOrders.push(order);
+  };
 
 }

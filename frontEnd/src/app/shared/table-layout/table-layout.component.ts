@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ViewChild, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -37,8 +37,11 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
   @Input() isConsumer: boolean = false; // to display the proper modals if a consumer
   record: Object; // single record
   @Input() recordType: string; // this will hold the type of record so that the proper modals can be shown
-  sortedRecords: any[]; 
+  sortedRecords: any[];
   sortDirection: any[]; // array of the column and it's sort value
+
+  @Output() orderAccepted = new EventEmitter<any>();
+  @Output() orderDenied = new EventEmitter<any>();
 
   // for pagination
   recordsCount: number = 0; // total quantity of records
@@ -82,8 +85,6 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
   ngOnInit() {
   }
 
- 
-
   download(records) {
     this.utility.convertAndDownload(records);
   }
@@ -120,6 +121,16 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
     if (this.recordType === 'order' && this.isConsumer === false) {
       const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
+      modalRef.componentInstance.orderAccepted.subscribe(
+        result => {
+          this.orderAccepted.emit(result);
+        }
+      );
+      modalRef.componentInstance.orderDenied.subscribe(
+        result => {
+          this.orderAccepted.emit(result);
+        }
+      );
     } else if (this.recordType === 'order' && this.isConsumer === true) {
       const modalRef = this.modal.open(ConsumerEditOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
@@ -168,7 +179,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
   }
 
   sortAscending(array, sortColumn) {
-    return array.sort(function (a,b) {
+    return array.sort(function (a, b) {
       let first;
       let second;
       // if the sortColumn is an Object
@@ -192,12 +203,12 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
         } else {
           return 0
         };
-      } 
+      }
     });
   }
 
   sortDescending(array, sortColumn) {
-    return array.sort(function (a,b) {
+    return array.sort(function (a, b) {
       let first;
       let second;
       // if the sortColumn is an Object
@@ -221,7 +232,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
         } else {
           return 0
         };
-      } 
+      }
     });
   }
 
@@ -238,7 +249,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
     // get the index of the map.primaryKey
     if (this.sortDirection) {
       for (let i = 0; i < this.sortDirection.length; i++) {
-        if (this.sortDirection[i].key == map.primaryKey) {
+        if (this.sortDirection[i].key === map.primaryKey) {
           index = i;
           break;
         } else {
@@ -256,7 +267,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
       this.sortDirection[index].direction = 'descending';
     } else {
       this.sortDirection[index].direction = 'ascending';
-    } 
+    }
   }
 
   getSortDirectionIndex(key) {

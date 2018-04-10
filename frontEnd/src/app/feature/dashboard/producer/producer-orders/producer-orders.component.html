@@ -23,7 +23,9 @@
                             [settings]="projectSettings"
                             [editable]="false"
                             [deletable]="false"
-                            [pending]="true">
+                            [pending]="true"
+                            (orderAccepted)="onAcceptOrder(order)"
+                            (orderDenied)="onDenyOrder(order)">
                         </app-table-layout>
                     </div>
                 </div>

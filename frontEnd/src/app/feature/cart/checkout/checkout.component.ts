@@ -94,6 +94,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     if (this.isLoggedIn) {
       this.cartService.retrieveCarts();
+      this.cartService.loadCarts();
     }
 
     this.id = +this.route.snapshot.paramMap.get('tempId');
@@ -102,7 +103,10 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.getCartById()
       .subscribe(
-        result => { this.order = result; }
+        result => {
+          this.order = result;
+          console.log('result: ', result);
+        }
       );
 
     this.cartService.loadCartById(this.id);
@@ -116,7 +120,9 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.loadCommunityList(this.id);
 
-    this.tempOrderValue = this.order.orderDetails.orderValue;
+    if (this.order && this.order.orderDetails) {
+      this.tempOrderValue = this.order.orderDetails.orderValue;
+    };
 
     if (this.isLoggedIn) {
       this.cartService.retrieveCarts();
