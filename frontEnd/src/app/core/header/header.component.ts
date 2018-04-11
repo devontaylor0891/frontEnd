@@ -21,8 +21,8 @@ export class HeaderComponent implements OnInit, OnChanges {
   ngOnChanges() {}
 
   onLogin(e) {
-    this.authService.login();
     this.cartService.storeCarts();
+    this.authService.login();
     e.preventDefault();
   }
 

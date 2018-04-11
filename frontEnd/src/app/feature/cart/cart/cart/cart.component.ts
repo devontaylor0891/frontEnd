@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { OrderModel } from '../../../../core/models/order.model';
 
@@ -7,9 +7,13 @@ import { OrderModel } from '../../../../core/models/order.model';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnChanges {
 
   @Input() cart: OrderModel;
+
+  ngOnChanges() {
+    console.log('received cart from carts: ', this.cart);
+  }
 
   constructor() { }
 

@@ -123,6 +123,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
       modalRef.componentInstance.record = record;
       modalRef.componentInstance.orderAccepted.subscribe(
         result => {
+          console.log('here is the result from table layout: ', result);
           this.orderAccepted.emit(result);
         }
       );

@@ -75,6 +75,7 @@ export class ProducerOrdersComponent implements OnInit {
   }
 
   onAcceptOrder(order) { // move order from pending array to accepted array
+    console.log('order was accepted: ', order);
     // remove from pending array
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', order.id);
     // add to accepted orders

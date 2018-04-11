@@ -87,6 +87,7 @@ export class CartService {
   }
 
   loadCartById(id) {
+    console.log('load cart by id called: ', id);
     this._cart.next(Object.assign({}, this.dataStore).carts[id]);
   }
 
@@ -334,7 +335,10 @@ export class CartService {
 
   clearCart(cartId) {
 	  // splice the provided cart from the array
-	  this.dataStore.carts.splice(cartId, 1);
+    this.dataStore.carts.splice(cartId, 1);
+		// refresh localstorage
+    this.removeCarts();
+    this.storeCarts();    
 	  // refresh the observable
 	  this._carts.next(Object.assign({}, this.dataStore).carts);
   };
@@ -364,6 +368,7 @@ export class CartService {
   };
   
   storeCarts() {
+    console.log('storing carts: ', this.dataStore);
     // store all carts in datastore
     localStorage.setItem('dataStore', JSON.stringify(this.dataStore));
   };

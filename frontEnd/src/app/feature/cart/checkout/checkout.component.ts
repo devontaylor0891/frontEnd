@@ -78,38 +78,43 @@ export class CheckoutComponent implements OnInit, OnChanges {
   };
 
   onLogin(e) {
-    this.authService.login(this.id);
     this.storeCart();
+    this.authService.login(this.id);
     e.preventDefault();
   }
 
   ngOnInit() {
 
+    // get the logged in status
     this.authService.getLoggedIn()
       .subscribe(
         result => {
           this.isLoggedIn = result;
+          // if they are logged in, load the carts from local storage into datastore
+          if (this.isLoggedIn) {
+            this.cartService.retrieveCarts();
+          };
         }
       );
 
-    if (this.isLoggedIn) {
-      this.cartService.retrieveCarts();
-      this.cartService.loadCarts();
-    }
-
     this.id = +this.route.snapshot.paramMap.get('tempId');
-
     console.log('tempId: ', this.id);
 
+    // load the matching cart
+    this.cartService.loadCartById(this.id);
+
+    // subscribe to the cart with the matching id
     this.cartService.getCartById()
       .subscribe(
         result => {
           this.order = result;
-          console.log('result: ', result);
+          console.log('result by id: ', result);
+          // set the temporary order value from the order details
+          if (this.order.orderDetails) {
+            this.tempOrderValue = this.order.orderDetails.orderValue;
+          }
         }
       );
-
-    this.cartService.loadCartById(this.id);
 
     this.cartService.getCommunityList()
       .subscribe(
@@ -120,14 +125,6 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.cartService.loadCommunityList(this.id);
 
-    if (this.order && this.order.orderDetails) {
-      this.tempOrderValue = this.order.orderDetails.orderValue;
-    };
-
-    if (this.isLoggedIn) {
-      this.cartService.retrieveCarts();
-    }
-
-  }
+  };
 
 }

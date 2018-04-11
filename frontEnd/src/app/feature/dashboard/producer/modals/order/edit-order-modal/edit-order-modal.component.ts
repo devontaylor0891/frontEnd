@@ -28,10 +28,7 @@ export class EditOrderModalComponent implements OnInit {
   submitOrderSub: Subscription;
   submitting: boolean = false;
   submitObject: {
-    "orderDetails": {
-      "producerComment": '',
-      "orderStatus": ''
-    }
+    "orderDetails": any
   };
   error: boolean;
   orderStatusInput: string;
@@ -40,11 +37,18 @@ export class EditOrderModalComponent implements OnInit {
         private router: Router,
         private api: ApiService,
         private activeModal: NgbActiveModal,
-        private cartService: CartService) { }
+        private cartService: CartService) { 
+
+    this.submitObject = { orderDetails : {} };
+
+  };
 
   ngOnInit() {
     // this.initialOrder = this.setInitialOrder();
-	  this.buildForm();
+    this.buildForm();
+    this.submitObject.orderDetails = this.record.orderDetails;
+    console.log('this order: ', this.record);
+    console.log('submitObject: ', this.submitObject);
   }
 
   private setInitialOrder() {
@@ -116,6 +120,7 @@ export class EditOrderModalComponent implements OnInit {
     this.api.patchOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
+          console.log('order emitted from modal: ', result);
           this.orderDenied.emit(result);
           this.handleSubmitSuccess(result);
         }, error => {
