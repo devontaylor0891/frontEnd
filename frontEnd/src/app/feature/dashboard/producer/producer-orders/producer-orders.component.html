@@ -24,8 +24,8 @@
                             [editable]="false"
                             [deletable]="false"
                             [pending]="true"
-                            (orderAccepted)="onAcceptOrder(order)"
-                            (orderDenied)="onDenyOrder(order)">
+                            (orderAccepted)="onAcceptOrder($event)"
+                            (orderDenied)="onDenyOrder($event)">
                         </app-table-layout>
                     </div>
                 </div>

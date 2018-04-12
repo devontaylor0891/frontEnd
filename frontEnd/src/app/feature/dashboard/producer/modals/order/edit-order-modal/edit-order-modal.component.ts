@@ -28,7 +28,7 @@ export class EditOrderModalComponent implements OnInit {
   submitOrderSub: Subscription;
   submitting: boolean = false;
   submitObject: {
-    "orderDetails": any
+    'orderDetails': any
   };
   error: boolean;
   orderStatusInput: string;
@@ -37,60 +37,30 @@ export class EditOrderModalComponent implements OnInit {
         private router: Router,
         private api: ApiService,
         private activeModal: NgbActiveModal,
-        private cartService: CartService) { 
+        private cartService: CartService) {
 
     this.submitObject = { orderDetails : {} };
 
   };
 
   ngOnInit() {
-    // this.initialOrder = this.setInitialOrder();
     this.buildForm();
     this.submitObject.orderDetails = this.record.orderDetails;
     console.log('this order: ', this.record);
     console.log('submitObject: ', this.submitObject);
   }
 
-  private setInitialOrder() {
-    // return new OrderModel(
-    //   // this.record.id,
-    //   // this.record.name,
-    //   // this.record.description,
-    //   // this.record.image,
-    //   // this.record.pricePerUnit,
-    //   // this.record.unit,
-    //   // this.record.unitsPer,
-    //   // this.record.category,
-    //   // this.record.subcategory,
-    //   // this.record.producer,
-    //   // this.record.dateAdded,
-    //   // this.record.qtyAvailable,
-    //   // this.record.qtyPending,
-    //   // this.record.qtyAccepted,
-    //   // this.record.qtyCompleted,
-    //   // this.record.isObsolete,
-    //   // this.record.scheduleList
-    // );
-  }
-
   private buildForm() {
-		this.orderForm = this.fb.group({
-			producerComment: [this.record.orderDetails.producerComment, [Validators.required]]
-		});
-		
-		// Subscribe to form value changes
-		this.formChangeSub = this.orderForm.valueChanges
-			.subscribe(data => this.onValueChanged());
-  };
-  
-  onValueChanged() {
+    this.orderForm = this.fb.group({
+      producerComment: [this.record.orderDetails.producerComment, [Validators.required]]
+    });
 
   };
-  
+
   setSubmitObject(status) {
-	  // then add the fields from the form
-	  this.submitObject.orderDetails.producerComment = this.orderForm.value.producerComment || '';
-	  this.submitObject.orderDetails.orderStatus = status;
+    // then add the fields from the form
+    this.submitObject.orderDetails.producerComment = this.orderForm.value.producerComment || '';
+    this.submitObject.orderDetails.orderStatus = status;
   }
 
   onAccept() {
@@ -100,8 +70,8 @@ export class EditOrderModalComponent implements OnInit {
     this.api.patchOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
-          this.orderAccepted.emit(result);
-          this.handleSubmitSuccess(result);
+          console.log('order accepted and emitted from modal: ', result);
+          this.handleSubmitAcceptSuccess(result);
         }, error => {
           this.handleSubmitError(error);
         }
@@ -120,9 +90,8 @@ export class EditOrderModalComponent implements OnInit {
     this.api.patchOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
-          console.log('order emitted from modal: ', result);
-          this.orderDenied.emit(result);
-          this.handleSubmitSuccess(result);
+          console.log('order denied and emitted from modal: ', result);
+          this.handleSubmitDenySuccess(result);
         }, error => {
           this.handleSubmitError(error);
         }
@@ -134,37 +103,46 @@ export class EditOrderModalComponent implements OnInit {
     }
 
   }
-  
+
   // onSubmit() {
-	// 	this.submitting = true;
+  // 	this.submitting = true;
   //   this.setSubmitObject();
   //   console.log('submitted object: ', this.submitObject);
-	// 	this.submitOrderSub = this.api
-	// 		.putOrder(this.record.id, this.submitObject)
-	// 		.subscribe(
-	// 		  data => this.handleSubmitSuccess(data),
-	// 		  err => this.handleSubmitError(err)
-	// 		);
+  // 	this.submitOrderSub = this.api
+  // 		.putOrder(this.record.id, this.submitObject)
+  // 		.subscribe(
+  // 		  data => this.handleSubmitSuccess(data),
+  // 		  err => this.handleSubmitError(err)
+  // 		);
   // };
-  
-  handleSubmitSuccess(res) {
+
+  handleSubmitAcceptSuccess(res) {
     this.submitting = false;
     console.log('put!: ', res);
-		// close modal
-		this.activeModal.close();
+    this.orderAccepted.emit(res);
+    // close modal
+    this.activeModal.close();
   };
-  
+
+  handleSubmitDenySuccess(res) {
+    this.submitting = false;
+    console.log('put!: ', res);
+    this.orderDenied.emit(res);
+    // close modal
+    this.activeModal.close();
+  };
+
   handleSubmitError(err) {
-		console.error(err);
-		this.submitting = false;
-		this.error = true;
+    console.error(err);
+    this.submitting = false;
+    this.error = true;
   };
-  
-  ngOnDestroy() {
-    if (this.submitOrderSub) {
-      this.submitOrderSub.unsubscribe();
-    }
-    this.formChangeSub.unsubscribe();
-  }
+
+  // ngOnDestroy() {
+  //   if (this.submitOrderSub) {
+  //     this.submitOrderSub.unsubscribe();
+  //   }
+  //   this.formChangeSub.unsubscribe();
+  // }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { ProducerDashboardService } from '../../producer-dashboard.service';
 
@@ -11,7 +11,7 @@ import { UtilityService } from '../../../../core/services/utility/utility.servic
   templateUrl: './producer-orders.component.html',
   styleUrls: ['./producer-orders.component.scss']
 })
-export class ProducerOrdersComponent implements OnInit {
+export class ProducerOrdersComponent implements OnInit, OnChanges {
 
   pendingOrders: OrderModel[] = [];
   acceptedOrders: OrderModel[] = [];
@@ -20,7 +20,7 @@ export class ProducerOrdersComponent implements OnInit {
 
   recordType: string = 'order';
 
-  projectSettings: ColumnSettingModel[] = 
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'producer',
@@ -51,7 +51,7 @@ export class ProducerOrdersComponent implements OnInit {
               private utilityService: UtilityService) { }
 
   ngOnChanges() {}
-  
+
   toggleView(order: any) {
     order.showView = !order.showView;
   }
@@ -74,19 +74,20 @@ export class ProducerOrdersComponent implements OnInit {
 
   }
 
-  onAcceptOrder(order) { // move order from pending array to accepted array
-    console.log('order was accepted: ', order);
+  onAcceptOrder($event) { // move order from pending array to accepted array
+    console.log('order was accepted: ', $event);
     // remove from pending array
-    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', order.id);
+    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
     // add to accepted orders
-    this.acceptedOrders.push(order);
+    this.acceptedOrders.push($event);
   };
 
-  onDenyOrder(order) { // move order from pending array to denied array
+  onDenyOrder($event) { // move order from pending array to denied array
+    console.log('order was denied: ', $event);
     // remove from pending array
-    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', order.id);
+    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
     // add to denied orders
-    this.deniedOrders.push(order);
+    this.deniedOrders.push($event);
   };
 
 }
