@@ -121,13 +121,13 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
     if (this.recordType === 'order' && this.isConsumer === false) {
       const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
-      modalRef.componentInstance.orderAccepted.subscribe(
+      modalRef.componentInstance.onOrderAccepted.subscribe(
         result => {
           console.log('here is the result from table layout: ', result);
           this.orderAccepted.emit(result);
         }
       );
-      modalRef.componentInstance.orderDenied.subscribe(
+      modalRef.componentInstance.onOrderDenied.subscribe(
         result => {
           console.log('here is the denied result from table layout: ', result);
           this.orderDenied.emit(result);

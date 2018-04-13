@@ -19,8 +19,8 @@ export class EditOrderModalComponent implements OnInit {
 
   @Input() record: OrderModel;
 
-  @Output() orderAccepted = new EventEmitter<OrderModel>();
-  @Output() orderDenied = new EventEmitter<OrderModel>();
+  @Output() onOrderAccepted = new EventEmitter<OrderModel>();
+  @Output() onOrderDenied = new EventEmitter<OrderModel>();
 
   orderForm: FormGroup;
   initialOrder: OrderModel;
@@ -118,16 +118,16 @@ export class EditOrderModalComponent implements OnInit {
 
   handleSubmitAcceptSuccess(res) {
     this.submitting = false;
-    console.log('put!: ', res);
-    this.orderAccepted.emit(res);
+    console.log('put, accepted!: ', res);
+    this.onOrderAccepted.emit(res);
     // close modal
     this.activeModal.close();
   };
 
   handleSubmitDenySuccess(res) {
     this.submitting = false;
-    console.log('put!: ', res);
-    this.orderDenied.emit(res);
+    console.log('put, denied!: ', res);
+    this.onOrderDenied.emit(res);
     // close modal
     this.activeModal.close();
   };

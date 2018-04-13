@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../../auth/auth.service';
+import { UserService } from '../../../core/services/user/user.service';
 
 import { OrderModel } from '../../models/order.model';
 import { ScheduleModel } from '../../models/schedule.model';
@@ -58,7 +59,8 @@ export class CartService {
   
   // during construction, create the empty dataStore and any BehaviourSubjects
   constructor(private apiService: ApiService,
-      				private authService: AuthService) {
+              private authService: AuthService,
+              private userService: UserService) {
     this.dataStore = { carts: [], cartCount: 0, schedulesArray: [{ tempId: null, producerId: null, communityList: [{ city: null, scheduleList: [] }] }] };
     this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
@@ -83,12 +85,14 @@ export class CartService {
   }
 
   getCartById() {
+    console.log('cart gotten by id: ', this._cart.asObservable());
     return this._cart.asObservable();
   }
 
   loadCartById(id) {
     console.log('load cart by id called: ', id);
     this._cart.next(Object.assign({}, this.dataStore).carts[id]);
+    console.log('datastore: ', this.dataStore);
   }
 
   getCartCount() {
@@ -293,9 +297,16 @@ export class CartService {
   };
   
   addConsumer(cartId) {
-    this.dataStore.carts[cartId].consumer = this.authService.userProfile;
-    let idArray = this.authService.userProfile.sub.split('|');
-    this.dataStore.carts[cartId].consumerId = idArray[1];
+    // this.dataStore.carts[cartId].consumer = this.authService.userProfile;
+    // let idArray = this.authService.userProfile.sub.split('|');
+    // this.dataStore.carts[cartId].consumerId = idArray[1];
+    this.userService.getUser()
+      .subscribe(
+        result => {
+          this.dataStore.carts[cartId].consumer = result;
+          this.dataStore.carts[cartId].consumerId = result.id;
+        }
+      );
   };
 
   addConsumerComment(cartId, comment) {
@@ -396,7 +407,7 @@ export class CartService {
 
   // 20 minute timer, then mark as abandoned
   cartTimer() {
-    setTimeout(this.logAbandonedCart, 1200000);
+    // setTimeout(this.logAbandonedCart, 1200000);
   };
 
   restartTimer() {

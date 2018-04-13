@@ -28,6 +28,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   consumerComment: string;
   deliveryAddress: string;
   isLoggedIn: boolean = false;
+  dataStoreExists: boolean;
 
   constructor(private cartService: CartService,
               private router: Router,
@@ -78,24 +79,13 @@ export class CheckoutComponent implements OnInit, OnChanges {
   };
 
   onLogin(e) {
+    console.log('cart stored from checkout');
     this.storeCart();
     this.authService.login(this.id);
     e.preventDefault();
   }
 
   ngOnInit() {
-
-    // get the logged in status
-    this.authService.getLoggedIn()
-      .subscribe(
-        result => {
-          this.isLoggedIn = result;
-          // if they are logged in, load the carts from local storage into datastore
-          if (this.isLoggedIn) {
-            this.cartService.retrieveCarts();
-          };
-        }
-      );
 
     this.id = +this.route.snapshot.paramMap.get('tempId');
     console.log('tempId: ', this.id);
@@ -107,12 +97,32 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.cartService.getCartById()
       .subscribe(
         result => {
-          this.order = result;
-          console.log('result by id: ', result);
-          // set the temporary order value from the order details
-          if (this.order.orderDetails) {
+          if (result === undefined) {
+            console.log('no datastore');
+            this.dataStoreExists = false;
+          } else {
+            console.log('datastore exists');
+            this.dataStoreExists = true;
+            this.order = result;
+            console.log('result by id: ', result);
+            // set the temporary order value from the order details
             this.tempOrderValue = this.order.orderDetails.orderValue;
           }
+        }
+      );
+
+    // get the logged in status
+    this.authService.getLoggedIn()
+      .subscribe(
+        result => {
+          this.isLoggedIn = result;
+          // if they are logged in, load the carts from local storage into datastore
+          if (this.isLoggedIn && !this.dataStoreExists) {
+            console.log('retrieve carts called');
+            this.cartService.retrieveCarts();
+          } else {
+
+          };
         }
       );
 
