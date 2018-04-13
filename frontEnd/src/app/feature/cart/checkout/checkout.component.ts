@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   deliveryAddress: string;
   isLoggedIn: boolean = false;
   dataStoreExists: boolean;
+  cartIndex: number;
 
   constructor(private cartService: CartService,
               private router: Router,
@@ -70,7 +71,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   }
 
   onSubmit(form: NgForm) {
-    this.cartService.confirmAndSendOrder(this.order.tempId, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
+    this.cartService.confirmAndSendOrder(this.cartIndex, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
     this.router.navigateByUrl('confirmation');
   }
 
@@ -89,6 +90,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
     this.id = +this.route.snapshot.paramMap.get('tempId');
     console.log('tempId: ', this.id);
+
+    this.cartIndex = this.cartService.getCartIndex(this.id);
 
     // load the matching cart
     this.cartService.loadCartById(this.id);

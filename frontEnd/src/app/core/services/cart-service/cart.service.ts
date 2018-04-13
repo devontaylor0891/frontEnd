@@ -85,14 +85,37 @@ export class CartService {
   }
 
   getCartById() {
-    console.log('cart gotten by id: ', this._cart.asObservable());
     return this._cart.asObservable();
   }
 
   loadCartById(id) {
     console.log('load cart by id called: ', id);
-    this._cart.next(Object.assign({}, this.dataStore).carts[id]);
+    let cartToLoad: any;
+    this.dataStore.carts.forEach(
+      (cart) => {
+        console.log('cart now: ', cart);
+        if (cart.tempId === id) {
+          cartToLoad = cart;
+        }
+      }
+    )
+    // this._cart.next(Object.assign({}, this.dataStore).carts[id]);
+    this._cart.next(Object.assign(cartToLoad));
     console.log('datastore: ', this.dataStore);
+  }
+
+  getCartIndex(tempId) {
+    let cartIndex;
+    console.log('getting cart Index');
+    for (let i = 0; i < this.dataStore.carts.length; i++) {
+      console.log('cart looping now: ', this.dataStore.carts[i]);
+      console.log('tempId: ', tempId);
+      console.log('cart temp id: ', this.dataStore.carts[i].tempId);
+      if (this.dataStore.carts[i].tempId === tempId) {
+        cartIndex = i;
+      }
+    }
+    return cartIndex;
   }
 
   getCartCount() {
