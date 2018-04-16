@@ -42,6 +42,7 @@ export class ProducerProductsComponent implements OnInit {
       {
         primaryKey: 'pricePerUnit',
         header: 'Price Per',
+        // format: 'currency'
         format: 'currency'
       },
       {
