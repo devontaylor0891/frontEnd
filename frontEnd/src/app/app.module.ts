@@ -30,8 +30,9 @@ import { PlacesService } from './core/services/places/places.service';
 import { UserService } from './core/services/user/user.service';
 
 // PIPES
-import { FormatCellPipe } from './shared/format-cell.pipe';
+import { FormatCellPipe } from './shared/pipes/format-cell.pipe';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { FirstCharacterToUppercasePipe } from './shared/pipes/firstCharacterToUppercase.pipe';
 
 // COMPONENTS
 // core
@@ -164,6 +165,7 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     UpdateProfileComponent,
     TableLayoutComponent,
     FormatCellPipe,
+    FirstCharacterToUppercasePipe,
     AdminDashboardComponent,
     ConsumerDashboardComponent,
     ProducerDashboardComponent,

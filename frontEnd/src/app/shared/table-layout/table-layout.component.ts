@@ -17,7 +17,7 @@ import { UtilityService } from '../../core/services/utility/utility.service';
 
 import { ColumnSettingModel, ColumnMap } from '../../shared/table-layout/layout.model';
 
-import { FormatCellPipe } from '../../shared/format-cell.pipe';
+import { FormatCellPipe } from '../../shared/pipes/format-cell.pipe';
 
 @Component({
   selector: 'app-table-layout',
@@ -34,6 +34,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
   @Input() editable: boolean; // governs display of Edit button
   @Input() deletable: boolean; // display of Delete button
   @Input() pending: boolean; // for orders that are pending
+  @Input() accepted: boolean; // for orders that are accepted
   @Input() isConsumer: boolean = false; // to display the proper modals if a consumer
   record: Object; // single record
   @Input() recordType: string; // this will hold the type of record so that the proper modals can be shown
@@ -50,6 +51,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
   paginatedRecords: any[]; // the array that will hold the current page's records
 
   iterableDiffer: any;
+  now: string;
 
   ngOnChanges() {
     if (this.settings) { // when settings provided in the parent component property binding
@@ -80,6 +82,9 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
 
     this.iterableDiffer = this._iterableDiffers.find([]).create(null);
 
+    this.now = new Date().toISOString();
+    console.log('now: ', this.now);
+
   }
 
   ngOnInit() {
@@ -87,7 +92,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
 
   download(records) {
     this.utility.convertAndDownload(records);
-  }
+  };
 
   onOpenView(record) {
     this.record = record;
@@ -149,7 +154,11 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
       const modalRef = this.modal.open(DeleteScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
-  }
+  };
+
+  onMarkComplete(record) {
+
+  };
 
   onSort(map) {
     this.setSortDirection(map);

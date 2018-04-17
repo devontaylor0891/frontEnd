@@ -3729,8 +3729,8 @@
         "deliveryAddress": "",
         "deliveryFee": null,
         "createdDate": "2018-04-13T20:58:56.702Z",
-        "producerComment": "",
-        "orderStatus": "pending",
+        "producerComment": "adfg",
+        "orderStatus": "accepted",
         "orderValue": 88
       }
     },
@@ -5385,8 +5385,8 @@
       "subcategory": "potatoes",
       "dateAdded": "2018-04-06T16:23:50.015Z",
       "qtyAvailable": 408,
-      "qtyPending": 66,
-      "qtyAccepted": 17,
+      "qtyPending": 64,
+      "qtyAccepted": 19,
       "qtyCompleted": 0,
       "isObsolete": false,
       "producerId": "10156726911823275",
