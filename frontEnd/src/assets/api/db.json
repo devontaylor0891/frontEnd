@@ -3163,19 +3163,8 @@
         }
       ],
       "orderDetails": {
-        "productQuantities": [
-          {
-            "productId": 964776,
-            "orderQuantity": 2,
-            "orderValue": 88
-          }
-        ],
-        "deliveryAddress": "",
-        "deliveryFee": null,
-        "createdDate": "2018-04-11T01:41:45.230Z",
-        "producerComment": "accept",
-        "orderStatus": "accepted",
-        "orderValue": 88
+        "orderStatus": "complete",
+        "incompleteReason": ""
       }
     },
     {
@@ -3718,20 +3707,8 @@
         }
       ],
       "orderDetails": {
-        "productQuantities": [
-          {
-            "productId": 964776,
-            "orderQuantity": 2,
-            "orderValue": 88
-          }
-        ],
-        "consumerComment": "sdfgsdfg",
-        "deliveryAddress": "",
-        "deliveryFee": null,
-        "createdDate": "2018-04-13T20:58:56.702Z",
-        "producerComment": "adfg",
-        "orderStatus": "accepted",
-        "orderValue": 88
+        "orderStatus": "incomplete",
+        "incompleteReason": "no-show"
       }
     },
     {

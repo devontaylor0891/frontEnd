@@ -114,6 +114,7 @@ import { AddProductModalComponent } from './feature/dashboard/producer/modals/pr
 import { AddScheduleModalComponent } from './feature/dashboard/producer/modals/schedule/add-schedule-modal/add-schedule-modal.component';
 import { ConsumerViewOrderModalComponent } from './feature/dashboard/consumer/modals/order/view-order-modal/view-order-modal.component';
 import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/modals/order/edit-order-modal/edit-order-modal.component';
+import { MarkCompleteOrderModalComponent } from './feature/dashboard/producer/modals/order/mark-complete-order-modal/mark-complete-order-modal.component';
 
 @NgModule({
   declarations: [
@@ -188,7 +189,8 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     ConsumerEditOrderModalComponent,
     LearnMoreConsumerComponent,
     LearnMoreProducerComponent,
-    PaginationComponent
+    PaginationComponent,
+    MarkCompleteOrderModalComponent
   ],
   imports: [
     BrowserModule,
@@ -248,7 +250,8 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
     AddProductModalComponent,
     AddScheduleModalComponent,
     ConsumerViewOrderModalComponent,
-    ConsumerEditOrderModalComponent
+    ConsumerEditOrderModalComponent,
+    MarkCompleteOrderModalComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -21,7 +21,8 @@ export class OrderModel {
             createdDate?: string,
             producerComment?: string,
             orderStatus?: string,
-            orderValue?: number
+            orderValue?: number,
+            incompleteReason?: string
         }
     ) {}
 }

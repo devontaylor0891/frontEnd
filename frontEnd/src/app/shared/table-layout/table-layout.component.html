@@ -28,7 +28,7 @@
             <td *ngIf="deletable">
                 <a (click)="onSelectDelete(record)">Delete</a>
             </td>
-            <td *ngIf="accepted && record.chosenSchedule && record.chosenSchedule.startDateTime < now">
+            <td *ngIf="accepted && record.chosenSchedule.startDateTime < now">
                 <a (click)="onMarkComplete(record)">Mark Complete</a>
             </td>
         </tr>

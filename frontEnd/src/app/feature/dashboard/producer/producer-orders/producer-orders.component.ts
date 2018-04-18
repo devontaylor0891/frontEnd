@@ -17,6 +17,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   acceptedOrders: OrderModel[] = [];
   completedOrders: OrderModel[] = [];
   deniedOrders: OrderModel[] = [];
+  incompletedOrders: OrderModel[] = [];
 
   recordType: string = 'order';
 
@@ -69,10 +70,13 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
           this.completedOrders = completed;
           const denied = orders.filter(order => order.orderDetails.orderStatus === 'denied');
           this.deniedOrders = denied;
+          const incomplete = orders.filter(order => order.orderDetails.orderStatus === 'incomplete');
+          this.incompletedOrders = incomplete;
           console.log('pending orders: ', this.pendingOrders);
           console.log('accepted orders: ', this.acceptedOrders);
           console.log('completed orders: ', this.completedOrders);
           console.log('denied orders: ', this.deniedOrders);
+          console.log('incomplete orders: ', this.incompletedOrders);
         }
       );
 
@@ -92,6 +96,22 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
     // add to denied orders
     this.deniedOrders.push($event);
+  };
+
+  onCompleteOrder($event) { // move order from accepted to completed
+    console.log('order was completed: ', $event);
+    // remove from pending array
+    this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
+    // add to denied orders
+    this.completedOrders.push($event);
+  };
+
+  onIncompleteOrder($event) { // move order from accepted to incompleted
+    console.log('order was incompleted: ', $event);
+    // remove from pending array
+    this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
+    // add to denied orders
+    this.incompletedOrders.push($event);
   };
 
 }
