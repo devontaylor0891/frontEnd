@@ -48,16 +48,20 @@ export class UtilityService {
   };
 
   removeByAttribute(array, attribute, value) {
-    let i = array.length;
-    while (i--) {
-       if ( array[i]
-           && array[i].hasOwnProperty(attribute) 
-           && (arguments.length > 2 && array[i][attribute] === value ) 
-          ) {
-            array.splice(i,1);
-       }
+    if (array) {
+      let i = array.length;
+      while (i--) {
+         if ( array[i]
+             && array[i].hasOwnProperty(attribute) 
+             && (arguments.length > 2 && array[i][attribute] === value ) 
+            ) {
+              array.splice(i,1);
+         }
+      }
+      return array;
+    } else {
+      return null;
     }
-    return array;
   };
 
   capitalizeFirstLetter(string) {

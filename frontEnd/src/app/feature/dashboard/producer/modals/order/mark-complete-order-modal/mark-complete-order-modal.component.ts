@@ -136,7 +136,9 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
 
     orderUpdateSubscription: any;
     submitting: boolean = false;
-    submitObject: any;
+    submitObject: {
+        'orderDetails': any
+    };
     error: boolean;
 
     constructor(private fb: FormBuilder,
@@ -144,6 +146,8 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
                 private api: ApiService,
                 private activeModal: NgbActiveModal,
                 private cartService: CartService) {
+
+        this.submitObject = { orderDetails : {} };
 
     };
 
@@ -159,14 +163,13 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
     }
 
     buildSubmitObject() {
-        this.submitObject = this.record.orderDetails;
+        this.submitObject.orderDetails = this.record.orderDetails;
     }
 
     onMarkComplete() {
-        // this.buildSubmitObject();
         this.submitting = true;
-        this.submitObject.orderStatus = 'complete';
-        this.submitObject.incompleteReason = '';
+        this.submitObject.orderDetails.orderStatus = 'complete';
+        this.submitObject.orderDetails.incompleteReason = '';
         this.orderUpdateSubscription = this.api.patchOrder(this.record.id, this.submitObject)
             .subscribe(
                 result => {
@@ -179,10 +182,11 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
     };
 
     onMarkIncomplete() {
-        // this.buildSubmitObject();
         this.submitting = true;
-        this.submitObject.orderStatus = 'incomplete';
-        this.submitObject.incompleteReason = this.markCompleteForm.value.incompleteReason;
+        console.log('this is the submitObject before:', this.submitObject);
+        this.submitObject.orderDetails.orderStatus = 'incomplete';
+        this.submitObject.orderDetails.incompleteReason = this.markCompleteForm.value.incompleteReason;
+        console.log('this is the submitObject after:', this.submitObject);
         this.orderUpdateSubscription = this.api.patchOrder(this.record.id, this.submitObject)
             .subscribe(
                 result => {

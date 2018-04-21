@@ -1,4 +1,4 @@
-// import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ViewChild, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
+// import { Component, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter, ViewChild, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
 
 // import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,6 +10,7 @@
 // import { DeleteScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
 // import { EditOrderModalComponent } from '../../feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
 // import { ViewOrderModalComponent } from '../../feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
+// import { MarkCompleteOrderModalComponent } from '../../feature/dashboard/producer/modals/order/mark-complete-order-modal/mark-complete-order-modal.component';
 // import { ConsumerViewOrderModalComponent } from '../../feature/dashboard/consumer/modals/order/view-order-modal/view-order-modal.component';
 // import { ConsumerEditOrderModalComponent } from '../../feature/dashboard/consumer/modals/order/edit-order-modal/edit-order-modal.component';
 
@@ -24,7 +25,7 @@
 //   templateUrl: './table-layout.component.html',
 //   styleUrls: ['./table-layout.component.scss']
 // })
-// export class TableLayoutComponent implements OnInit, OnChanges, DoCheck {
+// export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
 //   @Input() records: any[];
 //   @Input() caption: string;
@@ -41,8 +42,13 @@
 //   sortedRecords: any[];
 //   sortDirection: any[]; // array of the column and it's sort value
 
+//   firstModalSubscription: any;
+//   secondModalSubscription: any;
+
 //   @Output() orderAccepted = new EventEmitter<any>();
 //   @Output() orderDenied = new EventEmitter<any>();
+//   @Output() orderCompleted = new EventEmitter<any>();
+//   @Output() orderIncompleted = new EventEmitter<any>();
 
 //   // for pagination
 //   recordsCount: number = 0; // total quantity of records
@@ -126,18 +132,20 @@
 //     if (this.recordType === 'order' && this.isConsumer === false) {
 //       const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
 //       modalRef.componentInstance.record = record;
-//       modalRef.componentInstance.onOrderAccepted.subscribe(
-//         result => {
-//           console.log('here is the result from table layout: ', result);
-//           this.orderAccepted.emit(result);
-//         }
-//       );
-//       modalRef.componentInstance.onOrderDenied.subscribe(
-//         result => {
-//           console.log('here is the denied result from table layout: ', result);
-//           this.orderDenied.emit(result);
-//         }
-//       );
+//       this.firstModalSubscription = modalRef.componentInstance.onOrderAccepted
+//         .subscribe(
+//           result => {
+//             console.log('here is the result from table layout: ', result);
+//             this.orderAccepted.emit(result);
+//           }
+//         );
+//       this.secondModalSubscription = modalRef.componentInstance.onOrderDenied
+//         .subscribe(
+//           result => {
+//             console.log('here is the denied result from table layout: ', result);
+//             this.orderDenied.emit(result);
+//           }
+//         );
 //     } else if (this.recordType === 'order' && this.isConsumer === true) {
 //       const modalRef = this.modal.open(ConsumerEditOrderModalComponent, { size: 'lg' });
 //       modalRef.componentInstance.record = record;
@@ -157,7 +165,23 @@
 //   };
 
 //   onMarkComplete(record) {
-
+//     this.record = record;
+//     const modalRef = this.modal.open(MarkCompleteOrderModalComponent, { size: 'lg'});
+//     modalRef.componentInstance.record = record;
+//     this.firstModalSubscription = modalRef.componentInstance.onOrderCompleted
+//       .subscribe(
+//         result => {
+//           console.log('from table layout: order completed');
+//           this.orderCompleted.emit(result);
+//         }
+//       );
+//     this.secondModalSubscription = modalRef.componentInstance.onOrderIncompleted
+//       .subscribe(
+//         result => {
+//           console.log('from table layout: order incompleted');
+//           this.orderIncompleted.emit(result);
+//         }
+//       );
 //   };
 
 //   onSort(map) {
@@ -322,8 +346,16 @@
 //     this.getPaginatedRecords(this.currentPage);
 //   };
 
-// }
+//   ngOnDestroy() {
+//     if (this.firstModalSubscription) {
+//       this.firstModalSubscription.unsubscribe();
+//     }
+//     if (this.secondModalSubscription) {
+//       this.secondModalSubscription.unsubscribe();
+//     }
+//   };
 
+// }
 
 import { Component, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter, ViewChild, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
 
@@ -376,6 +408,9 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   @Output() orderDenied = new EventEmitter<any>();
   @Output() orderCompleted = new EventEmitter<any>();
   @Output() orderIncompleted = new EventEmitter<any>();
+  @Output() scheduleDeleted = new EventEmitter<any>();
+  @Output() productObsoleted = new EventEmitter<any>();
+  @Output() productDeleted = new EventEmitter<any>();
 
   // for pagination
   recordsCount: number = 0; // total quantity of records
@@ -484,10 +519,29 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     if (this.recordType === 'product') {
       const modalRef = this.modal.open(DeleteProductModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
+      this.firstModalSubscription = modalRef.componentInstance.onProductObsolete
+        .subscribe(
+          result => {
+            console.log('table layout obsolete kicked out: ', result);
+            this.productObsoleted.emit(result);
+          }
+        );
+      this.secondModalSubscription = modalRef.componentInstance.onProductDelete
+        .subscribe(
+          result => {
+            this.productDeleted.emit(result);
+          }
+        )
     }
     if (this.recordType === 'schedule') {
       const modalRef = this.modal.open(DeleteScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
+      this.firstModalSubscription = modalRef.componentInstance.onScheduleDeleted
+        .subscribe(
+          result => {
+            this.scheduleDeleted.emit(result);
+          }
+        );
     }
   };
 

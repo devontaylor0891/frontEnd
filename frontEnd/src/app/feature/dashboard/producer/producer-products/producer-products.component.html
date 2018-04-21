@@ -36,7 +36,8 @@
                             [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            (productObsoleted)="onProductObsoleted($event)">
                         </app-table-layout>
                     </div>
                 </div>
@@ -64,14 +65,15 @@
                             [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            (productObsoleted)="onProductObsoleted($event)">
                         </app-table-layout>
                     </div>
                 </div>
             </div>
             
             <!-- Deleted Product Table -->
-            <div class="card" *ngIf="deletedProducts.length > 0">
+            <div class="card" *ngIf="obsoletedProducts.length > 0">
                 <div class="card-header dash-accordion" role="tab" id="deletedProductsHeading">
                     <h5 class="mb-0">
                         <a 
@@ -88,11 +90,12 @@
                 <div id="deletedProductsCollapse" class="collapse" role="tabpanel" aria-labelledby="deletedProductsHeading">
                     <div class="card-block">
                         <app-table-layout
-                            [records]="deletedProducts"
+                            [records]="obsoletedProducts"
                             [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            (productDeleted)="onProductDeleted($event)">
                         </app-table-layout>
                     </div>
                 </div>

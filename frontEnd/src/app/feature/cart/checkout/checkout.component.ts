@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
@@ -15,7 +15,7 @@ import { ScheduleModel } from '../../../core/models/schedule.model';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnChanges {
+export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
 
   order: OrderModel;
   id: any;
@@ -30,6 +30,8 @@ export class CheckoutComponent implements OnInit, OnChanges {
   isLoggedIn: boolean = false;
   dataStoreExists: boolean;
   cartIndex: number;
+  getCartByIdSub: any;
+  communityListSub: any;
 
   constructor(private cartService: CartService,
               private router: Router,
@@ -97,7 +99,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.cartService.loadCartById(this.id);
 
     // subscribe to the cart with the matching id
-    this.cartService.getCartById()
+    this.getCartByIdSub = this.cartService.getCartById()
       .subscribe(
         result => {
           if (result === undefined) {
@@ -129,15 +131,27 @@ export class CheckoutComponent implements OnInit, OnChanges {
         }
       );
 
-    this.cartService.getCommunityList()
+    this.communityListSub = this.cartService.getCommunityList()
       .subscribe(
         result => {
           this.communityList = result;
         }
       );
 
-    this.cartService.loadCommunityList(this.id);
+    this.cartService.loadCommunityList(this.order.producer.id);
 
   };
+
+  ngOnDestroy() {
+
+    if (this.communityListSub) {
+      this.communityListSub.unsubscribe();
+    }
+
+    if (this.getCartByIdSub) {
+      this.getCartByIdSub.unsubscribe();
+    }
+
+  }
 
 }

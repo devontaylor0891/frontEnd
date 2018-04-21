@@ -1,4 +1,73 @@
-import { Component, OnInit, Input } from '@angular/core';
+// import { Component, OnInit, Input } from '@angular/core';
+
+// import { ApiService } from '../../../../../../core/api.service';
+
+// import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+// import { ProductModel } from '../../../../../../core/models/product.model';
+
+// @Component({
+//   selector: 'app-delete-product-modal',
+//   templateUrl: './delete-product-modal.component.html',
+//   styleUrls: ['./delete-product-modal.component.scss']
+// })
+// export class DeleteProductModalComponent implements OnInit {
+
+//   @Input() record: ProductModel;
+//   submitObject: ProductModel;
+//   hasPending: boolean;
+//   submitting: boolean;
+//   error: boolean;
+
+//   constructor(private activeModal: NgbActiveModal,
+//               private api: ApiService) { }
+
+//   ngOnInit() {
+//     if (this.record.qtyPending > 0) {
+//       this.hasPending = true;
+//     } else {
+//       this.submitObject = this.record;
+//     }
+//   }
+
+//   onObsolete() {
+//     this.submitObject.qtyAvailable = 0;
+//     this.submitObject.isObsolete = true;
+//     this.submitting = true;
+//     this.api.putProduct(this.record.id, this.submitObject)
+//       .subscribe(
+//         response => {
+//           this.submitting = false;
+//           this.activeModal.close();
+//         },
+//         err => {
+//           console.error(err);
+//           this.submitting = false;
+//           this.error = true;
+//         }
+//       )
+//   }
+
+//   onDelete() {
+//     this.submitting = true;
+//     this.api.deleteProduct(this.record.id)
+//       .subscribe(
+//         response => {
+//           this.submitting = false;
+//           this.activeModal.close();
+//         },
+//         err => {
+//           console.error(err);
+//           this.submitting = false;
+//           this.error = true;
+//         }
+//       )
+//   }
+
+// }
+
+
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 import { ApiService } from '../../../../../../core/api.service';
 
@@ -11,13 +80,17 @@ import { ProductModel } from '../../../../../../core/models/product.model';
   templateUrl: './delete-product-modal.component.html',
   styleUrls: ['./delete-product-modal.component.scss']
 })
-export class DeleteProductModalComponent implements OnInit {
+export class DeleteProductModalComponent implements OnInit, OnDestroy {
 
   @Input() record: ProductModel;
+  @Output() onProductDelete = new EventEmitter<any>();
+  @Output() onProductObsolete = new EventEmitter<any>();
+
   submitObject: ProductModel;
   hasPending: boolean;
   submitting: boolean;
   error: boolean;
+  subscription: any;
 
   constructor(private activeModal: NgbActiveModal,
               private api: ApiService) { }
@@ -28,40 +101,62 @@ export class DeleteProductModalComponent implements OnInit {
     } else {
       this.submitObject = this.record;
     }
-  }
+  };
 
   onObsolete() {
     this.submitObject.qtyAvailable = 0;
     this.submitObject.isObsolete = true;
     this.submitting = true;
-    this.api.putProduct(this.record.id, this.submitObject)
+    this.subscription = this.api.putProduct(this.record.id, this.submitObject)
       .subscribe(
         response => {
-          this.submitting = false;
-          this.activeModal.close();
+          console.log('modal obsolete done: ', response.id);
+          this.handleObsoleteSuccess(response);
         },
         err => {
-          console.error(err);
-          this.submitting = false;
-          this.error = true;
+          this.handleSubmitError(err);
         }
       )
-  }
+  };
 
   onDelete() {
     this.submitting = true;
-    this.api.deleteProduct(this.record.id)
+    this.subscription = this.api.deleteProduct(this.record.id)
       .subscribe(
         response => {
-          this.submitting = false;
-          this.activeModal.close();
+          console.log('modal delete done: ', this.record.id);
+          this.handleDeleteSuccess(this.record.id);
         },
         err => {
-          console.error(err);
-          this.submitting = false;
-          this.error = true;
+          this.handleSubmitError(err);
         }
       )
-  }
+  };
+
+  handleDeleteSuccess(id) {
+    this.submitting = false;
+    this.onProductDelete.emit(id);
+		// close modal
+		this.activeModal.close();
+  };
+
+  handleObsoleteSuccess(response) {
+    this.submitting = false;
+    this.onProductObsolete.emit(response);
+		// close modal
+		this.activeModal.close();
+  };
+  
+  handleSubmitError(err) {
+		console.error(err);
+		this.submitting = false;
+		this.error = true;
+  };
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  };
 
 }

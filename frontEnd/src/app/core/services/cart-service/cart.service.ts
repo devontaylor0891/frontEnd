@@ -126,17 +126,31 @@ export class CartService {
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
   }
 
-  getSchedulesByIdAndCommunity(id, community) {
-    
-  }
-
   getCommunityList() {
     return this._communityList.asObservable();
   };
 
-  loadCommunityList(id) {
-    this._communityList.next(Object.assign({}, this.dataStore).schedulesArray[id].communityList);
-  }
+  // loadCommunityList(id) {
+  //   console.log('id from checkout comp: ', id);
+  //   console.log('loadComm List datastore currently: ', this.dataStore);
+  //   this._communityList.next(Object.assign({}, this.dataStore).schedulesArray[id].communityList);
+  // }
+
+  loadCommunityList(producerId) {
+    console.log('load communityList by id called: ', producerId);
+    let communityListToLoad: any;
+    this.dataStore.schedulesArray.forEach(
+      (schedule) => {
+        if (schedule.producerId === producerId) {
+          communityListToLoad = schedule.communityList;
+        }
+      }
+    );
+    // this._cart.next(Object.assign({}, this.dataStore).carts[id]);
+    this._communityList.next(Object.assign(communityListToLoad));
+    console.log('datastore: ', this.dataStore);
+  ;}
+
 
   
 // ***********PRODUCT METHODS**********

@@ -109,7 +109,9 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   onIncompleteOrder($event) { // move order from accepted to incompleted
     console.log('order was incompleted: ', $event);
     // remove from pending array
+    console.log('accepted orders before: ', this.acceptedOrders);
     this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
+    console.log('accepted orders after: ', this.acceptedOrders);
     // add to denied orders
     this.incompletedOrders.push($event);
   };
