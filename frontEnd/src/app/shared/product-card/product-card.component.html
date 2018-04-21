@@ -3,7 +3,8 @@
 
     <!--Card image-->
     <div class="view overlay hm-white-slight cover-div">
-        <img src="../../assets/images/{{ product.image }}" class="img-fluid cover" alt="">
+        <img *ngIf="product.image !== ''" src="../../assets/images/{{ product.image }}" class="img-fluid cover" alt="">
+        <img *ngIf="product.image === ''" src="../../assets/images/beet.png" class="img-fluid cover" alt="">
         <a [routerLink]="['../producer/' + product.producer.id + '/product/' + product.id]">
             <div class="mask waves-effect waves-light"></div>
         </a>
