@@ -5169,8 +5169,8 @@
         "deliveryAddress": "",
         "deliveryFee": null,
         "createdDate": "2018-04-19T01:33:47.849Z",
-        "producerComment": "",
-        "orderStatus": "pending",
+        "producerComment": "acc",
+        "orderStatus": "accepted",
         "orderValue": 132
       }
     },
@@ -5329,8 +5329,8 @@
         "deliveryAddress": "",
         "deliveryFee": null,
         "createdDate": "2018-04-21T17:38:15.262Z",
-        "producerComment": "",
-        "orderStatus": "pending",
+        "producerComment": "asf",
+        "orderStatus": "accepted",
         "orderValue": 88
       }
     },
@@ -5488,8 +5488,8 @@
         "deliveryAddress": "",
         "deliveryFee": null,
         "createdDate": "2018-04-21T17:40:28.865Z",
-        "producerComment": "",
-        "orderStatus": "pending",
+        "producerComment": "asdf",
+        "orderStatus": "accepted",
         "orderValue": 44
       }
     },
@@ -5806,8 +5806,8 @@
         "deliveryAddress": "",
         "deliveryFee": null,
         "createdDate": "2018-04-21T17:53:02.830Z",
-        "producerComment": "",
-        "orderStatus": "pending",
+        "producerComment": "shghghf",
+        "orderStatus": "accepted",
         "orderValue": 44
       }
     },
@@ -6124,8 +6124,8 @@
         "deliveryAddress": "address",
         "deliveryFee": 0,
         "createdDate": "2018-04-21T17:53:53.692Z",
-        "producerComment": "",
-        "orderStatus": "pending",
+        "producerComment": "asdfh",
+        "orderStatus": "accepted",
         "orderValue": 176
       }
     }
@@ -6457,9 +6457,9 @@
       "category": "vegetables",
       "subcategory": "potatoes",
       "dateAdded": "2018-04-06T16:23:50.015Z",
-      "qtyAvailable": 384,
-      "qtyPending": 78,
-      "qtyAccepted": 29,
+      "qtyAvailable": 391,
+      "qtyPending": 56,
+      "qtyAccepted": 44,
       "qtyCompleted": 0,
       "isObsolete": false,
       "producerId": "10156726911823275",
@@ -6560,6 +6560,40 @@
       "subcategory": "carrots",
       "dateAdded": "2018-04-08T20:21:03.594Z",
       "qtyAvailable": 55,
+      "qtyPending": 0,
+      "qtyAccepted": 0,
+      "qtyCompleted": 0,
+      "isObsolete": false,
+      "producerId": "10156726911823275",
+      "producer": {
+        "id": "10156726911823275",
+        "name": "Onlylocalfood.com",
+        "location": "Moosomin",
+        "province": "SK",
+        "address": "818 Alberni St",
+        "description": "this is a description of my business.",
+        "email": "devontaylor0891@gmail.com",
+        "logoUrl": "",
+        "longitude": -101.66362779999997,
+        "latitude": 50.1395529,
+        "firstName": "Devon",
+        "status": "active",
+        "products": [],
+        "schedule": []
+      }
+    },
+    {
+      "id": 964778,
+      "name": "Oats",
+      "description": "desc",
+      "image": "",
+      "pricePerUnit": 2.22,
+      "unit": "lb",
+      "unitsPer": 1,
+      "category": "Value-added",
+      "subcategory": "Grains",
+      "dateAdded": "2018-04-22T15:56:23.471Z",
+      "qtyAvailable": 555,
       "qtyPending": 0,
       "qtyAccepted": 0,
       "qtyCompleted": 0,

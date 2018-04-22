@@ -433,6 +433,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     }
 
     this.sortedRecords = this.records; // set sorted records to initial record list
+    console.log('sorted Records, on Changes: ', this.sortedRecords);
     this.recordsCount = this.records.length; // get the count
     this.getPaginatedRecords(this.currentPage); // get the page of records
   }
@@ -497,7 +498,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
       this.firstModalSubscription = modalRef.componentInstance.onOrderAccepted
         .subscribe(
           result => {
-            console.log('here is the result from table layout: ', result);
+            console.log('here is the accepted result from table layout: ', result);
             this.orderAccepted.emit(result);
           }
         );

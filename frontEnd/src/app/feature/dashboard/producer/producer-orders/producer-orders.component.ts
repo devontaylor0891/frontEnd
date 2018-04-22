@@ -84,8 +84,10 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
 
   onAcceptOrder($event) { // move order from pending array to accepted array
     console.log('order was accepted: ', $event);
+    console.log('pending before: ', this.pendingOrders);
     // remove from pending array
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
+    console.log('pending after: ', this.pendingOrders);
     // add to accepted orders
     this.acceptedOrders.push($event);
   };
