@@ -33,7 +33,7 @@
 			"logoUrl": "farm-logo-3.jpg",
 			"longitude": 444,
 			"latitude": 555,
-			"firstName": "Devon",
+			"": "Devon",
 			"registrationDate": "2017-12-20T14:17:36.255Z",
 			"status": "active",
 			"productList": [
@@ -47,7 +47,7 @@
 		},
 		"consumer": {
             "id": 1,
-            "firstName": "Garfield",
+            "": "Garfield",
             "email": "email@email.com",
             "registrationDate": "2017-12-20T14:17:36.255Z",
             "role": "consumer"
@@ -73,7 +73,7 @@
 					"logoUrl": "farm-logo-1.jpg",
 					"longitude": 444,
 					"latitude": 555,
-					"firstName": "Devon",
+					"": "Devon",
 					"registrationDate": "2017-12-20T14:17:36.255Z",
 					"status": "active",
 					"productList": [
@@ -115,7 +115,7 @@
 					"logoUrl": "farm-logo-1.jpg",
 					"longitude": 444,
 					"latitude": 555,
-					"firstName": "Devon",
+					"": "Devon",
 					"registrationDate": "2017-12-20T14:17:36.255Z",
 					"status": "active",
 					"productList": [
@@ -193,7 +193,7 @@
 			"logoUrl": "farm-logo-3.jpg",
 			"longitude": 444,
 			"latitude": 555,
-			"firstName": "Devon",
+			"": "Devon",
 			"registrationDate": "2017-12-20T14:17:36.255Z",
 			"status": "active",
 			"productList": [
@@ -207,7 +207,7 @@
 		},
 		"consumer": {
 			"id": 3,
-			"firstName": "Bob",
+			"": "Bob",
 			"email": "email@email.com",
 			"registrationDate": "Jan 1 2017",
 			"role": "consumer"
@@ -233,7 +233,7 @@
 					"logoUrl": "farm-logo-1.jpg",
 					"longitude": 444,
 					"latitude": 555,
-					"firstName": "Devon",
+					"": "Devon",
 					"registrationDate": "2017-12-20T14:17:36.255Z",
 					"status": "active",
 					"productList": [
@@ -275,7 +275,7 @@
 					"logoUrl": "farm-logo-1.jpg",
 					"longitude": 444,
 					"latitude": 555,
-					"firstName": "Devon",
+					"": "Devon",
 					"registrationDate": "2017-12-20T14:17:36.255Z",
 					"status": "active",
 					"productList": [

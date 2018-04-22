@@ -23,29 +23,38 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
 
   projectSettings: ColumnSettingModel[] =
   [
-      {
-        primaryKey: 'producer',
-        header: 'Producer'
-      },
-      {
-        primaryKey: 'orderDetails',
-        header: 'Order Date',
-        format: 'mediumDate,createdDate'
-      },
-      {
-        primaryKey: 'orderDetails',
-        header: 'Order Time',
-        format: 'shortTime,createdDate'
-      },
-      {
-        primaryKey: 'orderDetails',
-        header: 'Order Total',
-        format: 'currency,orderValue'
-      },
-      {
-        primaryKey: 'consumer',
-        header: 'Consumer'
-      }
+    {
+      primaryKey: 'consumer',
+      header: 'Consumer',
+      format: 'null,firstName',
+      sortable: true,
+      sortPath: 'firstName',
+      nested: false
+    },
+    {
+      primaryKey: 'orderDetails',
+      header: 'Order Date',
+      format: 'mediumDate,createdDate',
+      sortable: false,
+      sortPath: '',
+      nested: false
+    },
+    {
+      primaryKey: 'orderDetails',
+      header: 'Order Time',
+      format: 'shortTime,createdDate',
+      sortable: false,
+      sortPath: '',
+      nested: false
+    },
+    {
+      primaryKey: 'orderDetails',
+      header: 'Order Total',
+      format: 'currency,orderValue',
+      sortable: false,
+      sortPath: '',
+      nested: false
+    }
   ];
 
   constructor(private dashboardService: ProducerDashboardService,

@@ -121,36 +121,43 @@ export class ProducerScheduleComponent implements OnInit {
   [
       {
         primaryKey: 'type',
-        header: 'Type'
+        header: 'Type',
+        sortable: true
       },
       {
         primaryKey: 'startDateTime',
         header: 'Date',
-        format: 'mediumDate'
+        format: 'mediumDate',
+        sortable: true
       },
       {
         primaryKey: 'startDateTime',
         header: 'Start Time',
-        format: 'shortTime'
+        format: 'shortTime',
+        sortable: false
       },
       {
         primaryKey: 'endDateTime',
         header: 'End Time',
-        format: 'shortTime'
+        format: 'shortTime',
+        sortable: false
       },
       {
         primaryKey: 'city',
-        header: 'Location'
+        header: 'Location',
+        sortable: true
       },
       {
         primaryKey: 'orderDeadline',
         header: 'Deadline Date',
-        format: 'mediumDate'
+        format: 'mediumDate',
+        sortable: true
       },
       {
         primaryKey: 'orderDeadline',
         header: 'Deadline Time',
-        format: 'shortTime'
+        format: 'shortTime',
+        sortable: false
       }
   ];
 

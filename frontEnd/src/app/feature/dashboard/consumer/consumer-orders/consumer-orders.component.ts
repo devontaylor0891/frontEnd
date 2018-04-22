@@ -26,36 +26,38 @@ export class ConsumerOrdersComponent implements OnInit {
   [
       {
         primaryKey: 'producer',
-        header: 'Producer'
+        header: 'Producer',
+        sortable: true
       },
       {
         primaryKey: 'chosenSchedule',
         header: 'Type',
-        format: 'null,type'
+        format: 'null,type',
+        sortable: true
       },
       {
         primaryKey: 'chosenSchedule',
         header: 'Date',
-        format: 'mediumDate,startDateTime'
+        format: 'mediumDate,startDateTime',
+        sortable: false
       },
       {
         primaryKey: 'chosenSchedule',
         header: 'Start Time',
-        format: 'shortTime,startDateTime'
+        format: 'shortTime,startDateTime',
+        sortable: false
       },
       {
         primaryKey: 'chosenSchedule',
         header: 'End Time',
-        format: 'shortTime,endDateTime'
+        format: 'shortTime,endDateTime',
+        sortable: false
       },
       {
         primaryKey: 'orderDetails',
         header: 'Order Total',
-        format: 'currency,orderValue'
-      },
-      {
-        primaryKey: 'consumer',
-        header: 'Consumer'
+        format: 'currency,orderValue',
+        sortable: false
       }
   ];
 

@@ -168,37 +168,44 @@ export class ProducerProductsComponent implements OnInit {
   [
       {
         primaryKey: 'name',
-        header: 'Name'
+        header: 'Name',
+        sortable: true
       },
       {
         primaryKey: 'pricePerUnit',
         header: 'Price Per',
-        // format: 'currency'
-        format: 'currency'
+        format: 'currency',
+        sortable: true
       },
       {
         primaryKey: 'unit',
-        header: 'Unit'
+        header: 'Unit',
+        sortable: true
       },
       {
         primaryKey: 'unitsPer',
-        header: 'Units Per'
+        header: 'Units Per',
+        sortable: true
       },
       {
         primaryKey: 'category',
-        header: 'Category'
+        header: 'Category',
+        sortable: true
       },
       {
         primaryKey: 'subcategory',
-        header: 'Subcat'
+        header: 'Subcat',
+        sortable: true
       },
       {
         primaryKey: 'qtyAvailable',
-        header: 'Available'
+        header: 'Available',
+        sortable: true
       },
       {
         primaryKey: 'qtyPending',
-        header: 'Pending'
+        header: 'Pending',
+        sortable: true
       }
   ];
 

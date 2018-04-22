@@ -3,6 +3,9 @@ export class ColumnSettingModel {
     public header?: string;
     public format?: string;
     public alternativeKeys?: string[];
+    public sortable?: boolean;
+    public sortPath?: string;
+    public nested?: boolean; // this will tell the table component that it needs a sortPath to use to sort
 };
 
 export class ColumnMap {
@@ -10,12 +13,18 @@ export class ColumnMap {
     private _header: string;
     private _format: string;
     alternativeKeys?: string[];
+    sortable?: boolean;
+    sortPath?: string;
+    nested?: boolean;
 
     constructor ( settings ) {
         this.primaryKey = settings.primaryKey;
         this.header = settings.header;
         this.format = settings.format;
         this.alternativeKeys = settings.alternativeKeys;
+        this.sortable = settings.sortable;
+        this.sortPath = settings.sortPath;
+        this.nested = settings.nested;
     }
     set header(setting: string) {
         this._header = setting ?
@@ -32,6 +41,7 @@ export class ColumnMap {
     get format() {
         return this._format;
     }
+    
     access = function ( object: any ) {
         if (object[this.primaryKey] || !this.alternativeKeys) {
             return this.primaryKey;

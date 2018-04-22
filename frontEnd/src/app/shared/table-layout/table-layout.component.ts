@@ -570,12 +570,24 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     this.setSortDirection(map);
     // get the sorting column
     let sortColumn = map.primaryKey;
+    console.log('sortColumn: ', sortColumn);
+    console.log('map: ', map);
     // get the sort direction
     let currentSortDirection = this.sortDirection[this.getSortDirectionIndex(sortColumn)].direction;
     // see if column contains numbers
     let isTypeOfNumber = this.isNumber(sortColumn);
+
+    // if nested sortPath exists
+    if (map.nested && !isTypeOfNumber) {
+      if (currentSortDirection === 'descending') {
+        this.sortedRecords = this.sortAscendingSortPath(this.records, sortColumn, map.sortPath);
+      } else {
+        this.sortedRecords = this.sortDescendingSortPath(this.records, sortColumn, map.sortPath);
+      }
+    }
+
     // if column is not numbers, sort as text
-    if (!isTypeOfNumber) {
+    if (!map.nested && !isTypeOfNumber) {
       if (currentSortDirection === 'descending') {
         this.sortedRecords = this.sortAscending(this.records, sortColumn);
       } else {
@@ -622,12 +634,44 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
         };
       }
     });
+  };
+
+  sortAscendingSortPath(array, sortColumn, sortPath?) {
+    return array.sort(function (a, b) {
+      let first;
+      let second;
+      first = a[sortColumn][sortPath].toLowerCase();
+      second = b[sortColumn][sortPath].toLowerCase();
+      if (first < second) {
+        return -1
+      } else if (first > second) {
+        return 1
+      } else {
+        return 0
+      };
+    });
+  };
+
+  sortDescendingSortPath(array, sortColumn, sortPath?) {
+    return array.sort(function (a, b) {
+      let first;
+      let second;
+      first = a[sortColumn][sortPath].toLowerCase();
+      second = b[sortColumn][sortPath].toLowerCase();
+      if (first > second) {
+        return -1
+      } else if (first < second) {
+        return 1
+      } else {
+        return 0
+      };
+    });
   }
 
   sortDescending(array, sortColumn) {
     return array.sort(function (a, b) {
       let first;
-      let second;
+      let second; 
       // if the sortColumn is an Object
       if (typeof a[sortColumn] === 'object') {
         first = a[sortColumn].name.toLowerCase();

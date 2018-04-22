@@ -9,7 +9,8 @@
     <thead>
         <tr>
             <th *ngFor="let map of columnMaps">
-                <a (click)="onSort(map)">{{ map.header }}</a>
+                <a *ngIf="map.sortable" (click)="onSort(map)">{{ map.header }}  <i class="fa fa-sort"></i></a>
+                <p class="m-0" *ngIf="!map.sortable">{{ map.header }}</p>
             </th>
         </tr>
     </thead>
