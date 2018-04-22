@@ -132,6 +132,8 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
     @Output() onOrderCompleted = new EventEmitter<OrderModel>();
     @Output() onOrderIncompleted = new EventEmitter<OrderModel>();
 
+    products: any;
+
     markCompleteForm: FormGroup;
 
     orderUpdateSubscription: any;
@@ -149,9 +151,21 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
 
         this.submitObject = { orderDetails : {} };
 
+        // build the products array to use in the table
+        this.products = [
+            {
+                id: null,
+                name: '',
+                quantity: null,
+                value: null
+            }
+        ];
+
     };
 
     ngOnInit() {
+
+        this.buildProductsArray();
 
         this.markCompleteForm = this.fb.group({
             incompleteReason: ['', [Validators.required] ]
@@ -160,11 +174,38 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
         console.log('this record: ', this.record);
         this.buildSubmitObject();
 
-    }
+    };
+
+    buildProductsArray() {
+        let newProduct = {
+            id: null,
+            name: '',
+            quantity: null,
+            value: null
+          };
+        let array = this.record.orderDetails.productQuantities;
+        // for each product in the productQuantities array, get the id, qty and value
+        for (let i = 0; i < array.length; i++) {
+            newProduct.id = array[i].productId;
+            newProduct.quantity = array[i].orderQuantity;
+            newProduct.value = array[i].orderValue;
+            newProduct.name = this.getProductName(newProduct.id);
+            this.products.push(newProduct);
+        }
+        // use the id to get the name from the productList array
+    };
+  
+    getProductName(id) {
+        for (let j = 0; j < this.record.productList.length; j++) {
+            if (this.record.productList[j].id === id) {
+                return this.record.productList[j].name;
+            }
+        }
+    };
 
     buildSubmitObject() {
         this.submitObject.orderDetails = this.record.orderDetails;
-    }
+    };
 
     onMarkComplete() {
         this.submitting = true;
@@ -221,7 +262,9 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
     };
 
     ngOnDestroy() {
-        this.orderUpdateSubscription.unsubscribe();
-    }
+        if (this.orderUpdateSubscription) {
+            this.orderUpdateSubscription.unsubscribe();
+        };
+    };
 
 }
