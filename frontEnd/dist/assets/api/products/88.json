@@ -1,0 +1,19 @@
+{
+    "id": 88,
+    "name": "Beets",
+    "description": "This is a description",
+    "image": "potatoes.jpg",
+    "pricePerUnit": 5,
+    "unit": "pkg",
+    "unitsPer": 2,
+    "category": "vegetables",
+    "subcategory": "beets",
+    "producerName": "Gardenia Farms",
+    "producerId": 13,
+    "dateAdded": "Jan 2 2017",
+    "qtyAvailable": 44,
+    "qtyPending": 0,
+    "qtyAccepted": 0,
+    "qtyCompleted": 345,
+    "isObsolete": false
+}
