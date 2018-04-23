@@ -1,0 +1,43 @@
+[
+	{
+		"id": 666,
+		"producerId": 10156726911823276,
+		"productList": [
+			66,
+			67
+		],
+		"type": "Door-to-door Delivery",
+		"description": "A description.",
+		"startDateTime": "2017-12-28T01:00:00.000Z",
+		"endDateTime": "2017-12-28T02:00:00.000Z",
+		"hasFee": true,
+		"fee": 10,
+		"feeWaiver": 25,
+		"latitude": 50.2615563,
+		"longitude": -101.9720143,
+		"city": "Moosomin",
+		"address": "555 Main St",
+		"province": "SK",
+		"orderDeadline": "2017-12-28T00:00:00.000Z"
+	}, {
+		"id": 667,
+		"producerId": 10156726911823276,
+		"productList": [
+			66,
+			67
+		],
+		"type": "On-farm Pickup",
+		"description": "A long description.",
+		"startDateTime": "2017-12-27T01:00:00.000Z",
+		"endDateTime": "2017-12-27T02:00:00.000Z",
+		"hasFee": false,
+		"fee": null,
+		"feeWaiver": null,
+		"latitude": 50.2615563,
+		"longitude": -104.9720143,
+		"city": "Timbuktu",
+		"address": "",
+		"province": "ON",
+		"orderDeadline": "2017-12-27T00:00:00.000Z"
+	}
+]

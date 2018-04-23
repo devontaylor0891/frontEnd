@@ -1,0 +1,705 @@
+[
+    {
+        "id": 1,
+		"tempId": 1,
+		"chosenSchedule": {
+			"id": 444,
+			"producerId": 13,
+			"productList": [
+				43,
+				95
+			],
+			"type": "Door-to-door Delivery",
+			"description": "We're gonna charge you this time.",
+			"startDateTime": "2017-12-02T01:00:00.000Z",
+			"endDateTime": "2017-12-02T02:00:00.000Z",
+			"hasFee": true,
+			"fee": 5,
+			"feeWaiver": 35,
+			"latitude": 50.2615563,
+			"longitude": -101.9720143,
+			"city": "Wapella",
+			"address": "123 Main St",
+			"province": "SK",
+			"orderDeadline": "2017-12-02T00:00:00.000Z"
+		},
+        "producer": {
+			"id": 13,
+			"name": "Gardenia Farms",
+			"location": "Virden",
+			"province": "MB",
+			"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+			"email": "email@email.com",
+			"logoUrl": "farm-logo-1.jpg",
+			"longitude": 444,
+			"latitude": 555,
+			"firstName": "Devon",
+			"registrationDate": "Jan 1 2017",
+			"status": "active",
+			"productList": [
+				43,
+				95
+			],
+			"scheduleList": [
+				444,
+				445,
+				789
+			]
+		},
+		"consumer": {
+            "id": 1,
+            "firstName": "Devon",
+            "email": "email@email.com",
+            "registrationDate": "Jan 1 2017",
+            "role": "consumer"
+        },
+		"productList": [
+			{
+				"id": 43,
+				"name": "Carrots",
+				"description": "Orange, cylindrical, delicious.",
+				"image": "carrots.jpg",
+				"pricePerUnit": 4,
+				"unit": "lb",
+				"unitsPer": 1,
+				"category": "Produce",
+				"subcategory": "Carrots",
+				"producer": {
+					"id": 13,
+					"name": "Gardenia Farms",
+					"location": "Virden",
+					"province": "MB",
+					"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+					"email": "email@email.com",
+					"logoUrl": "farm-logo-1.jpg",
+					"longitude": 444,
+					"latitude": 555,
+					"firstName": "Devon",
+					"registrationDate": "Jan 1 2017",
+					"status": "active",
+					"productList": [
+						43,
+						95
+					],
+					"scheduleList": [
+						444,
+						445,
+						789
+					]
+				},
+				"dateAdded": "Jan 1 2017",
+				"qtyAvailable": 55,
+				"qtyPending": 12,
+				"qtyAccepted": 22,
+				"qtyCompleted": 345,
+				"isObsolete": false,
+				"scheduleList": [
+					444,
+					445,
+					789
+				]
+			}
+		],
+		"orderDetails": {
+			"productQuantities": [
+				{
+					"productId": 43,
+					"orderQuantity": 3,
+					"orderValue": 12
+				}
+			],
+			"consumerComment": "blah blah",
+			"deliveryAddress": "",
+			"deliveryFee": null,
+			"createdDate": "2017-12-12T18:55:47.490Z",
+			"producerComment": "",
+			"orderStatus": "accepted",
+			"orderValue": 12.45
+		}
+    }, {
+        "id": 1,
+		"tempId": 1,
+		"chosenSchedule": {
+			"id": 444,
+			"producerId": 13,
+			"productList": [
+				43,
+				95
+			],
+			"type": "Door-to-door Delivery",
+			"description": "We're gonna charge you this time.",
+			"startDateTime": "2017-12-02T01:00:00.000Z",
+			"endDateTime": "2017-12-02T02:00:00.000Z",
+			"hasFee": true,
+			"fee": 5,
+			"feeWaiver": 35,
+			"latitude": 50.2615563,
+			"longitude": -101.9720143,
+			"city": "Wapella",
+			"address": "123 Main St",
+			"province": "SK",
+			"orderDeadline": "2017-12-02T00:00:00.000Z"
+		},
+        "producer": {
+			"id": 13,
+			"name": "Gardenia Farms",
+			"location": "Virden",
+			"province": "MB",
+			"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+			"email": "email@email.com",
+			"logoUrl": "farm-logo-1.jpg",
+			"longitude": 444,
+			"latitude": 555,
+			"firstName": "Devon",
+			"registrationDate": "Jan 1 2017",
+			"status": "active",
+			"productList": [
+				43,
+				95
+			],
+			"scheduleList": [
+				444,
+				445,
+				789
+			]
+		},
+		"consumer": {
+            "id": 1,
+            "firstName": "Devon",
+            "email": "email@email.com",
+            "registrationDate": "Jan 1 2017",
+            "role": "consumer"
+        },
+		"productList": [
+			{
+				"id": 43,
+				"name": "Carrots",
+				"description": "Orange, cylindrical, delicious.",
+				"image": "carrots.jpg",
+				"pricePerUnit": 4,
+				"unit": "lb",
+				"unitsPer": 1,
+				"category": "Produce",
+				"subcategory": "Carrots",
+				"producer": {
+					"id": 13,
+					"name": "Gardenia Farms",
+					"location": "Virden",
+					"province": "MB",
+					"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+					"email": "email@email.com",
+					"logoUrl": "farm-logo-1.jpg",
+					"longitude": 444,
+					"latitude": 555,
+					"firstName": "Devon",
+					"registrationDate": "Jan 1 2017",
+					"status": "active",
+					"productList": [
+						43,
+						95
+					],
+					"scheduleList": [
+						444,
+						445,
+						789
+					]
+				},
+				"dateAdded": "Jan 1 2017",
+				"qtyAvailable": 55,
+				"qtyPending": 12,
+				"qtyAccepted": 22,
+				"qtyCompleted": 345,
+				"isObsolete": false,
+				"scheduleList": [
+					444,
+					445,
+					789
+				]
+			}
+		],
+		"orderDetails": {
+			"productQuantities": [
+				{
+					"productId": 43,
+					"orderQuantity": 3,
+					"orderValue": 12
+				}
+			],
+			"consumerComment": "blah blah",
+			"deliveryAddress": "",
+			"deliveryFee": null,
+			"createdDate": "2017-12-12T18:55:47.490Z",
+			"producerComment": "",
+			"orderStatus": "pending",
+			"orderValue": 12.45
+		}
+    }, {
+        "id": 1,
+		"tempId": 1,
+		"chosenSchedule": {
+			"id": 444,
+			"producerId": 13,
+			"productList": [
+				43,
+				95
+			],
+			"type": "Door-to-door Delivery",
+			"description": "We're gonna charge you this time.",
+			"startDateTime": "2017-12-02T01:00:00.000Z",
+			"endDateTime": "2017-12-02T02:00:00.000Z",
+			"hasFee": true,
+			"fee": 5,
+			"feeWaiver": 35,
+			"latitude": 50.2615563,
+			"longitude": -101.9720143,
+			"city": "Wapella",
+			"address": "123 Main St",
+			"province": "SK",
+			"orderDeadline": "2017-12-02T00:00:00.000Z"
+		},
+        "producer": {
+			"id": 13,
+			"name": "Gardenia Farms",
+			"location": "Virden",
+			"province": "MB",
+			"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+			"email": "email@email.com",
+			"logoUrl": "farm-logo-1.jpg",
+			"longitude": 444,
+			"latitude": 555,
+			"firstName": "Devon",
+			"registrationDate": "Jan 1 2017",
+			"status": "active",
+			"productList": [
+				43,
+				95
+			],
+			"scheduleList": [
+				444,
+				445,
+				789
+			]
+		},
+		"consumer": {
+            "id": 1,
+            "firstName": "Devon",
+            "email": "email@email.com",
+            "registrationDate": "Jan 1 2017",
+            "role": "consumer"
+        },
+		"productList": [
+			{
+				"id": 43,
+				"name": "Carrots",
+				"description": "Orange, cylindrical, delicious.",
+				"image": "carrots.jpg",
+				"pricePerUnit": 4,
+				"unit": "lb",
+				"unitsPer": 1,
+				"category": "Produce",
+				"subcategory": "Carrots",
+				"producer": {
+					"id": 13,
+					"name": "Gardenia Farms",
+					"location": "Virden",
+					"province": "MB",
+					"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+					"email": "email@email.com",
+					"logoUrl": "farm-logo-1.jpg",
+					"longitude": 444,
+					"latitude": 555,
+					"firstName": "Devon",
+					"registrationDate": "Jan 1 2017",
+					"status": "active",
+					"productList": [
+						43,
+						95
+					],
+					"scheduleList": [
+						444,
+						445,
+						789
+					]
+				},
+				"dateAdded": "Jan 1 2017",
+				"qtyAvailable": 55,
+				"qtyPending": 12,
+				"qtyAccepted": 22,
+				"qtyCompleted": 345,
+				"isObsolete": false,
+				"scheduleList": [
+					444,
+					445,
+					789
+				]
+			}
+		],
+		"orderDetails": {
+			"productQuantities": [
+				{
+					"productId": 43,
+					"orderQuantity": 3,
+					"orderValue": 12
+				}
+			],
+			"consumerComment": "blah blah",
+			"deliveryAddress": "",
+			"deliveryFee": null,
+			"createdDate": "2017-12-12T18:55:47.490Z",
+			"producerComment": "",
+			"orderStatus": "pending",
+			"orderValue": 12.45
+		}
+    }, {
+        "id": 1,
+		"tempId": 1,
+		"chosenSchedule": {
+			"id": 444,
+			"producerId": 13,
+			"productList": [
+				43,
+				95
+			],
+			"type": "Door-to-door Delivery",
+			"description": "We're gonna charge you this time.",
+			"startDateTime": "2017-12-02T01:00:00.000Z",
+			"endDateTime": "2017-12-02T02:00:00.000Z",
+			"hasFee": true,
+			"fee": 5,
+			"feeWaiver": 35,
+			"latitude": 50.2615563,
+			"longitude": -101.9720143,
+			"city": "Wapella",
+			"address": "123 Main St",
+			"province": "SK",
+			"orderDeadline": "2017-12-02T00:00:00.000Z"
+		},
+        "producer": {
+			"id": 13,
+			"name": "Gardenia Farms",
+			"location": "Virden",
+			"province": "MB",
+			"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+			"email": "email@email.com",
+			"logoUrl": "farm-logo-1.jpg",
+			"longitude": 444,
+			"latitude": 555,
+			"firstName": "Devon",
+			"registrationDate": "Jan 1 2017",
+			"status": "active",
+			"productList": [
+				43,
+				95
+			],
+			"scheduleList": [
+				444,
+				445,
+				789
+			]
+		},
+		"consumer": {
+            "id": 1,
+            "firstName": "Devon",
+            "email": "email@email.com",
+            "registrationDate": "Jan 1 2017",
+            "role": "consumer"
+        },
+		"productList": [
+			{
+				"id": 43,
+				"name": "Carrots",
+				"description": "Orange, cylindrical, delicious.",
+				"image": "carrots.jpg",
+				"pricePerUnit": 4,
+				"unit": "lb",
+				"unitsPer": 1,
+				"category": "Produce",
+				"subcategory": "Carrots",
+				"producer": {
+					"id": 13,
+					"name": "Gardenia Farms",
+					"location": "Virden",
+					"province": "MB",
+					"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+					"email": "email@email.com",
+					"logoUrl": "farm-logo-1.jpg",
+					"longitude": 444,
+					"latitude": 555,
+					"firstName": "Devon",
+					"registrationDate": "Jan 1 2017",
+					"status": "active",
+					"productList": [
+						43,
+						95
+					],
+					"scheduleList": [
+						444,
+						445,
+						789
+					]
+				},
+				"dateAdded": "Jan 1 2017",
+				"qtyAvailable": 55,
+				"qtyPending": 12,
+				"qtyAccepted": 22,
+				"qtyCompleted": 345,
+				"isObsolete": false,
+				"scheduleList": [
+					444,
+					445,
+					789
+				]
+			}
+		],
+		"orderDetails": {
+			"productQuantities": [
+				{
+					"productId": 43,
+					"orderQuantity": 3,
+					"orderValue": 12
+				}
+			],
+			"consumerComment": "blah blah",
+			"deliveryAddress": "",
+			"deliveryFee": null,
+			"createdDate": "2017-12-12T18:55:47.490Z",
+			"producerComment": "",
+			"orderStatus": "accepted",
+			"orderValue": 12.45
+		}
+    }, {
+        "id": 1,
+		"tempId": 1,
+		"chosenSchedule": {
+			"id": 444,
+			"producerId": 13,
+			"productList": [
+				43,
+				95
+			],
+			"type": "Door-to-door Delivery",
+			"description": "We're gonna charge you this time.",
+			"startDateTime": "2017-12-02T01:00:00.000Z",
+			"endDateTime": "2017-12-02T02:00:00.000Z",
+			"hasFee": true,
+			"fee": 5,
+			"feeWaiver": 35,
+			"latitude": 50.2615563,
+			"longitude": -101.9720143,
+			"city": "Wapella",
+			"address": "123 Main St",
+			"province": "SK",
+			"orderDeadline": "2017-12-02T00:00:00.000Z"
+		},
+        "producer": {
+			"id": 13,
+			"name": "Gardenia Farms",
+			"location": "Virden",
+			"province": "MB",
+			"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+			"email": "email@email.com",
+			"logoUrl": "farm-logo-1.jpg",
+			"longitude": 444,
+			"latitude": 555,
+			"firstName": "Devon",
+			"registrationDate": "Jan 1 2017",
+			"status": "active",
+			"productList": [
+				43,
+				95
+			],
+			"scheduleList": [
+				444,
+				445,
+				789
+			]
+		},
+		"consumer": {
+            "id": 1,
+            "firstName": "Devon",
+            "email": "email@email.com",
+            "registrationDate": "Jan 1 2017",
+            "role": "consumer"
+        },
+		"productList": [
+			{
+				"id": 43,
+				"name": "Carrots",
+				"description": "Orange, cylindrical, delicious.",
+				"image": "carrots.jpg",
+				"pricePerUnit": 4,
+				"unit": "lb",
+				"unitsPer": 1,
+				"category": "Produce",
+				"subcategory": "Carrots",
+				"producer": {
+					"id": 13,
+					"name": "Gardenia Farms",
+					"location": "Virden",
+					"province": "MB",
+					"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+					"email": "email@email.com",
+					"logoUrl": "farm-logo-1.jpg",
+					"longitude": 444,
+					"latitude": 555,
+					"firstName": "Devon",
+					"registrationDate": "Jan 1 2017",
+					"status": "active",
+					"productList": [
+						43,
+						95
+					],
+					"scheduleList": [
+						444,
+						445,
+						789
+					]
+				},
+				"dateAdded": "Jan 1 2017",
+				"qtyAvailable": 55,
+				"qtyPending": 12,
+				"qtyAccepted": 22,
+				"qtyCompleted": 345,
+				"isObsolete": false,
+				"scheduleList": [
+					444,
+					445,
+					789
+				]
+			}
+		],
+		"orderDetails": {
+			"productQuantities": [
+				{
+					"productId": 43,
+					"orderQuantity": 3,
+					"orderValue": 12
+				}
+			],
+			"consumerComment": "blah blah",
+			"deliveryAddress": "",
+			"deliveryFee": null,
+			"createdDate": "2017-12-12T18:55:47.490Z",
+			"producerComment": "",
+			"orderStatus": "denied",
+			"orderValue": 12.45
+		}
+    }, {
+        "id": 1,
+		"tempId": 1,
+		"chosenSchedule": {
+			"id": 444,
+			"producerId": 13,
+			"productList": [
+				43,
+				95
+			],
+			"type": "Door-to-door Delivery",
+			"description": "We're gonna charge you this time.",
+			"startDateTime": "2017-12-02T01:00:00.000Z",
+			"endDateTime": "2017-12-02T02:00:00.000Z",
+			"hasFee": true,
+			"fee": 5,
+			"feeWaiver": 35,
+			"latitude": 50.2615563,
+			"longitude": -101.9720143,
+			"city": "Wapella",
+			"address": "123 Main St",
+			"province": "SK",
+			"orderDeadline": "2017-12-02T00:00:00.000Z"
+		},
+        "producer": {
+			"id": 13,
+			"name": "Gardenia Farms",
+			"location": "Virden",
+			"province": "MB",
+			"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+			"email": "email@email.com",
+			"logoUrl": "farm-logo-1.jpg",
+			"longitude": 444,
+			"latitude": 555,
+			"firstName": "Devon",
+			"registrationDate": "Jan 1 2017",
+			"status": "active",
+			"productList": [
+				43,
+				95
+			],
+			"scheduleList": [
+				444,
+				445,
+				789
+			]
+		},
+		"consumer": {
+            "id": 1,
+            "firstName": "Devon",
+            "email": "email@email.com",
+            "registrationDate": "Jan 1 2017",
+            "role": "consumer"
+        },
+		"productList": [
+			{
+				"id": 43,
+				"name": "Carrots",
+				"description": "Orange, cylindrical, delicious.",
+				"image": "carrots.jpg",
+				"pricePerUnit": 4,
+				"unit": "lb",
+				"unitsPer": 1,
+				"category": "Produce",
+				"subcategory": "Carrots",
+				"producer": {
+					"id": 13,
+					"name": "Gardenia Farms",
+					"location": "Virden",
+					"province": "MB",
+					"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+					"email": "email@email.com",
+					"logoUrl": "farm-logo-1.jpg",
+					"longitude": 444,
+					"latitude": 555,
+					"firstName": "Devon",
+					"registrationDate": "Jan 1 2017",
+					"status": "active",
+					"productList": [
+						43,
+						95
+					],
+					"scheduleList": [
+						444,
+						445,
+						789
+					]
+				},
+				"dateAdded": "Jan 1 2017",
+				"qtyAvailable": 55,
+				"qtyPending": 12,
+				"qtyAccepted": 22,
+				"qtyCompleted": 345,
+				"isObsolete": false,
+				"scheduleList": [
+					444,
+					445,
+					789
+				]
+			}
+		],
+		"orderDetails": {
+			"productQuantities": [
+				{
+					"productId": 43,
+					"orderQuantity": 3,
+					"orderValue": 12
+				}
+			],
+			"consumerComment": "blah blah",
+			"deliveryAddress": "",
+			"deliveryFee": null,
+			"createdDate": "2017-12-12T18:55:47.490Z",
+			"producerComment": "",
+			"orderStatus": "accepted",
+			"orderValue": 12.45
+		}
+    }
+]
