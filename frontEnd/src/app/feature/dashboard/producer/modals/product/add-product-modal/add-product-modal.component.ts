@@ -54,7 +54,6 @@ export class AddProductModalComponent implements OnInit {
     console.log(this.form.value);
     this.form.value.producerId = this.producer.id;
     this.form.value.producer = this.producer;
-    this.form.value.scheduleList = this.producer.scheduleList;
     // console.log(this.form.value);
     // this.dashboardService.addNewProduct(this.form.value);
     this.apiService.postProduct(this.form.value)
