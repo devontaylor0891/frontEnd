@@ -53,6 +53,7 @@ export class ProducersComponent implements OnInit, OnChanges {
     this.dashboardService.getAllProducers()
     .subscribe(
       response => {
+        console.log('producers from api: ', response);
         const active = response.filter(producer => producer.status === 'active');
         this.activeProducers = active;
         const inactive = response.filter(producer => producer.status === 'inactive');

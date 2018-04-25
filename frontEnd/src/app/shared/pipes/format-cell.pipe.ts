@@ -27,6 +27,8 @@ export class FormatCellPipe implements PipeTransform {
         }
 
         if (typeof value === 'object' && !nestedProperty) { // the cell value is an object, but no property is given
+            console.log('type of: ', typeof value);
+            console.log('value: ', value);
             newValue = value.name;
         } else if (typeof value === 'object' && nestedProperty) { // cell is object, given a nested property to display
             newValue = value[nestedProperty];

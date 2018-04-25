@@ -6074,11 +6074,8 @@
       "firstName": "Devon",
       "email": "devon@onlylocalfood.com",
       "registrationDate": "2018-03-14T02:07:17.052Z",
-      "role": "consumer",
-      "orders": [],
-      "name": "",
-      "description": "",
-      "logoUrl": ""
+      "role": "admin",
+      "orders": []
     },
     {
       "id": "5abd722b3d8f01209c970a40",
