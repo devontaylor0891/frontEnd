@@ -1,10 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 
 @Pipe({ name: 'formatCell' })
 export class FormatCellPipe implements PipeTransform {
     constructor (private datePipe: DatePipe,
-                private currencyPipe: CurrencyPipe) { }
+                private currencyPipe: CurrencyPipe,
+                private uppercasePipe: UpperCasePipe) { }
     // transform(value: any, format: string) { // make this into an object like { format, nestedProperty }
     transform (value: any, format: string ) {
 
@@ -26,22 +27,28 @@ export class FormatCellPipe implements PipeTransform {
             newValue = 'N/A';
         }
 
-        if (typeof value === 'object' && !nestedProperty) { // the cell value is an object, but no property is given
-            newValue = value.name;
-        } else if (typeof value === 'object' && nestedProperty) { // cell is object, given a nested property to display
+        // if (typeof value === 'object' && !nestedProperty) { // the cell value is an object, but no property is given
+        //     console.log('type of: ', typeof value);
+        //     console.log('value: ', value);
+        //     newValue = value.name;
+        // } else 
+        if (typeof value === 'object' && nestedProperty) { // cell is object, given a nested property to display
             newValue = value[nestedProperty];
         } else { // otherwise, the value is what it is
             newValue = value;
         }
 
         if (formatType === 'currency') {
-            newValue = this.currencyPipe.transform(newValue, 'USD', true);
+            newValue = this.currencyPipe.transform(newValue, 'CAD', 'symbol-narrow');
         }
         if (formatType === 'mediumDate') {
             newValue = this.datePipe.transform(newValue, 'mediumDate');
         }
         if (formatType === 'shortTime') {
             newValue = this.datePipe.transform(newValue, 'shortTime');
+        }
+        if (formatType === 'uppercase') {
+            newValue = this.uppercasePipe.transform(newValue);
         }
 
         return newValue;

@@ -180,6 +180,7 @@ export class ProducerProductsComponent implements OnInit {
       {
         primaryKey: 'unit',
         header: 'Unit',
+        format: 'uppercase',
         sortable: true
       },
       {

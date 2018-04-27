@@ -182,9 +182,7 @@ export class SearchService implements OnInit {
         "latitude": null,
         "firstName": '',
         "registrationDate": '',
-        "status": '',
-        "productList": [],
-        "scheduleList": []
+        "status": ''
       },
       "dateAdded": '',
       "qtyAvailable": null,

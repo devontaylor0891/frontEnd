@@ -197,7 +197,11 @@ var AppComponent = /** @class */ (function () {
                 window.scrollTo(0, 0);
             }
         });
-        this.isAdmin = this.authService.isAdmin;
+        this.authService.getIsAdmin()
+            .subscribe(function (result) {
+            console.log('isAdmin result: ', result);
+            _this.isAdmin = result;
+        });
         this.authService.getLoggedIn()
             .subscribe(function (result) {
             console.log('logged in result:', result); // this is being called
@@ -554,6 +558,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_18__core_services_cart_service_cart_service__["a" /* CartService */],
                 __WEBPACK_IMPORTED_MODULE_24__angular_common__["c" /* CurrencyPipe */],
                 __WEBPACK_IMPORTED_MODULE_24__angular_common__["e" /* DatePipe */],
+                __WEBPACK_IMPORTED_MODULE_24__angular_common__["l" /* UpperCasePipe */],
                 __WEBPACK_IMPORTED_MODULE_19__core_services_utility_utility_service__["a" /* UtilityService */],
                 __WEBPACK_IMPORTED_MODULE_20__feature_dashboard_producer_dashboard_service__["a" /* ProducerDashboardService */],
                 __WEBPACK_IMPORTED_MODULE_84__feature_dashboard_producer_modals_product_edit_product_modal_edit_product_modal_component__["a" /* EditProductModalComponent */],
@@ -842,6 +847,7 @@ var AuthService = /** @class */ (function () {
         var expiresAt = JSON.stringify((authResult.expiresIn * 1000) + Date.now());
         // Set tokens and expiration in localStorage and props
         this.isAdmin = this._checkAdmin(profile);
+        this.isAdmin$.next(this.isAdmin);
         localStorage.setItem('isAdmin', this.isAdmin.toString());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
@@ -1599,7 +1605,8 @@ var ApiService = /** @class */ (function () {
     function ApiService(http, auth) {
         this.http = http;
         this.auth = auth;
-        this.apiUrl = 'http://localhost:3000';
+        // apiUrl = 'http://localhost:3000';
+        this.apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
         this.productsUrl = '../../../../assets/api/products/';
         this.producerUrl = '../../../../assets/api/producer/';
         this.producersUrl = '../../../../assets/api/producers.json';
@@ -1641,7 +1648,7 @@ var ApiService = /** @class */ (function () {
     // get all products for admin dash
     ApiService.prototype.getProducts = function () {
         return this.http
-            .get(__WEBPACK_IMPORTED_MODULE_6__env_config__["a" /* ENV */].BASE_API + "products")
+            .get(this.apiUrl + "/products/")
             .catch(this._handleError);
     };
     // this method will return a product from the mock data
@@ -1741,7 +1748,7 @@ var ApiService = /** @class */ (function () {
     // get all producers
     ApiService.prototype.getProducers = function () {
         return this.http
-            .get(__WEBPACK_IMPORTED_MODULE_6__env_config__["a" /* ENV */].BASE_API + "producer/")
+            .get(this.apiUrl + "/producers/")
             .catch(this._handleError);
     };
     ;
@@ -1908,7 +1915,7 @@ var ENV = {
 /***/ "./src/app/core/footer/footer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<footer class=\"page-footer center-on-small-only\">\n\n        <!--Footer Links-->\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n\n                <!--First column-->\n                <div class=\"col-md-3 offset-lg-1 hidden-lg-down\">\n                    <h5 class=\"title\">ABOUT MATERIAL DESIGN</h5>\n                    <p>Material Design (codenamed Quantum Paper) is a design language developed by Google. </p>\n\n                    <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS, and JS framework - Bootstrap.</p>\n                </div>\n                <!--/.First column-->\n\n                <hr class=\"hidden-md-up\">\n\n                <!--Second column-->\n                <div class=\"col-lg-2 col-md-4 offset-lg-1\">\n                    <h5 class=\"title\">Our Projects</h5>\n                    <ul>\n                        <li><a href=\"#!\">Jeffs Bike Shop</a></li>\n                        <li><a href=\"#!\">Main Street Restaurant</a></li>\n                        <li><a href=\"#!\">Connect Groceries</a></li>\n                        <li><a href=\"#!\">White-To-Black Coffe Shop</a></li>\n                    </ul>\n                </div>\n                <!--/.Second column-->\n\n                <hr class=\"hidden-md-up\">\n\n                <!--Third column-->\n                <div class=\"col-lg-2 col-md-4\">\n                    <h5 class=\"title\">Useful Resources</h5>\n                    <ul>\n                        <li><a href=\"#!\">2016 Advertising Report</a></li>\n                        <li><a href=\"#!\">Best NY Agencies</a></li>\n                        <li><a href=\"#!\">Trends for 2017</a></li>\n                        <li><a href=\"#!\">World Advertisement Report</a></li>\n                    </ul>\n                </div>\n                <!--/.Third column-->\n\n                <hr class=\"hidden-md-up\">\n\n                <!--Fourth column-->\n                <div class=\"col-lg-2 col-md-4\">\n                    <h5 class=\"title\">Find us on</h5>\n                    <ul>\n                        <li><a href=\"#!\">Facebook</a></li>\n                        <li><a href=\"#!\">Twitter</a></li>\n                        <li><a href=\"#!\">LinkedIn</a></li>\n                        <li><a href=\"#!\">Behance</a></li>\n                    </ul>\n                </div>\n                <!--/.Fourth column-->\n\n            </div>\n        </div>\n        <!--/.Footer Links-->\n\n        <hr>\n\n        <!--Call to action-->\n        <div class=\"call-to-action\">\n            <h4>Material Design for Bootstrap</h4>\n            <ul>\n                <li>\n                    <h5>Get our UI KIT for free</h5></li>\n                <li><a target=\"_blank\" href=\"https://mdbootstrap.com/getting-started/\" class=\"btn btn-olf-primary\" rel=\"nofollow\">Sign up!</a></li>\n                <li><a target=\"_blank\" href=\"https://mdbootstrap.com/material-design-for-bootstrap/\" class=\"btn btn-olf-primary btn-sm\" rel=\"nofollow\">Learn more</a></li>\n            </ul>\n        </div>\n        <!--/.Call to action-->\n\n        <!--Copyright-->\n        <div class=\"footer-copyright grey lighten-2\">\n            <div class=\"container-fluid\">\n                <p class=\"text-muted\">© 2015 Copyright: <a href=\"http://www.MDBootstrap.com\"> MDBootstrap.com </a></p>\n\n            </div>\n        </div>\n        <!--/.Copyright-->\n\n    </footer>"
+module.exports = "<footer class=\"page-footer center-on-small-only\">\n\n        <!--Footer Links-->\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n\n                <!--First column-->\n                <div class=\"col-md-3 offset-lg-1 hidden-lg-down\">\n                    <h5 class=\"title\">ABOUT OLF</h5>\n                    <p>Onlylocalfood.com is a platform for local food producers to advertise and sell directly to consumers.</p>\n                </div>\n                <!--/.First column-->\n\n                <hr class=\"hidden-md-up\">\n\n                <!--Second column-->\n                <div class=\"col-lg-2 col-md-4 offset-lg-1\">\n                    <h5 class=\"title\">Our Projects</h5>\n                    <ul>\n                        <li><a href=\"#!\">Jeffs Bike Shop</a></li>\n                        <li><a href=\"#!\">Main Street Restaurant</a></li>\n                        <li><a href=\"#!\">Connect Groceries</a></li>\n                        <li><a href=\"#!\">White-To-Black Coffe Shop</a></li>\n                    </ul>\n                </div>\n                <!--/.Second column-->\n\n                <hr class=\"hidden-md-up\">\n\n                <!--Third column-->\n                <div class=\"col-lg-2 col-md-4\">\n                    <h5 class=\"title\">Useful Resources</h5>\n                    <ul>\n                        <li><a href=\"#!\">2016 Advertising Report</a></li>\n                        <li><a href=\"#!\">Best NY Agencies</a></li>\n                        <li><a href=\"#!\">Trends for 2017</a></li>\n                        <li><a href=\"#!\">World Advertisement Report</a></li>\n                    </ul>\n                </div>\n                <!--/.Third column-->\n\n                <hr class=\"hidden-md-up\">\n\n                <!--Fourth column-->\n                <div class=\"col-lg-2 col-md-4\">\n                    <h5 class=\"title\">Find us on</h5>\n                    <ul>\n                        <li><a href=\"https://www.facebook.com/onlylocalfood\" target=\"_blank\">Facebook</a></li>\n                        <li><a href=\"https://www.twitter.com/onlylocalfood\" target=\"_blank\">Twitter</a></li>\n                    </ul>\n                </div>\n                <!--/.Fourth column-->\n\n            </div>\n        </div>\n        <!--/.Footer Links-->\n\n        <hr>\n\n        <!--Copyright-->\n        <div class=\"footer-copyright grey lighten-2\">\n            <div class=\"container-fluid\">\n                <p class=\"text-muted\">© 2018 Copyright: <a href=\"http://www.onlylocalfood.com\"> Onlylocalfood.com </a></p>\n\n            </div>\n        </div>\n        <!--/.Copyright-->\n\n    </footer>"
 
 /***/ }),
 
@@ -2069,19 +2076,17 @@ var OrderModel = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProducerModel; });
 var ProducerModel = /** @class */ (function () {
-    function ProducerModel(id, name, location, province, address, email, longitude, latitude, firstName, status, productList, scheduleList, description, logoUrl, registrationDate, products, schedule) {
+    function ProducerModel(id, name, location, province, email, longitude, latitude, firstName, status, address, description, logoUrl, registrationDate, products, schedule) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.province = province;
-        this.address = address;
         this.email = email;
         this.longitude = longitude;
         this.latitude = latitude;
         this.firstName = firstName;
         this.status = status;
-        this.productList = productList;
-        this.scheduleList = scheduleList;
+        this.address = address;
         this.description = description;
         this.logoUrl = logoUrl;
         this.registrationDate = registrationDate;
@@ -3280,9 +3285,7 @@ var SearchService = /** @class */ (function () {
                 "latitude": null,
                 "firstName": '',
                 "registrationDate": '',
-                "status": '',
-                "productList": [],
-                "scheduleList": []
+                "status": ''
             },
             "dateAdded": '',
             "qtyAvailable": null,
@@ -4497,7 +4500,7 @@ var DeliveriesComponent = /** @class */ (function () {
         this.dashboardService.getAllSchedules()
             .subscribe(// returns an array
         function (// returns an array
-            results) {
+        results) {
             _this.upcomingSchedule = results;
         });
         this.dashboardService.loadAllSchedules();
@@ -4734,9 +4737,12 @@ var ProducersComponent = /** @class */ (function () {
             {
                 primaryKey: 'email',
                 header: 'Email'
-            }, {
+            },
+            {
                 primaryKey: 'registrationDate',
-                header: 'Reg. Date'
+                header: 'Reg. Date',
+                format: 'mediumDate',
+                sortable: true
             }
         ];
     }
@@ -4747,6 +4753,7 @@ var ProducersComponent = /** @class */ (function () {
         var _this = this;
         this.dashboardService.getAllProducers()
             .subscribe(function (response) {
+            console.log('producers from api: ', response);
             var active = response.filter(function (producer) { return producer.status === 'active'; });
             _this.activeProducers = active;
             var inactive = response.filter(function (producer) { return producer.status === 'inactive'; });
@@ -5030,16 +5037,20 @@ var ProductsComponent = /** @class */ (function () {
         this.projectSettings = [
             {
                 primaryKey: 'name',
-                header: 'Name'
+                header: 'Name',
+                sortable: true,
             },
             {
                 primaryKey: 'pricePerUnit',
                 header: 'Price Per',
-                format: 'currency'
+                format: 'currency',
+                sortable: true,
             },
             {
                 primaryKey: 'unit',
-                header: 'Unit'
+                header: 'Unit',
+                format: 'uppercase',
+                nested: false
             },
             {
                 primaryKey: 'unitsPer',
@@ -5047,23 +5058,31 @@ var ProductsComponent = /** @class */ (function () {
             },
             {
                 primaryKey: 'category',
-                header: 'Category'
+                header: 'Category',
+                sortable: true,
             },
             {
                 primaryKey: 'subcategory',
-                header: 'Subcat'
+                header: 'Subcat',
+                sortable: true,
             },
             {
                 primaryKey: 'qtyAvailable',
-                header: 'Available'
+                header: 'Available',
+                sortable: true,
             },
             {
                 primaryKey: 'qtyPending',
-                header: 'Pending'
+                header: 'Pending',
+                sortable: true,
             },
             {
                 primaryKey: 'producer',
-                header: 'Producer'
+                header: 'Producer',
+                format: 'null,name',
+                sortable: true,
+                sortPath: 'name',
+                nested: true
             }
         ];
         this.producerService.productAdded.subscribe(function (value) {
@@ -5362,7 +5381,10 @@ var ConsumerOrdersComponent = /** @class */ (function () {
             {
                 primaryKey: 'producer',
                 header: 'Producer',
-                sortable: true
+                format: 'null,name',
+                sortable: true,
+                sortPath: 'name',
+                nested: true
             },
             {
                 primaryKey: 'chosenSchedule',
@@ -6629,7 +6651,6 @@ var AddProductModalComponent = /** @class */ (function () {
         console.log(this.form.value);
         this.form.value.producerId = this.producer.id;
         this.form.value.producer = this.producer;
-        this.form.value.scheduleList = this.producer.scheduleList;
         // console.log(this.form.value);
         // this.dashboardService.addNewProduct(this.form.value);
         this.apiService.postProduct(this.form.value)
@@ -7204,7 +7225,6 @@ var AddScheduleModalComponent = /** @class */ (function () {
         this.clearDatesFromSubmitObject();
         // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
         this.submitObject.producerId = this.producer.id;
-        this.submitObject.productList = this.producer.productList;
         this.submitObject.type = this.form.value.type;
         this.submitObject.description = this.form.value.description;
         this.submitObject.startDateTime = this.buildStartDateTime(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
@@ -7246,7 +7266,6 @@ var AddScheduleModalComponent = /** @class */ (function () {
     AddScheduleModalComponent.prototype.buildSubmitObject = function () {
         // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
         this.submitObject.producerId = this.producer.id;
-        this.submitObject.productList = this.producer.productList;
         this.submitObject.type = this.form.value.type;
         this.submitObject.description = this.form.value.description;
         this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
@@ -7924,7 +7943,6 @@ var ProducerDashboardComponent = /** @class */ (function () {
         this.dashboardService.getProducer()
             .subscribe(function (result) {
             _this.producer = result;
-            console.log('producer subscription result: ', _this.producer);
         });
         this.dashboardService.loadData(this.id);
     };
@@ -8009,7 +8027,7 @@ var ProducerOrdersComponent = /** @class */ (function () {
                 primaryKey: 'orderDetails',
                 header: 'Order Date',
                 format: 'mediumDate,createdDate',
-                sortable: false,
+                sortable: true,
                 sortPath: '',
                 nested: false
             },
@@ -8022,10 +8040,26 @@ var ProducerOrdersComponent = /** @class */ (function () {
                 nested: false
             },
             {
+                primaryKey: 'chosenSchedule',
+                header: 'Location',
+                format: 'null,city',
+                sortable: true,
+                sortPath: 'city',
+                nested: false
+            },
+            {
+                primaryKey: 'chosenSchedule',
+                header: 'Schedule Date',
+                format: 'mediumDate,startDateTime',
+                sortable: true,
+                sortPath: '',
+                nested: false
+            },
+            {
                 primaryKey: 'orderDetails',
                 header: 'Order Total',
                 format: 'currency,orderValue',
-                sortable: false,
+                sortable: true,
                 sortPath: '',
                 nested: false
             }
@@ -8050,25 +8084,16 @@ var ProducerOrdersComponent = /** @class */ (function () {
             _this.deniedOrders = denied;
             var incomplete = orders.filter(function (order) { return order.orderDetails.orderStatus === 'incomplete'; });
             _this.incompletedOrders = incomplete;
-            console.log('pending orders: ', _this.pendingOrders);
-            console.log('accepted orders: ', _this.acceptedOrders);
-            console.log('completed orders: ', _this.completedOrders);
-            console.log('denied orders: ', _this.deniedOrders);
-            console.log('incomplete orders: ', _this.incompletedOrders);
         });
     };
     ProducerOrdersComponent.prototype.onAcceptOrder = function ($event) {
-        console.log('order was accepted: ', $event);
-        console.log('pending before: ', this.pendingOrders);
         // remove from pending array
         this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
-        console.log('pending after: ', this.pendingOrders);
         // add to accepted orders
         this.acceptedOrders.push($event);
     };
     ;
     ProducerOrdersComponent.prototype.onDenyOrder = function ($event) {
-        console.log('order was denied: ', $event);
         // remove from pending array
         this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
         // add to denied orders
@@ -8076,7 +8101,6 @@ var ProducerOrdersComponent = /** @class */ (function () {
     };
     ;
     ProducerOrdersComponent.prototype.onCompleteOrder = function ($event) {
-        console.log('order was completed: ', $event);
         // remove from pending array
         this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
         // add to denied orders
@@ -8084,11 +8108,8 @@ var ProducerOrdersComponent = /** @class */ (function () {
     };
     ;
     ProducerOrdersComponent.prototype.onIncompleteOrder = function ($event) {
-        console.log('order was incompleted: ', $event);
         // remove from pending array
-        console.log('accepted orders before: ', this.acceptedOrders);
         this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
-        console.log('accepted orders after: ', this.acceptedOrders);
         // add to denied orders
         this.incompletedOrders.push($event);
     };
@@ -8281,6 +8302,7 @@ var ProducerProductsComponent = /** @class */ (function () {
             {
                 primaryKey: 'unit',
                 header: 'Unit',
+                format: 'uppercase',
                 sortable: true
             },
             {
@@ -8424,7 +8446,7 @@ var ProducerProductsComponent = /** @class */ (function () {
 /***/ "./src/app/feature/dashboard/producer/producer-schedule/producer-schedule.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n        <div class=\"col col-xs-12\">\n            <div id=\"deliveriesAccordion\" role=\"tablist\" aria-multiselectable=\"true\">\n    \n                <!-- Add new schedule button -->\n                <div class=\"row text-center\">\n                    <div class=\"col col-xs-12\">\n                        <div class=\"btn-group\">\n                            <a class=\"btn btn-olf-primary\" (click)=\"openModal()\"><i class=\"fa fa-plus prefix mr-3\"></i>Add New Schedule</a>\n                        </div>\n                        <br>\n                    </div>\n                </div>\n    \n                <br>\n                \n                <div class=\"card\">\n                    <div class=\"card-header dash-accordion\" role=\"tab\" id=\"upcomingDeliveriesHeading\">\n                        <h5 class=\"mb-0\">\n                            <a \n                                data-toggle=\"collapse\" \n                                data-parent=\"#deliveriesAccordion\" \n                                href=\"#upcomingDeliveriesCollapse\" \n                                aria-expanded=\"true\" \n                                aria-controls=\"upcomingDeliveriesCollapse\">Upcoming Schedule  \n                                    <i class=\"fa fa-caret-down fa-lg\" aria-hidden=\"true\"></i>\n                            </a>\n                        </h5>\n                    </div>\n                    <div id=\"upcomingDeliveriesCollapse\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"upcomingDeliveriesHeading\">\n                        <div class=\"card-block\">\n                            <app-table-layout\n                                [records]=\"upcomingSchedule\"\n                                [recordType]=\"recordType\"\n                                [settings]=\"projectSettings\"\n                                [editable]=\"true\"\n                                [deletable]=\"true\"\n                                (scheduleDeleted)=\"onScheduleDeleted($event)\">\n                            </app-table-layout>\n                        </div>\n                    </div>\n                </div>\n                \n                <div class=\"card\">\n                    <div class=\"card-header dash-accordion\" role=\"tab\" id=\"completedDeliveriesHeading\">\n                        <h5 class=\"mb-0\">\n                            <a \n                                class=\"collapsed\" \n                                data-toggle=\"collapse\" \n                                data-parent=\"#deliveriesAccordion\" \n                                href=\"#completedDeliveriesCollapse\" \n                                aria-expanded=\"false\" \n                                aria-controls=\"completedDeliveriesCollapse\">Completed Schedule \n                                    <i class=\"fa fa-caret-down fa-lg\" aria-hidden=\"true\"></i>\n                            </a>\n                        </h5>\n                    </div>\n                    <div id=\"completedDeliveriesCollapse\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"completedDeliveriesHeading\">\n                        <div class=\"card-block\">\n                            <app-table-layout\n                                [records]=\"completedSchedule\"\n                                [recordType]=\"recordType\"\n                                [settings]=\"projectSettings\"\n                                [editable]=\"false\"\n                                [deletable]=\"false\">\n                            </app-table-layout>\n                        </div>\n                    </div>\n                </div>\n                \n            </div>\n        </div>\n    </div>"
+module.exports = "<div class=\"row\">\n        <div class=\"col col-xs-12\">\n            <div id=\"deliveriesAccordion\" role=\"tablist\" aria-multiselectable=\"true\">\n    \n                <!-- Add new schedule button -->\n                <div class=\"row text-center\">\n                    <div class=\"col col-xs-12\">\n                        <div class=\"btn-group\">\n                            <a class=\"btn btn-olf-primary\" (click)=\"openModal()\"><i class=\"fa fa-plus prefix mr-3\"></i>Add New Schedule</a>\n                        </div>\n                        <br>\n                    </div>\n                </div>\n    \n                <br>\n                \n                <div class=\"card\">\n                    <div class=\"card-header dash-accordion\" role=\"tab\" id=\"upcomingDeliveriesHeading\">\n                        <h5 class=\"mb-0\">\n                            <a \n                                data-toggle=\"collapse\" \n                                data-parent=\"#deliveriesAccordion\" \n                                href=\"#upcomingDeliveriesCollapse\" \n                                aria-expanded=\"true\" \n                                aria-controls=\"upcomingDeliveriesCollapse\">Upcoming Schedule  \n                                    <i class=\"fa fa-caret-down fa-lg\" aria-hidden=\"true\"></i>\n                            </a>\n                        </h5>\n                    </div>\n                    <div id=\"upcomingDeliveriesCollapse\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"upcomingDeliveriesHeading\">\n                        <div class=\"card-block\">\n                            <app-table-layout *ngIf=\"upcomingSchedule.length > 0\"\n                                [records]=\"upcomingSchedule\"\n                                [recordType]=\"recordType\"\n                                [settings]=\"projectSettings\"\n                                [editable]=\"true\"\n                                [deletable]=\"true\"\n                                (scheduleDeleted)=\"onScheduleDeleted($event)\">\n                            </app-table-layout>\n                            <div *ngIf=\"upcomingSchedule.length < 1\">\n                                <p>You have no upcoming deliveries or pickups scheduled.</p>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                \n                <div class=\"card\">\n                    <div class=\"card-header dash-accordion\" role=\"tab\" id=\"completedDeliveriesHeading\">\n                        <h5 class=\"mb-0\">\n                            <a \n                                class=\"collapsed\" \n                                data-toggle=\"collapse\" \n                                data-parent=\"#deliveriesAccordion\" \n                                href=\"#completedDeliveriesCollapse\" \n                                aria-expanded=\"false\" \n                                aria-controls=\"completedDeliveriesCollapse\">Completed Schedule \n                                    <i class=\"fa fa-caret-down fa-lg\" aria-hidden=\"true\"></i>\n                            </a>\n                        </h5>\n                    </div>\n                    <div id=\"completedDeliveriesCollapse\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"completedDeliveriesHeading\">\n                        <div class=\"card-block\">\n                            <app-table-layout\n                                [records]=\"completedSchedule\"\n                                [recordType]=\"recordType\"\n                                [settings]=\"projectSettings\"\n                                [editable]=\"false\"\n                                [deletable]=\"false\">\n                            </app-table-layout>\n                        </div>\n                    </div>\n                </div>\n                \n            </div>\n        </div>\n    </div>"
 
 /***/ }),
 
@@ -8594,7 +8616,6 @@ var ProducerScheduleComponent = /** @class */ (function () {
         // this.modal.open(this.modalContent, { size: 'lg' });  
         var modalRef = this.modal.open(__WEBPACK_IMPORTED_MODULE_4__modals_schedule_add_schedule_modal_add_schedule_modal_component__["a" /* AddScheduleModalComponent */], { size: 'lg' });
         modalRef.componentInstance.itemCreated.subscribe(function (schedule) {
-            console.log('schedule from event emitter: ', schedule);
             _this.createNew(schedule);
         });
     };
@@ -8609,7 +8630,6 @@ var ProducerScheduleComponent = /** @class */ (function () {
             console.log('upcoming: ', _this.upcomingSchedule);
             var completed = schedules.filter(function (schedule) { return schedule.endDateTime < date; });
             _this.completedSchedule = completed;
-            console.log('completed: ', _this.completedSchedule);
         });
     };
     ;
@@ -8618,7 +8638,6 @@ var ProducerScheduleComponent = /** @class */ (function () {
     };
     ;
     ProducerScheduleComponent.prototype.onScheduleDeleted = function ($event) {
-        console.log('sched deleted: ', $event);
         // remove from upcoming array
         this.upcomingSchedule = this.utilityService.removeByAttribute(this.upcomingSchedule, 'id', $event);
     };
@@ -8793,7 +8812,7 @@ var LearnMoreComponent = /** @class */ (function () {
 /***/ "./src/app/feature/producer/producer-page/producer-page-product-card/producer-page-product-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--Card-->\n<div class=\"card\">\n    \n    <!--Card image-->\n    <!--  [ngClass]=\"{outOfStockOverlay: isOutOfStock}\" -->\n    <div class=\"view overlay hm-white-slight cover-div\">\n        <img src=\"../../assets/images/{{ product.image }}\" class=\"img-fluid cover\" alt=\"\" >\n        <a [routerLink]=\"['../' + product.producerId + '/product/' + product.id]\">\n            <div class=\"mask waves-effect waves-light\"></div>\n        </a>\n        <div class=\"outOfStockOverlay cover-div\" *ngIf=\"isOutOfStock\"><img class=\"img-fluid cover\" src=\"../../assets/images/outOfStock.png\"></div>\n        \n    </div>\n    <!--/.Card image-->\n\n    <!--Card content-->\n    <div class=\"card-block text-center\">\n        <!--Product Name-->\n        \n        <h5 class=\"card-title\"><strong><a [routerLink]=\"['../' + product.producerId + '/product/' + product.id]\">{{ product.name }}</a></strong></h5>\n\n        <!--Description-->\n        <p class=\"card-text text-left text-truncate small\">{{ product.description }}</p>\n\n    </div>\n    <!--/.Card content-->\n\n    <!--Card footer-->\n    <div class=\"card-footer text-center px-0 pb-0\">\n        <p>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>\n        <app-add-to-cart [product]=\"product\"></app-add-to-cart>\n    </div>\n    <!--/.Card footer-->\n\n</div>\n<!--/.Card-->"
+module.exports = "<!--Card-->\n<div class=\"card\">\n    \n    <!--Card image-->\n    <!--  [ngClass]=\"{outOfStockOverlay: isOutOfStock}\" -->\n    <div class=\"view overlay hm-white-slight cover-div\">\n        <img src=\"../../assets/images/{{ product.image }}\" class=\"img-fluid cover\" alt=\"\" >\n        <a [routerLink]=\"['../' + product.producer.id + '/product/' + product.id]\">\n            <div class=\"mask waves-effect waves-light\"></div>\n        </a>\n        <div class=\"outOfStockOverlay cover-div\" *ngIf=\"isOutOfStock\"><img class=\"img-fluid cover\" src=\"../../assets/images/outOfStock.png\"></div>\n        \n    </div>\n    <!--/.Card image-->\n\n    <!--Card content-->\n    <div class=\"card-block text-center\">\n        <!--Product Name-->\n        \n        <h5 class=\"card-title\"><strong><a [routerLink]=\"['../' + product.producer.id + '/product/' + product.id]\">{{ product.name }}</a></strong></h5>\n\n        <!--Description-->\n        <p class=\"card-text text-left text-truncate small\">{{ product.description }}</p>\n\n    </div>\n    <!--/.Card content-->\n\n    <!--Card footer-->\n    <div class=\"card-footer text-center px-0 pb-0\">\n        <p>{{ product.pricePerUnit | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>\n        <app-add-to-cart [product]=\"product\"></app-add-to-cart>\n    </div>\n    <!--/.Card footer-->\n\n</div>\n<!--/.Card-->"
 
 /***/ }),
 
@@ -10005,7 +10024,7 @@ var SearchComponent = /** @class */ (function () {
 /***/ "./src/app/landing-content/landing-content.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--  -->\n<main class=\"container-fluid olf-green-lighten-2\">\n\n    <div class=\"row\">\n        <div class=\"col-md-4\">\n            <div class=\"row\">\n                <div class=\"col-md-12\">\n                    <!-- <h2 class=\"text-muted responsive white-text\">\n                        We aren't selling local food.\n                    </h2>\n                    <h2 class=\"text-muted responsive white-text\">\n                        We aren't delivering it either.\n                    </h2>\n                    <br>\n                    <h1 class=\"text-muted responsive white-text\">\n                        But we show you who is.\n                    </h1> -->\n                    <h2 class=\"text-muted responsive white-text\">\n                        Onlylocalfood.com - we don't sell or deliver local food...\n                    </h2>\n                    <br>\n                    <h1 class=\"text-muted responsive white-text\">\n                        We show you who does!\n                    </h1>\n                    <br><br>\n                    <p class=\"lead grey-text\">\n                        Our platform shows you the farms and producers that have products available, including where and how to get them, and let's you order online. It's a farmers' market on the web, done right.\n                    </p>\n                    <!-- <p class=\"lead grey-text\">\n                        OLF is a platform for producers of local food to create their own online store. It shows consumers what products are available in their area and how to get them.\n                    </p> -->\n                </div>\n                <div class=\"col-md-12\">\n                    <p class=\"lead white-text text-center\">\n                        <a routerLink=\"search\" class=\"btn btn-olf-primary inline\">Start Searching</a>\n                    </p>\n                </div>\n                <div class=\"col-md-12\">\n                    <!-- <h2 class=\"text-muted responsive white-text\">\n                        Find and order local food online,\n                        <br>\n                        directly from the producers.\n                    </h2> -->\n                    <h2 class=\"text-muted responsive white-text\">\n                        Feed your family.\n                        <br>\n                        Feed your community.\n                    </h2>\n                </div>\n            </div>\n        </div>\n        <div class=\"col-md-8\">\n            <div class=\"row d-flex align-self-stretch\">\n                <div class=\"col-12 col-sm-6 offset-sm-3 col-md offset-md-0 d-flex\">\n                    <!--Card-->\n                    <div class=\"card jumbotron-card\">\n                        <div class=\"row\">\n                            <!--Card image-->\n                            <div class=\"col mt-3 text-center\">\n                                <img class=\"w-25\" src=\"assets/images/icon-1.png\">\n                            </div>\n                            <!--/.Card image-->\n\n                            <!--Card content-->\n                            <div class=\"card-block\">\n                                <!--Title-->\n                                <h5 class=\"card-title text-center\">Products and Schedules</h5>\n                                <hr>\n                                <p class=\"text-center\"><img src=\"assets/images/step-1-graphic.png\"></p>\n                                <!--Text-->\n                                <p class=\"card-text\">Producers load their products onto OLF and schedule deliveries and pickups. Everything you need to know is added - what products are for sale, prices, and (<b>this is the special bit</b>) how, when, and where you can get your order.</p>\n                                \n                            </div>\n                            <!--/.Card content-->\n                        </div>\n                    </div>\n                    <!--/.Card-->\n                </div>\n                <div class=\"col-sm-6 offset-sm-3 col-md offset-md-0 d-flex\">\n                    <!--Card-->\n                    <div class=\"card jumbotron-card\">\n                        <div class=\"row\">\n                            <!--Card image-->\n                            <div class=\"col mt-3 text-center\">\n                                <img class=\"w-25\" src=\"assets/images/icon-2.png\">\n                            </div>\n                            <!--/.Card image-->\n\n                            <!--Card content-->\n                            <div class=\"card-block\">\n                                <!--Title-->\n                                <h5 class=\"card-title text-center\">Search and Order</h5>\n                                <hr>\n                                <!--Text-->\n                                <p class=\"card-text\">Our search page shows you all the products that are <b>available in your area</b>. You can see who's selling and the delivery and pickup options. Add what you want to your cart, and instead of paying when you check out, you simply select how to get your order based on the producer's options.</p>\n                                <p class=\"text-center\"><img src=\"assets/images/step-2-graphic.png\"></p>\n                            </div>\n                            <!--/.Card content-->\n                        </div>\n                    </div>\n                    <!--/.Card-->\n                </div>\n                <div class=\"col-sm-6 offset-sm-3 col-md offset-md-0 d-flex\">\n                    <!--Card-->\n                    <div class=\"card jumbotron-card\">\n                        <div class=\"row\">\n                            <!--Card image-->\n                            <div class=\"col mt-3 text-center\">\n                                <img class=\"w-25\" src=\"assets/images/icon-3.png\">\n                            </div>\n                            <!--/.Card image-->\n\n                            <!--Card content-->\n                            <div class=\"card-block\">\n                                <!--Title-->\n                                <h5 class=\"card-title text-center\">Delivery, Pickup, and Payment</h5>\n                                <hr>\n                                <p class=\"text-center\"><img src=\"assets/images/step-3-graphic.png\"></p>\n                                <!--Text-->\n                                <p class=\"card-text\">At the date and time you chose, you and the producer get together (or maybe they come to you!). <b>You get the great local food you ordered and the producer gets paid directly</b>. It's exactly like a farmers' market, just easier.</p>\n                            </div>\n                            <!--/.Card content-->\n                        </div>\n                    </div>\n                    <!--/.Card-->\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <!-- <div class=\"flex-center\">\n                    \n        <div>\n            \n            <div class=\"row\">\n                <div class=\"col-sm-12 col-md-4 mt-auto mb-auto\">\n                    <div class=\"col-sm\">\n                        <h2 class=\"text-muted responsive white-text\">\n                            Find and order local food online,\n                            <br>\n                            directly from the producers.\n                        </h2>\n                        <p class=\"lead grey-text\">\n                            This will be a fancy description of OLF. a;dfha;lksdfj as;ldfkj ;lj ;ld asdfasfd as s f d g se sg dsf s fgd .\n                        </p>\n                    </div>\n                    <br>\n                    <div class=\"col-sm\">\n                        <p class=\"lead white-text\">\n                            <a routerLink=\"search\" class=\"btn btn-olf-primary inline\">Start Searching</a>\n                            or\n                            <a routerLink=\"learn-more\" class=\"btn btn-olf-primary inline\">Learn More</a>\n                        </p>\n                    </div>\n                    \n                </div>\n            </div>\n                \n\n        </div>\n\n    </div> -->\n\n</main>\n\n<div class=\"container\">\n\n<div class=\"divider-new\">\n            <h2 class=\"h2-responsive wow fadeIn\" data-wow-delay=\"0.2s\">About us</h2>\n        </div>\n\n        <!--Section: About-->\n        <section id=\"about\" class=\"text-center wow fadeIn\" data-wow-delay=\"0.2s\">\n\n            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit explicabo assumenda eligendi ex exercitationem harum deleniti quaerat beatae ducimus dolor voluptates magnam, reiciendis pariatur culpa tempore quibusdam quidem, saepe eius.</p>\n            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit explicabo assumenda eligendi ex exercitationem harum deleniti quaerat beatae ducimus dolor voluptates magnam, reiciendis pariatur culpa tempore quibusdam quidem, saepe eius.</p>\n\n        </section>\n        <!--Section: About-->\n\n        <div class=\"divider-new\">\n            <h2 class=\"h2-responsive wow fadeIn\">Contact us</h2>\n        </div>\n\n        <!--Section: Contact-->\n        <section id=\"contact\">\n            <div class=\"row\">\n                <!--First column-->\n                <div class=\"col-md-8\">\n                    <div id=\"map-container\" class=\"z-depth-1 wow fadeIn\" style=\"height: 300px\"></div>\n                </div>\n                <!--/First column-->\n\n                <!--Second column-->\n                <div class=\"col-md-4\">\n                    <ul class=\"text-center\">\n                        <li class=\"wow fadeIn\" data-wow-delay=\"0.2s\"><i class=\"fa fa-map-marker teal-text\"></i>\n                            <p>New York, NY 10012, USA</p>\n                        </li>\n\n                        <li class=\"wow fadeIn\" data-wow-delay=\"0.3s\"><i class=\"fa fa-phone teal-text\"></i>\n                            <p>+ 01 234 567 89</p>\n                        </li>\n\n                        <li class=\"wow fadeIn\" data-wow-delay=\"0.4s\"><i class=\"fa fa-envelope teal-text\"></i>\n                            <p>contact@mdbootstrap.com</p>\n                        </li>\n                    </ul>\n                </div>\n                <!--/Second column-->\n            </div>\n        </section>\n        <!--Section: Contact-->\n        </div>"
+module.exports = "<!--  -->\n<main class=\"container-fluid olf-green-lighten-2\">\n\n    <div class=\"row\">\n        <div class=\"col-md-4\">\n            <div class=\"row\">\n                <div class=\"col-md-12\">\n                    <!-- <h2 class=\"text-muted responsive white-text\">\n                        We aren't selling local food.\n                    </h2>\n                    <h2 class=\"text-muted responsive white-text\">\n                        We aren't delivering it either.\n                    </h2>\n                    <br>\n                    <h1 class=\"text-muted responsive white-text\">\n                        But we show you who is.\n                    </h1> -->\n                    <h2 class=\"text-muted responsive white-text\">\n                        Onlylocalfood.com - we don't sell or deliver local food...\n                    </h2>\n                    <br>\n                    <h1 class=\"text-muted responsive white-text\">\n                        We show you who does!\n                    </h1>\n                    <br><br>\n                    <p class=\"lead grey-text\">\n                        Our platform shows you the farms and producers that have products available, including where and how to get them, and let's you order online. It's a farmers' market on the web, done right.\n                    </p>\n                    <!-- <p class=\"lead grey-text\">\n                        OLF is a platform for producers of local food to create their own online store. It shows consumers what products are available in their area and how to get them.\n                    </p> -->\n                </div>\n                <div class=\"col-md-12\">\n                    <p class=\"lead white-text text-center\">\n                        <a routerLink=\"search\" class=\"btn btn-olf-primary inline\">Start Searching</a>\n                    </p>\n                </div>\n                <div class=\"col-md-12\">\n                    <!-- <h2 class=\"text-muted responsive white-text\">\n                        Find and order local food online,\n                        <br>\n                        directly from the producers.\n                    </h2> -->\n                    <h2 class=\"text-muted responsive white-text\">\n                        Feed your family.\n                        <br>\n                        Feed your community.\n                    </h2>\n                </div>\n            </div>\n        </div>\n        <div class=\"col-md-8\">\n            <div class=\"row d-flex align-self-stretch\">\n                <div class=\"col-12 col-sm-6 offset-sm-3 col-md offset-md-0 d-flex\">\n                    <!--Card-->\n                    <div class=\"card jumbotron-card\">\n                        <div class=\"row\">\n                            <!--Card image-->\n                            <div class=\"col mt-3 text-center\">\n                                <img class=\"w-25\" src=\"assets/images/icon-1.png\">\n                            </div>\n                            <!--/.Card image-->\n\n                            <!--Card content-->\n                            <div class=\"card-block\">\n                                <!--Title-->\n                                <h5 class=\"card-title text-center\">Products and Schedules</h5>\n                                <hr>\n                                <p class=\"text-center\"><img src=\"assets/images/step-1-graphic.png\"></p>\n                                <!--Text-->\n                                <p class=\"card-text\">Producers load their products onto OLF and schedule deliveries and pickups. Everything you need to know is added - what products are for sale, prices, and (<b>this is the special bit</b>) how, when, and where you can get your order.</p>\n                                \n                            </div>\n                            <!--/.Card content-->\n                        </div>\n                    </div>\n                    <!--/.Card-->\n                </div>\n                <div class=\"col-sm-6 offset-sm-3 col-md offset-md-0 d-flex\">\n                    <!--Card-->\n                    <div class=\"card jumbotron-card\">\n                        <div class=\"row\">\n                            <!--Card image-->\n                            <div class=\"col mt-3 text-center\">\n                                <img class=\"w-25\" src=\"assets/images/icon-2.png\">\n                            </div>\n                            <!--/.Card image-->\n\n                            <!--Card content-->\n                            <div class=\"card-block\">\n                                <!--Title-->\n                                <h5 class=\"card-title text-center\">Search and Order</h5>\n                                <hr>\n                                <!--Text-->\n                                <p class=\"card-text\">Our search page shows you all the products that are <b>available in your area</b>. You can see who's selling and the delivery and pickup options. Add what you want to your cart, and instead of paying when you check out, you simply select how to get your order based on the producer's options.</p>\n                                <p class=\"text-center\"><img src=\"assets/images/step-2-graphic.png\"></p>\n                            </div>\n                            <!--/.Card content-->\n                        </div>\n                    </div>\n                    <!--/.Card-->\n                </div>\n                <div class=\"col-sm-6 offset-sm-3 col-md offset-md-0 d-flex\">\n                    <!--Card-->\n                    <div class=\"card jumbotron-card\">\n                        <div class=\"row\">\n                            <!--Card image-->\n                            <div class=\"col mt-3 text-center\">\n                                <img class=\"w-25\" src=\"assets/images/icon-3.png\">\n                            </div>\n                            <!--/.Card image-->\n\n                            <!--Card content-->\n                            <div class=\"card-block\">\n                                <!--Title-->\n                                <h5 class=\"card-title text-center\">Delivery, Pickup, and Payment</h5>\n                                <hr>\n                                <p class=\"text-center\"><img src=\"assets/images/step-3-graphic.png\"></p>\n                                <!--Text-->\n                                <p class=\"card-text\">At the date and time you chose, you and the producer get together (or maybe they come to you!). <b>You get the great local food you ordered and the producer gets paid directly</b>. It's exactly like a farmers' market, just easier.</p>\n                            </div>\n                            <!--/.Card content-->\n                        </div>\n                    </div>\n                    <!--/.Card-->\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <!-- <div class=\"flex-center\">\n                    \n        <div>\n            \n            <div class=\"row\">\n                <div class=\"col-sm-12 col-md-4 mt-auto mb-auto\">\n                    <div class=\"col-sm\">\n                        <h2 class=\"text-muted responsive white-text\">\n                            Find and order local food online,\n                            <br>\n                            directly from the producers.\n                        </h2>\n                        <p class=\"lead grey-text\">\n                            This will be a fancy description of OLF. a;dfha;lksdfj as;ldfkj ;lj ;ld asdfasfd as s f d g se sg dsf s fgd .\n                        </p>\n                    </div>\n                    <br>\n                    <div class=\"col-sm\">\n                        <p class=\"lead white-text\">\n                            <a routerLink=\"search\" class=\"btn btn-olf-primary inline\">Start Searching</a>\n                            or\n                            <a routerLink=\"learn-more\" class=\"btn btn-olf-primary inline\">Learn More</a>\n                        </p>\n                    </div>\n                    \n                </div>\n            </div>\n                \n\n        </div>\n\n    </div> -->\n\n</main>\n\n<div class=\"container\">\n\n<div class=\"divider-new\">\n            <h2 class=\"h2-responsive wow fadeIn\" data-wow-delay=\"0.2s\">About us</h2>\n        </div>\n\n        <!--Section: About-->\n        <section id=\"about\" class=\"text-center wow fadeIn\" data-wow-delay=\"0.2s\">\n\n            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit explicabo assumenda eligendi ex exercitationem harum deleniti quaerat beatae ducimus dolor voluptates magnam, reiciendis pariatur culpa tempore quibusdam quidem, saepe eius.</p>\n            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit explicabo assumenda eligendi ex exercitationem harum deleniti quaerat beatae ducimus dolor voluptates magnam, reiciendis pariatur culpa tempore quibusdam quidem, saepe eius.</p>\n\n        </section>\n        <!--Section: About-->\n\n        <div class=\"divider-new\">\n            <h2 class=\"h2-responsive wow fadeIn\">Contact us</h2>\n        </div>\n\n        <!--Section: Contact-->\n        <section id=\"contact\">\n            <div class=\"row\">\n                <h1>Here we need a contact form</h1>\n            </div>\n        </section>\n        <!--Section: Contact-->\n        </div>"
 
 /***/ }),
 
@@ -10486,9 +10505,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var FormatCellPipe = /** @class */ (function () {
-    function FormatCellPipe(datePipe, currencyPipe) {
+    function FormatCellPipe(datePipe, currencyPipe, uppercasePipe) {
         this.datePipe = datePipe;
         this.currencyPipe = currencyPipe;
+        this.uppercasePipe = uppercasePipe;
     }
     // transform(value: any, format: string) { // make this into an object like { format, nestedProperty }
     FormatCellPipe.prototype.transform = function (value, format) {
@@ -10508,23 +10528,28 @@ var FormatCellPipe = /** @class */ (function () {
         if (value === undefined) {
             newValue = 'N/A';
         }
-        if (typeof value === 'object' && !nestedProperty) {
-            newValue = value.name;
-        }
-        else if (typeof value === 'object' && nestedProperty) {
+        // if (typeof value === 'object' && !nestedProperty) { // the cell value is an object, but no property is given
+        //     console.log('type of: ', typeof value);
+        //     console.log('value: ', value);
+        //     newValue = value.name;
+        // } else 
+        if (typeof value === 'object' && nestedProperty) {
             newValue = value[nestedProperty];
         }
         else {
             newValue = value;
         }
         if (formatType === 'currency') {
-            newValue = this.currencyPipe.transform(newValue, 'USD', true);
+            newValue = this.currencyPipe.transform(newValue, 'CAD', 'symbol-narrow');
         }
         if (formatType === 'mediumDate') {
             newValue = this.datePipe.transform(newValue, 'mediumDate');
         }
         if (formatType === 'shortTime') {
             newValue = this.datePipe.transform(newValue, 'shortTime');
+        }
+        if (formatType === 'uppercase') {
+            newValue = this.uppercasePipe.transform(newValue);
         }
         return newValue;
         // original code
@@ -10554,7 +10579,8 @@ var FormatCellPipe = /** @class */ (function () {
     FormatCellPipe = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({ name: 'formatCell' }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common__["e" /* DatePipe */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* CurrencyPipe */]])
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* CurrencyPipe */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["l" /* UpperCasePipe */]])
     ], FormatCellPipe);
     return FormatCellPipe;
 }());
@@ -10687,7 +10713,7 @@ var ColumnMap = /** @class */ (function () {
 /***/ "./src/app/shared/table-layout/table-layout.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- TABLES -->\n<div class=\"row\">\n    <div class=\"col-12\">\n        <!-- <button *ngIf=\"!sortedRecords\" class=\"btn btn-sm btn-olf-primary\" (click)=\"download(records)\">Export as CSV</button> -->\n        <button *ngIf=\"sortedRecords.length !== 0\" class=\"btn btn-sm btn-olf-primary\" (click)=\"download(sortedRecords)\">Export as CSV</button>\n    </div>\n</div>\n<table class=\"table table-responsive-md table-hover\">\n    <thead>\n        <tr>\n            <th *ngFor=\"let map of columnMaps\">\n                <a *ngIf=\"map.sortable\" (click)=\"onSort(map)\">{{ map.header }}  <i class=\"fa fa-sort\"></i></a>\n                <p class=\"m-0\" *ngIf=\"!map.sortable\">{{ map.header }}</p>\n            </th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr *ngFor=\"let record of paginatedRecords\">\n            <td *ngFor=\"let map of columnMaps\">{{ record[map.access(record)] | formatCell:map.format }}</td>\n            <td *ngIf=\"!pending\">\n                <a (click)=\"onOpenView(record)\">View</a>\n            </td>\n            <td *ngIf=\"editable\">\n                <a (click)=\"onOpenEdit(record)\">Edit</a>\n            </td>\n            <td *ngIf=\"pending\">\n                <a (click)=\"onOpenEdit(record)\">Accept/Deny</a>\n            </td>\n            <td *ngIf=\"deletable\">\n                <a (click)=\"onSelectDelete(record)\">Delete</a>\n            </td>\n            <td *ngIf=\"accepted && record.chosenSchedule.startDateTime < now\">\n                <a (click)=\"onMarkComplete(record)\">Mark Complete</a>\n            </td>\n        </tr>\n    </tbody>\n</table>\n\n<app-pagination \n    *ngIf=\"recordsCount > perPage\"\n    [count]=\"recordsCount\"\n    [page]=\"currentPage\"\n    [perPage]=\"perPage\"\n    [pagesToShow]=\"5\"\n    (goPrev)=\"prevPage()\"\n    (goNext)=\"nextPage()\"\n    (goPage)=\"goToPage($event)\">\n</app-pagination>"
+module.exports = "<!-- TABLES -->\n<div class=\"row\">\n    <div class=\"col-12\">\n        <!-- <button *ngIf=\"!sortedRecords\" class=\"btn btn-sm btn-olf-primary\" (click)=\"download(records)\">Export as CSV</button> -->\n        <button *ngIf=\"sortedRecords.length !== 0\" class=\"btn btn-sm btn-olf-primary\" (click)=\"download(sortedRecords)\">Export as CSV</button>\n    </div>\n</div>\n<table class=\"table table-responsive-md table-hover\">\n    <thead>\n        <tr>\n            <th *ngFor=\"let map of columnMaps\" class=\"no-wrap\">\n                <a *ngIf=\"map.sortable\" (click)=\"onSort(map)\">{{ map.header }}  <i class=\"fa fa-sort\"></i></a>\n                <p class=\"m-0\" *ngIf=\"!map.sortable\">{{ map.header }}</p>\n            </th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr *ngFor=\"let record of paginatedRecords\">\n            <td *ngFor=\"let map of columnMaps\">{{ record[map.access(record)] | formatCell:map.format }}</td>\n            <td *ngIf=\"!pending\">\n                <a (click)=\"onOpenView(record)\">View</a>\n            </td>\n            <td *ngIf=\"editable\">\n                <a (click)=\"onOpenEdit(record)\">Edit</a>\n            </td>\n            <td *ngIf=\"pending\">\n                <a (click)=\"onOpenEdit(record)\">Accept/Deny</a>\n            </td>\n            <td *ngIf=\"deletable\">\n                <a (click)=\"onSelectDelete(record)\">Delete</a>\n            </td>\n            <td *ngIf=\"accepted && record.chosenSchedule.startDateTime < now\">\n                <a (click)=\"onMarkComplete(record)\">Mark Complete</a>\n            </td>\n        </tr>\n    </tbody>\n</table>\n\n<app-pagination \n    *ngIf=\"recordsCount > perPage\"\n    [count]=\"recordsCount\"\n    [page]=\"currentPage\"\n    [perPage]=\"perPage\"\n    [pagesToShow]=\"5\"\n    (goPrev)=\"prevPage()\"\n    (goNext)=\"nextPage()\"\n    (goPage)=\"goToPage($event)\">\n</app-pagination>"
 
 /***/ }),
 
@@ -11080,7 +11106,6 @@ var TableLayoutComponent = /** @class */ (function () {
         this.perPage = 5; // number of records to show per page
         this.iterableDiffer = this._iterableDiffers.find([]).create(null);
         this.now = new Date().toISOString();
-        console.log('now: ', this.now);
     }
     TableLayoutComponent.prototype.ngOnChanges = function () {
         if (this.settings) {
@@ -11094,7 +11119,6 @@ var TableLayoutComponent = /** @class */ (function () {
             });
         }
         this.sortedRecords = this.records; // set sorted records to initial record list
-        console.log('sorted Records, on Changes: ', this.sortedRecords);
         this.recordsCount = this.records.length; // get the count
         this.getPaginatedRecords(this.currentPage); // get the page of records
     };
@@ -11206,8 +11230,6 @@ var TableLayoutComponent = /** @class */ (function () {
         this.setSortDirection(map);
         // get the sorting column
         var sortColumn = map.primaryKey;
-        console.log('sortColumn: ', sortColumn);
-        console.log('map: ', map);
         // get the sort direction
         var currentSortDirection = this.sortDirection[this.getSortDirectionIndex(sortColumn)].direction;
         // see if column contains numbers
@@ -11407,8 +11429,6 @@ var TableLayoutComponent = /** @class */ (function () {
         else {
             var startIndex = ((pageNumber * this.perPage) - this.perPage);
             var endIndex = (pageNumber * this.perPage || this.recordsCount);
-            console.log(startIndex);
-            console.log(endIndex);
             this.paginatedRecords = this.sortedRecords.slice(startIndex, endIndex);
         }
     };

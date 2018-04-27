@@ -25,16 +25,20 @@ export class ProductsComponent implements OnInit {
   [
       {
         primaryKey: 'name',
-        header: 'Name'
+        header: 'Name',
+        sortable: true,
       },
       {
         primaryKey: 'pricePerUnit',
         header: 'Price Per',
-        format: 'currency'
+        format: 'currency',
+        sortable: true,
       },
       {
         primaryKey: 'unit',
-        header: 'Unit'
+        header: 'Unit',
+        format: 'uppercase',
+        nested: false
       },
       {
         primaryKey: 'unitsPer',
@@ -42,23 +46,31 @@ export class ProductsComponent implements OnInit {
       },
       {
         primaryKey: 'category',
-        header: 'Category'
+        header: 'Category',
+        sortable: true,
       },
       {
         primaryKey: 'subcategory',
-        header: 'Subcat'
+        header: 'Subcat',
+        sortable: true,
       },
       {
         primaryKey: 'qtyAvailable',
-        header: 'Available'
+        header: 'Available',
+        sortable: true,
       },
       {
         primaryKey: 'qtyPending',
-        header: 'Pending'
+        header: 'Pending',
+        sortable: true,
       },
       {
         primaryKey: 'producer',
-        header: 'Producer'
+        header: 'Producer',
+        format: 'null,name',
+        sortable: true,
+        sortPath: 'name',
+        nested: true
       }
   ];
 

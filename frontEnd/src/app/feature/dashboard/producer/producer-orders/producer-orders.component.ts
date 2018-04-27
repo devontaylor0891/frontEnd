@@ -35,7 +35,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
       primaryKey: 'orderDetails',
       header: 'Order Date',
       format: 'mediumDate,createdDate',
-      sortable: false,
+      sortable: true,
       sortPath: '',
       nested: false
     },
@@ -48,10 +48,26 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
       nested: false
     },
     {
+      primaryKey: 'chosenSchedule',
+      header: 'Location',
+      format: 'null,city',
+      sortable: true,
+      sortPath: 'city',
+      nested: false
+    },
+    {
+      primaryKey: 'chosenSchedule',
+      header: 'Schedule Date',
+      format: 'mediumDate,startDateTime',
+      sortable: true,
+      sortPath: '',
+      nested: false
+    },
+    {
       primaryKey: 'orderDetails',
       header: 'Order Total',
       format: 'currency,orderValue',
-      sortable: false,
+      sortable: true,
       sortPath: '',
       nested: false
     }
@@ -81,28 +97,19 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
           this.deniedOrders = denied;
           const incomplete = orders.filter(order => order.orderDetails.orderStatus === 'incomplete');
           this.incompletedOrders = incomplete;
-          console.log('pending orders: ', this.pendingOrders);
-          console.log('accepted orders: ', this.acceptedOrders);
-          console.log('completed orders: ', this.completedOrders);
-          console.log('denied orders: ', this.deniedOrders);
-          console.log('incomplete orders: ', this.incompletedOrders);
         }
       );
 
   }
 
   onAcceptOrder($event) { // move order from pending array to accepted array
-    console.log('order was accepted: ', $event);
-    console.log('pending before: ', this.pendingOrders);
     // remove from pending array
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
-    console.log('pending after: ', this.pendingOrders);
     // add to accepted orders
     this.acceptedOrders.push($event);
   };
 
   onDenyOrder($event) { // move order from pending array to denied array
-    console.log('order was denied: ', $event);
     // remove from pending array
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
     // add to denied orders
@@ -110,7 +117,6 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   };
 
   onCompleteOrder($event) { // move order from accepted to completed
-    console.log('order was completed: ', $event);
     // remove from pending array
     this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
     // add to denied orders
@@ -118,11 +124,8 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   };
 
   onIncompleteOrder($event) { // move order from accepted to incompleted
-    console.log('order was incompleted: ', $event);
     // remove from pending array
-    console.log('accepted orders before: ', this.acceptedOrders);
     this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
-    console.log('accepted orders after: ', this.acceptedOrders);
     // add to denied orders
     this.incompletedOrders.push($event);
   };

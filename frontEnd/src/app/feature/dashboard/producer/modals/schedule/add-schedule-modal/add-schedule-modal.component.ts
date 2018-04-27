@@ -151,7 +151,6 @@ export class AddScheduleModalComponent implements OnInit {
     this.clearDatesFromSubmitObject();
     // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
     this.submitObject.producerId = this.producer.id;
-    this.submitObject.productList = this.producer.productList;
     this.submitObject.type = this.form.value.type;
     this.submitObject.description = this.form.value.description;
     this.submitObject.startDateTime = this.buildStartDateTime(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
@@ -195,7 +194,6 @@ export class AddScheduleModalComponent implements OnInit {
   buildSubmitObject() {
     // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
     this.submitObject.producerId = this.producer.id;
-    this.submitObject.productList = this.producer.productList;
     this.submitObject.type = this.form.value.type;
     this.submitObject.description = this.form.value.description;
     this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);

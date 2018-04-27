@@ -27,7 +27,10 @@ export class ConsumerOrdersComponent implements OnInit {
       {
         primaryKey: 'producer',
         header: 'Producer',
-        sortable: true
+        format: 'null,name',
+        sortable: true,
+        sortPath: 'name',
+        nested: true
       },
       {
         primaryKey: 'chosenSchedule',

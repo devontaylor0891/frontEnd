@@ -433,7 +433,6 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     }
 
     this.sortedRecords = this.records; // set sorted records to initial record list
-    console.log('sorted Records, on Changes: ', this.sortedRecords);
     this.recordsCount = this.records.length; // get the count
     this.getPaginatedRecords(this.currentPage); // get the page of records
   }
@@ -452,7 +451,6 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     this.iterableDiffer = this._iterableDiffers.find([]).create(null);
 
     this.now = new Date().toISOString();
-    console.log('now: ', this.now);
 
   }
 
@@ -570,8 +568,6 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     this.setSortDirection(map);
     // get the sorting column
     let sortColumn = map.primaryKey;
-    console.log('sortColumn: ', sortColumn);
-    console.log('map: ', map);
     // get the sort direction
     let currentSortDirection = this.sortDirection[this.getSortDirectionIndex(sortColumn)].direction;
     // see if column contains numbers
@@ -749,8 +745,6 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     } else {
       let startIndex = ((pageNumber * this.perPage) - this.perPage);
       let endIndex = (pageNumber * this.perPage || this.recordsCount);
-      console.log(startIndex);
-      console.log(endIndex);
       this.paginatedRecords = this.sortedRecords.slice(startIndex, endIndex);
     }
   };

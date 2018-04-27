@@ -14,7 +14,8 @@ import { ENV } from './env.config';
 @Injectable()
 export class ApiService {
 
-  apiUrl = 'http://localhost:3000';
+  // apiUrl = 'http://localhost:3000';
+  apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
 
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
@@ -58,7 +59,8 @@ export class ApiService {
   // get all products for admin dash
   getProducts(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}products`)
+      .get(this.apiUrl + `/products/`)
+      // .get(`${ENV.BASE_API}products`)
       // .get(this.allProductsUrl)
       .catch(this._handleError);
   }
@@ -172,16 +174,18 @@ export class ApiService {
   // get all producers
   getProducers(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}producer/`)
+      .get(this.apiUrl + `/producers/`)
+      // .get(`${ENV.BASE_API}producer/`)
       .catch(this._handleError);
   };
 
   // GET one producer by id
   getProducerById(id): Observable<any> {
     return this.http
-    .get(`${ENV.BASE_API}producer/` + id)
-		// .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
-		.catch(this._handleError);
+      // .get(this.apiUrl + `/producers/` + id)
+      .get(`${ENV.BASE_API}producer/` + id)
+      // .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
+      .catch(this._handleError);
   };
 
   // POST a new producer
