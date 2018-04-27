@@ -58,7 +58,11 @@ export class ProductsComponent implements OnInit {
       },
       {
         primaryKey: 'producer',
-        header: 'Producer'
+        header: 'Producer',
+        format: 'null,name',
+        sortable: true,
+        sortPath: 'name',
+        nested: true
       }
   ];
 

@@ -39,9 +39,12 @@ export class ProducersComponent implements OnInit, OnChanges {
       {
         primaryKey: 'email',
         header: 'Email'
-      }, {
+      },
+      {
         primaryKey: 'registrationDate',
-        header: 'Reg. Date'
+        header: 'Reg. Date',
+        format: 'mediumDate',
+        sortable: true
       }
   ];
 
