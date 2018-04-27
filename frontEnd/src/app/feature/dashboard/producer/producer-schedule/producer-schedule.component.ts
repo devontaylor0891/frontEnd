@@ -169,7 +169,6 @@ export class ProducerScheduleComponent implements OnInit {
     // this.modal.open(this.modalContent, { size: 'lg' });  
     const modalRef = this.modal.open(AddScheduleModalComponent, { size: 'lg' });
     modalRef.componentInstance.itemCreated.subscribe((schedule) => {
-      console.log('schedule from event emitter: ', schedule);
       this.createNew(schedule);
     });
   }
@@ -186,7 +185,6 @@ export class ProducerScheduleComponent implements OnInit {
           console.log('upcoming: ', this.upcomingSchedule);
           const completed = schedules.filter(schedule => schedule.endDateTime < date);
           this.completedSchedule = completed;
-          console.log('completed: ', this.completedSchedule);
         }
       );
 
@@ -197,7 +195,6 @@ export class ProducerScheduleComponent implements OnInit {
   };
 
   onScheduleDeleted($event) {
-    console.log('sched deleted: ', $event);
     // remove from upcoming array
     this.upcomingSchedule = this.utilityService.removeByAttribute(this.upcomingSchedule, 'id', $event);
   };

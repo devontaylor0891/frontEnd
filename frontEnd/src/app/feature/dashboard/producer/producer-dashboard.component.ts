@@ -27,7 +27,6 @@ export class ProducerDashboardComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           this.producer = result;
-          console.log('producer subscription result: ', this.producer);
         }
       );
 

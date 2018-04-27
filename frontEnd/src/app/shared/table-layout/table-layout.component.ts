@@ -451,7 +451,6 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     this.iterableDiffer = this._iterableDiffers.find([]).create(null);
 
     this.now = new Date().toISOString();
-    console.log('now: ', this.now);
 
   }
 

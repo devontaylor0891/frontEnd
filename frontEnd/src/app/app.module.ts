@@ -31,7 +31,7 @@ import { UserService } from './core/services/user/user.service';
 
 // PIPES
 import { FormatCellPipe } from './shared/pipes/format-cell.pipe';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { FirstCharacterToUppercasePipe } from './shared/pipes/firstCharacterToUppercase.pipe';
 
 // COMPONENTS
@@ -219,7 +219,8 @@ import { MarkCompleteOrderModalComponent } from './feature/dashboard/producer/mo
     LocationService, 
     CartService, 
     CurrencyPipe, 
-    DatePipe, 
+    DatePipe,
+    UpperCasePipe,
     UtilityService,
     ProducerDashboardService,
     EditProductModalComponent,

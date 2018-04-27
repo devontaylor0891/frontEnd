@@ -36,7 +36,13 @@ export class AppComponent implements OnInit, OnChanges {
       }
     });
 
-    this.isAdmin = this.authService.isAdmin;
+    this.authService.getIsAdmin()
+      .subscribe(
+        result => {
+          console.log('isAdmin result: ', result);
+          this.isAdmin = result;
+        }
+      );
 
     this.authService.getLoggedIn()
       .subscribe(

@@ -149,6 +149,7 @@ export class AuthService {
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + Date.now());
     // Set tokens and expiration in localStorage and props
     this.isAdmin = this._checkAdmin(profile);
+    this.isAdmin$.next(this.isAdmin);
     localStorage.setItem('isAdmin', this.isAdmin.toString());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);

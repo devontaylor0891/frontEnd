@@ -8,7 +8,7 @@
 <table class="table table-responsive-md table-hover">
     <thead>
         <tr>
-            <th *ngFor="let map of columnMaps">
+            <th *ngFor="let map of columnMaps" class="no-wrap">
                 <a *ngIf="map.sortable" (click)="onSort(map)">{{ map.header }}  <i class="fa fa-sort"></i></a>
                 <p class="m-0" *ngIf="!map.sortable">{{ map.header }}</p>
             </th>

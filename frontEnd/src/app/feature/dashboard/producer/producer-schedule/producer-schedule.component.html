@@ -29,7 +29,7 @@
                     </div>
                     <div id="upcomingDeliveriesCollapse" class="collapse show" role="tabpanel" aria-labelledby="upcomingDeliveriesHeading">
                         <div class="card-block">
-                            <app-table-layout
+                            <app-table-layout *ngIf="upcomingSchedule.length > 0"
                                 [records]="upcomingSchedule"
                                 [recordType]="recordType"
                                 [settings]="projectSettings"
@@ -37,6 +37,9 @@
                                 [deletable]="true"
                                 (scheduleDeleted)="onScheduleDeleted($event)">
                             </app-table-layout>
+                            <div *ngIf="upcomingSchedule.length < 1">
+                                <p>You have no upcoming deliveries or pickups scheduled.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

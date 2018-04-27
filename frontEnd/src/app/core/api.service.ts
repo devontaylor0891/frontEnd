@@ -59,7 +59,8 @@ export class ApiService {
   // get all products for admin dash
   getProducts(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}products`)
+      .get(this.apiUrl + `/products/`)
+      // .get(`${ENV.BASE_API}products`)
       // .get(this.allProductsUrl)
       .catch(this._handleError);
   }
@@ -181,8 +182,8 @@ export class ApiService {
   // GET one producer by id
   getProducerById(id): Observable<any> {
     return this.http
-      .get(this.apiUrl + `/producers/` + id)
-      // .get(`${ENV.BASE_API}producer/` + id)
+      // .get(this.apiUrl + `/producers/` + id)
+      .get(`${ENV.BASE_API}producer/` + id)
       // .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
       .catch(this._handleError);
   };
