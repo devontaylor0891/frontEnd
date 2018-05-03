@@ -37,7 +37,7 @@
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable"
-                            (productObsoleted)="onProductObsoleted($event)">
+                            (productObsoleted)="onProductObsoleted('current', $event)">
                         </app-table-layout>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable"
-                            (productObsoleted)="onProductObsoleted($event)">
+                            (productObsoleted)="onProductObsoleted('outOfStock', $event)">
                         </app-table-layout>
                     </div>
                 </div>
