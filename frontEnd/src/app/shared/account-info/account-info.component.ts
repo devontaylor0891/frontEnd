@@ -34,7 +34,10 @@ import { ProducerDashboardService } from '../../feature/dashboard/producer-dashb
 
 import { UserModel } from '../../core/models/user.model';
 import { ProducerModel } from '../../core/models/producer.model';
-import { ProducerDashboardComponent } from 'app/feature/dashboard/producer/producer-dashboard.component';
+
+import { EditAccountModalComponent } from '../edit-account-modal/edit-account-modal.component';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-account-info',
@@ -49,7 +52,8 @@ export class AccountInfoComponent implements OnInit {
 
   constructor(private auth: AuthService,
               private userService: UserService,
-              private producerService: ProducerDashboardService) { }
+              private producerService: ProducerDashboardService,
+              private modal: NgbModal) { }
 
   ngOnInit() {
 
@@ -60,22 +64,14 @@ export class AccountInfoComponent implements OnInit {
     console.log('user: ', this.user);
     console.log('producer: ', this.producer);
 
-    // this.userService.getUser()
-    //   .subscribe(
-    //     result => {
-    //       this.user = result;
-    //       console.log('user: ', this.user);
-    //     }
-    //   );
+  };
 
-    // this.producerService.getProducer()
-    //   .subscribe(
-    //     result => {
-    //       this.producer = result;
-    //       console.log('producer: ', this.producer);
-    //     }
-    //   );
-
-  }
+  onOpenEdit() {
+    const modalRef = this.modal.open(EditAccountModalComponent, { size: 'lg' });
+    modalRef.componentInstance.user = this.user;
+    if (this.producer) {
+      modalRef.componentInstance.producer = this.producer;
+    };
+  };
 
 }
