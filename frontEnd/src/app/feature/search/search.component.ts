@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import 'rxjs/Rx';
 
 import { LocationService } from '../../core/services/location/location.service';
@@ -14,14 +15,19 @@ import { ProductModel } from '../../core/models/product.model';
 })
 export class SearchComponent implements OnInit {
 
+  pageTitle = 'Your custom search - Onlylocalfood.com';
+
   userLocation;
 
   searchResults: ProductModel[] = [];
 
   constructor(private locationService: LocationService,
-              private searchService: SearchService) { }
+              private searchService: SearchService,
+              private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle(this.pageTitle);
 
     // get the location from the browser window
     this.locationService.getLocation()

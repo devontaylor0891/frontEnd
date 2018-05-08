@@ -55,7 +55,8 @@ export class ProducerComponent implements OnInit, OnChanges {
       );
 
     // load the producer's information
-    this.producerService.loadProducerData(+id);
+    console.log('loading producer with id: ', id);
+    this.producerService.loadProducerData(id);
 
   }
 }

@@ -30,7 +30,7 @@
                     <div class="jumbotron">
                         <div>
                             <h2 class="h2-responsive">
-                                <img src="{{profile?.picture}}" class="avatar" alt="avatar">
+                                <img src="{{profile?.picture}}" class="avatar" alt="avatar" class="img-thumbnail">
                                 <strong>Your Profile</strong>
                             </h2>
                             <p></p>
@@ -136,7 +136,7 @@
                             
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-olf-primary btn-sm"><i class="fa fa-edit prefix mr-3"></i>Edit</button>
+                                    <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()"><i class="fa fa-edit prefix mr-3"></i>Edit</button>
                                 </div>
                             </div>
 

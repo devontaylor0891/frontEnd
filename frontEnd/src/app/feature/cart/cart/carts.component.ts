@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { CartService } from '../../../core/services/cart-service/cart.service';
 
@@ -11,13 +12,18 @@ import { OrderModel } from '../../../core/models/order.model';
 })
 export class CartsComponent implements OnInit, OnChanges {
 
+  pageTitle = 'Your Cart - Onlylocalfood.com';
+
   carts: OrderModel[];
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,
+              private title: Title) { }
 
   ngOnChanges() {}
 
   ngOnInit() {
+
+    this.title.setTitle(this.pageTitle);
 
     this.cartService.getCarts()
       .subscribe(results => {
