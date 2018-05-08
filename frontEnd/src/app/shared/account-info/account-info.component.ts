@@ -53,7 +53,9 @@ export class AccountInfoComponent implements OnInit {
   constructor(private auth: AuthService,
               private userService: UserService,
               private producerService: ProducerDashboardService,
-              private modal: NgbModal) { }
+              private modal: NgbModal) { };
+
+  
 
   ngOnInit() {
 

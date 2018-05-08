@@ -43,7 +43,7 @@
           
               </div>
   
-              <div class="col-12 col-md-4 justify-content-center">
+              <div class="col-12 text-center">
                   <button 
                       class="btn btn-olf-primary" 
                       type="submit"
@@ -55,7 +55,7 @@
   
       </form>
   
-      <form *ngIf="!submitting && producer" [formGroup]="producerForm"  (ngSubmit)="onSubmit(userForm, 'producer')">
+      <form *ngIf="!submitting && producer" [formGroup]="producerForm"  (ngSubmit)="onSubmit(producerForm, 'producer')">
   
           <div class="row form-section">
   
@@ -130,10 +130,72 @@
                               class="form-control">
                       </div>
                   </div>
+
+                </div>
+
+                <div class="col-12 form-section-header">
+                    <h4>Your Location Details</h4>
+                </div>
+            
+                <div class="col-12 form-section-body">
+
+                    <div class="row">
+                        <label for="name" class="col-4 col-form-label text-right">Address:</label>
+                        <div class="col-8">
+                            <p>{{ producer.address }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="name" class="col-4 col-form-label text-right">Location:</label>
+                        <div class="col-8">
+                            <p>{{ producer.location }}, {{ producer.province }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <a  
+                                (click)="toggleLocationSearch()"
+                                >Edit Location Details</a>
+                        </div>
+                    </div>
+
+                    <div class="row" [hidden]="!locationSearchDisplay">
+
+                        <!-- location -->
+                        <div class="col-12">
+
+                            <h5 class="h5-responsive">
+                                <label for="search">Enter Your Location</label>
+                                <p><small>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</small></p>                                    
+                            </h5>
+                            <div class="md-form pl-3">
+                                <i class="fa fa-map-marker prefix"></i>
+                                <input  
+                                    autocorrect="off" 
+                                    autocapitalize="off" 
+                                    spellcheck="off" 
+                                    type="text" 
+                                    class="form-control" 
+                                    #search 
+                                    id="search"
+                                    [formControl]="searchControl">
+                            </div>
+
+                        </div>
+
+                        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                            <agm-marker [latitude]="latitude" [longitude]="longitude">
+                                <!-- <agm-info-window>Börk</agm-info-window> -->
+                            </agm-marker>
+                        </agm-map>
+
+                    </div>
             
               </div>
         
-              <div class="col-12 col-md-4 justify-content-center">
+              <div class="col-12 text-center">
                   <button 
                       class="btn btn-olf-primary" 
                       type="submit"

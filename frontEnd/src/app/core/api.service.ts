@@ -239,6 +239,7 @@ export class ApiService {
 
   // PATCH user
   patchUser(id: number, newFieldAndValue: Object): Observable<any> {
+    console.log('api patch: ', id, newFieldAndValue);
     return this.http
       .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
