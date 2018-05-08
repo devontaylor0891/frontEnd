@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { ProducerService } from '../../../core/services/producer/producer.service';
 
@@ -18,7 +19,8 @@ export class ProducerPageComponent implements OnInit, OnChanges {
   schedule: ScheduleModel[];
   outOfStockProducts: ProductModel[] = [];
 
-  constructor(private producerService: ProducerService) {}
+  constructor(private producerService: ProducerService,
+              private title: Title) {}
 
   ngOnChanges() {}
 
@@ -28,6 +30,7 @@ export class ProducerPageComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           this.producer = result;
+          this.title.setTitle(this.producer.name + ' on Onlylocalfood.com');
         }
       );
 
