@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { mergeMap } from 'rxjs/operators';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/timer';
 import { AUTH_CONFIG } from './auth.config';
 import * as auth0 from 'auth0-js';
-
-import { Observable } from 'rxjs/Observable';
 
 import { UserModel } from '../core/models/user.model';
 
@@ -43,6 +46,9 @@ export class AuthService {
 
   authResult: any;
 
+  // Subscribe to token expiration stream
+  refreshSub: Subscription;
+
   constructor(private router: Router) {
 
     // If authenticated, set local profile property
@@ -56,6 +62,7 @@ export class AuthService {
       this.isAdmin = localStorage.getItem('isAdmin') === 'true';
       this.isAdmin$.next(this.isAdmin);
       this.setLoggedIn(true);
+      this.scheduleRenewal();
     } else if (!this.tokenValid && lsProfile) {
       this.logout();
     }
@@ -144,7 +151,7 @@ export class AuthService {
     localStorage.removeItem('authRedirect');
   }
 
-  private _setSession(authResult, profile) {
+  private _setSession(authResult, profile?) {
     // Save session data and update login status subject
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + Date.now());
     // Set tokens and expiration in localStorage and props
@@ -158,6 +165,8 @@ export class AuthService {
     this.userProfile = profile;
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
+    // Schedule access token renewal
+    this.scheduleRenewal();
   }
 
   private _checkAdmin(profile) {
@@ -171,7 +180,7 @@ export class AuthService {
   //   return type;
   // }
 
-  logout() {
+  logout(noRedirect?: boolean) {
     // Ensure all auth items removed from localStorage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
@@ -186,12 +195,67 @@ export class AuthService {
     this.setLoggedIn(false);
     // Return to homepage
     this.router.navigate(['/']);
+    // Unschedule access token renewal
+    this.unscheduleRenewal();
+    // Return to homepage
+    if (noRedirect !== true) {
+      this.router.navigate(['/']);
+    }
   }
 
   get tokenValid(): boolean {
     // Check if current time is past access token's expiration
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return Date.now() < expiresAt;
+  }
+
+  renewToken() {
+    this._auth0.checkSession({},
+      (err, authResult) => {
+        if (authResult && authResult.accessToken) {
+          this._setSession(authResult);
+        } else if (err) {
+          console.warn(`Could not renew token: ${err.errorDescription}`);
+          // Log out without redirecting to clear auth data
+          this.logout(true);
+          // Log in again
+          this.login();
+        }
+      }
+    );
+  }
+
+  scheduleRenewal() {
+    // If user isn't authenticated, do nothing
+    if (!this.tokenValid) { return; }
+    // Unsubscribe from previous expiration observable
+    this.unscheduleRenewal();
+    // Create and subscribe to expiration observable
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const expiresIn$ = Observable.of(expiresAt).pipe(
+      mergeMap(
+        expires => {
+          const now = Date.now();
+          // Use timer to track delay until expiration
+          // to run the refresh at the proper time
+          return Observable.timer(Math.max(1, expires - now));
+        }
+      )
+    );
+
+    this.refreshSub = expiresIn$
+      .subscribe(
+        () => {
+          this.renewToken();
+          this.scheduleRenewal();
+        }
+      );
+  }
+
+  unscheduleRenewal() {
+    if (this.refreshSub) {
+      this.refreshSub.unsubscribe();
+    }
   }
 
 }

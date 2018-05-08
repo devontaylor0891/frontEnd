@@ -195,7 +195,16 @@ export class ApiService {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
-  }
+  };
+
+  // PATCH producer info
+  patchProducer(id: number, newFieldAndValue: Object): Observable<any> {
+    return this.http
+      .patch(`${ENV.BASE_API}producer/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
 
 // ***************** USERS *****************
 
@@ -230,6 +239,7 @@ export class ApiService {
 
   // PATCH user
   patchUser(id: number, newFieldAndValue: Object): Observable<any> {
+    console.log('api patch: ', id, newFieldAndValue);
     return this.http
       .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)

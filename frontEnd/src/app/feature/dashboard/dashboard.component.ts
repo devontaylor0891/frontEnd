@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { DashboardService } from './dashboard.service';
 import { AuthService } from '../../auth/auth.service';
@@ -21,9 +22,12 @@ export class DashboardComponent implements OnInit, OnChanges {
   ngOnChanges() {};
 
   constructor(private auth: AuthService,
-              private userService: UserService) { }
+							private userService: UserService,
+							private title: Title) { }
 
   ngOnInit() {
+
+		this.title.setTitle('Your Dashboard');
 
 	  this.userService.getUserType()
 			.subscribe(
@@ -37,6 +41,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.isAdmin = result;
+					console.log('isAdmin: ', result);
 				}
 			);
 			
@@ -44,6 +49,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.id = result;
+					console.log('id: ', result);
 				}
 			);
 
@@ -51,6 +57,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.user = result;
+					console.log('user: ', result);
 				}
 			);
 

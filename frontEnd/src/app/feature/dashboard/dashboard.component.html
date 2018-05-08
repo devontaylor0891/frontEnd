@@ -1,7 +1,7 @@
 <div class="container">
 
     <app-admin-dashboard *ngIf="this.isAdmin" [id]="id" [user]="user"></app-admin-dashboard>
-    <app-consumer-dashboard *ngIf="this.userType === 'consumer' && !this.isAdmin" [id]="id" [user]="user"></app-consumer-dashboard>
+    <app-consumer-dashboard *ngIf="this.userType === 'consumer'" [id]="id" [user]="user"></app-consumer-dashboard>
     <app-producer-dashboard *ngIf="this.userType === 'producer'" [id]="id" [user]="user"></app-producer-dashboard>
         
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-landing-content',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingContentComponent implements OnInit {
 
-  constructor() { }
+  pageTitle = 'Onlylocalfood - Good, local food online';
+
+  constructor(private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle(this.pageTitle);
+
   }
 
 }

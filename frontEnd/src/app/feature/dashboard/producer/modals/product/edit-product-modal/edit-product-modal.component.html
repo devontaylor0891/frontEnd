@@ -27,7 +27,7 @@
             >Cancel Renewal</button>
     </div>
   
-    <form *ngIf="!submitting" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="!submitting && producer" [formGroup]="productForm" (ngSubmit)="onSubmit()">
         
         <!-- Name -->
         <div class="row">
