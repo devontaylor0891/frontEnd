@@ -22,6 +22,24 @@ export class AddProductModalComponent implements OnInit {
 
   @Output() itemCreated = new EventEmitter<ProductModel>();
 
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+    console.log('event: ', event);
+  };
+  imageCropped(image: string) {
+    this.croppedImage = image;
+    console.log('image: ', image);
+  };
+  imageLoaded() {
+    // show cropper
+  };
+  loadImageFailed() {
+    // show message
+  };
+
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
               private activeModal: NgbActiveModal,

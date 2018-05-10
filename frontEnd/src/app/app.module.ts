@@ -18,6 +18,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import { AgmCoreModule } from '@agm/core';
 //import { DateTimePickerModule } from 'ng-pick-datetime';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 // SERVICES
 import { AuthService } from './auth/auth.service';
@@ -209,10 +210,11 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
       apiKey: 'AIzaSyAgN6Tt6BxP2Q-iNCNe7HiHfIGotu1j_uY',
       libraries: ["places"]
     }),
-    //DateTimePickerModule,
+    // DateTimePickerModule,
     OwlDateTimeModule, OwlNativeDateTimeModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ImageCropperModule
   ],
   providers: [
     UserService,

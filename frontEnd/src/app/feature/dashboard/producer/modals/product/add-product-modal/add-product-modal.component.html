@@ -45,6 +45,35 @@
           </div>
 
           <div class="row">
+                <label for="" class="col-4 col-form-label text-right">Image Upload</label>
+                <div class="col-8">
+                    <input type="file" (change)="fileChangeEvent($event)" />
+
+                    <image-cropper
+                        [imageChangedEvent]="imageChangedEvent"
+                        [maintainAspectRatio]="true"
+                        [aspectRatio]="1 / 1"
+                        [resizeToWidth]="400"
+                        format="jpeg"
+                        [imageQuality]="70"
+                        (imageCropped)="imageCropped($event)"
+                        (imageLoaded)="imageLoaded()"
+                        (loadImageFailed)="loadImageFailed()"
+                    ></image-cropper>
+                    
+                </div>
+          </div>
+            <br>
+          <div class="row" *ngIf="croppedImage">
+                <label for="" class="col-4 col-form-label text-right">Image Preview</label>
+                <div class="col-8 text-center">
+                    <img class="img-thumbnail" [src]="croppedImage" />  
+                </div>
+          </div>
+
+          <br>
+
+          <div class="row">
               <label for="pricePerUnit" class="col-4 col-form-label text-right">Price Per Unit</label>
               <div class="col-8 input-group">
                   <div class="input-group-addon">$</div>
