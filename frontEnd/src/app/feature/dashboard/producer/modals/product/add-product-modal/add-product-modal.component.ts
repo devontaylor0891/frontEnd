@@ -24,14 +24,18 @@ export class AddProductModalComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  imageName: any = '';
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
     console.log('event: ', event);
+    console.log('time: ', new Date().getTime());
   };
   imageCropped(image: string) {
     this.croppedImage = image;
+    this.imageName = new Date().getTime();
     console.log('image: ', image);
+    console.log('imageName: ', this.imageName);
   };
   imageLoaded() {
     // show cropper
