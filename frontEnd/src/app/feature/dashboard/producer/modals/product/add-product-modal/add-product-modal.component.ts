@@ -30,6 +30,9 @@ export class AddProductModalComponent implements OnInit {
     this.imageChangedEvent = event;
     console.log('event: ', event);
     console.log('time: ', new Date().getTime());
+    console.log('event files: ', event.target.files[0]);
+    const url = this.apiService.getPresignedUrl();
+    this.apiService.putFileToS3(event.target.files[0], url)
   };
   imageCropped(image: string) {
     this.croppedImage = image;

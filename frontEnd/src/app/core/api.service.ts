@@ -11,6 +11,8 @@ import { ENV } from './env.config';
 // import { UserModel } from '../core/models/user.model';
 // import { OrderModel } from '../core/models/order.model';
 
+import AWS = require('aws-sdk');
+
 @Injectable()
 export class ApiService {
 
@@ -321,6 +323,64 @@ export class ApiService {
       this.auth.login();
     }
     return Observable.throw(errorMsg);
+  };
+
+// ********* get presigned url for image uploads ***************
+  getPresignedUrl() {
+    // return this.http
+    //   .get(`${ENV.BASE_API}getPresignedUrl/`, {
+    //     headers: new HttpHeaders().set('Authorization', this._authHeader)
+    //   })
+    //   .catch(this._handleError);
+    // temporary test of getting signed url, this will be moved into api.js on server in future
+    AWS.config.update({accessKeyId: 'AKIAJE3RP7EN3LSHXBWA', secretAccessKey: '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'})
+
+    // Tried with and without this. Since s3 is not region-specific, I don't
+    // think it should be necessary.
+    AWS.config.update({region: 'us-west-2'})
+
+    const myBucket = 'onlylocalfood-images'
+    const myKey = 'file-name.jpg'
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: myBucket,
+      Key: myKey
+    };
+    const url = s3.getSignedUrl('getObject', params, function (err, url) {
+      console.log('url: ', url);
+      return url;
+    });
+    return url;
+  };
+
+  putFileToS3(body: File, presignedUrl: any) {
+    // // const headers = new Headers({'Content-Type': 'image/jpeg'});
+    // headers: new HttpHeaders().set('Content-Type', 'image/jpeg')
+    // // const options = new RequestOptions({ headers: headers});
+    // return this.http.put(presignedUrl, body, )
+
+    AWS.config.accessKeyId = 'AKIAJE3RP7EN3LSHXBWA';
+    AWS.config.secretAccessKey = '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';
+    const bucket = new AWS.S3({params: {Bucket: 'onlylocalfood-images'}});
+    const myKey = 'file-name.jpg'
+    // var params = {Key: myKey, Body: body};
+    // bucket.upload(params, function (err, data) {
+    //     console.log(err, data);
+    // });
+
+    const params = {
+      Bucket: 'onlylocalfood-images',
+      Fields: {
+        key: myKey
+      }
+    };
+    bucket.createPresignedPost(params, function(err, data) {
+      if (err) {
+        console.error('Presigning post data encountered an error', err);
+      } else {
+        console.log('The post data is', data);
+      }
+    });
   }
 
 }

@@ -6,6 +6,7 @@
 
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
+const AWS = require('aws-sdk');
 
 /*
  |--------------------------------------
@@ -78,6 +79,25 @@ module.exports = function(app, config) {
   // GET API root
   app.get('/api/', (req, res) => {
     res.send('API works');
+  });
+
+  app.get('/getPresignedUrl/', function (req, res) {
+    AWS.config.update({accessKeyId: 'AKIAJE3RP7EN3LSHXBWA', secretAccessKey: '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'})
+
+    // Tried with and without this. Since s3 is not region-specific, I don't
+    // think it should be necessary.
+    AWS.config.update({region: 'us-west-2'})
+
+    const myBucket = 'onlylocalfood-images'
+    const myKey = 'file-name.jpg'
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: myBucket,
+      Key: myKey
+    };
+    s3.getSignedUrl('getObject', params, function (err, url) {
+      console.log('url: ', url);
+    });
   });
 
 };
