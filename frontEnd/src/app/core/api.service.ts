@@ -12,6 +12,7 @@ import { ENV } from './env.config';
 // import { OrderModel } from '../core/models/order.model';
 
 import AWS = require('aws-sdk');
+import { AnalysisOptions } from 'aws-sdk/clients/cloudsearch';
 
 @Injectable()
 export class ApiService {
@@ -361,8 +362,9 @@ export class ApiService {
 
     AWS.config.accessKeyId = 'AKIAJE3RP7EN3LSHXBWA';
     AWS.config.secretAccessKey = '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';
+    AWS.config.region = 'US-WEST-2';
     const bucket = new AWS.S3({params: {Bucket: 'onlylocalfood-images'}});
-    const myKey = 'file-name.jpg'
+    const myKey = 'file-2name.jpg'
     // var params = {Key: myKey, Body: body};
     // bucket.upload(params, function (err, data) {
     //     console.log(err, data);
@@ -374,13 +376,23 @@ export class ApiService {
         key: myKey
       }
     };
+    const httpTest = this.http;
     bucket.createPresignedPost(params, function(err, data) {
       if (err) {
         console.error('Presigning post data encountered an error', err);
       } else {
         console.log('The post data is', data);
+        // this.putImage(data.url, body);
+        console.log('body: ', body);
+        httpTest.put(data.url, body);
       }
     });
-  }
+  };
+
+  // putImage(url: any, image: any): Observable<any> {
+  //   return this.http
+  //     .put(url, image)
+  //     .catch(this._handleError);
+  // };
 
 }
