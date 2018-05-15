@@ -383,7 +383,7 @@ export class ApiService {
       } else {
         console.log('The post data is', data);
         // this.putImage(data.url, body);
-        console.log('body: ', body);
+        console.log('body: ', body)
         httpTest.put(data.url, body);
       }
     });
