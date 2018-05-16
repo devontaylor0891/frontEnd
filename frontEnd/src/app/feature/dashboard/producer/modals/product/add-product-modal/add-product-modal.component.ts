@@ -25,7 +25,7 @@ export class AddProductModalComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  imageName: any = '';
+  imageName: any;
 
   imageFile: any;
   presignedUrl: string;
@@ -33,7 +33,7 @@ export class AddProductModalComponent implements OnInit {
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
     this.imageFile = event.target.files[0];
-    this.getPresignedUrl();
+    this.getPresignedUrl(this.imageName);
     this.uploadToS3(this.presignedUrl);
     console.log('event: ', event);
     console.log('time: ', new Date().getTime());
@@ -43,7 +43,6 @@ export class AddProductModalComponent implements OnInit {
   };
   imageCropped(image: string) {
     this.croppedImage = image;
-    this.imageName = new Date().getTime();
     console.log('image: ', image);
     console.log('imageName: ', this.imageName);
   };
@@ -99,6 +98,8 @@ export class AddProductModalComponent implements OnInit {
 
   ngOnInit() {
 
+    this.imageName = new Date().getTime();
+
     this.dashboardService.getProducer()
     .subscribe(
       result => {
@@ -113,8 +114,8 @@ export class AddProductModalComponent implements OnInit {
   //   // this.apiService.uploadFile(url);
   // };
 
-  getPresignedUrl() {
-    this.presignedUrl = this.apiService.getPresignedUrl();
+  getPresignedUrl(imageName) {
+    this.presignedUrl = this.apiService.getPresignedUrl(imageName);
   }
 
   uploadToS3(url: string) {

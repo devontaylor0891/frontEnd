@@ -328,7 +328,7 @@ export class ApiService {
   };
 
 // ********* get presigned url for image uploads ***************
-  getPresignedUrl() {
+  getPresignedUrl(imageName: any) {
     // return this.http
     //   .get(`${ENV.BASE_API}getPresignedUrl/`, {
     //     headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -345,8 +345,8 @@ export class ApiService {
     // think it should be necessary.
     // AWS.config.update({region: 'us-west-2'})
 
-    const myBucket = 'onlylocalfood-images'
-    const myKey = 'file-name.jpeg'
+    const myBucket = 'onlylocalfood-images';
+    const myKey = imageName + '.jpg';
     const s3 = new AWS.S3();
     // const params = {
     //   Bucket: myBucket,
@@ -360,7 +360,7 @@ export class ApiService {
     // return url;
     let params = {
       Bucket: 'onlylocalfood-images',
-      Key: 'photo',
+      Key: imageName + '.jpg',
       Expires: 1000000,
       ContentType: 'image/jpg',
       ACL: 'public-read'
