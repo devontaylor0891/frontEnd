@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { RequestOptions, Response } from '@angular/http';
 import { AuthService } from './../auth/auth.service';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -334,65 +335,94 @@ export class ApiService {
     //   })
     //   .catch(this._handleError);
     // temporary test of getting signed url, this will be moved into api.js on server in future
-    AWS.config.update({accessKeyId: 'AKIAJE3RP7EN3LSHXBWA', secretAccessKey: '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'})
+    AWS.config.update({
+      accessKeyId: 'AKIAIENH4IWLFJKTGY6Q', 
+      secretAccessKey: '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',
+      region: 'us-west-2'
+    })
 
     // Tried with and without this. Since s3 is not region-specific, I don't
     // think it should be necessary.
-    AWS.config.update({region: 'us-west-2'})
+    // AWS.config.update({region: 'us-west-2'})
 
     const myBucket = 'onlylocalfood-images'
-    const myKey = 'file-name.jpg'
+    const myKey = 'file-name.jpeg'
     const s3 = new AWS.S3();
-    const params = {
-      Bucket: myBucket,
-      Key: myKey
+    // const params = {
+    //   Bucket: myBucket,
+    //   Key: myKey
+    // };
+    // let url;
+    // url = s3.getSignedUrl('getObject', params, function (err, url) {
+    //   console.log('url: ', url);
+    //   return url;
+    // });
+    // return url;
+    let params = {
+      Bucket: 'onlylocalfood-images',
+      Key: 'photo',
+      Expires: 1000000,
+      ContentType: 'image/jpg',
+      ACL: 'public-read'
     };
-    const url = s3.getSignedUrl('getObject', params, function (err, url) {
-      console.log('url: ', url);
-      return url;
-    });
+    console.log('presigned url params: ', params);
+    let url = s3.getSignedUrl('putObject', params);
+    console.log('The URL is', url);
     return url;
   };
 
-  putFileToS3(body: File, presignedUrl: any) {
-    // // const headers = new Headers({'Content-Type': 'image/jpeg'});
-    // headers: new HttpHeaders().set('Content-Type', 'image/jpeg')
-    // // const options = new RequestOptions({ headers: headers});
-    // return this.http.put(presignedUrl, body, )
+  // putFileToS3(body: File, presignedUrl: any) {
+  //   // // const headers = new Headers({'Content-Type': 'image/jpeg'});
+  //   // headers: new HttpHeaders().set('Content-Type', 'image/jpeg')
+  //   // // const options = new RequestOptions({ headers: headers});
+  //   // return this.http.put(presignedUrl, body, )
 
-    AWS.config.accessKeyId = 'AKIAJE3RP7EN3LSHXBWA';
-    AWS.config.secretAccessKey = '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';
-    AWS.config.region = 'US-WEST-2';
-    const bucket = new AWS.S3({params: {Bucket: 'onlylocalfood-images'}});
-    const myKey = 'file-2name.jpg'
-    // var params = {Key: myKey, Body: body};
-    // bucket.upload(params, function (err, data) {
-    //     console.log(err, data);
-    // });
+  //   AWS.config.accessKeyId = 'AKIAJE3RP7EN3LSHXBWA';
+  //   AWS.config.secretAccessKey = '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';
+  //   AWS.config.region = 'US-WEST-2';
+  //   const bucket = new AWS.S3({params: {Bucket: 'onlylocalfood-images'}});
+  //   const myKey = 'file-2name.jpg'
+  //   // var params = {Key: myKey, Body: body};
+  //   // bucket.upload(params, function (err, data) {
+  //   //     console.log(err, data);
+  //   // });
 
-    const params = {
-      Bucket: 'onlylocalfood-images',
-      Fields: {
-        key: myKey
-      }
-    };
-    const httpTest = this.http;
-    bucket.createPresignedPost(params, function(err, data) {
-      if (err) {
-        console.error('Presigning post data encountered an error', err);
-      } else {
-        console.log('The post data is', data);
-        // this.putImage(data.url, body);
-        console.log('body: ', body)
-        httpTest.put(data.url, body);
-      }
-    });
-  };
+  //   const params = {
+  //     Bucket: 'onlylocalfood-images',
+  //     Fields: {
+  //       key: myKey
+  //     }
+  //   };
+  //   const httpTest = this.http;
+  //   bucket.createPresignedPost(params, function(err, data) {
+  //     if (err) {
+  //       console.error('Presigning post data encountered an error', err);
+  //     } else {
+  //       console.log('The post data is', data);
+  //       // this.putImage(data.url, body);
+  //       console.log('body: ', body)
+  //       httpTest.put(data.url, body);
+  //     }
+  //   });
+  // };
 
   // putImage(url: any, image: any): Observable<any> {
   //   return this.http
   //     .put(url, image)
   //     .catch(this._handleError);
   // };
+
+  putFileToS3(file: File, url: string): Observable<any> {
+    console.log('put called');
+    return this.http.put(url, file
+      , {
+        headers: new HttpHeaders().set('Content-Type', 'image/jpg')
+      }
+    )
+      .map((response: Response) => {
+        console.log('image uploaded');
+        // response.json();
+      });
+  };
 
 }

@@ -6446,6 +6446,41 @@
         "products": [],
         "schedule": []
       }
+    },
+    {
+      "id": 964779,
+      "name": "",
+      "description": "",
+      "image": "",
+      "pricePerUnit": null,
+      "unit": "",
+      "unitsPer": 1,
+      "category": "",
+      "subcategory": "",
+      "dateAdded": "2018-05-16T02:12:03.709Z",
+      "qtyAvailable": null,
+      "qtyPending": 0,
+      "qtyAccepted": 0,
+      "qtyCompleted": 0,
+      "isObsolete": false,
+      "producerId": "10156726911823275",
+      "producer": {
+        "id": "10156726911823275",
+        "name": "Onlylocalfood.com",
+        "location": "Moosomin",
+        "province": "SK",
+        "address": "818 Alberni St",
+        "description": "this is a description of my business.",
+        "email": "devontaylor0891@gmail.com",
+        "logoUrl": "",
+        "longitude": -101.66362779999997,
+        "latitude": 50.1395529,
+        "firstName": "Devon",
+        "status": "active",
+        "products": [],
+        "schedule": []
+      },
+      "scheduleList": ""
     }
   ],
   "schedules": [

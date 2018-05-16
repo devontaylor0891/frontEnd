@@ -8,6 +8,7 @@ import { ProducerModel } from '../../../../../../core/models/producer.model';
 
 import { ProducerDashboardService } from '../../../../producer-dashboard.service';
 import { ApiService } from '../../../../../../core/api.service';
+import { stringList } from 'aws-sdk/clients/datapipeline';
 
 @Component({
   selector: 'app-add-product-modal',
@@ -26,13 +27,19 @@ export class AddProductModalComponent implements OnInit {
   croppedImage: any = '';
   imageName: any = '';
 
+  imageFile: any;
+  presignedUrl: string;
+
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
+    this.imageFile = event.target.files[0];
+    this.getPresignedUrl();
+    this.uploadToS3(this.presignedUrl);
     console.log('event: ', event);
     console.log('time: ', new Date().getTime());
     console.log('event files: ', event.target.files[0]);
-    const url = this.apiService.getPresignedUrl();
-    this.apiService.putFileToS3(event.target.files[0], url)
+    // const url = this.apiService.getPresignedUrl();
+    // this.apiService.putFileToS3(event.target.files[0], url)
   };
   imageCropped(image: string) {
     this.croppedImage = image;
@@ -98,6 +105,25 @@ export class AddProductModalComponent implements OnInit {
         this.producer = result;
       }
     )
+  };
+
+  // postProductStandin() {
+  //   this.presignedUrl = this.apiService.getPresignedUrl();
+  //   console.log('presigned url: ', this.presignedUrl);
+  //   // this.apiService.uploadFile(url);
+  // };
+
+  getPresignedUrl() {
+    this.presignedUrl = this.apiService.getPresignedUrl();
   }
+
+  uploadToS3(url: string) {
+    this.apiService.putFileToS3(this.imageFile, url)
+      .subscribe(
+        response => {
+          console.log('file upload response: ', response);
+        }
+      );
+  };
 
 }
