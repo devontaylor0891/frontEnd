@@ -98,12 +98,11 @@ export class AddProductModalComponent implements OnInit {
 
   ngOnInit() {
 
-    this.imageName = new Date().getTime();
-
     this.dashboardService.getProducer()
     .subscribe(
       result => {
         this.producer = result;
+        this.imageName = this.producer.id + '/' + new Date().getTime();
       }
     )
   };
