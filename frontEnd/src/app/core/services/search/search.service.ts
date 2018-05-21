@@ -54,8 +54,8 @@ export class SearchService implements OnInit {
   }
   
   // fill up the dataStore with a call to the API
-	loadAll() {
-		this.apiService.getSearchResults()
+	loadAll(lat, long, radius) {
+		this.apiService.getSearchResults(lat, long, radius)
 			.subscribe(
 				response => {
 					// fill dataStore

@@ -1,7 +1,7 @@
 <div class="row mt-1">
 	
 	<div class="col-12 col-md-3 mb-2">
-		<app-search-options></app-search-options>
+		<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="city"></app-search-options>
 	</div>
 
 	<div class="col-12 col-md-9">

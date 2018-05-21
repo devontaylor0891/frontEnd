@@ -14,6 +14,7 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
 
   searchResults: ProductModel[] = [];
   view: string = "product";
+  @Input() products: ProductModel[] = [];
 
   constructor(private searchService: SearchService) { }
 
@@ -32,7 +33,7 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
       );
       
     //load all search results
-    this.searchService.loadAll();
+    // this.searchService.loadAll();
 	
     //get the view setting
     this.searchService._viewStatus

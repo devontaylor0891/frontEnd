@@ -82,7 +82,7 @@ module.exports = function(app, config) {
   });
 
   app.get('/getPresignedUrl/', function (req, res) {
-    AWS.config.update({accessKeyId: 'AKIAJE3RP7EN3LSHXBWA', secretAccessKey: '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'})
+    AWS.config.update({accessKeyId: 'AKIAIIOD67U5IHQGMG2A', secretAccessKey: '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'})
 
     // Tried with and without this. Since s3 is not region-specific, I don't
     // think it should be necessary.

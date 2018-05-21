@@ -6,11 +6,6 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ENV } from './env.config';
-// import { ProductModel } from '../core/models/product.model';
-// import { ScheduleModel } from '../core/models/schedule.model';
-// import { ProducerModel } from '../core/models/producer.model';
-// import { UserModel } from '../core/models/user.model';
-// import { OrderModel } from '../core/models/order.model';
 
 import AWS = require('aws-sdk');
 import { AnalysisOptions } from 'aws-sdk/clients/cloudsearch';
@@ -39,7 +34,7 @@ export class ApiService {
 // ********** SEARCH *******
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
-  getSearchResults(): Observable<any[]> {
+  getSearchResults(lat: number, long: number, radius: number): Observable<any[]> {
     return this.http
       // .get(`http://localhost:3000/searchResults`)
       .get(`${ENV.BASE_API}searchResults`)
@@ -215,7 +210,8 @@ export class ApiService {
   // get all users for admin
   getUsers(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}users/`)
+      .get(this.apiUrl + `/users/`)
+      // .get(`${ENV.BASE_API}users/`)
       .catch(this._handleError);
   };
 
@@ -329,35 +325,14 @@ export class ApiService {
 
 // ********* get presigned url for image uploads ***************
   getPresignedUrl(imageName: any) {
-    // return this.http
-    //   .get(`${ENV.BASE_API}getPresignedUrl/`, {
-    //     headers: new HttpHeaders().set('Authorization', this._authHeader)
-    //   })
-    //   .catch(this._handleError);
-    // temporary test of getting signed url, this will be moved into api.js on server in future
     AWS.config.update({
-      accessKeyId: 'AKIAIENH4IWLFJKTGY6Q', 
-      secretAccessKey: '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',
+      accessKeyId: `${ENV.AWS_ACCESS_KEY}`, 
+      secretAccessKey: `${ENV.AWS_SECRET}`,
       region: 'us-west-2'
-    })
-
-    // Tried with and without this. Since s3 is not region-specific, I don't
-    // think it should be necessary.
-    // AWS.config.update({region: 'us-west-2'})
-
+    });
     const myBucket = 'onlylocalfood-images';
     const myKey = imageName + '.jpg';
     const s3 = new AWS.S3();
-    // const params = {
-    //   Bucket: myBucket,
-    //   Key: myKey
-    // };
-    // let url;
-    // url = s3.getSignedUrl('getObject', params, function (err, url) {
-    //   console.log('url: ', url);
-    //   return url;
-    // });
-    // return url;
     let params = {
       Bucket: 'onlylocalfood-images',
       Key: imageName + '.jpg',
@@ -365,63 +340,15 @@ export class ApiService {
       ContentType: 'image/jpg',
       ACL: 'public-read'
     };
-    console.log('presigned url params: ', params);
     let url = s3.getSignedUrl('putObject', params);
-    console.log('The URL is', url);
     return url;
   };
 
-  // putFileToS3(body: File, presignedUrl: any) {
-  //   // // const headers = new Headers({'Content-Type': 'image/jpeg'});
-  //   // headers: new HttpHeaders().set('Content-Type', 'image/jpeg')
-  //   // // const options = new RequestOptions({ headers: headers});
-  //   // return this.http.put(presignedUrl, body, )
-
-  //   AWS.config.accessKeyId = 'AKIAJE3RP7EN3LSHXBWA';
-  //   AWS.config.secretAccessKey = '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';
-  //   AWS.config.region = 'US-WEST-2';
-  //   const bucket = new AWS.S3({params: {Bucket: 'onlylocalfood-images'}});
-  //   const myKey = 'file-2name.jpg'
-  //   // var params = {Key: myKey, Body: body};
-  //   // bucket.upload(params, function (err, data) {
-  //   //     console.log(err, data);
-  //   // });
-
-  //   const params = {
-  //     Bucket: 'onlylocalfood-images',
-  //     Fields: {
-  //       key: myKey
-  //     }
-  //   };
-  //   const httpTest = this.http;
-  //   bucket.createPresignedPost(params, function(err, data) {
-  //     if (err) {
-  //       console.error('Presigning post data encountered an error', err);
-  //     } else {
-  //       console.log('The post data is', data);
-  //       // this.putImage(data.url, body);
-  //       console.log('body: ', body)
-  //       httpTest.put(data.url, body);
-  //     }
-  //   });
-  // };
-
-  // putImage(url: any, image: any): Observable<any> {
-  //   return this.http
-  //     .put(url, image)
-  //     .catch(this._handleError);
-  // };
-
+// ********* upload image to S3 ***************  
   putFileToS3(file: File, url: string): Observable<any> {
-    console.log('put called');
-    return this.http.put(url, file
-      , {
-        headers: new HttpHeaders().set('Content-Type', 'image/jpg')
-      }
-    )
+    return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/jpg') })
       .map((response: Response) => {
         console.log('image uploaded');
-        // response.json();
       });
   };
 

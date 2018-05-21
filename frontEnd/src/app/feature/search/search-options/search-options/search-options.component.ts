@@ -10,16 +10,30 @@
 // })
 // export class SearchOptionsComponent implements OnInit, OnChanges {
 
-//   checkboxValue: boolean;
-
-//   deliveryTypes: string[];
-//   categoriesList: string[];
+//   deliveryTypes: any[];
+//   categoriesList: any[];
 //   submittedValues: any = {
 //     categories: [],
 //     deliveryTypes: []
 //   };
 
-//   constructor(private searchService: SearchService) {}
+//   constructor(private searchService: SearchService) {
+
+//     this.deliveryTypes = [
+//       {
+//         type: '',
+//         checkboxValue: null
+//       }
+//     ];
+
+//     this.categoriesList = [
+//       {
+//         category: '',
+//         checkboxValue: null
+//       }
+//     ];
+
+//   }
 
 //   ngOnChanges() {
 
@@ -27,13 +41,18 @@
 
 //   ngOnInit() {
 
-//     this.checkboxValue = true;
-
 //     // subscribe to the delivery types
 //     this.searchService.getDeliveryTypes()
 //       .subscribe(
 //         results => {
-//           this.deliveryTypes = results;
+//           for (let i = 0; i < results.length; i++) {
+//             let newDel = {
+//               type: results[i],
+//               checkboxValue: true
+//             };
+//             this.deliveryTypes[i] = newDel;
+//           };
+//         //  this.deliveryTypes = result;
 //         //  console.log("These are the delivery types from the subscription:");
 //         //  console.log(this.deliveryTypes);
 //         }
@@ -43,7 +62,14 @@
 //     this.searchService.getCategories()
 //       .subscribe(
 //         results => {
-//           this.categoriesList = results;
+//           for (let i = 0; i < results.length; i++) {
+//             let newCat = {
+//               category: results[i],
+//               checkboxValue: true
+//             };
+//             this.categoriesList[i] = newCat;
+//           };
+//           //this.categoriesList = results;
 //         }
 //       );
 
@@ -76,8 +102,13 @@
 //   }
 
 //   reset(form: NgForm) {
-//     // form.reset();
-//     this.checkboxValue = true;
+//     // reset all checkboxes to true
+//     for (let i = 0; i < this.deliveryTypes.length; i++) {
+//       this.deliveryTypes[i].checkboxValue = true;
+//     }
+//     for (let i = 0; i < this.categoriesList.length; i++) {
+//       this.categoriesList[i].checkboxValue = true;
+//     }
 //     this.searchService.onReset();
 //     this.submittedValues = {
 //       categories: [],
@@ -88,7 +119,7 @@
 // }
 
 
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { SearchService } from '../../../../core/services/search/search.service';
@@ -106,6 +137,13 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     categories: [],
     deliveryTypes: []
   };
+
+  submitting: boolean = false;
+  currentRadius: number = 25;
+  latitude: number;
+  longitude: number;
+
+  @Input() city: string;
 
   constructor(private searchService: SearchService) {
 
@@ -125,9 +163,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnChanges() {
-
-  }
+  ngOnChanges() {}
 
   ngOnInit() {
 
@@ -142,9 +178,6 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
             };
             this.deliveryTypes[i] = newDel;
           };
-        //  this.deliveryTypes = result;
-        //  console.log("These are the delivery types from the subscription:");
-        //  console.log(this.deliveryTypes);
         }
       );
 
@@ -159,7 +192,6 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
             };
             this.categoriesList[i] = newCat;
           };
-          //this.categoriesList = results;
         }
       );
 
@@ -204,6 +236,21 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       categories: [],
       deliveryTypes: []
     };
+  };
+
+  onRadiusSubmit(radius: number) {
+    this.submitting = true;
+    if (this.currentRadius === radius) {
+      this.submitting = false;
+      return;
+    } else {
+      this.searchService.loadAll(this.latitude, this.longitude, radius);
+    }
+
+  };
+
+  changeCity() {
+    console.log('need to change city please');
   }
 
 }
