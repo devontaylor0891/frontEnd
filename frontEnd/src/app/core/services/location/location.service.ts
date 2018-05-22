@@ -55,7 +55,7 @@ export class LocationService {
     cityProvince: string = '';
     location: any;
     results: any;
-    geoCoderResults: any;
+    geoCoderResults: any = {};
 
     _cityProvince: BehaviorSubject<string>;
 
@@ -68,7 +68,7 @@ export class LocationService {
 
     getLocation(): Observable<any> {
         return Observable.create(observer => {
-            if(window.navigator && window.navigator.geolocation) {
+            if (window.navigator && window.navigator.geolocation) {
                 window.navigator.geolocation.getCurrentPosition(
                     (position) => {
                         this.lat = position.coords.latitude;
@@ -89,15 +89,16 @@ export class LocationService {
         return this._cityProvince.asObservable();
     };
 
-      
+
     codeLatLng(lat, lng) {
         this.mapsAPILoader.load().then(() => {
             this.geocoder = new google.maps.Geocoder();
             let latlng = new google.maps.LatLng(lat, lng);
+            let self = this;
             this.results = this.geocoder.geocode({'location': latlng}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    this.LocationService.geoCoderResults = results;
-                    console.log('geocoerresults: ', this.LocationService.geoCoderResults);
+                if (status === google.maps.GeocoderStatus.OK) {
+                    self.geoCoderResults = results;
+                    console.log('geocoerresults: ', self);
                     // if (results[1]) {
                     //     // this.fillCityProvince(results[1]);
                     //     let components = results[1].address_components;
@@ -115,7 +116,7 @@ export class LocationService {
                     //         //   this.ngZone.run(() => {
                     //         //       this.cityProvince = components[i].short_name + ', ' + components[i].short_name;
                     //         //       this._cityProvince.next(this.cityProvince);
-                    //         //   });                            
+                    //         //   });
                     //         }
                     //       }
                     //     // this.cityProvince = this.city + ', ' + this.province;
