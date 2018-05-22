@@ -81,23 +81,23 @@ module.exports = function(app, config) {
     res.send('API works');
   });
 
-  app.get('/getPresignedUrl/', function (req, res) {
-    AWS.config.update({accessKeyId: 'AKIAIIOD67U5IHQGMG2A', secretAccessKey: '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'})
+  // app.get('/getPresignedUrl/', function (req, res) {
+  //   AWS.config.update({accessKeyId: 'XXXX', secretAccessKey: 'XXXX'})
 
-    // Tried with and without this. Since s3 is not region-specific, I don't
-    // think it should be necessary.
-    AWS.config.update({region: 'us-west-2'})
+  //   // Tried with and without this. Since s3 is not region-specific, I don't
+  //   // think it should be necessary.
+  //   AWS.config.update({region: 'us-west-2'})
 
-    const myBucket = 'onlylocalfood-images'
-    const myKey = 'file-name.jpg'
-    const s3 = new AWS.S3();
-    const params = {
-      Bucket: myBucket,
-      Key: myKey
-    };
-    s3.getSignedUrl('getObject', params, function (err, url) {
-      console.log('url: ', url);
-    });
-  });
+  //   const myBucket = 'onlylocalfood-images'
+  //   const myKey = 'file-name.jpg'
+  //   const s3 = new AWS.S3();
+  //   const params = {
+  //     Bucket: myBucket,
+  //     Key: myKey
+  //   };
+  //   s3.getSignedUrl('getObject', params, function (err, url) {
+  //     console.log('url: ', url);
+  //   });
+  // });
 
 };

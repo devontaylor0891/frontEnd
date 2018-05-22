@@ -43,6 +43,7 @@ import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
 
+
 @Injectable()
 export class LocationService {
 
@@ -51,16 +52,17 @@ export class LocationService {
     lng: any;
     city: string;
     province: string;
+    cityProvince: string = '';
+    location: any;
+    results: any;
+    geoCoderResults: any;
 
-    _city: BehaviorSubject<any>;
+    _cityProvince: BehaviorSubject<string>;
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone) {
 
-        this._city = <BehaviorSubject<any>>new BehaviorSubject([]);
-        // this.initialize();
-         // load Places Autocomplete
-    
+        this._cityProvince = <BehaviorSubject<string>>new BehaviorSubject('');
 
     }
 
@@ -71,8 +73,7 @@ export class LocationService {
                     (position) => {
                         this.lat = position.coords.latitude;
                         this.lng = position.coords.longitude;
-                        console.log('position: ', position);
-                        this.codeLatLng(this.lat, this.lng);
+                        // console.log('position: ', position);
                         observer.next(position);
                         observer.complete();
                     },
@@ -84,8 +85,8 @@ export class LocationService {
         });
     };
 
-    getCity(): Observable<any> {
-        return this._city.asObservable();
+    getCityProvince(): Observable<string> {
+        return this._cityProvince.asObservable();
     };
 
       
@@ -93,32 +94,63 @@ export class LocationService {
         this.mapsAPILoader.load().then(() => {
             this.geocoder = new google.maps.Geocoder();
             let latlng = new google.maps.LatLng(lat, lng);
-            this.geocoder.geocode({'location': latlng}, function(results, status) {
+            this.results = this.geocoder.geocode({'location': latlng}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        let components = results[1].address_components;
-                        for (let i = 0; i < components.length; i++) {
-                            let types = components[i].types;
-                            for (let j = 0; j < types.length; j++) {
-                              let result = types[j];
-                              if (result === 'locality' || result === 'sublocality') {
-                                this.city = components[i].short_name;
-                              }
-                              if (result === 'administrative_area_level_1') {
-                                this.province = components[i].short_name;
-                              }
-                            }
-                          }
-
-                    console.log('city: ', this.city + ', ' + this.province);
-                    } else {
-                    alert("No results found");
-                    };
+                    this.LocationService.geoCoderResults = results;
+                    console.log('geocoerresults: ', this.LocationService.geoCoderResults);
+                    // if (results[1]) {
+                    //     // this.fillCityProvince(results[1]);
+                    //     let components = results[1].address_components;
+                    //     for (let i = 0; i < components.length; i++) {
+                    //         let types = components[i].types;
+                    //         for (let j = 0; j < types.length; j++) {
+                    //           let result = types[j];
+                    //           if (result === 'locality' || result === 'sublocality') {
+                    //             this.city = components[i].short_name;
+                    //           }
+                    //           if (result === 'administrative_area_level_1') {
+                    //             this.province = components[i].short_name;
+                    //           }
+                    //           this.cityProvince = this.city + ', ' + this.province;
+                    //         //   this.ngZone.run(() => {
+                    //         //       this.cityProvince = components[i].short_name + ', ' + components[i].short_name;
+                    //         //       this._cityProvince.next(this.cityProvince);
+                    //         //   });                            
+                    //         }
+                    //       }
+                    //     // this.cityProvince = this.city + ', ' + this.province;
+                    //     // console.log('cityprovince:', this.cityProvince);
+                    // } else {
+                    // alert("No results found");
+                    // };
+                    // // this._cityProvince.next(this.cityProvince);
+                    // // console.log('new value out: ', this.cityProvince);
+                    // return results;
                 } else {
                     alert("Geocoder failed due to: " + status);
                 };
             });
         });
     };
+
+    fillCityProvince(results) {
+        console.log('fill reached:', results);
+        let components = results.address_components;
+        for (let i = 0; i < components.length; i++) {
+            let types = components[i].types;
+            for (let j = 0; j < types.length; j++) {
+                let result = types[j];
+                if (result === 'locality' || result === 'sublocality') {
+                this.city = components[i].short_name;
+                }
+                if (result === 'administrative_area_level_1') {
+                this.province = components[i].short_name;
+                }
+                this.cityProvince = this.city + ', ' + this.province;
+                console.log('cityprovince:', this.cityProvince);
+                this._cityProvince.next(this.cityProvince);
+            }
+        }
+    }
 
 }

@@ -70,7 +70,7 @@
 // }
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/Rx';
 
@@ -85,18 +85,20 @@ import { ProductModel } from '../../core/models/product.model';
   styleUrls: ['./search.component.scss'],
   providers: [SearchService]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnChanges {
 
   pageTitle = 'Your custom search - Onlylocalfood.com';
 
   userLocation;
-  city: string;
+  cityProvince: string;
 
   searchResults: ProductModel[] = [];
 
   constructor(private locationService: LocationService,
               private searchService: SearchService,
-              private title: Title) { }
+              private title: Title) { };
+
+  ngOnChanges() {};
 
   ngOnInit() {
 
@@ -109,15 +111,17 @@ export class SearchComponent implements OnInit {
           this.userLocation = response;
           console.log(this.userLocation.coords.latitude);
           console.log(this.userLocation.coords.longitude);
+          this.locationService.codeLatLng(this.userLocation.coords.latitude, this.userLocation.coords.longitude);
           //load all search results
           this.searchService.loadAll(this.userLocation.coords.latitude, this.userLocation.coords.longitude, 25);
         }
       );
 
-    this.locationService.getCity()
+    this.locationService.getCityProvince()
       .subscribe(
         response => {
-          this.city = response;
+          this.cityProvince = response;
+          console.log('cityProvince: ', this.cityProvince);
         }
       );
 

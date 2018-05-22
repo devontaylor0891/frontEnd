@@ -1,16 +1,22 @@
 <!-- LOCATION DISPLAY AND CHANGE LINK -->
 <div class="card">
 
-        <div class="card-header olf-primary-color white-text">
-            Your Current Location
-        </div>
-    
-        <div class="card-block grey lighten-3">
-            <p>{{ city }}</p>
-            <a (click)="changeCity()">Change Location</a>
-        </div>
-    
+    <div class="card-header olf-primary-color white-text">
+        Your Current Location
     </div>
+
+    <div *ngIf="city === ''">
+        <app-loading></app-loading>
+    </div>
+
+    <div *ngIf="city !== ''" class="card-block grey lighten-3">
+        <p>{{ city }}</p>
+        <a (click)="changeCity()">Change Location</a>
+    </div>
+
+</div>
+
+<br>
 
 <!-- SEARCH OPTIONS -->
 <div class="card">

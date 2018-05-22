@@ -119,17 +119,18 @@
 // }
 
 
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { SearchService } from '../../../../core/services/search/search.service';
+import { LocationService } from '../../../../core/services/location/location.service';
 
 @Component({
   selector: 'app-search-options',
   templateUrl: './search-options.component.html',
   styleUrls: ['./search-options.component.scss']
 })
-export class SearchOptionsComponent implements OnInit, OnChanges {
+export class SearchOptionsComponent implements OnInit {
 
   deliveryTypes: any[];
   categoriesList: any[];
@@ -143,9 +144,10 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   latitude: number;
   longitude: number;
 
-  @Input() city: string;
+  city: string;
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService,
+              private locationService: LocationService) {
 
     this.deliveryTypes = [
       {
@@ -162,8 +164,6 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     ];
 
   }
-
-  ngOnChanges() {}
 
   ngOnInit() {
 
@@ -192,6 +192,13 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
             };
             this.categoriesList[i] = newCat;
           };
+        }
+      );
+
+    this.locationService.getCityProvince()
+      .subscribe(
+        results => {
+          this.city = results;
         }
       );
 
