@@ -326,8 +326,10 @@ export class ApiService {
 // ********* get presigned url for image uploads ***************
   getPresignedUrl(imageName: any) {
     AWS.config.update({
-      accessKeyId: `${ENV.AWS_ACCESS_KEY}`, 
-      secretAccessKey: `${ENV.AWS_SECRET}`,
+      // accessKeyId: `${ENV.AWS_ACCESS_KEY}`, 
+      // secretAccessKey: `${ENV.AWS_SECRET}`,
+      accessKeyId: `XXXX`,
+      secretAccessKey: `XXXX`,
       region: 'us-west-2'
     });
     const myBucket = 'onlylocalfood-images';
@@ -351,5 +353,24 @@ export class ApiService {
         console.log('image uploaded');
       });
   };
+
+// ******** get image ************
+  // first try just using the full s3 url
+  // getImage(imageName: string): Observable<any> {
+  //   let params = {
+  //     Bucket: 'onlylocalfood-images',
+  //     Key: imageName
+  //   };
+  //   const s3 = new AWS.S3();
+  //   s3.getObject(params, function (err, data) {
+  //     if (err) {
+  //       return err;
+  //     }
+  //     if (data) {
+  //       return data.Body.toString();
+  //       console.log('retreived data: ', data.Body.toString());
+  //     };
+  //   })
+  // };
 
 }

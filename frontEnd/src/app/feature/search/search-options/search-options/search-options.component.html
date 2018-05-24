@@ -12,12 +12,12 @@
         </div>
     
         <div *ngIf="cityProvince && !locationUpdate">
-            <p class="text-center"><i class="fa fa-map-marker prefix mr-1"></i>{{ cityProvince }}</p>
+            <p class="text-center"><i class="fa fa-map-marker prefix mr-2"></i>{{ cityProvince }}</p>
             <p class="text-right minor-link mb-0"><a (click)="changeCity()">Change Location</a></p>
         </div>
     
         <div [hidden]="!locationUpdate">
-                <p>Enter Your Location:</p>
+                <p>Enter a New Location:</p>
                 <div class="md-form pl-3">
                     <i class="fa fa-map-marker prefix"></i>
                     <input  
