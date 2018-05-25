@@ -326,8 +326,8 @@ export class ApiService {
 // ********* get presigned url for image uploads ***************
 getPresignedUrl(imageName: any) {
   AWS.config.update({
-    accessKeyId: `AKIAII4V73AK2CWQ2VUQ`, 
-    secretAccessKey: `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`,
+    accessKeyId: `XXXX`, 
+    secretAccessKey: `XXXX`,
     region: 'us-west-2'
   });
   const myBucket = 'onlylocalfood-images';
