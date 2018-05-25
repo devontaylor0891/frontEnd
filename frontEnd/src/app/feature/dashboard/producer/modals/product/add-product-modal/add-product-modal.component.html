@@ -55,7 +55,7 @@
                         [maintainAspectRatio]="true"
                         [aspectRatio]="1 / 1"
                         [resizeToWidth]="400"
-                        format="jpeg"
+                        format="jpg"
                         [imageQuality]="70"
                         (imageCropped)="imageCropped($event)"
                         (imageLoaded)="imageLoaded()"
@@ -243,7 +243,7 @@
       <div class="row">
           <div>
               <button class="btn btn-olf-primary" type="submit">Add to Products</button>
-              <a (click)="close()">Cancel Changes</a>
+              <a (click)="activeModal.close()">Cancel Changes</a>
           </div>
       </div>
   </div>

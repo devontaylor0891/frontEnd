@@ -26,25 +26,41 @@ export class AddProductModalComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   imageName: any;
-
+  imageType: string;
   imageFile: any;
   presignedUrl: string;
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
     this.imageFile = event.target.files[0];
-    this.getPresignedUrl(this.imageName);
-    this.uploadToS3(this.presignedUrl);
-    console.log('event: ', event);
-    console.log('time: ', new Date().getTime());
+    this.imageType = event.target.files[0].type;
+    console.log('image type: ', this.imageType);
     console.log('event files: ', event.target.files[0]);
     // const url = this.apiService.getPresignedUrl();
     // this.apiService.putFileToS3(event.target.files[0], url)
   };
-  imageCropped(image: string) {
-    this.croppedImage = image;
+  imageCropped(image) {
+    // this.croppedImage = image;
+    //Usage example:
+    // this.croppedImage = this.urltoFile(image, this.imageName, 'image/jpg')
+    //   .then(function(file){
+    //     console.log(file);
+    //   })
     console.log('image: ', image);
+    const jpg = image.split(',')[1];
+    var bs = atob(jpg);
+    var buffer = new ArrayBuffer(bs.length);
+    var ba = new Uint8Array(buffer);
+    for (var i = 0; i < bs.length; i++) {
+        ba[i] = bs.charCodeAt(i);
+    }
+    this.croppedImage = new Blob([ba], { type: "image/jpeg" });
+    this.croppedImage = new File([this.croppedImage], this.imageName);
+    // this.croppedImage = new Blob([window.atob(png)],  {type: 'image/jpg'});
+    console.log('cropped Image: ', this.croppedImage);
     console.log('imageName: ', this.imageName);
+    this.getPresignedUrl(this.imageName);
+    this.uploadToS3(this.presignedUrl);
   };
   imageLoaded() {
     // show cropper
@@ -107,23 +123,27 @@ export class AddProductModalComponent implements OnInit {
     )
   };
 
-  // postProductStandin() {
-  //   this.presignedUrl = this.apiService.getPresignedUrl();
-  //   console.log('presigned url: ', this.presignedUrl);
-  //   // this.apiService.uploadFile(url);
-  // };
-
   getPresignedUrl(imageName) {
     this.presignedUrl = this.apiService.getPresignedUrl(imageName);
   }
 
   uploadToS3(url: string) {
-    this.apiService.putFileToS3(this.imageFile, url)
+    // console.log('cropped image: ', this.croppedImage);
+    this.apiService.putFileToS3(this.croppedImage, url)
       .subscribe(
         response => {
           console.log('file upload response: ', response);
         }
       );
   };
+
+  //return a promise that resolves with a File instance
+  urltoFile(url, filename, mimeType){
+    mimeType = mimeType || (url.match(/^data:([^;]+);/)||'')[1];
+    return (fetch(url)
+        .then(function(res){return res.arrayBuffer();})
+        .then(function(buf){return new File([buf], filename, {type:mimeType});})
+    );
+  }
 
 }
