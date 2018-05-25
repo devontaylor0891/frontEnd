@@ -29,6 +29,7 @@ export class AddProductModalComponent implements OnInit {
   imageType: string;
   imageFile: any;
   presignedUrl: string;
+  previewCroppedImage: any = '';
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -40,6 +41,7 @@ export class AddProductModalComponent implements OnInit {
     // this.apiService.putFileToS3(event.target.files[0], url)
   };
   imageCropped(image) {
+    this.previewCroppedImage = image;
     // this.croppedImage = image;
     //Usage example:
     // this.croppedImage = this.urltoFile(image, this.imageName, 'image/jpg')

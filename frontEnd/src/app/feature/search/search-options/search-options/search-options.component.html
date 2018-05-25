@@ -5,11 +5,11 @@
         Your Current Location
     </div>
 
-    <div class="card-block grey lighten-3">
+    <div class="card-block" *ngIf="cityProvince === ''">
+        <app-loading></app-loading>
+    </div>
 
-        <div *ngIf="cityProvince === ''">
-            <app-loading></app-loading>
-        </div>
+    <div class="card-block grey lighten-3" [hidden]="cityProvince === ''">
     
         <div *ngIf="cityProvince && !locationUpdate">
             <p class="text-center"><i class="fa fa-map-marker prefix mr-2"></i>{{ cityProvince }}</p>

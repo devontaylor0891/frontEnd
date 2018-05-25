@@ -34,43 +34,30 @@
           </div>
 
           <div class="row">
-              <label for="imagePath" class="col-4 col-form-label text-right">Image URL</label>
-              <div class="col-8">
-                  <input 
-                      class="form-control" 
-                      type="text" 
-                      id="imagePath" 
-                      [formControl]="form.controls['image']">
-              </div>
-          </div>
-
-          <div class="row">
-                <label for="" class="col-4 col-form-label text-right">Image Upload</label>
-                <div class="col-8">
-                    <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
+                <label for="" class="col-12 col-form-label text-center">Image Upload and Crop</label>
+                <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
+                <div class="col-6">
                     <input type="file" (change)="fileChangeEvent($event)" />
-
                     <image-cropper
                         [imageChangedEvent]="imageChangedEvent"
                         [maintainAspectRatio]="true"
                         [aspectRatio]="1 / 1"
                         [resizeToWidth]="400"
                         format="jpg"
-                        [imageQuality]="70"
+                        [imageQuality]="40"
                         (imageCropped)="imageCropped($event)"
                         (imageLoaded)="imageLoaded()"
                         (loadImageFailed)="loadImageFailed()"
                     ></image-cropper>
-                    
                 </div>
+                <div class="col-6" *ngIf="previewCroppedImage">
+                    <div class="text-center">
+                        <img class="img-thumbnail" [src]="previewCroppedImage" />  
+                    </div>
+              </div>
           </div>
             <br>
-          <div class="row" *ngIf="croppedImage">
-                <label for="" class="col-4 col-form-label text-right">Image Preview</label>
-                <div class="col-8 text-center">
-                    <img class="img-thumbnail" [src]="croppedImage" />  
-                </div>
-          </div>
+          
 
           <br>
 
