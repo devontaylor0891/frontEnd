@@ -29,6 +29,7 @@ import { UtilityService } from './core/services/utility/utility.service';
 import { ProducerDashboardService } from './feature/dashboard/producer-dashboard.service';
 import { PlacesService } from './core/services/places/places.service';
 import { UserService } from './core/services/user/user.service';
+import { ImageService } from './core/services/image/image.service';
 
 // PIPES
 import { FormatCellPipe } from './shared/pipes/format-cell.pipe';
@@ -80,6 +81,7 @@ import { ProductCardComponent } from './shared/product-card/product-card.compone
 import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { ImageCropperComponent } from './shared/image-cropper/image-cropper.component';
 // dashboards - good candidate for lazy loading
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { UsersComponent } from './feature/dashboard/admin/users/users.component';
@@ -193,7 +195,8 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
     LearnMoreProducerComponent,
     PaginationComponent,
     MarkCompleteOrderModalComponent,
-    EditAccountModalComponent
+    EditAccountModalComponent,
+    ImageCropperComponent
   ],
   imports: [
     BrowserModule,
@@ -241,7 +244,8 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
     ConsumerViewOrderModalComponent,
     ConsumerEditOrderModalComponent,
     PlacesService,
-    Title
+    Title,
+    ImageService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [
