@@ -324,10 +324,10 @@ export class ApiService {
   };
 
 // ********* get presigned url for image uploads ***************
-getPresignedUrl(imageName: any) {
+getPresignedUrl(imageName: any): Observable<string> {
   AWS.config.update({
-    accessKeyId: `AKIAII4V73AK2CWQ2VUQ`, 
-    secretAccessKey: `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`,
+    accessKeyId: `XXXX`,
+    secretAccessKey: `XXXX`,
     region: 'us-west-2'
   });
   const s3 = new AWS.S3();
@@ -339,7 +339,9 @@ getPresignedUrl(imageName: any) {
     ACL: 'public-read'
   };
   let url = s3.getSignedUrl('putObject', params);
-  return url;
+  console.log('params: ', params);
+  console.log('url: ', url);
+  return Observable.of(url);
 };
 
 // ********* upload image to S3 ***************  

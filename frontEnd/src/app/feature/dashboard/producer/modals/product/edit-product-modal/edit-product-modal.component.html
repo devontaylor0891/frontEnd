@@ -27,7 +27,7 @@
             >Cancel Renewal</button>
     </div>
   
-    <form *ngIf="!submitting && producer" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="!submitting && record" [formGroup]="productForm" (ngSubmit)="onSubmit()">
         
         <!-- Name -->
         <div class="row">
@@ -54,7 +54,7 @@
         </div>
   
       <!-- image -->
-        <div class="row">
+        <!-- <div class="row">
             <label for="image" class="col-4 col-form-label text-right">Image URL:</label>
             <div class="col-8">
                 <input 
@@ -62,6 +62,40 @@
                     type="text" 
                     id="image" 
                     formControlName="image">
+            </div>
+        </div> -->
+
+        <div class="row" *ngIf="!addingImage && !changingImage">
+            <div class="col-4 text-right">
+                <label class="col-form-label">Image:</label>
+            </div>
+            <div class="col-6 offset-1">
+                <!-- image exists for product -->
+                <div *ngIf="record.image !== ''" class="text-center">
+                    <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ record.image }}" class="img-thumbnail" alt=""> 
+                    <a (click)="onChangeImage()">Change Image</a>
+                </div>
+                <!-- image does not exist for product -->
+                <div *ngIf="record.image === ''" class="text-center">
+                    <p>No image has been uploaded.</p>
+                    <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Image</button>
+                </div>
+            </div>
+        </div>
+        <!-- Changing existing image -->
+        <div class="row" *ngIf="changingImage">
+                <label class="col-12 col-form-label text-center">Image Upload and Crop</label>
+                <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
+                <div class="col-12">
+                    <app-image-cropper [name]="record.image"></app-image-cropper>
+                </div>
+            </div>
+        <!-- Adding new image -->
+        <div class="row" *ngIf="addingImage">
+            <label class="col-12 col-form-label text-center">Image Upload and Crop</label>
+            <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
+            <div class="col-12">
+                <app-image-cropper [name]="imageName"></app-image-cropper>
             </div>
         </div>
   
