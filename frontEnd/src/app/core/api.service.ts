@@ -326,8 +326,8 @@ export class ApiService {
 // ********* get presigned url for image uploads ***************
 getPresignedUrl(imageName: any): Observable<string> {
   AWS.config.update({
-    accessKeyId: `XXXX`,
-    secretAccessKey: `XXXX`,
+    accessKeyId: ``,
+    secretAccessKey: ``,
     region: 'us-west-2'
   });
   const s3 = new AWS.S3();
@@ -335,7 +335,7 @@ getPresignedUrl(imageName: any): Observable<string> {
     Bucket: 'onlylocalfood-images',
     Key: imageName,
     Expires: 1000000,
-    ContentType: 'image/png',
+    ContentType: 'image/jpeg',
     ACL: 'public-read'
   };
   let url = s3.getSignedUrl('putObject', params);
@@ -346,7 +346,7 @@ getPresignedUrl(imageName: any): Observable<string> {
 
 // ********* upload image to S3 ***************  
 putFileToS3(file: any, url: string): Observable<any> {
-  return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/png') })
+  return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/jpeg') })
     .map((response: Response) => {
       console.log('image uploaded');
     });

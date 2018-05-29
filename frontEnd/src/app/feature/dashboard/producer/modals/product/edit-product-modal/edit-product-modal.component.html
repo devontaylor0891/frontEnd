@@ -52,18 +52,6 @@
                   formControlName="description"></textarea>
             </div>
         </div>
-  
-      <!-- image -->
-        <!-- <div class="row">
-            <label for="image" class="col-4 col-form-label text-right">Image URL:</label>
-            <div class="col-8">
-                <input 
-                    class="form-control" 
-                    type="text" 
-                    id="image" 
-                    formControlName="image">
-            </div>
-        </div> -->
 
         <div class="row" *ngIf="!addingImage && !changingImage">
             <div class="col-4 text-right">
@@ -83,18 +71,20 @@
             </div>
         </div>
         <!-- Changing existing image -->
-        <div class="row" *ngIf="changingImage">
-                <label class="col-12 col-form-label text-center">Image Upload and Crop</label>
-                <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
-                <div class="col-12">
-                    <app-image-cropper [name]="record.image"></app-image-cropper>
-                </div>
-            </div>
-        <!-- Adding new image -->
-        <div class="row" *ngIf="addingImage">
-            <label class="col-12 col-form-label text-center">Image Upload and Crop</label>
+        <!-- <div class="row form-section" *ngIf="changingImage">
+            <label class="col-12 col-form-label text-center form-section-header">Image Upload and Crop</label>
             <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
-            <div class="col-12">
+            <div class="col-12 form-section-body">
+                <p>Preview:</p>
+                <app-image-cropper [name]="record.image"></app-image-cropper>
+            </div>
+        </div> -->
+        <!-- Adding new image -->
+        <div class="row form-section" *ngIf="addingImage || changingImage">
+            <label class="col-12 col-form-label text-center form-section-header">Image Upload and Crop</label>
+            <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
+            <div class="col-12 form-section-body">
+                <p>Preview:</p>
                 <app-image-cropper [name]="imageName"></app-image-cropper>
             </div>
         </div>
