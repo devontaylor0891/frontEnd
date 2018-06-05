@@ -7,7 +7,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ENV } from './env.config';
 
-import AWS = require('aws-sdk');
+// import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AnalysisOptions } from 'aws-sdk/clients/cloudsearch';
 
 @Injectable()

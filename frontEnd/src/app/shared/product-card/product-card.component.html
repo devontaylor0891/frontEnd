@@ -4,7 +4,7 @@
     <!--Card image-->
     <div class="view overlay hm-white-slight cover-div">
         <!-- image exists for product -->
-        <img *ngIf="product.image !== ''" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.producer.id }}/{{ product.image }}" class="img-fluid cover" alt="">
+        <img *ngIf="product.image !== ''" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="">
         <!-- no image exists, but it falls into a specific subcategory, then use subcategory icon -->
         <img *ngIf="product.image === '' && 
             product.subcategory === 'Bread' || 

@@ -1,12 +1,48 @@
-<div class="row mt-1">
-	
-	<div class="col-12 col-md-3 mb-2">
-		<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="cityProvince"></app-search-options>
-	</div>
+<!-- SMALL DEVICES -->
+<div class="row mt-1 hidden-md-up">
 
-	<div class="col-12 col-md-9">
-		<app-loading *ngIf="!searchResults"></app-loading>
-		<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
-	</div>
-
-</div>
+		<!-- location display -->
+		
+		<!-- tabs for search options and search results -->
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs nav-justified tabs-2 grey lighten-2 flex-column flex-sm-row dash-nav" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" href="#searchOptions" role="tab"><i class="fa fa-shopping-cart mr-1"></i> Options</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#searchResults" role="tab"><i class="fa fa-info-circle mr-1"></i> Results</a>
+				</li>
+			</ul>
+		
+			<!-- Tab panels -->
+			<div class="tab-content" style="padding: 1em;">
+				<!-- Options Panel -->
+				<div class="tab-pane fade" id="searchOptions" role="tabpanel">
+					<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="cityProvince"></app-search-options>
+				</div>
+				<!--/ Options Panel-->
+				<!-- results Panel -->
+				<div class="tab-pane fade in show active" id="searchResults" role="tabpanel">
+					<app-loading *ngIf="!searchResults"></app-loading>
+					<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
+				</div>
+				<!--/ results Panel-->
+			</div>
+		
+		</div>
+		
+		<!-- LARGER DEVICES -->
+		<div class="row mt-1 hidden-sm-down">
+			
+			<!-- search options -->
+			<div class="col-12 col-md-3 mb-2">
+				<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="cityProvince"></app-search-options>
+			</div>
+		
+			<!--  search results -->
+			<div class="col-12 col-md-9">
+				<app-loading *ngIf="!searchResults"></app-loading>
+				<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
+			</div>
+		
+		</div>
