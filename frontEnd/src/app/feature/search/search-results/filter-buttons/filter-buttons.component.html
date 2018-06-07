@@ -1,10 +1,19 @@
 <div class="row">
 	
-	<div class="col-xs-12 mx-auto">
-		View Results As: 
+	<div class="col-12 d-flex justify-content-center align-items-center">
+		<span class="pr-3">View Results As:</span>
+
+		<!-- select -->
+		<div class="hidden-md-up">
+			<select class="bootstrap-select">
+				<option value="products" selected="selected" (click)="onClick('products')">Products</option>
+				<option value="producers" (click)="onClick('producers')">Producers</option>
+				<option value="calendar" (click)="onClick('calendar')">Calendar</option>
+				</select>
+		</div> 
 
 			<!-- dropdown -->
-			<div class="hidden-md-up">
+			<!-- <div class="hidden-md-up">
 				<ul class="flex-center ml-auto">
 					<li class="dropdown">
 						<a class="dropdown-toggle" id="filterButtons" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
@@ -16,7 +25,7 @@
 						</div>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 		
 			<div class="hidden-sm-down"> 
 				<button

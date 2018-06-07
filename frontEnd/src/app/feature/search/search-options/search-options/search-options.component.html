@@ -48,7 +48,7 @@
             <hr>
             <form #f="ngForm" (ngSubmit)="onSubmit(f)">
                 <div class="row">
-                    <div class="col-6 col-md-12">
+                    <div class="col-12">
                         <h5 class="card-title">Categories</h5>
                             <div *ngFor="let category of categoriesList; let i = index" class="pl-3">
                                 <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
@@ -58,7 +58,7 @@
                     <hr>
                     
                     <hr>
-                    <div class="col-6 col-md-12">
+                    <div class="col-12">
                         <h5 class="card-title">Delivery Types</h5>
                         <form-group>
                             <div *ngFor="let delivery of deliveryTypes" class="pl-3">
@@ -68,12 +68,12 @@
                         </form-group>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-olf-primary mx-auto">Search!</button>
+                <div class="row d-flex align-items-center">
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-olf-primary mx-auto">Update Search</button>
                     </div>
-                    <div class="col-6">
-                        <a (click)="reset(f)">Reset Search</a>
+                    <div class="col-3">
+                        <a (click)="reset(f)">Reset</a>
                     </div>
                     <!-- <button type="button" class="btn btn-olf-primary mx-auto" (click)="reset(f)">Reset Search</button> -->
                 </div>
