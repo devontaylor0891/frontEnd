@@ -64,7 +64,12 @@ export class AddScheduleModalComponent implements OnInit {
   deadlineCalcHours: number;
 
   // DATE/TIME PICKER SETTINGS
-  public moment: any = new Date();
+  date: any = new Date();
+  year: any = this.date.getFullYear();
+  month: any = this.date.getMonth();
+  day: any = this.date.getDate();
+  public min = new Date(2018, 6, 6, 10, 30);
+  public moment: any = new Date(this.year, this.month, this.day);
   // public minDate = this.moment.setDate(this.moment.getDate() + 1); // set minimum date as tomorrow
   public dateMoment: any = new Date(new Date().setDate(new Date().getDate() + 1)); // somehow this works!
   public dateMoments: any; // throws error if initialized with a date
@@ -244,13 +249,13 @@ export class AddScheduleModalComponent implements OnInit {
     });
 
     this.dashboardService.getProducer()
-    .subscribe(
-      result => {
-        this.producer = result;
-        this.latitude = this.producer.latitude;
-        this.longitude = this.producer.longitude;
-      }
-    )
+      .subscribe(
+        result => {
+          this.producer = result;
+          this.latitude = this.producer.latitude;
+          this.longitude = this.producer.longitude;
+        }
+      );
 
     // set the defaults for dates
     this.onChooseDate();
@@ -259,6 +264,8 @@ export class AddScheduleModalComponent implements OnInit {
     this.onChooseEndTime();
     this.onChooseDeadlineDate();
     this.onChooseDeadlineTime();
+    console.log('minimum: ', this.moment);
+    console.log('othermin: ', new Date(2018, 1, 12, 10, 30));
   }
 
   private fillAddress(place) {

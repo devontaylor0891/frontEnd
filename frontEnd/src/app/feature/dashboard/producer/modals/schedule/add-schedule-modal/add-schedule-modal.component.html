@@ -89,7 +89,7 @@
                   
                   <!-- REPEAT? -->
                   
-                  <div class="row">
+                  <!-- <div class="row">
                         <label class="col-4 col-form-label text-right">Does this schedule repeat?</label>
                         <div class="col-8 pl-5">
                             <div class="form-check form-check-inline">
@@ -113,10 +113,10 @@
                               <label class="form-check-label" for="repeatNo">No</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
                 <!-- DATE - IS REPEAT - USES DATEPICKER MODULE -->
-                  <div *ngIf="isRepeat" class="row">
+                  <!-- <div *ngIf="isRepeat" class="row">
                       <label for="dates" class="col-4 col-form-label text-right">Dates:</label>
                       <div class="col-8">
                         <input 
@@ -139,7 +139,7 @@
                             [min]="moment"
                             ></owl-date-time>
                       </div>
-                  </div>
+                  </div> -->
         
                 <!-- DATE - NOT REPEAT - USES DATEPICKER MODULE -->
                   <div *ngIf="!isRepeat" class="row">
@@ -152,6 +152,7 @@
                             (ngModelChange)="onChooseDate()"
                             [ngModelOptions]="{standalone: true}"
                             [formControl]="form.controls['date']"
+                            [min]="moment"
                             ngDefaultControl>
                         <owl-date-time
                             #date
@@ -160,7 +161,7 @@
                             [placeHolder]="'YYYY-MM-DD'"
                             [autoClose]="true"
                             [inputId]="'date'"
-                            [min]="moment"
+                            
                             ></owl-date-time>
                       </div>
                   </div>

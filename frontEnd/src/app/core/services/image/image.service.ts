@@ -106,4 +106,15 @@ export class ImageService {
       );
   };
 
+  reset() {
+    this.imageName = '';
+    this.imageChangedEvent = '';
+    this.croppedImage = '';
+    this.imageType = '';
+    this.imageFile = '';
+    this.presignedUrl = '';
+    this.previewCroppedImage = '';
+    this._previewCroppedImage.next(this.previewCroppedImage);
+  }
+
 }

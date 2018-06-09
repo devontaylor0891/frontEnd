@@ -166,7 +166,7 @@ import { ProductModel } from '../../../../../../core/models/product.model';
   templateUrl: './edit-product-modal.component.html',
   styleUrls: ['./edit-product-modal.component.scss']
 })
-export class EditProductModalComponent implements OnInit {
+export class EditProductModalComponent implements OnInit, OnDestroy {
 
   @Input() record: ProductModel;
   productForm: FormGroup;
@@ -339,6 +339,7 @@ export class EditProductModalComponent implements OnInit {
     if (this.imageUploadingSub) {
       this.imageUploadingSub.unsubscribe();
     };
+    this.imageService.reset();
   }
 
 };
