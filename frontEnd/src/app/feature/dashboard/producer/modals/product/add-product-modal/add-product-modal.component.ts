@@ -25,6 +25,8 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   @Output() itemCreated = new EventEmitter<ProductModel>();
 
+  submitSub: Subscription;
+
   newItemUploading: boolean = false;
   imageName: any = '';
   imageUploading: boolean;
@@ -65,35 +67,34 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.newItemUploading = true;
     console.log(this.form.value);
+    this.form.value.image = this.imageName;
     this.form.value.producerId = this.producer.id;
     this.form.value.producer = this.producer;
     // console.log(this.form.value);
     // this.dashboardService.addNewProduct(this.form.value);
-    this.apiService.postProduct(this.form.value)
+    this.submitSub = this.apiService.postProduct(this.form.value)
       .subscribe(
-        result => {
-          this.itemCreated.emit(result);
-          this.newItemUploading = false;
-          if (!this.imageUploading) {
-            this.activeModal.close();
-          };
-        }
+          data => this.handleSubmitSuccess(data),
+			    err => this.handleSubmitError(err)
       );
   };
 
-  handleSubmitSuccess(res) {
-    if (this.addingImage) {
+  handleSubmitSuccess(result) {
+    this.itemCreated.emit(result);
+    if (this.addingImage) { // upload image and then close the modal
       this.imageService.convertAndUpload();
       this.imageService._imageUploading
         .subscribe(
           result => {
             if (!result) {
+              this.newItemUploading = false;
               this.submitting = false;
               this.activeModal.close();
             }
           }
         )
-    } else {
+    } else { // no image to upload
+      this.newItemUploading = false; 
       this.submitting = false;
       this.activeModal.close();
     };
@@ -132,6 +133,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.imageUploadingSub.unsubscribe();
+    this.imageService.reset();
   }
 
 }
