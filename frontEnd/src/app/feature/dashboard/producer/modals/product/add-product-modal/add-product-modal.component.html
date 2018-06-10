@@ -4,122 +4,133 @@
       <span aria-hidden="true">&times;</span>
   </button>
 </div>
-          
-<form [formGroup]="form" (ngSubmit)="onSubmit()"> <!-- this binds the viewed form to the form we build in the component class --> 
-  <div class="modal-body dash-modal-body">
-      <div>
-          <div class="row">
-              <label for="name" class="col-4 col-form-label text-right">Product Name</label>
-              <div class="col-8">
-                  <input 
-                      class="form-control" 
-                      type="text" 
-                      id="name" 
-                      [formControl]="form.controls['name']">
-                      <small 
-                          *ngIf="!form.get('name').valid && form.get('name').touched"
-                          class="help-block"
-                          >Please enter a name for the product.</small>
-              </div>
-          </div>
-          <div class="row">
-              <label for="description" class="col-4 col-form-label text-right">Description</label>
-              <div class="col-8">
-                  <input 
-                      class="form-control" 
-                      type="text" 
-                      id="description" 
-                      [formControl]="form.controls['description']">
-              </div>
-          </div>
 
-          <div class="row">
-                <label for="" class="col-12 col-form-label text-center">Image Upload and Crop</label>
-                <p>We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
-                <div class="col-12">
-                    <app-image-cropper [name]="imageName"></app-image-cropper>
+<div class="modal-body dash-modal-body" *ngIf="submitting">
+    <app-loading></app-loading>
+</div>
+
+<div class="modal-body dash-modal-body">
+          
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!submitting"> <!-- this binds the viewed form to the form we build in the component class --> 
+
+        <div>
+            <div class="row">
+                <label for="name" class="col-4 col-form-label text-right">Product Name</label>
+                <div class="col-8">
+                    <input 
+                        class="form-control" 
+                        type="text" 
+                        id="name" 
+                        [formControl]="form.controls['name']">
+                        <small 
+                            *ngIf="!form.get('name').valid && form.get('name').touched"
+                            class="help-block"
+                            >Please enter a name for the product.</small>
                 </div>
-                
-                <!-- <div class="col-6">
-                    <input type="file" (change)="fileChangeEvent($event)" />
-                    <image-cropper
-                        [imageChangedEvent]="imageChangedEvent"
-                        [maintainAspectRatio]="true"
-                        [aspectRatio]="1 / 1"
-                        [resizeToWidth]="400"
-                        format="png"
-                        [imageQuality]="40"
-                        (imageCropped)="imageCropped($event)"
-                        (imageLoaded)="imageLoaded()"
-                        (loadImageFailed)="loadImageFailed()"
-                    ></image-cropper>
+            </div>
+            <div class="row">
+                <label for="description" class="col-4 col-form-label text-right">Description</label>
+                <div class="col-8">
+                    <input 
+                        class="form-control" 
+                        type="text" 
+                        id="description" 
+                        [formControl]="form.controls['description']">
                 </div>
-                <div class="col-6" *ngIf="previewCroppedImage">
-                    <div class="text-center">
-                        <img class="img-thumbnail" [src]="previewCroppedImage" />  
+            </div>
+
+        <!-- image -->
+            <div class="row form-section">
+                <div class="col-12 form-section-header">
+                    <h4>Image</h4>
+                </div>
+                <div class="col-12 form-section-body">
+
+                    <!-- current image -->
+                    <div class="row" *ngIf="!addingImage">
+                        <div class="col-6 offset-3">
+                            <!-- image does not exist for product -->
+                            <div class="text-center">
+                                <p>No image has been uploaded.</p>
+                                <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Image</button>
+                            </div>
+                        </div>
                     </div>
-                </div> -->
-          </div>
+
+
+                <!-- Adding new image or changing current image -->
+                    <div class="row" *ngIf="addingImage">
+                        <div class="-col-10 offset-1">
+                            <p class="small">We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
+                        </div>
+                        <div class="col-6">
+                            <label class="col-12 col-form-label text-center">Upload and Crop:</label>
+                        </div>
+                        <div class="col-6">
+                            <label class="col-12 col-form-label text-center">Preview:</label>
+                        </div>
+                        <div class="col-12">
+                            <app-image-cropper [name]="imageName"></app-image-cropper>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <br>
-          
 
-          <br>
+            <div class="row">
+                <label for="pricePerUnit" class="col-4 col-form-label text-right">Price Per Unit</label>
+                <div class="col-8 input-group">
+                    <div class="input-group-addon">$</div>
+                    <input 
+                        class="form-control" 
+                        type="number"
+                        min="0"
+                        step="any"
+                        id="pricePerUnit" 
+                        [formControl]="form.controls['pricePerUnit']">
+                </div>
+            </div>
 
-          <div class="row">
-              <label for="pricePerUnit" class="col-4 col-form-label text-right">Price Per Unit</label>
-              <div class="col-8 input-group">
-                  <div class="input-group-addon">$</div>
-                  <input 
-                      class="form-control" 
-                      type="number"
-                      min="0"
-                      step="any"
-                      id="pricePerUnit" 
-                      [formControl]="form.controls['pricePerUnit']">
-              </div>
-          </div>
+            <br>
 
-          <br>
+            <div class="row">
+                <label for="unit" class="col-4 col-form-label text-right">Pricing Unit</label>
+                <div class="col-8">
+                    <select class="custom-select float-left" name="unit" [formControl]="form.controls['unit']">
+                        <option selected value="">Select a Unit</option>
+                        <option value="lb">Pound</option>
+                        <option value="kg">Kilo</option>
+                        <option value="ea">Each</option>
+                        <option value="pkg">Package</option>
+                    </select>
+                </div>
+            </div>
 
-          <div class="row">
-              <label for="unit" class="col-4 col-form-label text-right">Pricing Unit</label>
-              <div class="col-8">
-                  <select class="custom-select float-left" name="unit" [formControl]="form.controls['unit']">
-                      <option selected value="">Select a Unit</option>
-                      <option value="lb">Pound</option>
-                      <option value="kg">Kilo</option>
-                      <option value="ea">Each</option>
-                      <option value="pkg">Package</option>
-                  </select>
-              </div>
-          </div>
+            <br>
 
-          <br>
+            <div class="row">
+                <label for="unitsPer" class="col-4 col-form-label text-right">Units Per Final Product</label>
+                <div class="col-8 input-group">
+                    <input 
+                        class="form-control" 
+                        type="number"
+                        min="0"
+                        step=".1"
+                        id="unitsPer" 
+                        [formControl]="form.controls['unitsPer']">
+                </div>
+                <div class="col-8 offset-4">
+                    <small class="form-text text-muted text-right">If your final product contains more than 1 unit (like a 5 lb chicken), change this to the average number of units per final product. We can use this to calculate an estimated final price for the consumer.</small>
+                </div>
+            </div>
 
-          <div class="row">
-              <label for="unitsPer" class="col-4 col-form-label text-right">Units Per Final Product</label>
-              <div class="col-8 input-group">
-                  <input 
-                      class="form-control" 
-                      type="number"
-                      min="0"
-                      step=".1"
-                      id="unitsPer" 
-                      [formControl]="form.controls['unitsPer']">
-              </div>
-              <div class="col-8 offset-4">
-                  <small class="form-text text-muted text-right">If your final product contains more than 1 unit (like a 5 lb chicken), change this to the average number of units per final product. We can use this to calculate an estimated final price for the consumer.</small>
-              </div>
-          </div>
-
-          <br>
-
-          
-
-          <br>
+            <br>
+            <br>
 
           <!-- category -->
-        <div class="row">
+            <div class="row">
                 <label for="category" class="col-4 col-form-label text-right">Category:</label>
                 <div class="col-8">
                     <select 
@@ -215,27 +226,47 @@
                 </div>
             </div>
 
-          <div class="row">
-              <label for="qtyAvailable" class="col-4 col-form-label text-right">Quantity Available</label>
-              <div class="col-8 input-group">
-                  <input 
-                      class="form-control" 
-                      type="number"
-                      min="0"
-                      step="1"
-                      id="qtyAvailable" 
-                      [formControl]="form.controls['qtyAvailable']">
-              </div>
-          </div>
+            <div class="row">
+                <label for="qtyAvailable" class="col-4 col-form-label text-right">Quantity Available</label>
+                <div class="col-8 input-group">
+                    <input 
+                        class="form-control" 
+                        type="number"
+                        min="0"
+                        step="1"
+                        id="qtyAvailable" 
+                        [formControl]="form.controls['qtyAvailable']">
+                </div>
+            </div>
           
-      </div>
-  </div>
-  <div class="modal-footer justify-content-center">
-      <div class="row">
-          <div>
-              <button class="btn btn-olf-primary" type="submit">Add to Products</button>
-              <a (click)="activeModal.close()">Cancel Changes</a>
-          </div>
-      </div>
-  </div>
-</form>
+        </div>
+
+        <div>
+            <div class="row justify-content-center">
+                <div class="form-group text-center" *ngIf="!submitting">
+                    <button
+                        type="submit"
+                        class="btn btn-olf-primary"
+                        [attr.disabled]="form.invalid || submitting ? true : null"
+                    >Submit Changes</button>
+                        <!-- https://github.com/angular/angular/issues/11271#issuecomment-289806196 -->
+                
+                    <!-- API submission error -->
+                    <p *ngIf="error" class="mt-3 alert alert-danger">
+                        <strong>Error:</strong> There was a problem submitting the product. Please try again.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer justify-content-center">
+    <div class="row">
+        <div>
+            <a (click)="activeModal.close()">Cancel Changes</a>
+        </div>
+    </div>
+</div>
+

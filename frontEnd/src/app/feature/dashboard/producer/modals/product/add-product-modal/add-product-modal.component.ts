@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,7 +17,7 @@ import { stringList } from 'aws-sdk/clients/datapipeline';
   templateUrl: './add-product-modal.component.html',
   styleUrls: ['./add-product-modal.component.scss']
 })
-export class AddProductModalComponent implements OnInit {
+export class AddProductModalComponent implements OnInit, OnDestroy {
 
   form: FormGroup; // this will hold our form data in a js object
 
@@ -24,46 +25,13 @@ export class AddProductModalComponent implements OnInit {
 
   @Output() itemCreated = new EventEmitter<ProductModel>();
 
-  imageUploading: boolean;
   newItemUploading: boolean = false;
-
-  // imageChangedEvent: any = '';
-  // croppedImage: any = '';
-  imageName: any;
-  // imageType: string;
-  // imageFile: any;
-  // presignedUrl: string;
-  // previewCroppedImage: any = '';
-
-  // fileChangeEvent(event: any): void {
-  //   this.imageChangedEvent = event;
-  //   this.imageFile = event.target.files[0];
-  //   this.imageType = event.target.files[0].type;
-  //   console.log('image type: ', this.imageType);
-  //   console.log('event files: ', event.target.files[0]);
-  //   // const url = this.apiService.getPresignedUrl();
-  //   // this.apiService.putFileToS3(event.target.files[0], url)
-  // };
-  // imageCropped(image) {
-  //   this.previewCroppedImage = image;
-  //   const jpg = image.split(',')[1];
-  //   var bs = atob(jpg);
-  //   var buffer = new ArrayBuffer(bs.length);
-  //   var ba = new Uint8Array(buffer);
-  //   for (var i = 0; i < bs.length; i++) {
-  //       ba[i] = bs.charCodeAt(i);
-  //   };
-  //   this.croppedImage = new Blob([ba], { type: "image/png" });
-  //   this.croppedImage = new File([this.croppedImage], this.imageName);
-  //   this.getPresignedUrl(this.imageName);
-  //   this.uploadToS3(this.presignedUrl);
-  // };
-  // imageLoaded() {
-  //   // show cropper
-  // };
-  // loadImageFailed() {
-  //   // show message
-  // };
+  imageName: any = '';
+  imageUploading: boolean;
+  addingImage: boolean = false;
+  imageUploadingSub: Subscription;
+  submitting: boolean;
+  error: any;
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
@@ -106,12 +74,41 @@ export class AddProductModalComponent implements OnInit {
         result => {
           this.itemCreated.emit(result);
           this.newItemUploading = false;
-          if(!this.imageUploading) {
+          if (!this.imageUploading) {
             this.activeModal.close();
           };
         }
       );
-  }
+  };
+
+  handleSubmitSuccess(res) {
+    if (this.addingImage) {
+      this.imageService.convertAndUpload();
+      this.imageService._imageUploading
+        .subscribe(
+          result => {
+            if (!result) {
+              this.submitting = false;
+              this.activeModal.close();
+            }
+          }
+        )
+    } else {
+      this.submitting = false;
+      this.activeModal.close();
+    };
+  };
+
+  handleSubmitError(err) {
+    console.error(err);
+    this.submitting = false;
+    this.error = true;
+  };
+
+  onAddImage() {
+    this.imageName = this.producer.id + '/' + new Date().getTime();
+    this.addingImage = true;
+  };
 
   ngOnInit() {
 
@@ -124,7 +121,7 @@ export class AddProductModalComponent implements OnInit {
         }
       );
 
-    this.imageService._imageUploading
+    this.imageUploadingSub = this.imageService._imageUploading
       .subscribe(
         result => {
           this.imageUploading = result;
@@ -133,17 +130,8 @@ export class AddProductModalComponent implements OnInit {
 
   };
 
-  // getPresignedUrl(imageName) {
-  //   this.presignedUrl = this.apiService.getPresignedUrl(imageName);
-  // }
-
-  // uploadToS3(url: string) {
-  //   this.apiService.putFileToS3(this.croppedImage, url)
-  //     .subscribe(
-  //       response => {
-  //         console.log('file upload response: ', response);
-  //       }
-  //     );
-  // };
+  ngOnDestroy() {
+    this.imageUploadingSub.unsubscribe();
+  }
 
 }

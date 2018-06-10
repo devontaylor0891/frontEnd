@@ -481,6 +481,41 @@
         "schedule": []
       },
       "scheduleList": ""
+    },
+    {
+      "id": 964782,
+      "name": "Chinese food",
+      "description": "desc",
+      "image": "",
+      "pricePerUnit": 7,
+      "unit": "ea",
+      "unitsPer": 1,
+      "category": "Dairy & Eggs",
+      "subcategory": "Cheese",
+      "dateAdded": "2018-06-10T17:05:13.736Z",
+      "qtyAvailable": 987,
+      "qtyPending": 0,
+      "qtyAccepted": 0,
+      "qtyCompleted": 0,
+      "isObsolete": false,
+      "producerId": "59b16d2e4fe7b66e81c27373",
+      "producer": {
+        "id": "59b16d2e4fe7b66e81c27373",
+        "name": "Garden Farms",
+        "location": "Virden",
+        "province": "MB",
+        "address": "",
+        "description": "desc",
+        "email": "devon@onlylocalfood.com",
+        "logoUrl": "",
+        "longitude": -100.93252849999999,
+        "latitude": 49.8486678,
+        "firstName": "Devon",
+        "status": "active",
+        "products": [],
+        "schedule": []
+      },
+      "scheduleList": ""
     }
   ],
   "schedules": [
