@@ -126,7 +126,7 @@
                                             </h5>
                                         </div>
                                         <div class="pl-3 col-12 col-md-8">
-                                            <p *ngIf="producer?.logoUrl">{{ producer.logoUrl }}</p>
+                                            <img *ngIf="producer.logoUrl" class="img-thumbnail" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.id }}/logo" alt="">
                                             <p *ngIf="!producer?.logoUrl">No logo uploaded.</p>
                                         </div>
                                     </div>

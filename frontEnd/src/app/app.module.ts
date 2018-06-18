@@ -120,6 +120,7 @@ import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/mo
 import { MarkCompleteOrderModalComponent } from './feature/dashboard/producer/modals/order/mark-complete-order-modal/mark-complete-order-modal.component';
 import { EditAccountModalComponent } from './shared/edit-account-modal/edit-account-modal.component';
 import { ImageComponent } from './shared/image/image.component';
+import { LogoCropperComponent } from './shared/logo-cropper/logo-cropper.component';
 
 @NgModule({
   declarations: [
@@ -198,7 +199,8 @@ import { ImageComponent } from './shared/image/image.component';
     MarkCompleteOrderModalComponent,
     EditAccountModalComponent,
     ImageCropperComponent,
-    ImageComponent
+    ImageComponent,
+    LogoCropperComponent
   ],
   imports: [
     BrowserModule,
