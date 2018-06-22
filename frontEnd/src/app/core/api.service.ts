@@ -327,8 +327,8 @@ export class ApiService {
 // ********* get presigned url for image uploads ***************
 getPresignedUrl(imageName: any): Observable<string> {
   AWS.config.update({
-    accessKeyId: `AKIAI3L6H4YLAAN7Q3TQ`,
-    secretAccessKey: `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`,
+    accessKeyId: ``,
+    secretAccessKey: ``,
     region: 'us-west-2'
   });
   const s3 = new AWS.S3();
