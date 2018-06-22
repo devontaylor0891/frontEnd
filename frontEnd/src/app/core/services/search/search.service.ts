@@ -26,7 +26,7 @@ export class SearchService implements OnInit {
     deliveryTypes: string[], // holds a list of the unique delivery types contained in the above list
     categories: string[], // holds an array of category/subcategory objects
 	  searchProducers: ProducerModel[], // an array containing basic producer info for the producer view
-	  searchDeliveries: ScheduleModel[] // an array containing basic delivery info for the calendar view
+	  searchDeliveries: any[] // an array containing basic delivery info for the calendar view
   }
 	
 	// use a BehaviorSubject to create an observable out of a COPY of the search results
@@ -36,7 +36,7 @@ export class SearchService implements OnInit {
   public _deliveryTypes: BehaviorSubject<string[]>;
   public _categories: BehaviorSubject<string[]>;
   public _searchProducers: BehaviorSubject<ProducerModel[]>;
-  public _searchDeliveries: BehaviorSubject<ScheduleModel[]>;
+  public _searchDeliveries: BehaviorSubject<any[]>;
 
   // ****************** MODIFYING THE VIEW BASED ON FILTER BUTTONS
   // create a private property to hold the default view
@@ -50,7 +50,7 @@ export class SearchService implements OnInit {
     this._deliveryTypes = <BehaviorSubject<string[]>>new BehaviorSubject([]);
     this._categories = <BehaviorSubject<string[]>>new BehaviorSubject([]);
 	  this._searchProducers = <BehaviorSubject<ProducerModel[]>>new BehaviorSubject([]);
-	  this._searchDeliveries = <BehaviorSubject<ScheduleModel[]>>new BehaviorSubject([]);
+	  this._searchDeliveries = <BehaviorSubject<any[]>>new BehaviorSubject([]);
   }
   
   // fill up the dataStore with a call to the API
@@ -201,7 +201,7 @@ export class SearchService implements OnInit {
   
   addSearchDeliveries(searchResults) {
 	  
-	 let deliveries: ScheduleModel[] = [];
+	 let deliveries: any[] = [];
 	  
 	  // loop through search results
 	  searchResults.forEach((product) => {
@@ -222,9 +222,10 @@ export class SearchService implements OnInit {
   
   buildNewSearchDelivery(delivery, product) {
     let producer = product.producer;
-	  let delObject: ScheduleModel = {
+	  let delObject = {
       "id": delivery.id,
       "producerId": product.producer.id,
+      "producerName": product.producer.name,
       "productList": delivery.productList,
       "type": delivery.type,
       "description": delivery.description,

@@ -232,7 +232,28 @@
     
                 <!-- DEADLINE DATE - only if not a repeat - USES DATEPICKER MODULE -->
                 <div *ngIf="!isRepeat">
+
                     <div class="row">
+                        <label for="test" class="col-4 col-form-label text-right">Order Deadline Date/Time</label>
+                        <div class="col-8">
+                            <input 
+                                [owlDateTimeTrigger]="deadline" 
+                                [owlDateTime]="deadline"
+                                [max]="deadlineDateTimeMin"
+                                [(ngModel)]="deadlineDateTime"
+                                [ngModelOptions]="{standalone: true}"
+                                [formControl]="form.controls['deadlineDateTime']"
+                                ngDefaultControl
+                                >
+                            <owl-date-time 
+                                #deadline
+                                [autoClose]="true"
+                                [inputId]="'test'"
+                                ></owl-date-time>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
                         <label for="input5" class="col-4 col-form-label text-right">Order Deadline Date</label>
                         <div class="col-8">
                             <input 
@@ -252,10 +273,10 @@
                                 [inputId]="'input5'"
                                 ></owl-date-time>
                         </div>
-                    </div>
+                    </div> -->
         
                     <!-- DEADLINE TIME - USES DATEPICKER MODULE -->
-                    <div class="row">
+                    <!-- <div class="row">
                         <label for="input6" class="col-4 col-form-label text-right">Order Deadline Time</label>
                         <div class="col-8">
                             <input 
@@ -275,7 +296,7 @@
                                 [inputId]="'input6'"
                                 ></owl-date-time>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                   
     

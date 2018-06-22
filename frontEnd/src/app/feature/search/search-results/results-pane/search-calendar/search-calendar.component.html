@@ -14,6 +14,7 @@
             <p><b>Where: </b>{{ modalData.event.meta.schedule.address }}, {{ modalData.event.meta.schedule.city }}, {{ modalData.event.meta.schedule.province }}</p>
             <p><b>Date: </b>{{ modalData.event.meta.schedule.startDateTime | date:'fullDate' }}</p>
             <p><b>Time: </b>{{ modalData.event.meta.schedule.startDateTime | date:'shortTime' }} - {{ modalData.event.meta.schedule.endDateTime | date:'shortTime' }}</p>
+            <p><b>Producer: </b>{{ modalData.event.meta.schedule.producerName }}</p>
             <p><b>Description: </b>{{ modalData.event.meta.schedule.description }}</p>
             <p><b>Order Deadline: </b>{{ modalData.event.meta.schedule.orderDeadline | date:'shortTime' }}, {{ modalData.event.meta.schedule.orderDeadline | date:'fullDate' }}</p>
             <div *ngIf="modalData.event.meta.schedule.type === 'Door-to-door Delivery' && modalData.event.meta.schedule.hasFee">
