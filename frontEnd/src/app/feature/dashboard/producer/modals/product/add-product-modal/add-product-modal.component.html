@@ -14,30 +14,38 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!submitting"> <!-- this binds the viewed form to the form we build in the component class --> 
 
         <div>
-            <div class="row">
-                <label for="name" class="col-4 col-form-label text-right">Product Name</label>
-                <div class="col-8">
-                    <input 
-                        class="form-control" 
-                        type="text" 
-                        id="name" 
-                        [formControl]="form.controls['name']">
-                        <small 
-                            *ngIf="!form.get('name').valid && form.get('name').touched"
-                            class="help-block"
-                            >Please enter a name for the product.</small>
+            <div class="row form-section">
+                <div class="col-12 form-section-header">
+                    <h4>General Details</h4>
+                </div>
+                <div class="col-12 form-section-body">
+                    <div class="row">
+                        <label for="name" class="col-4 col-form-label text-right">Product Name:</label>
+                        <div class="col-8">
+                            <input 
+                                class="form-control" 
+                                type="text" 
+                                id="name" 
+                                [formControl]="form.controls['name']">
+                                <small 
+                                    *ngIf="!form.get('name').valid && form.get('name').touched"
+                                    class="help-block"
+                                    >Please enter a name for the product.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="description" class="col-4 col-form-label text-right">Description:</label>
+                        <div class="col-8">
+                            <input 
+                                class="form-control" 
+                                type="text" 
+                                id="description" 
+                                [formControl]="form.controls['description']">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <label for="description" class="col-4 col-form-label text-right">Description</label>
-                <div class="col-8">
-                    <input 
-                        class="form-control" 
-                        type="text" 
-                        id="description" 
-                        [formControl]="form.controls['description']">
-                </div>
-            </div>
+            
 
         <!-- image -->
             <div class="row form-section">

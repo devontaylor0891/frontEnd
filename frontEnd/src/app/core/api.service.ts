@@ -15,7 +15,8 @@ import { AnalysisOptions } from 'aws-sdk/clients/cloudsearch';
 export class ApiService {
 
   // apiUrl = 'http://localhost:3000';
-  apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
+  // apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
+  apiUrl = 'http://api-server-env.u4xn8vrpir.us-west-2.elasticbeanstalk.com/api';
 
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
@@ -225,16 +226,18 @@ export class ApiService {
 
   getUserById(id) {
     return this.http
-      .get(`${ENV.BASE_API}users/` + id)
+      // .get(`${ENV.BASE_API}users/` + id)
+      .get(this.apiUrl + `/users/` + id)
       .catch(this._handleError);
   };
 
   // create a new user
   createUser(user: any): Observable<any> {
+    console.log('create user called: ', user);
     return this.http
-    .post(`${ENV.BASE_API}users/`, user, {
-        headers: new HttpHeaders().set('Authorization', this._authHeader)
-      })
+      .post(this.apiUrl + `/users`, user, {
+          headers: new HttpHeaders().set('Authorization', this._authHeader)
+        })
       .catch(this._handleError);
   };
 

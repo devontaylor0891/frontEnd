@@ -53,11 +53,12 @@ export class AppComponent implements OnInit, OnChanges {
       );
 
     this.userService.getProfileIncomplete()
-		.subscribe(
-			result => {
-				this.profileIncomplete = result;
-			}
-		);
+      .subscribe(
+        result => {
+          this.profileIncomplete = result;
+          console.log('profileIncomplete: ', result);
+        }
+      );
 
   }
   

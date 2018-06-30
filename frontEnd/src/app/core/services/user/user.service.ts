@@ -46,12 +46,29 @@ export class UserService implements OnInit, OnChanges  {
           if (this.userId) {
             this.apiService.getUserById(this.userId)
               .subscribe(
-                result => { this.user = result;
-                            this.getUserFromDb(this.userId); },
+                result => { 
+                  console.log('result from apiservice getuser: ', result);
+                  if (result) {
+                    this.user = result;
+                    this.getUserFromDb(this.userId);
+                  } else {
+                    let newUser = this.buildNewUser(this.userProfile);
+                    console.log('trying to create user: ', newUser);
+                    this.apiService.createUser(newUser)
+                      .subscribe(
+                        result => {
+                          console.log('newly created user: ', result);
+                          this.isFirstLogin = false;
+                          this.getUserFromDb(result.insertId);
+                        }
+                      );
+                  }
+                }, 
                 error => {
                   // if the user isn't yet in the db, add them
                   if (error.indexOf('404') > -1) {
                     let newUser = this.buildNewUser(this.userProfile);
+                    console.log('trying to create user1: ', newUser);
                     this.apiService.createUser(newUser)
                       .subscribe(
                         result => {
@@ -72,11 +89,11 @@ export class UserService implements OnInit, OnChanges  {
   buildNewUser(profile) {
 	  let newUser = {
 		  'id': this.userId,
-		  'firstName': profile.given_name || '',
+		  // 'firstName': profile.given_name || '',
 		  'email': profile['http://myapp.com/email'] || '',
-		  'registrationDate': profile.created_at || profile.updated_at,
-      'role': '',
-      'orders': []
+		  'registrationDate': profile.created_at || profile.updated_at
+      // 'role': '',
+      // 'orders': []
 	  }
 	  return newUser;
   };
@@ -128,6 +145,7 @@ export class UserService implements OnInit, OnChanges  {
               this.profileIncomplete$.next(false);
             } else {
               this.profileIncomplete = true;
+              console.log('user profile incomplete: ', this.profileIncomplete);
               this.profileIncomplete$.next(true);
             }
         }
