@@ -117,8 +117,43 @@
                               class="form-control"></textarea>
                       </div>
                   </div>
+
+                  <!-- logo -->
+                  <div class="row form-section">
+                        <div class="col-12 form-section-header">
+                            <h4>Logo</h4>
+                        </div>
+                        <div class="col-12 form-section-body">
+
+                        <!-- current image -->
+                            <div class="row" *ngIf="!addingImage">
+                                <div class="col-6 offset-3">
+                                    <!-- image does not exist for product -->
+                                    <div class="text-center">
+                                        <p>No logo has been uploaded.</p>
+                                        <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        <!-- Adding new image or changing current image -->
+                            <div class="row" *ngIf="addingImage">
+                                <div class="col-6">
+                                    <label class="col-12 col-form-label text-center">Upload and Crop:</label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12 col-form-label text-center">Preview:</label>
+                                </div>
+                                <div class="col-12">
+                                    <app-logo-cropper [name]="imageName"></app-logo-cropper>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
   
-                  <div class="row">
+                  <!-- <div class="row">
                       <label for="logoUrl" class="col-4 col-form-label text-right">Upload a Logo</label>
                       <div class="col-8">
                           <input
@@ -129,7 +164,9 @@
                               (change)="fileChange($event)"
                               class="form-control">
                       </div>
-                  </div>
+                  </div> -->
+
+
 
                 </div>
 
