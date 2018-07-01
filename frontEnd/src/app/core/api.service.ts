@@ -217,13 +217,7 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  // single user by id
-  // getUserById(id) {
-  //   return this.http
-  //     .get(`${ENV.BASE_API}users/` + id)
-  //     .catch(this._handleError);
-  // }
-
+  // get single user by id
   getUserById(id) {
     return this.http
       // .get(`${ENV.BASE_API}users/` + id)
@@ -245,7 +239,8 @@ export class ApiService {
   patchUser(id: number, newFieldAndValue: Object): Observable<any> {
     console.log('api patch: ', id, newFieldAndValue);
     return this.http
-      .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
+      // .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
+      .put(this.apiUrl + `/users/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
