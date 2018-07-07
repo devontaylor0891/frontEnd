@@ -223,7 +223,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
           };
           // mark profile complete and get the full profile
           this.userService.profileIncomplete$.next(false);
-          this.userService.getUserFromDb(this.id);
+          this.userService.getUserFromDb();
         }
       );
   };

@@ -225,6 +225,21 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // get single user by id that was created by the database
+  getUserByDBId(id) {
+    return this.http
+      // .get(`${ENV.BASE_API}users/` + id)
+      .get(this.apiUrl + `/users/` + id)
+      .catch(this._handleError);
+  };
+
+  // get a single user by their Auth0 id
+  getUserByAuthId(id) {
+    return this.http
+      .get(this.apiUrl + `/users/auth/` + id)
+      .catch(this._handleError);
+  };
+
   // create a new user
   createUser(user: any): Observable<any> {
     console.log('create user called: ', user);
