@@ -26,11 +26,13 @@ export class ConsumerDashboardService {
   }
 
   loadData(id) {
-    this.apiService.getUserById(id)
+    console.log('user from consumer dashboard: ', id);
+    this.apiService.getUserByAuthId(id)
     // add a new product via the add-product component, push it to the appropriate array
       .subscribe(
         result => {
-          this.dataStore.user = result;
+          console.log('result: ', result);
+          this.dataStore.user = result[0];
           this._user.next(Object.assign({}, this.dataStore).user);
           console.log('user: ', this.dataStore.user);
         }, error => console.log('could not load user')

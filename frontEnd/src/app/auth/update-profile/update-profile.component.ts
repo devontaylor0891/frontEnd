@@ -19,6 +19,7 @@ import { ProducerModel } from '../../core/models/producer.model';
 })
 export class UpdateProfileComponent implements OnInit, OnChanges {
 
+  user: any;
   id: any;
   firstName: string;
   email: string;
@@ -83,6 +84,14 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() { 
+
+    this.userService.getUser()
+      .subscribe(
+        result => {
+          this.user = result;
+          console.log('userfrom service: ', this.user);
+        }
+      );
 
     // ***** LOCATION INIT CODE ******
     // set google maps defaults
@@ -208,7 +217,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   onSubmit(form: any): void {
     console.log('form value: ', form.value);
     console.log(this.id);
-    this.apiService.patchUser(this.id, form.value.user)
+    this.apiService.patchUser(this.user.id, form.value.user)
       .subscribe(
         result => {
           console.log('user updated: ', result);

@@ -9,7 +9,7 @@
   
       <app-loading *ngIf="submitting"></app-loading>
         
-      <form *ngIf="!submitting && !producer" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm, 'user')">
+      <form *ngIf="!submitting && !producer" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm, 'consumer')">
   
           <div class="row form-section">
   
