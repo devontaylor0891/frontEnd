@@ -39,7 +39,8 @@ export class ApiService {
   getSearchResults(lat: number, long: number, radius: number): Observable<any[]> {
     return this.http
       // .get(`http://localhost:3000/searchResults`)
-      .get(`${ENV.BASE_API}searchResults`)
+      // .get(`${ENV.BASE_API}searchResults`)
+      .get(this.apiUrl + `/searchResults/`)
       .catch(this._handleError);
   };
 
