@@ -124,7 +124,8 @@ export class ApiService {
   // get all schedules for admin
   getSchedules(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}schedules`)
+      // .get(`${ENV.BASE_API}schedules`)
+      .get(this.apiUrl + `/schedules/`)
       .catch(this._handleError);
   }
 

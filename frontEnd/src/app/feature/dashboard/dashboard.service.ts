@@ -98,10 +98,12 @@ export class DashboardService {
   }
 
   loadAllSchedules() {
+    console.log('load all scheds called');
     this.apiService.getSchedules()
       .subscribe(
         response => {
           this.dataStore.schedules = response;
+          console.log('this.datastore.schedules: ', this.dataStore.schedules);
           this._schedules.next(Object.assign({}, this.dataStore).schedules);
         }, error => console.log('could not load schedules')
       );
