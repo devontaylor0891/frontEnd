@@ -34,7 +34,8 @@ export class UsersComponent implements OnInit, OnChanges {
         header: 'Email'
       }, {
         primaryKey: 'registrationDate',
-        header: 'Reg. Date'
+        header: 'Reg. Date',
+        format: 'mediumDate'
       }
   ];
 

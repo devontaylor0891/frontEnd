@@ -68,7 +68,7 @@ export class ProducerService implements OnInit {
       this.apiService.getProducerById(id)
         .subscribe(
           response => {
-            this.dataStore.producer = response;
+            this.dataStore.producer = response[0];
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._producer.next(Object.assign({}, this.dataStore).producer);
           }
@@ -92,7 +92,8 @@ export class ProducerService implements OnInit {
         );
 	  } else {
       return;
-	  }
+    }
+    console.log('datastore: ', this.dataStore);
   }
   
   // **************************** SINGLE PRODUCER ************************

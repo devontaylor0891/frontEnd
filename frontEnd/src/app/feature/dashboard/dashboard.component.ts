@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.id = result;
-					console.log('id: ', result);
+					console.log('Auth0 id: ', result);
 				}
 			);
 
@@ -60,9 +60,6 @@ export class DashboardComponent implements OnInit, OnChanges {
 					console.log('user: ', result);
 				}
 			);
-
-    console.log('id: ', this.id);
-    console.log('userType: ', this.userType);
 
   }
 

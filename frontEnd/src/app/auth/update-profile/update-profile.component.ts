@@ -197,7 +197,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   buildProducerSubmitObject(form) {
     this.submitObject = {
-            id: this.id,
+            id: this.user.id,
             name: form.producer.name,
             location: this.city,
             province: this.province,
@@ -223,6 +223,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
           console.log('user updated: ', result);
           if (form.value.user.role === 'producer') {
             this.buildProducerSubmitObject(form.value);
+            console.log('producer submit object: ', this.submitObject);
             this.apiService.createProducer(this.submitObject)
               .subscribe(
                 result => {

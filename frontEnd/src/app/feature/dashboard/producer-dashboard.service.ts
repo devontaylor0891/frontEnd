@@ -41,7 +41,7 @@ export class ProducerDashboardService {
     this.apiService.getProducerById(id)
       .subscribe(
         result => {
-          this.dataStore.producer = result;
+          this.dataStore.producer = result[0];
           console.log('api getProducer result', result);
           this._producer.next(Object.assign({}, this.dataStore).producer);
         }, error => console.log('could not load producer')

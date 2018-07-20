@@ -185,8 +185,8 @@ export class ApiService {
   // GET one producer by id
   getProducerById(id): Observable<any> {
     return this.http
-      // .get(this.apiUrl + `/producers/` + id)
-      .get(`${ENV.BASE_API}producer/` + id)
+      .get(this.apiUrl + `/producers/` + id)
+      // .get(`${ENV.BASE_API}producer/` + id)
       // .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
       .catch(this._handleError);
   };
@@ -194,7 +194,8 @@ export class ApiService {
   // POST a new producer
   createProducer(producer: any): Observable<any> {
     return this.http
-      .post(`${ENV.BASE_API}producer/`, producer, {
+      .post(this.apiUrl + `/producers/`, producer, {
+      // .post(`${ENV.BASE_API}producer/`, producer, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
