@@ -5,7 +5,7 @@
     <!--  [ngClass]="{outOfStockOverlay: isOutOfStock}" -->
     <div class="view overlay hm-white-slight cover-div">
         <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="" >
-        <a [routerLink]="['../' + product.producer.id + '/product/' + product.id]">
+        <a [routerLink]="['../../product/' + product.id]">
             <div class="mask waves-effect waves-light"></div>
         </a>
         <div class="outOfStockOverlay cover-div" *ngIf="isOutOfStock"><img class="img-fluid cover" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/outOfStock.png"></div>
@@ -17,7 +17,7 @@
     <div class="card-block text-center">
         <!--Product Name-->
         
-        <h5 class="card-title"><strong><a [routerLink]="['../' + product.producer.id + '/product/' + product.id]">{{ product.name }}</a></strong></h5>
+        <h5 class="card-title"><strong><a [routerLink]="['../../product/' + product.id]">{{ product.name }}</a></strong></h5>
 
         <!--Description-->
         <p class="card-text text-left text-truncate small">{{ product.description }}</p>

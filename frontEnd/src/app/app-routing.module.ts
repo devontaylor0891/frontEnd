@@ -58,10 +58,9 @@ const appRoutes: Routes = [
 	]},
 	{ path: 'producer/:id', component: ProducerComponent, children: [
 		{ path: '', component: ProducerPageComponent },
-		{ path: 'schedule', component: ScheduleComponent },
-		{ path: 'product/:id', component: ProductComponent }
-	]}
-	,
+		{ path: 'schedule', component: ScheduleComponent }
+	]},
+	{ path: 'product/:id', component: ProductComponent },
 	{ path: 'cart', component: CartsComponent },
 	{ path: 'checkout/:tempId', component: CheckoutComponent },
 	{ path: 'confirmation', component: ConfirmationComponent },

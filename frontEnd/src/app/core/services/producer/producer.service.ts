@@ -77,6 +77,7 @@ export class ProducerService implements OnInit {
       this.apiService.getProductsByProducerId(id)
         .subscribe(
           response => { 
+            console.log('products in producer service: ', response);
             this.dataStore.products = response;
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._producerProducts.next(Object.assign({}, this.dataStore).products);

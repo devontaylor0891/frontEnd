@@ -11,7 +11,7 @@ import { ScheduleModel } from '../../core/models/schedule.model';
   selector: 'app-producer',
   templateUrl: './producer.component.html',
   styleUrls: ['./producer.component.scss'],
-  providers: [ProducerService]
+  providers: []
 })
 export class ProducerComponent implements OnInit, OnChanges {
 

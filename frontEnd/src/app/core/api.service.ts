@@ -78,7 +78,8 @@ export class ApiService {
   // GET all products from a single producer
   getProductsByProducerId(id): Observable<any[]> {
   return this.http
-    .get(`${ENV.BASE_API}producer/` + id + '/products')
+    .get(this.apiUrl + `/producersProducts/` + id)
+    // .get(`${ENV.BASE_API}producer/` + id + '/products')
 		// .get(this.producerUrl + id + '/products.json')
 		.catch(this._handleError);
   }

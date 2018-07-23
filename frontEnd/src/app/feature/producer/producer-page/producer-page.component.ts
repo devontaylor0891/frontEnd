@@ -38,6 +38,7 @@ export class ProducerPageComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           for (let i = 0; i < results.length; i++) {
+            console.log('result: ', results[i]);
             if (results[i].qtyAvailable < 1) {
               this.outOfStockProducts.push(results[i]);
             } else {

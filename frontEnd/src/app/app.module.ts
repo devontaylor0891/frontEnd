@@ -30,6 +30,7 @@ import { ProducerDashboardService } from './feature/dashboard/producer-dashboard
 import { PlacesService } from './core/services/places/places.service';
 import { UserService } from './core/services/user/user.service';
 import { ImageService } from './core/services/image/image.service';
+import { ProducerService } from './core/services/producer/producer.service';
 
 // PIPES
 import { FormatCellPipe } from './shared/pipes/format-cell.pipe';
@@ -249,7 +250,8 @@ import { LogoCropperComponent } from './shared/logo-cropper/logo-cropper.compone
     ConsumerEditOrderModalComponent,
     PlacesService,
     Title,
-    ImageService
+    ImageService,
+    ProducerService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [
