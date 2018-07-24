@@ -1,5 +1,4 @@
-<!-- display once resolved -->
-<div class="row" *ngIf="product?.producer">
+<div class="row">
 	<div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
 		<!-- Product Details -->
 		<div class="row justify-content-sm-center">
@@ -8,7 +7,7 @@
 			</div>
 			<div class="col col-xs-12 col-sm-6">
 				<div class="text-center">
-					<h4><a [routerLink]="['../../../../producer/' + product.producer.id]">{{ product.producer?.name }}</a></h4>
+					<h4><a [routerLink]="['../../producer/' + product.producer?.id]">{{ product.producer?.name }}</a></h4>
 					<h2>{{ product.name }}</h2>
 				</div>
 				<p>{{ product.description }}</p>
@@ -29,11 +28,11 @@
 		<div> 
 			<!-- Delivery Schedule -->
 			<div class="divider-new">
-	            <a [routerLink]="['../../../../producer/' + product.producer.id + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
+	            <a [routerLink]="['../../producer/' + product.producer?.id + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
 	        </div>
 			<!-- Related Products / Other products from the same producer -->
 			<div class="divider-new">
-	            <a [routerLink]="['../../../../producer/' + product.producer.id]" class="btn btn-olf-primary">View All Products from this Producer</a>
+	            <a [routerLink]="['../../producer/' + product.producer?.id]" class="btn btn-olf-primary">View All Products from this Producer</a>
 			</div>
 		</div>
 	        

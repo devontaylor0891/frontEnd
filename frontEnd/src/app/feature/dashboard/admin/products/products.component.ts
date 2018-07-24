@@ -10,7 +10,7 @@ import { DashboardService } from '../../dashboard.service';
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [ProducerService]
+  providers: []
 })
 export class ProductsComponent implements OnInit, OnChanges {
 

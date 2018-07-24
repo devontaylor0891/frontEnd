@@ -70,7 +70,8 @@ export class ApiService {
   // this method will return a product from the mock data
   getProductById(productId): Observable<any> {
     return this.http
-      .get(`${ENV.BASE_API}products/` + productId)
+      .get(this.apiUrl + `/products/` + productId)
+      // .get(`${ENV.BASE_API}products/` + productId)
       // .get(this.producerUrl + producerId + '/products/' + productId + '.json')
       .catch(this._handleError); 
   };
@@ -133,7 +134,8 @@ export class ApiService {
   // GET entire schedule from a single producers
   getScheduleByProducerId(id): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
+    .get(this.apiUrl + `/producersSchedules/` + id)
+      // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
       .catch(this._handleError);
   }
 

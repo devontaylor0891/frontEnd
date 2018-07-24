@@ -19,7 +19,6 @@ export class ProducerPageProductCardComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.isOutOfStock = this.product.qtyAvailable < 1;
-    console.log('product: ', this.product);
 
   };
 

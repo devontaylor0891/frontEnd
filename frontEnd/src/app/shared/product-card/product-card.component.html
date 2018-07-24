@@ -31,7 +31,7 @@
             product.subcategory !== 'Lamb' || 
             product.subcategory !== 'Fish'" 
             src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.category }}.png" class="img-fluid cover" alt="">
-        <a [routerLink]="['../producer/' + product.producer.id + '/product/' + product.id]">
+        <a [routerLink]="['../product/' + product.id]">
             <div class="mask waves-effect waves-light"></div>
         </a>
     </div>
@@ -41,7 +41,7 @@
     <div class="card-block text-center">
         <!--Product Name-->
         
-        <h5 class="card-title text-truncate"><strong><a [routerLink]="['../producer/' + product.producer.id + '/product/' + product.id]">{{ product.name }}</a></strong></h5>
+        <h5 class="card-title text-truncate"><strong><a [routerLink]="['../product/' + product.id]">{{ product.name }}</a></strong></h5>
 
         <!--Description-->
         <p class="card-text text-left text-truncate small">{{ product.description }}</p>
