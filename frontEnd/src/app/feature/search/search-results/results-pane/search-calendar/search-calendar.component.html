@@ -11,7 +11,7 @@
           <div>
             <h4>Event Details:</h4> 
             <br>           
-            <p><b>Where: </b>{{ modalData.event.meta.schedule.address }}, {{ modalData.event.meta.schedule.city }}, {{ modalData.event.meta.schedule.province }}</p>
+            <p><b>Where: </b><span *ngIf="modalData.event.meta.schedule.address">{{ modalData.event.meta.schedule.address }}, </span>{{ modalData.event.meta.schedule.city }}, {{ modalData.event.meta.schedule.province }}</p>
             <p><b>Date: </b>{{ modalData.event.meta.schedule.startDateTime | date:'fullDate' }}</p>
             <p><b>Time: </b>{{ modalData.event.meta.schedule.startDateTime | date:'shortTime' }} - {{ modalData.event.meta.schedule.endDateTime | date:'shortTime' }}</p>
             <p><b>Producer: </b>{{ modalData.event.meta.schedule.producerName }}</p>
