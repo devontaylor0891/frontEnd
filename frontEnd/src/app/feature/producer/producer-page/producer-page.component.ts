@@ -67,6 +67,8 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     console.log('onDestroy triggered!');
+    this.products.length = 0;
+    console.log('products ondestroy: ', this.products);
     if (this.getProducerSub) {
       this.getProducerSub.unsubscribe();
     };
