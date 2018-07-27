@@ -278,21 +278,4 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     }
   };
 
-  // file upload experiment
-  fileChange(event): void {
-    // const fileList: FileList = event.target.files;
-    const file = this.selectedFileEl.nativeElement.files[0];
-    console.log('file: ', file);
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    console.log('formData: ', formData);
-    this.apiService.uploadFile(formData)
-      .subscribe(
-        result => {
-          console.log('image uploaded: ', result);
-        }
-      );
-}
-
-
 }
