@@ -124,6 +124,7 @@ export class ProducerProductsComponent implements OnInit {
     this.dashboardService.getProducts()
       .subscribe( // returns an array
         (products) => {
+          console.log('products from service: ', products);
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
           this.currentProducts = current;
           const outOfStock = products.filter(product => product.qtyAvailable === 0 && product.isObsolete === false);

@@ -526,7 +526,7 @@ export class ApiService {
   // PATCH producer info
   patchProducer(id: number, newFieldAndValue: Object): Observable<any> {
     return this.http
-      .put(this.apiUrl + `producer/${id}/`, newFieldAndValue, {
+      .put(this.apiUrl + `/producers/${id}/`, newFieldAndValue, {
       // .patch(`${ENV.BASE_API}producer/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
@@ -542,7 +542,7 @@ export class ApiService {
       // .get(`${ENV.BASE_API}products`)
       // .get(this.allProductsUrl)
       .catch(this._handleError);
-  }
+  };
 
   // this method will return a product from the mock data
   getProductById(productId): Observable<any> {
@@ -560,7 +560,7 @@ export class ApiService {
     // .get(`${ENV.BASE_API}producer/` + id + '/products')
 		// .get(this.producerUrl + id + '/products.json')
 		.catch(this._handleError);
-  }
+  };
 
   // POST new product - producer or admin only
   postProduct(product: any): Observable<any> {
@@ -575,12 +575,12 @@ export class ApiService {
   // PUT existing product - producer or admin only
   putProduct(id: number, product: any): Observable<any> {
     return this.http
-      .put(this.apiUrl + `/products${id}/`, + product, {
+      .put(this.apiUrl + `/products/${id}/`, + product, {
       // .put(`${ENV.BASE_API}products/${id}`, product, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
-  }
+  };
 
   // PATCH product fields
   patchProduct(id: number, newFieldAndValue: Object): Observable<any> {
@@ -599,7 +599,7 @@ export class ApiService {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
-  }
+  };
 
 // ***************** SCHEDULES ****************
   
@@ -609,7 +609,7 @@ export class ApiService {
       // .get(`${ENV.BASE_API}schedules`)
       .get(this.apiUrl + `/schedules/`)
       .catch(this._handleError);
-  }
+  };
 
   // GET entire schedule from a single producers
   getScheduleByProducerId(id): Observable<any[]> {
@@ -617,7 +617,7 @@ export class ApiService {
     .get(this.apiUrl + `/producersSchedules/` + id)
       // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
       .catch(this._handleError);
-  }
+  };
 
   // POST new schedule - producer or admin only
   postSchedule(schedule: any): Observable<any> {
@@ -635,7 +635,7 @@ export class ApiService {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
-  }
+  };
 
   deleteSchedule(id): Observable<any> {
     return this.http
@@ -643,7 +643,7 @@ export class ApiService {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
-  }
+  };
 
   // this is returning the proper results, but I will use a mock endpoint for development so we can design proper data
   // GET one product by id from Nikki's endpoint
@@ -698,7 +698,7 @@ export class ApiService {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
-  }
+  };
 
   // PATCH order
   patchOrder(id: number, newFieldAndValue: Object): Observable<any> {

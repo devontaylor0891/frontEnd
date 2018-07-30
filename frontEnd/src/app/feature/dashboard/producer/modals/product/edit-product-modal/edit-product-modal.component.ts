@@ -175,7 +175,23 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   formChangeSub: Subscription;
   submitProductSub: Subscription;
   submitting: boolean = false;
-  submitObject: ProductModel;
+  submitObject = {
+    name: '',
+    description: '',
+    image: '',
+    pricePerUnit: 0,
+    unit: '',
+    unitsPer: 0,
+    category: '',
+    subcategory: '',
+    qtyAvailable: 0,
+    qtyPending: 0,
+    qtyAccepted: 0,
+    qtyCompleted: 0,
+    dateAdded: '',
+    isObsolete: null
+  };
+
   error: boolean;
 
   imageName: any = '';
@@ -244,7 +260,9 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
 		// Subscribe to form value changes
 		this.formChangeSub = this.productForm
 			.valueChanges
-			.subscribe(data => this.onValueChanged());
+      .subscribe(data => this.onValueChanged());
+      
+    console.log('form: ', this.productForm);
   };
   
   private calculateTotalValue() {
@@ -256,9 +274,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   };
   
   setSubmitObject() {
-	  // make it equal to the original record
-	  this.submitObject = this.record;
-	  // then add the fields from the form
+	  // add the fields from the form
 	  this.submitObject.name = this.productForm.value.name;
 	  this.submitObject.description = this.productForm.value.description;
 	  this.submitObject.image = this.imageName;
@@ -267,15 +283,20 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
 	  this.submitObject.unitsPer = this.productForm.value.unitsPer;
 	  this.submitObject.category = this.productForm.value.category;
 	  this.submitObject.subcategory = this.productForm.value.subcategory;
-	  this.submitObject.qtyAvailable = this.productForm.value.qtyAvailable;
+    this.submitObject.qtyAvailable = this.productForm.value.qtyAvailable;
+    // add non-changing items
+    this.submitObject.dateAdded = this.record.dateAdded;
+    this.submitObject.qtyPending = this.record.qtyPending;
+    this.submitObject.qtyAccepted = this.record.qtyAccepted;
+    this.submitObject.qtyCompleted = this.record.qtyCompleted;
+    this.submitObject.isObsolete = this.record.isObsolete;
   }
   
   onSubmit() {
 		this.submitting = true;
     this.setSubmitObject();
     console.log('submitted object: ', this.submitObject);
-		this.submitProductSub = this.api
-			.putProduct(this.record.id, this.submitObject)
+		this.submitProductSub = this.api.patchProduct(this.record.id, this.submitObject)
 			.subscribe(
 			  data => this.handleSubmitSuccess(data),
 			  err => this.handleSubmitError(err)

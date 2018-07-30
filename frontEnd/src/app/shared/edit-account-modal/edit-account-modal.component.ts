@@ -66,13 +66,20 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {};
 
   ngOnInit() {
-
+    
     // ***** LOCATION INIT CODE ******
     // set google maps defaults
     this.zoom = 8;
     if (this.producer) {
       this.latitude = this.producer.latitude;
       this.longitude = this.producer.longitude;
+      // initialize the producer values
+      this.lat = this.producer.latitude;
+      this.lng = this.producer.longitude;
+      this.address = this.producer.address;
+      this.city = this.producer.location;
+      this.province = this.producer.province;
+    };
     
     // create search FormControl
     this.searchControl = new FormControl();
@@ -105,7 +112,6 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         });
       });
     });
-  };
 
     if (this.producer) {
       this.producerForm = this.fb.group({
@@ -146,7 +152,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     } else if (userType === 'producer') { // if producer - break apart the user/producer info, call both patches
       let userData = {
         'firstName': form.value.firstName,
-        'email': form.value.email
+        'email': form.value.email,
+        'role': 'producer'
       };
       let producerData = {
         'firstName': form.value.firstName,
@@ -160,13 +167,18 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         'latitude': this.latitude,
         'longitude': this.longitude
       };
+      console.log('producerData: ', producerData);
+      console.log('userData: ', userData);
       this.apiService.patchUser(this.user.id, userData)
         .subscribe(
           result => {
             console.log('successfully patched user: ', result);
             this.apiService.patchProducer(this.user.id, producerData)
               .subscribe(
-                res => this.handleSubmitSuccess(res),
+                res => {
+                  console.log('producer successfully patched: ', res);
+                  this.handleSubmitSuccess(res)
+                },
                 err => this.handleSubmitError(err)
               );
           }

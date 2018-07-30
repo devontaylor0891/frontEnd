@@ -58,6 +58,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.products = result;
+          console.log('producer dashboard products: ', this.dataStore.products);
           this._products.next(Object.assign({}, this.dataStore).products);
         }, error => console.log('could not load products')
       );
