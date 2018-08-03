@@ -296,7 +296,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
 		this.submitting = true;
     this.setSubmitObject();
     console.log('submitted object: ', this.submitObject);
-		this.submitProductSub = this.api.patchProduct(this.record.id, this.submitObject)
+		this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
 			.subscribe(
 			  data => this.handleSubmitSuccess(data),
 			  err => this.handleSubmitError(err)

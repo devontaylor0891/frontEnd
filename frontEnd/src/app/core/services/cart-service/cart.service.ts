@@ -477,7 +477,7 @@ export class CartService {
           newVals.qtyPending += qty;
           console.log('qty: ', qty);
           console.log('newVals: ', newVals); // not working
-          this.apiService.patchProduct(productId, newVals)
+          this.apiService.putProduct(productId, newVals)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);
@@ -505,7 +505,7 @@ export class CartService {
           newVals.qtyPending -= qty;
           console.log('qty: ', qty);
           console.log('newVals: ', newVals); // not working
-          this.apiService.patchProduct(productId, newVals)
+          this.apiService.putProduct(productId, newVals)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);
@@ -532,7 +532,7 @@ export class CartService {
           newVals.qtyPending -= qty;
           console.log('qty: ', qty);
           console.log('newVals: ', newVals); // not working
-          this.apiService.patchProduct(productId, newVals)
+          this.apiService.putProduct(productId, newVals)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);
