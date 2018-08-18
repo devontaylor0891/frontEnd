@@ -66,7 +66,7 @@ export class UserService implements OnInit, OnChanges  {
                           console.log('result: ', result);
                           this.databaseId = result.insertId;
                           this.isFirstLogin = false;
-                          this.getUserFromDb();
+                          this.getUserFromDb(this.databaseId);
                         }
                       );
                   }
@@ -134,8 +134,8 @@ export class UserService implements OnInit, OnChanges  {
     return this.email$.asObservable();
   }
 
-  getUserFromDb() {
-    this.apiService.getUserByDBId(this.databaseId)
+  getUserFromDb(id) {
+    this.apiService.getUserByDBId(id)
       .subscribe(
         result => {
           console.log('result: ', result);

@@ -355,7 +355,11 @@ export class CartService {
   };
 
   addDeliveryFee(cartId, fee) {
-    this.dataStore.carts[cartId].orderDetails.deliveryFee = fee;
+    if (!fee) {
+      this.dataStore.carts[cartId].orderDetails.deliveryFee = 0;
+    } else {
+      this.dataStore.carts[cartId].orderDetails.deliveryFee = fee;
+    }
   };
 
   makeCartPending(cartId) {
@@ -459,25 +463,44 @@ export class CartService {
   
 // ***********OTHER METHODS**********
 
+  formatProduct(resultFromDb) {
+    let formattedProduct = {
+      userId: resultFromDb.producer.id,
+      name: resultFromDb.name,
+      description: resultFromDb.description,
+      image: resultFromDb.image,
+      pricePerUnit: resultFromDb.pricePerUnit,
+      unit: resultFromDb.unit,
+      unitsPer: resultFromDb.unitsPer,
+      category: resultFromDb.category,
+      subcategory: resultFromDb.subcategory,
+      qtyAvailable: resultFromDb.qtyAvailable,
+      qtyPending: resultFromDb.qtyPending,
+      qtyAccepted: resultFromDb.qtyAccepted,
+      qtyCompleted: resultFromDb.qtyCompleted,
+      dateAdded: resultFromDb.dateAdded,
+      isObsolete: resultFromDb.isObsolete,
+      scheduleList: resultFromDb.scheduleList,
+      producerId: resultFromDb.producerId
+    };
+    return formattedProduct;
+  }
+
   makeQtyPending(productId, qty) {
     console.log('productId: ', productId);
     console.log('qty: ', qty);
-    let newVals = {
-      'qtyAvailable': null,
-      'qtyPending': null
-    };
+    let newProduct;
     // call the API
     this.apiService.getProductById(productId)
       .subscribe(
         result => {
-          newVals.qtyAvailable = result.qtyAvailable;
-          newVals.qtyPending = result.qtyPending;
-          console.log('newVals: ', newVals); // working
-          newVals.qtyAvailable -= qty;
-          newVals.qtyPending += qty;
+          console.log('product from db ', result);
+          newProduct = this.formatProduct(result[0]);
+          console.log('new Product: ', newProduct);
+          newProduct.qtyAvailable -= qty;
+          newProduct.qtyPending += qty;
           console.log('qty: ', qty);
-          console.log('newVals: ', newVals); // not working
-          this.apiService.putProduct(productId, newVals)
+          this.apiService.putProduct(productId, newProduct)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);
@@ -490,22 +513,18 @@ export class CartService {
   makeQtyAvailable(productId, qty) {
     console.log('productId: ', productId);
     console.log('qty: ', qty);
-    let newVals = {
-      'qtyAvailable': null,
-      'qtyPending': null
-    };
+    let newProduct;
     // call the API
     this.apiService.getProductById(productId)
       .subscribe(
         result => {
-          newVals.qtyAvailable = result.qtyAvailable;
-          newVals.qtyPending = result.qtyPending;
-          console.log('newVals: ', newVals); // working
-          newVals.qtyAvailable += qty;
-          newVals.qtyPending -= qty;
+          console.log('product from db ', result);
+          newProduct = this.formatProduct(result[0]);
+          console.log('new Product: ', newProduct);
+          newProduct.qtyAvailable += qty;
+          newProduct.qtyPending -= qty;
           console.log('qty: ', qty);
-          console.log('newVals: ', newVals); // not working
-          this.apiService.putProduct(productId, newVals)
+          this.apiService.putProduct(productId, newProduct)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);
@@ -518,21 +537,18 @@ export class CartService {
   makeQtyAccepted(productId, qty) {
     console.log('productId: ', productId);
     console.log('qty: ', qty);
-    let newVals = {
-      'qtyAccepted': null,
-      'qtyPending': null
-    };
+    let newProduct;
     this.apiService.getProductById(productId)
       .subscribe(
         result => {
-          newVals.qtyAccepted = result.qtyAccepted;
-          newVals.qtyPending = result.qtyPending;
-          console.log('newVals: ', newVals); // working
-          newVals.qtyAccepted += qty;
-          newVals.qtyPending -= qty;
+          console.log('product from db ', result);
+          newProduct = this.formatProduct(result[0]);
+          console.log('new Product: ', newProduct);
+          newProduct.qtyAccepted += qty;
+          newProduct.qtyPending -= qty;
           console.log('qty: ', qty);
-          console.log('newVals: ', newVals); // not working
-          this.apiService.putProduct(productId, newVals)
+          console.log('newVals: ', newProduct); // not working
+          this.apiService.putProduct(productId, newProduct)
       		.subscribe(
       			result => {
       				console.log('successfully patched product: ', result);

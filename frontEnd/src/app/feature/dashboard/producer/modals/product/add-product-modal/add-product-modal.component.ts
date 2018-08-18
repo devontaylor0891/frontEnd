@@ -42,7 +42,6 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
               private imageService: ImageService) {
 
     this.form = formBuild.group({
-    'id': [''],
     'name': ['', Validators.required],
     'description': ['', Validators.required],
     'image': [''],
@@ -58,7 +57,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
     'qtyCompleted': [0],
     'isObsolete': [false],
     'producerId': [''],
-    'producer': [''],
+    'producer': [{}],
     'scheduleList': ['']
     })
 
@@ -68,8 +67,8 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
     this.newItemUploading = true;
     console.log(this.form.value);
     this.form.value.image = this.imageName;
-    this.form.value.producerId = this.producer.id;
-    this.form.value.producer = this.producer;
+    this.form.value.producerId = this.producer.producerId;
+    this.form.value.producer.id = this.producer.id;
     // console.log(this.form.value);
     // this.dashboardService.addNewProduct(this.form.value);
     this.submitSub = this.apiService.postProduct(this.form.value)

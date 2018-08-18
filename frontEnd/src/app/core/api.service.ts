@@ -169,7 +169,7 @@ export class ApiService {
   // POST new product - producer or admin only
   postProduct(product: any): Observable<any> {
     return this.http
-      .post(this.apiUrl + `/products/`, + product, {
+      .post(this.apiUrl + `/products/`, product, {
       // .post(`${ENV.BASE_API}products/`, product, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
@@ -178,8 +178,9 @@ export class ApiService {
 
   // PUT existing product - producer or admin only
   putProduct(id: number, product: any): Observable<any> {
+    console.log('id and product: ', id, product);
     return this.http
-      .put(this.apiUrl + `/products/${id}/`, + product, {
+      .put(this.apiUrl + `/products/${id}/`, product, {
       // .put(`${ENV.BASE_API}products/${id}`, product, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
@@ -258,7 +259,8 @@ export class ApiService {
   // POST order
   postOrder(order: any): Observable<any> {
     return this.http
-      .post(`${ENV.BASE_API}orders/`, order, {
+      .post(this.apiUrl + `/orders/`, order, {
+      // .post(`${ENV.BASE_API}orders/`, order, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -280,6 +282,13 @@ export class ApiService {
 
   // get all orders for a single consumer
   getOrdersByConsumerId(id) {
+    return this.http
+      .get(`${ENV.BASE_API}consumer/`+ id + '/orders')
+      .catch(this._handleError);
+  };
+
+  // get all orders for a single user
+  getOrdersByUserId(id) {
     return this.http
       .get(`${ENV.BASE_API}consumer/`+ id + '/orders')
       .catch(this._handleError);

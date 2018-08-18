@@ -158,6 +158,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService } from '../../../../../../core/api.service';
 import { ImageService } from '../../../../../../core/services/image/image.service';
+import { ProducerDashboardService } from '../../../../producer-dashboard.service';
 
 import { ProductModel } from '../../../../../../core/models/product.model';
 
@@ -176,6 +177,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   submitProductSub: Subscription;
   submitting: boolean = false;
   submitObject = {
+    userId: null,
     name: '',
     description: '',
     image: '',
@@ -189,14 +191,17 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     qtyAccepted: 0,
     qtyCompleted: 0,
     dateAdded: '',
-    isObsolete: null
+    isObsolete: null,
+    scheduleList: 0,
+    producerId: null
   };
 
   error: boolean;
 
-  imageName: any = '';
+  imageName: any;
   imageUploading: boolean;
   imageUploadingSub: Subscription;
+  producerIdSub: Subscription;
 
   // if changing existing image
   changingImage: boolean = false;
@@ -208,9 +213,13 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
               private router: Router,
               private api: ApiService,
               private activeModal: NgbActiveModal,
-              private imageService: ImageService) { }
+              private imageService: ImageService,
+              private producerDashboardService: ProducerDashboardService) { }
 
   ngOnInit() {
+    console.log('original record: ', this.record);
+    this.submitObject.image = this.record.image;
+    this.imageName = this.record.image;
     this.initialProduct = this.setInitialProduct();
 	  this.buildForm();
     this.calculateTotalValue();
@@ -220,6 +229,15 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
           this.imageUploading = result;
         }
       );
+    this.producerIdSub = this.producerDashboardService.getProducer()
+      .subscribe(
+        result => {
+          console.log('producer result: ', result);
+          this.submitObject.producerId =  result.producerId
+        }
+      );
+    this.setSubmitObject();
+    console.log('original submitObject: ', this.submitObject);
   }
 
   private setInitialProduct() {
@@ -274,7 +292,8 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   };
   
   setSubmitObject() {
-	  // add the fields from the form
+    // add the fields from the form
+    this.submitObject.userId = this.record.producer.id;
 	  this.submitObject.name = this.productForm.value.name;
 	  this.submitObject.description = this.productForm.value.description;
 	  this.submitObject.image = this.imageName;
@@ -296,6 +315,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
 		this.submitting = true;
     this.setSubmitObject();
     console.log('submitted object: ', this.submitObject);
+    console.log('submitted id: ', this.record.id);
 		this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
 			.subscribe(
 			  data => this.handleSubmitSuccess(data),
@@ -355,6 +375,9 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.submitProductSub) {
       this.submitProductSub.unsubscribe();
+    };
+    if (this.producerIdSub) {
+      this.producerIdSub.unsubscribe();
     };
     this.formChangeSub.unsubscribe();
     if (this.imageUploadingSub) {
