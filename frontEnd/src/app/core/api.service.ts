@@ -269,14 +269,14 @@ export class ApiService {
   // get all orders for admin
   getOrders(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}orders`)
+      .get(this.apiUrl + `/orders`)
       .catch(this._handleError);
   };
 
   // get all orders for a single producer
   getOrdersByProducerId(id) {
     return this.http
-      .get(`${ENV.BASE_API}producer/`+ id + '/orders')
+      .get(this.apiUrl + `/producersOrders/`+ id)
       .catch(this._handleError);
   };
 

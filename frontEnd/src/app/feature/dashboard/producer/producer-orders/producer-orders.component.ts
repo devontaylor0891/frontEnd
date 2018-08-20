@@ -87,6 +87,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
     this.dashboardService.getOrders()
       .subscribe( // returns an array
         (orders) => {
+          console.log('orders from service: ', orders);
           const pending = orders.filter(order => order.orderDetails.orderStatus === 'pending');
           this.pendingOrders = pending;
           const accepted = orders.filter(order => order.orderDetails.orderStatus === 'accepted');

@@ -44,6 +44,14 @@ export class ProducerDashboardService {
           this.dataStore.producer = result[0];
           console.log('api getProducer result', result);
           this._producer.next(Object.assign({}, this.dataStore).producer);
+          this.apiService.getOrdersByProducerId(this.dataStore.producer.producerId)
+            .subscribe(
+              result => {
+                this.dataStore.orders = result;
+                console.log('orders received: ', result);
+                this._orders.next(Object.assign({}, this.dataStore).orders);
+              }, error => console.log('could not load order: ', error)
+            );
         }, error => console.log('could not load producer')
       );
     this.apiService.getUserById(id)
@@ -62,13 +70,7 @@ export class ProducerDashboardService {
           this._products.next(Object.assign({}, this.dataStore).products);
         }, error => console.log('could not load products')
       );
-    this.apiService.getOrdersByProducerId(id)
-      .subscribe(
-        result => {
-          this.dataStore.orders = result;
-          this._orders.next(Object.assign({}, this.dataStore).orders);
-        }, error => console.log('could not load order')
-      );
+    
     this.apiService.getScheduleByProducerId(id)
       .subscribe(
         result => {
