@@ -277,7 +277,8 @@ export class ApiService {
   // get all orders for a single producer
   getOrdersByProducerId(id) {
     return this.http
-      .get(`${ENV.BASE_API}producer/`+ id + '/orders')
+      .get(this.apiUrl + `/producersOrders/` + id)
+      // .get(`${ENV.BASE_API}producer/`+ id + '/orders')
       .catch(this._handleError);
   };
 
