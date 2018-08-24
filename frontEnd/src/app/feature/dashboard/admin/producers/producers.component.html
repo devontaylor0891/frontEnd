@@ -19,6 +19,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="activeProducers"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">
@@ -45,6 +46,7 @@
                     <div class="card-block">
                             <app-table-layout
                             [records]="inactiveProducers"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">

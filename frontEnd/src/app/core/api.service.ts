@@ -265,11 +265,12 @@ export class ApiService {
       })
       .catch(this._handleError);
   };
-  
+
   // get all orders for admin
   getOrders(): Observable<any[]> {
     return this.http
-      .get(`${ENV.BASE_API}orders`)
+      .get(this.apiUrl + `/orders/`)
+      // .get(`${ENV.BASE_API}orders`)
       .catch(this._handleError);
   };
 

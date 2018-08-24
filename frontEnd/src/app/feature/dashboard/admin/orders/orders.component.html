@@ -19,9 +19,11 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="pendingOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -45,9 +47,11 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="acceptedOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -71,9 +75,11 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="completedOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -97,9 +103,11 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="deniedOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
-                            [deletable]="deletable">
+                            [deletable]="deletable"
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>

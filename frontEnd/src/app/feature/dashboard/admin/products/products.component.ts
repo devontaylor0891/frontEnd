@@ -18,10 +18,12 @@ export class ProductsComponent implements OnInit, OnChanges {
   outOfStockProducts: ProductModel[] = [];
   deletedProducts: ProductModel[] = [];
 
+  recordType: string = 'product';
+
   editable: boolean = true;
   deletable: boolean = true;
 
-  projectSettings: ColumnSettingModel[] = 
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'name',
