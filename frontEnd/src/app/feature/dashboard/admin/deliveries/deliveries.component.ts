@@ -16,21 +16,27 @@ export class DeliveriesComponent implements OnInit {
   upcomingSchedule: ScheduleModel[] = [];
   completedSchedule: ScheduleModel[] = [];
 
-  projectSettings: ColumnSettingModel[] = 
+  recordType: string = 'schedule';
+
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'type',
-        header: 'Type'
+        header: 'Type',
+        format: 'null',
+        sortable: true
       },
       {
         primaryKey: 'startDateTime',
         header: 'Date',
-        format: 'mediumDate'
+        format: 'mediumDate',
+        sortable: true
       },
       {
         primaryKey: 'startDateTime',
         header: 'Start Time',
-        format: 'shortTime'
+        format: 'shortTime',
+        sortable: true
       },
       {
         primaryKey: 'endDateTime',
@@ -39,29 +45,31 @@ export class DeliveriesComponent implements OnInit {
       },
       {
         primaryKey: 'city',
-        header: 'Location'
+        header: 'Location',
+        sortable: true
       },
       {
         primaryKey: 'orderDeadline',
         header: 'Deadline Date',
-        format: 'mediumDate'
+        format: 'mediumDate',
+        sortable: true
       },
       {
         primaryKey: 'orderDeadline',
         header: 'Deadline Time',
-        format: 'shortTime'
-      }, 
+        format: 'shortTime',
+        sortable: true
+      },
       {
         primaryKey: 'producerId',
-        header: 'Producer ID'
+        header: 'Producer ID',
+        sortable: true
       }
   ];
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-
-    let date = new Date().toISOString();
 
     this.dashboardService.getAllSchedules()
       .subscribe( // returns an array

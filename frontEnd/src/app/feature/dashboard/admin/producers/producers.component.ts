@@ -11,34 +11,46 @@ import { DashboardService } from '../../dashboard.service';
   styleUrls: ['./producers.component.scss']
 })
 export class ProducersComponent implements OnInit, OnChanges {
-  
+
   activeProducers: ProducerModel[] = [];
   inactiveProducers: ProducerModel[] = [];
+
+  recordType: string = 'producer';
 
   editable: boolean = true;
   deletable: boolean = true;
 
-  projectSettings: ColumnSettingModel[] = 
+  projectSettings: ColumnSettingModel[] =
   [
       {
-          primaryKey: 'name',
-          header: 'Name'
+        primaryKey: 'name',
+        header: 'Name',
+        format: 'null',
+        sortable: true
       },
       {
-          primaryKey: 'location',
-          header: 'Location'
+        primaryKey: 'location',
+        header: 'Location',
+        format: 'null',
+        sortable: true
       },
       {
-          primaryKey: 'province',
-          header: 'Province'
+        primaryKey: 'province',
+        header: 'Province',
+        format: 'null',
+        sortable: true
       },
       {
         primaryKey: 'firstName',
-        header: 'First Name'
+        header: 'First Name',
+        format: 'null',
+        sortable: true
       },
       {
         primaryKey: 'email',
-        header: 'Email'
+        header: 'Email',
+        format: 'null',
+        sortable: true
       },
       {
         primaryKey: 'registrationDate',
@@ -68,4 +80,3 @@ export class ProducersComponent implements OnInit, OnChanges {
 
   }
 }
- 

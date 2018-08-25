@@ -265,18 +265,20 @@ export class ApiService {
       })
       .catch(this._handleError);
   };
-  
+
   // get all orders for admin
   getOrders(): Observable<any[]> {
     return this.http
-      .get(this.apiUrl + `/orders`)
+      .get(this.apiUrl + `/orders/`)
+      // .get(`${ENV.BASE_API}orders`)
       .catch(this._handleError);
   };
 
   // get all orders for a single producer
   getOrdersByProducerId(id) {
     return this.http
-      .get(this.apiUrl + `/producersOrders/`+ id)
+      .get(this.apiUrl + `/producersOrders/` + id)
+      // .get(`${ENV.BASE_API}producer/`+ id + '/orders')
       .catch(this._handleError);
   };
 
