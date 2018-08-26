@@ -217,7 +217,8 @@ export class ApiService {
   // POST new schedule - producer or admin only
   postSchedule(schedule: any): Observable<any> {
     return this.http
-      .post(`${ENV.BASE_API}schedules/`, schedule, {
+      .post(this.apiUrl + `/schedules/`, schedule, {
+      // .post(`${ENV.BASE_API}schedules/`, schedule, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -285,14 +286,14 @@ export class ApiService {
   // get all orders for a single consumer
   getOrdersByConsumerId(id) {
     return this.http
-      .get(`${ENV.BASE_API}consumer/`+ id + '/orders')
+    .get(this.apiUrl + `/usersOrders/` + id)
       .catch(this._handleError);
   };
 
   // get all orders for a single user
   getOrdersByUserId(id) {
     return this.http
-      .get(`${ENV.BASE_API}consumer/`+ id + '/orders')
+    .get(this.apiUrl + `/usersOrders/` + id)
       .catch(this._handleError);
   };
 

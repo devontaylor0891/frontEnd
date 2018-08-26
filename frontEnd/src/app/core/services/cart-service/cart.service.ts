@@ -313,10 +313,10 @@ export class CartService {
 		// add the consumer comment to the cart
 		this.addConsumerComment(cartId, consumerComment);
 		// date stamp the cart
-		this.dateStampCart(cartId);
+    this.dateStampCart(cartId);
+    // add the delivery fee
+    this.addDeliveryFee(cartId, chosenSchedule.fee);
 		if (chosenSchedule.type === "Door-to-door Delivery") {
-		  // add the delivery fee, if required
-		  this.addDeliveryFee(cartId, chosenSchedule.fee);
 		  // add the delivery address, if it exists
 		  this.addDeliveryAddress(cartId, deliveryAddress);
 		}
@@ -347,7 +347,7 @@ export class CartService {
   };
 
   addConsumerComment(cartId, comment) {
-    this.dataStore.carts[cartId].orderDetails.consumerComment = comment;
+    this.dataStore.carts[cartId].orderDetails.consumerComment = comment || '';
   };
 
   addDeliveryAddress(cartId, address) {
@@ -355,6 +355,7 @@ export class CartService {
   };
 
   addDeliveryFee(cartId, fee) {
+    console.log('delivery fee value: ', fee);
     if (!fee) {
       this.dataStore.carts[cartId].orderDetails.deliveryFee = 0;
     } else {

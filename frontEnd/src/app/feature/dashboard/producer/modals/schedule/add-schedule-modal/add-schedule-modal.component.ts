@@ -437,7 +437,7 @@ export class AddScheduleModalComponent implements OnInit {
   country: string;
   lat: number;
   lng: number;
-  submitObject: ScheduleModel;
+  submitObject: any;
   submitting: boolean = false;
   isRepeat: boolean = false;
 
@@ -584,7 +584,8 @@ export class AddScheduleModalComponent implements OnInit {
       'address': '',
       'fee': null,
       'feeWaiver': null,
-      'orderList': []
+      'orderList': [],
+      'userId': null
     };
   }
 
@@ -595,7 +596,7 @@ export class AddScheduleModalComponent implements OnInit {
 
   buildSubmitObject() {
     // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
-    this.submitObject.producerId = this.producer.id;
+    this.submitObject.producerId = this.producer.producerId;
     this.submitObject.type = this.form.value.type;
     this.submitObject.description = this.form.value.description;
     this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
@@ -607,6 +608,7 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.fee = this.form.value.fee;
     this.submitObject.feeWaiver = this.form.value.feeWaiver;
     this.submitObject.orderList = [];
+    this.submitObject.userId = this.producer.id;
   };
 
   ngOnInit() {
