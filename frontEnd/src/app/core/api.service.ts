@@ -214,6 +214,14 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // GET future schedule from a single producer
+  getFutureScheduleByProducerId(id): Observable<any[]> {
+    return this.http
+      .get(this.apiUrl + `/producersFutureSchedules/` + id)
+      // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
+      .catch(this._handleError);
+  };
+
   // POST new schedule - producer or admin only
   postSchedule(schedule: any): Observable<any> {
     return this.http

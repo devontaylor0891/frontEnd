@@ -522,6 +522,7 @@ export class AddScheduleModalComponent implements OnInit {
       this.apiService.postSchedule(this.submitObject)
       .subscribe(
         result => {
+          console.log('emitting: ', result);
           this.itemCreated.emit(result);
         }
       );

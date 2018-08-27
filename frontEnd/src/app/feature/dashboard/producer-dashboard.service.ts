@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ApiService } from '../../core/api.service';
 
@@ -11,6 +12,12 @@ import { OrderModel } from '../../core/models/order.model';
 
 @Injectable()
 export class ProducerDashboardService {
+
+  producerSub: Subscription;
+  userSub: Subscription;
+  productsSub: Subscription;
+  scheduleSub: Subscription;
+  ordersSub: Subscription;
 
   // dataStore
   dataStore: {
@@ -38,16 +45,18 @@ export class ProducerDashboardService {
   }
 
   loadData(id) {
-    this.apiService.getProducerById(id)
+    this.producerSub = this.apiService.getProducerById(id)
       .subscribe(
         result => {
           this.dataStore.producer = result[0];
           console.log('api getProducer result', result);
           this._producer.next(Object.assign({}, this.dataStore).producer);
-          this.getRemainingProducerInfo();
+          this.getProductsByProducerId(this.dataStore.producer.id);
+          this.getSchedsByProducerId();
+          this.getOrdersByProducerId(this.dataStore.producer.producerId);        
         }, error => console.log('could not load producer')
       );
-    this.apiService.getUserById(id)
+    this.userSub = this.apiService.getUserById(id)
     // add a new product via the add-product component, push it to the appropriate array
       .subscribe(
         result => {
@@ -55,7 +64,10 @@ export class ProducerDashboardService {
           this._user.next(Object.assign({}, this.dataStore).user);
         }, error => console.log('could not load user')
       );
-    this.apiService.getProductsByProducerId(id)
+  };
+
+  getProductsByProducerId(id) {
+    this.productsSub = this.apiService.getProductsByProducerId(id)
       .subscribe(
         result => {
           this.dataStore.products = result;
@@ -63,7 +75,10 @@ export class ProducerDashboardService {
           this._products.next(Object.assign({}, this.dataStore).products);
         }, error => console.log('could not load products')
       );
-    this.apiService.getScheduleByProducerId(id)
+  };
+
+  getSchedsByProducerId() {
+    this.scheduleSub = this.apiService.getScheduleByProducerId(this.dataStore.producer.id)
       .subscribe(
         result => {
           this.dataStore.schedules = result;
@@ -71,10 +86,10 @@ export class ProducerDashboardService {
           this._schedules.next(Object.assign({}, this.dataStore).schedules);
         }, error => console.log('could not load schedules')
       );
-  };
+  }
 
-  getRemainingProducerInfo() {
-    this.apiService.getOrdersByProducerId(this.dataStore.producer.producerId)
+  getOrdersByProducerId(id) {
+    this.ordersSub = this.apiService.getOrdersByProducerId(id)
       .subscribe(
         result => {
           this.dataStore.orders = result;
@@ -113,13 +128,8 @@ export class ProducerDashboardService {
       );
   };
 
-  addNewSchedule(schedule: ScheduleModel) {
-    this.apiService.postSchedule(schedule)
-      .subscribe(
-        result => {
-          console.log('posted sched successfully')
-        }
-      );
-  };
+  reloadData() {
+    this.getSchedsByProducerId();
+  }
   
 }

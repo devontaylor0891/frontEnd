@@ -97,6 +97,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { ProducerDashboardService } from '../../producer-dashboard.service';
 import { UtilityService } from '../../../../core/services/utility/utility.service';
 
@@ -116,6 +118,9 @@ export class ProducerScheduleComponent implements OnInit {
   completedSchedule: ScheduleModel[] = [];
 
   recordType: string = 'schedule';
+  date: any;
+
+  schedSubscription: Subscription;
 
   projectSettings: ColumnSettingModel[] = 
   [
@@ -169,24 +174,16 @@ export class ProducerScheduleComponent implements OnInit {
     // this.modal.open(this.modalContent, { size: 'lg' });  
     const modalRef = this.modal.open(AddScheduleModalComponent, { size: 'lg' });
     modalRef.componentInstance.itemCreated.subscribe((schedule) => {
-      this.createNew(schedule);
+      console.log('received: ', schedule);
+      this.loadScheds();
     });
   }
 
   ngOnInit() {
 
-    let date = new Date().toISOString();
+    this.date = new Date().toISOString();
 
-    this.dashboardService.getSchedules()
-      .subscribe( // returns an array
-        (schedules) => {
-          const upcoming = schedules.filter(schedule => schedule.endDateTime > date);
-          this.upcomingSchedule = upcoming;
-          console.log('upcoming: ', this.upcomingSchedule);
-          const completed = schedules.filter(schedule => schedule.endDateTime < date);
-          this.completedSchedule = completed;
-        }
-      );
+    this.getScheds();
 
   };
 
@@ -197,6 +194,23 @@ export class ProducerScheduleComponent implements OnInit {
   onScheduleDeleted($event) {
     // remove from upcoming array
     this.upcomingSchedule = this.utilityService.removeByAttribute(this.upcomingSchedule, 'id', $event);
+  };
+
+  getScheds() {
+    this.schedSubscription = this.dashboardService.getSchedules()
+      .subscribe( // returns an array
+        (schedules) => {
+          const upcoming = schedules.filter(schedule => schedule.endDateTime > this.date);
+          this.upcomingSchedule = upcoming;
+          console.log('upcoming: ', this.upcomingSchedule);
+          const completed = schedules.filter(schedule => schedule.endDateTime < this.date);
+          this.completedSchedule = completed;
+        }
+      );
+  };
+
+  loadScheds() {
+    this.dashboardService.reloadData();
   };
 
 }
