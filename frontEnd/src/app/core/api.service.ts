@@ -305,6 +305,12 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  getOrdersByScheduleId(id) {
+    return this.http
+      .get(this.apiUrl + `/ordersBySchedule/` + id)
+      .catch(this._handleError);
+  };
+
   // PUT existing order - producer or admin only
   putOrder(id: number, order: any): Observable<any> {
     return this.http
