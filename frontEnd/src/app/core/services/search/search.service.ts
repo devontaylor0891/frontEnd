@@ -622,7 +622,7 @@ export class SearchService implements OnInit {
     // make a copy of results array to filter
     let filteredResults: any = [];
 
-    results.forEach((product) => { //for each product
+    results.products.forEach((product) => { //for each product
       // if it does contain the delivery AND it does contain the category
       if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
         // push it to the array
