@@ -9,12 +9,16 @@ import { ProductModel } from '../../../../core/models/product.model';
 })
 export class SearchResultsComponent implements OnInit, OnChanges {
 
-  @Input() searchResults: ProductModel[] = [];
+  @Input() searchResults: any = {};
 
   constructor() { }
 
   ngOnChanges() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    console.log('search results comp results: ', this.searchResults);
+
+  }
 
 }

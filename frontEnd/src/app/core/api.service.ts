@@ -36,7 +36,7 @@ export class ApiService {
 // ***************** SEARCH *******
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
-  getSearchResults(lat: number, long: number, radius: number): Observable<any[]> {
+  getSearchResults(lat: number, long: number, radius: number): Observable<any> {
     return this.http
       // .get(`http://localhost:3000/searchResults`)
       // .get(`${ENV.BASE_API}searchResults`)

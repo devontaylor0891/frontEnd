@@ -12,9 +12,9 @@ import { ProductModel } from '../../../../core/models/product.model';
 })
 export class ResultsPaneComponent implements OnInit, OnChanges {
 
-  searchResults: ProductModel[] = [];
+  // searchResults: any = {};
   view: string = "product";
-  @Input() products: ProductModel[] = [];
+  @Input() products: any;
 
   constructor(private searchService: SearchService) { }
 
@@ -23,14 +23,14 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
   ngOnInit() {
     
     //subscribe to the copied collection
-    this.searchService.getSearchResults()
-      .subscribe(
-        results => {
-          this.searchResults = results;
-          // console.log("These are the search results from the subscription:");
-          // console.log(this.searchResults);
-        }
-      );
+    // this.searchService.getSearchResults()
+    //   .subscribe(
+    //     results => {
+    //       this.searchResults = results;
+    //       // console.log("These are the search results from the subscription:");
+    //       // console.log(this.searchResults);
+    //     }
+    //   );
       
     //load all search results
     // this.searchService.loadAll();

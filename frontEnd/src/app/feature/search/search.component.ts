@@ -92,7 +92,7 @@ export class SearchComponent implements OnInit, OnChanges {
   userLocation;
   cityProvince: string;
 
-  searchResults: ProductModel[] = [];
+  searchResults;
 
   constructor(private locationService: LocationService,
               private searchService: SearchService,
@@ -112,7 +112,7 @@ export class SearchComponent implements OnInit, OnChanges {
           console.log(this.userLocation.coords.latitude);
           console.log(this.userLocation.coords.longitude);
           this.locationService.codeLatLng(this.userLocation.coords.latitude, this.userLocation.coords.longitude);
-          //load all search results
+          // load all search results
           this.searchService.loadAll(this.userLocation.coords.latitude, this.userLocation.coords.longitude, 25);
         }
       );
@@ -125,11 +125,12 @@ export class SearchComponent implements OnInit, OnChanges {
         }
       );
 
-    //subscribe to the copied collection
+    // subscribe to the copied collection
     this.searchService.getSearchResults()
       .subscribe(
         results => {
           this.searchResults = results;
+          console.log('search comp results: ', this.searchResults);
         }
       );
 
@@ -145,11 +146,7 @@ export class SearchComponent implements OnInit, OnChanges {
       //     console.log(results);
       //   }
       // );
-      
-    
 
   }
-
-  
 
 }
