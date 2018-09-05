@@ -14,7 +14,7 @@ export class ViewProductModalComponent implements OnInit {
   @Input() record: ProductModel;
   totalPrice: number;
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
 

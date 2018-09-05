@@ -14,7 +14,7 @@ export class ViewOrderModalComponent implements OnInit {
   @Input() record: OrderModel;
   products: any;
 
-  constructor(private activeModal: NgbActiveModal) {
+  constructor(public activeModal: NgbActiveModal) {
 
     // build the products array to use in the table
     this.products = [

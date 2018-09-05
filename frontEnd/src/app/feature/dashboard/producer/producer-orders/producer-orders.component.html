@@ -51,7 +51,6 @@
                             [records]="acceptedOrders"
                             [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
                             [accepted]="true"
                             [deletable]="false"
                             (orderCompleted)="onCompleteOrder($event)"
@@ -81,7 +80,6 @@
                             [records]="completedOrders"
                             [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
                             [deletable]="false">
                         </app-table-layout>
                     </div>
@@ -108,7 +106,6 @@
                             [records]="deniedOrders"
                             [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
                             [deletable]="false">
                         </app-table-layout>
                     </div>
@@ -135,7 +132,6 @@
                             [records]="incompletedOrders"
                             [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
                             [deletable]="false">
                         </app-table-layout>
                     </div>

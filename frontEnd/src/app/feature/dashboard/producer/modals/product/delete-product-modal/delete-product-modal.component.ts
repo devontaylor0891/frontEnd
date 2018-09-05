@@ -23,7 +23,7 @@ export class DeleteProductModalComponent implements OnInit, OnDestroy {
   error: boolean;
   subscription: any;
 
-  constructor(private activeModal: NgbActiveModal,
+  constructor(public activeModal: NgbActiveModal,
               private api: ApiService) { }
 
   ngOnInit() {

@@ -212,7 +212,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private router: Router,
               private api: ApiService,
-              private activeModal: NgbActiveModal,
+              public activeModal: NgbActiveModal,
               private imageService: ImageService,
               private producerDashboardService: ProducerDashboardService) { }
 

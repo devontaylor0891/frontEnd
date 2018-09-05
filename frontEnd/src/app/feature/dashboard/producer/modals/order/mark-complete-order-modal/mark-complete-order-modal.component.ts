@@ -146,7 +146,7 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
     constructor(private fb: FormBuilder,
                 private router: Router,
                 private api: ApiService,
-                private activeModal: NgbActiveModal,
+                public activeModal: NgbActiveModal,
                 private cartService: CartService) {
 
         this.submitObject = { orderDetails : {} };

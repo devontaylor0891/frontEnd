@@ -69,8 +69,8 @@
                     <strong>Consumer Comment:</strong>
                 </div>
                 <div class="col-8">
-                    <p *ngIf="record.consumerComment">{{ record.orderDetails.consumerComment }}</p>
-                    <p *ngIf="!record.consumerComment">No comments entered.</p>
+                    <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
+                    <p *ngIf="!record.orderDetails.consumerComment">No comments entered.</p>
                 </div>
             </div>
   
@@ -79,8 +79,8 @@
                     <strong>Producer Comment:</strong>
                 </div>
                 <div class="col-8">
-                    <p *ngIf="record.consumerComment">{{ record.orderDetails.producerComment }}</p>
-                    <p *ngIf="!record.consumerComment">No comments entered.</p>
+                    <p *ngIf="record.orderDetails.producerComment">{{ record.orderDetails.producerComment }}</p>
+                    <p *ngIf="!record.orderDetails.producerComment">No comments entered.</p>
                 </div>
             </div>
                 

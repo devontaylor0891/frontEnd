@@ -73,7 +73,7 @@ export class DeleteScheduleModalComponent implements OnInit, OnDestroy {
 
   deleteScheduleSub: any;
 
-  constructor(private activeModal: NgbActiveModal,
+  constructor(public activeModal: NgbActiveModal,
               private api: ApiService) { }
 
   ngOnInit() {

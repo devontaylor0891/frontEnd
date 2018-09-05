@@ -17,15 +17,15 @@
     src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ subcategory }}.png" class="img-fluid cover" alt="">
 <!-- no image exists, and no subcategory icon exists, then use the icon for the category itself -->
 <img [hidden]="imageName !== ''" *ngIf="imageName === '' && 
-    subcategory !== 'Bread' || 
-    subcategory !== 'Grains' || 
-    subcategory !== 'Honey' || 
-    subcategory !== 'Eggs' || 
-    subcategory !== 'Beef' || 
-    subcategory !== 'Chicken' || 
-    subcategory !== 'Pork' || 
-    subcategory !== 'Lamb' || 
-    subcategory !== 'Fish'" 
+    subcategory.toString() != 'Bread' || 
+    subcategory.toString() != 'Grains' || 
+    subcategory.toString() != 'Honey' || 
+    subcategory.toString() != 'Eggs' || 
+    subcategory.toString() != 'Beef' || 
+    subcategory.toString() != 'Chicken' || 
+    subcategory.toString() != 'Pork' || 
+    subcategory.toString() != 'Lamb' || 
+    subcategory.toString() != 'Fish'" 
     src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ category }}.png" class="img-fluid cover" alt="">
     
         <div class="mask waves-effect waves-light"></div>

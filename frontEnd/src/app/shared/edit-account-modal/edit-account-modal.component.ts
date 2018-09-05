@@ -328,7 +328,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   @Output() accountEdited = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder,
-              private activeModal: NgbActiveModal,
+              public activeModal: NgbActiveModal,
               private apiService: ApiService,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,

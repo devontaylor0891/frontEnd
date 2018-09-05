@@ -476,7 +476,7 @@ export class AddScheduleModalComponent implements OnInit {
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
-              private activeModal: NgbActiveModal,
+              public activeModal: NgbActiveModal,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
               private apiService: ApiService) {

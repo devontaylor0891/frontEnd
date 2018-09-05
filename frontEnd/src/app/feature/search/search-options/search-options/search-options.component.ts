@@ -516,6 +516,12 @@ export class SearchOptionsComponent implements OnInit {
   city: string;
   province: string;
 
+  searchOptions = {
+    latitude: null,
+    longitude: null,
+    radius: null
+  };
+
   public searchControl: FormControl;
   @ViewChild('search') public searchElementRef: ElementRef;
   zoom: number;
@@ -658,7 +664,10 @@ export class SearchOptionsComponent implements OnInit {
       this.submitting = false;
       return;
     } else {
-      this.searchService.loadAll(this.latitude, this.longitude, this.currentRadius);
+      this.searchOptions.latitude = this.latitude;
+      this.searchOptions.longitude = this.longitude;
+      this.searchOptions.radius = 25;
+      this.searchService.loadAll(this.searchOptions);
     }
 
   };
@@ -676,7 +685,7 @@ export class SearchOptionsComponent implements OnInit {
     // have location service re-emit the city and province
     this.locationService.updateCityProvince(this.city + ', ' + this.province);
     // have the search service make a new call
-    this.searchService.loadAll(this.latitude, this.longitude, this.currentRadius);
+    this.searchService.loadAll(this.searchOptions);
     this.locationUpdate = !this.locationUpdate;
   };
 

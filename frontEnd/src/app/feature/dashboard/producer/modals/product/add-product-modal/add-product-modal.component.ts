@@ -37,7 +37,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
-              private activeModal: NgbActiveModal,
+              public activeModal: NgbActiveModal,
               private apiService: ApiService,
               private imageService: ImageService) {
 

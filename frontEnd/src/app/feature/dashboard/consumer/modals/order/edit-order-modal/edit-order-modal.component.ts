@@ -25,11 +25,12 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   submitObject: OrderModel;
   error: boolean;
   orderStatusInput: string;
+  products: any;
 
   constructor(private fb: FormBuilder,
 				private router: Router,
 				private api: ApiService,
-				private activeModal: NgbActiveModal) { }
+				public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     // this.initialOrder = this.setInitialOrder();

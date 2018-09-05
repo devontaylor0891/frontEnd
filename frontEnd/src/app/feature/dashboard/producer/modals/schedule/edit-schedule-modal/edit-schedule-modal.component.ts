@@ -63,7 +63,7 @@ export class EditScheduleModalComponent implements OnInit {
   constructor(private formBuild: FormBuilder,
 				private router: Router,
 				private api: ApiService,
-				private activeModal: NgbActiveModal) { }
+				public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
 	  this.setHasOrders();

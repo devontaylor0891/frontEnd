@@ -17,7 +17,7 @@ export class ConsumerViewOrderModalComponent implements OnInit {
 	products: any;
 
   constructor(private api: ApiService,
-				private activeModal: NgbActiveModal) {
+				public activeModal: NgbActiveModal) {
 
 	 // build the products array to use in the table
 		this.products = [

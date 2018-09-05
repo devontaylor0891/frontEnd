@@ -16,7 +16,8 @@ export class ApiService {
 
   // apiUrl = 'http://localhost:3000';
   // apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
-  apiUrl = 'http://api-server-env.u4xn8vrpir.us-west-2.elasticbeanstalk.com/api';
+  // apiUrl = 'http://api-server-env.u4xn8vrpir.us-west-2.elasticbeanstalk.com/api';
+  apiUrl = 'https://api.olfdev.com/api';
 
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
@@ -36,11 +37,11 @@ export class ApiService {
 // ***************** SEARCH *******
   // GET list of PRODUCTS that are attached to DELIVERIES that occur in the future and within the search radius
   // this is using the mock data via json-server
-  getSearchResults(lat: number, long: number, radius: number): Observable<any> {
+  getSearchResults(searchOptions: any): Observable<any> {
     return this.http
       // .get(`http://localhost:3000/searchResults`)
       // .get(`${ENV.BASE_API}searchResults`)
-      .get(this.apiUrl + `/searchResults/`)
+      .post(this.apiUrl + `/searchResults/`, searchOptions)
       .catch(this._handleError);
   };
 

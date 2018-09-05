@@ -13,7 +13,7 @@ export class ViewScheduleModalComponent implements OnInit {
 
   @Input() record: ScheduleModel;
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
