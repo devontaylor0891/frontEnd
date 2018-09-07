@@ -370,8 +370,10 @@ export class SearchService implements OnInit {
 
   // ****************** MODIFYING THE VIEW BASED ON FILTER BUTTONS
   // create a private property to hold the default view
-  private viewStatus = new BehaviorSubject<string>("products");
-  public _viewStatus = this.viewStatus.asObservable();
+  // private viewStatus = new BehaviorSubject<string>("products");
+  // public _viewStatus = this.viewStatus.asObservable();
+  private viewStatus: string;
+  public _viewStatus = <BehaviorSubject<string>>new BehaviorSubject('products');
 	
 	// during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
@@ -671,7 +673,7 @@ export class SearchService implements OnInit {
   };
 
   changeView(view) {
-	  this.viewStatus.next(view);
+    this._viewStatus.next(view);
   }
 
   ngOnInit() {}

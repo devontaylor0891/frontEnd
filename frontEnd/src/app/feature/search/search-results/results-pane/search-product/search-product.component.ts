@@ -13,10 +13,6 @@ export class SearchProductComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-
-    console.log('products: ', this.products);
-
-  }
+  ngOnInit() {}
 
 }

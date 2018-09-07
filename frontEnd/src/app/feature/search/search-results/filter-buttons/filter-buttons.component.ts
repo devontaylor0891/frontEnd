@@ -10,13 +10,13 @@ import { SearchService } from '../../../../core/services/search/search.service';
 })
 export class FilterButtonsComponent implements OnInit {
 
-  view: string = "product";
+  view: string;
 
   constructor(private searchService: SearchService) { }
 
   ngOnInit() {
 
-    //get the view setting
+    // get the view setting
     this.searchService._viewStatus
       .subscribe(
         result => {
@@ -27,7 +27,7 @@ export class FilterButtonsComponent implements OnInit {
   }
 
   onClick(view) {
-	  this.searchService.changeView(view);
+    this.searchService.changeView(view);
   }
 
 }

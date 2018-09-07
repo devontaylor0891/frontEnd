@@ -13,7 +13,7 @@ import { ProductModel } from '../../../../core/models/product.model';
 export class ResultsPaneComponent implements OnInit, OnChanges {
 
   // searchResults: any = {};
-  view: string = "product";
+  view: string;
   @Input() products: any;
 
   constructor(private searchService: SearchService) { }
@@ -21,8 +21,8 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
   ngOnChanges() { }
 
   ngOnInit() {
-    
-    //subscribe to the copied collection
+
+    // subscribe to the copied collection
     // this.searchService.getSearchResults()
     //   .subscribe(
     //     results => {
@@ -31,11 +31,11 @@ export class ResultsPaneComponent implements OnInit, OnChanges {
     //       // console.log(this.searchResults);
     //     }
     //   );
-      
-    //load all search results
+
+    // load all search results
     // this.searchService.loadAll();
-	
-    //get the view setting
+
+    // get the view setting
     this.searchService._viewStatus
       .subscribe(
         result => {

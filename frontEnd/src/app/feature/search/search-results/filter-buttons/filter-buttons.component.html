@@ -5,11 +5,11 @@
 
 		<!-- select -->
 		<div class="hidden-md-up">
-			<select class="bootstrap-select">
-				<option value="products" selected="selected" (click)="onClick('products')">Products</option>
-				<option value="producers" (click)="onClick('producers')">Producers</option>
-				<option value="calendar" (click)="onClick('calendar')">Calendar</option>
-				</select>
+			<select class="bootstrap-select" (change)="onClick($event.target.value)">
+				<option value="products">Products</option>
+				<option value="producers">Producers</option>
+				<option value="calendar">Calendar</option>
+			</select>
 		</div> 
 
 			<!-- dropdown -->
