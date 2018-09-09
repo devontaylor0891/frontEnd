@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges} from '@angular/core';
 
 import { ProductModel } from '../../../../core/models/product.model';
+import { SearchService } from '../../../../core/services/search/search.service';
 
 @Component({
   selector: 'app-search-results',
@@ -9,15 +10,24 @@ import { ProductModel } from '../../../../core/models/product.model';
 })
 export class SearchResultsComponent implements OnInit, OnChanges {
 
-  @Input() searchResults: any = {};
+  @Input() searchResults: any;
+  zeroSearchResults: boolean;
 
-  constructor() { }
+  constructor(private searchService: SearchService) { }
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    console.log('zeroSearch: ', this.zeroSearchResults);
+    console.log('search results comp results: ', this.searchResults);
+  }
 
   ngOnInit() {
 
-    console.log('search results comp results: ', this.searchResults);
+    this.searchService.getZeroSearchResults()
+      .subscribe(
+        results => {
+          this.zeroSearchResults = results;
+        }
+      )
 
   }
 

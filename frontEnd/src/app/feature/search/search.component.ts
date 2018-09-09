@@ -27,6 +27,8 @@ export class SearchComponent implements OnInit, OnChanges {
     radius: null
   };
 
+  zeroSearchResults: boolean;
+
   constructor(private locationService: LocationService,
               private searchService: SearchService,
               private title: Title) { };
@@ -69,19 +71,6 @@ export class SearchComponent implements OnInit, OnChanges {
           console.log('search comp results: ', this.searchResults);
         }
       );
-
-      this.searchService.getProducers()
-      .subscribe(
-        results => {}
-      );
-
-      // this.searchService.getDeliveries()
-      // .subscribe(
-      //   results => {
-      //     console.log('from getDeliveries');
-      //     console.log(results);
-      //   }
-      // );
 
   }
 

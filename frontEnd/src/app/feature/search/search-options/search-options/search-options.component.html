@@ -14,6 +14,17 @@
             <div *ngIf="cityProvince && !locationUpdate">
                 <p class="text-center"><i class="fa fa-map-marker prefix mr-2"></i>{{ cityProvince }}</p>
                 <p class="text-right minor-link mb-0"><a (click)="changeCity()">Change Location</a></p>
+                <hr>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h5 class="card-title">Search Radius (km)</h5>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-olf-primary" (click)="changeDistance25()">25</button>
+                            <button type="button" class="btn btn-olf-primary" (click)="changeDistance10()">10</button>
+                            <button type="button" class="btn btn-olf-primary" (click)="changeDistance5()">5</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         
             <div [hidden]="!locationUpdate">
@@ -45,21 +56,19 @@
         </div>
         <div class="card-block grey lighten-3">
             <p class="card-text">Modify the settings below to narrow your search.</p>
-            <hr>
             <form #f="ngForm" (ngSubmit)="onSubmit(f)">
                 <div class="row">
                     <div class="col-12">
-                        <h5 class="card-title">Categories</h5>
+                        <hr>
+                        <h5 class="card-title text-center">Categories</h5>
                             <div *ngFor="let category of categoriesList; let i = index" class="pl-3">
                                 <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
                                 <label for="c.{{ category.category }}">{{ category.category }}</label>
                             </div>
                     </div>
-                    <hr>
-                    
-                    <hr>
                     <div class="col-12">
-                        <h5 class="card-title">Delivery Types</h5>
+                        <hr>
+                        <h5 class="card-title text-center">Delivery Types</h5>
                         <form-group>
                             <div *ngFor="let delivery of deliveryTypes" class="pl-3">
                                 <input type="checkbox" id="d.{{ delivery.type }}" name="d.{{ delivery.type }}" [(ngModel)]="delivery.checkboxValue" [checked]="delivery.checkboxValue">

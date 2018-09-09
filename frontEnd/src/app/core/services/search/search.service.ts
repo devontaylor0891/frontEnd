@@ -357,7 +357,10 @@ export class SearchService implements OnInit {
     categories: string[], // holds an array of category/subcategory objects
 	  searchProducers: ProducerModel[], // an array containing basic producer info for the producer view
 	  searchDeliveries: any[] // an array containing basic delivery info for the calendar view
-  }
+  };
+
+  private zeroSearchResultsReturned: boolean;
+  public _zeroSearchResultsReturned: BehaviorSubject<boolean>;
 	
 	// use a BehaviorSubject to create an observable out of a COPY of the search results
   public _searchResults: BehaviorSubject<any>;
@@ -370,19 +373,19 @@ export class SearchService implements OnInit {
 
   // ****************** MODIFYING THE VIEW BASED ON FILTER BUTTONS
   // create a private property to hold the default view
-  // private viewStatus = new BehaviorSubject<string>("products");
-  // public _viewStatus = this.viewStatus.asObservable();
   private viewStatus: string;
-  public _viewStatus = <BehaviorSubject<string>>new BehaviorSubject('products');
+  public _viewStatus: BehaviorSubject<string>;
 	
 	// during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
     this.dataStore = { searchResults: { schedules: [], producers: [], products: [] }, deliveryTypes: [], categories: [], searchProducers: [], searchDeliveries: [] };
-    this._searchResults = <BehaviorSubject<ProductModel[]>>new BehaviorSubject([]);
+    this._searchResults = <BehaviorSubject<ProductModel[]>>new BehaviorSubject(null);
     this._deliveryTypes = <BehaviorSubject<string[]>>new BehaviorSubject([]);
     this._categories = <BehaviorSubject<string[]>>new BehaviorSubject([]);
 	  this._searchProducers = <BehaviorSubject<ProducerModel[]>>new BehaviorSubject([]);
-	  this._searchDeliveries = <BehaviorSubject<any[]>>new BehaviorSubject([]);
+    this._searchDeliveries = <BehaviorSubject<any[]>>new BehaviorSubject([]);
+    this._zeroSearchResultsReturned = <BehaviorSubject<boolean>>new BehaviorSubject(null);
+    this._viewStatus = <BehaviorSubject<string>>new BehaviorSubject('products');
   }
   
   // fill up the dataStore with a call to the API
@@ -390,24 +393,58 @@ export class SearchService implements OnInit {
 		this.apiService.getSearchResults(searchOptions)
 			.subscribe(
 				response => {
-					// fill dataStore
-          this.dataStore.searchResults = response;
-          console.log('searchResults: ', this.dataStore.searchResults);
-          this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.searchResults.schedules);
-          this.dataStore.categories = this.addCategories(this.dataStore.searchResults.products);
-          this.dataStore.searchProducers = this.dataStore.searchResults.producers;
-          // this.dataStore.searchProducers = this.addSearchProducers(this.dataStore.searchResults);
-          this.dataStore.searchDeliveries = this.dataStore.searchResults.schedules;
-		      // this.dataStore.searchDeliveries = this.addSearchDeliveries(this.dataStore.searchResults);
-					// make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
-          this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
-          this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
-          this._categories.next(Object.assign({}, this.dataStore).categories);
-          this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
-          this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
+          console.log('response for search: ', response);
+          if (this.isEmpty(response)) {
+            // no results were returned
+            this.zeroSearchResultsReturned = true;
+            this._zeroSearchResultsReturned.next(this.zeroSearchResultsReturned);
+            this.dataStore = { searchResults: { schedules: [], producers: [], products: [] }, deliveryTypes: [], categories: [], searchProducers: [], searchDeliveries: [] };
+            this.dataStore.deliveryTypes = [];
+            this.dataStore.categories = [];
+            this.dataStore.searchProducers = [];
+            this.dataStore.searchDeliveries = [];
+            // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
+            this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
+            this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
+            this._categories.next(Object.assign({}, this.dataStore).categories);
+            this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
+            this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
+            console.log('no results from search');
+          } else {
+            // the response contains results
+            this.zeroSearchResultsReturned = false;
+            this._zeroSearchResultsReturned.next(this.zeroSearchResultsReturned);
+            // fill dataStore
+            this.dataStore.searchResults = response;
+            console.log('searchResults: ', this.dataStore.searchResults);
+            this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.searchResults.schedules);
+            this.dataStore.categories = this.addCategories(this.dataStore.searchResults.products);
+            this.dataStore.searchProducers = this.dataStore.searchResults.producers;
+            // this.dataStore.searchProducers = this.addSearchProducers(this.dataStore.searchResults);
+            this.dataStore.searchDeliveries = this.dataStore.searchResults.schedules;
+            // this.dataStore.searchDeliveries = this.addSearchDeliveries(this.dataStore.searchResults);
+            // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
+            this._searchResults.next(Object.assign({}, this.dataStore).searchResults);
+            this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
+            this._categories.next(Object.assign({}, this.dataStore).categories);
+            this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
+            this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
+          }
 				}, error => console.log('could not load search results')
       );
-	}
+  };
+  
+  isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+  };
+
+  getZeroSearchResults() {
+    return this._zeroSearchResultsReturned.asObservable();
+  }
 	
 	// create an observable out of the copy of the results
 	getSearchResults() {
