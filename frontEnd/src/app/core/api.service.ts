@@ -368,8 +368,8 @@ export class ApiService {
       Bucket: 'onlylocalfood-images',
       Key: imageName,
       Expires: 1000000,
-      ContentType: 'image/jpeg',
-      ACL: 'public-read'
+      ContentType: 'image/jpeg'
+      // ACL: 'public-read'
     };
     let url = s3.getSignedUrl('putObject', params);
     console.log('params: ', params);
