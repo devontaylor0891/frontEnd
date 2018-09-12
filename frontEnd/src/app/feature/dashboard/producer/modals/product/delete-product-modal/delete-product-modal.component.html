@@ -9,9 +9,12 @@
 
       <div *ngIf="!record.isObsolete">
         <div *ngIf="hasPending">
-          <p class="mt-3 alert alert-danger">
-            <strong>Uh Oh!</strong> It looks like this product has {{record.qtyPending }} order(s) pending. That means it can't be marked as obsolete. Once the outstanding orders are complete, you can try again.
-          </p>
+            <p>
+              <strong>Uh Oh!</strong> It looks like this product has {{record.qtyPending }} order(s) pending. That means it can't be marked as obsolete. Once the outstanding orders are complete, you can try again.
+            </p>
+            <p>
+              Note: If you don't want any more orders of this product to come in, you can edit the quantity available to zero.
+            </p>
         </div>
     
         <div *ngIf="!hasPending">

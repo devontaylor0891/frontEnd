@@ -100,6 +100,7 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
     this.searchService.getDeliveries()
       .subscribe(
         result => {
+          this.events = [];
           console.log('result:');
           console.log(result);
           let data = result;

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
 
     <app-admin-dashboard *ngIf="this.isAdmin" [id]="id" [user]="user"></app-admin-dashboard>
     <app-consumer-dashboard *ngIf="this.userType === 'consumer'" [id]="user.id" [user]="user"></app-consumer-dashboard>

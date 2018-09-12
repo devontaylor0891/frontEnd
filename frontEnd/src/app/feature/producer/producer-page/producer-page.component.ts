@@ -44,6 +44,9 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
     this.getAllProductsSub = this.producerService.getAllProducts()
       .subscribe(
         results => {
+          // empty the arrays first
+          this.outOfStockProducts = [];
+          this.products = [];
           for (let i = 0; i < results.length; i++) {
             if (results[i].qtyAvailable < 1) {
               this.outOfStockProducts.push(results[i]);
@@ -66,9 +69,6 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   ngOnDestroy() {
-    console.log('onDestroy triggered!');
-    this.products.length = 0;
-    console.log('products ondestroy: ', this.products);
     if (this.getProducerSub) {
       this.getProducerSub.unsubscribe();
     };
