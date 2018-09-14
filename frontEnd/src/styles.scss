@@ -190,8 +190,6 @@ a:hover {
     font-weight: 400;
 }
 
-
-
 footer.page-footer {
     background-color: #9e5f7e !important;
 }
@@ -325,7 +323,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .navbar .dropdown-menu a:hover {
-    color: #741b47 !important;
+    color: #611437 !important;
+    font-weight: 400;
+    background-color: white !important;
 }
 
 .outOfStockOverlay {

@@ -1,8 +1,8 @@
 <!-- <nav class="navbar navbar-default navbar-static-top"> -->
 <nav class="navbar navbar-toggleable-md grey lighten-2">
-    <div class="container-fluid">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header row">
+        <div class="row">
             <div>
                 <button 
                     class="p-2 navbar-toggler navbar-toggler-right btn btn-olf-primary btn-sm" 
@@ -25,33 +25,35 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse col-md-8 text-center" id="navbar-collapse-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="cart">
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" routerLink="/cart">
                             <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
                             <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                         <a class="nav-link" routerLink="/search">Search</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
                         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
                             Learn More...
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" routerLink="learn-more-consumer">For Buyers</a>
-                            <a class="dropdown-item" routerLink="learn-more-producer">For Producers</a>
-                        </div>
+                        <div class="row" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu col text-center">
+                                <a class="dropdown-item" routerLink="/learn-more-consumer">For Buyers</a>
+                                <a class="dropdown-item" routerLink="/learn-more-producer">For Producers</a>
+                            </div>
+                        </div>  
                     </li>
-                    <li class="nav-item" *ngIf="loggedIn && !isAdmin">
-                        <a class="nav-link" routerLink="dashboard">My Account</a>
+                    <li class="nav-item" *ngIf="loggedIn && !isAdmin" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" routerLink="/dashboard">My Account</a>
                     </li>
-                    <li class="nav-item" *ngIf="loggedIn">
-                        <a *ngIf="isAdmin" class="nav-link" routerLink="admin">Admin</a>
+                    <li class="nav-item" *ngIf="loggedIn" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a *ngIf="isAdmin" class="nav-link" routerLink="/admin">Admin</a>
                     </li>
-                    <li class="nav-item">
-                        <button class="btn btn-olf-primary" *ngIf="!loggedIn" (click)="onLogin($event)">Sign in/Register</button>
-                        <button class="btn btn-olf-primary" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <button class="btn btn-olf-primary btn-sm" *ngIf="!loggedIn" (click)="onLogin($event)">Sign in/Register</button>
+                        <button class="btn btn-olf-primary btn-sm" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
