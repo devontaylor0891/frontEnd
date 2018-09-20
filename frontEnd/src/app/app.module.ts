@@ -130,6 +130,7 @@ import { AdminUserViewModalComponent } from './feature/dashboard/admin/modals/us
 import { AdminProducerViewModalComponent } from './feature/dashboard/admin/modals/producers/admin-producer-view-modal/admin-producer-view-modal.component';
 import { AdminProductViewModalComponent } from './feature/dashboard/admin/modals/products/admin-product-view-modal/admin-product-view-modal.component';
 import { AdminScheduleViewModalComponent } from './feature/dashboard/admin/modals/schedules/admin-schedule-view-modal/admin-schedule-view-modal.component';
+import { ContactComponent } from './shared/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -214,7 +215,8 @@ import { AdminScheduleViewModalComponent } from './feature/dashboard/admin/modal
     AdminUserViewModalComponent,
     AdminProducerViewModalComponent,
     AdminProductViewModalComponent,
-    AdminScheduleViewModalComponent
+    AdminScheduleViewModalComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
