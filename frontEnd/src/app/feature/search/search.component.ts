@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit, OnChanges {
     radius: null
   };
 
+  searchResultsReceived: boolean = false;
   zeroSearchResults: boolean;
 
   constructor(private locationService: LocationService,
@@ -68,6 +69,7 @@ export class SearchComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           this.searchResults = results;
+          this.searchResultsReceived = true;
           console.log('search comp results: ', this.searchResults);
         }
       );

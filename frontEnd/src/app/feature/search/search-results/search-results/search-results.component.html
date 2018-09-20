@@ -6,7 +6,7 @@
     <div class="card-block" *ngIf="!searchResults || searchResults.length === 0 && !zeroSearchResults">
         <app-loading></app-loading>
     </div>
-    <div *ngIf="searchResults || searchResults.length !== 0">
+    <div *ngIf="searchResults">
         <div class="card-block grey lighten-3" *ngIf="searchResults.schedules.length !== 0 && !zeroSearchResults">   
             <app-filter-buttons></app-filter-buttons>
             <app-results-pane [products]="searchResults.products"></app-results-pane>
