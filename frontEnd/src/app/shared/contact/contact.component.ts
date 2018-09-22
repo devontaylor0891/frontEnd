@@ -41,7 +41,8 @@ export class ContactComponent implements OnInit {
     }
     this.apiService.verifyAndSendEmail(emailObject)
       .subscribe(
-        res => console.log('res: ', res),
+        // res => console.log('res: ', res),
+        res => alert('Your email has been sent. Thanks!'),
         err => console.log('err: ', err)
       );
   }
