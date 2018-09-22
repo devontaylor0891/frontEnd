@@ -1,3 +1,81 @@
-<p>
-  contact works!
-</p>
+<form [formGroup]="myGroup" (ngSubmit)="handleSubmit(myGroup)">
+
+  <div class="row form-section">
+
+    <div class="col-12 form-section-header">
+      <h4>Your Profile Information</h4>
+    </div>
+
+    <div class="col-12 form-section-body">
+
+      <div class="row">
+        <label for="name" class="col-4 col-form-label text-right">Your Name:</label>
+        <div class="col-8">
+          <input 
+            formControlName="name"
+            id="name"
+            type="text"
+            class="form-control">
+            <!-- <div class="row" *ngIf="name.touched && name.invalid"> 
+              Your name is required.
+            </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <label for="email" class="col-4 col-form-label text-right">Your Email:</label>
+        <div class="col-8">
+          <input 
+            formControlName="email"
+            id="email"
+            type="email"
+            class="form-control"
+            [(ngModel)]="email"
+            required>
+            <!-- <div class="row" *ngIf="email.touched && email.invalid"> 
+              Your email is required.
+            </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <label for="message" class="col-4 col-form-label text-right">Message:</label>
+        <div class="col-8">
+          <textarea
+            formControlName="message"
+            class="textarea" 
+            name="message" 
+            [(ngModel)]="message"
+            required></textarea>
+            <!-- <div class="row" *ngIf="message.touched && message.invalid"> 
+              A message is required.
+            </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <label for="recaptcha" class="col-4 col-form-label text-right">Verify:</label>
+        <div class="col-8">
+          <ngx-recaptcha2
+            [siteKey]="siteKey"
+            [size]="normal"
+            [hl]="en"
+            [theme]="light"
+            (expire)="handleExpire()"
+            (load)="handleLoad()"
+            (success)="handleSuccess($event)"
+            formControlName="recaptcha">
+          </ngx-recaptcha2>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-12 text-center">
+      <button 
+        class="btn btn-olf-primary" 
+        type="submit"
+        [disabled]="!myGroup.valid"
+        >Send Message</button>
+    </div>
+
+  </div>
+
+</form>

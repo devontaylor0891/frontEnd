@@ -385,4 +385,11 @@ export class ApiService {
       });
   };
 
+  // *************** CAPTCHA VERIFICATION AND EMAIL SEND *****************
+  verifyAndSendEmail(email) {
+    return this.http
+      .post(this.apiUrl + `/captcha`, email)
+      .catch(this._handleError);
+  }
+
 }

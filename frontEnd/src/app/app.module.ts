@@ -19,6 +19,7 @@ import { AgmCoreModule } from '@agm/core';
 // import { DateTimePickerModule } from 'ng-pick-datetime';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 // SERVICES
 import { AuthService } from './auth/auth.service';
@@ -237,7 +238,8 @@ import { ContactComponent } from './shared/contact/contact.component';
     OwlDateTimeModule, OwlNativeDateTimeModule,
     RouterModule,
     AppRoutingModule,
-    ImageCropperModule
+    ImageCropperModule,
+    NgxCaptchaModule
   ],
   providers: [
     UserService,

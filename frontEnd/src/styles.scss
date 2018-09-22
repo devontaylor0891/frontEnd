@@ -222,6 +222,11 @@ input.ng-invalid.ng-touched {
     border-radius: 5px;
 }
 
+textarea.ng-invalid.ng-touched {
+    border: 1px solid #cc0000;
+    border-radius: 5px;
+}
+
 .help-block {
     color: #cc0000;
     font-size: 80%;
