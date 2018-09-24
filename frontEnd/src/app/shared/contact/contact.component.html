@@ -1,4 +1,4 @@
-<form [formGroup]="myGroup" (ngSubmit)="handleSubmit(myGroup)">
+<form [formGroup]="myGroup" (ngSubmit)="handleSubmit()">
 
   <div class="row form-section">
 
@@ -29,7 +29,6 @@
             id="email"
             type="email"
             class="form-control"
-            [(ngModel)]="email"
             required>
             <!-- <div class="row" *ngIf="email.touched && email.invalid"> 
               Your email is required.
@@ -43,7 +42,6 @@
             formControlName="message"
             class="textarea" 
             name="message" 
-            [(ngModel)]="message"
             required></textarea>
             <!-- <div class="row" *ngIf="message.touched && message.invalid"> 
               A message is required.
@@ -55,12 +53,10 @@
         <div class="col-8">
           <ngx-recaptcha2
             [siteKey]="siteKey"
-            [size]="normal"
-            [hl]="en"
-            [theme]="light"
+
             (expire)="handleExpire()"
             (load)="handleLoad()"
-            (success)="handleSuccess($event)"
+            (success)="handleSuccess()"
             formControlName="recaptcha">
           </ngx-recaptcha2>
         </div>

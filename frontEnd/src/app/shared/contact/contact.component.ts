@@ -18,6 +18,8 @@ export class ContactComponent implements OnInit {
   });
   siteKey = "6Le1SnEUAAAAADu0R-EM9sg2Yt75HIpRAICj7hge";
 
+
+
   constructor(private formBuilder: FormBuilder,
               private apiService: ApiService) {}
 
@@ -52,5 +54,8 @@ export class ContactComponent implements OnInit {
   handleSuccess() {
     console.log('success');
   }
+  handleExpire() {
+    console.log('expired');
+  };
 
 }
