@@ -149,10 +149,10 @@
                             [owlDateTime]="date" 
                             [owlDateTimeTrigger]="date" 
                             [(ngModel)]="dateMoment" 
-                            (ngModelChange)="onChooseDate()"
+                            
                             [ngModelOptions]="{standalone: true}"
                             [formControl]="form.controls['date']"
-                            [min]="moment"
+                            [min]="DateMomentMin"
                             ngDefaultControl>
                         <owl-date-time
                             #date
@@ -161,7 +161,7 @@
                             [placeHolder]="'YYYY-MM-DD'"
                             [autoClose]="true"
                             [inputId]="'date'"
-                            
+                            (afterPickerClosed)="onChooseDate()"
                             ></owl-date-time>
                       </div>
                   </div>
@@ -175,7 +175,6 @@
                                 [owlDateTimeTrigger]="startTime"
                                 [(ngModel)]="startTimeMoment" 
                                 [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="onChooseStartTime()"
                                 [formControl]="form.controls['startTime']"
                                 ngDefaultControl
                                 >
@@ -186,6 +185,7 @@
                                 [stepMinute]="15"
                                 [autoClose]="true"
                                 [inputId]="'input3'"
+                                (afterPickerClosed)="onChooseStartTime()"
                                 ></owl-date-time>
                       </div>
                   </div>
@@ -199,7 +199,6 @@
                                 [owlDateTimeTrigger]="endTime"
                                 [(ngModel)]="endTimeMoment" 
                                 [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="onChooseEndTime()"
                                 [formControl]="form.controls['endTime']"
                                 ngDefaultControl
                                 >
@@ -210,6 +209,7 @@
                                 [stepMinute]="15"
                                 [autoClose]="true"
                                 [inputId]="'input4'"
+                                (afterPickerClosed)="onChooseEndTime()"
                                 ></owl-date-time>
                     </div>
                   </div>
@@ -231,7 +231,7 @@
                 </div>
     
                 <!-- DEADLINE DATE - only if not a repeat - USES DATEPICKER MODULE -->
-                <div *ngIf="!isRepeat">
+                <div *ngIf="!isRepeat && dateChosen">
 
                     <div class="row">
                         <label for="test" class="col-4 col-form-label text-right">Order Deadline Date/Time</label>
@@ -239,7 +239,8 @@
                             <input 
                                 [owlDateTimeTrigger]="deadline" 
                                 [owlDateTime]="deadline"
-                                [max]="deadlineDateTimeMin"
+                                [max]="deadlineDateTimeMax"
+                                [min]="deadlineDateTimeMin"
                                 [(ngModel)]="deadlineDateTime"
                                 [ngModelOptions]="{standalone: true}"
                                 [formControl]="form.controls['deadlineDateTime']"
@@ -410,11 +411,6 @@
                         </div>
                     </div>
                     
-                  </div>
-      
-                    <!-- options only for Market or other pickups -->
-                  <div *ngIf="type === 'Market Pickup' || type === 'Other Pickup'">
-                    <p>Market or other pickups</p>
                   </div>
     
                 </div>
