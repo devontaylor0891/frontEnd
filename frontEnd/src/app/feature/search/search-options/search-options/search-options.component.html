@@ -19,9 +19,9 @@
                     <div class="col-12 text-center">
                         <h5 class="card-title">Search Radius (km)</h5>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-olf-primary" (click)="changeDistance25()">25</button>
-                            <button type="button" class="btn btn-olf-primary" (click)="changeDistance10()">10</button>
-                            <button type="button" class="btn btn-olf-primary" (click)="changeDistance5()">5</button>
+                            <button type="button" class="btn" [ngClass]="(currentRadius == 25)?'btn-olf-primary btn-lg':'btn-olf-secondary btn-sm'" (click)="setDistance(25)">25</button>
+                            <button type="button" class="btn" [ngClass]="(currentRadius == 10)?'btn-olf-primary btn-lg':'btn-olf-secondary btn-sm'" (click)="setDistance(10)">10</button>
+                            <button type="button" class="btn" [ngClass]="(currentRadius == 5)?'btn-olf-primary btn-lg':'btn-olf-secondary btn-sm'" (click)="setDistance(5)">5</button>
                         </div>
                     </div>
                 </div>

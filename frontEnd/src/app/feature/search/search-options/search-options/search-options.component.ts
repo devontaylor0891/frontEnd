@@ -132,7 +132,12 @@ export class SearchOptionsComponent implements OnInit {
       });
     });
 
-  }
+  };
+
+  setDistance(distance) {
+    this.currentRadius = distance;
+    this.searchService.filterByDistance(distance);
+  };
 
   onSubmit(form: NgForm) {
     //empty the submitted values
@@ -156,6 +161,7 @@ export class SearchOptionsComponent implements OnInit {
         }
       }
     }
+    console.log('submitted values: ', this.submittedValues);
     //then send the submitted values to search service to update the view
     this.searchService.onFilter(this.submittedValues);
   }

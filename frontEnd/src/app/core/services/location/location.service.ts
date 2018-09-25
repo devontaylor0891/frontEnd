@@ -27,7 +27,22 @@ export class LocationService {
     results: any;
     geoCoderResults: any = {};
 
+    geoOptions = {
+        enableHighAccuracy: false,
+        timeout: 5000, // Wait 5 seconds
+        maximumAge: 300000 //  Valid for 5 minutes
+    };
+
+    fallbackPosition = {
+        coords: {
+            latitude: 50.1391360,
+            longitude: -101.6659968
+        }
+    }
+
     _cityProvince: BehaviorSubject<string>;
+
+    
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone) {
@@ -43,17 +58,78 @@ export class LocationService {
                     (position) => {
                         this.lat = position.coords.latitude;
                         this.lng = position.coords.longitude;
-                        // console.log('position: ', position);
+                        console.log('position: ', position);
                         observer.next(position);
                         observer.complete();
                     },
-                    (error) => observer.error(error)
+                    (error) => {
+                        this.lat = 50.1391360, // fallback lat 
+                        this.lng = -101.6659968  // fallback lng
+                        alert('Onlylocalfood will now load from a default location. You may update the location at any time.');
+                        console.log("Fallback position: ", this.fallbackPosition);
+                        observer.next(this.fallbackPosition);
+                        // observer.error(error)
+                        observer.complete();
+                    },
+                    this.geoOptions
                 );
             } else {
                 observer.error('Unsupported Browser');
             }
         });
     };
+
+    // getLocation(): Observable<any> {
+    //     return Observable.create(observer => {
+    //         if (window.navigator && window.navigator.geolocation) {
+    //             window.navigator.geolocation.getCurrentPosition(this.userLocationFound, this.userLocationNotFound, this.geoOptions);
+    //             setTimeout(function () {
+    //                 if(!this.lat){
+    //                     window.console.log("No confirmation from user, using fallback");
+    //                     this.lat = -41.29247, // fallback lat 
+    //                     this.lng = 174.7732  // fallback lng
+    //                     console.log("Fallback set: ", this.lat, this.lng);
+    //                 }else{
+    //                     // observer.next(Position);
+    //                     // observer.complete();
+    //                     window.console.log("Location was set");
+    //                 }
+    //             }, this.geoOptions.timeout + 1000); // Wait extra second
+    //         } else {
+    //             observer.error('Unsupported Browser');
+    //         }
+    //     });
+    // };
+
+    // userLocationFound(position) {
+    //     console.log('position: ', position);
+    //     this.lat = position.coords.latitude,
+    //     this.lng = position.coords.longitude
+    //     console.log("User confirmed! Location found: " + this.lat + ", " + this.lng);
+    // };
+
+    // setFallback() {
+    //     this.lat = -41.29247, // fallback lat 
+    //     this.lng = 174.7732  // fallback lng
+    //     console.log("Fallback set: ", this.lat, this.lng);
+    // }
+
+    // userLocationNotFound(error){
+    //     // this.lat = -41.29247, // fallback lat 
+    //     // this.lng = 174.7732  // fallback lng
+    //     // console.log("Fallback set: ", this.lat, this.lng);
+    //     switch(error.code) {
+    //         case error.PERMISSION_DENIED:
+    //             return console.log("User denied the request for Geolocation.")
+    //         case error.POSITION_UNAVAILABLE:
+    //             return console.log("Location information is unavailable.")
+    //         case error.TIMEOUT:
+    //             return console.log("The request to get user location timed out.")
+    //         case error.UNKNOWN_ERROR:
+    //             return console.log("An unknown error occurred.")
+    //     }
+    // };
+
 
     getCityProvince(): Observable<string> {
         return this._cityProvince.asObservable();

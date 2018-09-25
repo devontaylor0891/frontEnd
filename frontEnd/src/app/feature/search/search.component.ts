@@ -44,6 +44,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.locationService.getLocation()
       .subscribe(
         response => {
+          console.log('location service. getLocation results: ', response);
           this.userLocation = response;
           this.searchOptions.latitude = this.userLocation.coords.latitude;
           this.searchOptions.longitude = this.userLocation.coords.longitude;
