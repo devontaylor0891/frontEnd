@@ -197,6 +197,7 @@
                             <input 
                                 [owlDateTime]="endTime" 
                                 [owlDateTimeTrigger]="endTime"
+                                [min]="endTimeMin"
                                 [(ngModel)]="endTimeMoment" 
                                 [ngModelOptions]="{standalone: true}"
                                 [formControl]="form.controls['endTime']"
@@ -250,6 +251,7 @@
                                 #deadline
                                 [autoClose]="true"
                                 [inputId]="'test'"
+                                [stepMinute]="15"
                                 ></owl-date-time>
                         </div>
                     </div>

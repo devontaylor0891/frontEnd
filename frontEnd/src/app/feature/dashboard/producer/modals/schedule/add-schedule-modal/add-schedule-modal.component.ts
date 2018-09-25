@@ -73,6 +73,7 @@ export class AddScheduleModalComponent implements OnInit {
   public dateMoments: any; // throws error if initialized with a date
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
   public endTimeMoment: any = new Date(0, 0, 0, 13, 0, 0, 0); // default end time is 1pm
+  public endTimeMin: any = new Date(0, 0, 0, 13, 15, 0, 0);
   public deadlineDateMoment: any = new Date(); // default is now because date is tomorrow, just for ease of coding
   public deadlineTimeMoment: any = new Date(0, 0, 0, 0, 0, 0, 0); // defaults to 3 hours before start time
   public deadlineDateTime: any = new Date(
@@ -386,6 +387,9 @@ export class AddScheduleModalComponent implements OnInit {
     this.deadlineDateTimeMax.setHours(this.schedStartHour);
     this.deadlineDateTimeMax.setMinutes(this.schedStartMinute);
     console.log('new deadline max: ', this.deadlineDateTimeMax);
+    // set end time and end time min
+    this.endTimeMoment = new Date(0, 0, 0, this.schedStartHour + 1, this.schedStartMinute, 0, 0);
+    this.endTimeMin = new Date(0, 0, 0, this.schedStartHour, this.schedStartMinute + 15, 0, 0);
   };
 
   buildDate(year, month, day, hour, minute) {
