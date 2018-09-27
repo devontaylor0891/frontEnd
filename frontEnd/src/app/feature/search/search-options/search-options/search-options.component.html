@@ -62,8 +62,17 @@
                         <hr>
                         <h5 class="card-title text-center">Categories</h5>
                             <div *ngFor="let category of categoriesList; let i = index" class="pl-3">
-                                <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
-                                <label for="c.{{ category.category }}">{{ category.category }}</label>
+                                <!-- <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
+                                <label for="c.{{ category.category }}">{{ category.category }}</label> -->
+                                <label>
+                                        <input 
+                                            type="checkbox" 
+                                            id="c.{{ category.category }}" 
+                                            name="c.{{ category.category }}" 
+                                            [(ngModel)]="category.checkboxValue" 
+                                            [checked]="category.checkboxValue">
+                                    {{ category.category }}
+                                </label>
                             </div>
                     </div>
                     <div class="col-12">
@@ -71,8 +80,15 @@
                         <h5 class="card-title text-center">Delivery Types</h5>
                         <form-group>
                             <div *ngFor="let delivery of deliveryTypes" class="pl-3">
-                                <input type="checkbox" id="d.{{ delivery.type }}" name="d.{{ delivery.type }}" [(ngModel)]="delivery.checkboxValue" [checked]="delivery.checkboxValue">
-                                <label for="d.{{ delivery.type }}">{{ delivery.type }}</label>
+                                <label>
+                                        <input 
+                                            type="checkbox" 
+                                            id="d.{{ delivery.type }}" 
+                                            name="d.{{ delivery.type }}" 
+                                            [(ngModel)]="delivery.checkboxValue" 
+                                            [checked]="delivery.checkboxValue">
+                                    {{ delivery.type }}
+                                </label>
                             </div>
                         </form-group>
                     </div>

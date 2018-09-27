@@ -136,7 +136,7 @@ export class SearchOptionsComponent implements OnInit {
 
   setDistance(distance) {
     this.currentRadius = distance;
-    this.searchService.filterByDistance(distance);
+    this.searchService.filterByDistance(distance, this.locationService.lat, this.locationService.lng);
   };
 
   onSubmit(form: NgForm) {
