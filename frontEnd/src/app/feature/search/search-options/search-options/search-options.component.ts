@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, DoCheck, Input, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormControl, FormGroup } from '@angular/forms';
 
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
 
@@ -13,7 +13,9 @@ import { LocationService } from '../../../../core/services/location/location.ser
   templateUrl: './search-options.component.html',
   styleUrls: ['./search-options.component.scss']
 })
-export class SearchOptionsComponent implements OnInit {
+export class SearchOptionsComponent implements OnInit, DoCheck {
+
+  google: any;
 
   deliveryTypes: any[];
   categoriesList: any[];
@@ -42,6 +44,41 @@ export class SearchOptionsComponent implements OnInit {
   public searchControl: FormControl;
   @ViewChild('search') public searchElementRef: ElementRef;
   zoom: number;
+
+  ngDoCheck() {
+    if (this.locationUpdate) {
+// load Places Autocomplete
+this.mapsAPILoader.load().then(() => {
+//   let autocomplete = new google.maps.places.Autocomplete(
+//     <HTMLInputElement>document.getElementById("search"), {
+//     types: ['geocode']
+// });
+  let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+    types: ["geocode"]
+  });
+  autocomplete.addListener("place_changed", () => {
+    this.ngZone.run(() => {
+      // get the place result
+      let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+      // verify result
+      if (place.geometry === undefined || place.geometry === null) {
+        return;
+      }
+
+      console.log('place: ', place);
+      this.fillAddress(place);
+
+      // this shouldn't be necessary
+      // set latitude, longitude and zoom
+      // this.latitude = place.geometry.location.lat();
+      // this.longitude = place.geometry.location.lng();
+      // this.zoom = 12;
+    });
+  });
+});
+    }
+  }
 
   constructor(private searchService: SearchService,
               private locationService: LocationService,
@@ -105,32 +142,7 @@ export class SearchOptionsComponent implements OnInit {
     this.searchControl = new FormControl('');
 
 
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["geocode"]
-      });
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          // get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          console.log('place: ', place);
-          this.fillAddress(place);
-
-          // this shouldn't be necessary
-          // set latitude, longitude and zoom
-          // this.latitude = place.geometry.location.lat();
-          // this.longitude = place.geometry.location.lng();
-          // this.zoom = 12;
-        });
-      });
-    });
+    
 
   };
 

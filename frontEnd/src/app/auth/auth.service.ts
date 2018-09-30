@@ -129,7 +129,7 @@ export class AuthService {
         console.error(`Error authenticating: ${err.error}`);
       }
       //may have to remove the following line to make logins not redirect to home page
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
     });
   }
 
