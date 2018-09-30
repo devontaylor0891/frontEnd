@@ -35,15 +35,15 @@
                 <div class="row" [class.hidden]="!type || type === 'On-farm Pickup'">
                       <label for="search" class="col-4 col-form-label text-right">Search for Community:</label>
                       <div class="col-8">
-                            <input  
-                                autocorrect="off" 
-                                autocapitalize="off" 
-                                spellcheck="off" 
-                                type="text" 
-                                class="form-control" 
-                                #search 
-                                id="search"
-                                [formControl]="searchControl">
+                        <input  
+                            autocorrect="off" 
+                            autocapitalize="off" 
+                            spellcheck="off" 
+                            type="text" 
+                            class="form-control" 
+                            #search 
+                            id="search"
+                            [formControl]="searchControl">
                       </div>
                       
                     <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">

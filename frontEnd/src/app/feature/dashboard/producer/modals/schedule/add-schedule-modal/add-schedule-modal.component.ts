@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -140,6 +140,7 @@ export class AddScheduleModalComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+      console.log('google.maps: ', google.maps);
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["geocode"]
       });
@@ -172,6 +173,8 @@ export class AddScheduleModalComponent implements OnInit {
           this.longitude = this.producer.longitude;
         }
       );
+
+    this.setSchedDefaultValues();
 
   };
 
@@ -263,6 +266,8 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.producerId = this.producer.producerId;
     this.submitObject.type = this.form.value.type;
     this.submitObject.description = this.form.value.description;
+    console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
     this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
     this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
     this.submitObject.hasFee = this.form.value.hasFee;
@@ -421,5 +426,15 @@ export class AddScheduleModalComponent implements OnInit {
   onCancel() {
     this.activeModal.close();
   };
+
+  setSchedDefaultValues() {
+    this.schedYear = this.dateMoment.getFullYear();
+    this.schedMonth = this.dateMoment.getMonth();
+    this.schedDay = this.dateMoment.getDate();
+    this.schedStartHour = this.startTimeMoment.getHours();
+    this.schedStartMinute = this.startTimeMoment.getMinutes();
+    this.schedEndHour = this.endTimeMoment.getHours();
+    this.schedEndMinute = this.endTimeMoment.getMinutes();
+  }
 
 }

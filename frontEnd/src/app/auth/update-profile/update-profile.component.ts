@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, NgZone, ViewChild, ElementRef } from '@an
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
 
