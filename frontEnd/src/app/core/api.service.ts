@@ -321,15 +321,6 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  // PATCH order
-  patchOrder(id: number, newFieldAndValue: Object): Observable<any> {
-    return this.http
-      .patch(`${ENV.BASE_API}orders/${id}/`, newFieldAndValue, {
-        headers: new HttpHeaders().set('Authorization', this._authHeader)
-      })
-      .catch(this._handleError);
-  };
-
   // POST abandoned order
   postAbandonedOrder(order: any): Observable<any> {
     return this.http

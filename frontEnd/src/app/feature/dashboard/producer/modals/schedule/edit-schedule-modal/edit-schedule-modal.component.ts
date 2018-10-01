@@ -76,6 +76,7 @@ export class EditScheduleModalComponent implements OnInit {
   }
   
   private setHasOrders() {
+    console.log('record: ', this.record);
 	  if (this.record.orderList.length > 0) {
 		  this.hasOrders = true;
 	  } else {

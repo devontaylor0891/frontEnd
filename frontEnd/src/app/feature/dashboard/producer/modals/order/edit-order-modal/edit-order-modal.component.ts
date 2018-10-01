@@ -106,7 +106,7 @@ export class EditOrderModalComponent implements OnInit {
     this.submitting = true;
     this.setSubmitObject('accepted');
     // patch the order
-    this.api.patchOrder(this.record.id, this.submitObject)
+    this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
           console.log('order accepted and emitted from modal: ', result);
@@ -126,7 +126,7 @@ export class EditOrderModalComponent implements OnInit {
     this.submitting = true;
     this.setSubmitObject('denied');
     // patch the order
-    this.api.patchOrder(this.record.id, this.submitObject)
+    this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
           console.log('order denied and emitted from modal: ', result);
