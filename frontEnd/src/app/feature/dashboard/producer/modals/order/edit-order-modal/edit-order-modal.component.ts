@@ -15,7 +15,7 @@ import { OrderModel } from '../../../../../../core/models/order.model';
   templateUrl: './edit-order-modal.component.html',
   styleUrls: ['./edit-order-modal.component.scss']
 })
-export class EditOrderModalComponent implements OnInit {
+export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   @Input() record: OrderModel;
   products: any;
@@ -28,9 +28,7 @@ export class EditOrderModalComponent implements OnInit {
   formChangeSub: Subscription;
   submitOrderSub: Subscription;
   submitting: boolean = false;
-  submitObject: {
-    'orderDetails': any
-  };
+  submitObject: any;
   error: boolean;
   orderStatusInput: string;
 
@@ -39,8 +37,6 @@ export class EditOrderModalComponent implements OnInit {
         private api: ApiService,
         public activeModal: NgbActiveModal,
         private cartService: CartService) {
-
-    this.submitObject = { orderDetails : {} };
 
     // build the products array to use in the table
     this.products = [
@@ -57,7 +53,7 @@ export class EditOrderModalComponent implements OnInit {
   ngOnInit() {
     this.buildProductsArray();
     this.buildForm();
-    this.submitObject.orderDetails = this.record.orderDetails;
+    this.submitObject = this.record;
     console.log('this order: ', this.record);
     console.log('submitObject: ', this.submitObject);
   }
@@ -106,7 +102,7 @@ export class EditOrderModalComponent implements OnInit {
     this.submitting = true;
     this.setSubmitObject('accepted');
     // patch the order
-    this.api.putOrder(this.record.id, this.submitObject)
+    this.submitOrderSub = this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
           console.log('order accepted and emitted from modal: ', result);
@@ -126,7 +122,7 @@ export class EditOrderModalComponent implements OnInit {
     this.submitting = true;
     this.setSubmitObject('denied');
     // patch the order
-    this.api.putOrder(this.record.id, this.submitObject)
+    this.submitOrderSub = this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
           console.log('order denied and emitted from modal: ', result);
@@ -142,18 +138,6 @@ export class EditOrderModalComponent implements OnInit {
     }
 
   }
-
-  // onSubmit() {
-  // 	this.submitting = true;
-  //   this.setSubmitObject();
-  //   console.log('submitted object: ', this.submitObject);
-  // 	this.submitOrderSub = this.api
-  // 		.putOrder(this.record.id, this.submitObject)
-  // 		.subscribe(
-  // 		  data => this.handleSubmitSuccess(data),
-  // 		  err => this.handleSubmitError(err)
-  // 		);
-  // };
 
   handleSubmitAcceptSuccess(res) {
     this.submitting = false;
@@ -177,11 +161,10 @@ export class EditOrderModalComponent implements OnInit {
     this.error = true;
   };
 
-  // ngOnDestroy() {
-  //   if (this.submitOrderSub) {
-  //     this.submitOrderSub.unsubscribe();
-  //   }
-  //   this.formChangeSub.unsubscribe();
-  // }
+  ngOnDestroy() {
+    if (this.submitOrderSub) {
+      this.submitOrderSub.unsubscribe();
+    }
+  }
 
 }

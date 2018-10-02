@@ -27,9 +27,7 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
 
     orderUpdateSubscription: any;
     submitting: boolean = false;
-    submitObject: {
-        'orderDetails': any
-    };
+    submitObject: any;
     error: boolean;
 
     constructor(private fb: FormBuilder,
@@ -37,8 +35,6 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
                 private api: ApiService,
                 public activeModal: NgbActiveModal,
                 private cartService: CartService) {
-
-        this.submitObject = { orderDetails : {} };
 
         // build the products array to use in the table
         this.products = [
@@ -93,7 +89,7 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
     };
 
     buildSubmitObject() {
-        this.submitObject.orderDetails = this.record.orderDetails;
+        this.submitObject = this.record;
     };
 
     onMarkComplete() {
@@ -117,7 +113,7 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
         this.submitObject.orderDetails.orderStatus = 'incomplete';
         this.submitObject.orderDetails.incompleteReason = this.markCompleteForm.value.incompleteReason;
         console.log('this is the submitObject after:', this.submitObject);
-        this.orderUpdateSubscription = this.api.patchOrder(this.record.id, this.submitObject)
+        this.orderUpdateSubscription = this.api.putOrder(this.record.id, this.submitObject)
             .subscribe(
                 result => {
                     console.log('order incompleted and emitted from modal: ', result);

@@ -315,7 +315,8 @@ export class ApiService {
   // PUT existing order - producer or admin only
   putOrder(id: number, order: any): Observable<any> {
     return this.http
-      .put(`${ENV.BASE_API}orders/${id}`, order, {
+      .put(this.apiUrl + `/orders/${id}/`, order, {
+      // .put(`${ENV.BASE_API}orders/${id}`, order, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);

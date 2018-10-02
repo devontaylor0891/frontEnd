@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-// import { } from 'googlemaps';
+import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
