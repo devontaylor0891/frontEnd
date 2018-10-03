@@ -99,8 +99,8 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
         this.orderUpdateSubscription = this.api.putOrder(this.record.id, this.submitObject)
             .subscribe(
                 result => {
-                    console.log('order completed and emitted from modal: ', result);
-                    this.handleSubmitCompleteSuccess(result);
+                    console.log('order completed and emitted from modal: ', this.submitObject);
+                    this.handleSubmitCompleteSuccess(this.submitObject);
                 }, error => {
                     this.handleSubmitError(error);
                 }
@@ -116,8 +116,8 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
         this.orderUpdateSubscription = this.api.putOrder(this.record.id, this.submitObject)
             .subscribe(
                 result => {
-                    console.log('order incompleted and emitted from modal: ', result);
-                    this.handleSubmitIncompleteSuccess(result);
+                    console.log('order incompleted and emitted from modal: ', this.submitObject);
+                    this.handleSubmitIncompleteSuccess(this.submitObject);
                 }, error => {
                     this.handleSubmitError(error);
                 }
