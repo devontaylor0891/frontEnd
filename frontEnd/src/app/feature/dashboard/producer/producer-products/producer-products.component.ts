@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -82,7 +82,8 @@ export class ProducerProductsComponent implements OnInit {
 
   constructor(private dashboardService: ProducerDashboardService,
               private modal: NgbModal,
-              private utilityService: UtilityService) {  };
+              private utilityService: UtilityService,
+              private ref: ChangeDetectorRef) {  };
 
   openModal() {
     const modalRef = this.modal.open(AddProductModalComponent, { size: 'lg' });
@@ -153,6 +154,7 @@ export class ProducerProductsComponent implements OnInit {
     };
     // add to obsoleted array
     this.obsoletedProducts.push($event);
+    this.ref.detectChanges();
   };
 
   onProductDeleted($event) { // remove from wherever it is located

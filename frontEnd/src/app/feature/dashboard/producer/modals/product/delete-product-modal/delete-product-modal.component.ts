@@ -42,7 +42,7 @@ export class DeleteProductModalComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           console.log('modal obsolete done: ', response.id);
-          this.handleObsoleteSuccess(response);
+          this.handleObsoleteSuccess(this.submitObject);
         },
         err => {
           this.handleSubmitError(err);

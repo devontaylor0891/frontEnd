@@ -236,7 +236,8 @@ export class ApiService {
   // PUT existing schedule - producer or admin only
   putSchedule(id: number, schedule: any): Observable<any> {
     return this.http
-      .put(`${ENV.BASE_API}schedules/${id}`, schedule, {
+      .put(this.apiUrl + `/schedules/${id}/`, schedule, {
+      // .put(`${ENV.BASE_API}schedules/${id}`, schedule, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);

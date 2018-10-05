@@ -77,7 +77,7 @@ export class DeleteScheduleModalComponent implements OnInit, OnDestroy {
               private api: ApiService) { }
 
   ngOnInit() {
-    if (this.record.orderList.length > 0) {
+    if (this.record.orderCount > 0) {
       this.hasOrders = true;
     } else {
       this.submitObject = this.record;
