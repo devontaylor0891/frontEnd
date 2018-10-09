@@ -86,10 +86,11 @@ export class DeleteScheduleModalComponent implements OnInit, OnDestroy {
 
   onDelete() {
     this.submitting = true;
+    console.log('schedule deleted from modal: ', this.record);
     this.deleteScheduleSub = this.api.deleteSchedule(this.record.id)
       .subscribe(
         response => {
-          this.handleSubmitSuccess(response, this.record.id);
+          this.handleSubmitSuccess(response, this.record);
         },
         err => {
           this.handleSubmitError(err);
@@ -97,10 +98,10 @@ export class DeleteScheduleModalComponent implements OnInit, OnDestroy {
       )
   };
 
-  handleSubmitSuccess(res, id) {
+  handleSubmitSuccess(res, record) {
     this.submitting = false;
-    console.log('schedule deleted from modal: ', id);
-    this.onScheduleDeleted.emit(id);
+    console.log('schedule deleted from modal: ', record);
+    this.onScheduleDeleted.emit(record);
 		// close modal
 		this.activeModal.close();
   };

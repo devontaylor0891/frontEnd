@@ -263,6 +263,11 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.addingImage = true;
   };
 
+  deleteAccount() {
+    console.log('delete account clicked');
+    this.activeModal.close();
+  }
+
   ngOnDestroy() {
     if (this.imageUploadingSub) {
       this.imageUploadingSub.unsubscribe();

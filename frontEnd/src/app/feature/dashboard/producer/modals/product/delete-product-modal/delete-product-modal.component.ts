@@ -51,12 +51,16 @@ export class DeleteProductModalComponent implements OnInit, OnDestroy {
   };
 
   onDelete() {
+    this.submitObject.qtyAvailable = 0;
+    this.submitObject.isObsolete = true;
     this.submitting = true;
-    this.subscription = this.api.deleteProduct(this.record.id)
+    console.log('record to delete: ', this.record);
+    this.subscription = this.api.deleteProduct(this.record.id, this.record)
       .subscribe(
         response => {
+          console.log('response: ', response);
           console.log('modal delete done: ', this.record.id);
-          this.handleDeleteSuccess(this.record.id);
+          this.handleDeleteSuccess(this.record);
         },
         err => {
           this.handleSubmitError(err);
@@ -64,9 +68,9 @@ export class DeleteProductModalComponent implements OnInit, OnDestroy {
       )
   };
 
-  handleDeleteSuccess(id) {
+  handleDeleteSuccess(record) {
     this.submitting = false;
-    this.onProductDelete.emit(id);
+    this.onProductDelete.emit(record);
 		// close modal
 		this.activeModal.close();
   };

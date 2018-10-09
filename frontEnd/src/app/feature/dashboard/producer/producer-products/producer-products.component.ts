@@ -90,6 +90,7 @@ export class ProducerProductsComponent implements OnInit {
     modalRef.componentInstance.itemCreated
       .subscribe(
         (product) => {
+          console.log('new Product received: ', product);
           this.createNew(product);
         }
       );

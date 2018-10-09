@@ -101,6 +101,16 @@ export class ConsumerEditOrderModalComponent implements OnInit {
 			  err => this.handleSubmitError(err)
 			);
   };
+
+  deleteOrder() {
+    this.submitting = true;
+    this.submitOrderSub = this.api
+      .deleteOrder(this.record.id)
+      .subscribe(
+        data => this.handleDeleteSuccess(data),
+			  err => this.handleDeleteError(err)
+      )
+  }
   
   handleSubmitSuccess(res) {
     this.submitting = false;
@@ -110,6 +120,19 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   };
   
   handleSubmitError(err) {
+		console.error(err);
+		this.submitting = false;
+		this.error = true;
+  };
+
+  handleDeleteSuccess(res) {
+    this.submitting = false;
+    console.log('deleted!: ', res);
+		// close modal
+		this.activeModal.close();
+  };
+  
+  handleDeleteError(err) {
 		console.error(err);
 		this.submitting = false;
 		this.error = true;

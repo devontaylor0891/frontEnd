@@ -64,31 +64,60 @@
                             <div *ngFor="let category of categoriesList; let i = index" class="pl-3">
                                 <!-- <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
                                 <label for="c.{{ category.category }}">{{ category.category }}</label> -->
-                                <label>
+                                <!-- <label class="custom-control custom-checkbox">
                                         <input 
+                                            class="custom-control-indicator"
                                             type="checkbox" 
                                             id="c.{{ category.category }}" 
                                             name="c.{{ category.category }}" 
                                             [(ngModel)]="category.checkboxValue" 
                                             [checked]="category.checkboxValue">
-                                    {{ category.category }}
+                                            <span class="custom-control-description">{{ category.category }}</span>
+                                </label> -->
+                                <label class="custom-control fill-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        class="fill-control-input"
+                                        id="c.{{ category.category }}" 
+                                        name="c.{{ category.category }}" 
+                                        [(ngModel)]="category.checkboxValue" 
+                                        [checked]="category.checkboxValue"
+                                        >
+                                    <span class="fill-control-indicator"></span>
+                                    <span class="fill-control-description">{{ category.category }}</span>
                                 </label>
                             </div>
                     </div>
+
                     <div class="col-12">
                         <hr>
                         <h5 class="card-title text-center">Delivery Types</h5>
                         <form-group>
                             <div *ngFor="let delivery of deliveryTypes" class="pl-3">
-                                <label>
+                                <label class="custom-control fill-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        class="fill-control-input"
+                                        id="d.{{ delivery.type }}" 
+                                        name="d.{{ delivery.type }}" 
+                                        [(ngModel)]="delivery.checkboxValue" 
+                                        [checked]="delivery.checkboxValue"
+                                        >
+                                    <span class="fill-control-indicator"></span>
+                                    <span class="fill-control-description">{{ delivery.type }}</span>
+                                </label>
+
+                                <!-- <label class="custom-control custom-checkbox">
                                         <input 
+                                            class="custom-control-indicator"
                                             type="checkbox" 
                                             id="d.{{ delivery.type }}" 
                                             name="d.{{ delivery.type }}" 
                                             [(ngModel)]="delivery.checkboxValue" 
                                             [checked]="delivery.checkboxValue">
-                                    {{ delivery.type }}
-                                </label>
+                                            <span class="custom-control-description">{{ delivery.type }}</span>
+                                    
+                                </label> -->
                             </div>
                         </form-group>
                     </div>

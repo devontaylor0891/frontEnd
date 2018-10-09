@@ -173,10 +173,6 @@
               (click)="onAccept()"
               [disabled]="(orderForm.invalid)"
               >Confirm these Changes</button>
-          <button 
-              class="btn btn-olf-primary" 
-              (click)="activeModal.close()"
-              >Cancel Changes</button>
       </div>
 
   </form>
@@ -184,9 +180,19 @@
 </div>
 
 <div class="modal-footer justify-content-center">
-  <div class="row">
-      <div>
-          <a (click)="activeModal.close()">Cancel Changes</a>
-      </div>
-  </div>
+    <div class="row text-center">
+        <div class="col-12">
+            <a (click)="activeModal.close()">Cancel Changes</a>
+        </div>
+        <hr>
+        <div class="col-12" *ngIf="record.orderDetails.orderStatus === 'pending'">
+            <p>As your order is still pending, you have the option to delete it.
+                <button
+                    type="button" 
+                    class="btn btn-danger btn-sm" 
+                    (click)="deleteOrder()"
+                    >Delete</button>
+            </p>
+        </div>
+    </div>
 </div>

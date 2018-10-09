@@ -189,9 +189,11 @@ export class ApiService {
   };
 
   // DELETE existing event and all associated RSVPs (admin only)
-  deleteProduct(id: number): Observable<any> {
+  deleteProduct(id: number, product: any): Observable<any> {
     return this.http
-      .delete(`${ENV.BASE_API}products/${id}`, {
+      .put(this.apiUrl + `/productsDelete/${id}/`, product, {
+      // .delete(`${ENV.BASE_API}products/${id}`, {
+        // responseType: 'text', // remove this after the api code is done
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -243,9 +245,9 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  deleteSchedule(id): Observable<any> {
+  deleteSchedule(id: number): Observable<any> {
     return this.http
-      .delete(`${ENV.BASE_API}schedules/${id}`, {
+      .delete(this.apiUrl + `/schedules/${id}/`, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -323,6 +325,15 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // DELETE order
+  deleteOrder(id: number): Observable<any> {
+    return this.http
+      .delete(this.apiUrl + `/orders/${id}/`, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
   // POST abandoned order
   postAbandonedOrder(order: any): Observable<any> {
     return this.http
@@ -352,8 +363,8 @@ export class ApiService {
 // ***************** get presigned url for image uploads ***************
   getPresignedUrl(imageName: any): Observable<string> {
     AWS.config.update({
-      accessKeyId: ``,
-      secretAccessKey: ``,
+      accessKeyId: `AKIAJLT7PFCM3W5KFT7Q`,
+      secretAccessKey: `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`,
       region: 'us-west-2'
     });
     const s3 = new AWS.S3();

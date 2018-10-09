@@ -73,12 +73,13 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
     // this.dashboardService.addNewProduct(this.form.value);
     this.submitSub = this.apiService.postProduct(this.form.value)
       .subscribe(
-          data => this.handleSubmitSuccess(data),
+          data => this.handleSubmitSuccess(this.form.value),
 			    err => this.handleSubmitError(err)
       );
   };
 
   handleSubmitSuccess(result) {
+    console.log('new Product result: ', result);
     this.itemCreated.emit(result);
     if (this.addingImage) { // upload image and then close the modal
       this.imageService.convertAndUpload();
