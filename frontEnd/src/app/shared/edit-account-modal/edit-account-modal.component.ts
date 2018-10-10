@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 // import { } from 'googlemaps';
+import { google } from '@google/maps';
+
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
 import { Subscription } from 'rxjs/Subscription';

@@ -9,15 +9,16 @@ import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 
-// import { } from 'googlemaps';
+import { } from 'googlemaps';
+
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
-
+// import { google } from '@google/maps';
 
 @Injectable()
 export class LocationService {
 
-    geocoder: google.maps.Geocoder;
+    geocoder: any;
     lat: any;
     lng: any;
     city: string;
@@ -137,6 +138,7 @@ export class LocationService {
 
     codeLatLng(lat, lng) {
         this.mapsAPILoader.load().then(() => {
+            console.log('google.maps from location service: ', google.maps);
             this.geocoder = new google.maps.Geocoder();
             let latlng = new google.maps.LatLng(lat, lng);
             let self = this;

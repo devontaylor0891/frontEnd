@@ -2,6 +2,8 @@ import { Component, OnInit, Input, NgZone, ViewChild, ElementRef } from '@angula
 import { NgForm, FormControl, FormGroup } from '@angular/forms';
 
 // import { } from 'googlemaps';
+import { google } from '@google/maps';
+
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
 
