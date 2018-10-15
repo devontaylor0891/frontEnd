@@ -253,19 +253,6 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-  // this is returning the proper results, but I will use a mock endpoint for development so we can design proper data
-  // GET one product by id from Nikki's endpoint
-  // getProductById(id): Observable<ProductCardModel> {
-  //   console.log('api service called.')
-  //     return this.http
-  //       .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/products/' + id)
-  //       .map(response => { return response })
-  //       .catch(this._handleError);
-  // };
-
-
-
-
 
 // ***************** ORDERS *******************
 
@@ -343,14 +330,6 @@ export class ApiService {
       .catch(this._handleError);
   };
 
-	// from RWAS
-  // GET list of public, future events
-  // getEvents$(): Observable<EventModel[]> {
-    // return this.http
-      // .get(`${ENV.BASE_API}events`)
-      // .catch(this._handleError);
-  // }
-
 // ***************** ERROR HANDLING *******
   private _handleError(err: HttpErrorResponse | any) {
     const errorMsg = err.message || 'Error: Unable to complete request.';
@@ -389,7 +368,7 @@ export class ApiService {
       });
   };
 
-  // *************** CAPTCHA VERIFICATION AND EMAIL SEND *****************
+// *************** CAPTCHA VERIFICATION AND EMAIL SEND *****************
   verifyAndSendEmail(email) {
     return this.http
       .post(this.apiUrl + `/captcha`, email)
