@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
 import { CartService } from '../services/cart-service/cart.service';
@@ -8,7 +8,7 @@ import { CartService } from '../services/cart-service/cart.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   loggedIn: boolean;
   @Input() isAdmin: boolean;
@@ -53,6 +53,10 @@ export class HeaderComponent implements OnInit, OnChanges {
 
     this.cartService.loadCartCount();
 
+  };
+
+  ngOnDestroy() {
+    console.log('header onDestroy called');
   }
 
 }

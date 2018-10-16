@@ -148,7 +148,9 @@ export class ProducerProductsComponent implements OnInit {
     if (arrayName === 'current') {
       console.log('current before: ', this.currentProducts);
       this.utilityService.removeByAttribute(this.currentProducts, 'id', $event.id);
-      console.log('current after: ', this.currentProducts);
+       // make a copy of the array to force template to update view
+       this.currentProducts = this.currentProducts.slice();
+       console.log('current after: ', this.currentProducts);
     };
     if (arrayName === 'outOfStock') {
       this.utilityService.removeByAttribute(this.outOfStockProducts, 'id', $event.id);
