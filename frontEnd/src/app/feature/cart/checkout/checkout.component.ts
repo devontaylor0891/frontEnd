@@ -2,6 +2,7 @@
 // import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 // import { Location } from '@angular/common';
 // import { NgForm } from '@angular/forms';
+// import { Subscription } from 'rxjs';
 
 // import { CartService } from '../../../core/services/cart-service/cart.service';
 // import { AuthService } from '../../../auth/auth.service';
@@ -32,6 +33,13 @@
 //   cartIndex: number;
 //   getCartByIdSub: any;
 //   communityListSub: any;
+
+//   orderStatusSub: Subscription;
+//   orderStatus: boolean;
+//   orderQuantitiesToChangeSub: Subscription;
+//   orderQuantitiesToChange: any[];
+//   orderSuccessSub: Subscription;
+//   orderSuccess: boolean = false;
 
 //   constructor(private cartService: CartService,
 //               private router: Router,
@@ -74,7 +82,6 @@
 
 //   onSubmit(form: NgForm) {
 //     this.cartService.confirmAndSendOrder(this.cartIndex, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
-//     this.router.navigateByUrl('confirmation');
 //   }
 
 //   storeCart() {
@@ -140,6 +147,33 @@
 
 //     this.cartService.loadCommunityList(this.order.producer.id);
 
+//     this.orderStatusSub = this.cartService.getOrderQuantitiesStatus()
+//       .subscribe(
+//         result => {
+//           console.log('orderstatussub: ', result);
+//           this.orderStatus = result;
+//         }
+//       );
+
+//     this.orderQuantitiesToChangeSub = this.cartService.getOrderQuantitiesToChange()
+//       .subscribe(
+//         result => {
+//           console.log('orderqtystochange: ', result);
+//           this.orderQuantitiesToChange = result;
+//         }
+//       );
+
+//     this.orderSuccessSub = this.cartService.getOrderSentSuccessfully()
+//       .subscribe(
+//         result => {
+//           console.log('orderSuccess: ', result);
+//           this.orderSuccess = result;
+//           if (this.orderSuccess) {
+//             this.router.navigateByUrl('confirmation');
+//           };
+//         }
+//       );
+
 //   };
 
 //   ngOnDestroy() {
@@ -150,6 +184,18 @@
 
 //     if (this.getCartByIdSub) {
 //       this.getCartByIdSub.unsubscribe();
+//     }
+
+//     if (this.orderStatusSub) {
+//       this.orderStatusSub.unsubscribe();
+//     }
+
+//     if (this.orderQuantitiesToChangeSub) {
+//       this.orderQuantitiesToChangeSub.unsubscribe();
+//     }
+
+//     if (this.orderSuccessSub) {
+//       this.orderSuccessSub.unsubscribe();
 //     }
 
 //   }
@@ -198,6 +244,8 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
   orderQuantitiesToChange: any[];
   orderSuccessSub: Subscription;
   orderSuccess: boolean = false;
+  orderFailureSub: Subscription;
+  orderFailed: boolean = false;
 
   constructor(private cartService: CartService,
               private router: Router,
@@ -318,6 +366,18 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
         result => {
           console.log('orderqtystochange: ', result);
           this.orderQuantitiesToChange = result;
+          // make the changes automatically to the cart
+          // throw an alert notifying the user that they will have to reconfirm
+          if (this.orderQuantitiesToChange.length > 0) {
+            let retVal = confirm('orderqtystochange?' + result.toString());
+            if (retVal === true) {
+              console.log('User wants to continue!');
+              return true;
+            } else {
+              console.log('User does not want to continue!');
+              return false;
+            }
+          }
         }
       );
 
@@ -331,6 +391,17 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
           };
         }
       );
+
+    this.orderFailureSub = this.cartService.getOrderSentFailed()
+      .subscribe(
+        result => {
+          console.log('order send failed result: ', result);
+          this.orderFailed = result;
+          if (this.orderFailed) {
+            console.log('order send failed, do something');
+          };
+        }
+      )
 
   };
 
@@ -354,6 +425,10 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this.orderSuccessSub) {
       this.orderSuccessSub.unsubscribe();
+    }
+
+    if (this.orderFailureSub) {
+      this.orderFailureSub.unsubscribe();
     }
 
   }
