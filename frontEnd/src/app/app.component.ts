@@ -1,7 +1,6 @@
 import { Component,
           OnInit,
-          OnChanges,
-          HostListener
+          OnChanges
         } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -22,18 +21,18 @@ export class AppComponent implements OnInit, OnChanges {
   profileIncomplete: boolean;
   window: any;
 
-  @HostListener('window:beforeunload', ['$event']) onBeforeUnload(event) {
-    // Cancel the event as stated by the standard.
-    event.preventDefault();
-    // Chrome requires returnValue to be set.
-    event.returnValue = 'You have items in your cart. If you leave, they will be removed so they can be returned to stock.';
-    console.log('first method called: ', event);
-  }
+  // @HostListener('window:beforeunload', ['$event']) onBeforeUnload(event) {
+  //   // Cancel the event as stated by the standard.
+  //   event.preventDefault();
+  //   // Chrome requires returnValue to be set.
+  //   event.returnValue = 'You have items in your cart. If you leave, they will be removed so they can be returned to stock.';
+  //   console.log('first method called: ', event);
+  // }
 
-  @HostListener('window:unload', ['$event']) onUnload(event) {
-    console.log('2nd method called: ', event);
-    this.testFunction(event);
-  }
+  // @HostListener('window:unload', ['$event']) onUnload(event) {
+  //   console.log('2nd method called: ', event);
+  //   this.testFunction(event);
+  // }
 
   constructor (public authService: AuthService,
               private router: Router,
@@ -80,8 +79,8 @@ export class AppComponent implements OnInit, OnChanges {
 
     }
 
-    testFunction(input) {
-      console.log('from other function call: ', input);
-    }
+    // testFunction(input) {
+    //   console.log('from other function call: ', input);
+    // }
 
 }
