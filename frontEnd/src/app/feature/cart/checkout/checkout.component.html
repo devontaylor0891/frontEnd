@@ -197,29 +197,6 @@
 
 <div class="row">
 
-  <ng-template #basicExampleModal let-c="close" let-d="dismiss">
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>orderQuantitiesToChange:</p>
-            <p>{{ orderQuantitiesToChange }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
   <div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
     <div class="row card bg-dark py-5">
       <div class="col-10 offset-1 bg-light py-2 text-center card-body">

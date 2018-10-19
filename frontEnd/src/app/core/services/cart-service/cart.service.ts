@@ -3277,7 +3277,28 @@ export class CartService implements OnDestroy {
       this._orderQuantitiesToChange.next(Object.assign(orderQuantityNotOkayArray));
     }
   };
-  
+
+  updateProductQuantitiesToQtyAvailable(cartId, productQuantitiesToUpdate) {
+    console.log('productqtys to update: ', productQuantitiesToUpdate);
+    // for each product qty to update
+    for (let i = 0; i < productQuantitiesToUpdate.length; i++) {
+      // get the qty actually available
+      let qty = productQuantitiesToUpdate[i].quantityAvailable;
+      console.log('qty: ', qty);
+      // loop through the cart's productQtys to find the matching product
+      for (let j = 0; j < this.dataStore.carts[cartId].orderDetails.productQuantities.length; j++) {
+        console.log('cart product id test: ', this.dataStore.carts[cartId].orderDetails.productQuantities[j].productId);
+        if (productQuantitiesToUpdate[i].id === this.dataStore.carts[cartId].orderDetails.productQuantities[j].productId) {
+          // set the qty ordered to the qty available
+          this.dataStore.carts[cartId].orderDetails.productQuantities[j].orderQuantity = qty;
+        }
+      }
+    }
+    // reload the cart
+    this.loadCartById(cartId);
+    console.log('new datastore: ', this.dataStore.carts[cartId]);
+  };
+
   storeCarts() {
     console.log('storing carts: ', this.dataStore);
     // store all carts in datastore

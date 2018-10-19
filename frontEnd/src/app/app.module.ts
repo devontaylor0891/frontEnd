@@ -132,6 +132,7 @@ import { AdminProducerViewModalComponent } from './feature/dashboard/admin/modal
 import { AdminProductViewModalComponent } from './feature/dashboard/admin/modals/products/admin-product-view-modal/admin-product-view-modal.component';
 import { AdminScheduleViewModalComponent } from './feature/dashboard/admin/modals/schedules/admin-schedule-view-modal/admin-schedule-view-modal.component';
 import { ContactComponent } from './shared/contact/contact.component';
+import { CheckoutWarningModalComponent } from './feature/cart/checkout/checkout-warning-modal/checkout-warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -217,7 +218,8 @@ import { ContactComponent } from './shared/contact/contact.component';
     AdminProducerViewModalComponent,
     AdminProductViewModalComponent,
     AdminScheduleViewModalComponent,
-    ContactComponent
+    ContactComponent,
+    CheckoutWarningModalComponent
   ],
   imports: [
     BrowserModule,
@@ -290,7 +292,8 @@ import { ContactComponent } from './shared/contact/contact.component';
     AdminUserViewModalComponent,
     AdminProducerViewModalComponent,
     AdminProductViewModalComponent,
-    AdminScheduleViewModalComponent
+    AdminScheduleViewModalComponent,
+    CheckoutWarningModalComponent
   ],
   bootstrap: [AppComponent]
 })
