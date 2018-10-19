@@ -2757,6 +2757,7 @@ export class CartService implements OnDestroy {
       }]
     }]
   };
+
   private _carts: BehaviorSubject<OrderModel[]>;
   private _cartCount: BehaviorSubject<number>;
   private _schedulesArray: BehaviorSubject<Object[]>;
@@ -3143,6 +3144,15 @@ export class CartService implements OnDestroy {
     }
     console.log('count: ', count);
     return count;
+  };
+
+  calculateCartCount() {
+    let totalCartCount = 0;
+    for (let i = 0; i < this.dataStore.carts.length; i++) {
+      totalCartCount += this.getCartCountOfSingleCart(i);
+    }
+    this.dataStore.cartCount = totalCartCount;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
   }
 
   clearCart(cartId) {
@@ -3279,6 +3289,7 @@ export class CartService implements OnDestroy {
   };
 
   updateProductQuantitiesToQtyAvailable(cartId, productQuantitiesToUpdate) {
+    let cartIndex = this.getCartIndex(cartId);
     console.log('productqtys to update: ', productQuantitiesToUpdate);
     // for each product qty to update
     for (let i = 0; i < productQuantitiesToUpdate.length; i++) {
@@ -3286,17 +3297,78 @@ export class CartService implements OnDestroy {
       let qty = productQuantitiesToUpdate[i].quantityAvailable;
       console.log('qty: ', qty);
       // loop through the cart's productQtys to find the matching product
-      for (let j = 0; j < this.dataStore.carts[cartId].orderDetails.productQuantities.length; j++) {
-        console.log('cart product id test: ', this.dataStore.carts[cartId].orderDetails.productQuantities[j].productId);
-        if (productQuantitiesToUpdate[i].id === this.dataStore.carts[cartId].orderDetails.productQuantities[j].productId) {
+      for (let j = 0; j < this.dataStore.carts[cartIndex].orderDetails.productQuantities.length; j++) {
+        console.log('cart product id test: ', this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].productId);
+        if (productQuantitiesToUpdate[i].id === this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].productId) {
           // set the qty ordered to the qty available
-          this.dataStore.carts[cartId].orderDetails.productQuantities[j].orderQuantity = qty;
+          this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].orderQuantity = qty;
         }
       }
-    }
+    };
+    this.removeProductsWithZeroQty(cartIndex);
+    // clear the orderqtynotokay array and re-emit
+    this._orderQuantitiesToChange.next(Object.assign([]));
+    // recalculate the total order value
+    this.dataStore.carts[cartIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[cartIndex]);
     // reload the cart
-    this.loadCartById(cartId);
-    console.log('new datastore: ', this.dataStore.carts[cartId]);
+    this.loadCartById(cartIndex);
+    console.log('new datastore: ', this.dataStore.carts[cartIndex]);
+  };
+
+  removeProductsWithZeroQty(id) {
+    console.log('cart before removal: ', this.dataStore.carts[id]);
+    let productIdsToRemove = [];
+    let currentCart = this.dataStore.carts[id];
+    let productQtys = currentCart.orderDetails.productQuantities;
+    let productList = currentCart.productList;
+    // loop through the productQuantities, return an array of productIds where the qtyOrdered is zero, remove those ones as well
+    for (let i = 0; i < productQtys.length; i++) {
+      if (productQtys[i].orderQuantity === 0) {
+        productIdsToRemove.push(productQtys[i].productId);
+      }
+    };
+    // loop through product quantities and remove zero quantities
+    for (let i = productQtys.length - 1; i >= 0; i--) {
+      for (let j = 0; j < productIdsToRemove.length; j++) {
+        if (productQtys[i] && (productQtys[i].productId === productIdsToRemove[j])) {
+          productQtys.splice(i, 1);
+        }
+      }
+    };
+    // loop through the productList, remove any products where the id matches those contained in the above array
+    for (let i = productList.length - 1; i >= 0; i--) {
+      for (let j = 0; j < productIdsToRemove.length; j++) {
+        if (productList[i] && (productList[i].id === productIdsToRemove[j])) {
+          productList.splice(i, 1);
+        }
+      }
+    };
+    // let length = productQtys.length;
+    // while(length--) {
+
+    // }
+    // for (let i = 0; i < productQtys.length; i++) {
+
+    // };
+    this.dataStore.carts[id].orderDetails.productQuantities = productQtys;
+    this.dataStore.carts[id].orderDetails.productList = productList;
+    this.calculateCartCount();
+    console.log('cart after removal: ', this.dataStore.carts[id]);
+  };
+
+  resetOrderSubscriptions() {
+    // _orderQuantityOkay true
+    // _orderQuantitiesToChange []
+    // _orderSentSuccessfully false
+    // _orderSentFailed false
+    this.orderQuantityOkay = true;
+    this.orderQuantitiesToChange = [];
+    this.orderSentSuccessfully = false;
+    this.orderSentFailed = false;
+    this._orderQuantityOkay.next(this.orderQuantityOkay);
+    this._orderQuantitiesToChange.next([]);
+    this._orderSentSuccessfully.next(this.orderSentSuccessfully);
+    this._orderSentFailed.next(this.orderSentFailed);
   };
 
   storeCarts() {
@@ -3451,6 +3523,23 @@ export class CartService implements OnDestroy {
           }
         });
     }
+    return index;
+  };
+
+  findCartIndex(tempId) {
+    console.log('tempId passed in: ', tempId);
+    let index;
+    if (this.dataStore.carts.length === 1) {
+      index = 0;
+    } else {
+      this.dataStore.carts.forEach(
+        (order) => {
+          if (order.tempId === tempId) {
+            index = (this.dataStore.carts.indexOf(order));
+          }
+        });
+    }
+    console.log('index returned: ', index);
     return index;
   };
 

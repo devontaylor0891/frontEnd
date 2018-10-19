@@ -742,6 +742,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     // make the changes in the cart in the background
     this.cartService.updateProductQuantitiesToQtyAvailable(this.id, orderQuantities);
     const modalRef = this.modal.open(CheckoutWarningModalComponent, this.ngbModalOptions);
+    console.log('orderqtys pushed into modal: ', orderQuantities);
     modalRef.componentInstance.orderQuantities = orderQuantities;
     modalRef.componentInstance.goToCart
       .subscribe(
