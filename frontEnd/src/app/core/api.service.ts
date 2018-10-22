@@ -10,6 +10,7 @@ import { ENV } from './env.config';
 // import AWS = require('aws-sdk');
 import * as AWS from 'aws-sdk';
 import { AnalysisOptions } from 'aws-sdk/clients/cloudsearch';
+import { AnyAaaaRecord } from 'dns';
 
 @Injectable()
 export class ApiService {
@@ -98,6 +99,14 @@ export class ApiService {
       })
       .catch(this._handleError);
   };
+
+  deleteUser(id: number, user: any): Observable<any> {
+    return this.http
+      .put(this.apiUrl + `/usersDelete/${id}/`, user, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
 
 // ***************** PRODUCERS ***************
 
@@ -342,8 +351,8 @@ export class ApiService {
 // ***************** get presigned url for image uploads ***************
   getPresignedUrl(imageName: any): Observable<string> {
     AWS.config.update({
-      accessKeyId: ``,
-      secretAccessKey: ``,
+      accessKeyId: `AKIAJLFOVGIQFVZJ74WA`,
+      secretAccessKey: `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`,
       region: 'us-west-2'
     });
     const s3 = new AWS.S3();

@@ -9,7 +9,9 @@ import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
+// Avoid name not found warnings
+declare var google: any;
 
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';

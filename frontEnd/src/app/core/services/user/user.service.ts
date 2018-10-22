@@ -165,4 +165,13 @@ export class UserService implements OnInit, OnChanges  {
     }
   };
 
+  deleteUser() {
+    this.apiService.deleteUser(this.userId, this.user)
+      .subscribe(
+        result => {
+          console.log('user deleted: ', result);
+        }
+      );
+  };
+
 }

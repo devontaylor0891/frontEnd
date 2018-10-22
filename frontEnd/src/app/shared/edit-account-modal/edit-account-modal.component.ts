@@ -1,10 +1,13 @@
-import { Component, OnInit, Input, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';// Avoid name not found warnings
 
+import { Router } from '@angular/router';
 // import { } from 'googlemaps';
-import { google } from '@google/maps';
+// import { google } from '@google/maps';
+// Avoid name not found warnings
+// declare const google: any;
 
 import { MapsAPILoader } from '@agm/core';
-import { AgmMap } from '@agm/core';
+// import { AgmMap } from '@agm/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -13,6 +16,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService } from '../../core/api.service';
 import { ImageService } from '../../core/services/image/image.service';
+import { UserService } from '../../core/services/user/user.service';
 
 import { UserModel } from '../../core/models/user.model';
 import { ProducerModel } from '../../core/models/producer.model';
@@ -38,7 +42,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   public searchControl: FormControl;
   public zoom: number;
   @ViewChild('search') public searchElementRef: ElementRef;
-  @ViewChild(AgmMap) public agmMap: AgmMap;
+  // @ViewChild(AgmMap) public agmMap: AgmMap;
   lat: number;
   lng: number;
   streetNumber: number;
@@ -64,7 +68,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
               private apiService: ApiService,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private imageService: ImageService) { }
+              private imageService: ImageService,
+              private router: Router) { }
 
   ngOnChanges() {};
 
@@ -137,9 +142,9 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.locationSearchDisplay = !this.locationSearchDisplay;
   };
 
-  resizeMap() {
-    this.agmMap.triggerResize();
-  };
+  // resizeMap() {
+  //   this.agmMap.triggerResize();
+  // };
 
   onSubmit(form: any, userType) {
     this.submitting = true;
@@ -265,8 +270,16 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.addingImage = true;
   };
 
-  deleteAccount() {
-    console.log('delete account clicked');
+  onDeleteUser() {
+    console.log('delete user account clicked');
+    this.apiService.deleteUser(this.user.id, this.user)
+      .subscribe(
+        result => {
+          console.log('user deleted: ', result);
+          this.activeModal.close();
+          this.router.navigateByUrl('/');
+        }
+      )
     this.activeModal.close();
   }
 

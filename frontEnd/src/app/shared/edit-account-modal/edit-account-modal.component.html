@@ -252,13 +252,13 @@
             <a (click)="activeModal.close()">Cancel Changes</a>
         </div>
         <hr>
-        <div class="col-12">
+        <div class="col-12" *ngIf="!producer">
             <p>This will delete your account forever: 
                 <button
                     type="button" 
                     class="btn btn-danger btn-sm" 
-                    (click)="deleteAccount()"
-                    >Delete</button>
+                    (click)="onDeleteUser()"
+                    >Delete Profile</button>
             </p>
         </div>
     </div>
