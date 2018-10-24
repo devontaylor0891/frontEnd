@@ -35,12 +35,12 @@
 <div class="row mt-1 hidden-sm-down">
 	
 	<!-- search options -->
-	<div class="col-12 col-md-3 mb-2">
+	<div class="col-12 col-md-4 col-lg-3 mb-2">
 		<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="cityProvince"></app-search-options>
 	</div>
 
 	<!--  search results -->
-	<div class="col-12 col-md-9">
+	<div class="col-12 col-md-8 col-lg-9">
 		<app-loading *ngIf="!searchResults"></app-loading>
 		<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
 	</div>

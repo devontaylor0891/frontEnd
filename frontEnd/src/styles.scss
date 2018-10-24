@@ -153,6 +153,10 @@ $olf-grey: (
     )
 );
 
+html {
+    font-size: 90%;
+};
+
 .olf-primary {
     color: #741b47 !important;
 }
@@ -206,7 +210,7 @@ footer.page-footer {
 
 .jumbotron-dark {
     background-color: #262626 !important;
-    padding: 5em 5%;
+    padding: 3em 1em;
 }
 
 .dash-accordion {
@@ -293,7 +297,7 @@ input[type=number]::-webkit-outer-spin-button {
     color: whitesmoke !important;
 }
 
-.custom-control-input:checked~.custom-control-indicator {
+.custom-control-input:checked~ {
     background-color: #741b47 !important;
 }
 
@@ -435,7 +439,7 @@ input:focus:not([readonly]) {
 
 .custom-control-indicator{
     color:white !important;
-    background-color:#741b47 !important;
+    // background-color:#741b47 !important;
 }
 
 // search page checkboxes - from codepen: https://codepen.io/MoorLex/pen/XeNzoK?editors=1100#0

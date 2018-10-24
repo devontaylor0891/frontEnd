@@ -10,7 +10,7 @@ import { ENV } from './env.config';
 // import AWS = require('aws-sdk');
 import * as AWS from 'aws-sdk';
 import { AnalysisOptions } from 'aws-sdk/clients/cloudsearch';
-import { AnyAaaaRecord } from 'dns';
+// import { AnyAaaaRecord } from 'dns';
 
 @Injectable()
 export class ApiService {
@@ -49,7 +49,7 @@ export class ApiService {
 // ***************** USERS *****************
 
   // get all users for admin
-  getUsers(): Observable<any[]> {
+  getUsers(): Observable<any> {
     return this.http
       .get(this.apiUrl + `/users/`)
       // .get(`${ENV.BASE_API}users/`)
@@ -111,7 +111,7 @@ export class ApiService {
 // ***************** PRODUCERS ***************
 
   // get all producers
-  getProducers(): Observable<any[]> {
+  getProducers(): Observable<any> {
     return this.http
       .get(this.apiUrl + `/producers/`)
       // .get(`${ENV.BASE_API}producer/`)
@@ -150,7 +150,7 @@ export class ApiService {
 // ***************** PRODUCTS *******
 
   // get all products for admin dash
-  getProducts(): Observable<any[]> {
+  getProducts(): Observable<any> {
     return this.http
       .get(this.apiUrl + `/products/`)
       // .get(`${ENV.BASE_API}products`)
@@ -168,7 +168,7 @@ export class ApiService {
   };
   
   // GET all products from a single producer
-  getProductsByProducerId(id): Observable<any[]> {
+  getProductsByProducerId(id): Observable<any> {
   return this.http
     .get(this.apiUrl + `/producersProducts/` + id)
     // .get(`${ENV.BASE_API}producer/` + id + '/products')
@@ -211,7 +211,7 @@ export class ApiService {
 // ***************** SCHEDULES ****************
   
   // get all schedules for admin
-  getSchedules(): Observable<any[]> {
+  getSchedules(): Observable<any> {
     return this.http
       // .get(`${ENV.BASE_API}schedules`)
       .get(this.apiUrl + `/schedules/`)
@@ -219,7 +219,7 @@ export class ApiService {
   };
 
   // GET entire schedule from a single producers
-  getScheduleByProducerId(id): Observable<any[]> {
+  getScheduleByProducerId(id): Observable<any> {
     return this.http
     .get(this.apiUrl + `/producersSchedules/` + id)
       // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
@@ -227,7 +227,7 @@ export class ApiService {
   };
 
   // GET future schedule from a single producer
-  getFutureScheduleByProducerId(id): Observable<any[]> {
+  getFutureScheduleByProducerId(id): Observable<any> {
     return this.http
       .get(this.apiUrl + `/producersFutureSchedules/` + id)
       // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
@@ -276,7 +276,7 @@ export class ApiService {
   };
 
   // get all orders for admin
-  getOrders(): Observable<any[]> {
+  getOrders(): Observable<any> {
     return this.http
       .get(this.apiUrl + `/orders/`)
       // .get(`${ENV.BASE_API}orders`)

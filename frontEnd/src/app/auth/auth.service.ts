@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
+// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+// import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Subscription, of, timer } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/timer';
@@ -232,13 +233,23 @@ export class AuthService {
     this.unscheduleRenewal();
     // Create and subscribe to expiration observable
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    const expiresIn$ = Observable.of(expiresAt).pipe(
+    // const expiresIn$ = Observable.of(expiresAt).pipe(
+    //   mergeMap(
+    //     expires => {
+    //       const now = Date.now();
+    //       // Use timer to track delay until expiration
+    //       // to run the refresh at the proper time
+    //       return Observable.timer(Math.max(1, expires - now));
+    //     }
+    //   )
+    // );
+    const expiresIn$ = of(expiresAt).pipe(
       mergeMap(
         expires => {
           const now = Date.now();
           // Use timer to track delay until expiration
           // to run the refresh at the proper time
-          return Observable.timer(Math.max(1, expires - now));
+          return timer(Math.max(1, expires - now));
         }
       )
     );

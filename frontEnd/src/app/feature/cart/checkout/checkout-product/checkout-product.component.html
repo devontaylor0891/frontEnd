@@ -1,26 +1,24 @@
 <div class="row">
-  <div class="col-2 col-md-2 offset-md-1 col-lg-1 offset-lg-2">
-    <div class="cover-div">
-        <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="">
-    </div>  
-  </div>
-  <div class="col-9 offset-1 col-md-8 offset-md-1 col-lg-6 offset-lg-1">
-
-    <div class="row text-center">
-      <div class="col-8">
-        <p class="card-text">{{ product.name | uppercase }}</p>
-        <p class="card-text">{{ quantityOrdered }} x {{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>    
-      </div>
-      <div class="col-4">
-        <p class="card-text"><b>{{ totalPrice | currency:'USD':true:'1.2-2' }}</b></p>
-      </div>
+    <div class="col-2 offset-1 col-md-3 offset-md-0 col-lg-2 offset-lg-2 view overlay hm-white-slight cover-div">
+      <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="">
     </div>
-
-    <!-- <div class="col text-center">
-      <p class="card-text">{{ product.name | uppercase }}</p>
-      <p class="card-text m-0">{{ quantityOrdered }} x {{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>
-      <p class="card-text m-0"><b>{{ totalPrice | currency:'USD':true:'1.2-2' }}</b></p>
-    </div> -->
+    <div class="col-9 col-md-9 col-lg-6">
+  
+      <div class="row text-center">
+        <div class="col-8">
+          <p class="card-text">{{ product.name | uppercase }}</p>
+          <p class="card-text">{{ quantityOrdered }} x {{ product.pricePerUnit * product.unitsPer | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }}</p>    
+        </div>
+        <div class="col-4">
+          <p class="card-text"><b>{{ totalPrice | currency:'CAD':'symbol-narrow':'1.2-2' }}</b></p>
+        </div>
+      </div>
+  
+      <!-- <div class="col text-center">
+        <p class="card-text">{{ product.name | uppercase }}</p>
+        <p class="card-text m-0">{{ quantityOrdered }} x {{ product.pricePerUnit * product.unitsPer | currency:'USD':true:'1.2-2' }}/{{ product.unit }}</p>
+        <p class="card-text m-0"><b>{{ totalPrice | currency:'USD':true:'1.2-2' }}</b></p>
+      </div> -->
+    </div>
   </div>
-</div>
-<hr>
+  <hr>
