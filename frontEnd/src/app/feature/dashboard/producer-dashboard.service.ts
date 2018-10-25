@@ -22,25 +22,25 @@ export class ProducerDashboardService {
   // dataStore
   dataStore: {
     producer: ProducerModel,
-    user: UserModel,
+    user: any,
     products: ProductModel[],
-    orders: OrderModel[],
+    orders: any,
     schedules: ScheduleModel[]
   };
 
   // create the behaviour subjects
   public _producer: BehaviorSubject<ProducerModel>;
-  public _user: BehaviorSubject<UserModel>;
+  public _user: BehaviorSubject<any>;
   public _products: BehaviorSubject<ProductModel[]>;
-  public _orders: BehaviorSubject<OrderModel[]>;
+  public _orders: BehaviorSubject<any>;
   public _schedules: BehaviorSubject<ScheduleModel[]>;
 
   constructor(private apiService: ApiService) {
     this.dataStore = { producer: null, user: null, products: [], orders: [], schedules: [] };
     this._producer = <BehaviorSubject<ProducerModel>>new BehaviorSubject(null);
-    this._user = <BehaviorSubject<UserModel>>new BehaviorSubject(null);
+    this._user = <BehaviorSubject<any>>new BehaviorSubject(null);
     this._products = <BehaviorSubject<ProductModel[]>>new BehaviorSubject([]);
-    this._orders = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
+    this._orders = <BehaviorSubject<any>>new BehaviorSubject([]);
     this._schedules = <BehaviorSubject<ScheduleModel[]>>new BehaviorSubject([]);
   }
 

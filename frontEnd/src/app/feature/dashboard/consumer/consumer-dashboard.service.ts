@@ -12,17 +12,17 @@ export class ConsumerDashboardService {
   // dataStore
   dataStore: {
     user: UserModel,
-    orders: OrderModel[]
+    orders: any
   };
 
   // create the behaviour subjects
   public _user: BehaviorSubject<UserModel>;
-  public _orders: BehaviorSubject<OrderModel[]>;
+  public _orders: BehaviorSubject<any[]>;
 
   constructor(private apiService: ApiService) {
     this.dataStore = { user: null, orders: [] };
     this._user = <BehaviorSubject<UserModel>>new BehaviorSubject(null);
-    this._orders = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
+    this._orders = <BehaviorSubject<any[]>>new BehaviorSubject([]);
   }
 
   loadData(id) {
