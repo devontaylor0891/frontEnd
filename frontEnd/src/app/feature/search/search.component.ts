@@ -71,6 +71,11 @@ export class SearchComponent implements OnInit, OnChanges {
         results => {
           this.searchResults = results;
           this.searchResultsReceived = true;
+          if (results && results.schedules && results.schedules.length < 0) {
+            this.zeroSearchResults = true;
+          } else {
+            this.zeroSearchResults = false;
+          }
           console.log('search comp results: ', this.searchResults);
         }
       );

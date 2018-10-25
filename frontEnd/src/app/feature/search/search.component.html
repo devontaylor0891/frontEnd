@@ -18,31 +18,52 @@
 	<div class="tab-content" style="padding: 1em;">
 		<!-- Options Panel -->
 		<div class="tab-pane fade" id="searchOptions" role="tabpanel">
-			<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="cityProvince"></app-search-options>
+			<app-search-options 
+				[latitude]="userLocation?.coords.latitude" 
+				[longitude]="userLocation?.coords.longitude" 
+				[city]="cityProvince"
+				[zeroResults]="zeroSearchResults"
+				></app-search-options>
 		</div>
 		<!--/ Options Panel-->
 		<!-- results Panel -->
 		<div class="tab-pane fade in show active" id="searchResults" role="tabpanel">
 			<app-loading  *ngIf="!searchResults"></app-loading>
-			<app-search-results  *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
+			<app-search-results  
+				*ngIf="searchResults" 
+				[searchResults]="searchResults"
+				></app-search-results>
 		</div>
 		<!--/ results Panel-->
 	</div>
 
 </div>
-
+		
 <!-- LARGER DEVICES -->
 <div class="row mt-1 hidden-sm-down">
 	
 	<!-- search options -->
 	<div class="col-12 col-md-4 col-lg-3 mb-2">
-		<app-search-options [latitude]="userLocation?.coords.latitude" [longitude]="userLocation?.coords.longitude" [city]="cityProvince"></app-search-options>
+
+		<app-search-options
+			[latitude]="userLocation?.coords.latitude" 
+			[longitude]="userLocation?.coords.longitude" 
+			[city]="cityProvince"
+			[zeroResults]="zeroSearchResults"
+			></app-search-options>
+
 	</div>
 
 	<!--  search results -->
 	<div class="col-12 col-md-8 col-lg-9">
+
 		<app-loading *ngIf="!searchResults"></app-loading>
-		<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
+
+		<app-search-results
+			*ngIf="searchResults" 
+			[searchResults]="searchResults"
+			></app-search-results>
+
 	</div>
 
 </div>
