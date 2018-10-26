@@ -1,0 +1,99 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add A Location Notification</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
+    <div class="row card bg-dark py-5">
+      <div class="col-10 offset-1 bg-light py-2 text-center card-body">
+        <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
+        <button class="btn btn-olf-primary" type="button" (click)="onLogin($event)">Log in or Sign up</button>
+      </div>
+    </div>
+  </div>
+  
+<div class="modal-body dash-modal-body" *ngIf="isLoggedIn">
+  
+    <app-loading *ngIf="submitting"></app-loading>
+  
+    <form *ngIf="!submitting">
+
+        <div class="row form-section">
+        
+            <div class="col-12 form-section-body">
+
+                <p>Enter a location and click 'Add' to be notified of deliveries, markets, and other ways to get local food!</p>
+                <p>When a producer schedules an event with the area of the circle, you'll get an email telling you about it.</p>                
+
+                <div class="md-form row">
+                    <div class="col-8 col-sm-8 offset-sm-1">
+                        <i class="fa fa-map-marker prefix"></i>
+                        <input  
+                            autocorrect="off" 
+                            autocapitalize="off" 
+                            spellcheck="off" 
+                            type="text" 
+                            class="form-control" 
+                            #search 
+                            id="search"
+                            [formControl]="searchControl">
+                    </div>
+                    <div class="col-4 col-sm-3">
+                        <button 
+                            class="btn btn-olf-primary" 
+                            (click)="onAddLocation()"
+                            >Add</button>
+                    </div>
+                </div>
+
+                <!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                    <agm-marker [latitude]="lat" [longitude]="lng">
+                            <agm-info-window>Börk</agm-info-window> 
+                    </agm-marker>
+                </agm-map>  -->
+
+                <agm-map 
+                    [latitude]="lat"
+                    [longitude]="lng"
+                    [zoom]="zoom"
+                    [disableDefaultUI]="false"
+                    [zoomControl]="false">
+
+                    <agm-marker 
+                        *ngFor="let m of locationNotificationArray; let i = index"
+                        [latitude]="m.lat"
+                        [longitude]="m.lng">
+                        
+                        <agm-circle [latitude]="m.lat" [longitude]="m.lng" 
+                            [radius]="25000"
+                            [fillColor]="'black'"
+                            [circleDraggable]="false"
+                            [editable]="false">
+                        </agm-circle>
+                        
+                        <agm-info-window>
+                            <strong>{{ m.label }}</strong>
+                        </agm-info-window>
+                        
+                    </agm-marker>
+                
+                </agm-map>     
+        
+            </div>
+
+        </div>
+  
+    </form>
+    
+</div>
+  
+<div class="modal-footer justify-content-center">
+    <div class="row text-center">
+        <div class="col-12">
+            <!-- <a (click)="activeModal.close()">Close</a> -->
+            <button class="btn btn-olf-primary" (click)="onSubmit()">Save Locations</button>
+        </div>
+    </div>
+</div>

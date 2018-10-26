@@ -108,6 +108,16 @@ export class ApiService {
       .catch(this._handleError);
   }
 
+// ***************** LOCATION NOTIFICATION METHODS *******
+
+  addLocationNotifications(id: number, locationNotificationArray: Array<any>): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/users/${id}/locationNotifications/`, locationNotificationArray, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
 // ***************** PRODUCERS ***************
 
   // get all producers
