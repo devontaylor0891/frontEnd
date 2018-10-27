@@ -25,6 +25,7 @@ import { AddProducerComponent } from './feature/dashboard/admin/add-new/add-prod
 import { AddProductComponent } from './feature/dashboard/admin/products/add-product/add-product.component';
 import { AddDeliveryComponent } from './feature/dashboard/admin/add-new/add-delivery/add-delivery.component';
 import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/add-order.component';
+import { LocationNotificationComponent } from './feature/location-notification/location-notification.component';
 
 const appRoutes: Routes = [
 	
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
 	{ path: 'confirmation', component: ConfirmationComponent },
 	{ path: 'callback', component: CallbackComponent },
 	{ path: 'update-profile', component: UpdateProfileComponent	},
+	{ path: 'location-notification', component: LocationNotificationComponent },
 	{ path: '', component: LandingContentComponent, pathMatch: 'full' }
 ]
 

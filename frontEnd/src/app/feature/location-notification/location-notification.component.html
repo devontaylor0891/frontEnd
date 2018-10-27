@@ -1,8 +1,5 @@
 <div class="modal-header">
     <h5 class="modal-title">Add A Location Notification</h5>
-    <button type="button" class="close" (click)="activeModal.close()">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
 
 <div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
@@ -14,7 +11,7 @@
     </div>
   </div>
   
-<div class="modal-body dash-modal-body" *ngIf="isLoggedIn">
+<div class="" *ngIf="isLoggedIn">
   
     <app-loading *ngIf="submitting"></app-loading>
   
@@ -28,23 +25,47 @@
                 <p>When a producer schedules an event with the area of the circle, you'll get an email telling you about it.</p>                
 
                 <div class="md-form row">
-                    <div class="col-8 col-sm-8 offset-sm-1">
-                        <i class="fa fa-map-marker prefix"></i>
-                        <input  
-                            autocorrect="off" 
-                            autocapitalize="off" 
-                            spellcheck="off" 
-                            type="text" 
-                            class="form-control" 
-                            #search 
-                            id="search"
-                            [formControl]="searchControl">
+                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                        <div class="row">
+                            <div class="col-8 col-sm-10">
+                                <i class="fa fa-map-marker prefix"></i>
+                                <input  
+                                    autocorrect="off" 
+                                    autocapitalize="off" 
+                                    spellcheck="off" 
+                                    type="text" 
+                                    class="form-control" 
+                                    #search 
+                                    id="search"
+                                    [formControl]="searchControl">
+                            </div>
+                            <div class="col-4 col-sm-2">
+                                <button 
+                                    class="btn btn-olf-primary btn-block" 
+                                    (click)="onAddLocation()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4 col-sm-3">
-                        <button 
-                            class="btn btn-olf-primary" 
-                            (click)="onAddLocation()"
-                            >Add</button>
+                   
+                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                     <!--    <p *ngFor="let location of locationNotificationArray">
+                            {{ location.city }}, {{ location.province }}
+                            <a class="vertical-center-child">
+                                <i class="fa fa-times-circle fa-lg text-danger" aria-hidden="true"></i>
+                            </a>
+                        </p> -->
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-center align-items-center" *ngFor="let location of locationNotificationArray, let i = index">
+                                {{ location.city }}, {{ location.province }}
+                                <span class="pl-5">
+                                    <a (click)="onRemoveLocation(i)" class="vertical-center-child">
+                                        <i class="fa fa-times-circle fa-lg text-danger" aria-hidden="true"></i>
+                                    </a>
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
@@ -53,33 +74,36 @@
                             <agm-info-window>Börk</agm-info-window> 
                     </agm-marker>
                 </agm-map>  -->
+                <div class="row">
+                    <agm-map
+                        class="col-12 col-md-8 offset-md-2"
+                        [latitude]="lat"
+                        [longitude]="lng"
+                        [zoom]="zoom"
+                        [disableDefaultUI]="false"
+                        [zoomControl]="false">
 
-                <agm-map 
-                    [latitude]="lat"
-                    [longitude]="lng"
-                    [zoom]="zoom"
-                    [disableDefaultUI]="false"
-                    [zoomControl]="false">
-
-                    <agm-marker 
-                        *ngFor="let m of locationNotificationArray; let i = index"
-                        [latitude]="m.lat"
-                        [longitude]="m.lng">
-                        
-                        <agm-circle [latitude]="m.lat" [longitude]="m.lng" 
-                            [radius]="25000"
-                            [fillColor]="'black'"
-                            [circleDraggable]="false"
-                            [editable]="false">
-                        </agm-circle>
-                        
-                        <agm-info-window>
-                            <strong>{{ m.label }}</strong>
-                        </agm-info-window>
-                        
-                    </agm-marker>
-                
-                </agm-map>     
+                        <agm-marker 
+                            *ngFor="let m of locationNotificationArray; let i = index"
+                            [latitude]="m.lat"
+                            [longitude]="m.lng">
+                            
+                            <agm-circle [latitude]="m.lat" [longitude]="m.lng" 
+                                [radius]="25000"
+                                [fillColor]="'black'"
+                                [circleDraggable]="false"
+                                [editable]="false">
+                            </agm-circle>
+                            
+                            <agm-info-window>
+                                <strong>{{ m.label }}</strong>
+                            </agm-info-window>
+                            
+                        </agm-marker>
+                    
+                    </agm-map>
+                </div>
+                     
         
             </div>
 
@@ -89,7 +113,7 @@
     
 </div>
   
-<div class="modal-footer justify-content-center">
+<div class="justify-content-center">
     <div class="row text-center">
         <div class="col-12">
             <!-- <a (click)="activeModal.close()">Close</a> -->

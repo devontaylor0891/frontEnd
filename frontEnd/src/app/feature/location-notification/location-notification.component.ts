@@ -126,7 +126,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
                 );
             } else {
               // user is not logged in
-              this.onLogin('notification-manager');
+              this.onLogin('location-notification');
             };
           }
         );
@@ -141,6 +141,10 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
   
     onAddLocation() {
       this.locationNotificationArray.push(this.currentLocation);
+    }
+
+    onRemoveLocation(index) {
+      this.locationNotificationArray.splice(index, 1);
     }
   
     toggleLocationSearch() {
