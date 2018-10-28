@@ -121,6 +121,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
               this.getUserSub = this.userService.getUser()
                 .subscribe(
                   result => {
+                    console.log('userRecieved: ', result);
                     this.user = result;
                   }
                 );

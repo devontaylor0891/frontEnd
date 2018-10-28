@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Add A Location Notification</h5>
+    <h5 class="modal-title col-12 col-sm-8 offset-sm-2">Add A Location Notification</h5>
 </div>
 
 <div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
@@ -21,8 +21,12 @@
         
             <div class="col-12 form-section-body">
 
-                <p>Enter a location and click 'Add' to be notified of deliveries, markets, and other ways to get local food!</p>
-                <p>When a producer schedules an event with the area of the circle, you'll get an email telling you about it.</p>                
+                <div class="row">
+                    <div class="col-12 col-sm-8 offset-sm-2">
+                        <p>Start adding locations to your notifcation list. When a producer schedules an event with the area of the circle, you'll get an email telling you about it!</p>
+                        <p>(Don't forget to click 'Save Locations' before you leave.)</p>
+                    </div>
+                </div>              
 
                 <div class="md-form row">
                     <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
@@ -49,34 +53,28 @@
                         </div>
                     </div>
                    
-                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                    <div class="col-12 col-sm-8 offset-sm-2 col-md-4 offset-md-0 text-center">
                      <!--    <p *ngFor="let location of locationNotificationArray">
                             {{ location.city }}, {{ location.province }}
                             <a class="vertical-center-child">
                                 <i class="fa fa-times-circle fa-lg text-danger" aria-hidden="true"></i>
                             </a>
                         </p> -->
+                        <h5>Your Locations:</h5>
+                        <p *ngIf="locationNotificationArray.length < 1">You don't currently have any notifications set up. Try searching for a location above to start. Click 'Add' to put it on this list.</p>
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-center align-items-center" *ngFor="let location of locationNotificationArray, let i = index">
                                 {{ location.city }}, {{ location.province }}
                                 <span class="pl-5">
                                     <a (click)="onRemoveLocation(i)" class="vertical-center-child">
                                         <i class="fa fa-times-circle fa-lg text-danger" aria-hidden="true"></i>
-                                    </a>
+                                    </a> 
                                 </span>
                             </li>
                         </ul>
                     </div>
-                </div>
-
-                <!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-                    <agm-marker [latitude]="lat" [longitude]="lng">
-                            <agm-info-window>Börk</agm-info-window> 
-                    </agm-marker>
-                </agm-map>  -->
-                <div class="row">
                     <agm-map
-                        class="col-12 col-md-8 offset-md-2"
+                        class="col-12 col-md-8"
                         [latitude]="lat"
                         [longitude]="lng"
                         [zoom]="zoom"
@@ -103,6 +101,17 @@
                     
                     </agm-map>
                 </div>
+
+                <div class="row text-center">
+                    <div class="col-12">
+                        <!-- <a (click)="activeModal.close()">Close</a> -->
+                        <button class="btn btn-olf-primary" (click)="onSubmit()">Save Locations</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    
+                </div>
                      
         
             </div>
@@ -111,13 +120,4 @@
   
     </form>
     
-</div>
-  
-<div class="justify-content-center">
-    <div class="row text-center">
-        <div class="col-12">
-            <!-- <a (click)="activeModal.close()">Close</a> -->
-            <button class="btn btn-olf-primary" (click)="onSubmit()">Save Locations</button>
-        </div>
-    </div>
 </div>
