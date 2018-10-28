@@ -36,10 +36,11 @@ import {
   
   // just an interface for type safety.
   interface marker {
-      lat: number;
-      lng: number;
+    lat: number;
+    lng: number;
     city: string;
     province: string;
+    dateAdded: string;
   }
 @Component({
   selector: 'app-location-notification',
@@ -67,6 +68,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
     isLoggedIn: boolean;
     getUserSub: Subscription;
     user: any;
+    getLocationNotificationsSub: Subscription;
   
     constructor(private authService: AuthService,
                 private userService: UserService,
@@ -123,6 +125,15 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
                   result => {
                     console.log('userRecieved: ', result);
                     this.user = result;
+                    if (this.user) {
+                      this.getLocationNotificationsSub = this.apiService.getLocationNotifications(result.id)
+                        .subscribe(
+                          result => {
+                            this.locationNotificationArray = result;
+                            console.log('locations received: ', this.result);
+                          }
+                        )
+                    }
                   }
                 );
             } else {
@@ -158,11 +169,21 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
   
     onSubmit() {
       this.submitting = true;
-      this.apiService.addLocationNotifications(this.user.id, this.locationNotificationArray)
-        .subscribe(
-          res => this.handleSubmitSuccess(res),
-          err => this.handleSubmitError(err)
-        );
+      for (let i = 0; i < this.locationNotificationArray.length; i++) {
+        this.apiService.addLocationNotifications(this.user.id, this.locationNotificationArray[i])
+          .subscribe(
+            console.log('location sent: ', i);
+            if (i === this.locationNotificationArray.length) {
+              res => this.handleSubmitSuccess(res)
+            },
+            err => this.handleSubmitError(err)
+          );
+      }
+      // this.apiService.addLocationNotifications(this.user.id, this.locationNotificationArray)
+      //   .subscribe(
+      //     res => this.handleSubmitSuccess(res),
+      //     err => this.handleSubmitError(err)
+      //   );
     };
   
     private fillAddress(place) {
@@ -173,7 +194,8 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
         'lat': this.lat,
         'lng': this.lng,
         'city': this.city,
-        'province': this.province
+        'province': this.province,
+        'dateAdded': new Date()
       };
     };
   

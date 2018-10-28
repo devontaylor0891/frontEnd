@@ -110,9 +110,17 @@ export class ApiService {
 
 // ***************** LOCATION NOTIFICATION METHODS *******
 
+  getLocationNotifications(id: number): Observable<any> {
+    return this.http
+      .get(this.apiUrl + `/users/${id}/locationNotification/`, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
   addLocationNotifications(id: number, locationNotificationArray: Array<any>): Observable<any> {
     return this.http
-      .post(this.apiUrl + `/users/${id}/locationNotifications/`, locationNotificationArray, {
+      .post(this.apiUrl + `/users/${id}/locationNotification/`, locationNotificationArray, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
