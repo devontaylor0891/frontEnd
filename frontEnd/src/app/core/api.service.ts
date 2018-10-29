@@ -118,9 +118,17 @@ export class ApiService {
       .catch(this._handleError);
   }
 
-  addLocationNotifications(id: number, locationNotificationArray: Array<any>): Observable<any> {
+  addLocationNotifications(id: number, locationNotification: any): Observable<any> {
     return this.http
-      .post(this.apiUrl + `/users/${id}/locationNotification/`, locationNotificationArray, {
+      .post(this.apiUrl + `/users/${id}/locationNotification/`, locationNotification, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
+  deleteLocationNotifications(userId: number, locationNotificationId: number): Observable<any> {
+    return this.http
+      .delete(this.apiUrl + `/users/${userId}/locationNotification/${locationNotificationId}`, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
