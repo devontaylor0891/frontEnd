@@ -187,6 +187,7 @@ export class AddScheduleModalComponent implements OnInit {
       this.submitObject.address = this.producer.address;
       this.submitObject.city = this.producer.location;
       this.submitObject.province = this.producer.province;
+      this.submitObject.producerName = this.producer.name;
     }
     if (!this.isRepeat) {
       this.buildSubmitObject();
@@ -237,6 +238,7 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject = {
       'id': null,
       'producerId': null,
+      'producerName': '',
       'productList': [],
       'type': '',
       'description': '',

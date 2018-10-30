@@ -148,7 +148,9 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
                 );
             } else {
               // user is not logged in
-              this.onLogin('location-notification');
+              this.isLoggedIn = false;
+              // give the link to log in
+              // this.onLogin('location-notification');
             };
           }
         );
@@ -157,7 +159,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
 
     onLogin(e) {
       console.log('cart stored from checkout');
-      this.authService.login(e);
+      this.authService.login('location-notification');
       e.preventDefault();
     }
   
