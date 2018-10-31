@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 // import { } from 'googlemaps';
 import { google } from '@google/maps';
 
+declare var google: any;
+
 import { MapsAPILoader } from '@agm/core';
 import { AgmMap } from '@agm/core';
 

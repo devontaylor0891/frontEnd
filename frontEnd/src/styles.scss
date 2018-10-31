@@ -209,7 +209,7 @@ footer.page-footer {
 }
 
 .jumbotron-dark {
-    background-color: #262626 !important;
+    background-color: #261D2A !important;
     padding: 3em 1em;
 }
 
@@ -302,7 +302,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .bg-dark {
-    background-color: #343a40!important;
+    background-color: #261D2A!important;
 }
 
 .dash-nav > .nav-item a {
@@ -484,4 +484,105 @@ input:focus:not([readonly]) {
 p {
     white-space: pre-line;
 }
+
+.modal-dialog {
+    border-top-left-radius: 0.3rem !important;
+    border-top-right-radius: 0.3rem !important;
+}
+
+.modal-content {
+    border-top-left-radius: 0.3rem !important;
+    border-top-right-radius: 0.3rem !important;
+}
+
+.modal-header {
+    background-color: #893d63 !important;
+    color: whitesmoke !important;
+}
+
+.modal-title {
+    font-weight: 400 !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 0 !important;
+    line-height: 1.5 !important;
+}
+
+.form-section {
+    margin: 2rem !important;
+}
+
+.form-section-header {
+    font-size: 1rem;
+    font-weight: 500 !important;
+    background: none !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    font-weight: 700;
+}
+
+.form-section-header > h4 {
+    font-weight: 500 !important;
+}
+
+.form-section-body {
+    border-radius: 5px !important;
+    background-color: lightgray !important;
+    padding: 1rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0  !important;
+}
+
+input.form-input-custom {
+    border-radius: 5px !important;
+    padding: .25rem !important;
+    background-color: white !important;
+}
+
+textarea.form-input-custom {
+    border-radius: 5px !important;
+    padding: .25rem !important;
+    background-color: white !important;
+}
+
+//     font-weight 500
+
+// form styles:
+// - remove border-radius from .modal-dialog, .modal-content
+// - add purple background-color to .modal-header, and color white
+//  - .modal-title font-weight: 400;
+//     font-size: 1.5rem;
+//     margin-bottom: 0;
+//     line-height: 1.5;
+
+// - .form-section - margin: 2rem
+//  - .form-section-header:
+//         /* font-size: 1rem; */
+//     font-weight: 500 !important;
+//     /* background: #d3d3d3; */
+//     /* padding-top: .75em; */
+//     /* padding-bottom: .75em; */
+//     font-weight: 700;
+// - .form-section-header > h4:
+//     font-weight 500
+// - .form-section-body:
+//     border-radius: 5px;
+//     background-color: #893d6342!important;
+//     padding: 1rem;
+//     /* margin-top: 1em; */
+//     /* margin-bottom: 1em; */
+// - input - .form-input-custom:
+//         border-radius: 5px;
+//     padding: .25rem;
+//     border: solid lightgray 1px;
+//     background-color: white;
+
+// - make description inputs textareas
+
+// colors:
+// black 303030
+// dark purple 642d49
+// med purple 893d63
+// light purple a66a89
+// pale, background purple ceafbe
+// great dark background - 261D2A
 

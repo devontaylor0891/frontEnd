@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { google } from '@google/maps';
 import { MapsAPILoader } from '@agm/core';
 
+declare var google: any;
+
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ScheduleModel } from '../../../../../../core/models/schedule.model';
