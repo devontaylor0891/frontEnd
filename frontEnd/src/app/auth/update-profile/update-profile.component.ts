@@ -1,6 +1,8 @@
-import { Component, OnInit, OnChanges, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { Subscription } from 'rxjs/Subscription';
 
 // import { } from 'googlemaps';
 import { google } from '@google/maps';
@@ -13,6 +15,7 @@ import { AgmMap } from '@agm/core';
 import { AuthService } from '../auth.service';
 import { ApiService } from '../../core/api.service';
 import { UserService } from '../../core/services/user/user.service';
+import { LocationService } from '../../core/services/location/location.service';
 
 import { ProducerModel } from '../../core/models/producer.model';
 
@@ -21,14 +24,12 @@ import { ProducerModel } from '../../core/models/producer.model';
   templateUrl: './update-profile.component.html',
   styleUrls: ['./update-profile.component.scss']
 })
-export class UpdateProfileComponent implements OnInit, OnChanges {
+export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   user: any;
   id: any;
   firstName: string;
   email: string;
-  newValues: Object;
-  newProducerValues: Object;
 
   // reactive form
   userForm: FormGroup;
@@ -38,6 +39,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   public latitude: number;
   public longitude: number;
+  public markerLatitude: number;
+  public markerLongitude: number;
   public searchControl: FormControl;
   public zoom: number;
   @ViewChild('search') public searchElementRef: ElementRef;
@@ -55,13 +58,24 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   country: string;
   submitObject: ProducerModel;
 
+  selectedAddress: any;
+  selectedCityProvince: any;
+  selectedLocation: any;
+
+  mapLocation: any;
+
+  getUserSub: Subscription;
+  getCityProvinceSub: Subscription;
+  getAddressSub: Subscription;
+
   constructor(private auth: AuthService,
               private apiService: ApiService,
               private userService: UserService,
               private router: Router,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private locationService: LocationService) {
 
     // build an empty submitObject
     this.submitObject = {
@@ -89,11 +103,34 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   ngOnInit() { 
 
-    this.userService.getUser()
+    this.getUserSub = this.userService.getUser()
       .subscribe(
         result => {
           this.user = result;
           console.log('userfrom service: ', this.user);
+        }
+      );
+
+    this.getCityProvinceSub = this.locationService.getCityProvince()
+      .subscribe(
+        result => {
+          this.selectedCityProvince = result;
+          console.log('cityProvince service: ', this.selectedCityProvince);
+          if (!this.selectedAddress && this.selectedCityProvince) {
+            this.selectedLocation = this.selectedCityProvince;
+          }
+          if (this.selectedAddress && this.selectedCityProvince) {
+            this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
+          }
+          this.searchElementRef.nativeElement.value = this.selectedLocation;
+        }
+      );
+
+    this.getAddressSub = this.locationService.getAddress()
+      .subscribe(
+        result => {
+          this.selectedAddress = result;
+          console.log('address service: ', this.selectedAddress);
         }
       );
 
@@ -129,7 +166,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
           // set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
+          this.markerLatitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
+          this.markerLongitude = place.geometry.location.lng();
           this.zoom = 12;
         });
       });
@@ -242,13 +281,15 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       );
   };
 
-  private fillAddress(place) {
+  fillAddress(place) {
     // this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
+    this.selectedLocation = this.city + ', ' + this.province;
     if (this.streetNumber && this.route) {
       this.address = this.streetNumber + ' ' + this.route;
+      this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
     };
     this.latitude = this.lat;
     this.longitude = this.lng;
@@ -281,5 +322,36 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       }
     }
   };
+
+  mapClicked($event: MouseEvent) {
+    this.selectedLocation = '';
+    this.selectedAddress = '';
+    this.selectedCityProvince = '';
+    this.markerLatitude = $event.coords.lat
+    this.markerLongitude =  $event.coords.lng;
+    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  }
+  
+  markerDragEnd($event: MouseEvent) {
+    this.selectedLocation = '';
+    this.selectedAddress = '';
+    this.selectedCityProvince = '';
+    console.log('dragEnd');
+    this.markerLatitude = $event.coords.lat
+    this.markerLongitude =  $event.coords.lng;
+    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  };
+
+  ngOnDestroy() {
+    if (this.getUserSub) {
+      this.getUserSub.unsubscribe();
+    };
+    if (this.getCityProvinceSub) {
+      this.getCityProvinceSub.unsubscribe();
+    };
+    if (this.getAddressSub) {
+      this.getAddressSub.unsubscribe();
+    };
+  }
 
 }
