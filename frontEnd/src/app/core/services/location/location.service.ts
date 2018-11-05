@@ -172,7 +172,7 @@ export class LocationService {
                                 if (result === 'route') {
                                     this.route = components[i].short_name;
                                 }
-                                if (result === 'locality' || result === 'sublocality') {
+                                if (result === 'locality' || result === 'sublocality' || result === 'administrative_area_level_3') {
                                     this.city = components[i].short_name;
                                 }
                                 if (result === 'administrative_area_level_1') {

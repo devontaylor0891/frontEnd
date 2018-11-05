@@ -110,7 +110,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   }
 
   download(records) {
-    this.utility.convertAndDownload(records);
+    this.utility.convertAndDownload(records, this.recordType);
   };
 
   onOpenView(record) {

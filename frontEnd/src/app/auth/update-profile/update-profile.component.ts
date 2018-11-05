@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,7 +10,7 @@ import { google } from '@google/maps';
 declare var google: any;
 
 import { MapsAPILoader } from '@agm/core';
-import { AgmMap } from '@agm/core';
+import { AgmMap, MouseEvent as AgmMouseEvent } from '@agm/core';
 
 import { AuthService } from '../auth.service';
 import { ApiService } from '../../core/api.service';
@@ -19,12 +19,14 @@ import { LocationService } from '../../core/services/location/location.service';
 
 import { ProducerModel } from '../../core/models/producer.model';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.component.html',
   styleUrls: ['./update-profile.component.scss']
 })
-export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
+export class UpdateProfileComponent implements OnInit {
 
   user: any;
   id: any;
@@ -75,7 +77,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
               private fb: FormBuilder,
-              private locationService: LocationService) {
+              private locationService: LocationService,
+              private modalService: NgbModal) {
 
     // build an empty submitObject
     this.submitObject = {
@@ -94,6 +97,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     }
 
   }
+
 
   ngOnChanges() {}
 
@@ -323,7 +327,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     }
   };
 
-  mapClicked($event: MouseEvent) {
+  mapClicked($event: AgmMouseEvent) {
     this.selectedLocation = '';
     this.selectedAddress = '';
     this.selectedCityProvince = '';
@@ -332,7 +336,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   }
   
-  markerDragEnd($event: MouseEvent) {
+  markerDragEnd($event: AgmMouseEvent) {
     this.selectedLocation = '';
     this.selectedAddress = '';
     this.selectedCityProvince = '';
