@@ -532,6 +532,8 @@ input.form-input-custom {
     border-radius: 5px !important;
     padding: .25rem !important;
     background-color: white !important;
+    border: none !important;
+    outline: none !important;
 }
 
 textarea.form-input-custom {
@@ -539,6 +541,7 @@ textarea.form-input-custom {
     padding: .25rem !important;
     background-color: white !important;
     border: none !important;
+    height: 5rem !important;
 }
 
 .input-group > input {
