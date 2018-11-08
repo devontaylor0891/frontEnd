@@ -17,7 +17,7 @@
                     <h5>General Details</h5>
                 </div>
 
-                <div class="form-section-body">
+                <div class="col-12 form-section-body">
 
                     <!-- SELECT SCHEDULE TYPE BEFORE ANY OTHER OPTIONS SHOWN -->
                     <div class="row">
@@ -74,9 +74,7 @@
                                     <p>{{ this.form.value.city }}, {{ this.form.value.province }}</p>
                                 </div>
                             </div>
-                    
-                            <br>
-                            
+                                                
                         </div>
                         
                         <!-- DESCRIPTION -->
@@ -84,7 +82,7 @@
                             <label for="description" class="col-4 col-form-label text-right">Description</label>
                             <div class="col-8">
                                 <textarea 
-                                    class="form-control" 
+                                    class="form-input-custom" 
                                     type="text" 
                                     id="description" 
                                     [formControl]="form.controls['description']"></textarea>
@@ -161,7 +159,7 @@
                     <h5>Dates and Times</h5>
                 </div>
 
-                <div class="form-section-body">
+                <div class="col-12 form-section-body">
 
                     <!-- DATE - NOT REPEAT - USES DATEPICKER MODULE -->
                     <div *ngIf="!isRepeat" class="row">
@@ -291,7 +289,7 @@
                     <h5>Door-to-door Delivery Details</h5>
                 </div>
 
-                <div class="form-section-body">
+                <div class="col-12 form-section-body">
 
                     <div class="row">
                         <label for="unit" class="col-4 col-form-label text-right">Does this delivery have a fee?</label>
@@ -390,7 +388,7 @@
                         <h5>Door-to-door Delivery Details</h5>
                     </div>
 
-                    <div class="form-section-body">
+                    <div class="col-12 form-section-body">
 
                         <div class="row">
                             <label for="address" class="col-4 col-form-label text-right">Your Address:</label>

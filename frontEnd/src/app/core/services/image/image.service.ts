@@ -90,6 +90,7 @@ export class ImageService {
     this.apiService.getPresignedUrl(imageName)
       .subscribe(
         result => {
+          console.log('presignedUrl: ', result);
           this.presignedUrl = result;
         }
       );

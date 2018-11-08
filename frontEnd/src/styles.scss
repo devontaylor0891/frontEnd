@@ -548,6 +548,10 @@ textarea.form-input-custom {
     padding: 0.25rem !important;
 }
 
+.input-group > .form-control {
+    height: auto !important;
+}
+
 .form-control {
     background-color: white !important;
 }

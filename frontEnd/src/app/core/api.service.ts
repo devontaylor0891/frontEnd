@@ -375,24 +375,30 @@ export class ApiService {
   };
 
 // ***************** get presigned url for image uploads ***************
-  getPresignedUrl(imageName: any): Observable<string> {
-    AWS.config.update({
-      accessKeyId: ``,
-      secretAccessKey: ``,
-      region: 'us-west-2'
-    });
-    const s3 = new AWS.S3();
-    let params = {
-      Bucket: 'onlylocalfood-images',
-      Key: imageName,
-      Expires: 1000000,
-      ContentType: 'image/jpeg'
-      // ACL: 'public-read'
-    };
-    let url = s3.getSignedUrl('putObject', params);
-    console.log('params: ', params);
-    console.log('url: ', url);
-    return Observable.of(url);
+  getPresignedUrl(imageName: any): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/presignedUrl/`, imageName, {
+      // .post(`${ENV.BASE_API}orders/`, order, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+    // AWS.config.update({
+    //   accessKeyId: ``,
+    //   secretAccessKey: ``,
+    //   region: 'us-west-2'
+    // });
+    // const s3 = new AWS.S3();
+    // let params = {
+    //   Bucket: 'onlylocalfood-images',
+    //   Key: imageName,
+    //   Expires: 1000000,
+    //   ContentType: 'image/jpeg'
+    //   // ACL: 'public-read'
+    // };
+    // let url = s3.getSignedUrl('putObject', params);
+    // console.log('params: ', params);
+    // console.log('url: ', url);
+    // return Observable.of(url);
   };
 
 // ***************** upload image to S3 ***************  
