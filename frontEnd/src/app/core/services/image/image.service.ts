@@ -74,6 +74,7 @@ export class ImageService {
     this.imageUploading = true;
     this._imageUploading.next(this.imageUploading);
     const jpg = this.previewCroppedImage.split(',')[1];
+    console.log('jpg: ', jpg);
     var bs = atob(jpg);
     var buffer = new ArrayBuffer(bs.length);
     var ba = new Uint8Array(buffer);
@@ -83,20 +84,26 @@ export class ImageService {
     this.croppedImage = new Blob([ba], { type: 'image/jpeg' });
     this.croppedImage = new File([this.croppedImage], this.imageName);
     this.getPresignedUrl(this.imageName);
-    this.uploadToS3(this.presignedUrl);
   }
 
   getPresignedUrl(imageName) {
-    this.apiService.getPresignedUrl(imageName)
+    let imageNameObj = {
+      imageNameAttribute: imageName
+    };
+    console.log('imageName: ', imageNameObj);
+    this.apiService.getPresignedUrl(imageNameObj)
       .subscribe(
         result => {
           console.log('presignedUrl: ', result);
           this.presignedUrl = result;
+          this.uploadToS3(this.presignedUrl);
         }
       );
   }
 
   uploadToS3(url: string) {
+    console.log('image: ', this.croppedImage);
+    console.log('url: ', url);
     this.apiService.putFileToS3(this.croppedImage, url)
       .subscribe(
         response => {

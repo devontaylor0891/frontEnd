@@ -379,7 +379,8 @@ export class ApiService {
     return this.http
       .post(this.apiUrl + `/presignedUrl/`, imageName, {
       // .post(`${ENV.BASE_API}orders/`, order, {
-        headers: new HttpHeaders().set('Authorization', this._authHeader)
+        headers: new HttpHeaders().set('Authorization', this._authHeader),
+        responseType: 'text'
       })
       .catch(this._handleError);
     // AWS.config.update({
@@ -405,7 +406,7 @@ export class ApiService {
   putFileToS3(file: any, url: string): Observable<any> {
     return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/jpeg') })
       .map((response: Response) => {
-        console.log('image uploaded');
+        console.log('image uploaded response: ', response);
       });
   };
 
