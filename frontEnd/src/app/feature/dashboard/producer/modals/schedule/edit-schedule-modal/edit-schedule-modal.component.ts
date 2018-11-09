@@ -69,15 +69,26 @@ export class EditScheduleModalComponent implements OnInit {
 				public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    console.log('this sched: ', this.record);
     	  // break out the dates/times from the incoming record so they can be used in the form
     this.breakUpDatesTimes();
 	  this.setHasOrders();
 	  this.hasDelFee = this.record.hasFee;
     this.hasFeeWaiver = this.record.hasWaiver;
-    this.delFee = this.record.fee || 0;
+    this.delFee = this.record.fee || 0.00;
 	  // build the form with the incoming record and the date/time defaults
 	  this.buildForm();
   }
+
+  setDeliveryFeeToZero() {
+    this.record.fee = 0.00;
+    this.scheduleForm.value.fee = 0.00;
+  };
+
+  setFeeWaiverToZero() {
+    this.record.feeWaiver = 0.00;
+    this.scheduleForm.value.feeWaiver = 0.00;
+  };
   
   private setHasOrders() {
     console.log('record: ', this.record);

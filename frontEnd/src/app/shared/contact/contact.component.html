@@ -5,51 +5,63 @@
     <div class="col-12 form-section-body">
 
       <div class="row">
-        <label for="name" class="col-4 col-form-label text-right">Your Name:</label>
-        <div class="col-8">
+        <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Name:</label>
+        <div class="col-xs-12 col-sm-8 input-group">
           <input 
             formControlName="name"
             id="name"
             type="text"
-            class="form-control">
+            class="form-input-custom"
+            required>
+            <small 
+              *ngIf="!myGroup.get('name').valid && myGroup.get('name').touched"
+              class="help-block"
+              >Please enter your name.</small>
             <!-- <div class="row" *ngIf="name.touched && name.invalid"> 
               Your name is required.
             </div> -->
         </div>
       </div>
       <div class="row">
-        <label for="email" class="col-4 col-form-label text-right">Your Email:</label>
-        <div class="col-8">
+        <label for="email" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Email:</label>
+        <div class="col-xs-12 col-sm-8 input-group">
           <input 
             formControlName="email"
             id="email"
             type="email"
-            class="form-control"
+            class="form-input-custom"
             required>
+            <small 
+              *ngIf="!myGroup.get('email').valid && myGroup.get('email').touched"
+              class="help-block"
+              >Please enter your email.</small>
             <!-- <div class="row" *ngIf="email.touched && email.invalid"> 
               Your email is required.
             </div> -->
         </div>
       </div>
       <div class="row">
-        <label for="message" class="col-4 col-form-label text-right">Message:</label>
-        <div class="col-8">
+        <label for="message" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Message:</label>
+        <div class="col-xs-12 col-sm-8 input-group">
           <textarea
             formControlName="message"
-            class="textarea" 
+            class="form-input-custom" 
             name="message" 
             required></textarea>
+            <small 
+              *ngIf="!myGroup.get('message').valid && myGroup.get('message').touched"
+              class="help-block"
+              >Please enter your message.</small>
             <!-- <div class="row" *ngIf="message.touched && message.invalid"> 
               A message is required.
             </div> -->
         </div>
       </div>
       <div class="row">
-        <label for="recaptcha" class="col-4 col-form-label text-right">Verify:</label>
-        <div class="col-8">
+        <label for="recaptcha" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Verify:</label>
+        <div class="col-xs-12 col-sm-8 input-group">
           <ngx-recaptcha2
             [siteKey]="siteKey"
-
             (expire)="handleExpire()"
             (load)="handleLoad()"
             (success)="handleSuccess()"

@@ -305,6 +305,11 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   private clearAddress() {
+    this.submitObject.address = '';
+    this.submitObject.city = '';
+    this.submitObject.province = '';
+    this.submitObject.latitude = null;
+    this.submitObject.longitude = null;
     this.streetNumber = '';
     this.route = '';
     this.city = '';

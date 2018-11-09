@@ -8,16 +8,18 @@
     <div *ngIf="!submitting">
 
       <div>
-        <div *ngIf="hasOrders">
-          <p class="mt-3 alert alert-danger">
+        <div *ngIf="hasOrders" class="mt-3 alert alert-danger">
+          <p>
             <strong>Uh Oh!</strong> It looks like this schedule has orders. Unfortunately you can't cancel a delivery or pickup unless you cancel the orders.
           </p>
         </div>
     
         <div *ngIf="!hasOrders">
-          <p class="mt-3 alert alert-danger">
-            <strong>Are you sure?</strong> By clicking 'Confirm' below, you will be deleting this schedule.
-          </p>
+          <div class="mt-3 alert alert-danger">
+            <p>
+              <strong>Are you sure?</strong> By clicking 'Confirm' below, you will be deleting this schedule.
+            </p>
+          </div>
           <button
             type="button" 
             class="btn btn-danger" 

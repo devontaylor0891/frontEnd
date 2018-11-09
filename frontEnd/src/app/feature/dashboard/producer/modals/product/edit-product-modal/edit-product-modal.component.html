@@ -37,8 +37,8 @@
             <div class="col-12 form-section-body">
             <!-- Name -->
                 <div class="row">
-                    <label for="name" class="col-4 col-form-label text-right">Name:</label>
-                    <div class="col-8">
+                    <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Name:</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <input 
                             id="name"
                             type="text"
@@ -49,8 +49,8 @@
             
             <!-- Description -->
                 <div class="row">
-                    <label for="description" class="col-4 col-form-label text-right">Description:</label>
-                    <div class="col-8">
+                    <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description:</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <textarea 
                             type="text"
                             class="form-input-custom"  
@@ -90,10 +90,10 @@
                         <p class="small">We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
                     </div>
                     <div class="col-6">
-                        <label class="col-12 col-form-label text-center">Upload and Crop:</label>
+                        <label class="col-xs-12 col-sm-4 col-form-label text-sm-center">Upload and Crop:</label>
                     </div>
                     <div class="col-6">
-                        <label class="col-12 col-form-label text-center">Preview:</label>
+                        <label class="col-xs-12 col-sm-4 col-form-label text-sm-center">Preview:</label>
                     </div>
                     <div class="col-12">
                         <app-image-cropper [name]="imageName"></app-image-cropper>
@@ -112,8 +112,8 @@
 
             <!-- price per unit -->
                 <div class="row">
-                    <label for="pricePerUnit" class="col-4 col-form-label text-right">Price Per Unit:</label>
-                    <div class="col-8 input-group">
+                    <label for="pricePerUnit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Price Per Unit:</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <div class="input-group-addon">$</div>
                         <input 
                             class="form-control" 
@@ -127,8 +127,8 @@
 
             <!-- unit -->
                 <div class="row">
-                    <label for="unit" class="col-4 col-form-label text-right">Pricing Unit</label>
-                    <div class="col-8">
+                    <label for="unit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Pricing Unit</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <select class="custom-select form-input-custom float-left" name="unit" formControlName="unit">
                             <option selected value="">Select a Unit</option>
                             <option value="lb">Pound</option>
@@ -141,8 +141,8 @@
             
             <!-- units per -->
                 <div class="row">
-                    <label for="unitsPer" class="col-4 col-form-label text-right">Units Per Final Product</label>
-                    <div class="col-8 input-group">
+                    <label for="unitsPer" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Units Per Final Product</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <input 
                             class="form-input-custom" 
                             type="number"
@@ -151,7 +151,7 @@
                             id="unitsPer" 
                             formControlName="unitsPer">
                     </div>
-                    <div class="col-8 offset-4">
+                    <div class="col-xs-12 col-sm-8 offset-sm-4">
                         <small class="form-text text-muted text-right">If your final product contains more than 1 unit (like a 5 lb chicken), change this to the average number of units per final product. We can use this to calculate an estimated final price for the consumer.</small>
                     </div>
                 </div>
@@ -168,8 +168,8 @@
 
             <!-- category -->
                 <div class="row">
-                    <label for="category" class="col-4 col-form-label text-right">Category:</label>
-                    <div class="col-8">
+                    <label for="category" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Category:</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <select 
                         class="custom-select form-input-custom float-left" 
                         name="category" 
@@ -185,9 +185,9 @@
 
             <!-- subcategory -->
                 <div class="row">
-                    <label for="subcategory" class="col-4 col-form-label text-right">Subcategory:</label>
+                    <label for="subcategory" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Subcategory:</label>
                 <!-- dairy/egg subcategories -->
-                    <div class="col-8" *ngIf="productForm.value.category === 'Dairy & Eggs'">
+                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Dairy & Eggs'">
                             <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
                                 <option selected value="">Choose a Subcategory</option>
                                 <option value="Cheese">Cheese</option>
@@ -197,7 +197,7 @@
                             </select>
                         </div>
                 <!-- meat subcategories -->
-                    <div class="col-8" *ngIf="productForm.value.category === 'Meat'">
+                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Meat'">
                         <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
                             <option selected value="">Choose a Subcategory</option>
                             <option value="Beef">Beef</option>
@@ -211,7 +211,7 @@
                         </select>
                     </div>
                 <!-- produce subcategories -->
-                    <div class="col-8" *ngIf="productForm.value.category === 'Produce'">
+                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Produce'">
                         <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
                             <option selected value="">Choose a Subcategory</option>
                             <option value="Apples">Apples</option>
@@ -245,7 +245,7 @@
                         </select>
                     </div>
                 <!-- value added subs -->
-                    <div class="col-8" *ngIf="productForm.value.category === 'Value-added'">
+                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Value-added'">
                         <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
                             <option selected value="">Choose a Subcategory</option>
                             <option value="Baking">Baking</option>
@@ -273,8 +273,8 @@
 
             <!-- qty available -->
                 <div class="row">
-                    <label for="qtyAvailable" class="col-4 col-form-label text-right">Quantity Available:</label>
-                    <div class="col-8 input-group">
+                    <label for="qtyAvailable" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Quantity Available:</label>
+                    <div class="col-xs-12 col-sm-8 input-group">
                         <input 
                             class="form-input-custom" 
                             type="number"
