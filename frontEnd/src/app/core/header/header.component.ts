@@ -55,6 +55,10 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   };
 
+  public openLink(link) {
+    window.open(link, '_blank');
+  }
+
   ngOnDestroy() {
     console.log('header onDestroy called');
   }

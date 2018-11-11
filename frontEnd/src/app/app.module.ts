@@ -135,6 +135,12 @@ import { ContactComponent } from './shared/contact/contact.component';
 import { CheckoutWarningModalComponent } from './feature/cart/checkout/checkout-warning-modal/checkout-warning-modal.component';
 import { LocationNotificationSignUpModalComponent } from './shared/location-notification-sign-up-modal/location-notification-sign-up-modal.component';
 import { LocationNotificationComponent } from './feature/location-notification/location-notification.component';
+import { FbPageComponent } from './shared/social-media/facebook/fb-page/fb-page.component';
+import { FbLikeComponent } from './shared/social-media/facebook/fb-like/fb-like.component';
+import { FbLikeShareComponent } from './shared/social-media/facebook/fb-like-share/fb-like-share.component';
+import { FbShareComponent } from './shared/social-media/facebook/fb-share/fb-share.component';
+import { TwitterTweetComponent } from './shared/social-media/twitter/twitter-tweet/twitter-tweet.component';
+import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed/twitter-feed.component';
 
 @NgModule({
   declarations: [
@@ -223,7 +229,13 @@ import { LocationNotificationComponent } from './feature/location-notification/l
     ContactComponent,
     CheckoutWarningModalComponent,
     LocationNotificationSignUpModalComponent,
-    LocationNotificationComponent
+    LocationNotificationComponent,
+    FbPageComponent,
+    FbLikeComponent,
+    FbLikeShareComponent,
+    FbShareComponent,
+    TwitterTweetComponent,
+    TwitterFeedComponent
   ],
   imports: [
     BrowserModule,

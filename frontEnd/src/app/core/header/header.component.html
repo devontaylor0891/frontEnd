@@ -26,6 +26,11 @@
             <div class="collapse navbar-collapse col-md-8 text-center" id="navbar-collapse-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" (click)="openLink('https://www.facebook.com/onlylocalfood')">
+                            <i class="fa fa-facebook-f fa-2x"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                         <a class="nav-link" routerLink="/cart">
                             <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
                             <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
