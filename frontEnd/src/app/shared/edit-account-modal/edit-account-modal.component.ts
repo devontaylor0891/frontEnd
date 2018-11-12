@@ -71,7 +71,13 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
               private imageService: ImageService,
               private router: Router) { }
 
-  ngOnChanges() {};
+  ngOnChanges() {
+    // console.log('producer from edit modal: ', this.producer);
+
+    // if (this.producer && this.producer.logoUrl !== '') {
+    //   this.logoExists = true;
+    // }
+  }
 
   ngOnInit() {
     
@@ -87,6 +93,9 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       this.address = this.producer.address;
       this.city = this.producer.location;
       this.province = this.producer.province;
+      if (this.producer && this.producer.logoUrl !== '') {
+        this.logoExists = true;
+      }
     };
     
     // create search FormControl

@@ -322,6 +322,9 @@ export class UtilityService {
   };
 
   removeByAttribute(array, attribute, value) {
+    console.log('array: ', array);
+    console.log('attribute: ', attribute);
+    console.log('value: ', value);
     if (array) {
       let i = array.length;
       while (i--) {
@@ -332,6 +335,7 @@ export class UtilityService {
               array.splice(i,1);
          }
       }
+      console.log('array after: ', array);
       return array;
     } else {
       return null;

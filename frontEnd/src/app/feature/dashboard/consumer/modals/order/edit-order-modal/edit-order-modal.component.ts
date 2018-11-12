@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -16,7 +16,8 @@ import { OrderModel } from '../../../../../../core/models/order.model';
 })
 export class ConsumerEditOrderModalComponent implements OnInit {
 
-   @Input() record: OrderModel;
+  @Input() record: OrderModel;
+  @Output() onOrderDeleted = new EventEmitter<any>();
   orderForm: FormGroup;
   initialOrder: OrderModel;
   formChangeSub: Subscription;
@@ -164,6 +165,7 @@ export class ConsumerEditOrderModalComponent implements OnInit {
 
   handleDeleteSuccess(res) {
     this.submitting = false;
+    this.onOrderDeleted.emit(this.record.id);
     console.log('deleted!: ', res);
     // close modal
     this.activeModal.close();

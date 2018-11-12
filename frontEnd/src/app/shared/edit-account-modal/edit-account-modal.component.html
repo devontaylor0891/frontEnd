@@ -92,10 +92,10 @@
               <label for="firstName" class="col-xs-12 col-sm-4 col-form-label text-sm-right">First Name:</label>
               <div class="col-xs-12 col-sm-8 input-group">
                 <input 
-                  id="firstName"
-                  type="text"
-                  class="form-input-custom"
-                  formControlName="firstName">
+                id="firstName"
+                type="text"
+                class="form-input-custom"
+                formControlName="firstName">
               </div>
             </div>
 
@@ -103,10 +103,10 @@
               <label for="email" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Email:</label>
               <div class="col-xs-12 col-sm-8 input-group">
                 <input 
-                  id="email"
-                  type="text"
-                  class="form-input-custom"
-                  formControlName="email">
+                id="email"
+                type="text"
+                class="form-input-custom"
+                formControlName="email">
               </div>
             </div>
 
@@ -137,11 +137,11 @@
               <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description of your Business:</label>
               <div class="col-xs-12 col-sm-8 input-group">
                 <textarea
-                  id="description"
-                  type="text" 
-                  class="md-textarea"
-                  formControlName="description"
-                  class="form-input-custom"></textarea>
+                id="description"
+                type="text" 
+                class="md-textarea"
+                formControlName="description"
+                class="form-input-custom"></textarea>
               </div>
             </div>
 
@@ -161,9 +161,15 @@
             <div class="row" *ngIf="!addingImage">
               <div class="col-12">
                 <!-- image does not exist for product -->
-                <div class="text-center">
-                  <p>No logo has been uploaded.</p>
-                  <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
+                <div class="text-center row">
+                  <div class="col-6 offset-3" *ngIf="logoExists">
+                    <img class="img-thumbnail" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.id }}/logo" alt="">
+                    <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Change Logo</button>
+                  </div>
+                  <div class="col-12" *ngIf="!logoExists">
+                    <p>No logo has been uploaded.</p>
+                    <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -246,32 +252,32 @@
                     </agm-marker>
                   </agm-map> --> 
 
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="col-12 text-center">
+              <button 
+              class="btn btn-olf-primary" 
+              type="submit"
+              [disabled]="(producerForm.invalid)"
+              >Update Profile</button>
             </div>
 
           </div>
 
         </div>
 
-        <div class="col-12 text-center">
-          <button 
-          class="btn btn-olf-primary" 
-          type="submit"
-          [disabled]="(producerForm.invalid)"
-          >Update Profile</button>
+      </form>
+
+    </div>
+
+    <div class="modal-footer justify-content-center">
+      <div class="row text-center">
+        <div class="col-12">
+          <a (click)="activeModal.close()">Cancel Changes</a>
         </div>
-
       </div>
-
     </div>
-
-  </form>
-
-</div>
-
-<div class="modal-footer justify-content-center">
-  <div class="row text-center">
-    <div class="col-12">
-      <a (click)="activeModal.close()">Cancel Changes</a>
-    </div>
-  </div>
-</div>

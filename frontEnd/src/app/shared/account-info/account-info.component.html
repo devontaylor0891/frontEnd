@@ -1,148 +1,124 @@
-<!-- <div class="row">
+<div class="row">
     <div class="col col-xs-12">
         <div role="tablist" aria-multiselectable="true">
-            <div class="card">
-                <div class="card-header dash-accordion" role="tab">
-                    <h5 class="mb-0 text-white">Account Information</h5>
-                </div>
-                <div role="tabpanel" aria-labelledby="accountInfoHeading">
-                    <div class="card-block">
-                        <img src="{{profile?.picture}}" class="avatar" alt="avatar">
-                        <div>
-                            <h3 class="nickname">{{ profile?.nickname }}</h3>
-                        </div>
-                        <pre class="full-profile">{{ profile | json }}</pre>
-                    </div>
-                    <div class="card-block">
-                        <pre class="full-profile">{{ user | json }}</pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<div class="row">
-        <div class="col col-xs-12">
-            <div role="tablist" aria-multiselectable="true">
-    
-                <div class="col-12 col-md-8 mx-auto my-2">
-                    <div class="jumbotron">
-                        <div>
-                            <h2 class="h2-responsive">
-                                <img src="{{profile?.picture}}" class="avatar" alt="avatar" class="img-thumbnail">
-                                <strong>Your Profile</strong>
-                            </h2>
-                            <p></p>
-        
-                            <div class="card-block">
-                                
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-user prefix mr-3"></i>Name:
-                                        </h5>
-                                    </div>
-                                    
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ user.firstName }}</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-at prefix mr-3"></i>Email:
-                                        </h5>
-                                    </div>
-                                    
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ user.email }}</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-adjust prefix mr-3"></i>Role:
-                                        </h5>
-                                    </div>
-                                    
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ user.role | firstCharacterToUppercase }}</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row mb-1">
-                                    <p>You have been a member of OLF since {{ user.registrationDate | date:'fullDate' }}.</p>
-                                </div>
-    
-                                <div *ngIf="user?.role === 'producer'">
-                                    <hr>
-                                    <div class="row mb-1">
-                                        <div class="col-12 col-md-4">
-                                            <h5 class="h5-responsive">
-                                                <i class="fa fa-id-card prefix mr-3"></i>Business Name:
-                                            </h5>
-                                        </div>
-                                        <div class="pl-3 col-12 col-md-8">
-                                            <p>{{ producer?.name }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-12 col-md-4">
-                                            <h5 class="h5-responsive">
-                                                <i class="fa fa-map-marker prefix mr-3"></i>Location:
-                                            </h5>
-                                        </div>
-                                        <div class="pl-3 col-12 col-md-8">
-                                            <p>{{ producer?.location }}, {{ producer?.province }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-1" *ngIf="producer?.address">
-                                        <div class="col-12 col-md-4">
-                                            <h5 class="h5-responsive">
-                                                <i class="fa fa-map-marker prefix mr-3"></i>Address:
-                                            </h5>
-                                        </div>
-                                        <div class="pl-3 col-12 col-md-8">
-                                            <p>{{ producer.address }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-1" *ngIf="producer?.description">
-                                        <div class="col-12 col-md-4">
-                                            <h5 class="h5-responsive">
-                                                <i class="fa fa-align-justify prefix mr-3"></i>Description:
-                                            </h5>
-                                        </div>
-                                        <div class="pl-3 col-12 col-md-8">
-                                            <p>{{ producer.description }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-12 col-md-4">
-                                            <h5 class="h5-responsive">
-                                                <i class="fa fa-image prefix mr-3"></i>Logo:
-                                            </h5>
-                                        </div>
-                                        <div class="pl-3 col-12 col-md-8">
-                                            <img *ngIf="logoExists" class="img-thumbnail" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.id }}/logo" alt="">
-                                            <p *ngIf="!logoExists">No logo uploaded.</p>
-                                        </div>
-                                    </div>
+            
+            <div class="col-12 col-md-8 mx-auto my-2">
+                <div class="jumbotron">
+                    <div>
+                        <h2 class="h2-responsive">
+                            <img src="{{profile?.picture}}" class="avatar" alt="avatar" class="img-thumbnail">
+                            <strong>Your Profile</strong>
+                        </h2>
+                        <p></p>
+                        
+                        <div class="card-block">
+                            
+                            <div class="row mb-1">
+                                <div class="col-12 col-md-4">
+                                    <h5 class="h5-responsive">
+                                        <i class="fa fa-user prefix mr-3"></i>Name:
+                                    </h5>
                                 </div>
                                 
+                                <div class="pl-3 col-12 col-md-8">
+                                    <p>{{ user.firstName }}</p>
+                                </div>
                             </div>
                             
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()"><i class="fa fa-edit prefix mr-3"></i>Edit</button>
+                            <div class="row mb-1">
+                                <div class="col-12 col-md-4">
+                                    <h5 class="h5-responsive">
+                                        <i class="fa fa-at prefix mr-3"></i>Email:
+                                    </h5>
+                                </div>
+                                
+                                <div class="pl-3 col-12 col-md-8">
+                                    <p>{{ user.email }}</p>
                                 </div>
                             </div>
-
+                            
+                            <div class="row mb-1">
+                                <div class="col-12 col-md-4">
+                                    <h5 class="h5-responsive">
+                                        <i class="fa fa-adjust prefix mr-3"></i>Role:
+                                    </h5>
+                                </div>
+                                
+                                <div class="pl-3 col-12 col-md-8">
+                                    <p>{{ user.role | firstCharacterToUppercase }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-1">
+                                <p>You have been a member of OLF since {{ user.registrationDate | date:'fullDate' }}.</p>
+                            </div>
+                            
+                            <div *ngIf="user?.role === 'producer'">
+                                <hr>
+                                <div class="row mb-1">
+                                    <div class="col-12 col-md-4">
+                                        <h5 class="h5-responsive">
+                                            <i class="fa fa-id-card prefix mr-3"></i>Business Name:
+                                        </h5>
+                                    </div>
+                                    <div class="pl-3 col-12 col-md-8">
+                                        <p>{{ producer?.name }}</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-12 col-md-4">
+                                        <h5 class="h5-responsive">
+                                            <i class="fa fa-map-marker prefix mr-3"></i>Location:
+                                        </h5>
+                                    </div>
+                                    <div class="pl-3 col-12 col-md-8">
+                                        <p>{{ producer?.location }}, {{ producer?.province }}</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-1" *ngIf="producer?.address">
+                                    <div class="col-12 col-md-4">
+                                        <h5 class="h5-responsive">
+                                            <i class="fa fa-map-marker prefix mr-3"></i>Address:
+                                        </h5>
+                                    </div>
+                                    <div class="pl-3 col-12 col-md-8">
+                                        <p>{{ producer.address }}</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-1" *ngIf="producer?.description">
+                                    <div class="col-12 col-md-4">
+                                        <h5 class="h5-responsive">
+                                            <i class="fa fa-align-justify prefix mr-3"></i>Description:
+                                        </h5>
+                                    </div>
+                                    <div class="pl-3 col-12 col-md-8">
+                                        <p>{{ producer.description }}</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-12 col-md-4">
+                                        <h5 class="h5-responsive">
+                                            <i class="fa fa-image prefix mr-3"></i>Logo:
+                                        </h5>
+                                    </div>
+                                    <div class="pl-3 col-12 col-md-8">
+                                        <img *ngIf="logoExists" class="img-thumbnail" [src]="currentLogo" alt="">
+                                        <p *ngIf="!logoExists">No logo uploaded.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()"><i class="fa fa-edit prefix mr-3"></i>Edit</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

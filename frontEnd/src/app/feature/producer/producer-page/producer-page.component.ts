@@ -48,10 +48,12 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
           this.outOfStockProducts = [];
           this.products = [];
           for (let i = 0; i < results.length; i++) {
-            if (results[i].qtyAvailable < 1) {
-              this.outOfStockProducts.push(results[i]);
-            } else {
-              this.products.push(results[i]);
+            if (!results[i].isObsolete) {
+              if (results[i].qtyAvailable < 1) {
+                this.outOfStockProducts.push(results[i]);
+              } else {
+                this.products.push(results[i]);
+              }
             }
           }
         }

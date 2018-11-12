@@ -59,6 +59,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   @Output() orderAccepted = new EventEmitter<any>();
   @Output() orderDenied = new EventEmitter<any>();
   @Output() orderCompleted = new EventEmitter<any>();
+  @Output() orderDeleted = new EventEmitter<any>();
   @Output() orderIncompleted = new EventEmitter<any>();
   @Output() scheduleDeleted = new EventEmitter<any>();
   @Output() productObsoleted = new EventEmitter<any>();
@@ -182,6 +183,13 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     } else if (this.recordType === 'order' && this.isConsumer === true) {
       const modalRef = this.modal.open(ConsumerEditOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
+      this.firstModalSubscription = modalRef.componentInstance.onOrderDeleted
+        .subscribe(
+          result => {
+            console.log('consumer order dleeted: ', result);
+            this.orderDeleted.emit(result);
+          }
+        )
     }
   }
 
