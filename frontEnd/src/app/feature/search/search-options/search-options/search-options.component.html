@@ -28,19 +28,18 @@
             </div>
         
             <div [hidden]="!locationUpdate">
-                    <p>Enter a New Location:</p>
-                    <div class="md-form pl-3">
-                        <i class="fa fa-map-marker prefix"></i>
-                        <input  
-                            autocorrect="off" 
-                            autocapitalize="off" 
-                            spellcheck="off" 
-                            type="text" 
-                            class="form-control" 
-                            #search 
-                            id="search"
-                            [formControl]="searchControl">
-                    </div>
+                <p><i class="fa fa-map-marker pr-2"></i>Enter a New Location:</p>
+                <div>                        
+                    <input  
+                        autocorrect="off" 
+                        autocapitalize="off" 
+                        spellcheck="off" 
+                        type="text" 
+                        class="form-input-custom" 
+                        #search 
+                        id="search"
+                        [formControl]="searchControl">
+                </div>
             </div>
     
         </div>
