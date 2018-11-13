@@ -53,6 +53,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   postalCode: string;
   country: string;
 
+  logoExists: boolean;
+
   imageName: string = '';
   addingImage: boolean = false;
   imageUploading: boolean;

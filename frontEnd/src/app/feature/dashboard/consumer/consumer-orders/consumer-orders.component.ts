@@ -65,7 +65,7 @@ export class ConsumerOrdersComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: ConsumerDashboardService
+  constructor(private dashboardService: ConsumerDashboardService,
               private utilityService: UtilityService) { }
 
   toggleView(order: any) {
