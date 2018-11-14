@@ -38,7 +38,8 @@
                                 (scheduleDeleted)="onScheduleDeleted($event)">
                             </app-table-layout>
                             <div *ngIf="upcomingSchedule.length < 1">
-                                <p>You have no upcoming deliveries or pickups scheduled.</p>
+                                <p>You currently have no upcoming deliveries or pickups scheduled. Use the button above to add an event.</p>
+                                <p>If you're not exactly sure how this works, head <a class="" routerLink="/learn-more-producer">here</a> to learn more.</p>
                             </div>
                         </div>
                     </div>

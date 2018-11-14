@@ -51,7 +51,7 @@ export class UserService implements OnInit, OnChanges  {
               .subscribe(
                 result => { 
                   console.log('result from apiservice getuser: ', result);
-                  if (result) {
+                  if (result[0]) {
                     // removed from above test: .length > 0
                     this.assignUserValues(result);
                     // this.user = result;

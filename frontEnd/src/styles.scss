@@ -153,6 +153,12 @@ $olf-grey: (
     )
 );
 
+
+.container-fluid {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
 .olf-primary {
     color: #741b47 !important;
 }
@@ -207,6 +213,19 @@ footer.page-footer {
 .jumbotron-dark {
     background-color: #261D2A !important;
     padding: 3em 1em;
+}
+
+.landing-page-jumbotron {
+    background-image: url("https://images.unsplash.com/photo-1510148199876-8a856ee41d42?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a82c3751ed73cbbd31bbaef3d7233a83&w=1000&q=80"), linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+    padding: 5em 5%;
+}
+
+.landing-fa-stack {
+    font-size: 3rem;
+    color: #893d63;
 }
 
 .dash-accordion {
@@ -569,6 +588,7 @@ table td {
 }
 
 
+// another good dark purple 280215
 
 // colors:
 // black 303030
