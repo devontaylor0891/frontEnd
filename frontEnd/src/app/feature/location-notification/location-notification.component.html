@@ -1,13 +1,13 @@
-<div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
+<div class="col col-md-6 offset-md-3 p-4" *ngIf="!isLoggedIn">
     <div class="row card bg-dark py-5">
-      <div class="col-10 offset-1 bg-light py-2 text-center card-body">
-        <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
-        <button class="btn btn-olf-primary" type="button" (click)="onLogin($event)">Log in or Sign up</button>
-      </div>
+        <div class="col-10 offset-1 bg-light py-2 text-center card-body">
+            <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
+            <button class="btn btn-olf-primary" type="button" (click)="onLogin($event)">Log in or Sign up</button>
+        </div>
     </div>
-  </div>
+</div>
 
-<div *ngIf="isLoggedIn">
+<div class="m-4" *ngIf="isLoggedIn">
 
     <div class="modal-header">
         <h5 class="modal-title col-12 col-sm-8 offset-sm-2">Add A Location Notification</h5>
