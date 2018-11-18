@@ -104,7 +104,7 @@
               <p>Your Order Total:</p> 
             </div>
             <div class="col-3 col-md-3 col-lg-2 text-center">
-              <span><strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>
+              <span><strong>{{ tempOrderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong></span>
             </div>
           </div>
   
@@ -130,6 +130,7 @@
             </div>
             <div class="col-12 col-md-8">
               <input
+                class="form-input-custom"
                 type="text" 
                 name="deliveryAddress" 
                 id="deliveryAddress"
@@ -148,7 +149,7 @@
                   </label>
                 </div>
                 <div class="col-12 col-md-8"  *ngIf="order.chosenSchedule.hasFee">
-                  <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':true:'1.2-2' }} has been added to your order.</p>
+                  <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>
                   <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue >= order.chosenSchedule.feeWaiver)" class="card-text">Your order qualifies for free delivery!</p>
                   <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue < order.chosenSchedule.feeWaiver)" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'CAD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>   
                 </div>
@@ -163,6 +164,7 @@
             </div>
             <div class="col-12 col-md-8">
               <textarea 
+                class="form-input-custom"
                 name="consumerComment" 
                 id="consumerComment" 
                 [(ngModel)]="consumerComment"></textarea>
@@ -182,17 +184,11 @@
                   <i class="fa fa-check"></i>
               </span>
               <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p class="help-block" *ngIf="agreement.touched && agreement.invalid">
+                  Please read and agree to the terms and conditions to complete your order!
+                </p>
             </label>
-            <!-- <label for="agreement" class="form-check-label">
-              <input 
-                class="form-check-input" 
-                type="checkbox" 
-                name="agreement" 
-                id="agreement" 
-                value="agreement" 
-                [(ngModel)]="agreement">
-              <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </label> -->
+
           </div>
         </div>
       </div>

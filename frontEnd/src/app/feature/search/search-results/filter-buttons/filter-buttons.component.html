@@ -1,67 +1,39 @@
 <div class="row pb-4">
-	
-	<div class="col-12 d-flex justify-content-center align-items-center">
-		<span class="pr-3">View Results As:</span>
 
-		<!-- select -->
-		<div class="hidden-md-up">
-			<select class="btn btn-sm btn-outline-olf-primary" (change)="onClick($event.target.value)">
-				<option value="products">Products</option>
-				<option value="producers">Producers</option>
-				<option value="calendar">Calendar</option>
-			</select>
-		</div> 
+	<div class="dropdown hidden-md-up col-12">
+		<button class="btn btn-olf-primary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Choose Your View
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" (click)="onClick('products')"> Products</a>
+			<a class="dropdown-item" (click)="onClick('producers')"> Producers</a>
+			<a class="dropdown-item" (click)="onClick('calendar')"> Calendar</a>
+		</div>
+	</div>
 
-			<!-- dropdown -->
-			<!-- <div class="hidden-md-up">
-				<ul class="flex-center ml-auto">
-					<li class="dropdown">
-						<a class="dropdown-toggle" id="filterButtons" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
-							Learn More...
-						</a>
-						<div class="dropdown-menu" aria-labelledby="filterButtons">
-							<a class="dropdown-item" routerLink="learn-more-consumer">For Buyers</a>
-							<a class="dropdown-item" routerLink="learn-more-producer">For Producers</a>
-						</div>
-					</li>
-				</ul>
-			</div> -->
-<!-- 		
-			<div class="hidden-sm-down"> 
+	<div class="hidden-sm-down col-12">
+		<div class="d-flex justify-content-center align-items-center ">
+			<span class="pr-3">Choose Your View:</span>
+
+			<div class=""> 
 				<button
-					class="btn" 
-					[ngClass]="{'btn-olf-primary': view === 'products', 'btn-outline-olf-primary': view !== 'products'}"
-					(click)="onClick('products')"
-					>Products</button>
+				class="btn btn-sm" 
+				[ngClass]="{'btn-olf-primary': view === 'products', 'btn-outline-olf-primary': view !== 'products'}"
+				(click)="onClick('products')"
+				>Products</button>
 				<button 
-					class="btn-outline-olf-primary btn"
-					[ngClass]="{'btn-olf-primary': view === 'producers', 'btn-outline-olf-primary': view !== 'producers'}"
-					(click)="onClick('producers')"
-					>Producers</button>
+				class="btn-outline-olf-primary btn btn-sm"
+				[ngClass]="{'btn-olf-primary': view === 'producers', 'btn-outline-olf-primary': view !== 'producers'}"
+				(click)="onClick('producers')"
+				>Producers</button>
 				<button 
-					class="btn-outline-olf-primary btn"
-					[ngClass]="{'btn-olf-primary': view === 'calendar', 'btn-outline-olf-primary': view !== 'calendar'}" 
-					(click)="onClick('calendar')"
-					>Calendar</button>
-			</div> -->
-
-			<div class="hidden-sm-down"> 
-				<button
-					class="btn btn-sm" 
-					[ngClass]="{'btn-olf-primary': view === 'products', 'btn-outline-olf-primary': view !== 'products'}"
-					(click)="onClick('products')"
-					>Products</button>
-				<button 
-					class="btn-outline-olf-primary btn btn-sm"
-					[ngClass]="{'btn-olf-primary': view === 'producers', 'btn-outline-olf-primary': view !== 'producers'}"
-					(click)="onClick('producers')"
-					>Producers</button>
-				<button 
-					class="btn-outline-olf-primary btn btn-sm"
-					[ngClass]="{'btn-olf-primary': view === 'calendar', 'btn-outline-olf-primary': view !== 'calendar'}" 
-					(click)="onClick('calendar')"
-					>Calendar</button>
+				class="btn-outline-olf-primary btn btn-sm"
+				[ngClass]="{'btn-olf-primary': view === 'calendar', 'btn-outline-olf-primary': view !== 'calendar'}" 
+				(click)="onClick('calendar')"
+				>Calendar</button>
 			</div>
+		</div>
+
 	</div>
 
 </div>

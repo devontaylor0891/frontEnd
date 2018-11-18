@@ -153,6 +153,9 @@ $olf-grey: (
     )
 );
 
+html {
+    font-size: 16px !important;
+}
 
 .container-fluid {
     padding-right: 0 !important;
@@ -195,6 +198,14 @@ $olf-grey: (
     border: 2px solid #893d63 !important;
     color: #893d63 !important;
     background-color: transparent;
+}
+
+.btn-danger {
+    background-color: #cc0000 !important;
+}
+
+.btn-tight-padding {
+    padding: 0.375rem 0.75rem;
 }
 
 a {
@@ -291,6 +302,11 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
+// remove spinner arrows in firefox
+input[type=number] {
+    -moz-appearance:textfield;
+  }
+
 .cover-div {
     width: 100%;
 }
@@ -314,6 +330,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 .custom-control-input:checked~ {
     background-color: #741b47 !important;
+}
+
+.custom-control-input:checked~.custom-control-indicator {
+    background-color: #741b47 !important;
+}
+
+.custom-control-input:focus ~ .custom-control-indicator {
+    box-shadow: none !important;
 }
 
 .bg-dark {
@@ -393,7 +417,7 @@ input[type=number]::-webkit-outer-spin-button {
 // FORMS ***************************************************
 
 .form-section {
-    margin: 2rem !important;
+    margin: 5% !important;
 }
 
 .form-section-header {
