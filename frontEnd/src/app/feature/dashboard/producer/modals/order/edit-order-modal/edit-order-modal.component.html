@@ -75,12 +75,12 @@
                                 <tr *ngFor="let product of products">
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.quantity }}</td>
-                                <td>{{ product.value | currency:'USD':true:'1.2-2' }}</td>
+                                <td>{{ product.value | currency:'USD':'symbol-narrow':'1.2-2' }}</td>
                                 </tr>
                                 <tr>
                                 <td></td>
                                 <td></td>
-                                <td><strong>{{ record.orderDetails.orderValue | currency:'USD':true:'1.2-2' }}</strong></td>
+                                <td><strong>{{ record.orderDetails.orderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong></td>
                                 </tr>
                             </tbody>
                             </table>
@@ -224,7 +224,7 @@
                         [disabled]="(form.invalid)"
                         >Add to Schedule</button> -->
                     <button 
-                        class="btn btn-olf-primary" 
+                        class="btn btn-outline-olf-primary" 
                         type="submit"
                         (click)="onDeny()"
                         [disabled]="(orderForm.invalid)"

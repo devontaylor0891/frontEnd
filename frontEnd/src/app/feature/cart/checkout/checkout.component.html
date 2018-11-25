@@ -1,6 +1,6 @@
 <div class="row my-4 mx-1">
 
-    <div class="col col-md-6 offset-md-3 mb-2" *ngIf="!isLoggedIn">
+    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2" *ngIf="!isLoggedIn">
       <div class="row card bg-dark py-5">
         <div class="col-10 offset-1 bg-light py-2 text-center card-body">
           <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
@@ -12,7 +12,7 @@
     <app-loading *ngIf="!order"></app-loading>
   
     <div *ngIf="order && isLoggedIn">
-    <div class="col col-md-6 offset-md-3 mb-2" >
+    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2" >
       <div>
         <a (click)="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
       </div>
@@ -24,12 +24,12 @@
         </div>
       </div>
     </div>
-    <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 card bg-light mb-2">
       <div class="row grey lighten-2 px-2">
         <h5 class="pt-2 card-title">1. Choose How and When to Get Your Order:</h5>
       </div>
       <div class="row my-3">
-        <div class="col-12 col-md-8 offset-md-2 card-body">
+        <div class="col-12 col-lg-8 offset-lg-2 card-body">
           <h6 class="card-subtitle mb-2 text-muted">First, select your community:</h6>
           <select class="custom-select w-100" (change)="onSelect($event)">
             <option selected disabled>Select:</option>
@@ -43,7 +43,7 @@
         <div class="col-12">
           <hr>
         </div>
-        <div class="col-12 col-md-8 offset-md-2 card-body" *ngIf="showSchedules">
+        <div class="col-12 col-lg-8 offset-lg-2 card-body" *ngIf="showSchedules">
           <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
           <div *ngFor="let schedule of selectedSchedulesList, let i = index">
             <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
@@ -87,7 +87,7 @@
       </div> 
     </div>
   
-    <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 card bg-light mb-2">
       <div class="row grey lighten-2 px-2">
         <h5 class="pt-2 card-title">2. Review Your Products:</h5>
       </div>
@@ -112,7 +112,7 @@
     </div>
   
     <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-      <div class="col col-md-6 offset-md-3 card bg-light mb-2">
+      <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 card bg-light mb-2">
         <div class="row grey lighten-2 px-2">
           <h5 class="pt-2 card-title">3. Add Comments and Agree to Terms & Conditions:</h5>
         </div>
@@ -165,6 +165,7 @@
             <div class="col-12 col-md-8">
               <textarea 
                 class="form-input-custom"
+                style="border: solid lightgrey 1px !important;"
                 name="consumerComment" 
                 id="consumerComment" 
                 [(ngModel)]="consumerComment"></textarea>
@@ -195,7 +196,7 @@
   
   
   
-      <div class="col col-md-6 offset-md-3 mb-2">
+      <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2">
         <div class="row grey lighten-2 mb-3 justify-content-center">
           <!-- <div class="col-6 p-2 text-center">
             <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    

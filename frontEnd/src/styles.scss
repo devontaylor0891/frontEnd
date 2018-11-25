@@ -324,6 +324,12 @@ input[type=number] {
     height: 100%;
 }
 
+.small-square-image {
+    width: 100% !important; 
+    background-size: cover !important; 
+    background-position: center !important;
+}
+
 .text-light {
     color: whitesmoke !important;
 }
@@ -417,7 +423,7 @@ input[type=number] {
 // FORMS ***************************************************
 
 .form-section {
-    margin: 5% !important;
+    margin: 2% !important;
 }
 
 .form-section-header {
@@ -474,6 +480,10 @@ textarea.form-input-custom {
 
 .input-group > .form-control {
     height: auto !important;
+}
+
+.input-group >.input-group-append > .btn {
+    margin: 0 !important;
 }
 
 .form-control {

@@ -70,14 +70,16 @@
         </div>
       </div>
 
-    </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <button 
+            class="btn btn-olf-primary" 
+            type="submit"
+            [disabled]="!myGroup.valid"
+            >Send Message</button>
+        </div>
+      </div>
 
-    <div class="col-12 text-center">
-      <button 
-        class="btn btn-olf-primary" 
-        type="submit"
-        [disabled]="!myGroup.valid"
-        >Send Message</button>
     </div>
 
   </div>

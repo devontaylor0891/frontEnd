@@ -1,14 +1,14 @@
 <div class="m-4" *ngIf="producer.id; else loading">
   <div class="row align-items-center">
-    <div class="col-12 col-sm-8 push-sm-4 col-md-4 push-md-6 text-center">
+    <div class="col-8 offset-2 col-sm-4 offset-sm-0 col-lg-2 offset-lg-3">
+        <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.logoUrl? producer.logoUrl : 'global/squareBeet.png' }}" class="img-fluid" alt="food">
+    </div>
+    <div class="col-12 col-sm-8 col-lg-4 text-center mt-3">
       <h2>{{ producer.name | uppercase }}</h2>
       <p>{{ producer.location }}, {{ producer.province | uppercase }}</p>
       <a pageScroll [pageScrollDuration]="750" href="#products" class="btn btn-olf-primary">Jump to Products</a>
       <a pageScroll [pageScrollDuration]="750" href="#schedule" class="btn btn-olf-primary">Jump to Schedule</a>
       <app-fb-share></app-fb-share>
-    </div>
-    <div class="col-10 offset-1 col-sm-4 pull-sm-8 offset-sm-0 col-md-2 pull-md-4 offset-md-3">
-        <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.logoUrl? producer.logoUrl : 'global/squareBeet.png' }}" class="img-fluid" alt="food">
     </div>
   </div>
     

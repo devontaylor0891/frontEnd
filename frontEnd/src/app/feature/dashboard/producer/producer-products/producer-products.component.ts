@@ -90,7 +90,6 @@ export class ProducerProductsComponent implements OnInit {
     modalRef.componentInstance.itemCreated
       .subscribe(
         (product) => {
-          console.log('new Product received: ', product);
           this.createNew(product);
         }
       );
@@ -126,7 +125,6 @@ export class ProducerProductsComponent implements OnInit {
     this.dashboardService.getProducts()
       .subscribe( // returns an array
         (products) => {
-          console.log('products from service: ', products);
           const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
           this.currentProducts = current;
           const outOfStock = products.filter(product => product.qtyAvailable === 0 && product.isObsolete === false);
@@ -142,18 +140,16 @@ export class ProducerProductsComponent implements OnInit {
     // loop through each of the 2 arrays
     // find the product with the matching id
     // return the array name
-    console.log('obsoleting: ', $event.id);
     // let arrayName = this.findArrayProductIsCurrentlyIn($event.id);
     // continue as per usual
     if (arrayName === 'current') {
-      console.log('current before: ', this.currentProducts);
       this.utilityService.removeByAttribute(this.currentProducts, 'id', $event.id);
        // make a copy of the array to force template to update view
        this.currentProducts = this.currentProducts.slice();
-       console.log('current after: ', this.currentProducts);
     };
     if (arrayName === 'outOfStock') {
       this.utilityService.removeByAttribute(this.outOfStockProducts, 'id', $event.id);
+      this.outOfStockProducts = this.outOfStockProducts.slice();
     };
     // add to obsoleted array
     this.obsoletedProducts.push($event);
@@ -161,15 +157,14 @@ export class ProducerProductsComponent implements OnInit {
   };
 
   onProductDeleted($event) { // remove from wherever it is located
-    console.log('removing: ', $event);
-    this.obsoletedProducts = this.utilityService.removeByAttribute(this.obsoletedProducts, 'id', $event);
+    this.obsoletedProducts = this.utilityService.removeByAttribute(this.obsoletedProducts, 'id', $event.id);
+    this.obsoletedProducts = this.obsoletedProducts.slice();
   };
 
   findArrayProductIsCurrentlyIn(id) {
     let arrayName;
     for (let i; i < this.currentProducts.length; i++ ) {
       if (this.currentProducts[i].id === id) {
-        console.log('currentProducts id: ', this.currentProducts[i].id);
         arrayName = 'currentProducts';
       }
     };
@@ -183,7 +178,6 @@ export class ProducerProductsComponent implements OnInit {
         arrayName = 'obsoletedProducts';
       }
     };
-    console.log('arrayName: ', arrayName);
     return arrayName;
   }
 

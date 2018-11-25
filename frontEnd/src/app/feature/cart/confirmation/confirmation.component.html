@@ -1,19 +1,32 @@
-<div class="row m-4">
+<div class="row my-4 mx-1">
   <div class="col-12 col-md-6 offset-md-3">
-    <h2>Thank you for your order!</h2>
-    <h3><small class="text-faded">Your order is on its way to the producer.</small></h3>
+    <h3>
+      <small class="text-faded">Thanks! Your order is on its way to the producer.</small>
+    </h3>
     <p class="lead">Once the producer has reviewed your order and accepted it, you will get a confirmation email.</p>
     <hr>
-    <h3><small class="text-faded">Want to help further support local producers?</small></h3>
+    <h3>
+      <small class="text-faded">Want to help further support local producers?</small>
+    </h3>
     <p class="lead">Share your purchase on social media!</p>
     <p>We've even got a cool tidbit for you to share: Did you know that a study from Ontario found that the value of buying locally was <em>three times</em> your original purchase!</p>
-    <p>Sharing links go here</p>
-    <div class="card bg-dark text-light p-3">
-      <div class="card-body">
-        <h4 class="card-title">Want to be informed every time deliveries and pickups are scheduled in your area?</h4>
-        <p class="card-text">Sign up here and never miss an opportunity to buy more locally produced food!</p>
-        <p class="card-text">Sign up link here.</p>
+    <app-fb-share></app-fb-share>
+  </div>
+</div>
+<main class="container-fluid jumbotron-dark">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="row text-center px-4">
+        <div class="col-12">
+          <p class="lead white-text">
+            Want to be informed every time deliveries and pickups are scheduled in your area?
+          </p>
+          <p class="white-text">
+            Sign up for <strong><a routerLink="/location-notification">Custom Location Notifications</a> </strong>and never miss an opportunity to buy more locally produced food!
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
-</div>
+</main>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h5 class="modal-title">Please review and Accept or Deny this order</h5>
+  <h5 class="modal-title">Edit your Order</h5>
   <button type="button" class="close" (click)="activeModal.close()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -27,13 +27,13 @@
               <strong>Order Status:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
-              <p>{{ record.orderDetails.orderStatus }}</p>
+              <p>{{ record.orderDetails.orderStatus | uppercase }}</p>
             </div>
 
           </div>
 
           <div class="row">
-            <div class="col-8 offset-2 justify-content-center">
+            <div class="col-12 col-md-8 offset-md-2 justify-content-center">
               <table class="table form-input-custom">
                 <thead>
                   <tr>
@@ -65,7 +65,7 @@
       <div class="row form-section">
 
         <div class="col-12 form-section-header">
-          <h4>Schedule Details</h4>
+          <h5>Schedule Details</h5>
         </div>  
 
         <div class="col-12 form-section-body">
@@ -156,7 +156,7 @@
         <div class="row form-section">
 
           <div class="col-12 form-section-header">
-            <h4>Your Comments</h4>
+            <h5>Your Comments</h5>
           </div>  
 
           <div class="col-12 form-section-body">
@@ -188,7 +188,18 @@
         </div>
 
       </form>
+    
+    </div>
 
+    <hr>
+    <div class="col-12 text-center" *ngIf="record.orderDetails.orderStatus === 'pending'">
+      <p>As your order is still pending, you have the option to delete it.
+        <button
+          type="button" 
+          class="btn btn-danger btn-sm" 
+          (click)="deleteOrder()"
+          >Delete</button>
+      </p>
     </div>
 
   </div>
@@ -199,16 +210,6 @@
   <div class="row text-center">
     <div class="col-12">
       <a (click)="activeModal.close()">Cancel Changes</a>
-    </div>
-    <hr>
-    <div class="col-12" *ngIf="record.orderDetails.orderStatus === 'pending'">
-      <p>As your order is still pending, you have the option to delete it.
-        <button
-          type="button" 
-          class="btn btn-danger btn-sm" 
-          (click)="deleteOrder()"
-          >Delete</button>
-      </p>
     </div>
   </div>
 </div>
