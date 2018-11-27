@@ -4,13 +4,15 @@ import { Title } from '@angular/platform-browser';
 import { DashboardService } from './dashboard.service';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../core/services/user/user.service';
+import { ConsumerDashboardService } from './consumer/consumer-dashboard.service';
+
 import { UserModel } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [DashboardService]
+  providers: [DashboardService, ConsumerDashboardService]
 })
 export class DashboardComponent implements OnInit, OnChanges {
 

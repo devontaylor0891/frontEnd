@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ConsumerDashboardService } from './consumer-dashboard.service';
+// import { ConsumerDashboardService } from './consumer-dashboard.service';
 import { UserModel } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-consumer-dashboard',
   templateUrl: './consumer-dashboard.component.html',
   styleUrls: ['./consumer-dashboard.component.scss'],
-  providers: [ConsumerDashboardService]
+  providers: []
 })
 export class ConsumerDashboardComponent implements OnInit {
 
