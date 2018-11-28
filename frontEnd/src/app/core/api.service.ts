@@ -173,6 +173,13 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // GET custom url producer id
+  getProducerIdByCustomUrl(urlString: string): Observable<any> {
+    return this.http
+      .get(this.apiUrl + `/customUrl/` + urlString)
+      .catch(this._handleError);
+  };
+
 // ***************** PRODUCTS *******
 
   // get all products for admin dash

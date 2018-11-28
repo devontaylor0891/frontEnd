@@ -26,6 +26,8 @@ import { AddProductComponent } from './feature/dashboard/admin/products/add-prod
 import { AddDeliveryComponent } from './feature/dashboard/admin/add-new/add-delivery/add-delivery.component';
 import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/add-order.component';
 import { LocationNotificationComponent } from './feature/location-notification/location-notification.component';
+import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
 	
@@ -68,7 +70,10 @@ const appRoutes: Routes = [
 	{ path: 'callback', component: CallbackComponent },
 	{ path: 'update-profile', component: UpdateProfileComponent	},
 	{ path: 'location-notification', component: LocationNotificationComponent },
-	{ path: '', component: LandingContentComponent, pathMatch: 'full' }
+	{ path: 'not-found', component: PageNotFoundComponent },
+	{ path: ':customUrl', component: CustomUrlResolverComponent },
+	{ path: '', component: LandingContentComponent, pathMatch: 'full' },
+	{ path: '**', redirectTo: 'not-found' }
 ]
 
 @NgModule({

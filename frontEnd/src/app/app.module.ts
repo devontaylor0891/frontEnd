@@ -141,6 +141,8 @@ import { FbLikeShareComponent } from './shared/social-media/facebook/fb-like-sha
 import { FbShareComponent } from './shared/social-media/facebook/fb-share/fb-share.component';
 import { TwitterTweetComponent } from './shared/social-media/twitter/twitter-tweet/twitter-tweet.component';
 import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed/twitter-feed.component';
+import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -235,7 +237,9 @@ import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed
     FbLikeShareComponent,
     FbShareComponent,
     TwitterTweetComponent,
-    TwitterFeedComponent
+    TwitterFeedComponent,
+    CustomUrlResolverComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
