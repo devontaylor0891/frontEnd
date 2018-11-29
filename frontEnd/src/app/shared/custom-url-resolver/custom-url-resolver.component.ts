@@ -35,6 +35,7 @@ export class CustomUrlResolverComponent implements OnInit {
               this.navigateToNotFound();
             } else {
               this.resolvedRoute = result;
+              this.routeParam = this.routeParam.toLowerCase();
               console.log('resolved Route: ', this.resolvedRoute);
               this.navigateToProducerPage(this.resolvedRoute);
             }            

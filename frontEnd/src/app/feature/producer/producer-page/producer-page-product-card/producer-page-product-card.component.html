@@ -8,7 +8,7 @@
         <a [routerLink]="['../product/' + product.id]">
             <div class="mask waves-effect waves-light"></div>
         </a>
-
+        <div class="outOfStockOverlay cover-div" *ngIf="isOutOfStock"><img class="img-fluid cover" src="../../assets/images/outOfStock.png"></div>
         <ng-template [ngIf]="product.image === '' && 
         product.subcategory.toString() === 'Bread' || 
         product.subcategory.toString() === 'Grains' || 

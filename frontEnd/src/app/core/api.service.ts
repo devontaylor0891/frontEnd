@@ -180,6 +180,15 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // POST new customUrl
+  createCustomUrl(customUrlObject: any): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/customUrl/`, customUrlObject, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
 // ***************** PRODUCTS *******
 
   // get all products for admin dash

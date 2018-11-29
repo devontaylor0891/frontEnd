@@ -123,6 +123,16 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <label for="customUrl" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Custom Url:</label>
+                                    <div class="col-xs-12 col-sm-8 input-group">
+                                        <input pattern="[^\s]*" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl">
+                                        <small class="">If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
+                                        <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsgarden'.</small>
+                                        <small *ngIf="!userForm.get('producer.customUrl').valid && userForm.get('producer.customUrl').touched" class="help-block">No spaces or tabs are allowed.</small>
+                                    </div>
+                                </div>
+
                                 <!-- business name -->
                                 <!-- <div class="col-12">
                                     <h5 class="h5-responsive">
