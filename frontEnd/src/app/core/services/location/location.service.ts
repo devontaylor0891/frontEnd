@@ -64,7 +64,7 @@ export class LocationService {
                     (position) => {
                         this.lat = position.coords.latitude;
                         this.lng = position.coords.longitude;
-                        console.log('position: ', position);
+                        // console.log('position: ', position);
                         observer.next(position);
                         observer.complete();
                     },
@@ -72,7 +72,7 @@ export class LocationService {
                         this.lat = 50.1391360, // fallback lat 
                         this.lng = -101.6659968  // fallback lng
                         alert('Onlylocalfood will now load from a default location. You may update the location at any time.');
-                        console.log("Fallback position: ", this.fallbackPosition);
+                        // console.log("Fallback position: ", this.fallbackPosition);
                         observer.next(this.fallbackPosition);
                         // observer.error(error)
                         observer.complete();
@@ -147,7 +147,7 @@ export class LocationService {
 
     codeLatLng(lat, lng) {
         this.mapsAPILoader.load().then(() => {
-            console.log('google.maps from location service: ', google.maps);
+            // console.log('google.maps from location service: ', google.maps);
             this.geocoder = new google.maps.Geocoder();
             let latlng = new google.maps.LatLng(lat, lng);
             let self = this;
@@ -159,7 +159,7 @@ export class LocationService {
                     this.route = '';
                     this.city = '';
                     this.province = '';
-                    console.log('geocoerresults: ', self);
+                    // console.log('geocoerresults: ', self);
                     if (results[1]) {
                         let components = results[1].address_components;
                         for (let i = 0; i < components.length; i++) {
@@ -178,8 +178,8 @@ export class LocationService {
                                 if (result === 'administrative_area_level_1') {
                                     this.province = components[i].short_name;
                                 }
-                                console.log('street number: ', this.streetNumber);
-                                console.log('route: ', this.route);
+                                // console.log('street number: ', this.streetNumber);
+                                // console.log('route: ', this.route);
                                 if (!this.route && !this.streetNumber) {
                                     self.address = null;
                                 } else if (!this.streetNumber) {
@@ -188,10 +188,18 @@ export class LocationService {
                                     self.address = this.streetNumber + ' ' + this.route;
                                 }
                                 self.cityProvince = this.city + ', ' + this.province;
-                                self.ngZone.run(() => {
-                                    self._cityProvince.next(self.cityProvince);
+                                if ((i === components.length - 1) && (j === types.length - 1)) {
+                                   self.ngZone.run(() => {
+                                    // console.log('ngzone running: ');
+                                    // console.log('self.cityProvince: ', self._cityProvince);
+                                    // console.log('self.address: ', self._address);
                                     self._address.next(self.address);
-                                });
+                                    self._cityProvince.next(self.cityProvince);
+                                    // console.log('self.cityProvince: ', self._cityProvince);
+                                    // console.log('self.address: ', self._address);
+                                    })
+                                }
+                                
                             //   this.ngZone.run(() => {
                             //       this.cityProvince = components[i].short_name + ', ' + components[i].short_name;
                             //       this._cityProvince.next(this.cityProvince);
