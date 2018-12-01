@@ -1215,6 +1215,8 @@ export class UpdateProfileComponent implements OnInit {
   mapLocation: any;
 
   getUserSub: Subscription;
+  getCitySub: Subscription;
+  getProvinceSub: Subscription;
   getCityProvinceSub: Subscription;
   getAddressSub: Subscription;
 
@@ -1280,6 +1282,22 @@ export class UpdateProfileComponent implements OnInit {
         }
       );
 
+    this.getCitySub = this.locationService.getCity()
+      .subscribe(
+        result => {
+          console.log('result: ', result);
+          this.city = result;
+        }
+      );
+
+    this.getProvinceSub = this.locationService.getProvince()
+      .subscribe(
+        result => {
+          console.log('result: ', result);
+          this.province = result;
+        }
+      );
+
     this.getCityProvinceSub = this.locationService.getCityProvince()
       .subscribe(
         result => {
@@ -1292,7 +1310,12 @@ export class UpdateProfileComponent implements OnInit {
           if (this.selectedAddress) {
             this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
           }
-          // console.log('selectedLocation: ', this.selectedLocation);
+          console.log('selectedLocation: ', this.selectedLocation);
+          console.log('city: ', this.city);
+          console.log('province: ', this.province);
+          console.log('streetNumber: ', this.streetNumber);
+          console.log('route: ', this.route);
+          console.log('selectedAddress: ', this.selectedAddress);
           if (this.searchElementRef) {
             this.searchElementRef.nativeElement.value = this.selectedLocation;
           }
@@ -1302,9 +1325,11 @@ export class UpdateProfileComponent implements OnInit {
     this.getAddressSub = this.locationService.getAddress()
       .subscribe(
         result => {
-          this.selectedAddress = result;
+          this.clearAddress();
           if (result) {
-            // console.log('address service: ', result);
+            this.selectedAddress = result;
+            this.address = result;
+            console.log('address service: ', result);
           // } else {
           //   console.log('no address returned')
           }
@@ -1443,7 +1468,7 @@ export class UpdateProfileComponent implements OnInit {
       name: form.producer.name,
       location: this.city,
       province: this.province,
-      address: this.address || '',
+      address: this.selectedAddress || '',
       description: form.producer.description,
       email: form.user.email,
       logoUrl: this.imageName,
@@ -1502,13 +1527,14 @@ export class UpdateProfileComponent implements OnInit {
   };
 
   fillAddress(place) {
-    // this.clearAddress();
+    this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
     this.selectedLocation = this.city + ', ' + this.province;
     if (this.streetNumber && this.route) {
       this.address = this.streetNumber + ' ' + this.route;
+      this.selectedAddress = this.streetNumber + ' ' + this.route;
       this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
     };
     this.latitude = this.lat;
@@ -1528,7 +1554,6 @@ export class UpdateProfileComponent implements OnInit {
         }
         if (result === 'locality' || result === 'sublocality') {
           this.city = components[i].short_name;
-          console.log('city: ', this.city);
         }
         if (result === 'administrative_area_level_1') {
           this.province = components[i].short_name;
@@ -1544,21 +1569,23 @@ export class UpdateProfileComponent implements OnInit {
   };
 
   mapClicked($event: AgmMouseEvent) {
-    this.selectedLocation = '';
-    this.selectedAddress = '';
+    this.clearAddress();
     this.selectedCityProvince = '';
     this.markerLatitude = $event.coords.lat
     this.markerLongitude =  $event.coords.lng;
+    this.latitude = this.markerLatitude;
+    this.longitude = this.markerLongitude;
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   }
   
   markerDragEnd($event: AgmMouseEvent) {
-    this.selectedLocation = '';
-    this.selectedAddress = '';
+    this.clearAddress();
     this.selectedCityProvince = '';
     // console.log('dragEnd');
     this.markerLatitude = $event.coords.lat
     this.markerLongitude =  $event.coords.lng;
+    this.latitude = this.markerLatitude;
+    this.longitude = this.markerLongitude;
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   };
 
@@ -1599,9 +1626,24 @@ export class UpdateProfileComponent implements OnInit {
     this.error = true;
   };
 
+  clearAddress() {
+    this.city = '';
+    this.province = '';
+    this.streetNumber = null;
+    this.route = '';
+    this.selectedAddress = '';
+    this.selectedLocation = '';
+  }
+
   ngOnDestroy() {
     if (this.getUserSub) {
       this.getUserSub.unsubscribe();
+    };
+    if (this.getCitySub) {
+      this.getCitySub.unsubscribe();
+    };
+    if (this.getProvinceSub) {
+      this.getProvinceSub.unsubscribe();
     };
     if (this.getCityProvinceSub) {
       this.getCityProvinceSub.unsubscribe();

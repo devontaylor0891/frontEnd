@@ -44,6 +44,8 @@ export class LocationService {
         }
     }
 
+    _city: BehaviorSubject<string>;
+    _province: BehaviorSubject<string>;
     _cityProvince: BehaviorSubject<string>;
     _address: BehaviorSubject<string>;
 
@@ -52,6 +54,8 @@ export class LocationService {
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone) {
 
+        this._city = <BehaviorSubject<string>>new BehaviorSubject('');
+        this._province = <BehaviorSubject<string>>new BehaviorSubject('');
         this._cityProvince = <BehaviorSubject<string>>new BehaviorSubject('');
         this._address = <BehaviorSubject<string>>new BehaviorSubject('');
 
@@ -136,6 +140,13 @@ export class LocationService {
     //     }
     // };
 
+    getCity(): Observable<string> {
+        return this._city.asObservable();
+    };
+
+    getProvince(): Observable<string> {
+        return this._province.asObservable();
+    };
 
     getCityProvince(): Observable<string> {
         return this._cityProvince.asObservable();
@@ -178,15 +189,18 @@ export class LocationService {
                                 if (result === 'administrative_area_level_1') {
                                     this.province = components[i].short_name;
                                 }
-                                // console.log('street number: ', this.streetNumber);
-                                // console.log('route: ', this.route);
+                                console.log('street number: ', this.streetNumber);
+                                console.log('route: ', this.route);
                                 if (!this.route && !this.streetNumber) {
-                                    self.address = null;
+                                    self.address = '';
                                 } else if (!this.streetNumber) {
                                     self.address = this.route
                                 } else {
                                     self.address = this.streetNumber + ' ' + this.route;
                                 }
+                                console.log('self.address: ', self.address);
+                                self.city = this.city;
+                                self.province = this.province;
                                 self.cityProvince = this.city + ', ' + this.province;
                                 if ((i === components.length - 1) && (j === types.length - 1)) {
                                    self.ngZone.run(() => {
@@ -194,6 +208,8 @@ export class LocationService {
                                     // console.log('self.cityProvince: ', self._cityProvince);
                                     // console.log('self.address: ', self._address);
                                     self._address.next(self.address);
+                                    self._city.next(self.city);
+                                    self._province.next(self.province);
                                     self._cityProvince.next(self.cityProvince);
                                     // console.log('self.cityProvince: ', self._cityProvince);
                                     // console.log('self.address: ', self._address);
