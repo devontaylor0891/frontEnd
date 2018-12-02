@@ -1188,7 +1188,6 @@ export class UpdateProfileComponent implements OnInit {
   public searchControl: FormControl;
   public zoom: number;
   @ViewChild('search') public searchElementRef: ElementRef;
-  @ViewChild('logoUrl') public selectedFileEl;
 
   @ViewChild(AgmMap) public agmMap: AgmMap;
   lat: number;
@@ -1207,6 +1206,7 @@ export class UpdateProfileComponent implements OnInit {
   postCustomUrlSubscription: Subscription;
   getCustomUrlSubscription: Subscription;
   customUrlExists: boolean = false;
+  noSpacesFormat = "[^/s]*";
 
   selectedAddress: any;
   selectedCityProvince: any;
@@ -1265,7 +1265,6 @@ export class UpdateProfileComponent implements OnInit {
 
   }
 
-
   ngOnChanges() {}
 
   resizeMap() {
@@ -1317,7 +1316,9 @@ export class UpdateProfileComponent implements OnInit {
           console.log('route: ', this.route);
           console.log('selectedAddress: ', this.selectedAddress);
           if (this.searchElementRef) {
-            this.searchElementRef.nativeElement.value = this.selectedLocation;
+            // this.searchElementRef.nativeElement.value = this.selectedLocation;
+            this.searchControl.setValue(this.selectedLocation);
+            console.log('form: ', this.userForm);
           }
         }
       );
@@ -1344,7 +1345,7 @@ export class UpdateProfileComponent implements OnInit {
     this.longitude = -100.5555;
 
     // create search FormControl
-    this.searchControl = new FormControl();
+    this.searchControl = new FormControl('', [Validators.required]);
 
     // set current position
     // this.setCurrentPosition();
@@ -1411,7 +1412,7 @@ export class UpdateProfileComponent implements OnInit {
         id: new FormControl(this.id),
         name: new FormControl('', [Validators.required]),
         customUrl: new FormControl(''),
-        description: new FormControl('', [Validators.required]),
+        description: new FormControl(''),
         logoUrl: new FormControl('')
       }),
       status: new FormControl('active')
@@ -1432,8 +1433,10 @@ export class UpdateProfileComponent implements OnInit {
                 if (result[0]) {
                   console.log('producerId returned on check: ', result);
                   this.customUrlExists = true;
+                  this.userForm['controls'].producer['controls'].customUrl.setErrors({ 'invalid': true });
                 } else {
                   this.customUrlExists = false;
+                  this.userForm['controls'].producer['controls'].customUrl.setErrors(null);
                 }
               }
             )
@@ -1444,10 +1447,12 @@ export class UpdateProfileComponent implements OnInit {
 
   disableProducerFields() {
     this.userForm.controls.producer.disable();
+    this.searchControl.disable();
   };
 
   enableProducerFields() {
     this.userForm.controls.producer.enable();
+    this.searchControl.enable();
   };
 
   onSelectConsumer() {
@@ -1532,10 +1537,12 @@ export class UpdateProfileComponent implements OnInit {
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
     this.selectedLocation = this.city + ', ' + this.province;
+    this.searchControl.setValue(this.selectedLocation);
     if (this.streetNumber && this.route) {
       this.address = this.streetNumber + ' ' + this.route;
       this.selectedAddress = this.streetNumber + ' ' + this.route;
       this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
+      this.searchControl.setValue(this.selectedLocation);
     };
     this.latitude = this.lat;
     this.longitude = this.lng;

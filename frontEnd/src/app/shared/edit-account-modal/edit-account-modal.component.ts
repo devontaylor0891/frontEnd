@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 // declare const google: any;
 
 import { MapsAPILoader } from '@agm/core';
-// import { AgmMap } from '@agm/core';
+import { AgmMap, MouseEvent as AgmMouseEvent } from '@agm/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -17,6 +17,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../core/api.service';
 import { ImageService } from '../../core/services/image/image.service';
 import { UserService } from '../../core/services/user/user.service';
+import { LocationService } from '../../core/services/location/location.service';
 
 import { UserModel } from '../../core/models/user.model';
 import { ProducerModel } from '../../core/models/producer.model';
@@ -39,10 +40,13 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
   public latitude: number;
   public longitude: number;
+  public markerLatitude: number;
+  public markerLongitude: number;
   public searchControl: FormControl;
   public zoom: number;
   @ViewChild('search') public searchElementRef: ElementRef;
-  // @ViewChild(AgmMap) public agmMap: AgmMap;
+
+  @ViewChild(AgmMap) public agmMap: AgmMap;
   lat: number;
   lng: number;
   streetNumber: number;
@@ -52,6 +56,25 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   province: string;
   postalCode: string;
   country: string;
+  submitObject: ProducerModel;
+
+  customUrlObject: any;
+  checkCustomUrlSubscription: Subscription;
+  postCustomUrlSubscription: Subscription;
+  getCustomUrlSubscription: Subscription;
+  customUrlExists: boolean = false;
+
+  selectedAddress: any;
+  selectedCityProvince: any;
+  selectedLocation: any;
+
+  mapLocation: any;
+
+  getUserSub: Subscription;
+  getCitySub: Subscription;
+  getProvinceSub: Subscription;
+  getCityProvinceSub: Subscription;
+  getAddressSub: Subscription;
 
   logoExists: boolean;
 
@@ -70,6 +93,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
               private apiService: ApiService,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
+              private locationService: LocationService,
               private imageService: ImageService,
               private router: Router) { }
 
@@ -82,6 +106,65 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+
+    // set current map marker location
+    this.markerLatitude = this.producer.latitude;
+    this.markerLongitude = this.producer.longitude;
+
+    this.getCitySub = this.locationService.getCity()
+      .subscribe(
+        result => {
+          console.log('result: ', result);
+          this.city = result;
+        }
+      );
+
+    this.getProvinceSub = this.locationService.getProvince()
+      .subscribe(
+        result => {
+          console.log('result: ', result);
+          this.province = result;
+        }
+      );
+
+    this.getCityProvinceSub = this.locationService.getCityProvince()
+      .subscribe(
+        result => {
+          // console.log('result: ', result);
+          this.selectedCityProvince = result;
+          
+          if (!this.selectedAddress) {
+            this.selectedLocation = this.selectedCityProvince;
+          }
+          if (this.selectedAddress) {
+            this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
+          }
+          console.log('selectedLocation: ', this.selectedLocation);
+          console.log('city: ', this.city);
+          console.log('province: ', this.province);
+          console.log('streetNumber: ', this.streetNumber);
+          console.log('route: ', this.route);
+          console.log('selectedAddress: ', this.selectedAddress);
+          if (this.searchElementRef) {
+            this.searchElementRef.nativeElement.value = this.selectedLocation;
+          }
+        }
+      );
+
+    this.getAddressSub = this.locationService.getAddress()
+      .subscribe(
+        result => {
+          this.clearAddress();
+          if (result) {
+            this.selectedAddress = result;
+            this.address = result;
+            console.log('address service: ', result);
+          // } else {
+          //   console.log('no address returned')
+          }
+          
+        }
+      );
     
     // ***** LOCATION INIT CODE ******
     // set google maps defaults
@@ -126,7 +209,9 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
           // set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
+          this.markerLatitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
+          this.markerLongitude = place.geometry.location.lng();
           this.zoom = 12;
         });
       });
@@ -179,8 +264,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         'email': form.value.email,
         'name': form.value.name,
         'description': form.value.description,
-        'logoUrl': this.imageName,
-        'address': this.address,
+        'logoUrl': this.producer.logoUrl || this.imageName,
+        'address': this.selectedAddress,
         'location': this.city,
         'province': this.province,
         'latitude': this.latitude,
@@ -208,11 +293,23 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
   private fillAddress(place) {
     // this.clearAddress();
+    // this.parseAddressComponents(place.address_components);
+    // this.lat = place.geometry.location.lat();
+    // this.lng = place.geometry.location.lng();
+    // if (this.streetNumber && this.route) {
+    //   this.address = this.streetNumber + ' ' + this.route;
+    // };
+    // this.latitude = this.lat;
+    // this.longitude = this.lng;
+    this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
+    this.selectedLocation = this.city + ', ' + this.province;
     if (this.streetNumber && this.route) {
       this.address = this.streetNumber + ' ' + this.route;
+      this.selectedAddress = this.streetNumber + ' ' + this.route;
+      this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
     };
     this.latitude = this.lat;
     this.longitude = this.lng;
@@ -276,6 +373,27 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.error = true;
   };
 
+  mapClicked($event: AgmMouseEvent) {
+    this.clearAddress();
+    this.selectedCityProvince = '';
+    this.markerLatitude = $event.coords.lat
+    this.markerLongitude =  $event.coords.lng;
+    this.latitude = this.markerLatitude;
+    this.longitude = this.markerLongitude;
+    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  }
+  
+  markerDragEnd($event: AgmMouseEvent) {
+    this.clearAddress();
+    this.selectedCityProvince = '';
+    // console.log('dragEnd');
+    this.markerLatitude = $event.coords.lat
+    this.markerLongitude =  $event.coords.lng;
+    this.latitude = this.markerLatitude;
+    this.longitude = this.markerLongitude;
+    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  };
+
   onAddImage() {
     this.imageName = this.producer.id + '/logo';
     this.addingImage = true;
@@ -294,10 +412,31 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.activeModal.close();
   }
 
+  clearAddress() {
+    this.city = '';
+    this.province = '';
+    this.streetNumber = null;
+    this.route = '';
+    this.selectedAddress = '';
+    this.selectedLocation = '';
+  }
+
   ngOnDestroy() {
     if (this.imageUploadingSub) {
       this.imageUploadingSub.unsubscribe();
     }
+    if (this.getCitySub) {
+      this.getCitySub.unsubscribe();
+    };
+    if (this.getProvinceSub) {
+      this.getProvinceSub.unsubscribe();
+    };
+    if (this.getCityProvinceSub) {
+      this.getCityProvinceSub.unsubscribe();
+    };
+    if (this.getAddressSub) {
+      this.getAddressSub.unsubscribe();
+    };
   };
 
 }
