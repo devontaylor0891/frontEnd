@@ -98,6 +98,17 @@
                                 <div class="row mb-1">
                                     <div class="col-12 col-md-4">
                                         <h5 class="h5-responsive">
+                                            <i class="fa fa-globe prefix mr-3"></i>Custom Url:
+                                        </h5>
+                                    </div>
+                                    <div class="pl-3 col-12 col-md-8">
+                                        <p *ngIf="customUrl">{{ customUrl }}</p>
+                                        <p *ngIf="!customUrl">No Custom Url set up.</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-12 col-md-4">
+                                        <h5 class="h5-responsive">
                                             <i class="fa fa-image prefix mr-3"></i>Logo:
                                         </h5>
                                     </div>

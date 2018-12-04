@@ -70,7 +70,8 @@
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable"
-                            (productObsoleted)="onProductObsoleted('outOfStock', $event)">
+                            (productObsoleted)="onProductObsoleted('outOfStock', $event)"
+                            (productInStock)="onProductRestocked($event)">
                         </app-table-layout>
                     </div>
                 </div>

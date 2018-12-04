@@ -180,6 +180,13 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // GET custom url from producer id
+  getCustomUrlByProducerId(id: number): Observable<any> {
+    return this.http
+      .get(this.apiUrl + `/customUrlFromId/` + id)
+      .catch(this._handleError);
+  };
+
   // POST new customUrl
   createCustomUrl(customUrlObject: any): Observable<any> {
     return this.http

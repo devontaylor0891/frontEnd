@@ -23,6 +23,7 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
   profile: any;
   @Input() user: UserModel;
   @Input() producer: ProducerModel;
+  @Input() customUrl: string;
   logoExists: boolean = false;
 
   logoUploadSubscription: Subscription;
@@ -32,6 +33,7 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {
     console.log('producer: ', this.producer);
+    console.log('customurl: ', this.customUrl);
 
     if (this.producer && this.producer.logoUrl !== '') {
       this.currentLogo = 'https://s3-us-west-2.amazonaws.com/onlylocalfood-images/' + this.producer.id + '/logo?timeStamp=' + Date.now();
