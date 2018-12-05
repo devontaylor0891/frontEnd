@@ -102,8 +102,8 @@
                                         </h5>
                                     </div>
                                     <div class="pl-3 col-12 col-md-8">
-                                        <p *ngIf="customUrl">{{ customUrl }}</p>
-                                        <p *ngIf="!customUrl">No Custom Url set up.</p>
+                                        <p *ngIf="customUrlObject">onlylocalfood.com/{{ customUrlObject.customUrl }}</p>
+                                        <p *ngIf="!customUrlObject">No Custom Url set up.</p>
                                     </div>
                                 </div>
                                 <div class="row mb-1">

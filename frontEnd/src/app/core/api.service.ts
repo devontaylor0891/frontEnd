@@ -196,6 +196,16 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // PUT custom url
+  updateCustomUrl(id: number, customUrlObject: any): Observable<any> {
+    return this.http
+      .put(this.apiUrl + `customUrl/${id}/`, customUrlObject, {
+      // .put(`${ENV.BASE_API}products/${id}`, product, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  }
+
 // ***************** PRODUCTS *******
 
   // get all products for admin dash
