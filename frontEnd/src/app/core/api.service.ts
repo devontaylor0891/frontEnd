@@ -199,7 +199,7 @@ export class ApiService {
   // PUT custom url
   updateCustomUrl(id: number, customUrlObject: any): Observable<any> {
     return this.http
-      .put(this.apiUrl + `customUrl/${id}/`, customUrlObject, {
+      .put(this.apiUrl + `/customUrl/${id}/`, customUrlObject, {
       // .put(`${ENV.BASE_API}products/${id}`, product, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
