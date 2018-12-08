@@ -69,9 +69,10 @@ export class SearchComponent implements OnInit, OnChanges {
     this.searchService.getSearchResults()
       .subscribe(
         results => {
+          console.log('search comp receiving results...');
           this.searchResults = results;
           this.searchResultsReceived = true;
-          if (results && results.schedules && results.schedules.length < 0) {
+          if (results && results.schedules && results.schedules.length < 1) {
             this.zeroSearchResults = true;
           } else {
             this.zeroSearchResults = false;

@@ -3,15 +3,15 @@
     <div class="card-header olf-primary-color white-text hidden-sm-down">
         Search Results
     </div>
-    <div class="card-block" *ngIf="!searchResults || searchResults.length === 0 && !zeroSearchResults">
+    <div class="card-block" *ngIf="!searchResults || searchResults.length === 0 && !zeroResults">
         <app-loading></app-loading>
     </div>
     <div *ngIf="searchResults">
-        <div class="card-block grey lighten-3" *ngIf="searchResults.schedules.length !== 0 && !zeroSearchResults">   
+        <div class="card-block grey lighten-3" *ngIf="searchResults.schedules.length > 0">   
             <app-filter-buttons></app-filter-buttons>
             <app-results-pane [products]="searchResults.products"></app-results-pane>
         </div>
-        <div class="card-block grey lighten-3" *ngIf="searchResults.schedules.length === 0 && zeroSearchResults">   
+        <div class="card-block grey lighten-3" *ngIf="searchResults.schedules.length < 1">   
             <p>Sorry, there are no scheduled deliveries or pickups for this search. Please try another location.</p>
             <br>
             <div class="card bg-dark text-light p-3">

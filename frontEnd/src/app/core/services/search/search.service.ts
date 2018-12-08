@@ -22,6 +22,11 @@ export class SearchService implements OnInit {
 
   // create a place to store the original search results in memory
 	private dataStore: {
+    originalSearchResults: {
+      schedules: any[],
+      producers: any[],
+      products: any[]
+    }, 
     searchResults: {
       schedules: any[],
       producers: any[],
@@ -59,6 +64,7 @@ export class SearchService implements OnInit {
 	// during construction of service, create a empty dataStore and various BehaviorSubjects
 	constructor(private apiService: ApiService) {
     this.dataStore = { 
+      originalSearchResults: { schedules: [], producers: [], products: [] },
       searchResults: { schedules: [], producers: [], products: [] }, 
       filteredSearchResults: { schedules: [], producers: [], products: [] },
       deliveryTypes: [], 
@@ -79,12 +85,14 @@ export class SearchService implements OnInit {
 		this.apiService.getSearchResults(searchOptions)
 			.subscribe(
 				response => {
+          console.log('************searchoptions: ', searchOptions);
           console.log('response for search: ', response);
           if (this.isEmpty(response)) {
             // no results were returned
             this.zeroSearchResultsReturned = true;
             this._zeroSearchResultsReturned.next(this.zeroSearchResultsReturned);
             this.dataStore = { 
+              originalSearchResults: { schedules: [], producers: [], products: [] },
               searchResults: { schedules: [], producers: [], products: [] }, 
               filteredSearchResults: { schedules: [], producers: [], products: [] },
               deliveryTypes: [], 
@@ -103,15 +111,14 @@ export class SearchService implements OnInit {
             this.zeroSearchResultsReturned = false;
             this._zeroSearchResultsReturned.next(this.zeroSearchResultsReturned);
             // fill dataStore
+            this.dataStore.originalSearchResults = response;
             this.dataStore.searchResults = response;
             this.dataStore.filteredSearchResults = response;
             console.log('searchResults: ', this.dataStore.filteredSearchResults);
             this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
             this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
             this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
-            // this.dataStore.searchProducers = this.addSearchProducers(this.dataStore.searchResults);
             this.dataStore.searchDeliveries = this.dataStore.filteredSearchResults.schedules;
-            // this.dataStore.searchDeliveries = this.addSearchDeliveries(this.dataStore.searchResults);
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
             this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
@@ -165,17 +172,6 @@ export class SearchService implements OnInit {
     return this.dataStore.deliveryTypes;
   };
   
-  // addDeliveryTypes(searchResults) {
-  //   searchResults.forEach((product) => {
-  //     product.scheduleList.forEach((delivery) => {
-  //       if (!this.dataStore.deliveryTypes.includes(delivery.type)) {
-  //         this.dataStore.deliveryTypes.push(delivery.type)
-  //       }
-  //     })
-  //   })
-  //   return this.dataStore.deliveryTypes;
-  // }
-
   addCategories(products) {
     let newArray: string[] = [];
     products.forEach((product) => {
@@ -188,19 +184,6 @@ export class SearchService implements OnInit {
     });
     return newArray;
   };
-
-  // addCategories(searchResults) {
-  //   let newArray: string[] = [];
-  //   searchResults.forEach((product) => {
-  //     let category = product.category;
-  //     if (newArray.length === 0) {
-  //       newArray = [category];
-  //     } else if (newArray.indexOf(category) === -1) {
-  //       newArray.push(category);
-  //     }
-  //   });
-  //   return newArray;
-  // };
   
   addSearchProducers(products) {
 	  // create the producers array
@@ -288,27 +271,6 @@ export class SearchService implements OnInit {
 	  return productObject;
   }
   
-  addSearchDeliveries(searchResults) {
-	  
-	 let deliveries = searchResults.schedules;
-	  
-	  // loop through search results
-	  // searchResults.forEach((product) => {
-		//   // loop through each product's deliveries
-		//   product.scheduleList.forEach((delivery) => {
-		// 	  // if deliveries array is empty, add the delivery
-		// 	  if (deliveries.length === 0) {
-		// 		  deliveries[0] = this.buildNewSearchDelivery(delivery, product);
-		// 	  } else if (!this.findByIdInArray(delivery.id, deliveries)) { // if delivery is not in array
-		// 		// add it
-		// 		  deliveries.push(this.buildNewSearchDelivery(delivery, product));
-		// 	  }
-		//   })
-	  // })
-	  // return the completed array
-		return deliveries;
-  };
-
   addDeliveriesFromProducerArrayAndScheduleType(producerArray, scheduleTypeArray) {
     let deliveriesByProducer = [];
     let finalDeliveries = [];
@@ -404,36 +366,19 @@ export class SearchService implements OnInit {
     // ditto for deliveries
     filteredResults.schedules = this.addDeliveriesFromProducerArrayAndScheduleType(filteredResults.producers, delArray);
     // this._searchDeliveries.next(filteredDeliveries);
-
+    console.log('filtered Results: ', filteredResults);
     this._searchResults.next(filteredResults);
     
   };
 
-  // filterByDistance(distance) {
-  //   // if distance is 25, simply emit the original datastore results
-  //   if (distance === 25) {
-  //     this.dataStore.filteredSearchResults = this.dataStore.searchResults;
-  //     this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
-  //     this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
-  //     this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
-  //     this.dataStore.searchDeliveries = this.dataStore.filteredSearchResults.schedules;
-  //     this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
-  //     this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
-  //     this._categories.next(Object.assign({}, this.dataStore).categories);
-  //     this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
-  //     this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
-  //   } else {
-  //     // run the great circle equation on the original datastore search results scheds
-  //     this._searchResults.next(null);
-  //     console.log('distance selected: ', distance);
-  //   }
-  // };
-
   filterByDistance(distance, latitude, longitude) {
     console.log('distance selected: ', distance);
+    console.log('lat: ', latitude);
+    console.log('lng: ', longitude);
     // if distance is 25, simply emit the original datastore results
     if (distance === 25) {
-      this.dataStore.filteredSearchResults = this.dataStore.searchResults;
+      console.log('return original search results: ', this.dataStore);
+      this.dataStore.filteredSearchResults = this.dataStore.originalSearchResults;
       this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
       this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
       this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
@@ -467,8 +412,6 @@ export class SearchService implements OnInit {
       // longitude boundaries (longitude gets smaller when latitude increases)
       maxlng = longitude + this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
       minlng = longitude - this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
-      console.log('lat: ', latitude)
-      console.log('lng: ', longitude);
       console.log('maxlat: ', maxlat);
       console.log('maxlng: ', maxlng);
       console.log('minlat: ', minlat);
@@ -483,6 +426,7 @@ export class SearchService implements OnInit {
       let schedLngInCircle: boolean = false;
       // loop through each sched in the current datastore
       this.dataStore.searchResults.schedules.forEach((sched) => {
+        console.log('sched: ', sched);
         schedLat = sched.latitude;
         schedLng = sched.longitude;
         // create an array of producer ids
@@ -502,6 +446,7 @@ export class SearchService implements OnInit {
           returnedScheds.push(sched);
         };
         console.log('schedsarray: ', returnedScheds);
+        console.log('datastore check: ', this.dataStore);
       });
       // using the producerIdArray, return the producers
       producerIdArray.forEach((id) => {
@@ -517,19 +462,23 @@ export class SearchService implements OnInit {
           }
         }; 
       });
+      console.log('datastore check: ', this.dataStore);
       // emit the values
       this.dataStore.filteredSearchResults.schedules = returnedScheds;
       this.dataStore.filteredSearchResults.producers = returnedProducers;
       this.dataStore.filteredSearchResults.products = returnedProducts;
+      console.log('datastore check: ', this.dataStore);
       this.dataStore.deliveryTypes = this.addDeliveryTypes(returnedScheds);
       this.dataStore.categories = this.addCategories(returnedProducts);
       this.dataStore.searchProducers = returnedProducers;
       this.dataStore.searchDeliveries = returnedScheds;
+      console.log('datastore check: ', this.dataStore);
       this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
       this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
       this._categories.next(Object.assign({}, this.dataStore).categories);
       this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
       this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
+      console.log('datastore check: ', this.dataStore);
     }
   };
 

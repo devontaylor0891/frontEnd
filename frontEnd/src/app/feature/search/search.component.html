@@ -1,3 +1,33 @@
+<!-- LARGER DEVICES -->
+<div class="row m-4 hidden-sm-down">
+	
+	<!-- search options -->
+	<div class="col-12 col-md-4 col-lg-3 mb-2">
+
+		<app-search-options
+			[latitude]="userLocation?.coords.latitude" 
+			[longitude]="userLocation?.coords.longitude" 
+			[city]="cityProvince"
+			[zeroResults]="zeroSearchResults"
+			></app-search-options>
+
+	</div>
+
+	<!--  search results -->
+	<div class="col-12 col-md-8 col-lg-9">
+
+		<app-loading *ngIf="!searchResults"></app-loading>
+
+		<app-search-results
+			*ngIf="searchResults" 
+			[searchResults]="searchResults"
+			[zeroResults]="zeroSearchResults"
+			></app-search-results>
+
+	</div>
+
+</div>
+
 <!-- SMALL DEVICES -->
 <div class="m-1 hidden-md-up">
 
@@ -32,6 +62,7 @@
 			<app-search-results  
 				*ngIf="searchResults" 
 				[searchResults]="searchResults"
+				[zeroResults]="zeroSearchResults"
 				></app-search-results>
 		</div>
 		<!--/ results Panel-->
@@ -39,31 +70,3 @@
 
 </div>
 		
-<!-- LARGER DEVICES -->
-<div class="row m-4 hidden-sm-down">
-	
-	<!-- search options -->
-	<div class="col-12 col-md-4 col-lg-3 mb-2">
-
-		<app-search-options
-			[latitude]="userLocation?.coords.latitude" 
-			[longitude]="userLocation?.coords.longitude" 
-			[city]="cityProvince"
-			[zeroResults]="zeroSearchResults"
-			></app-search-options>
-
-	</div>
-
-	<!--  search results -->
-	<div class="col-12 col-md-8 col-lg-9">
-
-		<app-loading *ngIf="!searchResults"></app-loading>
-
-		<app-search-results
-			*ngIf="searchResults" 
-			[searchResults]="searchResults"
-			></app-search-results>
-
-	</div>
-
-</div>

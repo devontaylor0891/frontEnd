@@ -15,24 +15,24 @@ import { LocationNotificationSignUpModalComponent } from '../../../../shared/loc
 export class SearchResultsComponent implements OnInit, OnChanges {
 
   @Input() searchResults: any;
-  zeroSearchResults: boolean;
+  @Input() zeroResults: boolean;
 
   constructor(private searchService: SearchService,
               private modal: NgbModal) { }
 
   ngOnChanges() {
-    console.log('zeroSearch: ', this.zeroSearchResults);
+    console.log('zeroSearch: ', this.zeroResults);
     console.log('search results comp results: ', this.searchResults);
   }
 
   ngOnInit() {
 
-    this.searchService.getZeroSearchResults()
-      .subscribe(
-        results => {
-          this.zeroSearchResults = results;
-        }
-      )
+    // this.searchService.getZeroSearchResults()
+    //   .subscribe(
+    //     results => {
+    //       this.zeroSearchResults = results;
+    //     }
+    //   )
 
   };
 
