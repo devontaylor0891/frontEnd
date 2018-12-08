@@ -189,8 +189,8 @@ export class LocationService {
                                 if (result === 'administrative_area_level_1') {
                                     this.province = components[i].short_name;
                                 }
-                                console.log('street number: ', this.streetNumber);
-                                console.log('route: ', this.route);
+                                // console.log('street number: ', this.streetNumber);
+                                // console.log('route: ', this.route);
                                 if (!this.route && !this.streetNumber) {
                                     self.address = '';
                                 } else if (!this.streetNumber) {
@@ -198,7 +198,7 @@ export class LocationService {
                                 } else {
                                     self.address = this.streetNumber + ' ' + this.route;
                                 }
-                                console.log('self.address: ', self.address);
+                                // console.log('self.address: ', self.address);
                                 self.city = this.city;
                                 self.province = this.province;
                                 self.cityProvince = this.city + ', ' + this.province;
