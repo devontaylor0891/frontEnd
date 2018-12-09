@@ -111,9 +111,9 @@ export class SearchService implements OnInit {
             this.zeroSearchResultsReturned = false;
             this._zeroSearchResultsReturned.next(this.zeroSearchResultsReturned);
             // fill dataStore
-            this.dataStore.originalSearchResults = response;
-            this.dataStore.searchResults = response;
-            this.dataStore.filteredSearchResults = response;
+            this.dataStore.originalSearchResults = JSON.parse(JSON.stringify(response));
+            this.dataStore.searchResults = JSON.parse(JSON.stringify(response));
+            this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(response));
             console.log('searchResults: ', this.dataStore.filteredSearchResults);
             this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
             this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
@@ -337,7 +337,7 @@ export class SearchService implements OnInit {
   onFilter(values) {
 	
     // get original searchResults, loop through each product, if it doesn't contain one of the deliveries or one of the categories, remove it
-    let results: any = this.dataStore.searchResults;
+    let results: any = JSON.parse(JSON.stringify(this.dataStore.searchResults));
     let catArray = [];
     values.categories.forEach((category) => { catArray.push(category) });
     let delArray = [];
