@@ -30,7 +30,7 @@ export class ContactComponent implements OnInit {
     //   message: this.formBuilder.control('England, UK', Validators.required),
     //   recaptcha: this.formBuilder.control('', Validators.required)
     // });
-    console.log('form value: ', this.myGroup.value);
+    // console.log('form value: ', this.myGroup.value);
   }
 
   handleSubmit() {
@@ -49,13 +49,13 @@ export class ContactComponent implements OnInit {
       );
   }
   handleLoad() {
-    console.log('handle load called');
+    // console.log('handle load called');
   }
   handleSuccess() {
-    console.log('success');
+    // console.log('success');
   }
   handleExpire() {
-    console.log('expired');
+    // console.log('expired');
   };
 
 }

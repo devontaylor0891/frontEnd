@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnChanges {
     this.authService.getIsAdmin()
       .subscribe(
         result => {
-          console.log('isAdmin result: ', result);
+          // console.log('isAdmin result: ', result);
           this.isAdmin = result;
         }
       );
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, OnChanges {
     this.authService.getLoggedIn()
       .subscribe(
         result => {
-          console.log('logged in result:', result); // this is being called
+          // console.log('logged in result:', result); // this is being called
           this.loggedIn = result;
         }
       );
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           this.profileIncomplete = result;
-          console.log('profileIncomplete: ', result);
+          // console.log('profileIncomplete: ', result);
         }
       );
 

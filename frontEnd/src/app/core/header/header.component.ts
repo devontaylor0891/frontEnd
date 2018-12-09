@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { AuthService } from '../../auth/auth.service';
 import { CartService } from '../services/cart-service/cart.service';
 
@@ -12,6 +14,9 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   loggedIn: boolean;
   @Input() isAdmin: boolean;
+
+  loggedInSub: Subscription;
+  cartCountSub: Subscription;
   
   cartCount: number;
 
@@ -21,7 +26,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {}
 
   onLogin(e) {
-    console.log('cart stored from header');
+    // console.log('cart stored from header');
     this.cartService.storeCarts();
     this.authService.login();
     e.preventDefault();
@@ -34,7 +39,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() { 
 
-    this.authService.loggedIn$
+    this.loggedInSub = this.authService.loggedIn$
       .subscribe(
         result => {
           this.loggedIn = result;
@@ -44,7 +49,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
         }
       );
 
-    this.cartService.getCartCount()
+    this.cartCountSub = this.cartService.getCartCount()
       .subscribe(
         results => {
           this.cartCount = results;
@@ -60,7 +65,13 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('header onDestroy called');
+    if (this.loggedInSub) {
+      this.loggedInSub.unsubscribe();
+    }
+    if (this.cartCountSub) {
+      this.cartCountSub.unsubscribe();
+    }
+    // console.log('header onDestroy called');
   }
 
 }
