@@ -28,52 +28,62 @@ import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/a
 import { LocationNotificationComponent } from './feature/location-notification/location-notification.component';
 import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { FaqComponent } from './feature/faq/faq.component';
 
 const appRoutes: Routes = [
-	
-	{ path: 'search', component: SearchComponent },
-	{ path: 'learn-more-consumer', component: LearnMoreConsumerComponent },
-	{ path: 'learn-more-producer', component: LearnMoreProducerComponent },
-	{ path: 'dashboard',
-	canActivate: [
-		AuthGuard
-	  ],
-	  children: [
-		{
-		  path: '',
-		  component: DashboardComponent }
-	]},
-	{ path: 'admin',
-	canActivate: [
-		AuthGuard,
-		AdminGuard
-	  ],
-	  children: [
-		{
-		  path: '',
-		  component: DashboardComponent, children: [
-			{ path: 'add-user', component: AddUserComponent },
-			{ path: 'add-producer', component: AddProducerComponent },
-			{ path: 'add-product', component: AddProductComponent },
-			{ path: 'add-delivery', component: AddDeliveryComponent },
-			{ path: 'add-order', component: AddOrderComponent }
-		]}
-	]},
-	{ path: 'producer/:id', component: ProducerComponent, children: [
-		{ path: '', component: ProducerPageComponent },
-		{ path: 'schedule', component: ScheduleComponent }
-	]},
-	{ path: 'product/:id', component: ProductComponent },
-	{ path: 'cart', component: CartsComponent },
-	{ path: 'checkout/:tempId', component: CheckoutComponent },
-	{ path: 'confirmation', component: ConfirmationComponent },
-	{ path: 'callback', component: CallbackComponent },
-	{ path: 'update-profile', component: UpdateProfileComponent	},
-	{ path: 'location-notification', component: LocationNotificationComponent },
-	{ path: 'not-found', component: PageNotFoundComponent },
-	{ path: ':customUrl', component: CustomUrlResolverComponent },
-	{ path: '', component: LandingContentComponent, pathMatch: 'full' },
-	{ path: '**', redirectTo: 'not-found' }
+
+  { path: 'search', component: SearchComponent },
+  { path: 'learn-more-consumer', component: LearnMoreConsumerComponent },
+  { path: 'learn-more-producer', component: LearnMoreProducerComponent },
+  { path: 'faq', component: FaqComponent },
+  {
+    path: 'dashboard',
+    canActivate: [
+      AuthGuard
+    ],
+    children: [
+      {
+        path: '',
+        component: DashboardComponent
+      }
+    ]
+  },
+  {
+    path: 'admin',
+    canActivate: [
+      AuthGuard,
+      AdminGuard
+    ],
+    children: [
+      {
+        path: '',
+        component: DashboardComponent, children: [
+          { path: 'add-user', component: AddUserComponent },
+          { path: 'add-producer', component: AddProducerComponent },
+          { path: 'add-product', component: AddProductComponent },
+          { path: 'add-delivery', component: AddDeliveryComponent },
+          { path: 'add-order', component: AddOrderComponent }
+        ]
+      }
+    ]
+  },
+  {
+    path: 'producer/:id', component: ProducerComponent, children: [
+      { path: '', component: ProducerPageComponent },
+      { path: 'schedule', component: ScheduleComponent }
+    ]
+  },
+  { path: 'product/:id', component: ProductComponent },
+  { path: 'cart', component: CartsComponent },
+  { path: 'checkout/:tempId', component: CheckoutComponent },
+  { path: 'confirmation', component: ConfirmationComponent },
+  { path: 'callback', component: CallbackComponent },
+  { path: 'update-profile', component: UpdateProfileComponent },
+  { path: 'location-notification', component: LocationNotificationComponent },
+  { path: 'not-found', component: PageNotFoundComponent },
+  { path: ':customUrl', component: CustomUrlResolverComponent },
+  { path: '', component: LandingContentComponent, pathMatch: 'full' },
+  { path: '**', redirectTo: 'not-found' }
 ]
 
 @NgModule({
@@ -84,8 +94,8 @@ const appRoutes: Routes = [
   declarations: [],
   exports: [RouterModule],
   providers: [
-	AuthGuard,
-	AdminGuard
-	]
+    AuthGuard,
+    AdminGuard
+  ]
 })
 export class AppRoutingModule { }

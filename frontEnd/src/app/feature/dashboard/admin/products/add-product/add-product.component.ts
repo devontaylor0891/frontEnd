@@ -11,10 +11,10 @@ import { ProducerService } from '../../../../../core/services/producer/producer.
 })
 export class AddProductComponent implements OnInit {
 
-  form: FormGroup; //this will hold our form data in a js object
+  form: FormGroup; // this will hold our form data in a js object
 
-  constructor(private formBuild: FormBuilder, 
-              private location: Location, 
+  constructor(private formBuild: FormBuilder,
+              private location: Location,
               private producerService: ProducerService) {
     this.form = formBuild.group({
       'name': ['', Validators.required],

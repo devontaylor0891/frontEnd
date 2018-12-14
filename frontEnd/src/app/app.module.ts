@@ -143,6 +143,7 @@ import { TwitterTweetComponent } from './shared/social-media/twitter/twitter-twe
 import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed/twitter-feed.component';
 import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { FaqComponent } from './feature/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -239,7 +240,8 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
     TwitterTweetComponent,
     TwitterFeedComponent,
     CustomUrlResolverComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
@@ -254,7 +256,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAgN6Tt6BxP2Q-iNCNe7HiHfIGotu1j_uY',
-      libraries: ["places"]
+      libraries: ['places']
     }),
     // DateTimePickerModule,
     OwlDateTimeModule, OwlNativeDateTimeModule,
@@ -265,11 +267,11 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
   ],
   providers: [
     UserService,
-    AuthService, 
-    ApiService, 
-    LocationService, 
-    CartService, 
-    CurrencyPipe, 
+    AuthService,
+    ApiService,
+    LocationService,
+    CartService,
+    CurrencyPipe,
     DatePipe,
     UpperCasePipe,
     UtilityService,
