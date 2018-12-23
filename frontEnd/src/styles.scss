@@ -247,6 +247,10 @@ footer.page-footer {
     color: white !important;
 }
 
+.product-card {
+    overflow: hidden !important;
+}
+
 .dashboard-details {
     background-color: #bf88a2 !important;
 }
@@ -619,6 +623,13 @@ p {
 table td {
     font-size: .9rem;
     font-weight: 400;
+}
+
+.faq-toggle[aria-expanded=false] .faq-icon-expanded {
+  display: none;
+}
+.faq-toggle[aria-expanded=true] .faq-icon-collapsed {
+  display: none;
 }
 
 
