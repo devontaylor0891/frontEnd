@@ -269,6 +269,7 @@ export class AddScheduleModalComponent implements OnInit {
   buildSubmitObject() {
     // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
     this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
     this.submitObject.type = this.form.value.type;
     this.submitObject.description = this.form.value.description;
     console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
