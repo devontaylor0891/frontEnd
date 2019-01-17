@@ -20,6 +20,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
 
   @Input() record: ProductModel;
   @Output() onProductInStock = new EventEmitter<ProductModel>();
+  @Output() onProductRenewed = new EventEmitter<ProductModel>();
 
   productIsOutOfStock: boolean = false;
   productForm: FormGroup;
@@ -193,6 +194,9 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   
   handleSubmitSuccess(res) {
     console.log('put product result: ', res);
+    if (this.record.isObsolete) {
+      this.onProductRenewed.emit(this.record);
+    }
     if (this.productIsOutOfStock) {
       this.record.qtyAvailable = this.submitObject.qtyAvailable;
       this.onProductInStock.emit(this.record);

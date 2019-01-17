@@ -100,7 +100,8 @@
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable"
-                            (productDeleted)="onProductDeleted($event)">
+                            (productDeleted)="onProductDeleted($event)"
+                            (productRenewed)="onProductRenewed($event)">
                         </app-table-layout>
                     </div>
                 </div>
