@@ -42,7 +42,8 @@
             <button class="btn btn-outline-olf-primary m-0 p-2" type="button" (click)="lessOne()"><i class="fa fa-minus" aria-hidden="true"></i></button>
           </div>
           <div class="col-6">
-            <p class="m-0">{{ productQuantity }} x {{ product.pricePerUnit * product.unitsPer | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }}</p>
+            <p *ngIf="product.unitsPer === 1" class="m-0">{{ productQuantity }} x {{ product.pricePerUnit * product.unitsPer | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }}</p>
+            <p *ngIf="product.unitsPer > 1" class="m-0">{{ productQuantity }} x {{ product.pricePerUnit * product.unitsPer | currency:'CAD':'symbol-narrow':'1.2-2' }}/ea</p>
             <p class="m-0"><b>{{ totalProductValue | currency:'CAD':'symbol-narrow':'1.2-2' }}</b></p>
           </div>
           <div class="col-3 text-left">
