@@ -551,26 +551,46 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       role: ['consumer'] 
     });
 
-    this.producerForm = this.fb.group({
-      firstName: [this.user.firstName, [Validators.required] ],
-      email: [this.user.email, [Validators.required] ],
-      name: [this.producer.name, [Validators.required] ],
-      description: [this.producer.description],
-      customUrl: [this.customUrlObject.customUrl]
-    });
-
     // create search FormControl
     this.searchControl = new FormControl();
 
-    this.disableProducerFields();
+    // this.disableProducerFields();
 
     if (this.producer) {
+      this.producerForm = this.fb.group({
+        firstName: [this.user.firstName, [Validators.required] ],
+        email: [this.user.email, [Validators.required] ],
+        name: [this.producer.name, [Validators.required] ],
+        description: [this.producer.description],
+        customUrl: [this.customUrlObject.customUrl]
+      });
       this.enableProducerFields();
+      // set current map marker location
+      this.markerLatitude = this.producer.latitude;
+      this.markerLongitude = this.producer.longitude;
+        // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
+      this.checkCustomUrlSubscription = this.producerForm['controls'].customUrl.valueChanges
+      .filter(val => val.length >= 2) // after 2 characters at least
+      .debounceTime(500) // after waiting half a second
+      .switchMap( // call the api, but cancel the call if a new call is made
+        val => {
+          this.customUrlChanged = true;
+          this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
+            .subscribe(
+              result => {
+                if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
+                  console.log('producerId returned on check: ', result);
+                  this.customUrlExists = true;
+                  this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
+                } else {
+                  this.customUrlExists = false;
+                  this.producerForm['controls'].customUrl.setErrors(null);
+                }
+              });
+          return val;
+        })
+        .subscribe(valid => {return true});
     }
-
-    // set current map marker location
-    this.markerLatitude = this.producer.latitude;
-    this.markerLongitude = this.producer.longitude;
 
     this.getCitySub = this.locationService.getCity()
       .subscribe(
@@ -672,34 +692,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           this.zoom = 12;
         });
       });
-    });
-
-
-    
-      // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
-    this.checkCustomUrlSubscription = this.producerForm['controls'].customUrl.valueChanges
-      .filter(val => val.length >= 2) // after 2 characters at least
-      .debounceTime(500) // after waiting half a second
-      .switchMap( // call the api, but cancel the call if a new call is made
-        val => {
-          this.customUrlChanged = true;
-          this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
-            .subscribe(
-              result => {
-                if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
-                  console.log('producerId returned on check: ', result);
-                  this.customUrlExists = true;
-                  this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
-                } else {
-                  this.customUrlExists = false;
-                  this.producerForm['controls'].customUrl.setErrors(null);
-                }
-              });
-          return val;
-        })
-        .subscribe(valid => {return true});
-
-    
+    });    
     
   };
 
