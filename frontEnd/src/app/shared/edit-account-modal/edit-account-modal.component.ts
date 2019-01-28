@@ -507,6 +507,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   getCustomUrlSubscription: Subscription;
   customUrlExists: boolean = false;
   customUrlChanged: boolean = false;
+  customUrlId: number;
 
   selectedAddress: any;
   selectedCityProvince: any;
@@ -557,13 +558,23 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     // this.disableProducerFields();
 
     if (this.producer) {
-      this.producerForm = this.fb.group({
-        firstName: [this.user.firstName, [Validators.required] ],
-        email: [this.user.email, [Validators.required] ],
-        name: [this.producer.name, [Validators.required] ],
-        description: [this.producer.description],
-        customUrl: [this.customUrlObject.customUrl]
-      });
+      if (this.customUrlObject) {
+        this.producerForm = this.fb.group({
+          firstName: [this.user.firstName, [Validators.required] ],
+          email: [this.user.email, [Validators.required] ],
+          name: [this.producer.name, [Validators.required] ],
+          description: [this.producer.description],
+          customUrl: [this.customUrlObject.customUrl]
+        });
+      } else {
+        this.producerForm = this.fb.group({
+          firstName: [this.user.firstName, [Validators.required] ],
+          email: [this.user.email, [Validators.required] ],
+          name: [this.producer.name, [Validators.required] ],
+          description: [this.producer.description],
+          customUrl: ['']
+        });
+      };
       this.enableProducerFields();
       // set current map marker location
       this.markerLatitude = this.producer.latitude;
@@ -747,11 +758,14 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         'userId': this.user.id,
         'customUrl': form.value.customUrl,
       };
-      let customUrlId = this.customUrlObject.id;
+
+      if (this.customUrlObject) {
+        this.customUrlId = this.customUrlObject.id;
+      }
       console.log('producerData: ', producerData);
       console.log('userData: ', userData);
       if (this.customUrlChanged) {
-        this.apiService.updateCustomUrl(customUrlId, customUrlData)
+        this.apiService.updateCustomUrl(this.customUrlId, customUrlData)
           .subscribe(
             result => {
               console.log('custom url update: ', result)
