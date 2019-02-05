@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col col-xs-12">
+    <div class="col px-0">
         <div id="productsAccordion" role="tablist" aria-multiselectable="true">
 
             <!-- Here are the links to trigger the 'add new whatever' form to appear, which appears in the router-outlet tag -->
@@ -32,6 +32,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="currentProducts"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">
@@ -58,6 +59,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="outOfStockProducts"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">
@@ -84,6 +86,7 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="deletedProducts"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
                             [editable]="editable"
                             [deletable]="deletable">

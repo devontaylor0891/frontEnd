@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ConsumerDashboardService } from '../consumer-dashboard.service';
+import { UtilityService } from '../../../../core/services/utility/utility.service';
 
 import { OrderModel } from '../../../../core/models/order.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
@@ -64,7 +65,8 @@ export class ConsumerOrdersComponent implements OnInit {
       }
   ];
 
-  constructor(private dashboardService: ConsumerDashboardService) { }
+  constructor(private dashboardService: ConsumerDashboardService,
+              private utilityService: UtilityService) { }
 
   toggleView(order: any) {
     order.showView = !order.showView;
@@ -88,9 +90,10 @@ export class ConsumerOrdersComponent implements OnInit {
         } 
       );
 
-    
-    console.log('id: ', this.id);
+  };
 
+  onDeleteOrder(id) {
+    this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', id);
   }
 
 }

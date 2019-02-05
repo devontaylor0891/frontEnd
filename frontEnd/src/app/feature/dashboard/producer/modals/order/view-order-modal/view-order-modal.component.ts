@@ -14,7 +14,7 @@ export class ViewOrderModalComponent implements OnInit {
   @Input() record: OrderModel;
   products: any;
 
-  constructor(private activeModal: NgbActiveModal) {
+  constructor(public activeModal: NgbActiveModal) {
 
     // build the products array to use in the table
     this.products = [
@@ -34,31 +34,35 @@ export class ViewOrderModalComponent implements OnInit {
 
   }
 
-  buildProductsArray() {
-	  let newProduct = {
-		  id: null,
-		  name: '',
-		  quantity: null,
-		  value: null
-		};
-	  let array = this.record.orderDetails.productQuantities;
-	  // for each product in the productQuantities array, get the id, qty and value
-	  for (let i = 0; i < array.length; i++) {
-		  newProduct.id = array[i].productId;
-		  newProduct.quantity = array[i].orderQuantity;
-		  newProduct.value = array[i].orderValue;
-		  newProduct.name = this.getProductName(newProduct.id);
-		  this.products.push(newProduct);
-	  }
-	  // use the id to get the name from the productList array
-  }
-  
+   buildProductsArray() {
+    let newProduct = {
+      id: null,
+      name: '',
+      quantity: null,
+      value: null
+    };
+    let array = this.record.orderDetails.productQuantities;
+    // for each product in the productQuantities array, get the id, qty and value
+    for (let i = 0; i < array.length; i++) {
+      newProduct.id = array[i].productId;
+      newProduct.quantity = array[i].orderQuantity;
+      newProduct.value = array[i].orderValue;
+      newProduct.name = this.getProductName(newProduct.id);
+      let cloneProduct = {...newProduct};
+      console.log('newProduct: ,', newProduct)
+      this.products.push(cloneProduct);
+      console.log('products: ', this.products);
+    }
+    // use the id to get the name from the productList array
+  };
+
   getProductName(id) {
-	  for (let j = 0; j < this.record.productList.length; j++) {
-		  if (this.record.productList[j].id === id) {
-			  return this.record.productList[j].name;
-		  }
-	  }
-  }
+    for (let j = 0; j < this.record.productList.length; j++) {
+      if (this.record.productList[j].id === id) {
+        console.log('id and name: ', id + ' ' + this.record.productList[j].name);
+        return this.record.productList[j].name;
+      }
+    }
+  };
 
 }

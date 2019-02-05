@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col col-xs-12">
+    <div class="col px-0">
         <div id="ordersAccordion" role="tablist" aria-multiselectable="true">
             
             <div class="card">
@@ -19,9 +19,9 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="pendingOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
-                            [deletable]="deletable">
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -45,9 +45,9 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="acceptedOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
-                            [deletable]="deletable">
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -71,9 +71,9 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="completedOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
-                            [deletable]="deletable">
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>
@@ -97,9 +97,9 @@
                     <div class="card-block">
                         <app-table-layout
                             [records]="deniedOrders"
+                            [recordType]="recordType"
                             [settings]="projectSettings"
-                            [editable]="editable"
-                            [deletable]="deletable">
+                            [isAdmin]="true">
                         </app-table-layout>
                     </div>
                 </div>

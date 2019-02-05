@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { ProductModel } from '../../../../core/models/product.model';
 
@@ -7,21 +7,19 @@ import { ProductModel } from '../../../../core/models/product.model';
   templateUrl: './producer-page-product-card.component.html',
   styleUrls: ['./producer-page-product-card.component.scss']
 })
-export class ProducerPageProductCardComponent implements OnInit {
+export class ProducerPageProductCardComponent implements OnInit, OnChanges {
 
   @Input() product: ProductModel;
   isOutOfStock: boolean;
 
-  constructor() {
+  ngOnChanges() {};
 
-    
-
-  }
+  constructor() {};
 
   ngOnInit() {
 
     this.isOutOfStock = this.product.qtyAvailable < 1;
 
-  }
+  };
 
 }

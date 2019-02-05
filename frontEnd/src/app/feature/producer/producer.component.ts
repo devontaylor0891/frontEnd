@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ProducerService } from '../../core/services/producer/producer.service';
@@ -11,13 +11,17 @@ import { ScheduleModel } from '../../core/models/schedule.model';
   selector: 'app-producer',
   templateUrl: './producer.component.html',
   styleUrls: ['./producer.component.scss'],
-  providers: [ProducerService]
+  providers: []
 })
-export class ProducerComponent implements OnInit, OnChanges {
+export class ProducerComponent implements OnInit, OnChanges, OnDestroy {
 
   producer: ProducerModel;
   products: ProductModel[] = [];
   schedule: ScheduleModel[] = [];
+
+  getProducerSub: any;
+  getAllProductsSub: any;
+  getAllScheduleSub: any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -33,30 +37,43 @@ export class ProducerComponent implements OnInit, OnChanges {
     let id = this.route.snapshot.paramMap.get('id');
 
 	 // subscribe to the appropriate methods to populate data
-    this.producerService.getProducer()
-      .subscribe(
-        result => {
-          this.producer = result;
-        }
-      );
+    // this.getProducerSub = this.producerService.getProducer()
+    //   .subscribe(
+    //     result => {
+    //       this.producer = result;
+    //     }
+    //   );
 
-    this.producerService.getAllProducts()
-      .subscribe(
-        result => {
-          this.products = result;
-        }
-      );
+    // this.getAllProductsSub = this.producerService.getAllProducts()
+    //   .subscribe(
+    //     result => {
+    //       this.products = result;
+    //     }
+    //   );
 
-    this.producerService.getAllSchedule()
-      .subscribe(
-        result => {
-          this.schedule = result;
-        }
-      );
+    // this.getAllScheduleSub = this.producerService.getAllSchedule()
+    //   .subscribe(
+    //     result => {
+    //       this.schedule = result;
+    //     }
+    //   );
 
     // load the producer's information
     console.log('loading producer with id: ', id);
     this.producerService.loadProducerData(id);
 
   }
+
+  ngOnDestroy() {
+    if (this.getProducerSub) {
+      this.getProducerSub.unsubscribe();
+    };
+    if (this.getAllProductsSub) {
+      this.getAllProductsSub.unsubscribe();
+    };
+    if (this.getAllScheduleSub) {
+      this.getAllScheduleSub.unsubscribe();
+    };
+  }
+
 }

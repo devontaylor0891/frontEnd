@@ -18,37 +18,56 @@ export class OrdersComponent implements OnInit, OnChanges {
   completedOrders: OrderModel[] = [];
   deniedOrders: OrderModel[] = [];
 
-  projectSettings: ColumnSettingModel[] = 
+  recordType: string = 'order';
+
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'producer',
-        header: 'Producer'
+        header: 'Producer',
+        format: 'null,name',
+        sortable: true,
+        sortPath: 'name',
+        nested: false
       },
       {
         primaryKey: 'orderDetails',
         header: 'Order Date',
-        format: 'mediumDate,createdDate'
+        format: 'mediumDate,createdDate',
+        sortable: true,
+        sortPath: 'createdDate',
+        nested: false
       },
       {
         primaryKey: 'orderDetails',
         header: 'Order Time',
-        format: 'shortTime,createdDate'
+        format: 'shortTime,createdDate',
+        sortable: false,
+        sortPath: '',
+        nested: false
       },
       {
         primaryKey: 'orderDetails',
         header: 'Order Total',
-        format: 'currency,orderValue'
+        format: 'currency,orderValue',
+        sortable: true,
+        sortPath: 'orderValue',
+        nested: false
       },
       {
         primaryKey: 'consumer',
-        header: 'Consumer'
+        header: 'Consumer',
+        format: 'null,firstName',
+        sortable: true,
+        sortPath: 'firstName',
+        nested: false
       }
   ];
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnChanges() {}
-  
+
   toggleView(order: any) {
     order.showView = !order.showView;
   }
@@ -66,7 +85,7 @@ export class OrdersComponent implements OnInit, OnChanges {
           this.completedOrders = completed;
           const denied = orders.filter(order => order.orderDetails.orderStatus === 'denied');
           this.deniedOrders = denied;
-        }  
+        }
       );
 
     this.dashboardService.loadAllOrders();

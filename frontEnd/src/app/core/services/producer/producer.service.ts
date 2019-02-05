@@ -68,7 +68,7 @@ export class ProducerService implements OnInit {
       this.apiService.getProducerById(id)
         .subscribe(
           response => {
-            this.dataStore.producer = response;
+            this.dataStore.producer = response[0];
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._producer.next(Object.assign({}, this.dataStore).producer);
           }
@@ -77,6 +77,7 @@ export class ProducerService implements OnInit {
       this.apiService.getProductsByProducerId(id)
         .subscribe(
           response => { 
+            console.log('products in producer service: ', response);
             this.dataStore.products = response;
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._producerProducts.next(Object.assign({}, this.dataStore).products);
@@ -91,8 +92,10 @@ export class ProducerService implements OnInit {
           }
         );
 	  } else {
+      console.log('producer service datastore already full'); // NEVER GETS CALLED 
       return;
-	  }
+    }
+    console.log('datastore: ', this.dataStore);
   }
   
   // **************************** SINGLE PRODUCER ************************
@@ -128,14 +131,31 @@ export class ProducerService implements OnInit {
   // GET the single product with an API call, assign it as the next observable from the BehaviorSubject
   // NOTE -  first check to see if this product is in the dataStore.products array, if not, then make the API call
 
-  loadProduct(productId, producerId) {
-    this.apiService.getProductById(productId)
-    .subscribe(
-      response => { 
-        this._product.next(Object.assign({}, response)); }
-    );
-  }
+  // loadProduct(productId) {
+  //   this.apiService.getProductById(productId)
+  //   .subscribe(
+  //     response => { 
+  //       this._product.next(Object.assign({}, response[0])); }
+  //   );
+  // }
   
+  loadProduct(productId) {
+    // check if product is already in datastore, if yes, return it,
+    let index = this.findInArray(this.dataStore.products, productId);
+    if (index > -1) {
+      console.log('product already in datastore');
+      this._product.next(Object.assign({}, this.dataStore.products[index]));
+    } else {
+      console.log('api call being made, product not already in datastore');
+      // if not, make the api call
+      this.apiService.getProductById(productId)
+      .subscribe(
+        response => { 
+          this._product.next(Object.assign({}, response[0])); }
+      );
+    };
+  };
+
   // **************************** MULTIPLE SCHEDULES ************************
   
   getAllSchedule() {
@@ -176,7 +196,17 @@ export class ProducerService implements OnInit {
           return data;
         }  
       )
-  }
+  };
+
+  findInArray(array, id) {
+    let index = -1;
+    for (let i=0; i < array.length; i++) {
+      if (array[i].id == id) {
+        index = i;
+      }
+    };
+    return index;
+  };
 
   ngOnInit() {}
 

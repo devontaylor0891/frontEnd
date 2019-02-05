@@ -1,0 +1,125 @@
+<div class="col col-md-6 offset-md-3 p-4" *ngIf="!isLoggedIn">
+    <div class="row card bg-dark py-5">
+        <div class="col-10 offset-1 bg-light py-2 text-center card-body">
+            <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
+            <button class="btn btn-olf-primary" type="button" (click)="onLogin($event)">Log in or Sign up</button>
+        </div>
+    </div>
+</div>
+
+<div class="my-4 mx-1" *ngIf="isLoggedIn">
+
+    <div class="modal-header">
+        <h5 class="modal-title col-12 col-sm-8 offset-sm-2">Add A Location Notification</h5>
+    </div>
+    
+    <div class="">
+    
+        <app-loading *ngIf="submitting"></app-loading>
+    
+        <div *ngIf="!submitting">
+
+            <div class="row form-section">
+            
+                <div class="col-12 form-section-body">
+
+                    <div class="row">
+                        <div class="col-12 col-sm-8 offset-sm-2">
+                            <p>Start adding locations to your notifcation list. When a producer schedules an event with the area of the circle (25 km), you'll get an email telling you about it!</p>
+                            <p>(Don't forget to click 'Save Locations' before you leave.)</p>
+                        </div>
+                    </div>              
+
+                    <div class="row">
+                        <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <input 
+                                            autocorrect="off" 
+                                            autocapitalize="off" 
+                                            spellcheck="off" 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Enter a location" 
+                                            aria-label="Recipient's username" 
+                                            aria-describedby="basic-addon2"
+                                            #search 
+                                            id="search"
+                                            [formControl]="searchControl">
+                                        <div class="input-group-append">
+                                            <button 
+                                                class="btn-olf-primary btn btn-sm"
+                                                (click)="onAddLocation()"> 
+                                                <i aria-hidden="true" class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-12 col-sm-8 offset-sm-2 col-md-4 offset-md-0 text-center mb-2">
+                            <h5>Your Locations:</h5>
+                            <p *ngIf="locationsToDisplay.length < 1">You don't currently have any notifications set up. Try searching for a location above to start. Click 'Add' to put it on this list.</p>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-center align-items-center" *ngFor="let location of locationsToDisplay, let i = index">
+                                    {{ location.city }}, {{ location.province }}
+                                    <span class="pl-5">
+                                        <a (click)="onRemoveLocation(i)" class="vertical-center-child">
+                                            <i class="fa fa-times-circle fa-lg text-danger" aria-hidden="true"></i>
+                                        </a> 
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <agm-map
+                            class="col-12 col-md-8"
+                            [latitude]="lat"
+                            [longitude]="lng"
+                            [zoom]="zoom"
+                            [disableDefaultUI]="false"
+                            [zoomControl]="false">
+
+                            <agm-marker 
+                                *ngFor="let m of locationsToDisplay; let i = index"
+                                [latitude]="m.lat"
+                                [longitude]="m.lng">
+                                
+                                <agm-circle [latitude]="m.lat" [longitude]="m.lng" 
+                                    [radius]="25000"
+                                    [fillColor]="'black'"
+                                    [circleDraggable]="false"
+                                    [editable]="false">
+                                </agm-circle>
+                                
+                                <agm-info-window>
+                                    <strong>{{ m.city }}, {{ m.province }}</strong>
+                                </agm-info-window>
+                                
+                            </agm-marker>
+                        
+                        </agm-map>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <!-- <a (click)="activeModal.close()">Close</a> -->
+                            <button class="btn btn-olf-primary" (click)="onSubmit()">Save Locations</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
+                    </div>
+                        
+            
+                </div>
+
+            </div>
+    
+        </div>
+        
+    </div>
+
+</div>

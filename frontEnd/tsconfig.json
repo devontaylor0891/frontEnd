@@ -15,7 +15,9 @@
     ],
     "lib": [
       "es2016",
-      "dom"
-    ]
+      "dom",
+      "es2015.promise"
+    ],
+    "types": ["node", "googlemaps"]
   }
 }

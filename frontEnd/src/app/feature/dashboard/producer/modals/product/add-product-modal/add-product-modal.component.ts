@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,13 +9,15 @@ import { ProducerModel } from '../../../../../../core/models/producer.model';
 
 import { ProducerDashboardService } from '../../../../producer-dashboard.service';
 import { ApiService } from '../../../../../../core/api.service';
+import { ImageService } from '../../../../../../core/services/image/image.service';
+import { stringList } from 'aws-sdk/clients/datapipeline';
 
 @Component({
   selector: 'app-add-product-modal',
   templateUrl: './add-product-modal.component.html',
   styleUrls: ['./add-product-modal.component.scss']
 })
-export class AddProductModalComponent implements OnInit {
+export class AddProductModalComponent implements OnInit, OnDestroy {
 
   form: FormGroup; // this will hold our form data in a js object
 
@@ -22,13 +25,23 @@ export class AddProductModalComponent implements OnInit {
 
   @Output() itemCreated = new EventEmitter<ProductModel>();
 
+  submitSub: Subscription;
+
+  newItemUploading: boolean = false;
+  imageName: any = '';
+  imageUploading: boolean;
+  addingImage: boolean = false;
+  imageUploadingSub: Subscription;
+  submitting: boolean;
+  error: any;
+
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
-              private activeModal: NgbActiveModal,
-              private apiService: ApiService) {
+              public activeModal: NgbActiveModal,
+              private apiService: ApiService,
+              private imageService: ImageService) {
 
     this.form = formBuild.group({
-    'id': [''],
     'name': ['', Validators.required],
     'description': ['', Validators.required],
     'image': [''],
@@ -44,35 +57,83 @@ export class AddProductModalComponent implements OnInit {
     'qtyCompleted': [0],
     'isObsolete': [false],
     'producerId': [''],
-    'producer': [''],
+    'producer': [{}],
     'scheduleList': ['']
     })
 
   }
 
   onSubmit() {
+    this.newItemUploading = true;
     console.log(this.form.value);
-    this.form.value.producerId = this.producer.id;
-    this.form.value.producer = this.producer;
+    this.form.value.image = this.imageName;
+    this.form.value.producerId = this.producer.producerId;
+    this.form.value.producer.id = this.producer.id;
     // console.log(this.form.value);
     // this.dashboardService.addNewProduct(this.form.value);
-    this.apiService.postProduct(this.form.value)
+    this.submitSub = this.apiService.postProduct(this.form.value)
       .subscribe(
-        result => {
-          this.itemCreated.emit(result);
-          this.activeModal.close();
-        }
+          data => this.handleSubmitSuccess(this.form.value),
+			    err => this.handleSubmitError(err)
       );
-  }
+  };
+
+  handleSubmitSuccess(result) {
+    console.log('new Product result: ', result);
+    this.itemCreated.emit(result);
+    if (this.addingImage) { // upload image and then close the modal
+      this.imageService.convertAndUpload();
+      this.imageService._imageUploading
+        .subscribe(
+          result => {
+            if (!result) {
+              this.newItemUploading = false;
+              this.submitting = false;
+              this.activeModal.close();
+            }
+          }
+        )
+    } else { // no image to upload
+      this.newItemUploading = false; 
+      this.submitting = false;
+      this.activeModal.close();
+    };
+  };
+
+  handleSubmitError(err) {
+    console.error(err);
+    this.submitting = false;
+    this.error = true;
+  };
+
+  onAddImage() {
+    this.imageName = this.producer.id + '/' + new Date().getTime();
+    this.addingImage = true;
+  };
 
   ngOnInit() {
 
     this.dashboardService.getProducer()
-    .subscribe(
-      result => {
-        this.producer = result;
-      }
-    )
+      .subscribe(
+        result => {
+          this.producer = result;
+          this.imageName = this.producer.id + '/' + new Date().getTime();
+          this.form.value.image = this.imageName;
+        }
+      );
+
+    this.imageUploadingSub = this.imageService._imageUploading
+      .subscribe(
+        result => {
+          this.imageUploading = result;
+        }
+      )
+
+  };
+
+  ngOnDestroy() {
+    this.imageUploadingSub.unsubscribe();
+    this.imageService.reset();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,13 +9,16 @@ import { ScheduleModel } from '../../../../../../core/models/schedule.model';
   templateUrl: './view-schedule-modal.component.html',
   styleUrls: ['./view-schedule-modal.component.scss']
 })
-export class ViewScheduleModalComponent implements OnInit {
+export class ViewScheduleModalComponent implements OnInit, OnChanges {
 
   @Input() record: ScheduleModel;
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
   }
 
 }

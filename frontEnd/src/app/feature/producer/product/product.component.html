@@ -1,14 +1,33 @@
-<!-- display once resolved -->
-<div class="row" *ngIf="product?.producer">
-	<div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+<div class="row m-4">
+	<div class="col-12 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
 		<!-- Product Details -->
 		<div class="row justify-content-sm-center">
 			<div class="col col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1">
-				<img src="../../../../assets/images/{{ product.image }}" class="img-fluid" alt="food">
+				<!-- image exists for product -->
+        <img *ngIf="product.image !== ''; else noImage" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="small-square-image" alt="">
+        <!-- no image exists, but it falls into a specific subcategory, then use subcategory icon -->
+        <ng-template #noImage>
+          <img [hidden]="product.image !== ''" *ngIf="product.image === '' && 
+          product.subcategory.toString() === 'Bread' || 
+          product.subcategory.toString() === 'Grains' || 
+          product.subcategory.toString() === 'Honey' || 
+          product.subcategory.toString() === 'Eggs' || 
+          product.subcategory.toString() === 'Beef' || 
+          product.subcategory.toString() === 'Chicken' || 
+          product.subcategory.toString() === 'Pork' || 
+          product.subcategory.toString() === 'Lamb' || 
+          product.subcategory.toString() === 'Fish'; else categoryImage" 
+          src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.subcategory }}.png" class="small-square-image" alt="">
+          <!-- no image exists, and no subcategory icon exists, then use the icon for the category itself -->
+          <ng-template #categoryImage>
+            <img [hidden]="product.image !== ''" 
+            src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.category }}.png" class="small-square-image" alt="">
+          </ng-template>
+        </ng-template>
 			</div>
 			<div class="col col-xs-12 col-sm-6">
 				<div class="text-center">
-					<h4><a [routerLink]="['../../../../producer/' + product.producer.id]">{{ product.producer?.name }}</a></h4>
+					<h4><a [routerLink]="['../../producer/' + product.producer?.id]">{{ product.producer?.name }}</a></h4>
 					<h2>{{ product.name }}</h2>
 				</div>
 				<p>{{ product.description }}</p>
@@ -17,25 +36,33 @@
 		<br>
 		<div class="row justify-content-sm-center">
 			<div class="col-5 col-md-3 col-offset-md-2">
-				<h3 class="text-center">{{ product.pricePerUnit }}/{{ product.unit }}</h3>
+				<h3 class="text-center">{{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }}</h3>
 			</div>
 			<div class="col-7 col-md-4">
-					<app-add-to-cart [product]="product"></app-add-to-cart>
+				<app-add-to-cart [product]="product"></app-add-to-cart>
 			</div>
 		</div>
-				
+
 		<hr>
 		
 		<div> 
-			<!-- Delivery Schedule -->
-			<div class="divider-new">
-	            <a [routerLink]="['../../../../producer/' + product.producer.id + '/schedule']" class="btn btn-olf-primary">View this Producer's Upcoming Schedule</a>
-	        </div>
-			<!-- Related Products / Other products from the same producer -->
-			<div class="divider-new">
-	            <a [routerLink]="['../../../../producer/' + product.producer.id]" class="btn btn-olf-primary">View All Products from this Producer</a>
+
+			<div class="row text-center">
+				<div class="col-12 col-sm-6 col-lg-4 offset-lg-1">
+					<a 
+						[routerLink]="['../../producer/' + product.producer?.id + '/schedule']" 
+						class="btn btn-olf-primary btn-tight-padding">
+						View this Producer's Upcoming Schedule</a>
+				</div>
+				<div class="col-12 col-sm-6 col-lg-4 offset-lg-2">
+					<a 
+						[routerLink]="['../../producer/' + product.producer?.id]" 
+						class="btn btn-olf-primary btn-tight-padding">
+						View All Products from this Producer</a>
 			</div>
+				</div>
+
 		</div>
-	        
+
 	</div>
 </div>

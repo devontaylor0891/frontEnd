@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { ProductModel } from '../../../../core/models/product.model';
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
@@ -10,18 +10,20 @@ import { DashboardService } from '../../dashboard.service';
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [ProducerService]
+  providers: []
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnChanges {
 
   currentProducts: ProductModel[] = [];
   outOfStockProducts: ProductModel[] = [];
   deletedProducts: ProductModel[] = [];
 
+  recordType: string = 'product';
+
   editable: boolean = true;
   deletable: boolean = true;
 
-  projectSettings: ColumnSettingModel[] = 
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'name',
@@ -74,6 +76,8 @@ export class ProductsComponent implements OnInit {
       }
   ];
 
+  ngOnChanges() {};
+
   constructor(private producerService: ProducerService,
               private dashboardService: DashboardService) {
 
@@ -109,11 +113,12 @@ export class ProductsComponent implements OnInit {
     this.dashboardService.getAllProducts()
       .subscribe( // returns an array
         (products) => {
-          const current = products.filter(product => product.qtyAvailable > 0 && product.isObsolete === false);
+          console.log('products received: ', products);
+          const current = products.filter(product => product.qtyAvailable > 0 && (product.isObsolete === false || !product.isObsolete));
           this.currentProducts = current;
-          const outOfStock = products.filter(product => product.qtyAvailable == 0 && product.isObsolete === false);
+          const outOfStock = products.filter(product => product.qtyAvailable == 0 && (product.isObsolete === false || !product.isObsolete));
           this.outOfStockProducts = outOfStock;
-          const deleted = products.filter(product => product.isObsolete === true);
+          const deleted = products.filter(product => (product.isObsolete === true || product.isObsolete));
           this.deletedProducts = deleted;
         }
       );

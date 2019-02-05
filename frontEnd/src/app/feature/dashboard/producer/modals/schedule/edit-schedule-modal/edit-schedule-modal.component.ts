@@ -33,9 +33,10 @@ export class EditScheduleModalComponent implements OnInit {
   submitting: boolean = false;
   submitObject: ScheduleModel;
   error: boolean;
-  hasOrders: boolean;
+  hasOrders: boolean = false;
   hasDelFee: boolean;
   hasFeeWaiver: boolean;
+  delFee: number;
   
   schedDay: number;
   schedMonth: number;
@@ -52,35 +53,51 @@ export class EditScheduleModalComponent implements OnInit {
   
   // DATE/TIME PICKER SETTINGS
   public moment: any = new Date();
-  dateMoment: any;
+  dateMoment: any = new Date();
   dateMin: any = new Date(new Date().setDate(new Date().getDate() + 1)); // must be 1 day in future
   startTimeMoment: any;
   endTimeMoment: any;
-  deadlineDateMoment: any;
-	deadlineDateMax: any = new Date(); // default is now, which is 24 hours before dateMin
-  deadlineTimeMoment: any;
+  endTimeMin: any;
+  deadlineDateMoment: any = new Date();
+  public deadlineDateTimeMin: any = new Date(new Date().setDate(new Date().getDate() + 1));
+  public deadlineDateTimeMax: any = this.dateMoment;
+  deadlineTimeMoment: any = new Date();
 
   constructor(private formBuild: FormBuilder,
 				private router: Router,
 				private api: ApiService,
-				private activeModal: NgbActiveModal) { }
+				public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    console.log('this sched: ', this.record);
+    	  // break out the dates/times from the incoming record so they can be used in the form
+    this.breakUpDatesTimes();
 	  this.setHasOrders();
 	  this.hasDelFee = this.record.hasFee;
-	  this.hasFeeWaiver = this.record.hasWaiver;
-	  // break out the dates/times from the incoming record so they can be used in the form
-	  this.breakUpDatesTimes();
+    this.hasFeeWaiver = this.record.hasWaiver;
+    this.delFee = this.record.fee || 0.00;
 	  // build the form with the incoming record and the date/time defaults
 	  this.buildForm();
   }
+
+  setDeliveryFeeToZero() {
+    this.record.fee = 0.00;
+    this.scheduleForm.value.fee = 0.00;
+  };
+
+  setFeeWaiverToZero() {
+    this.record.feeWaiver = 0.00;
+    this.scheduleForm.value.feeWaiver = 0.00;
+  };
   
   private setHasOrders() {
-	  if (this.record.orderList.length > 0) {
+    console.log('record: ', this.record);
+	  if (this.record.orderCount > 0) {
 		  this.hasOrders = true;
 	  } else {
 		  this.hasOrders = false;
-	  }
+    }
+    console.log('hasOrders: ', this.hasOrders);
   }
   
   private setDateTimes() {
@@ -119,13 +136,15 @@ export class EditScheduleModalComponent implements OnInit {
 		  hasFee: [this.record.hasFee, Validators.required],
 		  fee: [this.record.fee],
 		  hasWaiver: [this.record.hasWaiver, Validators.required],
-		  feeWaiver: [this.record.feeWaiver]
+      feeWaiver: [this.record.feeWaiver]
     });
 		
 	  // Subscribe to form value changes
     this.formChangeSub = this.scheduleForm
       .valueChanges
       .subscribe(data => this.onValueChanged());
+
+    console.log('form: ', this.scheduleForm);
   };
   
   onValueChanged() {
@@ -162,11 +181,21 @@ export class EditScheduleModalComponent implements OnInit {
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
     this.schedYear = this.dateMoment.getFullYear();
+    this.deadlineDateTimeMax = new Date(this.dateMoment);
   };
 
   onChooseStartTime() {
     this.schedStartHour = this.startTimeMoment.getHours();
     this.schedStartMinute = this.startTimeMoment.getMinutes();
+    this.endTimeMin = new Date(
+      0,
+      0,
+      0,
+      this.startTimeMoment.getHours(),
+      this.startTimeMoment.getMinutes() + 15,
+      0
+    );
+    this.endTimeMoment = new Date(this.endTimeMin);
   };
 
   onChooseEndTime() {

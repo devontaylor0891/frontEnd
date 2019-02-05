@@ -16,8 +16,10 @@ import { CalendarModule } from 'angular-calendar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import { AgmCoreModule } from '@agm/core';
-//import { DateTimePickerModule } from 'ng-pick-datetime';
+// import { DateTimePickerModule } from 'ng-pick-datetime';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 // SERVICES
 import { AuthService } from './auth/auth.service';
@@ -28,6 +30,8 @@ import { UtilityService } from './core/services/utility/utility.service';
 import { ProducerDashboardService } from './feature/dashboard/producer-dashboard.service';
 import { PlacesService } from './core/services/places/places.service';
 import { UserService } from './core/services/user/user.service';
+import { ImageService } from './core/services/image/image.service';
+import { ProducerService } from './core/services/producer/producer.service';
 
 // PIPES
 import { FormatCellPipe } from './shared/pipes/format-cell.pipe';
@@ -73,12 +77,15 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { CallbackComponent } from './auth/callback/callback.component';
 import { UpdateProfileComponent } from './auth/update-profile/update-profile.component';
+
 // shared
 import { AccountInfoComponent } from './shared/account-info/account-info.component';
 import { ProductCardComponent } from './shared/product-card/product-card.component';
 import { TableLayoutComponent } from 'app/shared/table-layout/table-layout.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { ImageCropperComponent } from './shared/image-cropper/image-cropper.component';
+
 // dashboards - good candidate for lazy loading
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { UsersComponent } from './feature/dashboard/admin/users/users.component';
@@ -101,6 +108,7 @@ import { ConsumerOrdersComponent } from './feature/dashboard/consumer/consumer-o
 import { ProducerOrdersComponent } from './feature/dashboard/producer/producer-orders/producer-orders.component';
 import { ProducerProductsComponent } from './feature/dashboard/producer/producer-products/producer-products.component';
 import { ProducerScheduleComponent } from './feature/dashboard/producer/producer-schedule/producer-schedule.component';
+
 // dashboard/modals - good candidate for lazy loading
 import { EditProductModalComponent } from './feature/dashboard/producer/modals/product/edit-product-modal/edit-product-modal.component';
 import { ViewProductModalComponent } from './feature/dashboard/producer/modals/product/view-product-modal/view-product-modal.component';
@@ -116,6 +124,26 @@ import { ConsumerViewOrderModalComponent } from './feature/dashboard/consumer/mo
 import { ConsumerEditOrderModalComponent } from './feature/dashboard/consumer/modals/order/edit-order-modal/edit-order-modal.component';
 import { MarkCompleteOrderModalComponent } from './feature/dashboard/producer/modals/order/mark-complete-order-modal/mark-complete-order-modal.component';
 import { EditAccountModalComponent } from './shared/edit-account-modal/edit-account-modal.component';
+import { ImageComponent } from './shared/image/image.component';
+import { LogoCropperComponent } from './shared/logo-cropper/logo-cropper.component';
+import { AdminOrderViewModalComponent } from './feature/dashboard/admin/modals/orders/admin-order-view-modal/admin-order-view-modal.component';
+import { AdminUserViewModalComponent } from './feature/dashboard/admin/modals/users/admin-user-view-modal/admin-user-view-modal.component';
+import { AdminProducerViewModalComponent } from './feature/dashboard/admin/modals/producers/admin-producer-view-modal/admin-producer-view-modal.component';
+import { AdminProductViewModalComponent } from './feature/dashboard/admin/modals/products/admin-product-view-modal/admin-product-view-modal.component';
+import { AdminScheduleViewModalComponent } from './feature/dashboard/admin/modals/schedules/admin-schedule-view-modal/admin-schedule-view-modal.component';
+import { ContactComponent } from './shared/contact/contact.component';
+import { CheckoutWarningModalComponent } from './feature/cart/checkout/checkout-warning-modal/checkout-warning-modal.component';
+import { LocationNotificationSignUpModalComponent } from './shared/location-notification-sign-up-modal/location-notification-sign-up-modal.component';
+import { LocationNotificationComponent } from './feature/location-notification/location-notification.component';
+import { FbPageComponent } from './shared/social-media/facebook/fb-page/fb-page.component';
+import { FbLikeComponent } from './shared/social-media/facebook/fb-like/fb-like.component';
+import { FbLikeShareComponent } from './shared/social-media/facebook/fb-like-share/fb-like-share.component';
+import { FbShareComponent } from './shared/social-media/facebook/fb-share/fb-share.component';
+import { TwitterTweetComponent } from './shared/social-media/twitter/twitter-tweet/twitter-tweet.component';
+import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed/twitter-feed.component';
+import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { FaqComponent } from './feature/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -192,7 +220,28 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
     LearnMoreProducerComponent,
     PaginationComponent,
     MarkCompleteOrderModalComponent,
-    EditAccountModalComponent
+    EditAccountModalComponent,
+    ImageCropperComponent,
+    ImageComponent,
+    LogoCropperComponent,
+    AdminOrderViewModalComponent,
+    AdminUserViewModalComponent,
+    AdminProducerViewModalComponent,
+    AdminProductViewModalComponent,
+    AdminScheduleViewModalComponent,
+    ContactComponent,
+    CheckoutWarningModalComponent,
+    LocationNotificationSignUpModalComponent,
+    LocationNotificationComponent,
+    FbPageComponent,
+    FbLikeComponent,
+    FbLikeShareComponent,
+    FbShareComponent,
+    TwitterTweetComponent,
+    TwitterFeedComponent,
+    CustomUrlResolverComponent,
+    PageNotFoundComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
@@ -207,20 +256,22 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAgN6Tt6BxP2Q-iNCNe7HiHfIGotu1j_uY',
-      libraries: ["places"]
+      libraries: ['places']
     }),
-    //DateTimePickerModule,
+    // DateTimePickerModule,
     OwlDateTimeModule, OwlNativeDateTimeModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ImageCropperModule,
+    NgxCaptchaModule
   ],
   providers: [
     UserService,
-    AuthService, 
-    ApiService, 
-    LocationService, 
-    CartService, 
-    CurrencyPipe, 
+    AuthService,
+    ApiService,
+    LocationService,
+    CartService,
+    CurrencyPipe,
     DatePipe,
     UpperCasePipe,
     UtilityService,
@@ -239,7 +290,9 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
     ConsumerViewOrderModalComponent,
     ConsumerEditOrderModalComponent,
     PlacesService,
-    Title
+    Title,
+    ImageService,
+    ProducerService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [
@@ -256,7 +309,14 @@ import { EditAccountModalComponent } from './shared/edit-account-modal/edit-acco
     ConsumerViewOrderModalComponent,
     ConsumerEditOrderModalComponent,
     MarkCompleteOrderModalComponent,
-    EditAccountModalComponent
+    EditAccountModalComponent,
+    AdminOrderViewModalComponent,
+    AdminUserViewModalComponent,
+    AdminProducerViewModalComponent,
+    AdminProductViewModalComponent,
+    AdminScheduleViewModalComponent,
+    CheckoutWarningModalComponent,
+    LocationNotificationSignUpModalComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 <div class="row">
-        <div class="col col-xs-12">
+        <div class="col px-0">
             <div id="deliveriesAccordion" role="tablist" aria-multiselectable="true">
     
                 <!-- Add new schedule button -->
@@ -22,7 +22,7 @@
                                 data-parent="#deliveriesAccordion" 
                                 href="#upcomingDeliveriesCollapse" 
                                 aria-expanded="true" 
-                                aria-controls="upcomingDeliveriesCollapse">Upcoming Schedule  
+                                aria-controls="upcomingDeliveriesCollapse">Upcoming Schedule ({{ upcomingSchedule.length }})
                                     <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
                             </a>
                         </h5>
@@ -38,7 +38,8 @@
                                 (scheduleDeleted)="onScheduleDeleted($event)">
                             </app-table-layout>
                             <div *ngIf="upcomingSchedule.length < 1">
-                                <p>You have no upcoming deliveries or pickups scheduled.</p>
+                                <p>You currently have no upcoming deliveries or pickups scheduled. Use the button above to add an event.</p>
+                                <p>If you're not exactly sure how this works, head <a class="" routerLink="/learn-more-producer">here</a> to learn more.</p>
                             </div>
                         </div>
                     </div>
@@ -53,7 +54,7 @@
                                 data-parent="#deliveriesAccordion" 
                                 href="#completedDeliveriesCollapse" 
                                 aria-expanded="false" 
-                                aria-controls="completedDeliveriesCollapse">Completed Schedule 
+                                aria-controls="completedDeliveriesCollapse">Completed Schedule ({{ completedSchedule.length }})
                                     <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
                             </a>
                         </h5>

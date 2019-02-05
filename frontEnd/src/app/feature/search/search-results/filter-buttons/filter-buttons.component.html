@@ -1,23 +1,44 @@
-<div class="row">
-	
-	<div class="col-xs-12 mx-auto">
-		<p>FILTER THE RESULTS BY: 
-			<button
-				class="btn" 
+<div class="row pb-4">
+
+	<div class="dropdown hidden-md-up col-12">
+		<button class="btn btn-olf-primary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Choose Your View
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" (click)="onClick('products')"> Products</a>
+			<a class="dropdown-item" (click)="onClick('producers')"> Producers</a>
+			<a class="dropdown-item" (click)="onClick('calendar')"> Calendar</a>
+		</div>
+	</div>
+
+	<div class="hidden-sm-down col-12">
+		<div class="d-flex justify-content-center align-items-center ">
+			<span class="pr-3">Choose Your View:</span>
+
+			<div class=""> 
+				<button
+				class="btn btn-sm" 
 				[ngClass]="{'btn-olf-primary': view === 'products', 'btn-outline-olf-primary': view !== 'products'}"
 				(click)="onClick('products')"
+				placement="top" 
+				ngbTooltip="View the products available to you"
 				>Products</button>
-			<button 
-				class="btn-outline-olf-primary btn"
+				<button 
+				class="btn-outline-olf-primary btn btn-sm"
 				[ngClass]="{'btn-olf-primary': view === 'producers', 'btn-outline-olf-primary': view !== 'producers'}"
 				(click)="onClick('producers')"
+				placement="top" 
+				ngbTooltip="View producers coming to your area"
 				>Producers</button>
-			<button 
-				class="btn-outline-olf-primary btn"
+				<button 
+				class="btn-outline-olf-primary btn btn-sm"
 				[ngClass]="{'btn-olf-primary': view === 'calendar', 'btn-outline-olf-primary': view !== 'calendar'}" 
 				(click)="onClick('calendar')"
+				placement="top" 
+				ngbTooltip="View the upcoming schedule"
 				>Calendar</button>
-		</p>
+			</div>
+		</div>
 
 	</div>
 

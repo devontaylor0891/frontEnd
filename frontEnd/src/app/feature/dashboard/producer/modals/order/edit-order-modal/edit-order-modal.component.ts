@@ -15,7 +15,7 @@ import { OrderModel } from '../../../../../../core/models/order.model';
   templateUrl: './edit-order-modal.component.html',
   styleUrls: ['./edit-order-modal.component.scss']
 })
-export class EditOrderModalComponent implements OnInit {
+export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   @Input() record: OrderModel;
   products: any;
@@ -28,36 +28,25 @@ export class EditOrderModalComponent implements OnInit {
   formChangeSub: Subscription;
   submitOrderSub: Subscription;
   submitting: boolean = false;
-  submitObject: {
-    'orderDetails': any
-  };
+  submitObject: any;
   error: boolean;
   orderStatusInput: string;
 
   constructor(private fb: FormBuilder,
         private router: Router,
         private api: ApiService,
-        private activeModal: NgbActiveModal,
+        public activeModal: NgbActiveModal,
         private cartService: CartService) {
 
-    this.submitObject = { orderDetails : {} };
-
     // build the products array to use in the table
-    this.products = [
-      {
-        id: null,
-        name: '',
-        quantity: null,
-        value: null
-      }
-    ];
+    this.products = [];
 
   };
 
   ngOnInit() {
     this.buildProductsArray();
     this.buildForm();
-    this.submitObject.orderDetails = this.record.orderDetails;
+    this.submitObject = this.record;
     console.log('this order: ', this.record);
     console.log('submitObject: ', this.submitObject);
   }
@@ -75,8 +64,11 @@ export class EditOrderModalComponent implements OnInit {
 		  newProduct.id = array[i].productId;
 		  newProduct.quantity = array[i].orderQuantity;
 		  newProduct.value = array[i].orderValue;
-		  newProduct.name = this.getProductName(newProduct.id);
-		  this.products.push(newProduct);
+      newProduct.name = this.getProductName(newProduct.id);
+      let cloneProduct = {...newProduct};
+      console.log('newProduct: ,', newProduct)
+      this.products.push(cloneProduct);
+      console.log('products: ', this.products);
 	  }
 	  // use the id to get the name from the productList array
   };
@@ -84,6 +76,7 @@ export class EditOrderModalComponent implements OnInit {
   getProductName(id) {
 	  for (let j = 0; j < this.record.productList.length; j++) {
 		  if (this.record.productList[j].id === id) {
+        console.log('id and name: ', id + ' ' + this.record.productList[j].name);
 			  return this.record.productList[j].name;
 		  }
 	  }
@@ -106,11 +99,11 @@ export class EditOrderModalComponent implements OnInit {
     this.submitting = true;
     this.setSubmitObject('accepted');
     // patch the order
-    this.api.patchOrder(this.record.id, this.submitObject)
+    this.submitOrderSub = this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
-          console.log('order accepted and emitted from modal: ', result);
-          this.handleSubmitAcceptSuccess(result);
+          console.log('order accepted and emitted from modal: ', this.submitObject);
+          this.handleSubmitAcceptSuccess(this.submitObject);
         }, error => {
           this.handleSubmitError(error);
         }
@@ -126,11 +119,11 @@ export class EditOrderModalComponent implements OnInit {
     this.submitting = true;
     this.setSubmitObject('denied');
     // patch the order
-    this.api.patchOrder(this.record.id, this.submitObject)
+    this.submitOrderSub = this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
-          console.log('order denied and emitted from modal: ', result);
-          this.handleSubmitDenySuccess(result);
+          console.log('order denied and emitted from modal: ', this.submitObject);
+          this.handleSubmitDenySuccess(this.submitObject);
         }, error => {
           this.handleSubmitError(error);
         }
@@ -142,18 +135,6 @@ export class EditOrderModalComponent implements OnInit {
     }
 
   }
-
-  // onSubmit() {
-  // 	this.submitting = true;
-  //   this.setSubmitObject();
-  //   console.log('submitted object: ', this.submitObject);
-  // 	this.submitOrderSub = this.api
-  // 		.putOrder(this.record.id, this.submitObject)
-  // 		.subscribe(
-  // 		  data => this.handleSubmitSuccess(data),
-  // 		  err => this.handleSubmitError(err)
-  // 		);
-  // };
 
   handleSubmitAcceptSuccess(res) {
     this.submitting = false;
@@ -177,11 +158,10 @@ export class EditOrderModalComponent implements OnInit {
     this.error = true;
   };
 
-  // ngOnDestroy() {
-  //   if (this.submitOrderSub) {
-  //     this.submitOrderSub.unsubscribe();
-  //   }
-  //   this.formChangeSub.unsubscribe();
-  // }
+  ngOnDestroy() {
+    if (this.submitOrderSub) {
+      this.submitOrderSub.unsubscribe();
+    }
+  }
 
 }

@@ -20,6 +20,8 @@ import { UserModel } from '../../../core/models/user.model';
 @Injectable()
 export class UserService implements OnInit, OnChanges  {
 
+  auth0Id: string;
+  databaseId: number;
   userId: number;
   userType: string;
   userType$ = new BehaviorSubject<string>(this.userType);
@@ -41,26 +43,49 @@ export class UserService implements OnInit, OnChanges  {
     this.authService.getIdAndProfile()
       .subscribe(
         result => {
-          this.userId = result[0];
+          this.auth0Id = result[0];
           this.userProfile = result[1];
-          if (this.userId) {
-            this.apiService.getUserById(this.userId)
+          console.log('auth0 id: ', this.auth0Id);
+          if (this.auth0Id) {
+            this.apiService.getUserByAuthId(this.auth0Id)
               .subscribe(
-                result => { this.user = result;
-                            this.getUserFromDb(this.userId); },
-                error => {
-                  // if the user isn't yet in the db, add them
-                  if (error.indexOf('404') > -1) {
+                result => { 
+                  console.log('result from apiservice getuser: ', result);
+                  if (result[0]) {
+                    // removed from above test: .length > 0
+                    this.assignUserValues(result);
+                    // this.user = result;
+                    // this.databaseId = result[0].id;
+                    // this.getUserFromDb();
+                  } else {
                     let newUser = this.buildNewUser(this.userProfile);
+                    console.log('trying to create user: ', newUser);
                     this.apiService.createUser(newUser)
                       .subscribe(
                         result => {
+                          console.log('newly created user: ', result);
+                          console.log('result: ', result);
+                          this.databaseId = result.insertId;
                           this.isFirstLogin = false;
-                          this.getUserFromDb(this.userId);
+                          this.getUserFromDb(this.databaseId);
                         }
                       );
                   }
-                }
+                }, 
+                // error => {
+                //   // if the user isn't yet in the db, add them
+                //   if (error.indexOf('404') > -1) {
+                //     let newUser = this.buildNewUser(this.userProfile);
+                //     console.log('trying to create user1: ', newUser);
+                //     this.apiService.createUser(newUser)
+                //       .subscribe(
+                //         result => {
+                //           this.isFirstLogin = false;
+                //           this.getUserFromDb(this.userId);
+                //         }
+                //       );
+                //   }
+                // }
               );
           }
 
@@ -71,12 +96,12 @@ export class UserService implements OnInit, OnChanges  {
   
   buildNewUser(profile) {
 	  let newUser = {
-		  'id': this.userId,
-		  'firstName': profile.given_name || '',
+		  'auth0Id': this.auth0Id,
+		  // 'firstName': profile.given_name || '',
 		  'email': profile['http://myapp.com/email'] || '',
-		  'registrationDate': profile.created_at || profile.updated_at,
-      'role': '',
-      'orders': []
+		  'registrationDate': profile.created_at || profile.updated_at
+      // 'role': '',
+      // 'orders': []
 	  }
 	  return newUser;
   };
@@ -111,29 +136,43 @@ export class UserService implements OnInit, OnChanges  {
   }
 
   getUserFromDb(id) {
-    this.apiService.getUserById(id)
+    this.apiService.getUserByDBId(id)
       .subscribe(
         result => {
-            this.user = result;
-            this.user$.next(this.user);
-            console.log('user from db: ', this.user);
-            this.userType = this.user.role;
-            this.userType$.next(this.userType);
-            this.firstName = this.user.firstName;
-            this.firstName$.next(this.firstName);
-            this.email = this.user.email;
-            this.email$.next(this.email);
-            if (this.user.role && this.user.firstName && this.user.email) {
-              this.profileIncomplete = false;
-              this.profileIncomplete$.next(false);
-            } else {
-              this.profileIncomplete = true;
-              this.profileIncomplete$.next(true);
-            }
+          console.log('result: ', result);
+          this.assignUserValues(result);
+            
         }
       );
   };
 
+  assignUserValues(result) {
+    this.user = result[0];
+    this.user$.next(this.user);
+    console.log('user from db: ', this.user);
+    this.userType = this.user.role;
+    this.userType$.next(this.userType);
+    this.firstName = this.user.firstName;
+    this.firstName$.next(this.firstName);
+    this.email = this.user.email;
+    this.email$.next(this.email);
+    if (this.user.role && this.user.firstName && this.user.email) {
+      this.profileIncomplete = false;
+      this.profileIncomplete$.next(false);
+    } else {
+      this.profileIncomplete = true;
+      console.log('user profile incomplete: ', this.profileIncomplete);
+      this.profileIncomplete$.next(true);
+    }
+  };
 
+  deleteUser() {
+    this.apiService.deleteUser(this.userId, this.user)
+      .subscribe(
+        result => {
+          console.log('user deleted: ', result);
+        }
+      );
+  };
 
 }

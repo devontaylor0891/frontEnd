@@ -1,4 +1,6 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../auth/auth.service';
 import { CartService } from '../services/cart-service/cart.service';
@@ -8,10 +10,13 @@ import { CartService } from '../services/cart-service/cart.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   loggedIn: boolean;
   @Input() isAdmin: boolean;
+
+  loggedInSub: Subscription;
+  cartCountSub: Subscription;
   
   cartCount: number;
 
@@ -21,7 +26,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   ngOnChanges() {}
 
   onLogin(e) {
-    console.log('cart stored from header');
+    // console.log('cart stored from header');
     this.cartService.storeCarts();
     this.authService.login();
     e.preventDefault();
@@ -34,7 +39,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngOnInit() { 
 
-    this.authService.loggedIn$
+    this.loggedInSub = this.authService.loggedIn$
       .subscribe(
         result => {
           this.loggedIn = result;
@@ -44,7 +49,7 @@ export class HeaderComponent implements OnInit, OnChanges {
         }
       );
 
-    this.cartService.getCartCount()
+    this.cartCountSub = this.cartService.getCartCount()
       .subscribe(
         results => {
           this.cartCount = results;
@@ -53,6 +58,20 @@ export class HeaderComponent implements OnInit, OnChanges {
 
     this.cartService.loadCartCount();
 
+  };
+
+  public openLink(link) {
+    window.open(link, '_blank');
+  }
+
+  ngOnDestroy() {
+    if (this.loggedInSub) {
+      this.loggedInSub.unsubscribe();
+    }
+    if (this.cartCountSub) {
+      this.cartCountSub.unsubscribe();
+    }
+    // console.log('header onDestroy called');
   }
 
 }

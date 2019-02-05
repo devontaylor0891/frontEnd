@@ -20,22 +20,29 @@ export class UsersComponent implements OnInit, OnChanges {
   producers: UserModel[] = [];
   consumers: UserModel[] = [];
 
+  recordType: string = 'user';
+
   editable: boolean = true;
   deletable: boolean = true;
 
-  projectSettings: ColumnSettingModel[] = 
-  [
-      {
-        primaryKey: 'firstName',
-        header: 'Name'
-      },
-      {
-        primaryKey: 'email',
-        header: 'Email'
-      }, {
-        primaryKey: 'registrationDate',
-        header: 'Reg. Date'
-      }
+  projectSettings: ColumnSettingModel[] = [
+    {
+      primaryKey: 'firstName',
+      header: 'Name',
+      format: 'null',
+      sortable: true
+    },
+    {
+      primaryKey: 'email',
+      header: 'Email',
+      format: 'null',
+      sortable: true
+    }, {
+      primaryKey: 'registrationDate',
+      header: 'Reg. Date',
+      format: 'mediumDate',
+      sortable: true
+    }
   ];
 
   constructor(private dashboardService: DashboardService) { }

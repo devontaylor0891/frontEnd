@@ -1,97 +1,16 @@
-// import { Component, OnInit, OnChanges } from '@angular/core';
-// import { NgForm } from '@angular/forms';
+import { Component, OnInit, Input, NgZone, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import { NgForm, FormControl, FormGroup } from '@angular/forms';
 
-// import { SearchService } from '../../../../core/services/search/search.service';
+// import { } from 'googlemaps';
+import { google } from '@google/maps';
 
-// @Component({
-//   selector: 'app-search-options',
-//   templateUrl: './search-options.component.html',
-//   styleUrls: ['./search-options.component.scss']
-// })
-// export class SearchOptionsComponent implements OnInit, OnChanges {
-
-//   checkboxValue: boolean;
-
-//   deliveryTypes: string[];
-//   categoriesList: string[];
-//   submittedValues: any = {
-//     categories: [],
-//     deliveryTypes: []
-//   };
-
-//   constructor(private searchService: SearchService) {}
-
-//   ngOnChanges() {
-
-//   }
-
-//   ngOnInit() {
-
-//     this.checkboxValue = true;
-
-//     // subscribe to the delivery types
-//     this.searchService.getDeliveryTypes()
-//       .subscribe(
-//         results => {
-//           this.deliveryTypes = results;
-//         //  console.log("These are the delivery types from the subscription:");
-//         //  console.log(this.deliveryTypes);
-//         }
-//       );
-
-//     // subscribe to the category types
-//     this.searchService.getCategories()
-//       .subscribe(
-//         results => {
-//           this.categoriesList = results;
-//         }
-//       );
-
-//   }
-
-//   onSubmit(form: NgForm) {
-//     //empty the submitted values
-//     this.submittedValues = {
-//       categories: [],
-//       deliveryTypes: []
-//     };
-//     // separate and loop through each of the values
-//     for (let property in form.value) {
-//       if (form.value.hasOwnProperty(property)) {
-//         let propValue = form.value[property]; //get the returned values
-//         // if the returned value is true
-//         if (propValue) {
-//           //separate the properties by their type (category or delivery)
-//           if (property.split('.')[0] === 'c') {
-//             //add the property to the appropriate array
-//             this.submittedValues.categories.push(property.split('.')[1]);
-//           } else {
-//             this.submittedValues.deliveryTypes.push(property.split('.')[1]);
-//           }
-//         }
-//       }
-//     }
-//     //then send the submitted values to search service to update the view
-//     this.searchService.onFilter(this.submittedValues);
-//   }
-
-//   reset(form: NgForm) {
-//     // form.reset();
-//     this.checkboxValue = true;
-//     this.searchService.onReset();
-//     this.submittedValues = {
-//       categories: [],
-//       deliveryTypes: []
-//     };
-//   }
-
-// }
-
-
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
+import { AgmMap } from '@agm/core';
 
 import { SearchService } from '../../../../core/services/search/search.service';
+import { LocationService } from '../../../../core/services/location/location.service';
+
+declare var google: any;
 
 @Component({
   selector: 'app-search-options',
@@ -100,6 +19,8 @@ import { SearchService } from '../../../../core/services/search/search.service';
 })
 export class SearchOptionsComponent implements OnInit, OnChanges {
 
+  @Input() zeroResults: any;
+
   deliveryTypes: any[];
   categoriesList: any[];
   submittedValues: any = {
@@ -107,7 +28,31 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     deliveryTypes: []
   };
 
-  constructor(private searchService: SearchService) {
+  locationUpdate: boolean = false;
+  submitting: boolean = false;
+  currentRadius: number = 25;
+  latitude: number;
+  longitude: number;
+  cityProvince: string;
+ 
+  address: string;
+  city: string;
+  province: string;
+
+  searchOptions = {
+    latitude: null,
+    longitude: null,
+    radius: null
+  };
+
+  public searchControl: FormControl;
+  @ViewChild('search') public searchElementRef: ElementRef;
+  zoom: number;
+
+  constructor(private searchService: SearchService,
+              private locationService: LocationService,
+              private mapsAPILoader: MapsAPILoader,
+              private ngZone: NgZone) {
 
     this.deliveryTypes = [
       {
@@ -123,11 +68,11 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       }
     ];
 
-  }
+  };
 
   ngOnChanges() {
-
-  }
+    console.log('zeroResults: ', this.zeroResults);
+  };
 
   ngOnInit() {
 
@@ -142,9 +87,6 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
             };
             this.deliveryTypes[i] = newDel;
           };
-        //  this.deliveryTypes = result;
-        //  console.log("These are the delivery types from the subscription:");
-        //  console.log(this.deliveryTypes);
         }
       );
 
@@ -159,11 +101,54 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
             };
             this.categoriesList[i] = newCat;
           };
-          //this.categoriesList = results;
         }
       );
 
-  }
+    this.locationService.getCityProvince()
+      .subscribe(
+        results => {
+          this.cityProvince = results;
+        }
+      );
+
+    this.locationService.getLocation()
+      .subscribe(
+        result => {
+          this.latitude = result.coords.latitude;
+          this.longitude = result.coords.longitude;
+        }
+      )
+
+    // create search FormControl
+    this.searchControl = new FormControl('');
+
+
+    // load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["geocode"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          // get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          // verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+          console.log('place: ', place);
+          this.fillAddress(place);
+        });
+      });
+    });
+
+  };
+
+  setDistance(distance) {
+    this.currentRadius = distance;
+    this.searchService.filterByDistance(distance, this.latitude, this.longitude);
+  };
 
   onSubmit(form: NgForm) {
     //empty the submitted values
@@ -187,6 +172,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
         }
       }
     }
+    console.log('submitted values: ', this.submittedValues);
     //then send the submitted values to search service to update the view
     this.searchService.onFilter(this.submittedValues);
   }
@@ -204,6 +190,56 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       categories: [],
       deliveryTypes: []
     };
-  }
+  };
+
+  // onRadiusSubmit(radius: number) {
+  //   this.submitting = true;
+  //   if (this.currentRadius === radius) {
+  //     this.submitting = false;
+  //     return;
+  //   } else {
+  //     this.searchOptions.latitude = this.latitude;
+  //     this.searchOptions.longitude = this.longitude;
+  //     this.searchOptions.radius = 25;
+  //     this.searchService.loadAll(this.searchOptions);
+  //   }
+
+  // };
+
+  changeCity() {
+    this.locationUpdate = !this.locationUpdate;
+    // this.runMapLoader();
+  };
+
+  private fillAddress(place) {
+    // this.clearAddress();
+    this.parseAddressComponents(place.address_components);
+    this.latitude = place.geometry.location.lat();
+    this.longitude = place.geometry.location.lng();
+    console.log('lat and long: ', this.latitude + ', ' + this.longitude);
+    // have location service re-emit the city and province
+    this.locationService.updateCityProvince(this.city + ', ' + this.province);
+    // have the search service make a new call
+    this.searchOptions.latitude = this.latitude;
+    this.searchOptions.longitude = this.longitude;
+    this.searchOptions.radius = 25;
+    this.searchService.loadAll(this.searchOptions);
+    this.locationUpdate = !this.locationUpdate;
+  };
+
+  private parseAddressComponents(components) {
+    for (let i = 0; i < components.length; i++) {
+      let types = components[i].types;
+      for (let j = 0; j < types.length; j++) {
+        let result = types[j];
+        if (result === 'locality' || result === 'sublocality') {
+          this.city = components[i].short_name;
+        };
+        if (result === 'administrative_area_level_1') {
+          this.province = components[i].short_name;
+        };
+      };
+    };
+  };
 
 }

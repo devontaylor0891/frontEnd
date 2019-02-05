@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -82,7 +82,8 @@ export class ProducerProductsComponent implements OnInit {
 
   constructor(private dashboardService: ProducerDashboardService,
               private modal: NgbModal,
-              private utilityService: UtilityService) {  };
+              private utilityService: UtilityService,
+              private ref: ChangeDetectorRef) {  };
 
   openModal() {
     const modalRef = this.modal.open(AddProductModalComponent, { size: 'lg' });
@@ -139,31 +140,46 @@ export class ProducerProductsComponent implements OnInit {
     // loop through each of the 2 arrays
     // find the product with the matching id
     // return the array name
-    console.log('obsoleting: ', $event.id);
     // let arrayName = this.findArrayProductIsCurrentlyIn($event.id);
     // continue as per usual
     if (arrayName === 'current') {
-      console.log('current before: ', this.currentProducts);
       this.utilityService.removeByAttribute(this.currentProducts, 'id', $event.id);
-      console.log('current after: ', this.currentProducts);
+       // make a copy of the array to force template to update view
+       this.currentProducts = this.currentProducts.slice();
     };
     if (arrayName === 'outOfStock') {
       this.utilityService.removeByAttribute(this.outOfStockProducts, 'id', $event.id);
+      this.outOfStockProducts = this.outOfStockProducts.slice();
     };
     // add to obsoleted array
     this.obsoletedProducts.push($event);
+    this.ref.detectChanges();
+  };
+
+  onProductRenewed($event) { // move from obsolete to out of stock
+    console.log('product renewed: ', $event.id);
+    this.utilityService.removeByAttribute(this.obsoletedProducts, 'id', $event.id);
+    this.obsoletedProducts = this.obsoletedProducts.slice();
+    // add to obsoleted array
+    this.outOfStockProducts.push($event);
+    this.ref.detectChanges();
   };
 
   onProductDeleted($event) { // remove from wherever it is located
-    console.log('removing: ', $event);
-    this.obsoletedProducts = this.utilityService.removeByAttribute(this.obsoletedProducts, 'id', $event);
+    this.obsoletedProducts = this.utilityService.removeByAttribute(this.obsoletedProducts, 'id', $event.id);
+    this.obsoletedProducts = this.obsoletedProducts.slice();
   };
+
+  onProductRestocked($event) {
+    this.outOfStockProducts = this.utilityService.removeByAttribute(this.outOfStockProducts, 'id', $event.id);
+    this.outOfStockProducts = this.outOfStockProducts.slice();
+    this.currentProducts.push($event);
+  }
 
   findArrayProductIsCurrentlyIn(id) {
     let arrayName;
     for (let i; i < this.currentProducts.length; i++ ) {
       if (this.currentProducts[i].id === id) {
-        console.log('currentProducts id: ', this.currentProducts[i].id);
         arrayName = 'currentProducts';
       }
     };
@@ -177,7 +193,6 @@ export class ProducerProductsComponent implements OnInit {
         arrayName = 'obsoletedProducts';
       }
     };
-    console.log('arrayName: ', arrayName);
     return arrayName;
   }
 

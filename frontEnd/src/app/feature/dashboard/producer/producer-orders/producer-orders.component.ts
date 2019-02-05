@@ -105,6 +105,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   onAcceptOrder($event) { // move order from pending array to accepted array
     // remove from pending array
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
+    this.pendingOrders = this.pendingOrders.slice();
     // add to accepted orders
     this.acceptedOrders.push($event);
   };
@@ -112,6 +113,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   onDenyOrder($event) { // move order from pending array to denied array
     // remove from pending array
     this.pendingOrders = this.utilityService.removeByAttribute(this.pendingOrders, 'id', $event.id);
+    this.pendingOrders = this.pendingOrders.slice();
     // add to denied orders
     this.deniedOrders.push($event);
   };
@@ -119,6 +121,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   onCompleteOrder($event) { // move order from accepted to completed
     // remove from pending array
     this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
+    this.acceptedOrders = this.acceptedOrders.slice();
     // add to denied orders
     this.completedOrders.push($event);
   };
@@ -126,6 +129,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
   onIncompleteOrder($event) { // move order from accepted to incompleted
     // remove from pending array
     this.acceptedOrders = this.utilityService.removeByAttribute(this.acceptedOrders, 'id', $event.id);
+    this.acceptedOrders = this.acceptedOrders.slice();
     // add to denied orders
     this.incompletedOrders.push($event);
   };

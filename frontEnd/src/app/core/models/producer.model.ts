@@ -9,6 +9,7 @@ export class ProducerModel {
                 public latitude: number,
                 public firstName: string,
                 public status: string,
+                public producerId?: number,
                 public address?: string,
                 public description?: string,
                 public logoUrl?: string,

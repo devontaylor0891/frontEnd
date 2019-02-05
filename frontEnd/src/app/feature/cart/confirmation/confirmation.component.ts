@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CartService } from '../../../core/services/cart-service/cart.service';
+
 @Component({
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
+
+    this.cartService.resetOrderSubscriptions();
+
   }
 
 }

@@ -12,5 +12,7 @@ const apiURI = _isDev ? 'http://localhost:3000/' : `/api/`;
 
 export const ENV = {
   BASE_URI: getHost(),
-  BASE_API: apiURI
+  BASE_API: apiURI,
+  AWS_ACCESS_KEY: 'XXXX',
+  AWS_SECRET: 'XXXX'
 };

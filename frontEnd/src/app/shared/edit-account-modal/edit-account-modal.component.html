@@ -1,218 +1,307 @@
 <div class="modal-header">
-    <h5 class="modal-title">Please review and edit your Account Information as necessary</h5>
-    <button type="button" class="close" (click)="activeModal.close()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  
-  <div class="modal-body dash-modal-body">
-  
-      <app-loading *ngIf="submitting"></app-loading>
-        
-      <form *ngIf="!submitting && !producer" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm, 'user')">
-  
-          <div class="row form-section">
-  
-              <div class="col-12 form-section-header">
-                  <h4>Your Profile Information</h4>
-              </div>
-          
-              <div class="col-12 form-section-body">
-  
-                  <div class="row">
-                      <label for="firstName" class="col-4 col-form-label text-right">First Name:</label>
-                      <div class="col-8">
-                          <input 
-                          id="firstName"
-                          type="text"
-                          class="form-control"
-                          formControlName="firstName">
-                      </div>
-                  </div>
-  
-                  <div class="row">
-                      <label for="email" class="col-4 col-form-label text-right">Email:</label>
-                      <div class="col-8">
-                          <input 
-                          id="email"
-                          type="text"
-                          class="form-control"
-                          formControlName="email">
-                      </div>
-                  </div>
-          
-              </div>
-  
-              <div class="col-12 text-center">
-                  <button 
-                      class="btn btn-olf-primary" 
-                      type="submit"
-                      [disabled]="(userForm.invalid)"
-                      >Update Profile</button>
-              </div>
-  
+  <h5 class="modal-title">Please review and edit your Account Information as necessary</h5>
+  <button type="button" class="close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body dash-modal-body">
+
+  <app-loading *ngIf="submitting"></app-loading>
+
+  <form *ngIf="!submitting && !producer" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm, 'consumer')">
+
+    <div class="row">
+
+      <div class="col-12">
+
+        <div class="row form-section">
+
+          <div class="col-12 form-section-header">
+            <h5>Your Profile Information</h5>
           </div>
-  
-      </form>
-  
-      <form *ngIf="!submitting && producer" [formGroup]="producerForm"  (ngSubmit)="onSubmit(producerForm, 'producer')">
-  
-          <div class="row form-section">
-  
-              <div class="col-12 form-section-header">
-                  <h4>Your Profile Information</h4>
+
+          <div class="col-12 form-section-body">
+
+            <div class="row">
+              <label for="firstName" class="col-xs-12 col-sm-4 col-form-label text-sm-right">First Name:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                id="firstName"
+                type="text"
+                class="form-input-custom"
+                formControlName="firstName">
               </div>
-  
-              <div class="col-12 form-section-body">
-  
-                  <div class="row">
-                      <label for="firstName" class="col-4 col-form-label text-right">First Name:</label>
-                      <div class="col-8">
-                          <input 
-                          id="firstName"
-                          type="text"
-                          class="form-control"
-                          formControlName="firstName">
-                      </div>
-                  </div>
-  
-                  <div class="row">
-                      <label for="email" class="col-4 col-form-label text-right">Email:</label>
-                      <div class="col-8">
-                          <input 
-                          id="email"
-                          type="text"
-                          class="form-control"
-                          formControlName="email">
-                      </div>
-                  </div>
-  
+            </div>
+
+            <div class="row">
+              <label for="email" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Email:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                id="email"
+                type="text"
+                class="form-input-custom"
+                formControlName="email">
               </div>
-  
-              <div class="col-12 form-section-header">
-                  <h4>Your Business Information</h4>
-              </div>
-        
-              <div class="col-12 form-section-body">
-  
-                  <div class="row">
-                      <label for="name" class="col-4 col-form-label text-right">Business Name:</label>
-                      <div class="col-8">
-                          <input 
-                              id="name"
-                              type="text"
-                              class="form-control"
-                              formControlName="name">
-                      </div>
-                  </div>
-  
-                  <div class="row">
-                      <label for="description" class="col-4 col-form-label text-right">Description of your Business:</label>
-                      <div class="col-8">
-                          <textarea
-                              id="description"
-                              type="text" 
-                              class="md-textarea"
-                              formControlName="description"
-                              class="form-control"></textarea>
-                      </div>
-                  </div>
-  
-                  <div class="row">
-                      <label for="logoUrl" class="col-4 col-form-label text-right">Upload a Logo</label>
-                      <div class="col-8">
-                          <input
-                              #logoUrl
-                              type="file"
-                              accept=".png, .jpg, .jpeg"
-                              formControlName="logoUrl"
-                              (change)="fileChange($event)"
-                              class="form-control">
-                      </div>
-                  </div>
+            </div>
 
-                </div>
-
-                <div class="col-12 form-section-header">
-                    <h4>Your Location Details</h4>
-                </div>
-            
-                <div class="col-12 form-section-body">
-
-                    <div class="row">
-                        <label for="name" class="col-4 col-form-label text-right">Address:</label>
-                        <div class="col-8">
-                            <p>{{ producer.address }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="name" class="col-4 col-form-label text-right">Location:</label>
-                        <div class="col-8">
-                            <p>{{ producer.location }}, {{ producer.province }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <a  
-                                (click)="toggleLocationSearch()"
-                                >Edit Location Details</a>
-                        </div>
-                    </div>
-
-                    <div class="row" [hidden]="!locationSearchDisplay">
-
-                        <!-- location -->
-                        <div class="col-12">
-
-                            <h5 class="h5-responsive">
-                                <label for="search">Enter Your Location</label>
-                                <p><small>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</small></p>                                    
-                            </h5>
-                            <div class="md-form pl-3">
-                                <i class="fa fa-map-marker prefix"></i>
-                                <input  
-                                    autocorrect="off" 
-                                    autocapitalize="off" 
-                                    spellcheck="off" 
-                                    type="text" 
-                                    class="form-control" 
-                                    #search 
-                                    id="search"
-                                    [formControl]="searchControl">
-                            </div>
-
-                        </div>
-
-                        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-                            <agm-marker [latitude]="latitude" [longitude]="longitude">
-                                <!-- <agm-info-window>Börk</agm-info-window> -->
-                            </agm-marker>
-                        </agm-map>
-
-                    </div>
-            
-              </div>
-        
-              <div class="col-12 text-center">
-                  <button 
-                      class="btn btn-olf-primary" 
-                      type="submit"
-                      [disabled]="(producerForm.invalid)"
-                      >Update Profile</button>
-              </div>
-  
           </div>
-  
-      </form>
-      
-  </div>
-  
-  <div class="modal-footer justify-content-center">
-      <div class="row">
-          <div>
-              <a (click)="activeModal.close()">Cancel Changes</a>
-          </div>
+
+        </div>
+
+        <div class="col-12 text-center my-4">
+          <button 
+          class="btn btn-olf-primary" 
+          type="submit"
+          [disabled]="(userForm.invalid)"
+          >Update Profile</button>
+        </div>
+
+        <div class="col-12 text-center" *ngIf="!producer">
+          <hr>
+          <p>This will delete your account forever: 
+            <button
+            type="button" 
+            class="btn btn-danger btn-sm" 
+            (click)="onDeleteUser()"
+            >Delete Profile</button>
+          </p>
+        </div>
+
       </div>
+
+    </div>
+
+  </form>
+  
+  <form *ngIf="!submitting && producer" [formGroup]="producerForm"  (ngSubmit)="onSubmit(producerForm, 'producer')">
+
+    <div class="row">
+
+      <div class="col-12">
+
+        <div class="row form-section">
+
+          <div class="col-12 form-section-header">
+            <h5>Your Profile Information</h5>
+          </div>
+
+          <div class="col-12 form-section-body">
+
+            <div class="row">
+              <label for="firstName" class="col-xs-12 col-sm-4 col-form-label text-sm-right">First Name:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                id="firstName"
+                type="text"
+                class="form-input-custom"
+                formControlName="firstName">
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="email" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Email:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                id="email"
+                type="text"
+                class="form-input-custom"
+                formControlName="email">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row form-section">
+
+          <div class="col-12 form-section-header">
+            <h5>Your Business Information</h5>
+          </div>
+
+          <div class="col-12 form-section-body">
+
+            <div class="row">
+              <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Business Name:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                id="name"
+                type="text"
+                class="form-input-custom"
+                formControlName="name">
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description of your Business:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <textarea
+                id="description"
+                type="text" 
+                class="md-textarea"
+                formControlName="description"
+                class="form-input-custom"></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="customUrl" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Custom Url:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                  <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl">
+                  <small>If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
+                  <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
+                  <small *ngIf="customUrlExists" class="help-block">That URL is already taken. Please choose another.</small>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- logo -->
+        <div class="row form-section">
+
+          <div class="col-12 form-section-header">
+            <h4>Logo</h4>
+          </div>
+          <div class="col-12 form-section-body">
+
+            <!-- current image -->
+            <div class="row" *ngIf="!addingImage">
+              <div class="col-12">
+                <!-- image does not exist for product -->
+                <div class="text-center row">
+                  <div class="col-6 offset-3" *ngIf="logoExists">
+                    <img class="img-thumbnail" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.id }}/logo" alt="">
+                    <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Change Logo</button>
+                  </div>
+                  <div class="col-12" *ngIf="!logoExists">
+                    <p>No logo has been uploaded.</p>
+                    <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Adding new image or changing current image -->
+            <div class="row" *ngIf="addingImage">
+              <div class="col-6">
+                <label class="col-form-label text-center">Upload and Crop:</label>
+              </div>
+              <div class="col-6">
+                <label class="col-form-label text-center">Preview:</label>
+              </div>
+              <div class="col-12">
+                <app-logo-cropper [name]="imageName"></app-logo-cropper>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row form-section">
+
+          <div class="col-12 form-section-header">
+            <h5>Your Location Details</h5>
+          </div>
+
+          <div class="col-12 form-section-body">
+
+            <div class="row" *ngIf="producer.address">
+              <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Address:</label>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ producer.address }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location:</label>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ producer.location }}, {{ producer.province }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 text-center">
+                <a  
+                (click)="toggleLocationSearch()"
+                >Edit Location Details</a>
+              </div>
+            </div>
+
+            <div class="row" [hidden]="!locationSearchDisplay">
+
+              <!-- location -->
+              <div class="col-12">
+
+                <p>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</p>
+                <!-- <div class="md-form pl-3">
+                  <i class="fa fa-map-marker prefix"></i>
+                  <input  
+                  autocorrect="off" 
+                  autocapitalize="off" 
+                  spellcheck="off" 
+                  type="text" 
+                  class="form-input-custom" 
+                  #search 
+                  id="search"
+                  [formControl]="searchControl">
+                </div> -->
+
+              </div>
+
+              <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location Search:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-input-custom" #search id="search"
+                [formControl]="searchControl">
+              </div>
+
+              <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Selected Location:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <p>{{ selectedLocation }}</p>
+              </div>
+
+              <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)">
+                <agm-marker [latitude]="markerLatitude" [longitude]="markerLongitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
+                  <!-- <agm-info-window>Börk</agm-info-window> -->
+                </agm-marker>
+              </agm-map>
+
+                <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                    <agm-marker [latitude]="latitude" [longitude]="longitude">
+                         <agm-info-window>Börk</agm-info-window> 
+                    </agm-marker>
+                  </agm-map> --> 
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-12 text-center">
+          <button 
+          class="btn btn-olf-primary" 
+          type="submit"
+          [disabled]="(producerForm.invalid)"
+          >Update Profile</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </form>
+
+</div>
+
+<div class="modal-footer justify-content-center">
+  <div class="row text-center">
+    <div class="col-12">
+      <a (click)="activeModal.close()">Cancel Changes</a>
+    </div>
   </div>
+</div>

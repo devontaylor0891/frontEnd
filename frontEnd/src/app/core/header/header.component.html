@@ -1,18 +1,94 @@
+<!-- <nav class="navbar navbar-default navbar-static-top"> -->
 <nav class="navbar navbar-toggleable-md grey lighten-2">
-        <div class="container flex-center">
-        <div class="row">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="row w-100">
+            <div>
+                <button 
+                    class="p-2 navbar-toggler navbar-toggler-right btn btn-olf-primary btn-sm" 
+                    type="button" 
+                    data-toggle="collapse" 
+                    data-target="#navbar-collapse-1" 
+                    aria-controls="navbar-collapse-1" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
+                    <span class="fa fa-bars fa-lg"></span>
+                </button>
+            </div>
+            <div class="col-6 col-md-4 text-center">
+                <a class="navbar-brand" routerLink="">
+                    <img src="../../assets/images/logo.png" style="max-width: 100%; max-height: 60px;">
+                </a>
+            </div>
+        
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse col-md-8 text-center" id="navbar-collapse-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" (click)="openLink('https://www.facebook.com/onlylocalfood')">
+                            <i class="fa fa-facebook-f fa-2x"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" routerLink="/cart">
+                            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                            <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" routerLink="/search">Search</a>
+                    </li>
+                    <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
+                            Learn More...
+                        </a>
+                        <div class="row" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu col text-center">
+                                <a class="dropdown-item" routerLink="/learn-more-consumer">For Buyers</a>
+                                <a class="dropdown-item" routerLink="/learn-more-producer">For Producers</a>
+                                <a class="dropdown-item" routerLink="/faq">FAQ</a>
+                            </div>
+                        </div>  
+                    </li>
+                    <li class="nav-item" *ngIf="loggedIn && !isAdmin" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a class="nav-link" routerLink="/dashboard">My Account</a>
+                    </li>
+                    <li class="nav-item" *ngIf="loggedIn" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <a *ngIf="isAdmin" class="nav-link" routerLink="/admin">Admin</a>
+                    </li>
+                    <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <button class="btn btn-olf-primary btn-sm" *ngIf="!loggedIn" (click)="onLogin($event)">Sign in/Register</button>
+                        <button class="btn btn-olf-primary btn-sm" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- <nav class="navbar navbar-toggleable-md grey lighten-2">
+    <div class="container flex-center">
+        <div class="row"> -->
             <!-- Button that appears on collapse  -->
-            <button class="navbar-toggler navbar-toggler-right btn btn-olf-primary btn-sm" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <button 
+                class="p-2 navbar-toggler navbar-toggler-right btn btn-olf-primary btn-sm" 
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#navbarNav1" 
+                aria-controls="navbarNav1" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
                 <span class="fa fa-bars fa-lg"></span>
-            </button>
+            </button> -->
             <!-- Logo  -->
-            <div class="col-5 col-sm-4">
+            <!-- <div class="col-5 col-sm-4">
                 <a routerLink="">
                     <img src="../../assets/images/logo.png" style="max-width: 100%">
                 </a>
-            </div>
+            </div> -->
             <!-- Collapsible Content  -->
-            <div class="collapse navbar-collapse col-6 col-lg-8" id="navbarNav1">
+            <!-- <div class="collapse navbar-collapse col-6 col-lg-8" id="navbarNav1">
                 <ul class="navbar-nav flex-center ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" routerLink="cart">
@@ -24,33 +100,29 @@
                         <a class="nav-link" routerLink="/search">Search</a>
                     </li>
                     <li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
-							Learn More...
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" routerLink="learn-more-consumer">For Buyers</a>
-							<a class="dropdown-item" routerLink="learn-more-producer">For Producers</a>
-						</div>
-					</li>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
+                            Learn More...
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" routerLink="learn-more-consumer">For Buyers</a>
+                            <a class="dropdown-item" routerLink="learn-more-producer">For Producers</a>
+                        </div>
+                    </li>
                     <li class="nav-item" *ngIf="loggedIn && !isAdmin">
                         <a class="nav-link" routerLink="dashboard">My Account</a>
                     </li>
                     <li class="nav-item" *ngIf="loggedIn">
                         <a *ngIf="isAdmin" class="nav-link" routerLink="admin">Admin</a>
                     </li>
-                    <!--<li class="nav-item">-->
-                    <!--    <button class="btn btn-olf-primary" data-toggle="modal" data-target="#modalLRForm">Sign in/Register</button>-->
-                    <!--</li>-->
                     <li class="nav-item">
                         <button class="btn btn-olf-primary" *ngIf="!loggedIn" (click)="onLogin($event)">Sign in/Register</button>
                         <button class="btn btn-olf-primary" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
                     </li>
-			
                 </ul>
             </div>
         </div>
-        </div>
-    </nav>
+    </div>
+</nav> -->
     
                                                
 

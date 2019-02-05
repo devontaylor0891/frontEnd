@@ -12,33 +12,35 @@ export class ConsumerDashboardService {
   // dataStore
   dataStore: {
     user: UserModel,
-    orders: OrderModel[]
+    orders: any
   };
 
   // create the behaviour subjects
   public _user: BehaviorSubject<UserModel>;
-  public _orders: BehaviorSubject<OrderModel[]>;
+  public _orders: BehaviorSubject<any[]>;
 
   constructor(private apiService: ApiService) {
     this.dataStore = { user: null, orders: [] };
     this._user = <BehaviorSubject<UserModel>>new BehaviorSubject(null);
-    this._orders = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
+    this._orders = <BehaviorSubject<any[]>>new BehaviorSubject([]);
   }
 
   loadData(id) {
-    this.apiService.getUserById(id)
-    // add a new product via the add-product component, push it to the appropriate array
-      .subscribe(
-        result => {
-          this.dataStore.user = result;
-          this._user.next(Object.assign({}, this.dataStore).user);
-          console.log('user: ', this.dataStore.user);
-        }, error => console.log('could not load user')
-      );
+    console.log('user from consumer dashboard: ', id);
+    // this.apiService.getUserByAuthId(id)
+    //   .subscribe(
+    //     result => {
+    //       console.log('result: ', result);
+    //       this.dataStore.user = result[0];
+    //       this._user.next(Object.assign({}, this.dataStore).user);
+    //       console.log('user: ', this.dataStore.user);
+    //     }, error => console.log('could not load user')
+    //   );
     this.apiService.getOrdersByConsumerId(id)
       .subscribe(
         result => {
           this.dataStore.orders = result;
+          console.log('consumer orders: ', result);
           this._orders.next(Object.assign({}, this.dataStore).orders);
         }, error => console.log('could not load order')
       );

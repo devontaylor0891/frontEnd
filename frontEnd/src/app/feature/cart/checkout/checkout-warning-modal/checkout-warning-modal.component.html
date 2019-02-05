@@ -1,0 +1,40 @@
+<div class="modal-body dash-modal-body">
+
+  <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Uh oh! Product availability has changed.</h4>
+      <p>Things move fast in the world of local food and some of your order quantities need to change. The changes are shown below. Once you click 'OK' below, they will be reflected in your cart.</p>
+  </div>
+
+  <div class="row text-center">
+    <div class="col">
+      <div class="row">
+        <div class="col-3 offset-6">
+          <p><strong>Requested Qty</strong></p>
+        </div>
+        <div class="col-3">
+          <p><strong>Available Qty</strong></p>
+        </div>
+      </div>
+      <div class="row" *ngFor="let order of orderQuantities">
+        <div class="col-6">
+          <p>{{ order.name | uppercase }}</p>
+        </div>
+        <div class="col-3">
+          <p class="text-danger">{{ order.quantityOrdered }}</p>
+        </div>
+        <div class="col-3">
+          <p class="text-success">{{ order.quantityAvailable }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+  
+<div class="modal-footer justify-content-center">
+  <div class="row">
+      <!-- <button class="btn btn-olf-primary" (click)="onAccept()">Accept Changes</button> -->
+      <button class="btn btn-olf-primary" (click)="onMakeChanges()">OK</button>
+  </div>
+</div>
+

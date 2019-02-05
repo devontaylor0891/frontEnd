@@ -1,12 +1,72 @@
-<div class="row mt-1">
+<!-- LARGER DEVICES -->
+<div class="row m-4 hidden-sm-down">
 	
-	<div class="col-12 col-md-3 mb-2">
-		<app-search-options></app-search-options>
+	<!-- search options -->
+	<div class="col-12 col-md-4 col-lg-3 mb-2">
+
+		<app-search-options
+			[latitude]="userLocation?.coords.latitude" 
+			[longitude]="userLocation?.coords.longitude" 
+			[city]="cityProvince"
+			[zeroResults]="zeroSearchResults"
+			></app-search-options>
+
 	</div>
 
-	<div class="col-12 col-md-9">
+	<!--  search results -->
+	<div class="col-12 col-md-8 col-lg-9">
+
 		<app-loading *ngIf="!searchResults"></app-loading>
-		<app-search-results *ngIf="searchResults" [searchResults]="searchResults"></app-search-results>
+
+		<app-search-results
+			*ngIf="searchResults" 
+			[searchResults]="searchResults"
+			[zeroResults]="zeroSearchResults"
+			></app-search-results>
+
 	</div>
 
 </div>
+
+<!-- SMALL DEVICES -->
+<div class="m-1 hidden-md-up">
+
+<!-- location display -->
+
+<!-- tabs for search options and search results -->
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs nav-fill grey lighten-2" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#searchOptions" role="tab"><i class="fa fa-search-plus mr-1"></i> Options</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#searchResults" role="tab"><i class="fa fa-list-ul mr-1"></i> Results</a>
+		</li>
+	</ul>
+
+	<!-- Tab panels -->
+	<div class="tab-content" style="padding: .25rem;">
+		<!-- Options Panel -->
+		<div class="tab-pane fade" id="searchOptions" role="tabpanel">
+			<app-search-options 
+				[latitude]="userLocation?.coords.latitude" 
+				[longitude]="userLocation?.coords.longitude" 
+				[city]="cityProvince"
+				[zeroResults]="zeroSearchResults"
+				></app-search-options>
+		</div>
+		<!--/ Options Panel-->
+		<!-- results Panel -->
+		<div class="tab-pane fade in show active" id="searchResults" role="tabpanel">
+			<app-loading  *ngIf="!searchResults"></app-loading>
+			<app-search-results  
+				*ngIf="searchResults" 
+				[searchResults]="searchResults"
+				[zeroResults]="zeroSearchResults"
+				></app-search-results>
+		</div>
+		<!--/ results Panel-->
+	</div>
+
+</div>
+		

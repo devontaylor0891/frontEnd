@@ -153,15 +153,39 @@ $olf-grey: (
     )
 );
 
+html {
+    font-size: 16px !important;
+}
+
+.container-fluid {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
 .olf-primary {
     color: #741b47 !important;
 }
+
+.olf-primary-light {
+    color: #9e5f7e !important;
+}
+
 .olf-primary-color {
     background-color: #9e5f7e !important;
 }
 
 .btn-olf-primary {
     background-color: #893d63 !important;
+    color: #ffffff !important;
+}
+
+.btn-olf-secondary {
+    background-color: #9e5f7e !important;
+    color: #ffffff !important;
+}
+
+.btn-olf-secondary:hover {
+    background-color: #741b47 !important;
     color: #ffffff !important;
 }
 
@@ -176,6 +200,14 @@ $olf-grey: (
     background-color: transparent;
 }
 
+.btn-danger {
+    background-color: #cc0000 !important;
+}
+
+.btn-tight-padding {
+    padding: 0.375rem 0.75rem;
+}
+
 a {
     color: #741b47 !important;
 }
@@ -185,10 +217,26 @@ a:hover {
     font-weight: 400;
 }
 
-
-
 footer.page-footer {
     background-color: #9e5f7e !important;
+}
+
+.jumbotron-dark {
+    background-color: #261D2A !important;
+    padding: 3em 1em;
+}
+
+.landing-page-jumbotron {
+    background-image: url("https://images.unsplash.com/photo-1510148199876-8a856ee41d42?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a82c3751ed73cbbd31bbaef3d7233a83&w=1000&q=80"), linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+    padding: 5em 5%;
+}
+
+.landing-fa-stack {
+    font-size: 3rem;
+    color: #893d63;
 }
 
 .dash-accordion {
@@ -197,6 +245,10 @@ footer.page-footer {
 
 .card-header a {
     color: white !important;
+}
+
+.product-card {
+    overflow: hidden !important;
 }
 
 .dashboard-details {
@@ -210,6 +262,11 @@ footer.page-footer {
 // VALIDATION WARNINGS
 
 input.ng-invalid.ng-touched {
+    border: 1px solid #cc0000;
+    border-radius: 5px;
+}
+
+textarea.ng-invalid.ng-touched {
     border: 1px solid #cc0000;
     border-radius: 5px;
 }
@@ -238,7 +295,7 @@ input.ng-invalid.ng-touched {
 
 .cart-badge {
     position: relative;
-    left: -30%;
+    left: -1rem;
     top: -1rem;
 }
 
@@ -248,6 +305,11 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+
+// remove spinner arrows in firefox
+input[type=number] {
+    -moz-appearance:textfield;
+  }
 
 .cover-div {
     width: 100%;
@@ -266,16 +328,30 @@ input[type=number]::-webkit-outer-spin-button {
     height: 100%;
 }
 
+.small-square-image {
+    width: 100% !important; 
+    background-size: cover !important; 
+    background-position: center !important;
+}
+
 .text-light {
     color: whitesmoke !important;
+}
+
+.custom-control-input:checked~ {
+    background-color: #741b47 !important;
 }
 
 .custom-control-input:checked~.custom-control-indicator {
     background-color: #741b47 !important;
 }
 
+.custom-control-input:focus ~ .custom-control-indicator {
+    box-shadow: none !important;
+}
+
 .bg-dark {
-    background-color: #343a40!important;
+    background-color: #261D2A!important;
 }
 
 .dash-nav > .nav-item a {
@@ -301,12 +377,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .vertical-center-parent {
-	position: relative;
+    position: relative;
 }
 
 .vertical-center-child {
-	position: absolute;
-	top: 50%;
+    position: absolute;
+    top: 50%;
     transform: translateY(-50%);
 }
 
@@ -315,7 +391,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .navbar .dropdown-menu a:hover {
-    color: #741b47 !important;
+    color: #611437 !important;
+    font-weight: 400;
+    background-color: white !important;
 }
 
 .outOfStockOverlay {
@@ -345,26 +423,226 @@ input[type=number]::-webkit-outer-spin-button {
     border-color: #741b47 !important;
 }
 
-.form-section {
 
+// FORMS ***************************************************
+
+.form-section {
+    margin: 2% !important;
 }
 
 .form-section-header {
-    background: lightgray;
-    padding-top: .75em;
-    padding-bottom: .75em;
-    font-weight: 700;
-}
-
-.form-section-header > h1 {
-    font-size: 5vw;
+    font-size: 1rem;
+    background: none !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    font-weight: 500;
 }
 
 .form-section-body {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    border-radius: 5px !important;
+    background-color: #e0e0e0 !important;
+    padding: 1rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0  !important;
+}
+
+.form-section-body > div.row {
+    margin-bottom: 1rem !important;
+}
+
+input.form-input-custom {
+    border-radius: 5px !important;
+    padding: .25rem !important;
+    background-color: white !important;
+    border: none !important;
+    outline: none !important;
+}
+
+table.form-input-custom {
+    border-radius: 5px !important;
+    padding: .25rem !important;
+    background-color: white !important;
+    border: none !important;
+    outline: none !important;
+}
+
+textarea.form-input-custom {
+    border-radius: .25rem !important;
+    padding: .25rem !important;
+    background-color: white !important;
+    border: none !important;
+    height: 5rem !important;
+}
+
+.input-group > input {
+    padding: 0.25rem !important;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    margin-top: 0px;
+    padding-left: 5px;
+}
+
+.input-group > .form-control {
+    height: auto !important;
+}
+
+.input-group >.input-group-append > .btn {
+    margin: 0 !important;
+}
+
+.form-control {
+    background-color: white !important;
+}
+
+.form-control:focus {
+    border-color: #741b47 !important;
+}
+
+.custom-select:focus {
+    border-color: #741b47 !important;
+}
+
+input[type=number]:focus:not([readonly]) {
+    border-bottom: 1px solid #741b47 !important;
+    box-shadow: 0 1px 0 0 #741b47 !important;
+}
+
+// test
+input:focus:not([readonly]) {
+    border-bottom: 1px solid #741b47 !important;
+    box-shadow: 0 1px 0 0 #741b47 !important;
+}
+
+.col-form-label {
+    font-weight: 700;
+}
+
+.col-form-value {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+    font-weight: 400 !important;
+}
+
+.col-form-value > p {
+    margin-bottom: 0 !important;
 }
 
 .no-wrap {
     white-space: nowrap !important;
 }
+
+.minor-link {
+    font-size: .75em;
+}
+
+.custom-control-indicator{
+    color:white !important;
+    // background-color:#741b47 !important;
+}
+
+// search page checkboxes - from codepen: https://codepen.io/MoorLex/pen/XeNzoK?editors=1100#0
+.custom-control{
+
+    &.fill-checkbox{
+        --color: #741b47;
+
+        .fill-control-input{
+            display: none;
+            &:checked~.fill-control-indicator{
+                background-color: var(--color);
+                border-color: var(--color);
+                background-size: 80%;
+            }
+        }
+        .fill-control-indicator{
+            border-radius: 3px;
+            display: inline-block;
+            position: absolute;
+            top: 4px;
+            left: 0;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #aaa;
+            transition: .3s;
+            background: transparent;
+            background-size: 0%;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            .fa {
+                color: #eeeeee;
+                font-size: .8rem;
+                position: absolute;
+                margin: -5%;
+            }
+        }
+    }
+}
+
+
+// TO MAINTAIN LINE BREAKS WITHIN DYNAMIC FIELDS FROM DB
+p {
+    white-space: pre-line;
+}
+
+// MODALS ********************************************************
+
+.modal-dialog {
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+}
+
+.modal-content{
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+}
+
+.modal-header {
+    background-color: #893d63 !important;
+    color: whitesmoke !important;
+}
+
+.modal-title {
+    font-weight: 400 !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 0 !important;
+    line-height: 1.5 !important;
+}
+
+.modal-header > .close {
+    color: white !important;
+}
+
+.lead {
+    font-weight: 400 !important;
+}
+
+table td {
+    font-size: .9rem;
+    font-weight: 400;
+}
+
+.faq-toggle[aria-expanded=false] .faq-icon-expanded {
+  display: none;
+}
+.faq-toggle[aria-expanded=true] .faq-icon-collapsed {
+  display: none;
+}
+
+.faq-section-header {
+    margin-top: 1.5rem !important;
+}
+
+
+// another good dark purple 280215
+
+// colors:
+// black 303030
+// dark purple 642d49
+// med purple 893d63
+// light purple a66a89
+// pale, background purple ceafbe
+// great dark background - 261D2A

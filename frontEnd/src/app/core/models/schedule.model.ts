@@ -17,6 +17,6 @@ export class ScheduleModel {
         public address?: string,        
         public fee?: number,
         public feeWaiver?: number,
-        public orderList?: number[]
+        public orderCount?: number
     ) {}
 }

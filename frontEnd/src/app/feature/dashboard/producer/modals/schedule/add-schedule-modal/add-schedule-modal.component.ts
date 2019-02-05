@@ -1,8 +1,11 @@
-import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
+import { google } from '@google/maps';
 import { MapsAPILoader } from '@agm/core';
+
+declare var google: any;
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -43,7 +46,7 @@ export class AddScheduleModalComponent implements OnInit {
   country: string;
   lat: number;
   lng: number;
-  submitObject: ScheduleModel;
+  submitObject: any;
   submitting: boolean = false;
   isRepeat: boolean = false;
 
@@ -64,39 +67,53 @@ export class AddScheduleModalComponent implements OnInit {
   deadlineCalcHours: number;
 
   // DATE/TIME PICKER SETTINGS
-  public moment: any = new Date();
-  // public minDate = this.moment.setDate(this.moment.getDate() + 1); // set minimum date as tomorrow
+  date: any = new Date();
+  year: any = this.date.getFullYear();
+  month: any = this.date.getMonth();
+  day: any = this.date.getDate();
+  public DateMomentMin: any = new Date(new Date().setDate(new Date().getDate() + 1)); // set minimum date as tomorrow
   public dateMoment: any = new Date(new Date().setDate(new Date().getDate() + 1)); // somehow this works!
   public dateMoments: any; // throws error if initialized with a date
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
   public endTimeMoment: any = new Date(0, 0, 0, 13, 0, 0, 0); // default end time is 1pm
+  public endTimeMin: any = new Date(0, 0, 0, 13, 15, 0, 0);
   public deadlineDateMoment: any = new Date(); // default is now because date is tomorrow, just for ease of coding
-  public deadlineTimeMoment: any = new Date(0, 0, 0, (this.startTimeMoment.getHours() - 6), this.startTimeMoment.getMinutes(), 0, 0); // defaults to 12 hours before start time
+  public deadlineTimeMoment: any = new Date(0, 0, 0, 0, 0, 0, 0); // defaults to 3 hours before start time
+  public deadlineDateTime: any = new Date(
+    this.dateMoment.getFullYear(),
+    this.dateMoment.getMonth(),
+    this.dateMoment.getDate(),
+    0, 0, 0, 0);
+  public deadlineDateTimeMin: any = new Date();
+  public deadlineDateTimeMax: any = this.dateMoment;
+  dateChosen: boolean = false;
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
-              private activeModal: NgbActiveModal,
+              public activeModal: NgbActiveModal,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private apiService: ApiService) {
+              private apiService: ApiService,
+              private cdRef: ChangeDetectorRef) {
 
     this.buildBlankSubmitObject();
 
     this.form = formBuild.group({
       'type': ['', Validators.required],
       'description': [''],
-	    'repeat': [this.isRepeat, Validators.required],
+      'repeat': [this.isRepeat, Validators.required],
       'date': [this.dateMoment],
-	    'dates': [this.dateMoments],
+      'dates': [this.dateMoments],
       'startTime': [this.startTimeMoment, Validators.required],
       'endTime': [this.endTimeMoment, Validators.required],
       'deadlineCalcHours': [12],
+      'deadlineDateTime': [''],
       'deadlineDate': [this.deadlineDateMoment],
       'deadlineTime': [this.deadlineTimeMoment],
       'hasFee': [false, Validators.required],
-      'fee': [0],
+      'fee': [0.00],
       'hasWaiver': [false, Validators.required],
-      'feeWaiver': [0],
+      'feeWaiver': [0.00],
       'latitude': [null],
       'longitude': [null],
       'city': ['', Validators.required],
@@ -106,107 +123,14 @@ export class AddScheduleModalComponent implements OnInit {
 
   }
 
-  onSubmit() {
-    this.submitting = true;
-    if (this.form.value.type === 'On-farm Pickup') {
-      this.submitObject.latitude = this.latitude;
-      this.submitObject.longitude = this.longitude;
-      this.submitObject.address = this.producer.address;
-      this.submitObject.city = this.producer.location;
-      this.submitObject.province = this.producer.province;
-    }
-    if (!this.isRepeat) {
-      this.buildSubmitObject();
-      this.apiService.postSchedule(this.submitObject)
-      .subscribe(
-        result => {
-          this.itemCreated.emit(result);
-        }
-      );
-    } else {
-      console.log('datesArray: ', this.datesArray);
-      for (let i = 0; i < this.datesArray.length; i++) {
-        this.buildRepeatSubmitObject(i, this.form.value.deadlineCalcHours);
-        this.apiService.postSchedule(this.submitObject)
-          .subscribe(
-            result => {
-              console.log('emitting: ', result);
-              this.itemCreated.emit(result);
-            }
-          );
-      }
-    }
-    
-    this.buildBlankSubmitObject();
-    this.submitting = false;
-    this.activeModal.close();
-  }
-
-  // generateRandomId() {
-  //   return Math.floor( Math.random() * 1000000 )
-  // }
-
-  // for repeat dates
-  buildRepeatSubmitObject(i, deadlineHours) {
-    this.clearDatesFromSubmitObject();
-    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
-    this.submitObject.producerId = this.producer.id;
-    this.submitObject.type = this.form.value.type;
-    this.submitObject.description = this.form.value.description;
-    this.submitObject.startDateTime = this.buildStartDateTime(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
-    this.submitObject.endDateTime = this.buildEndDateTime(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedEndHour, this.schedEndMinute)
-    this.submitObject.hasFee = this.form.value.hasFee;
-    this.submitObject.hasWaiver = this.form.value.hasWaiver;
-    this.submitObject.orderDeadline = this.buildRepeatOrderDeadline(this.submitObject.startDateTime, deadlineHours);
-    this.submitObject.fee = this.form.value.fee;
-    this.submitObject.feeWaiver = this.form.value.feeWaiver;
-    this.submitObject.orderList = [];
-  };
-
-  buildBlankSubmitObject() {
-    this.submitObject = {
-      'id': null,
-      'producerId': null,
-      'productList': [],
-      'type': '',
-      'description': '',
-      'startDateTime': '',
-      'endDateTime': '',
-      'hasFee': null,
-      'hasWaiver': null,
-      'latitude': null,
-      'longitude': null,
-      'city': '',
-      'province': '',
-      'orderDeadline': '',
-      'address': '',
-      'fee': null,
-      'feeWaiver': null,
-      'orderList': []
-    };
-  }
-
-  clearDatesFromSubmitObject() {
-    this.submitObject.startDateTime = '';
-    this.submitObject.endDateTime = '';
-  }
-
-  buildSubmitObject() {
-    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
-    this.submitObject.producerId = this.producer.id;
-    this.submitObject.type = this.form.value.type;
-    this.submitObject.description = this.form.value.description;
-    this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
-    this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
-    this.submitObject.hasFee = this.form.value.hasFee;
-    this.submitObject.hasWaiver = this.form.value.hasWaiver;
-    this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-    this.submitObject.fee = this.form.value.fee;
-    this.submitObject.feeWaiver = this.form.value.feeWaiver;
-    this.submitObject.orderList = [];
-  };
-
   ngOnInit() {
+
+    console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
+    console.log('startTime (noon): ', this.startTimeMoment);
+    console.log('endTime (1pm): ', this.endTimeMoment);
+    console.log('deadline (12am tomorrow): ', this.deadlineDateTime);
+    console.log('minimum date (tomorrow): ', this.DateMomentMin);
+    console.log('max deadline (same as dateMoment): ', this.deadlineDateTimeMax);
 
     // set google maps defaults
     this.zoom = 4;
@@ -219,6 +143,7 @@ export class AddScheduleModalComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+      console.log('google.maps: ', google.maps);
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["geocode"]
       });
@@ -244,22 +169,122 @@ export class AddScheduleModalComponent implements OnInit {
     });
 
     this.dashboardService.getProducer()
-    .subscribe(
-      result => {
-        this.producer = result;
-        this.latitude = this.producer.latitude;
-        this.longitude = this.producer.longitude;
-      }
-    )
+      .subscribe(
+        result => {
+          this.producer = result;
+          this.latitude = this.producer.latitude;
+          this.longitude = this.producer.longitude;
+        }
+      );
 
-    // set the defaults for dates
-    this.onChooseDate();
-    // this.onChooseMultipleDates(new Date());
-    this.onChooseStartTime();
-    this.onChooseEndTime();
-    this.onChooseDeadlineDate();
-    this.onChooseDeadlineTime();
+    this.setSchedDefaultValues();
+
+  };
+
+  onSubmit() {
+    this.submitting = true;
+    if (this.form.value.type === 'On-farm Pickup') {
+      this.submitObject.latitude = this.latitude;
+      this.submitObject.longitude = this.longitude;
+      this.submitObject.address = this.producer.address;
+      this.submitObject.city = this.producer.location;
+      this.submitObject.province = this.producer.province;
+      this.submitObject.producerName = this.producer.name;
+    }
+    if (!this.isRepeat) {
+      this.buildSubmitObject();
+      this.apiService.postSchedule(this.submitObject)
+      .subscribe(
+        result => {
+          console.log('emitting: ', result);
+          this.itemCreated.emit(result);
+        }
+      );
+    } else {
+      console.log('datesArray: ', this.datesArray);
+      for (let i = 0; i < this.datesArray.length; i++) {
+        this.buildRepeatSubmitObject(i, this.form.value.deadlineCalcHours);
+        this.apiService.postSchedule(this.submitObject)
+          .subscribe(
+            result => {
+              console.log('emitting: ', result);
+              this.itemCreated.emit(result);
+            }
+          );
+      }
+    }
+    
+    this.buildBlankSubmitObject();
+    this.submitting = false;
+    this.activeModal.close();
   }
+
+  // for repeat dates
+  buildRepeatSubmitObject(i, deadlineHours) {
+    this.clearDatesFromSubmitObject();
+    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
+    this.submitObject.producerId = this.producer.id;
+    this.submitObject.type = this.form.value.type;
+    this.submitObject.description = this.form.value.description;
+    this.submitObject.startDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedEndHour, this.schedEndMinute)
+    this.submitObject.hasFee = this.form.value.hasFee;
+    this.submitObject.hasWaiver = this.form.value.hasWaiver;
+    this.submitObject.orderDeadline = this.buildRepeatOrderDeadline(this.submitObject.startDateTime, deadlineHours);
+    this.submitObject.fee = this.form.value.fee;
+    this.submitObject.feeWaiver = this.form.value.feeWaiver;
+    this.submitObject.orderList = [];
+  };
+
+  buildBlankSubmitObject() {
+    this.submitObject = {
+      'id': null,
+      'producerId': null,
+      'producerName': '',
+      'productList': [],
+      'type': '',
+      'description': '',
+      'startDateTime': '',
+      'endDateTime': '',
+      'hasFee': null,
+      'hasWaiver': null,
+      'latitude': null,
+      'longitude': null,
+      'city': '',
+      'province': '',
+      'orderDeadline': '',
+      'address': '',
+      'fee': null,
+      'feeWaiver': null,
+      'orderList': [],
+      'userId': null
+    };
+  }
+
+  clearDatesFromSubmitObject() {
+    this.submitObject.startDateTime = '';
+    this.submitObject.endDateTime = '';
+  }
+
+  buildSubmitObject() {
+    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
+    this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
+    this.submitObject.type = this.form.value.type;
+    this.submitObject.description = this.form.value.description;
+    console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
+    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    this.submitObject.hasFee = this.form.value.hasFee;
+    this.submitObject.hasWaiver = this.form.value.hasWaiver;
+    this.submitObject.orderDeadline = this.deadlineDateTime;
+    // this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
+    this.submitObject.fee = this.form.value.fee;
+    this.submitObject.feeWaiver = this.form.value.feeWaiver;
+    this.submitObject.orderList = [];
+    this.submitObject.userId = this.producer.id;
+  };
 
   private fillAddress(place) {
     this.clearAddress();
@@ -281,6 +306,11 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   private clearAddress() {
+    this.submitObject.address = '';
+    this.submitObject.city = '';
+    this.submitObject.province = '';
+    this.submitObject.latitude = null;
+    this.submitObject.longitude = null;
     this.streetNumber = '';
     this.route = '';
     this.city = '';
@@ -319,9 +349,25 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseDate() {
+    console.log('new dateMoment: ', this.dateMoment);
+    // set the scheduled day, month, year
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
     this.schedYear = this.dateMoment.getFullYear();
+    // use those to set the order deadline day, month, year
+    this.setDeadlineDate();
+  };
+
+  setDeadlineDate() {
+    this.deadlineDateTime.setFullYear(this.schedYear);
+    this.deadlineDateTime.setMonth(this.schedMonth);
+    this.deadlineDateTime.setDate(this.schedDay);
+    console.log('new deadline: ', this.deadlineDateTime);
+    this.deadlineDateTimeMax.setFullYear(this.schedYear);
+    this.deadlineDateTimeMax.setMonth(this.schedMonth);
+    this.deadlineDateTimeMax.setDate(this.schedDay);
+    console.log('new deadline max: ', this.deadlineDateTimeMax);
+    this.dateChosen = true;
   };
 
   onChooseMultipleDates(value) {
@@ -341,14 +387,35 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseStartTime() {
+    console.log('starttime chosen: ', this.startTimeMoment);
     this.schedStartHour = this.startTimeMoment.getHours();
     this.schedStartMinute = this.startTimeMoment.getMinutes();
+    // create new deadline date object to update the view
+    this.deadlineDateTime = new Date(
+      this.deadlineDateTime.getFullYear(),
+      this.deadlineDateTime.getMonth(),
+      this.deadlineDateTime.getDate(),
+      this.schedStartHour - 3,
+      this.schedStartMinute,
+      0
+    );
+    console.log('new deadline datetime: ', this.deadlineDateTime);
+    this.deadlineDateTimeMax.setHours(this.schedStartHour);
+    this.deadlineDateTimeMax.setMinutes(this.schedStartMinute);
+    console.log('new deadline max: ', this.deadlineDateTimeMax);
+    // set end time and end time min
+    this.endTimeMoment = new Date(0, 0, 0, this.schedStartHour + 1, this.schedStartMinute, 0, 0);
+    this.endTimeMin = new Date(0, 0, 0, this.schedStartHour, this.schedStartMinute + 15, 0, 0);
+  };
+
+  buildDate(year, month, day, hour, minute) {
+    return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   };
 
   onChooseEndTime() {
     this.schedEndHour = this.endTimeMoment.getHours();
     this.schedEndMinute = this.endTimeMoment.getMinutes();
-  }
+  };
 
   onChooseDeadlineDate() {
     this.deadlineDateDay = this.deadlineDateMoment.getDate();
@@ -359,19 +426,7 @@ export class AddScheduleModalComponent implements OnInit {
   onChooseDeadlineTime() {
     this.deadlineHour = this.deadlineTimeMoment.getHours();
     this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
-  }
-
-  buildStartDateTime(year, month, day, hour, minute) {
-    return new Date(year, month, day, hour, minute, 0, 0).toISOString();
-  }
-
-  buildEndDateTime(year, month, day, hour, minute) {
-    return new Date(year, month, day, hour, minute, 0, 0).toISOString();
-  }
-
-  buildOrderDeadline(year, month, day, hour, minute) {
-    return new Date(year, month, day, hour, minute, 0, 0).toISOString();
-  }
+  };
 
   buildRepeatOrderDeadline(date, deadlineHours) {
     let originalDeadline = new Date(date);
@@ -381,6 +436,16 @@ export class AddScheduleModalComponent implements OnInit {
 
   onCancel() {
     this.activeModal.close();
+  };
+
+  setSchedDefaultValues() {
+    this.schedYear = this.dateMoment.getFullYear();
+    this.schedMonth = this.dateMoment.getMonth();
+    this.schedDay = this.dateMoment.getDate();
+    this.schedStartHour = this.startTimeMoment.getHours();
+    this.schedStartMinute = this.startTimeMoment.getMinutes();
+    this.schedEndHour = this.endTimeMoment.getHours();
+    this.schedEndMinute = this.endTimeMoment.getMinutes();
   }
 
 }

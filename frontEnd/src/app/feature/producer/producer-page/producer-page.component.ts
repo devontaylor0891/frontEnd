@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ProducerService } from '../../../core/services/producer/producer.service';
@@ -12,12 +12,16 @@ import { ScheduleModel } from '../../../core/models/schedule.model';
   templateUrl: './producer-page.component.html',
   styleUrls: ['./producer-page.component.scss']
 })
-export class ProducerPageComponent implements OnInit, OnChanges {
+export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
 
   producer: ProducerModel;
   products: ProductModel[] = [];
   schedule: ScheduleModel[];
   outOfStockProducts: ProductModel[] = [];
+
+  getProducerSub: any;
+  getAllProductsSub: any;
+  getAllScheduleSub: any;
 
   constructor(private producerService: ProducerService,
               private title: Title) {}
@@ -26,7 +30,10 @@ export class ProducerPageComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    this.producerService.getProducer()
+    console.log('products: ', this.products);
+    console.log('outof stock: ', this.outOfStockProducts);
+
+    this.getProducerSub = this.producerService.getProducer()
       .subscribe(
         result => {
           this.producer = result;
@@ -34,26 +41,45 @@ export class ProducerPageComponent implements OnInit, OnChanges {
         }
       );
 
-    this.producerService.getAllProducts()
+    this.getAllProductsSub = this.producerService.getAllProducts()
       .subscribe(
         results => {
+          // empty the arrays first
+          this.outOfStockProducts = [];
+          this.products = [];
           for (let i = 0; i < results.length; i++) {
-            if (results[i].qtyAvailable < 1) {
-              this.outOfStockProducts.push(results[i]);
-            } else {
-              this.products.push(results[i]);
+            if (!results[i].isObsolete) {
+              if (results[i].qtyAvailable < 1) {
+                this.outOfStockProducts.push(results[i]);
+              } else {
+                this.products.push(results[i]);
+              }
             }
           }
-          // this.products = results;
         }
       );
 
-    this.producerService.getAllSchedule()
+    this.getAllScheduleSub = this.producerService.getAllSchedule()
       .subscribe(
         results => {
           this.schedule = results;
         }
       );
+
+    console.log('products: ', this.products);
+    console.log('outof stock: ', this.outOfStockProducts);
+  };
+
+  ngOnDestroy() {
+    if (this.getProducerSub) {
+      this.getProducerSub.unsubscribe();
+    };
+    if (this.getAllProductsSub) {
+      this.getAllProductsSub.unsubscribe();
+    };
+    if (this.getAllScheduleSub) {
+      this.getAllScheduleSub.unsubscribe();
+    };
   }
 
 }

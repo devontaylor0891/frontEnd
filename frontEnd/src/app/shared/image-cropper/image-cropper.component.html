@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-6">
+    <input type="file" (change)="fileChangeEvent($event)" />
+    <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="1 / 1"
+        [resizeToWidth]="400"
+        format="jpeg"
+        [imageQuality]="70"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+  </div>
+  <div class="col-6" *ngIf="previewCroppedImage">
+    <div class="text-center">
+        <img class="img-thumbnail" [src]="previewCroppedImage" />  
+    </div>
+  </div>
+</div>
+

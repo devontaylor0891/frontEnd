@@ -4,13 +4,15 @@ import { Title } from '@angular/platform-browser';
 import { DashboardService } from './dashboard.service';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../core/services/user/user.service';
+import { ConsumerDashboardService } from './consumer/consumer-dashboard.service';
+
 import { UserModel } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [DashboardService]
+  providers: [DashboardService, ConsumerDashboardService]
 })
 export class DashboardComponent implements OnInit, OnChanges {
 
@@ -49,7 +51,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.id = result;
-					console.log('id: ', result);
+					console.log('Auth0 id: ', result);
 				}
 			);
 
@@ -60,9 +62,6 @@ export class DashboardComponent implements OnInit, OnChanges {
 					console.log('user: ', result);
 				}
 			);
-
-    console.log('id: ', this.id);
-    console.log('userType: ', this.userType);
 
   }
 

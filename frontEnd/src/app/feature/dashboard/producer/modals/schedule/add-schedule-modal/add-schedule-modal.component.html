@@ -1,157 +1,178 @@
 <div class="modal-header">
-        <h5 class="modal-title">Add a New Schedule</h5>
-        <button type="button" class="close" (click)="activeModal.close()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-                
-      <form [formGroup]="form" (ngSubmit)="onSubmit()"> <!-- this binds the viewed form to the form we build in the component class --> 
-        <div class="modal-body dash-modal-body">
-        
-            <app-submitting *ngIf="submitting"></app-submitting>
-        
-            <div *ngIf="!submitting">
+    <h5 class="modal-title">Add a New Schedule</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
             
-            <!-- SELECT SCHEDULE TYPE BEFORE ANY OTHER OPTIONS SHOWN -->
-                <div class="row">
-                    <label for="type" class="col-4 col-form-label text-right">Schedule Type</label>
-                    <div class="col-8">
-                      <select class="custom-select float-left" name="type" [(ngModel)]="type" [formControl]="form.controls['type']">
-                          <option selected value="">Select a Type</option>
-                          <option value="Door-to-door Delivery">Door-to-door Delivery</option>
-                          <option value="Market Pickup">Market Pickup</option>
-                          <option value="On-farm Pickup">On-farm Pickup</option>
-                          <option value="Off-farm Pickup">Other Pickup</option>
-                      </select>
-                      <small 
-                          *ngIf="!form.get('type').valid && form.get('type').touched"
-                          class="help-block"
-                          >Please select the type of delivery or pickup you are planning.</small>
-                    </div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()"> <!-- this binds the viewed form to the form we build in the component class --> 
+    <div class="modal-body dash-modal-body">
+    
+        <app-submitting *ngIf="submitting"></app-submitting>
+    
+        <div *ngIf="!submitting">
+
+            <div class="row form-section">
+                <div class="col-12 form-section-header">
+                    <h5>General Details</h5>
                 </div>
-                
-            <!-- AFTER TYPE SELECTED, GOOGLE MAPS API SEARCH FOR COMMUNITY -->
-            <!-- Note: this has to be hidden, if locked in an ngIf it will throw an error in the console -->
-                <div class="row" [class.hidden]="!type || type === 'On-farm Pickup'">
-                      <label for="search" class="col-4 col-form-label text-right">Search for Community:</label>
-                      <div class="col-8">
+
+                <div class="col-12 form-section-body">
+
+                    <!-- SELECT SCHEDULE TYPE BEFORE ANY OTHER OPTIONS SHOWN -->
+                    <div class="row">
+                        <label for="type" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Schedule Type</label>
+                        <div class="col-xs-12 col-sm-8 input-group">
+                            <select class="custom-select form-input-custom float-left" name="type" [(ngModel)]="type" [formControl]="form.controls['type']">
+                                <option selected value="">Select a Type</option>
+                                <option value="Door-to-door Delivery">Door-to-door Delivery</option>
+                                <option value="Market Pickup">Market Pickup</option>
+                                <option value="On-farm Pickup">On-farm Pickup</option>
+                                <option value="Off-farm Pickup">Other Pickup</option>
+                            </select>
+                        <small 
+                            *ngIf="!form.get('type').valid && form.get('type').touched"
+                            class="help-block"
+                            >Please select the type of delivery or pickup you are planning.</small>
+                        </div>
+                    </div>
+
+                    <!-- AFTER TYPE SELECTED, GOOGLE MAPS API SEARCH FOR COMMUNITY -->
+                    <!-- Note: this has to be hidden, if locked in an ngIf it will throw an error in the console -->
+                    <div class="row" [class.hidden]="!type || type === 'On-farm Pickup'">
+                        <label for="search" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Search for Community:</label>
+                        <div class="col-xs-12 col-sm-8 input-group">
                             <input  
                                 autocorrect="off" 
                                 autocapitalize="off" 
                                 spellcheck="off" 
                                 type="text" 
-                                class="form-control" 
+                                class="form-input-custom" 
                                 #search 
                                 id="search"
                                 [formControl]="searchControl">
-                      </div>
-                      
-                    <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-                      </agm-map> -->
-                </div>
-    
-            <!-- options required for ALL types -->
-                <div *ngIf="type">
-    
-                <!-- options for EVERYTHING EXCEPT FARMGATE -->
-                  <div *ngIf="type !== 'On-farm Pickup'">
-    
-                      <div *ngIf="this.form.value.address" class="row">
-                          <label for="address" class="col-4 col-form-label text-right">Address:</label>
-                          <div class="col-8 input-group">
-                              <p>{{ this.form.value.address }}</p>
-                          </div>
-                      </div>
-    
-                      <div *ngIf="this.form.value.city" class="row">
-                          <label for="city" class="col-4 col-form-label text-right">City/Town:</label>
-                          <div class="col-8 input-group">
-                              <p>{{ this.form.value.city }}, {{ this.form.value.province }}</p>
-                          </div>
-                      </div>
-            
-                      <br>
-                      
-                  </div>
+                        </div>
                     
-                <!-- DESCRIPTION -->
-                  <div class="row">
-                      <label for="description" class="col-4 col-form-label text-right">Description</label>
-                      <div class="col-8">
-                          <textarea 
-                              class="form-control" 
-                              type="text" 
-                              id="description" 
-                              [formControl]="form.controls['description']"></textarea>
-                      </div>
-                  </div>
-                  
-                  <!-- REPEAT? -->
-                  
-                  <div class="row">
-                        <label class="col-4 col-form-label text-right">Does this schedule repeat?</label>
-                        <div class="col-8 pl-5">
-                            <div class="form-check form-check-inline">
-                              <input 
-                                [formControl]="form.controls['repeat']" 
-                                type="radio" 
-                                name="repeatYes" 
-                                [(ngModel)]="isRepeat"
-                                id="repeatYes" 
-                                [value]="true">
-                              <label class="form-check-label" for="repeatYes">Yes</label>
+                    </div>
+
+                    <!-- options required for ALL types -->
+                    <div *ngIf="type">
+
+                        <!-- options for EVERYTHING EXCEPT FARMGATE -->
+                        <div *ngIf="type !== 'On-farm Pickup'">
+        
+                            <div *ngIf="submitObject.address" class="row">
+                                <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Address:</label>
+                                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                                    <p>{{ submitObject.address }}</p>
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline">
-                              <input 
-                                [formControl]="form.controls['repeat']" 
-                                type="radio" 
-                                name="repeatNo"
-                                [(ngModel)]="isRepeat" 
-                                id="repeatNo" 
-                                [value]="false">
-                              <label class="form-check-label" for="repeatNo">No</label>
+            
+                            <div *ngIf="submitObject.city" class="row">
+                                <label for="city" class="col-xs-12 col-sm-4 col-form-label text-sm-right">City/Town:</label>
+                                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                                    <p>{{ submitObject.city }}, {{ submitObject.province }}</p>
+                                </div>
+                            </div>
+                                                
+                        </div>
+                        
+                        <!-- DESCRIPTION -->
+                        <div class="row">
+                            <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description</label>
+                            <div class="col-xs-12 col-sm-8 input-group">
+                                <textarea 
+                                    class="form-input-custom" 
+                                    type="text" 
+                                    id="description" 
+                                    [formControl]="form.controls['description']"></textarea>
                             </div>
                         </div>
+
                     </div>
+
+                </div>
+
+            </div>
                     
-                <!-- DATE - IS REPEAT - USES DATEPICKER MODULE -->
-                  <div *ngIf="isRepeat" class="row">
-                      <label for="dates" class="col-4 col-form-label text-right">Dates:</label>
-                      <div class="col-8">
-                        <input 
-                            [owlDateTime]="dates" 
-                            [owlDateTimeTrigger]="dates" 
-                            [selectMode]="'range'"
-                            [(ngModel)]="dateMoments"
-                            [ngModelOptions]="{standalone: true}"
-                            (onConfirm)="onChooseMultipleDates(value)"
-                            formControlName="dates"
-                            ngDefaultControl
-                            >
-                        <owl-date-time 
-                            #dates
-                            [showButtons]="true"
-                            [dateFormat]="'YYYY-MM-DD'"
-                            [pickerType]="'calendar'" 
-                            [placeHolder]="'YYYY-MM-DD'"
-                            [inputId]="'dates'"
-                            [min]="moment"
-                            ></owl-date-time>
-                      </div>
-                  </div>
+            
+            
+
         
-                <!-- DATE - NOT REPEAT - USES DATEPICKER MODULE -->
-                  <div *ngIf="!isRepeat" class="row">
-                      <label for="date" class="col-4 col-form-label text-right">Date:</label>
-                      <div class="col-8">
+                
+                <!-- REPEAT? -->
+                
+                <!-- <div class="row">
+                    <label class="col-4 col-form-label text-right">Does this schedule repeat?</label>
+                    <div class="col-8 pl-5">
+                        <div class="form-check form-check-inline">
+                            <input 
+                            [formControl]="form.controls['repeat']" 
+                            type="radio" 
+                            name="repeatYes" 
+                            [(ngModel)]="isRepeat"
+                            id="repeatYes" 
+                            [value]="true">
+                            <label class="form-check-label" for="repeatYes">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input 
+                            [formControl]="form.controls['repeat']" 
+                            type="radio" 
+                            name="repeatNo"
+                            [(ngModel)]="isRepeat" 
+                            id="repeatNo" 
+                            [value]="false">
+                            <label class="form-check-label" for="repeatNo">No</label>
+                        </div>
+                    </div>
+                </div> -->
+                
+            <!-- DATE - IS REPEAT - USES DATEPICKER MODULE -->
+                <!-- <div *ngIf="isRepeat" class="row">
+                    <label for="dates" class="col-4 col-form-label text-right">Dates:</label>
+                    <div class="col-8">
+                    <input 
+                        [owlDateTime]="dates" 
+                        [owlDateTimeTrigger]="dates" 
+                        [selectMode]="'range'"
+                        [(ngModel)]="dateMoments"
+                        [ngModelOptions]="{standalone: true}"
+                        (onConfirm)="onChooseMultipleDates(value)"
+                        formControlName="dates"
+                        ngDefaultControl
+                        >
+                    <owl-date-time 
+                        #dates
+                        [showButtons]="true"
+                        [dateFormat]="'YYYY-MM-DD'"
+                        [pickerType]="'calendar'" 
+                        [placeHolder]="'YYYY-MM-DD'"
+                        [inputId]="'dates'"
+                        [min]="moment"
+                        ></owl-date-time>
+                    </div>
+                </div> -->
+
+            <div class="row form-section">
+                <div class="col-12 form-section-header">
+                    <h5>Dates and Times</h5>
+                </div>
+
+                <div class="col-12 form-section-body">
+
+                    <!-- DATE - NOT REPEAT - USES DATEPICKER MODULE -->
+                    <div *ngIf="!isRepeat" class="row">
+                        <label for="date" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Date:</label>
+                        <div class="col-xs-12 col-sm-8 input-group">
                         <input 
+                            class="form-input-custom"
                             [owlDateTime]="date" 
                             [owlDateTimeTrigger]="date" 
                             [(ngModel)]="dateMoment" 
-                            (ngModelChange)="onChooseDate()"
                             [ngModelOptions]="{standalone: true}"
                             [formControl]="form.controls['date']"
+                            [min]="DateMomentMin"
                             ngDefaultControl>
                         <owl-date-time
                             #date
@@ -160,21 +181,21 @@
                             [placeHolder]="'YYYY-MM-DD'"
                             [autoClose]="true"
                             [inputId]="'date'"
-                            [min]="moment"
+                            (afterPickerClosed)="onChooseDate()"
                             ></owl-date-time>
-                      </div>
-                  </div>
+                        </div>
+                    </div>
 
-                  <!-- START TIME - USES DATEPICKER MODULE -->
-                  <div class="row">
-                      <label for="input3" class="col-4 col-form-label text-right">Start Time:</label>
-                      <div class="col-8">
+                    <!-- START TIME - USES DATEPICKER MODULE -->
+                    <div class="row">
+                        <label for="input3" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Start Time:</label>
+                        <div class="col-xs-12 col-sm-8 input-group">
                             <input 
+                                class="form-input-custom"
                                 [owlDateTime]="startTime" 
                                 [owlDateTimeTrigger]="startTime"
                                 [(ngModel)]="startTimeMoment" 
                                 [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="onChooseStartTime()"
                                 [formControl]="form.controls['startTime']"
                                 ngDefaultControl
                                 >
@@ -185,20 +206,22 @@
                                 [stepMinute]="15"
                                 [autoClose]="true"
                                 [inputId]="'input3'"
+                                (afterPickerClosed)="onChooseStartTime()"
                                 ></owl-date-time>
-                      </div>
-                  </div>
-    
-                <!-- END TIME - USES DATEPICKER MODULE -->
-                  <div class="row">
-                      <label for="input4" class="col-4 col-form-label text-right">End Time</label>
-                      <div class="col-8">
+                        </div>
+                    </div>
+
+                    <!-- END TIME - USES DATEPICKER MODULE -->
+                    <div class="row">
+                        <label for="input4" class="col-xs-12 col-sm-4 col-form-label text-sm-right">End Time</label>
+                        <div class="col-xs-12 col-sm-8 input-group">
                             <input 
+                                class="form-input-custom"
                                 [owlDateTime]="endTime" 
                                 [owlDateTimeTrigger]="endTime"
+                                [min]="endTimeMin"
                                 [(ngModel)]="endTimeMoment" 
                                 [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="onChooseEndTime()"
                                 [formControl]="form.controls['endTime']"
                                 ngDefaultControl
                                 >
@@ -209,155 +232,138 @@
                                 [stepMinute]="15"
                                 [autoClose]="true"
                                 [inputId]="'input4'"
+                                (afterPickerClosed)="onChooseEndTime()"
                                 ></owl-date-time>
+                        </div>
                     </div>
-                  </div>
 
-                  <!-- DEADLINE DATE - only if  a repeat - get hours to calculate a deadline for each repeat -->
-                <div *ngIf="isRepeat">
-                    <div class="row">
-                        <label for="deadlineCalcHours" class="col-4 col-form-label text-right">Order deadline: How many hours before the scheduled start time?</label>
-                        <div class="col-8 input-group">
-                            <input 
-                            class="form-control" 
-                            type="number"
-                            min="0"
-                            step="1"
-                            id="deadlineCalcHours" 
-                            [formControl]="form.controls['deadlineCalcHours']">
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- DEADLINE DATE - only if not a repeat - USES DATEPICKER MODULE -->
-                <div *ngIf="!isRepeat">
-                    <div class="row">
-                        <label for="input5" class="col-4 col-form-label text-right">Order Deadline Date</label>
-                        <div class="col-8">
-                            <input 
-                                [owlDateTime]="deadlineDate" 
-                                [owlDateTimeTrigger]="deadlineDate"
-                                [(ngModel)]="deadlineDateMoment"
-                                [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="onChooseDeadlineDate()"
-                                [formControl]="form.controls['deadlineDate']"
-                                ngDefaultControl
-                                >
-                            <owl-date-time
-                                #deadlineDate
-                                [dateFormat]="'YYYY-MM-DD'"
-                                [pickerType]="'calendar'" 
-                                [autoClose]="true"
-                                [inputId]="'input5'"
-                                ></owl-date-time>
-                        </div>
-                    </div>
-        
-                    <!-- DEADLINE TIME - USES DATEPICKER MODULE -->
-                    <div class="row">
-                        <label for="input6" class="col-4 col-form-label text-right">Order Deadline Time</label>
-                        <div class="col-8">
-                            <input 
-                                [owlDateTime]="deadlineTime" 
-                                [owlDateTimeTrigger]="deadlineTime"
-                                [(ngModel)]="deadlineTimeMoment" 
-                                [ngModelOptions]="{standalone: true}"
-                                (ngModelChange)="onChooseDeadlineTime()"
-                                [formControl]="form.controls['deadlineTime']"
-                                ngDefaultControl
-                                >
-                            <owl-date-time 
-                                #deadlineTime
-                                [pickerType]="'timer'"
-                                [dateFormat]="'hh:mm'"
-                                [autoClose]="true"
-                                [inputId]="'input6'"
-                                ></owl-date-time>
-                        </div>
-                    </div>
-                </div>
-                  
-    
-                  <br>
-        
-                  
-    
-                  <!-- options only for D2D deliveries -->
-                <div *ngIf="type == 'Door-to-door Delivery'">
-                    <p>D2D</p>
-                    <div class="row">
-                        <label for="unit" class="col-4 col-form-label text-right">Does this delivery have a fee?</label>
-                        <div class="col-8 pl-5">
-                            <div class="form-check form-check-inline">
-                              <input 
-                                [formControl]="form.controls['hasFee']" 
-                                type="radio" 
-                                name="hasFee" 
-                                [(ngModel)]="hasDelFee"
-                                id="feeYes" 
-                                [value]="true">
-                              <label class="form-check-label" for="feeYes">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input 
-                                [formControl]="form.controls['hasFee']" 
-                                type="radio" 
-                                name="hasFee"
-                                [(ngModel)]="hasDelFee" 
-                                id="feeNo" 
-                                [value]="false">
-                              <label class="form-check-label" for="feeNo">No</label>
-                            </div>
-                        </div>
-                    </div>
-      
-                    <div *ngIf="hasDelFee">
-                      <div class="row">
-                        <label for="fee" class="col-4 col-form-label text-right">What is the fee?</label>
-                        <div class="col-8 input-group">
-                          <div class="input-group-addon">$</div>
-                          <input 
-                            class="form-control" 
-                            type="number"
-                            min="0"
-                            step="1"
-                            id="fee" 
-                            [formControl]="form.controls['fee']">
-                        </div>
-                      </div>
-    
-                      <br>
-      
-                      <div class="row">
-                          <label for="hasWaiver" class="col-4 col-form-label text-right">Is there an order value at which you will waive the fee?</label>
-                          <div class="col-8 pl-5">
-                              <div class="form-check form-check-inline">
-                                <input 
-                                  [formControl]="form.controls['hasWaiver']" 
-                                  type="radio" 
-                                  name="hasWaiver" 
-                                  [(ngModel)]="hasFeeWaiver"
-                                  id="waiverYes" 
-                                  [value]="true">
-                                <label class="form-check-label" for="waiverYes">Yes</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input 
-                                  [formControl]="form.controls['hasWaiver']" 
-                                  type="radio" 
-                                  name="hasWaiver"
-                                  [(ngModel)]="hasFeeWaiver" 
-                                  id="waiverNo" 
-                                  [value]="false">
-                                <label class="form-check-label" for="waiverNo">No</label>
-                              </div>
-                          </div>
-                      </div>
-      
-                      <div *ngIf="hasFeeWaiver">
+                    <!-- DEADLINE DATE - only if  a repeat - get hours to calculate a deadline for each repeat -->
+                    <div *ngIf="isRepeat">
                         <div class="row">
-                            <label for="feeWaiver" class="col-4 col-form-label text-right">What is the order amount?</label>
-                            <div class="col-8 input-group">
+                            <label for="deadlineCalcHours" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Order deadline: How many hours before the scheduled start time?</label>
+                            <div class="col-xs-12 col-sm-8 input-group">
+                                <input 
+                                    class="form-input-custom" 
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    id="deadlineCalcHours" 
+                                    [formControl]="form.controls['deadlineCalcHours']">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DEADLINE DATE - only if not a repeat - USES DATEPICKER MODULE -->
+                    <div *ngIf="!isRepeat && dateChosen">
+                        <div class="row">
+                            <label for="test" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Order Deadline Date/Time</label>
+                            <div class="col-xs-12 col-sm-8 input-group">
+                                <input 
+                                    class="form-input-custom"
+                                    [owlDateTimeTrigger]="deadline" 
+                                    [owlDateTime]="deadline"
+                                    [max]="deadlineDateTimeMax"
+                                    [min]="deadlineDateTimeMin"
+                                    [(ngModel)]="deadlineDateTime"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [formControl]="form.controls['deadlineDateTime']"
+                                    ngDefaultControl
+                                    >
+                                <owl-date-time 
+                                    #deadline
+                                    [autoClose]="true"
+                                    [inputId]="'test'"
+                                    [stepMinute]="15"
+                                    ></owl-date-time>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+    
+            <!-- options only for D2D deliveries -->
+            <div class="row form-section" *ngIf="type == 'Door-to-door Delivery'">
+                <div class="col-12 form-section-header">
+                    <h5>Door-to-door Delivery Details</h5>
+                </div>
+
+                <div class="col-12 form-section-body">
+
+                    <div class="row">
+                        <label for="unit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Does this delivery have a fee?</label>
+                        <div class="col-xs-12 col-sm-8 input-group pl-5">
+                            <div class="form-check form-check-inline">
+                                <input 
+                                    [formControl]="form.controls['hasFee']" 
+                                    type="radio" 
+                                    name="hasFee" 
+                                    [(ngModel)]="hasDelFee"
+                                    id="feeYes" 
+                                    [value]="true">
+                                <label class="form-check-label" for="feeYes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input 
+                                    [formControl]="form.controls['hasFee']" 
+                                    type="radio" 
+                                    name="hasFee"
+                                    [(ngModel)]="hasDelFee" 
+                                    id="feeNo" 
+                                    [value]="false">
+                                <label class="form-check-label" for="feeNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div *ngIf="hasDelFee">
+                        <div class="row">
+                        <label for="fee" class="col-xs-12 col-sm-4 col-form-label text-sm-right">What is the fee?</label>
+                        <div class="col-xs-12 col-sm-8 input-group">
+                            <div class="input-group-addon">$</div>
+                            <input 
+                                class="form-control" 
+                                type="number"
+                                min="0"
+                                step="1"
+                                id="fee" 
+                                [formControl]="form.controls['fee']">
+                        </div>
+                        </div>
+    
+                        <br>
+        
+                        <div class="row">
+                            <label for="hasWaiver" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Is there an order value at which you will waive the fee?</label>
+                            <div class="col-xs-12 col-sm-8 input-group pl-5">
+                                <div class="form-check form-check-inline">
+                                <input 
+                                    [formControl]="form.controls['hasWaiver']" 
+                                    type="radio" 
+                                    name="hasWaiver" 
+                                    [(ngModel)]="hasFeeWaiver"
+                                    id="waiverYes" 
+                                    [value]="true">
+                                <label class="form-check-label" for="waiverYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input 
+                                    [formControl]="form.controls['hasWaiver']" 
+                                    type="radio" 
+                                    name="hasWaiver"
+                                    [(ngModel)]="hasFeeWaiver" 
+                                    id="waiverNo" 
+                                    [value]="false">
+                                <label class="form-check-label" for="waiverNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div *ngIf="hasFeeWaiver">
+                        <div class="row">
+                            <label for="feeWaiver" class="col-xs-12 col-sm-4 col-form-label text-sm-right">What is the order amount?</label>
+                            <div class="col-xs-12 col-sm-8 input-group">
                                 <div class="input-group-addon">$</div>
                                 <input 
                                     class="form-control" 
@@ -368,57 +374,61 @@
                                     [formControl]="form.controls['feeWaiver']">
                             </div>
                         </div>
-                      </div>
-                      
-                    </div>
-                  </div>
-      
-                  <!-- options only for farmgate -->
-                  <div *ngIf="type === 'On-farm Pickup'">
-                    <div class="row">
-                        <label for="address" class="col-4 col-form-label text-right">Your Address:</label>
-                        <div class="col-8 input-group">
-                          <p>{{ producer.address }}</p>
                         </div>
+                        
                     </div>
-                    <div class="row">
-                        <label for="address" class="col-4 col-form-label text-right">City, Province:</label>
-                        <div class="col-8 input-group">
-                          <p>{{ producer.location }}, {{ producer.province }}</p>
+
+                </div>
+
+            </div>
+
+            <!-- options only for farmgate -->
+            <div class="row form-section" *ngIf="type == 'On-farm Pickup'">
+                    <div class="col-12 form-section-header">
+                        <h5>Door-to-door Delivery Details</h5>
+                    </div>
+
+                    <div class="col-12 form-section-body">
+
+                        <div class="row">
+                            <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Address:</label>
+                            <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                                <p>{{ producer.address }}</p>
+                            </div>
                         </div>
+                        <div class="row">
+                            <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">City, Province:</label>
+                            <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                                <p>{{ producer.location }}, {{ producer.province }}</p>
+                            </div>
+                        </div>
+
                     </div>
-                    
-                  </div>
-      
-                    <!-- options only for Market or other pickups -->
-                  <div *ngIf="type === 'Market Pickup' || type === 'Other Pickup'">
-                    <p>Market or other pickups</p>
-                  </div>
-    
-                </div>
-                
-                <div class="row justify-content-center">
-                    <button *ngIf="!isRepeat"
-                      class="btn btn-olf-primary" 
-                      type="submit"
-                      >Add to Schedule</button>
-                    <button *ngIf="isRepeat"
-                      class="btn btn-olf-primary" 
-                      type="submit"
-                      >Add All to Schedule</button>
-                      <!-- <button 
-                      class="btn btn-olf-primary" 
-                      type="submit"
-                      [disabled]="(form.invalid)"
-                      >Add to Schedule</button> -->
-                </div>
-    
+
             </div>
-        </div>
-        <div class="modal-footer justify-content-center">
-            <div class="row">
-                <a (click)="onCancel()">Cancel Changes</a>
+            
+            <div class="row justify-content-center">
+                <button *ngIf="!isRepeat"
+                    class="btn btn-olf-primary" 
+                    type="submit"
+                    >Add to Schedule</button>
+                <button *ngIf="isRepeat"
+                    class="btn btn-olf-primary" 
+                    type="submit"
+                    >Add All to Schedule</button>
+                    <!-- <button 
+                    class="btn btn-olf-primary" 
+                    type="submit"
+                    [disabled]="(form.invalid)"
+                    >Add to Schedule</button> -->
             </div>
+
         </div>
-      </form>
-      
+    </div>
+    <div class="modal-footer justify-content-center">
+        <div class="row">
+            <a (click)="onCancel()">Cancel Changes</a>
+        </div>
+    </div>
+</form>
+    

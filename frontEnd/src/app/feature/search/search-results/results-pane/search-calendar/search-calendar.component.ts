@@ -97,15 +97,37 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     // subscribe to the get method results
-    this.searchService.getDeliveries()
+    // this.searchService.getDeliveries()
+    //   .subscribe(
+    //     result => {
+    //       this.events = [];
+    //       console.log('result:');
+    //       console.log(result);
+    //       let data = result;
+    //       data.forEach((result) => {
+    //         this.events.push({
+    //           title: result.type + ' - ' + result.producerName,
+    //           color: colors.red,
+    //           start: new Date(result.startDateTime),
+    //           meta: {
+    //             schedule: result
+    //           }
+    //         } )
+    //       })
+    //       this.refresh.next();
+    //     }
+    //   );
+
+    this.searchService.getSearchResults()
       .subscribe(
         result => {
-          console.log('result:');
-          console.log(result);
-          let data = result;
+          this.events = [];
+          console.log('result.scheds:');
+          console.log(result.schedules);
+          let data = result.schedules;
           data.forEach((result) => {
             this.events.push({
-              title: result.type,
+              title: result.type + ' - ' + result.producerName,
               color: colors.red,
               start: new Date(result.startDateTime),
               meta: {
@@ -117,6 +139,6 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
         }
       );
 
-  }
+   }
 
 }

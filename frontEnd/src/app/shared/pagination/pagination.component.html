@@ -1,30 +1,36 @@
-<div class="pagination">
-    <div class="description">
-        <span class="page-counts">{{ getMin() }} - {{ getMax() }} of {{ count }}</span>  
-    </div>
-    <div class="numbers">
-        <button 
-            class="link" 
-            (click)="onPrev()" 
-            [disabled]="page === 1" 
-            [ngClass]="{ 'disabled': page === 1 }">
-            &lt; Previous</button>
-        
-        <button
-            *ngFor="let pageNum of getPages()"
-            (click)="onPage(pageNum)"
-            [ngClass]="{'active': pageNum === page}">
-            {{ pageNum }}</button>
+<div class="pagination row">
 
-        <button 
-            class="link" 
-            (click)="onNext()" 
-            [disabled]="lastPage()" 
-            [ngClass]="{ 'disabled': lastPage() }">
-            Next &gt;</button>
+    <div class="col-12">
+        <div class="numbers">
+            <button 
+                class="link" 
+                (click)="onPrev()" 
+                [disabled]="page === 1" 
+                [ngClass]="{ 'disabled': page === 1 }">
+                &lt; Prev</button>
+            
+            <button
+                *ngFor="let pageNum of getPages()"
+                (click)="onPage(pageNum)"
+                [ngClass]="{'active': pageNum === page}">
+                {{ pageNum }}</button>
+    
+            <button 
+                class="link" 
+                (click)="onNext()" 
+                [disabled]="lastPage()" 
+                [ngClass]="{ 'disabled': lastPage() }">
+                Next &gt;</button>
+        </div>
     </div>
-    <div class="pull-right">
-        <span class="page-totals">{{ totalPages() }} pages</span>
+
+    <div class="col-12">
+        <div class="description">
+            <span class="page-counts">{{ getMin() }} - {{ getMax() }} of {{ count }}</span>  
+        </div>
+        <div class="pull-right">
+            <span class="page-totals">{{ totalPages() }} pages</span>
+        </div>
     </div>
 </div>
 

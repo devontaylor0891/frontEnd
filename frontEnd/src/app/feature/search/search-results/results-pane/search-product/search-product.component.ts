@@ -9,11 +9,10 @@ import { ProductModel } from '../../../../../core/models/product.model';
 })
 export class SearchProductComponent implements OnInit {
 
-  @Input() products: ProductModel[] = [];
+  @Input() products: any;
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
