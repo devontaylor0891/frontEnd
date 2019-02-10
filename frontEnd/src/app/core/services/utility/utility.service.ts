@@ -362,4 +362,17 @@ export class UtilityService {
     return str.replace(/\w\S*/g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   };
 
+  randomizeArray(array) {
+    return array.sort(function() { return 0.5 - Math.random() });
+  };
+
+  alphabetizeArray(array) {
+    array.sort(function(a, b) {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    return array;
+  }
+
 }

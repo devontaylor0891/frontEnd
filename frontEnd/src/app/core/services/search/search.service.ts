@@ -12,6 +12,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ApiService } from '../../api.service';
+import { UtilityService } from '../../services/utility/utility.service';
 
 import { ProductModel } from '../../../core/models/product.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
@@ -62,7 +63,8 @@ export class SearchService implements OnInit {
   currentDistanceSelected: number = 25;
 
   // during construction of service, create a empty dataStore and various BehaviorSubjects
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService,
+              private utilityService: UtilityService) {
     this.dataStore = {
       originalSearchResults: { schedules: [], producers: [], products: [] },
       searchResults: { schedules: [], producers: [], products: [] }, 
@@ -111,9 +113,12 @@ export class SearchService implements OnInit {
             this.zeroSearchResultsReturned = false;
             this._zeroSearchResultsReturned.next(this.zeroSearchResultsReturned);
             // fill dataStore
-            this.dataStore.originalSearchResults = JSON.parse(JSON.stringify(response));
-            this.dataStore.searchResults = JSON.parse(JSON.stringify(response));
-            this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(response));
+            let sortedResponse = response;
+            sortedResponse.products = this.utilityService.randomizeArray(response.products);
+            sortedResponse.producers = this.utilityService.alphabetizeArray(response.producers);
+            this.dataStore.originalSearchResults = JSON.parse(JSON.stringify(sortedResponse));
+            this.dataStore.searchResults = JSON.parse(JSON.stringify(sortedResponse));
+            this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(sortedResponse));
             console.log('searchResults: ', this.dataStore.filteredSearchResults);
             this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
             this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
