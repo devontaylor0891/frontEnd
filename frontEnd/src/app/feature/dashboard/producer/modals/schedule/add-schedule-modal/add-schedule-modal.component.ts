@@ -405,6 +405,7 @@ export class AddScheduleModalComponent implements OnInit {
     console.log('new deadline max: ', this.deadlineDateTimeMax);
     // set end time and end time min
     this.endTimeMoment = new Date(0, 0, 0, this.schedStartHour + 1, this.schedStartMinute, 0, 0);
+    this.onChooseEndTime();
     this.endTimeMin = new Date(0, 0, 0, this.schedStartHour, this.schedStartMinute + 15, 0, 0);
   };
 

@@ -87,7 +87,7 @@ export class ProducerScheduleComponent implements OnInit {
   ngOnInit() {
 
     this.date = new Date().toISOString();
-
+    console.log('this date: ', this.date);
     this.getScheds();
 
   };

@@ -191,13 +191,13 @@ export class SearchService implements OnInit {
     return newArray;
   };
 
-  addSearchProducers(products) {
+  addSearchProducers(scheds) {
     // create the producers array
     let producers: ProducerModel[] = [];
     let producerIdArray = [];
     // loop through each of the products, build an array of producer Ids
-    products.forEach((product) => {
-      let pId = product.producerId;
+    scheds.forEach((sched) => {
+      let pId = sched.producerId;
       // add id to array
       if (producerIdArray.length === 0 ) {
         producerIdArray = [pId]
@@ -218,6 +218,34 @@ export class SearchService implements OnInit {
     // return producers array
     return producers;
   };
+
+  // addSearchProducers(products) {
+  //   // create the producers array
+  //   let producers: ProducerModel[] = [];
+  //   let producerIdArray = [];
+  //   // loop through each of the products, build an array of producer Ids
+  //   products.forEach((product) => {
+  //     let pId = product.producerId;
+  //     // add id to array
+  //     if (producerIdArray.length === 0 ) {
+  //       producerIdArray = [pId]
+  //     } else {
+  //       if (producerIdArray.indexOf(pId) === -1) {
+  //         producerIdArray.push(pId)
+  //       }
+  //     }
+  //   });
+  //   // then for each pId, return it from the datastore search results and add the producer to the array
+  //   for (let i = 0; i < producerIdArray.length; i++) {
+  //     for (let j = 0; j < this.dataStore.searchResults.producers.length; j++){
+  //       if (producerIdArray[i] === this.dataStore.searchResults.producers[j].producerId) {
+  //         producers.push(this.dataStore.searchResults.producers[j]);
+  //       }
+  //     }
+  //   }
+  //   // return producers array
+  //   return producers;
+  // };
 
   findByIdInArray(id, array) {
     for (let i = 0; i < array.length; i++) {
@@ -302,6 +330,25 @@ export class SearchService implements OnInit {
     }
 	  // return the completed array
 		return finalDeliveries;
+  };
+
+  addProductsFromProducerArray(producerArray) {
+    let finalProducts = [];
+    let producerIdArray = [];
+    // loop through producerArray, build an array of ids
+    producerArray.forEach((producer) => {
+      producerIdArray.push(producer.producerId);
+    });
+    // loop through the datastores scheds and push to another array where producer id is in producerIdArray
+    for (let i = 0; i < producerIdArray.length; i++ ) {
+      for (let j = 0; j < this.dataStore.searchResults.products.length; j++) {
+        if (producerIdArray[i] === this.dataStore.searchResults.products[j].producerId) {
+          finalProducts.push(this.dataStore.searchResults.products[j]);
+        }
+      }
+    };
+	  // return the completed array
+		return finalProducts;
   }
   
   buildNewSearchDelivery(delivery, product) {
@@ -340,15 +387,109 @@ export class SearchService implements OnInit {
     }
   }
 
+  // original onFilter
+  // onFilter(values) {
+	
+  //   // get original searchResults, loop through each product, if it doesn't contain one of the deliveries or one of the categories, remove it
+  //   let results: any = JSON.parse(JSON.stringify(this.dataStore.searchResults));
+  //   let catArray = [];
+  //   values.categories.forEach((category) => { catArray.push(category) });
+  //   let delArray = [];
+  //   values.deliveryTypes.forEach((delivery) => { delArray.push(delivery) });
+
+  //   // make a copy of results array to filter
+  //   let filteredResults: any = {
+  //     schedules: [],
+  //     producers: [],
+  //     products: []
+  //   };
+
+  //   results.products.forEach((product) => { //for each product
+  //     // if it does contain the delivery AND it does contain the category
+  //     // if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
+  //     if (this.containCategory(product, catArray)) {
+  //       // push it to the array
+  //       filteredResults.products.push(product);
+  //     }
+  //   }); 
+
+  //   // create a new array for producers
+  //   filteredResults.producers = this.addSearchProducers(filteredResults.products);
+  //   // this._searchProducers.next(filteredProducers);
+
+  //   // ditto for deliveries
+  //   filteredResults.schedules = this.addDeliveriesFromProducerArrayAndScheduleType(filteredResults.producers, delArray);
+  //   // this._searchDeliveries.next(filteredDeliveries);
+  //   console.log('filtered Results: ', filteredResults);
+  //   this._searchResults.next(filteredResults);
+    
+  // };
+
+  // attempt to get it filtering producers and scheds too
   onFilter(values) {
 	
     // get original searchResults, loop through each product, if it doesn't contain one of the deliveries or one of the categories, remove it
     let results: any = JSON.parse(JSON.stringify(this.dataStore.searchResults));
+    let resultsFilteredBySched = [];
+    let resultsFilteredByCategory = [];
     let catArray = [];
     values.categories.forEach((category) => { catArray.push(category) });
     let delArray = [];
     values.deliveryTypes.forEach((delivery) => { delArray.push(delivery) });
 
+    resultsFilteredBySched = this.filterByScheds(results, delArray, catArray);
+
+    resultsFilteredByCategory = this.filterByCategories(resultsFilteredBySched, delArray, catArray);
+
+    console.log('filtered Results: ', resultsFilteredByCategory);
+    this._searchResults.next(resultsFilteredByCategory);
+    
+  };
+
+  filterByScheds(resultsArray, delArray, catArray) {
+    // make a copy of results array to filter
+    let filteredResults: any = {
+      schedules: [],
+      producers: [],
+      products: []
+    };
+    let schedFilteredProducts = [];
+    // filter scheds
+
+    // filter producers
+
+    // filter products
+
+    // return results
+    filteredResults.schedules = this.addDeliveriesFromProducerArrayAndScheduleType(resultsArray.producers, delArray);
+
+    // create a new array for producers
+    filteredResults.producers = this.addSearchProducers(filteredResults.schedules);
+    // this._searchProducers.next(filteredProducers);
+
+    schedFilteredProducts = this.addProductsFromProducerArray(filteredResults.producers);
+
+    schedFilteredProducts.forEach((product) => { //for each product
+      // if it does contain the delivery AND it does contain the category
+      // if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
+      if (this.containCategory(product, catArray)) {
+        // push it to the array
+        filteredResults.products.push(product);
+      }
+    });
+
+    return filteredResults;
+
+  };
+
+  filterByCategories(resultsArray, delArray, catArray) {
+    // filter products
+
+    // filter producers
+
+    // filter scheds
+
+    // return results
     // make a copy of results array to filter
     let filteredResults: any = {
       schedules: [],
@@ -356,7 +497,7 @@ export class SearchService implements OnInit {
       products: []
     };
 
-    results.products.forEach((product) => { //for each product
+    resultsArray.products.forEach((product) => { //for each product
       // if it does contain the delivery AND it does contain the category
       // if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
       if (this.containCategory(product, catArray)) {
@@ -371,10 +512,8 @@ export class SearchService implements OnInit {
 
     // ditto for deliveries
     filteredResults.schedules = this.addDeliveriesFromProducerArrayAndScheduleType(filteredResults.producers, delArray);
-    // this._searchDeliveries.next(filteredDeliveries);
-    console.log('filtered Results: ', filteredResults);
-    this._searchResults.next(filteredResults);
-    
+
+    return filteredResults;
   };
 
   filterByDistance(distance, latitude, longitude) {
