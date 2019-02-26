@@ -144,6 +144,8 @@ import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed
 import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { FaqComponent } from './feature/faq/faq.component';
+import { PrivacyComponent } from './shared/privacy/privacy.component';
+import { TandcComponent } from './shared/tandc/tandc.component';
 
 @NgModule({
   declarations: [
@@ -241,7 +243,9 @@ import { FaqComponent } from './feature/faq/faq.component';
     TwitterFeedComponent,
     CustomUrlResolverComponent,
     PageNotFoundComponent,
-    FaqComponent
+    FaqComponent,
+    PrivacyComponent,
+    TandcComponent
   ],
   imports: [
     BrowserModule,
