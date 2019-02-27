@@ -96,6 +96,8 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
         this.submitting = true;
         this.submitObject.orderDetails.orderStatus = 'complete';
         this.submitObject.orderDetails.incompleteReason = '';
+        console.log('record id: ', this.record.id);
+        console.log('submit object: ', this.submitObject);
         this.orderUpdateSubscription = this.api.putOrder(this.record.id, this.submitObject)
             .subscribe(
                 result => {
