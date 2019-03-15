@@ -84,6 +84,8 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
+    console.log('action: ', action);
+    console.log('event: ', event);
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }

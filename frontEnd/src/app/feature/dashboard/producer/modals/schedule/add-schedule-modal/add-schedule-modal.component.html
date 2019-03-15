@@ -412,10 +412,12 @@
                 <button *ngIf="!isRepeat"
                     class="btn btn-olf-primary" 
                     type="submit"
+                    [disabled]="(form.invalid)"
                     >Add to Schedule</button>
                 <button *ngIf="isRepeat"
                     class="btn btn-olf-primary" 
                     type="submit"
+                    [disabled]="(form.invalid)"
                     >Add All to Schedule</button>
                     <!-- <button 
                     class="btn btn-olf-primary" 

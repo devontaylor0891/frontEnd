@@ -76,7 +76,7 @@ export class AddScheduleModalComponent implements OnInit {
   public dateMoments: any; // throws error if initialized with a date
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
   public endTimeMoment: any = new Date(0, 0, 0, 13, 0, 0, 0); // default end time is 1pm
-  public endTimeMin: any = new Date(0, 0, 0, 13, 15, 0, 0);
+  public endTimeMin: any = new Date(0, 0, 0, 13, 0, 0, 0);
   public deadlineDateMoment: any = new Date(); // default is now because date is tomorrow, just for ease of coding
   public deadlineTimeMoment: any = new Date(0, 0, 0, 0, 0, 0, 0); // defaults to 3 hours before start time
   public deadlineDateTime: any = new Date(
@@ -101,18 +101,18 @@ export class AddScheduleModalComponent implements OnInit {
     this.form = formBuild.group({
       'type': ['', Validators.required],
       'description': [''],
-      'repeat': [this.isRepeat, Validators.required],
+      'repeat': [this.isRepeat],
       'date': [this.dateMoment],
       'dates': [this.dateMoments],
-      'startTime': [this.startTimeMoment, Validators.required],
-      'endTime': [this.endTimeMoment, Validators.required],
+      'startTime': [this.startTimeMoment],
+      'endTime': [this.endTimeMoment],
       'deadlineCalcHours': [12],
       'deadlineDateTime': [''],
       'deadlineDate': [this.deadlineDateMoment],
       'deadlineTime': [this.deadlineTimeMoment],
-      'hasFee': [false, Validators.required],
+      'hasFee': [false],
       'fee': [0.00],
-      'hasWaiver': [false, Validators.required],
+      'hasWaiver': [false],
       'feeWaiver': [0.00],
       'latitude': [null],
       'longitude': [null],
@@ -178,6 +178,8 @@ export class AddScheduleModalComponent implements OnInit {
       );
 
     this.setSchedDefaultValues();
+
+    console.log('form value: ', this.form.value);
 
   };
 
@@ -295,14 +297,17 @@ export class AddScheduleModalComponent implements OnInit {
       this.form.value.address = this.streetNumber + ' ' + this.route;
       this.submitObject.address = this.streetNumber + ' ' + this.route;
     };
-    this.form.value.city = this.city;
+    // this.form.value.city = this.city;
+    this.form.controls['city'].setValue(this.city);
     this.submitObject.city = this.city; // still not working
-    this.form.value.province = this.province;
+    // this.form.value.province = this.province;
+    this.form.controls['province'].setValue(this.province);
     this.submitObject.province = this.province;
     // this.form.value.latitude = this.lat;
     // this.form.value.longitude = this.lng;
     this.submitObject.latitude = this.lat;
     this.submitObject.longitude = this.lng;
+    console.log('form after location choice: ', this.form);
   };
 
   private clearAddress() {
