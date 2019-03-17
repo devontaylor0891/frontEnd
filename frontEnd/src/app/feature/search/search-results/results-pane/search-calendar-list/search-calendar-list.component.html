@@ -8,7 +8,7 @@
         <div *ngFor="let date of dateArrays">
           <p>{{ date.date }}</p>
           <div *ngFor="let sched of date.schedules">
-            <p>{{ sched.startDateTime }}</p>
+            <p>{{ sched.type + ' - ' + sched.producerName + ' - ' + sched.startDateTime }}</p>
           </div>
         </div>
       </div>
