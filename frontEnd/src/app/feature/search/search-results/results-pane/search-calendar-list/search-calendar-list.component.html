@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-8 offset-sm-2 mb-2">
+    <div class="card">
+      <div class="card-block">
+        <div>
+          <p class="lead text-center">Upcoming Schedule</p>
+        </div>
+        <div *ngFor="let date of dateArrays">
+          <p>{{ date.date }}</p>
+          <div *ngFor="let sched of date.schedules">
+            <p>{{ sched.startDateTime }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

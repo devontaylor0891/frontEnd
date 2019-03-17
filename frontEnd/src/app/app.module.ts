@@ -146,6 +146,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { FaqComponent } from './feature/faq/faq.component';
 import { PrivacyComponent } from './shared/privacy/privacy.component';
 import { TandcComponent } from './shared/tandc/tandc.component';
+import { SearchCalendarListComponent } from './feature/search/search-results/results-pane/search-calendar-list/search-calendar-list.component';
 
 @NgModule({
   declarations: [
@@ -245,7 +246,8 @@ import { TandcComponent } from './shared/tandc/tandc.component';
     PageNotFoundComponent,
     FaqComponent,
     PrivacyComponent,
-    TandcComponent
+    TandcComponent,
+    SearchCalendarListComponent
   ],
   imports: [
     BrowserModule,

@@ -373,6 +373,33 @@ export class UtilityService {
       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
     });
     return array;
+  };
+
+  dateToISOLikeButLocal(input) {
+    let date = new Date(input);
+    const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+    const msLocal =  date.getTime() - offsetMs;
+    const dateLocal = new Date(msLocal);
+    const iso = dateLocal.toISOString();
+    const isoLocal = iso.slice(0, 19);
+    return isoLocal;
+  };
+
+  readableDate(date) {
+    let readable = new Date(date);  // When we pass the ISO format to the JS Date constructor, the return is "Fri Jul 04 2014 21:06:08 GMT-0400 (Eastern Daylight Time)"
+    let m = readable.getMonth();  // returns 6 (note that this number is one less than the number of the month in isoformat)
+    let d = readable.getDate();  // returns 15
+    let y = readable.getFullYear();  // returns 2012
+
+    // we define an array of the months in a year
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    // we get the text name of the month by using the value of m to find the corresponding month name
+    let mlong = months[m];
+
+
+    let fulldate = mlong + ' ' + d + ', ' + y;
+    return fulldate;
   }
 
 }
