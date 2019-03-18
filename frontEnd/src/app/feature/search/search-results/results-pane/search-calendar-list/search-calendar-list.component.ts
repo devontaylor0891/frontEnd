@@ -13,6 +13,9 @@ export class SearchCalendarListComponent implements OnInit {
   builtDateArray: any = [];
   dateArrays: any = [];
 
+  showParent: number;
+  showChild: number;
+
   constructor(private searchService: SearchService,
               private utilityService: UtilityService) { }
 
@@ -28,8 +31,15 @@ export class SearchCalendarListComponent implements OnInit {
           this.addScheds(results.schedules);
         }
       );
-      
   }
+
+  setParent(index) {
+    this.showParent = index;
+  };
+
+  setChild(index) {
+    this.showChild = index;
+  };
 
   // sort dates ascending by start date
   sortDates(array) {

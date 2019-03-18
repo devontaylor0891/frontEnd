@@ -3,12 +3,24 @@
     <div class="card">
       <div class="card-block">
         <div>
-          <p class="lead text-center">Upcoming Schedule</p>
+          <h5 class="card-title">Upcoming Schedule</h5>
         </div>
-        <div *ngFor="let date of dateArrays">
-          <p>{{ date.date }}</p>
-          <div *ngFor="let sched of date.schedules">
-            <p>{{ sched.type + ' - ' + sched.producerName + ' - ' + sched.startDateTime }}</p>
+        <div *ngFor="let date of dateArrays; let i = index">
+          <hr>
+          <h6 card-subtitle mb-2 text-muted>{{ date.date | date:'mediumDate' }}</h6>
+          <div *ngFor="let sched of date.schedules; let j = index;">
+            <p>
+              {{ i }}
+              {{ j }}
+              {{ sched.type + ' - ' + sched.producerName }}
+              {{ sched.startDateTime | date:'shortTime' }} - {{ sched.endDateTime | date:'shortTime' }}
+              <a (click)="setParent(i); setChild(j)">Show Details</a>
+            </p>
+            <div *ngIf="showParent === i && showChild === j" class="pl-2">
+              {{ sched.startDateTime }}
+              {{ sched.startDateTime }}
+              {{ sched.startDateTime }}
+            </div>
           </div>
         </div>
       </div>
