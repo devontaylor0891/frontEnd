@@ -147,6 +147,7 @@ import { FaqComponent } from './feature/faq/faq.component';
 import { PrivacyComponent } from './shared/privacy/privacy.component';
 import { TandcComponent } from './shared/tandc/tandc.component';
 import { SearchCalendarListComponent } from './feature/search/search-results/results-pane/search-calendar-list/search-calendar-list.component';
+import { SearchMapComponent } from './feature/search/search-results/results-pane/search-map/search-map.component';
 
 @NgModule({
   declarations: [
@@ -247,7 +248,8 @@ import { SearchCalendarListComponent } from './feature/search/search-results/res
     FaqComponent,
     PrivacyComponent,
     TandcComponent,
-    SearchCalendarListComponent
+    SearchCalendarListComponent,
+    SearchMapComponent
   ],
   imports: [
     BrowserModule,

@@ -37,7 +37,14 @@
 				(click)="onClick('calendar')"
 				placement="top" 
 				ngbTooltip="View the upcoming schedule"
-				>Calendar</button>
+        >Calendar</button>
+        <button 
+				class="btn-outline-olf-primary btn btn-sm"
+				[ngClass]="{'btn-olf-primary': view === 'map', 'btn-outline-olf-primary': view !== 'map'}" 
+				(click)="onClick('map')"
+				placement="top" 
+				ngbTooltip="View the deliveries and pickups on a map"
+				>Map</button>
 			</div>
 		</div>
 

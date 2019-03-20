@@ -224,6 +224,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     this.searchOptions.longitude = this.longitude;
     this.searchOptions.radius = 25;
     this.searchService.loadAll(this.searchOptions);
+    // pass these lat/long out to map
     this.locationUpdate = !this.locationUpdate;
   };
 

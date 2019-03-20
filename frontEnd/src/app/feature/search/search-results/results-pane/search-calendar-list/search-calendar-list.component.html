@@ -7,21 +7,29 @@
         </div>
         <div *ngFor="let date of dateArrays; let i = index">
           <hr>
-          <h6 card-subtitle mb-2 text-muted>{{ date.date | date:'mediumDate' }}</h6>
-          <div *ngFor="let sched of date.schedules; let j = index;">
-            <p>
-              {{ i }}
-              {{ j }}
-              {{ sched.type + ' - ' + sched.producerName }}
-              {{ sched.startDateTime | date:'shortTime' }} - {{ sched.endDateTime | date:'shortTime' }}
-              <a (click)="setParent(i); setChild(j)">Show Details</a>
-            </p>
-            <div *ngIf="showParent === i && showChild === j" class="pl-2">
-              {{ sched.startDateTime }}
-              {{ sched.startDateTime }}
-              {{ sched.startDateTime }}
-            </div>
-          </div>
+          <h6 class="card-subtitle mb-2 text-muted list-group-item d-flex justify-content-between align-items-center">
+            <i class="fa fa-calendar"></i>
+            {{ date.date | date:'mediumDate' }}
+            <span class="badge badge-olf badge-pill">{{ dateArrays[i].schedules.length }}</span>
+          </h6>
+          <ul class="list-group">
+            <li *ngFor="let sched of date.schedules; let j = index;" class="list-group-item d-flex justify-content-between align-items-center">
+              <p><b>{{ sched.type + ' - ' + sched.city }}</b>
+                <span class="sched-details">
+                  {{ sched.producerName }}
+                  {{ sched.startDateTime | date:'shortTime' }} - {{ sched.endDateTime | date:'shortTime' }}
+                </span>
+              </p>
+              <div class="w-100 text-center">
+                <a (click)="setParent(i); setChild(j)">Details</a>
+              </div>
+              <div *ngIf="showParent === i && showChild === j" class="pl-2">
+                {{ sched.startDateTime }}
+                {{ sched.startDateTime }}
+                {{ sched.startDateTime }}
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
