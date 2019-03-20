@@ -30,7 +30,7 @@ export class SearchMapComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
 
-    this.zoom = 8;
+    this.zoom = 12;
 
     // get the location from the browser window
     this.locationService.getLocation()

@@ -13,7 +13,6 @@
         (markerClick)="clickedMarker(i)"
         [latitude]="m.latitude"
         [longitude]="m.longitude"
-
         >
 
         <!--   
@@ -23,16 +22,17 @@
         [iconWidth]="20"
         [label]="{ color: '#fff', fontFamily:'Arial', text:m.type, labelClass:'className' }"
           
-          [iconUrl]="{
+        [iconUrl]="{
           url: 
-            m.type === 'Market Pickup' ? './assets/images/car.svg' : 
-            m.type === 'Door-to-door Delivery' ? './assets/images/bike.svg': 
-            m.type === 'Off-farm Pickup' ? './assets/images/bike.svg',
+            m.type === 'Market Pickup' ? './assets/images/logo.png' : 
+            m.type === 'Door-to-door Delivery' ? './assets/images/logo.png' : 
+            './assets/images/logo.png',
           scaledSize: {
               width: 40,
               height: 60
           }
-        }"   -->
+        }"
+             -->
         
         <agm-info-window *ngIf="markerClicked">
           <strong>{{ m.type }}</strong>

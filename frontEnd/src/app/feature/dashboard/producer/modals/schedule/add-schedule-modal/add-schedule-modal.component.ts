@@ -293,6 +293,13 @@ export class AddScheduleModalComponent implements OnInit {
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
+    this.form.value.latitude = this.lat;
+    this.form.value.longitude = this.lng;
+    this.form.patchValue({
+      latitude: this.lat,
+      longitude: this.lng
+    });
+    console.log('lat fn: ', place.geometry.location.lat());
     if (this.streetNumber && this.route) {
       this.form.value.address = this.streetNumber + ' ' + this.route;
       this.submitObject.address = this.streetNumber + ' ' + this.route;
@@ -307,6 +314,7 @@ export class AddScheduleModalComponent implements OnInit {
     // this.form.value.longitude = this.lng;
     this.submitObject.latitude = this.lat;
     this.submitObject.longitude = this.lng;
+    console.log('lat in submit obj: ', this.submitObject.latitude);
     console.log('form after location choice: ', this.form);
   };
 
