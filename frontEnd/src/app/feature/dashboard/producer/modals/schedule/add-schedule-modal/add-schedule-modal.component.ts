@@ -179,8 +179,18 @@ export class AddScheduleModalComponent implements OnInit {
 
     this.setSchedDefaultValues();
 
+    this.onChanges();
+
     console.log('form value: ', this.form.value);
 
+  };
+
+  onChanges() {
+    this.form.get('type').valueChanges.subscribe(val => {
+      if (val === 'On-farm Pickup') {
+        console.log('on farm pickup selected, form value: ', this.form.value);
+      }
+    });
   };
 
   onSubmit() {

@@ -594,6 +594,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
                   this.customUrlExists = true;
                   this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
                 } else {
+                  console.log('custom url not returned');
                   this.customUrlExists = false;
                   this.producerForm['controls'].customUrl.setErrors(null);
                 }
@@ -768,7 +769,9 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         this.apiService.updateCustomUrl(this.customUrlId, customUrlData)
           .subscribe(
             result => {
-              console.log('custom url update: ', result)
+              console.log('custom url update id: ', this.customUrlId)
+              console.log('custom url update data: ', this.customUrlObject)
+              console.log('custom url update result: ', result)
             }
           ),
           err => this.handleSubmitError(err)
