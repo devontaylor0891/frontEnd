@@ -30,10 +30,10 @@
                                 <option value="On-farm Pickup">On-farm Pickup</option>
                                 <option value="Off-farm Pickup">Other Pickup</option>
                             </select>
-                        <small 
-                            *ngIf="!form.get('type').valid && form.get('type').touched"
-                            class="help-block"
-                            >Please select the type of delivery or pickup you are planning.</small>
+                            <small 
+                                *ngIf="!form.get('type').valid && form.get('type').touched"
+                                class="help-block">Please select the type of delivery or pickup you are planning.</small>
+                            <p *ngIf="!producer.address && form.get('type').value === 'On-farm Pickup'" class="help-block">We've noticed you don't have a particular address (you're probably on a farm). In order for your customers to pick up their order, please include directions to the pickup location in the description below. Thanks!</p>
                         </div>
                     </div>
 
