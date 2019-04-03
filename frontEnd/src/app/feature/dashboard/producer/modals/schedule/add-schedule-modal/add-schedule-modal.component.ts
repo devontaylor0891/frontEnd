@@ -191,6 +191,12 @@ export class AddScheduleModalComponent implements OnInit {
         console.log('on farm pickup selected, form value: ', this.form.value);
       }
     });
+    this.form.get('hasFee').valueChanges.subscribe(val => {
+      console.log('has fee changed: ', this.form.value);
+    });
+    this.form.get('hasWaiver').valueChanges.subscribe(val => {
+      console.log('has delfee changed: ', this.form.value);
+    });
   };
 
   onSubmit() {
@@ -202,6 +208,7 @@ export class AddScheduleModalComponent implements OnInit {
       this.submitObject.city = this.producer.location;
       this.submitObject.province = this.producer.province;
       this.submitObject.producerName = this.producer.name;
+      console.log('submitting on farm pickup: ', this.submitObject);
     }
     if (!this.isRepeat) {
       this.buildSubmitObject();
@@ -284,8 +291,8 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.producerName = this.producer.name;
     this.submitObject.type = this.form.value.type;
     this.submitObject.description = this.form.value.description;
-    console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
-    console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
+    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
     this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
     this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
     this.submitObject.hasFee = this.form.value.hasFee;
@@ -296,6 +303,7 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.feeWaiver = this.form.value.feeWaiver;
     this.submitObject.orderList = [];
     this.submitObject.userId = this.producer.id;
+    console.log('submit obj built: ', this.submitObject);
   };
 
   private fillAddress(place) {
