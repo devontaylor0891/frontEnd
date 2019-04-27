@@ -69,6 +69,16 @@
                         <p class="card-text">{{ schedule.description }}</p>
                       </div>
                     </div>
+                    <div 
+                      class="row" 
+                      *ngIf="(schedule.type === 'Door-to-door Delivery') && schedule.hasFee && (!schedule.hasWaiver || (schedule.hasWaiver && (schedule.feeWaiver < order.orderDetails.orderValue)))">
+                      <div class="col-12 col-sm-3">
+                        <span class="card-text"><strong>Fee:</strong></span>
+                      </div>
+                      <div class="col-12 col-sm-9">
+                        <p class="card-text">{{ schedule.fee }}</p>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-12 col-sm-3">
                         <span class="card-text"><strong>Order Deadline:</strong></span>

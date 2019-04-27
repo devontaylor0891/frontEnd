@@ -50,13 +50,13 @@
 			<div class="row text-center">
 				<div class="col-12 col-sm-6 col-lg-4 offset-lg-1">
 					<a 
-						[routerLink]="['../../producer/' + product.producer?.id + '/schedule']" 
+						pageScroll [pageScrollDuration]="750" [routerLink]="['../../producer/' + product.producer?.id + '/']" href="#schedule"
 						class="btn btn-olf-primary btn-tight-padding">
 						View this Producer's Upcoming Schedule</a>
 				</div>
 				<div class="col-12 col-sm-6 col-lg-4 offset-lg-2">
 					<a 
-						[routerLink]="['../../producer/' + product.producer?.id]" 
+						pageScroll [pageScrollDuration]="750" [routerLink]="['../../producer/' + product.producer?.id + '/']" href="#products"
 						class="btn btn-olf-primary btn-tight-padding">
 						View All Products from this Producer</a>
 			</div>
