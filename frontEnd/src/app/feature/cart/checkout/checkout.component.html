@@ -43,7 +43,7 @@
         <div class="col-12">
           <hr>
         </div>
-        <div class="col-12 col-lg-8 offset-lg-2 card-body" *ngIf="showSchedules">
+        <div class="col-12 col-lg-10 offset-lg-1 card-body" *ngIf="showSchedules">
           <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
           <div *ngFor="let schedule of selectedSchedulesList, let i = index">
             <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
@@ -211,7 +211,7 @@
               <span class="fill-control-indicator">
                   <i class="fa fa-check"></i>
               </span>
-              <p class="card-text"><strong>I agree </strong>that Onlylocalfood.com Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
               <p class="help-block" *ngIf="agreement.touched && agreement.invalid">
                   Please read and agree to the terms and conditions to complete your order!
                 </p>
@@ -224,7 +224,7 @@
   
   
       <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2">
-        <div class="row grey lighten-2 mb-3 justify-content-center">
+        <div class="row mb-3 justify-content-center">
           <!-- <div class="col-6 p-2 text-center">
             <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
           </div>

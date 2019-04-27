@@ -101,7 +101,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     this.order.orderDetails.deliveryFee = 0;
     let index = $event;
     this.order.chosenSchedule = this.selectedSchedulesList[index];
-    if ((this.order.chosenSchedule.hasFee) && (this.order.orderDetails.orderValue < this.order.chosenSchedule.feeWaiver)) {
+    if (((this.order.chosenSchedule.hasFee) && (this.order.orderDetails.orderValue < this.order.chosenSchedule.feeWaiver)) || (this.order.chosenSchedule.hasFee) && (!this.order.chosenSchedule.hasWaiver)) {
       this.tempOrderValue = this.order.orderDetails.orderValue + this.order.chosenSchedule.fee;
       this.order.orderDetails.deliveryFee = this.order.chosenSchedule.fee;
     } else {

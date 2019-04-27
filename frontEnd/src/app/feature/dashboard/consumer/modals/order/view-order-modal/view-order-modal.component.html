@@ -76,8 +76,25 @@
                     <td>{{ product.quantity }}</td>
                     <td>{{ product.value | currency:'USD':'symbol-narrow':'1.2-2' }}</td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="record.orderDetails.deliveryFee">
+                    <td>Delivery Fee</td>
                     <td></td>
+                    <td>{{ record.orderDetails.deliveryFee | currency:'USD':'symbol-narrow':'1.2-2' }}
+                    </td>
+                  </tr>
+                  <tr *ngIf="record.orderDetails.deliveryFee">
+                    <td>
+                        <strong>Order Total</strong>
+                    </td>
+                    <td></td>
+                    <td>
+                      <strong>{{ (record.orderDetails.orderValue + record.orderDetails.deliveryFee) | currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!record.orderDetails.deliveryFee">
+                    <td>
+                        <strong>Order Total</strong>
+                    </td>
                     <td></td>
                     <td>
                       <strong>{{ record.orderDetails.orderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
