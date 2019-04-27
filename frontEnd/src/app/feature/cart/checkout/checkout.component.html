@@ -69,16 +69,22 @@
                         <p class="card-text">{{ schedule.description }}</p>
                       </div>
                     </div>
+
                     <div 
                       class="row" 
-                      *ngIf="(schedule.type === 'Door-to-door Delivery') && schedule.hasFee && (!schedule.hasWaiver || (schedule.hasWaiver && (schedule.feeWaiver < order.orderDetails.orderValue)))">
+                      *ngIf="schedule.type === 'Door-to-door Delivery'">
                       <div class="col-12 col-sm-3">
                         <span class="card-text"><strong>Fee:</strong></span>
                       </div>
-                      <div class="col-12 col-sm-9">
-                        <p class="card-text">{{ schedule.fee }}</p>
+                      <div class="col-12 col-sm-9" *ngIf="(!schedule.hasWaiver) || 
+                      (schedule.feeWaiver > order.orderDetails.orderValue)">
+                        <p class="card-text">{{ schedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+                      </div>
+                      <div class="col-12 col-sm-9" *ngIf="(schedule.hasWaiver && schedule.feeWaiver <= order.orderDetails.orderValue)">
+                        <p class="card-text">$0.00</p>
                       </div>
                     </div>
+
                     <div class="row">
                       <div class="col-12 col-sm-3">
                         <span class="card-text"><strong>Order Deadline:</strong></span>
@@ -108,6 +114,17 @@
           [product]="product" 
           [productQuantities]="order.orderDetails.productQuantities"
           ></app-checkout-product>
+
+          <div *ngIf="order.chosenSchedule">
+            <div class="row" *ngIf="order?.chosenSchedule.type === 'Door-to-door Delivery'">
+              <div class="col-9 col-md-9 col-lg-8 text-right">
+                <p>Delivery Fee:</p> 
+              </div>
+              <div class="col-3 col-md-3 col-lg-2 text-center px-0">
+                <span>{{ order.orderDetails.deliveryFee | currency:'USD':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
   
           <div class="row">
             <div class="col-9 col-md-9 col-lg-8 text-right">
