@@ -123,7 +123,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           email: [this.user.email, [Validators.required] ],
           name: [this.producer.name, [Validators.required] ],
           description: [this.producer.description],
-          customUrl: [this.customUrlObject.customUrl]
+          customUrl: [this.customUrlObject.customUrl, Validators.pattern('[a-zA-Z ]*')]
         });
       } else {
         this.producerCustomUrlExists = false;
@@ -132,7 +132,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           email: [this.user.email, [Validators.required] ],
           name: [this.producer.name, [Validators.required] ],
           description: [this.producer.description],
-          customUrl: ['']
+          customUrl: ['', Validators.pattern('[a-zA-Z ]*')]
         });
       };
       this.enableProducerFields();
@@ -145,21 +145,25 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       .debounceTime(500) // after waiting half a second
       .switchMap( // call the api, but cancel the call if a new call is made
         val => {
-          this.customUrlChanged = true;
-          this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
-            .subscribe(
-              result => {
-                if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
-                  console.log('producerId returned on check: ', result);
-                  this.customUrlDuplicateExists = true;
-                  this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
-                } else {
-                  console.log('custom url not returned');
-                  this.customUrlDuplicateExists = false;
-                  this.producerForm['controls'].customUrl.setErrors(null);
-                }
-              });
-          return val;
+          if (!this.producerForm['controls'].customUrl.errors.pattern) {
+            this.customUrlChanged = true;
+            this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
+              .subscribe(
+                result => {
+                  if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
+                    console.log('producerId returned on check: ', result);
+                    this.customUrlDuplicateExists = true;
+                    this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
+                  } else {
+                    console.log('custom url not returned');
+                    this.customUrlDuplicateExists = false;
+                    this.producerForm['controls'].customUrl.setErrors(null);
+                  }
+                });
+            return val;
+          } else {
+            return val;
+          };
         })
         .subscribe(valid => {return true});
     }
@@ -266,6 +270,10 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       });
     });    
     
+  };
+
+  get customUrl() { 
+    return this.producerForm.get('customUrl'); 
   };
 
   disableProducerFields() {

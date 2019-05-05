@@ -148,10 +148,13 @@
             <div class="row">
               <label for="customUrl" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Custom Url:</label>
               <div class="col-xs-12 col-sm-8 input-group">
-                  <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl" pattern="^[a-zA-Z0-9]*$" title="Invalid input">
+                  <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl" pattern="[a-zA-Z ]*">
                   <small>If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
                   <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
                   <small *ngIf="customUrlExists" class="help-block">That URL is already taken. Please choose another.</small>
+                  <small *ngIf="customUrl.errors && customUrl.errors.pattern" class="help-block">
+                    The custom url cannot contain numbers or special characters.
+                  </small>
               </div>
             </div>
 
