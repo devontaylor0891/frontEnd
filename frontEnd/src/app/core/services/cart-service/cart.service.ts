@@ -496,26 +496,36 @@ export class CartService implements OnDestroy {
   };
 
   buildCartAndSendOrder() {
-    // build the cart
-		let newOrder = this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress);
-		// send the cart via the api
-		console.log('finished cart: ', newOrder);
-		this.apiService.postOrder(newOrder)
-			.subscribe(
-				result => {
-          console.log('successfully posted: ', result);
-          this._orderSentSuccessfully.next(true);
-          // remove the cart contents from the cart count
-					this.dataStore.cartCount -= this.getCartCountOfSingleCart(this.sendingCartId); // unnecessary??? throws error on single cart checkout, not sure about multi
-					// remove the cart from the dataStore on success
-					this.clearCart(this.sendingCartId);
-					console.log('new cartCount: ', this.dataStore.cartCount);
-					this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-				}, error => {
-          console.log('could not add new order');
-          this._orderSentFailed.next(true);
+    console.log('sending chosen sched: ', this.sendingChosenSchedule);
+    // get the producer's email, subscribe to an api call, then continue with this function
+    this.apiService.getProducerById(this.sendingChosenSchedule.userId)
+      .subscribe(
+        result => {
+          console.log('result of get producer by id: ', result);
+          let producerEmail = result[0].email;
+          this.sendingChosenSchedule.producerEmail = producerEmail;
+          // build the cart
+          let newOrder = this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress);
+          // send the cart via the api
+          console.log('finished cart: ', newOrder);
+          this.apiService.postOrder(newOrder)
+            .subscribe(
+              result => {
+                console.log('successfully posted: ', result);
+                this._orderSentSuccessfully.next(true);
+                // remove the cart contents from the cart count
+                this.dataStore.cartCount -= this.getCartCountOfSingleCart(this.sendingCartId); // unnecessary??? throws error on single cart checkout, not sure about multi
+                // remove the cart from the dataStore on success
+                this.clearCart(this.sendingCartId);
+                console.log('new cartCount: ', this.dataStore.cartCount);
+                this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+              }, error => {
+                console.log('could not add new order');
+                this._orderSentFailed.next(true);
+              }
+            );
         }
-			);
+      );
   }
 
   getProductsCurrentQuantities(productsArray) {
