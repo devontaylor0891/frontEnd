@@ -209,12 +209,14 @@ html {
 }
 
 a {
-    color: #741b47 !important;
+    
+    color: #611437 !important;
+    font-weight: 400;
 }
 
 a:hover {
-    color: #611437 !important;
-    font-weight: 400;
+    color: #741b47 !important;
+    font-weight: 600;
 }
 
 footer.page-footer {

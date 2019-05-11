@@ -89,7 +89,7 @@
 
 <div class="container mb-5">
   
-  <section id="producerFaq" class="text-left wow fadeIn" data-wow-delay="0.2s">
+  <section id="consumerFaq" class="text-left wow fadeIn" data-wow-delay="0.2s">
     <div class="row">
       <div class="col-12">
         
@@ -111,7 +111,7 @@
                 <p>There are several benefits to joining Onlylocalfood.com:</p>
                 <ul>
                   <li>Discover - You can find new producers and products!</li>
-                  <li>Save time - Your time is valuable, and you shouldn't need to hunt around looking for local food. OLF aims to be the one-stop online shop for you. And with our location notifications, you don't even have to come to the site anymore - sign up for them and OLF will let you know when local food is coming to your area!</li>
+                  <li>Save time - Your time is valuable, and you shouldn't need to hunt around looking for local food. OLF aims to be the one-stop online shop for you. And with our location notifications, you don't even have to come to the site anymore - sign up for them <strong><a routerLink="/location-notification"><u>here</u></a></strong> and OLF will let you know when local food is coming to your area!</li>
                   <li>Pre-orders - Wouldn’t it be nice to go to a farmers’ market or roadside pickup with the products you want already ordered? So no matter what time you make it there, your order will be waiting. Don't miss out on the good stuff again!</li>
                   <li>Easy ordering - Rather than a long back-and-forth message string with a producer, you can now find all the information you need to order online with confidence. When prices, quantities, descriptions, and schedules are all transparently presented, you don't have to worry about any unexpected changes or charges.</li>
                   <li>Plan ahead - With the calendar in our search and each individual producer's calendar, you can look ahead to see what's coming and when.</li>
@@ -121,7 +121,7 @@
           </div>
         </div>
         
-        <div id="faqBasicsAccordion" role="tablist" aria-multiselectable="true">
+        <!-- <div id="faqBasicsAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
             <div class="card-header dash-accordion" role="tab" id="faqBasicsHeading">
               <h5 class="mb-0">
@@ -139,7 +139,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         
         <div id="faqDistributorAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
@@ -148,7 +148,7 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqDistributorAccordion" href="#faqDistributorCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  Is OLF the distributor?
+                  Is OLF the retailer or distributor?
                 </a>
               </h5>
             </div>
@@ -187,13 +187,13 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqWhatsAvailableAccordion" href="#faqWhatsAvailableCollapse" aria-expanded="false" aria-controls="faqWhatsAvailableCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  What's available?
+                  What's available? What if there’s nothing for sale in my area?
                 </a>
               </h5>
             </div>
             <div id="faqWhatsAvailableCollapse" class="collapse" role="tabpanel" aria-labelledby="faqWhatsAvailableHeading">
               <div class="card-block">
-                <p>Well, that depends. OLF is producer-driven, meaning that we don’t control or manipulate what is available. Availability will depend on what producers choose to sell and what’s in season.</p>
+                <p>OLF is producer-driven, meaning that we don’t control or manipulate what is available, when it's available, or where it's available. Availability will depend on what producers choose to sell, what’s in season, and where they want to sell. If you don't want to miss out when products do become available, sign up to our location notifications <strong><a routerLink="/location-notification"><u>here</u></a></strong>. Then you don't have to keep checking back. We'll send you an email when deliveries and pickups are scheduled in the locations you select.</p>
               </div>
             </div>
           </div>
@@ -235,13 +235,34 @@
             </div>
             <div id="faqDeliveryFeesCollapse" class="collapse" role="tabpanel" aria-labelledby="faqDeliveryFeesHeading">
               <div class="card-block">
-                <p>There could be. Door-to-door deliveries could have a fee attached to them, if the producer chooses. And that fee may apply to all orders, or it may be waived when a certain order value is reached. All this information will be available to see in the schedule details.</p>
+                <p>There could be. Door-to-door deliveries could have a fee attached to them, if the producer chooses. And that fee may apply to all orders, or it may be waived when a certain order value is reached. All this information will be available to see in the schedule details do you'll be aware before you order.</p>
               </div>
             </div>
           </div>
         </div>
         
         <h5 class="faq-section-header">How to Use OLF</h5>
+
+        <div id="faqSignUpAccordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <div class="card-header dash-accordion" role="tab" id="faqSignUpHeading">
+                <h5 class="mb-0">
+                  <a class="faq-toggle" data-toggle="collapse" data-parent="#faqSignUpAccordion" href="#faqSignUpCollapse" aria-expanded="false" aria-controls="faqSignUpCollapse">
+                    <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                    <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                    How do I sign up?
+                  </a>
+                </h5>
+              </div>
+              <div id="faqSignUpCollapse" class="collapse" role="tabpanel" aria-labelledby="faqSignUpHeading">
+                <div class="card-block">
+                    <p>
+                      We've made signing up easy and safe by using a third-party service that is one of the best in the business - Auth0. Simply choose 'Sign In/Register' in at the top of any page, and use your email, or Google or Facebook account to create a basic account with us. Follow the instructions and you'll be set up in no time!
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
         
         <div id="faqSearchingAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
@@ -318,25 +339,44 @@
             </div>
           </div>
         </div>
-                
-        <div id="faqAddScheduleAccordion" role="tablist" aria-multiselectable="true">
-          <div class="card">
-            <div class="card-header dash-accordion" role="tab" id="faqAddScheduleHeading">
-              <h5 class="mb-0">
-                <a class="faq-toggle" data-toggle="collapse" data-parent="#faqAddScheduleAccordion" href="#faqAddScheduleCollapse" aria-expanded="false" aria-controls="faqAddScheduleCollapse">
-                  <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
-                  <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  How do I add my schedule?
-                </a>
-              </h5>
-            </div>
-            <div id="faqAddScheduleCollapse" class="collapse" role="tabpanel" aria-labelledby="faqAddScheduleHeading">
-              <div class="card-block">
-                <p>******</p>              
+
+        <div id="faqGetOrderAccordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <div class="card-header dash-accordion" role="tab" id="faqGetOrderHeading">
+                <h5 class="mb-0">
+                  <a class="faq-toggle" data-toggle="collapse" data-parent="#faqGetOrderAccordion" href="#faqGetOrderCollapse" aria-expanded="false" aria-controls="faqGetOrderCollapse">
+                    <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                    <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                    When will I get my order?
+                  </a>
+                </h5>
+              </div>
+              <div id="faqGetOrderCollapse" class="collapse" role="tabpanel" aria-labelledby="faqGetOrderHeading">
+                <div class="card-block">
+                  <p>When you get your order is also chosen at checkout time based on the producer’s schedule. We’d suggest that you make a note of the date and time in your calendar as you check out.</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+
+        <div id="faqMultipleOrderAccordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <div class="card-header dash-accordion" role="tab" id="faqMultipleOrderHeading">
+                <h5 class="mb-0">
+                  <a class="faq-toggle" data-toggle="collapse" data-parent="#faqMultipleOrderAccordion" href="#faqMultipleOrderCollapse" aria-expanded="false" aria-controls="faqMultipleOrderCollapse">
+                    <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                    <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                    I want to buy from multiple producers, how do I do that?
+                  </a>
+                </h5>
+              </div>
+              <div id="faqMultipleOrderCollapse" class="collapse" role="tabpanel" aria-labelledby="faqMultipleOrderHeading">
+                <div class="card-block">
+                  <p>If you chose products from more than one producer, your cart will be split up into multiple carts. You will need to proceed through the checkout process for each cart.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         
         <div id="faqScheduleTypesAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
@@ -345,44 +385,68 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqScheduleTypesAccordion" href="#faqScheduleTypesCollapse" aria-expanded="false" aria-controls="faqScheduleTypesCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  What are the different types of schedules that I can/should use?
+                  What are the different schedule types that producers use?
                 </a>
               </h5>
             </div>
             <div id="faqScheduleTypesCollapse" class="collapse" role="tabpanel" aria-labelledby="faqScheduleTypesHeading">
               <div class="card-block">
                 <p>Currently, OLF uses four types of schedules: Door-to-door delivery, market pickup, on-farm pickup, and other pickups.</p>
-                <p><b>Door-to-door Delivery</b> - This is fairly self-explanatory, but you should note a couple of things: You will only be required to input a community name to set it up. Consumers will be required to provide an address when they order. If you are restricting your delivery in any way (eg. you are only delivering to the south west corner of the city), then you should indicate that in the description. You will also have the option to add a delivery fee, and the option to add it to every order, or to orders that fall below a certain dollar value.</p>
-                <p><b>Market Pickup</b> - Again, pretty easy to understand. If you want to take pre-orders for a farmers' market, this is the place to do it. Enter the community and an address if possible. Include any other details to your description.</p>
-                <p><b>On-farm Pickup</b> - Using this option, you can schedule farmgate sales.</p>
-                <p><b>Other Pickup</b> - This option will cover anything else. If you drop off orders at another location (eg. a friend's store), or if you send meat to the butcher, this will be the option to use. Including details in your description will be key to the success of these types of schedules.</p>
+                <p><b>Door-to-door Delivery</b> - This is fairly self-explanatory, but you should note a couple of things: You will be required to provide an address when you order. If the producer is restricting their delivery in any way (eg. they are only delivering to the south west corner of the city), then it should be indicated that in the description. Producers  also have the option to add a delivery fee, as well as the option to add it to every order, or to orders that fall below a certain dollar value.</p>
+                <p><b>Market Pickup</b> - Again, pretty easy to understand. If a producer is taking pre-orders for a farmers' market, this schedule type they'll use.</p>
+                <p><b>On-farm Pickup</b> - This option is for farmgate sales. Producers can set up their own schedule so you know exactly when you can show up to pick up your order. It probably wouldn't hurt to include some information in your comments at checkout - like when you expect to be there.</p>
+                <p><b>Other Pickup</b> - This option will cover anything else. If the producer is going to drop off orders at another location (eg. a friend's store), or if they send meat to the butcher, this will be the option. The details in the description will be helpful to you to better explain how the pick up will work.</p>
               </div>
             </div>
           </div>
         </div>
-        
-        <div id="faqAddDeliveryFeeAccordion" role="tablist" aria-multiselectable="true">
+
+        <div id="faqShippingAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
-            <div class="card-header dash-accordion" role="tab" id="faqAddDeliveryFeeHeading">
+            <div class="card-header dash-accordion" role="tab" id="faqShippingHeading">
               <h5 class="mb-0">
-                <a class="faq-toggle" data-toggle="collapse" data-parent="#faqAddDeliveryFeeAccordion" href="#faqAddDeliveryFeeCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
+                <a class="faq-toggle" data-toggle="collapse" data-parent="#faqShippingAccordion" href="#faqShippingCollapse" aria-expanded="false" aria-controls="faqShippingCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  Can I add a delivery fee to orders?
+                  Can you ship my order?
                 </a>
               </h5>
             </div>
-            <div id="faqAddDeliveryFeeCollapse" class="collapse" role="tabpanel" aria-labelledby="faqAddDeliveryFeeHeading">
+            <div id="faqShippingCollapse" class="collapse" role="tabpanel" aria-labelledby="faqShippingHeading">
               <div class="card-block">
-                <p>You sure can. When you choose to schedule a ‘door-to-door delivery’, you have the option to add a delivery fee. You can also choose to apply that fee to all orders, or to waive the fee when an order hits a certain dollar value.</p>
+                <p>We currently don’t offer the option for producers to ship products. This may become an option in the future.</p>
               </div>
             </div>
           </div>
         </div>
+
+        <div id="faqLocNotifAccordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <div class="card-header dash-accordion" role="tab" id="faqLocNotifHeading">
+                <h5 class="mb-0">
+                  <a class="faq-toggle" data-toggle="collapse" data-parent="#faqLocNotifAccordion" href="#faqLocNotifCollapse" aria-expanded="false" aria-controls="faqLocNotifCollapse">
+                    <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                    <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                    What’s a location notification? And how do I create one?
+                  </a>
+                </h5>
+              </div>
+              <div id="faqLocNotifCollapse" class="collapse" role="tabpanel" aria-labelledby="faqLocNotifHeading">
+                <div class="card-block">
+                    <p>
+                      You can make your search for local food a whole lot easier with our Location Notifications. Simply add one or more locations to your profile and as deliveries and pickups are scheduled near those locations, we'll send you an email telling you so! We'll do the searching for you.
+                    </p>
+                    <p>
+                      You can add Location Notifications from your account dashboard. Or, you can simply head straight <a [routerLink]="['/location-notification']"><u>here</u></a> to do it. While there, use the search to look up a community. Once you find it, click 'Add' to add it to your list. And don't forget to click 'Save' when you're done.
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
         
         <h5 class="faq-section-header">Managing Orders</h5>
         
-        <div id="faqOrderProcessAccordion" role="tablist" aria-multiselectable="true">
+        <!-- <div id="faqOrderProcessAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
             <div class="card-header dash-accordion" role="tab" id="faqOrderProcessHeading">
               <h5 class="mb-0">
@@ -406,7 +470,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         
         <div id="faqGetPaidAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
@@ -415,19 +479,57 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqGetPaidAccordion" href="#faqGetPaidCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  How do I get paid?
+                  What payment methods can I use with each producer?
                 </a>
               </h5>
             </div>
             <div id="faqGetPaidCollapse" class="collapse" role="tabpanel" aria-labelledby="faqGetPaidHeading">
               <div class="card-block">
-                <p>OLF isn’t the middleman. When you and the consumer connect via delivery or pickup, they pay you directly, not us. We'd recommend including the acceptable payment methods in your schedule descriptions.</p>
+                <p>As each producer runs their own business as they see fit, we don't control what payment methods they use. We do recommend that producers include the acceptable payment methods in their schedule descriptions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="faqModOrderAccordion" role="tablist" aria-multiselectable="true">
+          <div class="card">
+            <div class="card-header dash-accordion" role="tab" id="faqModOrderHeading">
+              <h5 class="mb-0">
+                <a class="faq-toggle" data-toggle="collapse" data-parent="#faqModOrderAccordion" href="#faqModOrderCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
+                  <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                  <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                  Can I modify my order after I have checked out?
+                </a>
+              </h5>
+            </div>
+            <div id="faqModOrderCollapse" class="collapse" role="tabpanel" aria-labelledby="faqModOrderHeading">
+              <div class="card-block">
+                <p>Your order goes through a few stages. When you first create it, it is marked ‘Pending’. Once the producer has reviewed it, they will mark it ‘Accepted’. If you need to make changes, they can only be made while it is ‘Pending’, before being accepted by the producer. If you need to order more products, you will have to create a new, separate order.</p>
               </div>
             </div>
           </div>
         </div>
         
         <h5 class="faq-section-header">Account Management</h5>
+
+        <div id="faqChangePWAccordion" role="tablist" aria-multiselectable="true">
+          <div class="card">
+            <div class="card-header dash-accordion" role="tab" id="faqChangePWHeading">
+              <h5 class="mb-0">
+                <a class="faq-toggle" data-toggle="collapse" data-parent="#faqChangePWAccordion" href="#faqChangePWCollapse" aria-expanded="false" aria-controls="faqChangePWCollapse">
+                  <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                  <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                  How do I change/reset my password?
+                </a>
+              </h5>
+            </div>
+            <div id="faqChangePWCollapse" class="collapse" role="tabpanel" aria-labelledby="faqChangePWHeading">
+              <div class="card-block">
+                <p>The third-party service we use for user/account management and security handles password resets. Get to the Auth0 widget by clicking 'Sign In/Register' at the top of any page. Near the bottom of the widget, you'll see 'Don't remember your password?'. Click that and follow the instructions.</p>
+              </div>
+            </div>
+          </div>
+        </div> 
         
         <div id="faqEditBusinessInfoAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
@@ -436,7 +538,7 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqEditBusinessInfoAccordion" href="#faqEditBusinessInfoCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  How do I edit my business information?
+                  How do I edit my account information?
                 </a>
               </h5>
             </div>
@@ -455,20 +557,20 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqDownloadTableAccordion" href="#faqDownloadTableCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  Can I download a spreadsheet of my orders, products, etc.?
+                  Can I download a spreadsheet of my orders?
                 </a>
               </h5>
             </div>
             <div id="faqDownloadTableCollapse" class="collapse" role="tabpanel" aria-labelledby="faqDownloadTableHeading">
               <div class="card-block">
-                <p>You sure can! You can download any of the tables within any of the tabs in your Account Dashboard. Simply click the ‘Export’ button located beside the table’s title. A CSV file will be downloaded. You can then open that in Excel, or any other table-based software, and begin to manipulate the data.</p>
+                <p>You sure can! You can download any of the tables in your Account Dashboard. Simply click the ‘Export’ button located beside the table’s title. A CSV file will be downloaded. You can then open that in Excel, or any other table-based software, and begin to manipulate the data.</p>
               </div>
             </div>
           </div>
         </div>
         
         <h5 class="faq-section-header">Other Questions</h5>
-        
+
         <div id="faqWhatIsLocalAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
             <div class="card-header dash-accordion" role="tab" id="faqWhatIsLocalHeading">
@@ -487,7 +589,26 @@
             </div>
           </div>
         </div>
-        
+
+        <div id="faqOrganicAccordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <div class="card-header dash-accordion" role="tab" id="faqOrganicHeading">
+                <h5 class="mb-0">
+                  <a class="faq-toggle" data-toggle="collapse" data-parent="#faqOrganicAccordion" href="#faqOrganicCollapse" aria-expanded="false" aria-controls="faqOrganicCollapse">
+                    <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                    <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                    Is the food organic?
+                  </a>
+                </h5>
+              </div>
+              <div id="faqOrganicCollapse" class="collapse" role="tabpanel" aria-labelledby="faqOrganicHeading">
+                <div class="card-block">
+                  <p>OLF doesn’t restrict the types of food available on the site. Some producers will offer organic products and some will not. The information should be easy to find in the Producer Page or product information pages.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         <div id="faqContactInfoAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
             <div class="card-header dash-accordion" role="tab" id="faqContactInfoHeading">
@@ -495,17 +616,36 @@
                 <a class="faq-toggle" data-toggle="collapse" data-parent="#faqContactInfoAccordion" href="#faqContactInfoCollapse" aria-expanded="false" aria-controls="faqHowToPayCollapse">
                   <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
                   <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
-                  Why isn’t my contact information on my producer page?
+                  Why isn’t the producer's contact information on their page/storefront?
                 </a>
               </h5>
             </div>
             <div id="faqContactInfoCollapse" class="collapse" role="tabpanel" aria-labelledby="faqContactInfoHeading">
               <div class="card-block">
-                <p>This goes back to our goal of trying to reduce the back-and-forth messaging that can come with selling food direct to the consumer. Buyers will have all the information they need to make a purchase decision right on the site itself, so we’ve made the decision to keep communication options limited. If you don’t agree with this, then we’d like to know more. You can send us a note and even ask us to call you back <a pageScroll [pageScrollDuration]="750" [routerLink]="['/']" href="#contact">here</a>.</p>
+                <p>This goes back to our goal of trying to reduce the back-and-forth messaging that can come with selling food direct. You will have all the information they need to make a purchase decision right on the site itself, so we’ve made the decision to keep communication options limited. If you don’t agree with this, then we’d like to know more. You can send us a note and even ask us to call you back <a pageScroll [pageScrollDuration]="750" [routerLink]="['/']" href="#contact"><u>here</u></a>.</p>
               </div>
             </div>
           </div>
         </div>
+
+        <div id="faqContactProducerAccordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <div class="card-header dash-accordion" role="tab" id="faqContactProducerHeading">
+                <h5 class="mb-0">
+                  <a class="faq-toggle" data-toggle="collapse" data-parent="#faqContactProducerAccordion" href="#faqContactProducerCollapse" aria-expanded="false" aria-controls="faqContactProducerCollapse">
+                    <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                    <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                    How can I contact a producer?
+                  </a>
+                </h5>
+              </div>
+              <div id="faqContactProducerCollapse" class="collapse" role="tabpanel" aria-labelledby="faqContactProducerHeading">
+                <div class="card-block">
+                  <p>Currently we are not including producer contact information on the site. All the information you need to create an order should be on OLF already. If you need more information from a producer, you can let us know and we can pass your information on to them. Simply use our contact form here.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         
         <div id="faqContactOLFAccordion" role="tablist" aria-multiselectable="true">
           <div class="card">
@@ -520,7 +660,7 @@
             </div>
             <div id="faqContactOLFCollapse" class="collapse" role="tabpanel" aria-labelledby="faqContactOLFHeading">
               <div class="card-block">
-                <p>If you need more information, we’d be happy to help. You can use our contact form <a pageScroll [pageScrollDuration]="750" [routerLink]="['/']" href="#contact">here</a>. If you’d like a call back, please include your phone number and the best time to contact you and we’ll do our best to get back to you in a timely manner.</p>
+                <p>If you need more information, we’d be happy to help. You can use our contact form <a pageScroll [pageScrollDuration]="750" [routerLink]="['/']" href="#contact"><u>here</u></a>. If you’d like a call back, please include your phone number and the best time to contact you and we’ll do our best to get back to you in a timely manner.</p>
               </div>
             </div>
           </div>
@@ -533,11 +673,11 @@
 </div>
 
         
-<div class="divider-new">
+<!-- <div class="divider-new">
   <h2 class="h2-responsive wow fadeIn" data-wow-delay="0.2s">Even more details</h2>
-</div>
+</div> -->
 
-<!-- Section -->
+<!-- Section 
 <section id="in-depth" class="text-center wow fadeIn" data-wow-delay="0.2s">
   <div class="row text-left">
     <div class="col-12 col-md-8 offset-md-2">
@@ -545,7 +685,7 @@
         <h3>Searching Explained...</h3>
         <div #step1>
           <div class="embed-responsive embed-responsive-16by9">
-            <!-- <iframe class="embed-responsive-item" autoplay="false" autostart="false" autoplay="0" autostart="0" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/videos/OnlyLocalFoodexplainer-1.mp4" allowfullscreen></iframe> -->
+            
             <video controls controlsList="nodownload" webkitallowfullscreen mozallowfullscreen allowfullscreen>
               <source src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/videos/OnlyLocalFoodexplainer-1.mp4" type="video/mp4">
               </video>
@@ -566,7 +706,6 @@
           
           <h3>Ordering Explained...</h3>
           <div #step2>
-            <!-- VIDEO SHOULD BE EMBEDDED HERE -->
             <p>
               Now that you’ve seen what’s on offer, you can <b>start building your order</b>. It’s just like ordering anything else online – start adding things to your cart! There is one special difference: because OLF is an online farmers’ market, that means when you order products from different producers, you are really creating multiple shopping carts. (What does this mean? Let us show you. – multiple carts video.)
             </p>
@@ -591,6 +730,6 @@
       </div>
     </div>
   </section>
-  <!-- Section -->
+   Section -->
   
   
