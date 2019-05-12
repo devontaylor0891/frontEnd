@@ -153,11 +153,11 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
                 result => {
                   this.customUrlChanged = true;
                   if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
-                    console.log('producerId returned on check: ', result);
+                    // console.log('producerId returned on check: ', result);
                     this.customUrlDuplicateExists = true;
                     this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
                   } else {
-                    console.log('custom url not returned');
+                    // console.log('custom url not returned');
                     this.customUrlDuplicateExists = false;
                     // this.producerForm['controls'].customUrl.setErrors(null);
                   }
@@ -173,7 +173,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.getCitySub = this.locationService.getCity()
       .subscribe(
         result => {
-          console.log('result: ', result);
+          // console.log('result: ', result);
           this.city = result;
         }
       );
@@ -181,7 +181,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.getProvinceSub = this.locationService.getProvince()
       .subscribe(
         result => {
-          console.log('result: ', result);
+          // console.log('result: ', result);
           this.province = result;
         }
       );
@@ -189,7 +189,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.getCityProvinceSub = this.locationService.getCityProvince()
       .subscribe(
         result => {
-          console.log('getting cityProvince sub');
+          // console.log('getting cityProvince sub');
           this.selectedCityProvince = result;
           
           if (!this.selectedAddress) {
@@ -198,12 +198,12 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           if (this.selectedAddress) {
             this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
           }
-          console.log('selectedLocation: ', this.selectedLocation);
-          console.log('city: ', this.city);
-          console.log('province: ', this.province);
-          console.log('streetNumber: ', this.streetNumber);
-          console.log('route: ', this.route);
-          console.log('selectedAddress: ', this.selectedAddress);
+          // console.log('selectedLocation: ', this.selectedLocation);
+          // console.log('city: ', this.city);
+          // console.log('province: ', this.province);
+          // console.log('streetNumber: ', this.streetNumber);
+          // console.log('route: ', this.route);
+          // console.log('selectedAddress: ', this.selectedAddress);
           if (this.searchElementRef) {
             this.searchElementRef.nativeElement.value = this.selectedLocation;
           }
@@ -217,9 +217,9 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           if (result) {
             this.selectedAddress = result;
             this.address = result;
-            console.log('address service: ', result);
+            // console.log('address service: ', result);
           // } else {
-          //   console.log('no address returned')
+            console.log('no address returned')
           }
           
         }
@@ -259,7 +259,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
             return;
           }
 
-          console.log('place: ', place);
+          // console.log('place: ', place);
           this.fillAddress(place);
 
           // set latitude, longitude and zoom
@@ -298,8 +298,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
   onSubmit(form: any, userType) {
     this.submitting = true;
-    console.log('form value: ', form.value);
-    console.log('user id: ', this.user.id);
+    // console.log('form value: ', form.value);
+    // console.log('user id: ', this.user.id);
     // test which user type
     if (userType === 'consumer') { // if consumer - patch user as normal
       this.apiService.patchUser(this.user.id, form.value) // patch the user basic data
@@ -333,16 +333,16 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       if (this.customUrlObject) {
         this.customUrlId = this.customUrlObject.id;
       }
-      console.log('producerData: ', producerData);
-      console.log('userData: ', userData);
+      // console.log('producerData: ', producerData);
+      // console.log('userData: ', userData);
       if (this.customUrlChanged) {
         if (this.producerCustomUrlExists) {
           this.apiService.updateCustomUrl(this.customUrlId, customUrlData)
             .subscribe(
               result => {
-                console.log('custom url update id: ', this.customUrlId)
-                console.log('custom url update data: ', this.customUrlObject)
-                console.log('custom url update result: ', result)
+                // console.log('custom url update id: ', this.customUrlId)
+                // console.log('custom url update data: ', this.customUrlObject)
+                // console.log('custom url update result: ', result)
               }
             ),
             err => this.handleSubmitError(err)
@@ -350,8 +350,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           this.apiService.createCustomUrl(customUrlData)
           .subscribe(
             result => {
-              console.log('custom url update data: ', this.customUrlObject)
-              console.log('custom url update result: ', result)
+              // console.log('custom url update data: ', this.customUrlObject)
+              // console.log('custom url update result: ', result)
             }
           ),
           err => this.handleSubmitError(err)
@@ -360,11 +360,11 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       this.apiService.patchUser(this.user.id, userData)
         .subscribe(
           result => {
-            console.log('successfully patched user: ', result);
+            // console.log('successfully patched user: ', result);
             this.apiService.patchProducer(this.user.id, producerData)
               .subscribe(
                 res => {
-                  console.log('producer successfully patched: ', res);
+                  // console.log('producer successfully patched: ', res);
                   this.handleSubmitSuccess(res)
                 },
                 err => this.handleSubmitError(err)
@@ -397,7 +397,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     };
     this.latitude = this.lat;
     this.longitude = this.lng;
-    console.log('new selected address: ', this.selectedAddress);
+    // console.log('new selected address: ', this.selectedAddress);
   };
 
   private parseAddressComponents(components) {
@@ -413,7 +413,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         }
         if (result === 'locality' || result === 'sublocality') {
           this.city = components[i].short_name;
-          console.log('city: ', this.city);
+          // console.log('city: ', this.city);
         }
         if (result === 'administrative_area_level_1') {
           this.province = components[i].short_name;
@@ -485,11 +485,11 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   onDeleteUser() {
-    console.log('delete user account clicked');
+    // console.log('delete user account clicked');
     this.apiService.deleteUser(this.user.id, this.user)
       .subscribe(
         result => {
-          console.log('user deleted: ', result);
+          // console.log('user deleted: ', result);
           this.activeModal.close();
           this.router.navigateByUrl('/');
         }

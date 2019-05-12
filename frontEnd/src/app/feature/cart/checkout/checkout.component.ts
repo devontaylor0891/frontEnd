@@ -65,7 +65,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     // make the changes in the cart in the background
     this.cartService.updateProductQuantitiesToQtyAvailable(this.id, orderQuantities);
     const modalRef = this.modal.open(CheckoutWarningModalComponent, this.ngbModalOptions);
-    console.log('orderqtys pushed into modal: ', orderQuantities);
+    // console.log('orderqtys pushed into modal: ', orderQuantities);
     modalRef.componentInstance.orderQuantities = orderQuantities;
     modalRef.componentInstance.goToCart
       .subscribe(
@@ -76,7 +76,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     modalRef.componentInstance.changesAccepted
       .subscribe(
         result => {
-          console.log(result);
+          // console.log(result);
           // changes may already be propagated to the cart
           // need to get the changes from the cart
           // this.order = this.cartService.getCartById();
@@ -107,7 +107,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.tempOrderValue = this.order.orderDetails.orderValue;
     }
-    console.log('order: ', this.order);
+    // console.log('order: ', this.order);
   }
 
   returnSchedules(community) {
@@ -130,7 +130,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   onLogin(e) {
-    console.log('cart stored from checkout');
+    // console.log('cart stored from checkout');
     this.storeCart();
     this.authService.login(this.id);
     e.preventDefault();
@@ -150,13 +150,13 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         result => {
           if (result === undefined) {
-            console.log('no datastore');
+            // console.log('no datastore');
             this.dataStoreExists = false;
           } else {
-            console.log('datastore exists');
+            // console.log('datastore exists');
             this.dataStoreExists = true;
             this.order = result;
-            console.log('result by id: ', result);
+            // console.log('result by id: ', result);
             // set the temporary order value from the order details
             this.tempOrderValue = this.order.orderDetails.orderValue;
           }
@@ -171,7 +171,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
           this.isLoggedIn = result;
           // if they are logged in, load the carts from local storage into datastore
           if (this.isLoggedIn && !this.dataStoreExists) {
-            console.log('retrieve carts called');
+            // console.log('retrieve carts called');
             this.cartService.retrieveCarts();
           } else {
 
@@ -191,7 +191,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     this.orderQuantityOkaySub = this.cartService.getOrderQuantityOkay()
       .subscribe(
         result => {
-          console.log('orderstatussub: ', result);
+          // console.log('orderstatussub: ', result);
           this.orderQuantityOkay = result;
         }
       );
@@ -199,7 +199,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     this.orderQuantitiesToChangeSub = this.cartService.getOrderQuantitiesToChange()
       .subscribe(
         result => {
-          console.log('orderqtystochange: ', result);
+          // console.log('orderqtystochange: ', result);
           this.orderQuantitiesToChange = result;
           // make the changes automatically to the cart
           // throw an alert notifying the user that they will have to reconfirm
@@ -207,10 +207,10 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
             this.openModal(this.orderQuantitiesToChange);
             // let retVal = confirm('orderqtystochange?' + result.toString());
             // if (retVal === true) {
-            //   console.log('User wants to continue!');
+              // console.log('User wants to continue!');
             //   return true;
             // } else {
-            //   console.log('User does not want to continue!');
+              // console.log('User does not want to continue!');
             //   return false;
             // }
           }
@@ -220,7 +220,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     this.orderSuccessSub = this.cartService.getOrderSentSuccessfully()
       .subscribe(
         result => {
-          console.log('orderSuccess: ', result);
+          // console.log('orderSuccess: ', result);
           this.orderSuccess = result;
           if (this.orderSuccess) {
             this.router.navigateByUrl('confirmation');
@@ -231,10 +231,10 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     this.orderFailureSub = this.cartService.getOrderSentFailed()
       .subscribe(
         result => {
-          console.log('order send failed result: ', result);
+          // console.log('order send failed result: ', result);
           this.orderFailed = result;
           if (this.orderFailed) {
-            console.log('order send failed, do something');
+            // console.log('order send failed, do something');
           };
         }
       )

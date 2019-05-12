@@ -87,8 +87,8 @@ export class SearchService implements OnInit {
     this.apiService.getSearchResults(searchOptions)
       .subscribe(
         response => {
-          console.log('************searchoptions: ', searchOptions);
-          console.log('response for search: ', response);
+          // console.log('************searchoptions: ', searchOptions);
+          // console.log('response for search: ', response);
           if (this.isEmpty(response)) {
             // no results were returned
             this.zeroSearchResultsReturned = true;
@@ -107,7 +107,7 @@ export class SearchService implements OnInit {
             this._categories.next(Object.assign({}, this.dataStore).categories);
             this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
             this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
-            console.log('no results from search');
+            // console.log('no results from search');
           } else {
             // the response contains results
             this.zeroSearchResultsReturned = false;
@@ -119,7 +119,7 @@ export class SearchService implements OnInit {
             this.dataStore.originalSearchResults = JSON.parse(JSON.stringify(sortedResponse));
             this.dataStore.searchResults = JSON.parse(JSON.stringify(sortedResponse));
             this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(sortedResponse));
-            console.log('searchResults: ', this.dataStore.filteredSearchResults);
+            // console.log('searchResults: ', this.dataStore.filteredSearchResults);
             this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
             this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
             this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
@@ -420,7 +420,7 @@ export class SearchService implements OnInit {
   //   // ditto for deliveries
   //   filteredResults.schedules = this.addDeliveriesFromProducerArrayAndScheduleType(filteredResults.producers, delArray);
   //   // this._searchDeliveries.next(filteredDeliveries);
-  //   console.log('filtered Results: ', filteredResults);
+    // console.log('filtered Results: ', filteredResults);
   //   this._searchResults.next(filteredResults);
     
   // };
@@ -441,7 +441,7 @@ export class SearchService implements OnInit {
 
     resultsFilteredByCategory = this.filterByCategories(resultsFilteredBySched, delArray, catArray);
 
-    console.log('filtered Results: ', resultsFilteredByCategory);
+    // console.log('filtered Results: ', resultsFilteredByCategory);
     this._searchResults.next(resultsFilteredByCategory);
     
   };
@@ -517,12 +517,12 @@ export class SearchService implements OnInit {
   };
 
   filterByDistance(distance, latitude, longitude) {
-    console.log('distance selected: ', distance);
-    console.log('lat: ', latitude);
-    console.log('lng: ', longitude);
+    // console.log('distance selected: ', distance);
+    // console.log('lat: ', latitude);
+    // console.log('lng: ', longitude);
     // if distance is 25, simply emit the original datastore results
     if (distance === 25) {
-      console.log('return original search results: ', this.dataStore);
+      // console.log('return original search results: ', this.dataStore);
       this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(this.dataStore.originalSearchResults));
       this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
       this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
@@ -557,10 +557,10 @@ export class SearchService implements OnInit {
       // longitude boundaries (longitude gets smaller when latitude increases)
       maxlng = longitude + this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
       minlng = longitude - this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
-      console.log('maxlat: ', maxlat);
-      console.log('maxlng: ', maxlng);
-      console.log('minlat: ', minlat);
-      console.log('minlng: ', minlng);
+      // console.log('maxlat: ', maxlat);
+      // console.log('maxlng: ', maxlng);
+      // console.log('minlat: ', minlat);
+      // console.log('minlng: ', minlng);
       // and return the list of scheds
       let returnedScheds = [];
       let producerIdArray = [];
@@ -571,7 +571,7 @@ export class SearchService implements OnInit {
       let schedLngInCircle: boolean = false;
       // loop through each sched in the current datastore
       this.dataStore.searchResults.schedules.forEach((sched) => {
-        console.log('sched: ', sched);
+        // console.log('sched: ', sched);
         schedLat = sched.latitude;
         schedLng = sched.longitude;
         // create an array of producer ids
@@ -580,7 +580,7 @@ export class SearchService implements OnInit {
         } else if (producerIdArray.indexOf(sched.producerId) === -1) {
             producerIdArray.push(sched.producerId);
         };
-        console.log('producerIds: ', producerIdArray);
+        // console.log('producerIds: ', producerIdArray);
         if (schedLat >= minlat && schedLat <= maxlat) {
           schedLatInCircle = true;
         };
@@ -590,8 +590,8 @@ export class SearchService implements OnInit {
         if (schedLatInCircle && schedLngInCircle) {
           returnedScheds.push(sched);
         };
-        console.log('schedsarray: ', returnedScheds);
-        console.log('datastore check: ', this.dataStore);
+        // console.log('schedsarray: ', returnedScheds);
+        // console.log('datastore check: ', this.dataStore);
       });
       // using the producerIdArray, return the producers
       producerIdArray.forEach((id) => {
@@ -607,23 +607,23 @@ export class SearchService implements OnInit {
           }
         }; 
       });
-      console.log('datastore check: ', this.dataStore);
+      // console.log('datastore check: ', this.dataStore);
       // emit the values
       this.dataStore.filteredSearchResults.schedules = returnedScheds;
       this.dataStore.filteredSearchResults.producers = returnedProducers;
       this.dataStore.filteredSearchResults.products = returnedProducts;
-      console.log('datastore check: ', this.dataStore);
+      // console.log('datastore check: ', this.dataStore);
       this.dataStore.deliveryTypes = this.addDeliveryTypes(returnedScheds);
       this.dataStore.categories = this.addCategories(returnedProducts);
       this.dataStore.searchProducers = returnedProducers;
       this.dataStore.searchDeliveries = returnedScheds;
-      console.log('datastore check: ', this.dataStore);
+      // console.log('datastore check: ', this.dataStore);
       this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
       this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
       this._categories.next(Object.assign({}, this.dataStore).categories);
       this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
       this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
-      console.log('datastore check: ', this.dataStore);
+      // console.log('datastore check: ', this.dataStore);
     }
   };
 
@@ -645,8 +645,8 @@ export class SearchService implements OnInit {
   };
 
   containDelivery(product, deliveriesArray) {
-    console.log('product: ', product)
-    console.log('deliveriesArray: ', deliveriesArray)
+    // console.log('product: ', product)
+    // console.log('deliveriesArray: ', deliveriesArray)
 	  for (let i = 0; i < deliveriesArray.length; i++) {
 		  for (let j = 0; j < product.scheduleList.length; j++) {
 			  if (product.scheduleList[j].type === deliveriesArray[i]) {

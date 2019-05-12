@@ -40,7 +40,7 @@ export class UtilityService {
     
     // loop through each order in the array
     for (let i = 0; i < objArray.length; i++) {
-      console.log('objectArr: ', objArray[i]); // **********************************************
+      // console.log('objectArr: ', objArray[i]); // **********************************************
       startDateTime = new Date(objArray[i].startDateTime);
       endDateTime = new Date(objArray[i].endDateTime);
       orderDeadlineDateTime = new Date(objArray[i].orderDeadline);
@@ -82,10 +82,10 @@ export class UtilityService {
       line = line.toString();
       // append the new line to the returnString
       returnString += line + '\r\n';
-      console.log('line this iteration: ', line);
+      // console.log('line this iteration: ', line);
     };
     // return the entire string
-    console.log('string: ', returnString);
+    // console.log('string: ', returnString);
     return returnString;
   };
 
@@ -118,7 +118,7 @@ export class UtilityService {
     
     // loop through each order in the array
     for (let i = 0; i < objArray.length; i++) {
-      console.log('objectArr: ', objArray[i]); // **********************************************
+      // console.log('objectArr: ', objArray[i]); // **********************************************
       id = objArray[i].id;
       name = objArray[i].name;
       description = objArray[i].description;
@@ -158,10 +158,10 @@ export class UtilityService {
       line = line.toString();
       // append the new line to the returnString
       returnString += line + '\r\n';
-      console.log('line this iteration: ', line);
+      // console.log('line this iteration: ', line);
     };
     // return the entire string
-    console.log('string: ', returnString);
+    // console.log('string: ', returnString);
     return returnString;
   };
 
@@ -199,7 +199,7 @@ export class UtilityService {
       productTotalCost;
     // loop through each order in the array
     for (let i = 0; i < objArray.length; i++) {
-      console.log('objectArr: ', objArray[i]); // **********************************************
+      // console.log('objectArr: ', objArray[i]); // **********************************************
       // break out the basic object information
       id = objArray[i].id;
       createdDate = new Date(objArray[i].orderDetails.createdDate);
@@ -250,7 +250,7 @@ export class UtilityService {
         line = line.toString();
         // append the new line to the returnString
         returnString += line + '\r\n';
-        console.log('line this iteration: ', line);
+        // console.log('line this iteration: ', line);
       }
       
       
@@ -258,8 +258,8 @@ export class UtilityService {
 
       // for (let j = 0; j < lineValues.length; j++) {
       //   if (typeof lineValues[j] === 'object') {
-      //     console.log('linevalue[j]: ', lineValues[j]);
-      //     console.log('typeof: ', typeof lineValues[j])
+          // console.log('linevalue[j]: ', lineValues[j]);
+          // console.log('typeof: ', typeof lineValues[j])
       //     lineValues[j] = lineValues[j].name;
       //   }
       // }
@@ -273,29 +273,29 @@ export class UtilityService {
     // let values;
     // for (let i = 0; i < objArray.length; i++) {
     //   let line = '';
-    //   console.log('objectArr: ', objArray[i]); // **********************************************
+      // console.log('objectArr: ', objArray[i]); // **********************************************
     //   let lineValues = Object.keys(objArray[i]).map(key => objArray[i][key]);
 
     //   for (let j = 0; j < lineValues.length; j++) {
     //     if (typeof lineValues[j] === 'object') {
-    //       console.log('linevalue[j]: ', lineValues[j]);
-    //       console.log('typeof: ', typeof lineValues[j])
+          // console.log('linevalue[j]: ', lineValues[j]);
+          // console.log('typeof: ', typeof lineValues[j])
     //       lineValues[j] = lineValues[j].name;
     //     }
     //   }
-    //   console.log('linevalues: ', lineValues);
+      // console.log('linevalues: ', lineValues);
     //   let commaJoinedValues = lineValues.join(",");
     //   commaJoinedValues = commaJoinedValues.replace(/\r\n|\r|\n/gm, ' '); // replace carriage returns with spaces 
-    //   console.log('cjv: ', commaJoinedValues);
+      // console.log('cjv: ', commaJoinedValues);
     //   returnString += commaJoinedValues + '\r\n';
     // }
-    console.log('string: ', returnString);
+    // console.log('string: ', returnString);
     return returnString;
   };
 
   convertAndDownload(yourData, recordType) {
-    console.log('recordtype: ', recordType);
-    console.log('data received: ', yourData);
+    // console.log('recordtype: ', recordType);
+    // console.log('data received: ', yourData);
     let csvData, fileName;
     if (recordType === 'schedule') {
       fileName = 'schedules.csv';
@@ -322,9 +322,9 @@ export class UtilityService {
   };
 
   removeByAttribute(array, attribute, value) {
-    console.log('array: ', array);
-    console.log('attribute: ', attribute);
-    console.log('value: ', value);
+    // console.log('array: ', array);
+    // console.log('attribute: ', attribute);
+    // console.log('value: ', value);
     if (array) {
       let i = array.length;
       while (i--) {
@@ -335,7 +335,7 @@ export class UtilityService {
               array.splice(i,1);
          }
       }
-      console.log('array after: ', array);
+      // console.log('array after: ', array);
       return array;
     } else {
       return null;
@@ -346,8 +346,8 @@ export class UtilityService {
     let returnValue;
     for (let i = 0; i < array.length; i++) {
       if (array[i][lookupAttribute] === lookupValue) {
-        console.log('lookup attribute: ', array[i][lookupAttribute]);
-        console.log('lookup value: ', lookupValue)
+        // console.log('lookup attribute: ', array[i][lookupAttribute]);
+        // console.log('lookup value: ', lookupValue)
         returnValue = array[i][returnAttibute];
       }
     }

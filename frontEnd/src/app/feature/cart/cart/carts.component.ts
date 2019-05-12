@@ -32,7 +32,7 @@ export class CartsComponent implements OnInit, OnChanges {
 
     this.cartService.loadCarts();
 
-    console.log('carts: ', this.carts);
+    // console.log('carts: ', this.carts);
     
   }
 

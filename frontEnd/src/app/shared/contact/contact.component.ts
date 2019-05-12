@@ -34,7 +34,7 @@ export class ContactComponent implements OnInit {
   }
 
   handleSubmit() {
-    console.log('form: ', this.myGroup);
+    // console.log('form: ', this.myGroup);
     let emailObject = {
       name: this.myGroup.value.name,
       email: this.myGroup.value.email,

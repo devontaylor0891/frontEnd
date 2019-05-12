@@ -157,7 +157,7 @@ export class ProducerProductsComponent implements OnInit {
   };
 
   onProductRenewed($event) { // move from obsolete to out of stock
-    console.log('product renewed: ', $event.id);
+    // console.log('product renewed: ', $event.id);
     this.utilityService.removeByAttribute(this.obsoletedProducts, 'id', $event.id);
     this.obsoletedProducts = this.obsoletedProducts.slice();
     // add to obsoleted array

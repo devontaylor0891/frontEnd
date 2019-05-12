@@ -59,9 +59,9 @@ export class ConsumerEditOrderModalComponent implements OnInit {
       newProduct.value = array[i].orderValue;
       newProduct.name = this.getProductName(newProduct.id);
       let cloneProduct = {...newProduct};
-      console.log('newProduct: ,', newProduct)
+      // console.log('newProduct: ,', newProduct)
       this.products.push(cloneProduct);
-      console.log('products: ', this.products);
+      // console.log('products: ', this.products);
     }
     // use the id to get the name from the productList array
   };
@@ -69,7 +69,7 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   getProductName(id) {
     for (let j = 0; j < this.record.productList.length; j++) {
       if (this.record.productList[j].id === id) {
-        console.log('id and name: ', id + ' ' + this.record.productList[j].name);
+        // console.log('id and name: ', id + ' ' + this.record.productList[j].name);
         return this.record.productList[j].name;
       }
     }
@@ -131,7 +131,7 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   onSubmit() {
     this.submitting = true;
     this.setSubmitObject();
-    console.log('submitted object: ', this.submitObject);
+    // console.log('submitted object: ', this.submitObject);
     this.submitOrderSub = this.api
       .putOrder(this.record.id, this.submitObject)
       .subscribe(
@@ -152,7 +152,7 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   
   handleSubmitSuccess(res) {
     this.submitting = false;
-    console.log('put!: ', res);
+    // console.log('put!: ', res);
     // close modal
     this.activeModal.close();
   };
@@ -166,7 +166,7 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   handleDeleteSuccess(res) {
     this.submitting = false;
     this.onOrderDeleted.emit(this.record.id);
-    console.log('deleted!: ', res);
+    // console.log('deleted!: ', res);
     // close modal
     this.activeModal.close();
   };

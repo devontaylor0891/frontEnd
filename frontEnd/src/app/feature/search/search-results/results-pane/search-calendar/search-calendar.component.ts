@@ -84,8 +84,8 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    console.log('action: ', action);
-    console.log('event: ', event);
+    // console.log('action: ', action);
+    // console.log('event: ', event);
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -124,8 +124,8 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           this.events = [];
-          console.log('result.scheds:');
-          console.log(result.schedules);
+          // console.log('result.scheds:');
+          // console.log(result.schedules);
           let data = result.schedules;
           data.forEach((result) => {
             this.events.push({

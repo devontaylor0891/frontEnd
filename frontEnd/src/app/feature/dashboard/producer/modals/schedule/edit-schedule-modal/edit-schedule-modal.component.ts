@@ -69,7 +69,7 @@ export class EditScheduleModalComponent implements OnInit {
 				public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    console.log('this sched: ', this.record);
+    // console.log('this sched: ', this.record);
     	  // break out the dates/times from the incoming record so they can be used in the form
     this.breakUpDatesTimes();
 	  this.setHasOrders();
@@ -91,13 +91,13 @@ export class EditScheduleModalComponent implements OnInit {
   };
   
   private setHasOrders() {
-    console.log('record: ', this.record);
+    // console.log('record: ', this.record);
 	  if (this.record.orderCount > 0) {
 		  this.hasOrders = true;
 	  } else {
 		  this.hasOrders = false;
     }
-    console.log('hasOrders: ', this.hasOrders);
+    // console.log('hasOrders: ', this.hasOrders);
   }
   
   private setDateTimes() {
@@ -144,7 +144,7 @@ export class EditScheduleModalComponent implements OnInit {
       .valueChanges
       .subscribe(data => this.onValueChanged());
 
-    console.log('form: ', this.scheduleForm);
+    // console.log('form: ', this.scheduleForm);
   };
   
   onValueChanged() {
@@ -168,7 +168,7 @@ export class EditScheduleModalComponent implements OnInit {
   onSubmit() {
 	  this.submitting = true;
     this.setSubmitObject();
-    console.log('submitted object: ', this.submitObject);
+    // console.log('submitted object: ', this.submitObject);
 		this.submitScheduleSub = this.api
 			.putSchedule(this.record.id, this.submitObject)
 			.subscribe(

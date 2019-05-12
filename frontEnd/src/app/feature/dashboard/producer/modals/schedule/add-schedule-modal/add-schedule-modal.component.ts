@@ -126,12 +126,12 @@ export class AddScheduleModalComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
-    console.log('startTime (noon): ', this.startTimeMoment);
-    console.log('endTime (1pm): ', this.endTimeMoment);
-    console.log('deadline (12am tomorrow): ', this.deadlineDateTime);
-    console.log('minimum date (tomorrow): ', this.DateMomentMin);
-    console.log('max deadline (same as dateMoment): ', this.deadlineDateTimeMax);
+    // console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
+    // console.log('startTime (noon): ', this.startTimeMoment);
+    // console.log('endTime (1pm): ', this.endTimeMoment);
+    // console.log('deadline (12am tomorrow): ', this.deadlineDateTime);
+    // console.log('minimum date (tomorrow): ', this.DateMomentMin);
+    // console.log('max deadline (same as dateMoment): ', this.deadlineDateTimeMax);
 
     // set google maps defaults
     this.zoom = 4;
@@ -144,7 +144,7 @@ export class AddScheduleModalComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
-      console.log('google.maps: ', google.maps);
+      // console.log('google.maps: ', google.maps);
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["geocode"]
       });
@@ -158,7 +158,7 @@ export class AddScheduleModalComponent implements OnInit {
             return;
           }
 
-          console.log('place: ', place);
+          // console.log('place: ', place);
           this.fillAddress(place);
 
           // set latitude, longitude and zoom
@@ -182,14 +182,14 @@ export class AddScheduleModalComponent implements OnInit {
 
     this.onChanges();
 
-    console.log('form value: ', this.form.value);
+    // console.log('form value: ', this.form.value);
 
   };
 
   onChanges() {
     this.form.get('type').valueChanges.subscribe(val => {
       if (val === 'On-farm Pickup') {
-        console.log('on farm pickup selected, form value before: ', this.form.value);
+        // console.log('on farm pickup selected, form value before: ', this.form.value);
         this.submitObject.latitude = this.latitude;
         this.submitObject.longitude = this.longitude;
         this.submitObject.address = this.producer.address;
@@ -203,14 +203,14 @@ export class AddScheduleModalComponent implements OnInit {
           city: this.producer.location,
           province: this.producer.province
         });
-        console.log('on farm pickup selected, form value after: ', this.form.value);
+        // console.log('on farm pickup selected, form value after: ', this.form.value);
       }
     });
     this.form.get('hasFee').valueChanges.subscribe(val => {
-      console.log('has fee changed: ', this.form.value);
+      // console.log('has fee changed: ', this.form.value);
     });
     this.form.get('hasWaiver').valueChanges.subscribe(val => {
-      console.log('has delfee changed: ', this.form.value);
+      // console.log('has delfee changed: ', this.form.value);
     });
   };
 
@@ -230,18 +230,18 @@ export class AddScheduleModalComponent implements OnInit {
       this.apiService.postSchedule(this.submitObject)
       .subscribe(
         result => {
-          console.log('emitting: ', result);
+          // console.log('emitting: ', result);
           this.itemCreated.emit(result);
         }
       );
     } else {
-      console.log('datesArray: ', this.datesArray);
+      // console.log('datesArray: ', this.datesArray);
       for (let i = 0; i < this.datesArray.length; i++) {
         this.buildRepeatSubmitObject(i, this.form.value.deadlineCalcHours);
         this.apiService.postSchedule(this.submitObject)
           .subscribe(
             result => {
-              console.log('emitting: ', result);
+              // console.log('emitting: ', result);
               this.itemCreated.emit(result);
             }
           );
@@ -318,7 +318,7 @@ export class AddScheduleModalComponent implements OnInit {
     this.submitObject.feeWaiver = this.form.value.feeWaiver;
     this.submitObject.orderList = [];
     this.submitObject.userId = this.producer.id;
-    console.log('submit obj built: ', this.submitObject);
+    // console.log('submit obj built: ', this.submitObject);
   };
 
   private fillAddress(place) {
@@ -332,14 +332,14 @@ export class AddScheduleModalComponent implements OnInit {
       latitude: this.lat,
       longitude: this.lng
     });
-    console.log('lat fn: ', place.geometry.location.lat());
+    // console.log('lat fn: ', place.geometry.location.lat());
     if (this.streetNumber && this.route) {
       this.noAddress = false;
       this.form.value.address = this.streetNumber + ' ' + this.route;
       this.submitObject.address = this.streetNumber + ' ' + this.route;
     };
     if (this.route && !this.streetNumber) {
-      console.log('no streetnumber');
+      // console.log('no streetnumber');
       this.noAddress = true;
     };
     // this.form.value.city = this.city;
@@ -352,8 +352,8 @@ export class AddScheduleModalComponent implements OnInit {
     // this.form.value.longitude = this.lng;
     this.submitObject.latitude = this.lat;
     this.submitObject.longitude = this.lng;
-    console.log('lat in submit obj: ', this.submitObject.latitude);
-    console.log('form after location choice: ', this.form);
+    // console.log('lat in submit obj: ', this.submitObject.latitude);
+    // console.log('form after location choice: ', this.form);
   };
 
   private clearAddress() {
@@ -400,7 +400,7 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseDate() {
-    console.log('new dateMoment: ', this.dateMoment);
+    // console.log('new dateMoment: ', this.dateMoment);
     // set the scheduled day, month, year
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
@@ -414,11 +414,11 @@ export class AddScheduleModalComponent implements OnInit {
     this.deadlineDateTime.setMonth(this.schedMonth);
     this.deadlineDateTime.setDate(this.schedDay);
     this.deadlineDateTime = new Date(this.deadlineDateTime);
-    console.log('new deadline: ', this.deadlineDateTime);
+    // console.log('new deadline: ', this.deadlineDateTime);
     this.deadlineDateTimeMax.setFullYear(this.schedYear);
     this.deadlineDateTimeMax.setMonth(this.schedMonth);
     this.deadlineDateTimeMax.setDate(this.schedDay);
-    console.log('new deadline max: ', this.deadlineDateTimeMax);
+    // console.log('new deadline max: ', this.deadlineDateTimeMax);
     this.dateChosen = true;
   };
 
@@ -439,7 +439,7 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseStartTime() {
-    console.log('starttime chosen: ', this.startTimeMoment);
+    // console.log('starttime chosen: ', this.startTimeMoment);
     this.schedStartHour = this.startTimeMoment.getHours();
     this.schedStartMinute = this.startTimeMoment.getMinutes();
     // create new deadline date object to update the view
@@ -451,10 +451,10 @@ export class AddScheduleModalComponent implements OnInit {
       this.schedStartMinute,
       0
     );
-    console.log('new deadline datetime: ', this.deadlineDateTime);
+    // console.log('new deadline datetime: ', this.deadlineDateTime);
     this.deadlineDateTimeMax.setHours(this.schedStartHour);
     this.deadlineDateTimeMax.setMinutes(this.schedStartMinute);
-    console.log('new deadline max: ', this.deadlineDateTimeMax);
+    // console.log('new deadline max: ', this.deadlineDateTimeMax);
     // set end time and end time min
     this.endTimeMoment = new Date(0, 0, 0, this.schedStartHour + 1, this.schedStartMinute, 0, 0);
     this.onChooseEndTime();

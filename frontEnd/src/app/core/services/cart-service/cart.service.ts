@@ -113,11 +113,11 @@ export class CartService implements OnDestroy {
   }
 
   loadCartById(id) {
-    console.log('load cart by id called: ', id);
+    // console.log('load cart by id called: ', id);
     let cartToLoad: any;
     this.dataStore.carts.forEach(
       (cart) => {
-        console.log('cart now: ', cart);
+        // console.log('cart now: ', cart);
         if (cart.tempId === id) {
           cartToLoad = cart;
         }
@@ -125,16 +125,16 @@ export class CartService implements OnDestroy {
     )
     // this._cart.next(Object.assign({}, this.dataStore).carts[id]);
     this._cart.next(Object.assign(cartToLoad));
-    console.log('datastore: ', this.dataStore);
+    // console.log('datastore: ', this.dataStore);
   }
 
   getCartIndex(tempId) {
     let cartIndex;
-    console.log('getting cart Index');
+    // console.log('getting cart Index');
     for (let i = 0; i < this.dataStore.carts.length; i++) {
-      console.log('cart looping now: ', this.dataStore.carts[i]);
-      console.log('tempId: ', tempId);
-      console.log('cart temp id: ', this.dataStore.carts[i].tempId);
+      // console.log('cart looping now: ', this.dataStore.carts[i]);
+      // console.log('tempId: ', tempId);
+      // console.log('cart temp id: ', this.dataStore.carts[i].tempId);
       if (this.dataStore.carts[i].tempId === tempId) {
         cartIndex = i;
       }
@@ -171,14 +171,14 @@ export class CartService implements OnDestroy {
   }
 
   // loadCommunityList(id) {
-  //   console.log('id from checkout comp: ', id);
-  //   console.log('loadComm List datastore currently: ', this.dataStore);
+    // console.log('id from checkout comp: ', id);
+    // console.log('loadComm List datastore currently: ', this.dataStore);
   //   this._communityList.next(Object.assign({}, this.dataStore).schedulesArray[id].communityList);
   // }
 
   // called from checkout component to load the list of communities in the dropdown
   loadCommunityList(producerId) {
-    console.log('load communityList by id called: ', producerId);
+    // console.log('load communityList by id called: ', producerId);
     let communityListToLoad: any;
     this.dataStore.schedulesArray.forEach(
       (schedule) => {
@@ -189,7 +189,7 @@ export class CartService implements OnDestroy {
     );
     // this._cart.next(Object.assign({}, this.dataStore).carts[id]);
     this._communityList.next(Object.assign(communityListToLoad));
-    console.log('datastore: ', this.dataStore);
+    // console.log('datastore: ', this.dataStore);
   ;}
 
 
@@ -198,7 +198,7 @@ export class CartService implements OnDestroy {
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
   addToCart(product, quantity) {
-    console.log('adding to cart datastore: ', this.dataStore);
+    // console.log('adding to cart datastore: ', this.dataStore);
 
     // calculate the total value of this addition
   	let productValue = this.calculateProductOrderValue(product, quantity);
@@ -270,7 +270,7 @@ export class CartService implements OnDestroy {
     // increase the cartCount
     this.dataStore.cartCount += quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-    console.log('dataStore: ', this.dataStore);
+    // console.log('dataStore: ', this.dataStore);
     // if a timer currently exists, clear it, start a new timer
     // this.restartTimer();
   };
@@ -320,11 +320,11 @@ export class CartService implements OnDestroy {
         };
       };
     };
-    console.log('cart: ', cart); // works
-    console.log('cartIndex: ', cartIndex); // undefined
-    console.log('productIndex: ', productIndex); // undefined
+    // console.log('cart: ', cart); // works
+    // console.log('cartIndex: ', cartIndex); // undefined
+    // console.log('productIndex: ', productIndex); // undefined
     // get the quantity
-    console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
+    // console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
     let quantity = cart.orderDetails.productQuantities[productIndex].orderQuantity;
     // splice the product out of the arrays
     this.dataStore.carts[cartIndex].orderDetails.productQuantities.splice(productIndex, 1);
@@ -375,9 +375,9 @@ export class CartService implements OnDestroy {
   // for each cart in the cart contents, select a schedule
   selectSchedule(cartId, schedule) {
     // in specified cart, push the schedule details
-    console.log('chosen sched given to select schedule method: ', schedule);
+    // console.log('chosen sched given to select schedule method: ', schedule);
     this.dataStore.carts[cartId].chosenSchedule = schedule;
-    console.log('cart in dataStore after sched added: ', this.dataStore.carts[cartId]);
+    // console.log('cart in dataStore after sched added: ', this.dataStore.carts[cartId]);
   };
   
   addConsumer(cartId) {
@@ -402,7 +402,7 @@ export class CartService implements OnDestroy {
   };
 
   addDeliveryFee(cartId, fee) {
-    console.log('delivery fee value: ', fee);
+    // console.log('delivery fee value: ', fee);
     if (!fee) {
       this.dataStore.carts[cartId].orderDetails.deliveryFee = 0;
     } else {
@@ -423,13 +423,13 @@ export class CartService implements OnDestroy {
     let count: number = 0;
     // get the cart
     let cart = this.dataStore.carts[cartId];
-    console.log('cart: ', cart);
+    // console.log('cart: ', cart);
     // loop through the productQuantities, adding them to count
     for (let i = 0; i < cart.orderDetails.productQuantities.length; i++) {
-      console.log('cart.orderDetails.productQuantities[i].orderQuantity; ', cart.orderDetails.productQuantities[i].orderQuantity);
+      // console.log('cart.orderDetails.productQuantities[i].orderQuantity; ', cart.orderDetails.productQuantities[i].orderQuantity);
       count += cart.orderDetails.productQuantities[i].orderQuantity;
     }
-    console.log('count: ', count);
+    // console.log('count: ', count);
     return count;
   };
 
@@ -484,7 +484,7 @@ export class CartService implements OnDestroy {
 		// this.apiService.postOrder(newOrder)
 		// 	.subscribe(
 		// 		result => {
-    //       console.log('successfully posted: ', result);
+          // console.log('successfully posted: ', result);
     //       // remove the cart contents from the cart count
 		// 			this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId); // unnecessary??? throws error on single cart checkout, not sure about multi
 		// 			// remove the cart from the dataStore on success
@@ -496,31 +496,31 @@ export class CartService implements OnDestroy {
   };
 
   buildCartAndSendOrder() {
-    console.log('sending chosen sched: ', this.sendingChosenSchedule);
+    // console.log('sending chosen sched: ', this.sendingChosenSchedule);
     // get the producer's email, subscribe to an api call, then continue with this function
     this.apiService.getProducerById(this.sendingChosenSchedule.userId)
       .subscribe(
         result => {
-          console.log('result of get producer by id: ', result);
+          // console.log('result of get producer by id: ', result);
           let producerEmail = result[0].email;
           this.sendingChosenSchedule.producerEmail = producerEmail;
           // build the cart
           let newOrder = this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress);
           // send the cart via the api
-          console.log('finished cart: ', newOrder);
+          // console.log('finished cart: ', newOrder);
           this.apiService.postOrder(newOrder)
             .subscribe(
               result => {
-                console.log('successfully posted: ', result);
+                // console.log('successfully posted: ', result);
                 this._orderSentSuccessfully.next(true);
                 // remove the cart contents from the cart count
                 this.dataStore.cartCount -= this.getCartCountOfSingleCart(this.sendingCartId); // unnecessary??? throws error on single cart checkout, not sure about multi
                 // remove the cart from the dataStore on success
                 this.clearCart(this.sendingCartId);
-                console.log('new cartCount: ', this.dataStore.cartCount);
+                // console.log('new cartCount: ', this.dataStore.cartCount);
                 this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
               }, error => {
-                console.log('could not add new order');
+                // console.log('could not add new order');
                 this._orderSentFailed.next(true);
               }
             );
@@ -538,19 +538,19 @@ export class CartService implements OnDestroy {
         'quantityAvailable': null,
         'name': null
       };
-      console.log('products passed in: ', product);
+      // console.log('products passed in: ', product);
       productChecked.id = product.productId;
       productChecked.quantityOrdered = product.orderQuantity;
       this.apiService.getProductById(product.productId)
         .subscribe(
           (result) => {
-            console.log('api result: ', result);
+            // console.log('api result: ', result);
             productChecked.quantityAvailable = result[0].qtyAvailable;
             productChecked.name = result[0].name;
             productCheckArray.push(productChecked);
             if (index === (array.length -1)) {
               // triggered on last one.
-              console.log('last one');
+              // console.log('last one');
               this.compareProductQuantities(productCheckArray);
             };
           }
@@ -562,12 +562,12 @@ export class CartService implements OnDestroy {
   compareProductQuantities(array) {
     
     let productArray = array.slice();
-    console.log('array passed in : ', productArray);
+    // console.log('array passed in : ', productArray);
     this.orderQuantityOkay = true;
     let orderQuantityNotOkayArray = [];
     for (let i = 0; i < productArray.length; i++) {
       let product = productArray[i];
-      console.log('product looping: ', product);
+      // console.log('product looping: ', product);
       if (product.quantityOrdered > product.quantityAvailable) {
         this.orderQuantityOkay = false;
         orderQuantityNotOkayArray.push(product);
@@ -575,27 +575,27 @@ export class CartService implements OnDestroy {
     }
     if (this.orderQuantityOkay) {
       this._orderQuantityOkay.next(this.orderQuantityOkay);
-      console.log('orderqty ok');
+      // console.log('orderqty ok');
       this.buildCartAndSendOrder();
     } else {
       // product stock is low and user must make changes
       this._orderQuantityOkay.next(this.orderQuantityOkay);
-      console.log('products out of stock: ', orderQuantityNotOkayArray);
+      // console.log('products out of stock: ', orderQuantityNotOkayArray);
       this._orderQuantitiesToChange.next(Object.assign(orderQuantityNotOkayArray));
     }
   };
 
   updateProductQuantitiesToQtyAvailable(cartId, productQuantitiesToUpdate) {
     let cartIndex = this.getCartIndex(cartId);
-    console.log('productqtys to update: ', productQuantitiesToUpdate);
+    // console.log('productqtys to update: ', productQuantitiesToUpdate);
     // for each product qty to update
     for (let i = 0; i < productQuantitiesToUpdate.length; i++) {
       // get the qty actually available
       let qty = productQuantitiesToUpdate[i].quantityAvailable;
-      console.log('qty: ', qty);
+      // console.log('qty: ', qty);
       // loop through the cart's productQtys to find the matching product
       for (let j = 0; j < this.dataStore.carts[cartIndex].orderDetails.productQuantities.length; j++) {
-        console.log('cart product id test: ', this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].productId);
+        // console.log('cart product id test: ', this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].productId);
         if (productQuantitiesToUpdate[i].id === this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].productId) {
           // set the qty ordered to the qty available
           this.dataStore.carts[cartIndex].orderDetails.productQuantities[j].orderQuantity = qty;
@@ -609,11 +609,11 @@ export class CartService implements OnDestroy {
     this.dataStore.carts[cartIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[cartIndex]);
     // reload the cart
     this.loadCartById(cartIndex);
-    console.log('new datastore: ', this.dataStore.carts[cartIndex]);
+    // console.log('new datastore: ', this.dataStore.carts[cartIndex]);
   };
 
   removeProductsWithZeroQty(id) {
-    console.log('cart before removal: ', this.dataStore.carts[id]);
+    // console.log('cart before removal: ', this.dataStore.carts[id]);
     let productIdsToRemove = [];
     let currentCart = this.dataStore.carts[id];
     let productQtys = currentCart.orderDetails.productQuantities;
@@ -650,7 +650,7 @@ export class CartService implements OnDestroy {
     this.dataStore.carts[id].orderDetails.productQuantities = productQtys;
     this.dataStore.carts[id].orderDetails.productList = productList;
     this.calculateCartCount();
-    console.log('cart after removal: ', this.dataStore.carts[id]);
+    // console.log('cart after removal: ', this.dataStore.carts[id]);
   };
 
   resetOrderSubscriptions() {
@@ -669,7 +669,7 @@ export class CartService implements OnDestroy {
   };
 
   storeCarts() {
-    console.log('storing carts: ', this.dataStore);
+    // console.log('storing carts: ', this.dataStore);
     // store all carts in datastore
     localStorage.setItem('dataStore', JSON.stringify(this.dataStore));
   };
@@ -677,13 +677,13 @@ export class CartService implements OnDestroy {
   retrieveCarts() {
     let localCarts = JSON.parse(localStorage.getItem('dataStore'));
     if (localCarts) {
-      console.log('carts in local storage: ', localCarts);
+      // console.log('carts in local storage: ', localCarts);
       // add it/them to the carts array in datastore
       this.dataStore = localCarts;
       this.loadCarts();
       this.loadCartCount();
     } else {
-      console.log('no carts in local storage');
+      // console.log('no carts in local storage');
     }
   };
 
@@ -743,7 +743,7 @@ export class CartService implements OnDestroy {
     this.apiService.getProductById(productId)
       .subscribe(
         result => {
-          console.log('product from db ', result);
+          // console.log('product from db ', result);
           newProduct = this.formatProduct(result[0]);
           // console.log('new Product: ', newProduct);
           newProduct.qtyAvailable -= qty;
@@ -760,19 +760,19 @@ export class CartService implements OnDestroy {
   };
 
   makeQtyAvailable(productId, qty) {
-    console.log('productId: ', productId);
-    console.log('qty: ', qty);
+    // console.log('productId: ', productId);
+    // console.log('qty: ', qty);
     let newProduct;
     // call the API
     this.apiService.getProductById(productId)
       .subscribe(
         result => {
-          console.log('product from db ', result);
+          // console.log('product from db ', result);
           newProduct = this.formatProduct(result[0]);
-          console.log('new Product: ', newProduct);
+          // console.log('new Product: ', newProduct);
           newProduct.qtyAvailable += qty;
           newProduct.qtyPending -= qty;
-          console.log('qty: ', qty);
+          // console.log('qty: ', qty);
           this.apiService.putProduct(productId, newProduct)
       		.subscribe(
       			result => {
@@ -784,19 +784,19 @@ export class CartService implements OnDestroy {
   };
 
   makeQtyAccepted(productId, qty) {
-    console.log('productId: ', productId);
-    console.log('qty: ', qty);
+    // console.log('productId: ', productId);
+    // console.log('qty: ', qty);
     let newProduct;
     this.apiService.getProductById(productId)
       .subscribe(
         result => {
-          console.log('product from db ', result);
+          // console.log('product from db ', result);
           newProduct = this.formatProduct(result[0]);
-          console.log('new Product: ', newProduct);
+          // console.log('new Product: ', newProduct);
           newProduct.qtyAccepted += qty;
           newProduct.qtyPending -= qty;
-          console.log('qty: ', qty);
-          console.log('newVals: ', newProduct); // not working
+          // console.log('qty: ', qty);
+          // console.log('newVals: ', newProduct); // not working
           this.apiService.putProduct(productId, newProduct)
       		.subscribe(
       			result => {
@@ -824,7 +824,7 @@ export class CartService implements OnDestroy {
   };
 
   findCartIndex(tempId) {
-    console.log('tempId passed in: ', tempId);
+    // console.log('tempId passed in: ', tempId);
     let index;
     if (this.dataStore.carts.length === 1) {
       index = 0;
@@ -836,7 +836,7 @@ export class CartService implements OnDestroy {
           }
         });
     }
-    console.log('index returned: ', index);
+    // console.log('index returned: ', index);
     return index;
   };
 
@@ -919,7 +919,7 @@ export class CartService implements OnDestroy {
   findProducerInSchedList(id) { // return true if producerId is already in scheduleList array, false if not
     let result;
     this.dataStore.schedulesArray.forEach((scheduleObject) => {
-      console.log('schedule object producer id: ', scheduleObject.producerId);
+      // console.log('schedule object producer id: ', scheduleObject.producerId);
       if (scheduleObject.producerId === id) {
         result = true;
       }
@@ -928,16 +928,16 @@ export class CartService implements OnDestroy {
   };
 
   addToSchedulesArray(tempId, producerId) {
-    console.log('add to scheds array called');
+    // console.log('add to scheds array called');
     let communityList;
-    console.log('datastore in add to scheds array: ', this.dataStore);
+    // console.log('datastore in add to scheds array: ', this.dataStore);
     // if dataStore.scheduleList is empty
     if (this.dataStore.schedulesArray[0].producerId === null) {
-      console.log('producer id is null');
+      // console.log('producer id is null');
       this.getFutureSchedsSubscription = this.apiService.getFutureScheduleByProducerId(producerId)
         .subscribe(
           result => {
-            console.log('future sched for this producer: ', result);
+            // console.log('future sched for this producer: ', result);
             //build the communityList array
             communityList = this.buildCommunityList(result);
             this.dataStore.schedulesArray = [{ // build the object and put it in the dataStore
@@ -948,11 +948,11 @@ export class CartService implements OnDestroy {
           }
         )
     } else if (this.findProducerInSchedList(producerId)) { // producerId is not in the dataStore yet
-      console.log('producer id is not in list');
+      // console.log('producer id is not in list');
       this.getFutureSchedsSubscription = this.apiService.getFutureScheduleByProducerId(producerId)
         .subscribe(
           result => {
-            console.log('future sched for this producer: ', result);
+            // console.log('future sched for this producer: ', result);
             //build the communityList array
             communityList = this.buildCommunityList(result);
             let newObject = { // build the new object and push it into the array
@@ -961,15 +961,15 @@ export class CartService implements OnDestroy {
               communityList: communityList
             };
             this.dataStore.schedulesArray.push(newObject);
-            console.log('datastore now: ', this.dataStore);
+            // console.log('datastore now: ', this.dataStore);
           }
         )
     } else if (!this.findProducerInSchedList(producerId)) { // producerId is not in the dataStore yet
-      console.log('producer id is not null');
+      // console.log('producer id is not null');
       this.getFutureSchedsSubscription = this.apiService.getFutureScheduleByProducerId(producerId)
         .subscribe(
           result => {
-            console.log('future sched for this producer: ', result);
+            // console.log('future sched for this producer: ', result);
             //build the communityList array
             communityList = this.buildCommunityList(result);
             let newObject = { // build the new object and push it into the array
@@ -984,12 +984,12 @@ export class CartService implements OnDestroy {
   };
 
   buildCommunityList(scheduleList) {
-    console.log('starting sched list: ', scheduleList)
+    // console.log('starting sched list: ', scheduleList)
     // first sort the scheduleList by date
     let newSchedList = scheduleList.sort((first, second) => {
       return new Date(first.startDateTime).getTime() - new Date (second.startDateTime).getTime()
     });
-    console.log('newSchedList: ', newSchedList)
+    // console.log('newSchedList: ', newSchedList)
     let city;
     let communityList;
     // for each item in the scheduleList

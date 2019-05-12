@@ -316,7 +316,7 @@ export class LocationNotificationSignUpModalComponent implements OnInit, OnChang
             return;
           }
 
-          console.log('place: ', place);
+          // console.log('place: ', place);
           this.fillAddress(place);
 
           // set latitude, longitude and zoom
@@ -371,7 +371,7 @@ export class LocationNotificationSignUpModalComponent implements OnInit, OnChang
         }
         if (result === 'locality' || result === 'sublocality') {
           this.city = components[i].short_name;
-          console.log('city: ', this.city);
+          // console.log('city: ', this.city);
         }
         if (result === 'administrative_area_level_1') {
           this.province = components[i].short_name;

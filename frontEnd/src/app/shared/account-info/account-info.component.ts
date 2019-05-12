@@ -122,8 +122,8 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
   currentLogo: any;
 
   ngOnChanges() {
-    console.log('producer: ', this.producer);
-    console.log('customurl: ', this.customUrlObject);
+    // console.log('producer: ', this.producer);
+    // console.log('customurl: ', this.customUrlObject);
 
     if (this.producer && this.producer.logoUrl !== '') {
       this.currentLogo = 'https://s3-us-west-2.amazonaws.com/onlylocalfood-images/' + this.producer.id + '/logo?timeStamp=' + Date.now();

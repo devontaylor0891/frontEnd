@@ -21,8 +21,8 @@ export class SearchResultsComponent implements OnInit, OnChanges {
               private modal: NgbModal) { }
 
   ngOnChanges() {
-    console.log('zeroSearch: ', this.zeroResults);
-    console.log('search results comp results: ', this.searchResults);
+    // console.log('zeroSearch: ', this.zeroResults);
+    // console.log('search results comp results: ', this.searchResults);
   }
 
   ngOnInit() {

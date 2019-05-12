@@ -44,13 +44,13 @@ export class SearchComponent implements OnInit, OnChanges {
     this.locationService.getLocation()
       .subscribe(
         response => {
-          console.log('location service. getLocation results: ', response);
+          // console.log('location service. getLocation results: ', response);
           this.userLocation = response;
           this.searchOptions.latitude = this.userLocation.coords.latitude;
           this.searchOptions.longitude = this.userLocation.coords.longitude;
           this.searchOptions.radius = 25;
-          console.log(this.userLocation.coords.latitude);
-          console.log(this.userLocation.coords.longitude);
+          // console.log(this.userLocation.coords.latitude);
+          // console.log(this.userLocation.coords.longitude);
           this.locationService.codeLatLng(this.userLocation.coords.latitude, this.userLocation.coords.longitude);
           // load all search results
           this.searchService.loadAll(this.searchOptions);
@@ -61,7 +61,7 @@ export class SearchComponent implements OnInit, OnChanges {
       .subscribe(
         response => {
           this.cityProvince = response;
-          console.log('cityProvince: ', this.cityProvince);
+          // console.log('cityProvince: ', this.cityProvince);
         }
       );
 
@@ -69,7 +69,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.searchService.getSearchResults()
       .subscribe(
         results => {
-          console.log('search comp receiving results...');
+          // console.log('search comp receiving results...');
           this.searchResults = results;
           this.searchResultsReceived = true;
           if (results && results.schedules && results.schedules.length < 1) {
@@ -77,7 +77,7 @@ export class SearchComponent implements OnInit, OnChanges {
           } else {
             this.zeroSearchResults = false;
           }
-          console.log('search comp results: ', this.searchResults);
+          // console.log('search comp results: ', this.searchResults);
         }
       );
 

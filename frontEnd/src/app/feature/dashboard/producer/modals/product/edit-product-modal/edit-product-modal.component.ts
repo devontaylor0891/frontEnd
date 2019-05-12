@@ -70,7 +70,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
               private producerDashboardService: ProducerDashboardService) { }
 
   ngOnInit() {
-    console.log('original record: ', this.record);
+    // console.log('original record: ', this.record);
     this.submitObject.image = this.record.image;
     this.imageName = this.record.image;
     this.initialProduct = this.setInitialProduct();
@@ -88,12 +88,12 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.producerIdSub = this.producerDashboardService.getProducer()
       .subscribe(
         result => {
-          console.log('producer result: ', result);
+          // console.log('producer result: ', result);
           this.submitObject.producerId =  result.producerId
         }
       );
     this.setSubmitObject();
-    console.log('original submitObject: ', this.submitObject);
+    // console.log('original submitObject: ', this.submitObject);
   }
 
   private setInitialProduct() {
@@ -136,7 +136,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
       .valueChanges
       .subscribe(data => this.onValueChanged());
       
-    console.log('form: ', this.productForm);
+    // console.log('form: ', this.productForm);
   };
   
   private calculateTotalValue() {
@@ -170,8 +170,8 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitting = true;
     this.setSubmitObject();
-    console.log('submitted object: ', this.submitObject);
-    console.log('submitted id: ', this.record.id);
+    // console.log('submitted object: ', this.submitObject);
+    // console.log('submitted id: ', this.record.id);
     this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
       .subscribe(
         data => this.handleSubmitSuccess(data),
@@ -183,8 +183,8 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.submitting = true;
     this.setSubmitObject();
     this.submitObject.isObsolete = false;
-    console.log('submitted object: ', this.submitObject);
-    console.log('submitted id: ', this.record.id);
+    // console.log('submitted object: ', this.submitObject);
+    // console.log('submitted id: ', this.record.id);
     this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
       .subscribe(
         data => this.handleSubmitSuccess(data),
@@ -193,7 +193,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   }
   
   handleSubmitSuccess(res) {
-    console.log('put product result: ', res);
+    // console.log('put product result: ', res);
     if (this.record.isObsolete) {
       this.onProductRenewed.emit(this.record);
     }

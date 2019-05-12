@@ -45,7 +45,7 @@ export class DashboardService {
         response => {
           // fill datastore
           this.dataStore.producers = response;
-          console.log('this.datastore.producers: ', this.dataStore.producers);
+          // console.log('this.datastore.producers: ', this.dataStore.producers);
           // make a copy and assign to the behaviour subject
           this._producers.next(Object.assign({}, this.dataStore).producers);
         }, error => console.log('could not load producers')
@@ -61,7 +61,7 @@ export class DashboardService {
       .subscribe(
         response => {
           this.dataStore.users = response;
-          console.log('this.datastore.users: ', this.dataStore.users);
+          // console.log('this.datastore.users: ', this.dataStore.users);
           this._users.next(Object.assign({}, this.dataStore).users);
         }, error => console.log('could not load users')
       );
@@ -76,7 +76,7 @@ export class DashboardService {
       .subscribe(
         response => {
           this.dataStore.products = response;
-          console.log('this.datastore.products: ', this.dataStore.products);
+          // console.log('this.datastore.products: ', this.dataStore.products);
           this._products.next(Object.assign({}, this.dataStore).products);
         }, error => console.log('could not load products')
       );
@@ -91,7 +91,7 @@ export class DashboardService {
       .subscribe(
         response => {
           this.dataStore.orders = response;
-          console.log('this.datastore.orders: ', this.dataStore.orders);
+          // console.log('this.datastore.orders: ', this.dataStore.orders);
           this._orders.next(Object.assign({}, this.dataStore).orders);
         }, error => console.log('could not load orders')
       );
@@ -102,12 +102,12 @@ export class DashboardService {
   }
 
   loadAllSchedules() {
-    console.log('load all scheds called');
+    // console.log('load all scheds called');
     this.apiService.getSchedules()
       .subscribe(
         response => {
           this.dataStore.schedules = response;
-          console.log('this.datastore.schedules: ', this.dataStore.schedules);
+          // console.log('this.datastore.schedules: ', this.dataStore.schedules);
           this._schedules.next(Object.assign({}, this.dataStore).schedules);
         }, error => console.log('could not load schedules')
       );

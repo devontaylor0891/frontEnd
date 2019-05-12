@@ -39,9 +39,9 @@ export class SearchMapComponent implements OnInit, OnChanges, OnDestroy {
           this.userLocation = response;
           this.latitude = this.userLocation.coords.latitude;
           this.longitude = this.userLocation.coords.longitude;
-          console.log('lat and long from location service:');
-          console.log(this.latitude);
-          console.log(this.longitude);
+          // console.log('lat and long from location service:');
+          // console.log(this.latitude);
+          // console.log(this.longitude);
         }
       );
 
@@ -51,7 +51,7 @@ export class SearchMapComponent implements OnInit, OnChanges, OnDestroy {
           // console.log('result.scheds:');
           // console.log(result.schedules);
           this.events = result.schedules;
-          console.log('events: ', this.events);
+          // console.log('events: ', this.events);
         });
 
     // set current position

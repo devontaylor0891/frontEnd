@@ -30,8 +30,8 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
 
-    console.log('products: ', this.products);
-    console.log('outof stock: ', this.outOfStockProducts);
+    // console.log('products: ', this.products);
+    // console.log('outof stock: ', this.outOfStockProducts);
 
     this.getProducerSub = this.producerService.getProducer()
       .subscribe(
@@ -66,8 +66,8 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
         }
       );
 
-    console.log('products: ', this.products);
-    console.log('outof stock: ', this.outOfStockProducts);
+    // console.log('products: ', this.products);
+    // console.log('outof stock: ', this.outOfStockProducts);
   };
 
   ngOnDestroy() {
