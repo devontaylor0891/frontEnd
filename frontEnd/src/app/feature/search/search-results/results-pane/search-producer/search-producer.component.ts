@@ -19,12 +19,19 @@ export class SearchProducerComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-     this.searchService.getProducers()
-      .subscribe(
-        results => {
-          this.producers = results;
-        }
-      );
+    //  this.searchService.getProducers()
+    //   .subscribe(
+    //     results => {
+    //       this.producers = results;
+    //     }
+    //   );
+
+    this.searchService.getSearchResults()
+        .subscribe(
+          results => {
+            this.producers = results.producers;
+          }
+        )
 
       
 

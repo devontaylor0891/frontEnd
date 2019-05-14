@@ -105,7 +105,7 @@ export class ProductsComponent implements OnInit, OnChanges {
 
   // add a new product via the add-product component, push it to the appropriate array
   addNewProduct(value) {
-    console.log(value);
+    // console.log(value);
   }
 
   ngOnInit() {
@@ -113,7 +113,7 @@ export class ProductsComponent implements OnInit, OnChanges {
     this.dashboardService.getAllProducts()
       .subscribe( // returns an array
         (products) => {
-          console.log('products received: ', products);
+          // console.log('products received: ', products);
           const current = products.filter(product => product.qtyAvailable > 0 && (product.isObsolete === false || !product.isObsolete));
           this.currentProducts = current;
           const outOfStock = products.filter(product => product.qtyAvailable == 0 && (product.isObsolete === false || !product.isObsolete));

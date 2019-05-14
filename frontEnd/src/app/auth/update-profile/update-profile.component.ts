@@ -805,7 +805,7 @@ export class UpdateProfileComponent implements OnInit {
       producer: new FormGroup({
         id: new FormControl(this.id),
         name: new FormControl('', [Validators.required]),
-        customUrl: new FormControl(''),
+        customUrl: new FormControl('', [Validators.pattern('[0-9a-zA-Z_-]*')]),
         description: new FormControl(''),
         logoUrl: new FormControl('')
       }),
@@ -837,7 +837,11 @@ export class UpdateProfileComponent implements OnInit {
         })
       .subscribe(valid => console.log('valid: ', valid));
 
-  }
+  };
+
+  get customUrl() {
+    return this.userForm.get('producer.customUrl');
+  };
 
   disableProducerFields() {
     this.userForm.controls.producer.disable();

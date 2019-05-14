@@ -28,6 +28,8 @@ import { AddOrderComponent } from './feature/dashboard/admin/add-new/add-order/a
 import { LocationNotificationComponent } from './feature/location-notification/location-notification.component';
 import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { PrivacyComponent } from './shared/privacy/privacy.component';
+import { TandcComponent } from './shared/tandc/tandc.component';
 import { FaqComponent } from './feature/faq/faq.component';
 
 const appRoutes: Routes = [
@@ -81,6 +83,8 @@ const appRoutes: Routes = [
   { path: 'update-profile', component: UpdateProfileComponent },
   { path: 'location-notification', component: LocationNotificationComponent },
   { path: 'not-found', component: PageNotFoundComponent },
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'tandc', component: TandcComponent },
   { path: ':customUrl', component: CustomUrlResolverComponent },
   { path: '', component: LandingContentComponent, pathMatch: 'full' },
   { path: '**', redirectTo: 'not-found' }

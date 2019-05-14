@@ -91,7 +91,7 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
           this.pendingOrders = pending;
           const accepted = orders.filter(order => order.orderDetails.orderStatus === 'accepted');
           this.acceptedOrders = accepted;
-          const completed = orders.filter(order => order.orderDetails.orderStatus === 'completed');
+          const completed = orders.filter(order => order.orderDetails.orderStatus === 'complete');
           this.completedOrders = completed;
           const denied = orders.filter(order => order.orderDetails.orderStatus === 'denied');
           this.deniedOrders = denied;

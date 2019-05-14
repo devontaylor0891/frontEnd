@@ -62,8 +62,8 @@ export class ProducerService implements OnInit {
   // **************************** LOAD ALL INTO DATASTORE ************************ 
   // GET the producer and store the info in the dataStore, if it's not already in there
   loadProducerData(id) {
-    console.log('id: ', id);
-    console.log('datastore: ', this.dataStore);
+    // console.log('id: ', id);
+    // console.log('datastore: ', this.dataStore);
 	  if ((this.dataStore.producer === null) || (id !== this.dataStore.producer.id)) {
       this.apiService.getProducerById(id)
         .subscribe(
@@ -77,7 +77,7 @@ export class ProducerService implements OnInit {
       this.apiService.getProductsByProducerId(id)
         .subscribe(
           response => { 
-            console.log('products in producer service: ', response);
+            // console.log('products in producer service: ', response);
             this.dataStore.products = response;
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._producerProducts.next(Object.assign({}, this.dataStore).products);
@@ -92,10 +92,10 @@ export class ProducerService implements OnInit {
           }
         );
 	  } else {
-      console.log('producer service datastore already full'); // NEVER GETS CALLED 
+      // console.log('producer service datastore already full'); // NEVER GETS CALLED 
       return;
     }
-    console.log('datastore: ', this.dataStore);
+    // console.log('datastore: ', this.dataStore);
   }
   
   // **************************** SINGLE PRODUCER ************************
@@ -143,10 +143,10 @@ export class ProducerService implements OnInit {
     // check if product is already in datastore, if yes, return it,
     let index = this.findInArray(this.dataStore.products, productId);
     if (index > -1) {
-      console.log('product already in datastore');
+      // console.log('product already in datastore');
       this._product.next(Object.assign({}, this.dataStore.products[index]));
     } else {
-      console.log('api call being made, product not already in datastore');
+      // console.log('api call being made, product not already in datastore');
       // if not, make the api call
       this.apiService.getProductById(productId)
       .subscribe(

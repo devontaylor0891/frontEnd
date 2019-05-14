@@ -65,7 +65,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.newItemUploading = true;
-    console.log(this.form.value);
+    // console.log(this.form.value);
     this.form.value.image = this.imageName;
     this.form.value.producerId = this.producer.producerId;
     this.form.value.producer.id = this.producer.id;
@@ -79,7 +79,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
   };
 
   handleSubmitSuccess(result) {
-    console.log('new Product result: ', result);
+    // console.log('new Product result: ', result);
     this.itemCreated.emit(result);
     if (this.addingImage) { // upload image and then close the modal
       this.imageService.convertAndUpload();

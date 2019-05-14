@@ -26,7 +26,7 @@ export class ConsumerDashboardService {
   }
 
   loadData(id) {
-    console.log('user from consumer dashboard: ', id);
+    // console.log('user from consumer dashboard: ', id);
     // this.apiService.getUserByAuthId(id)
     //   .subscribe(
     //     result => {
@@ -40,7 +40,7 @@ export class ConsumerDashboardService {
       .subscribe(
         result => {
           this.dataStore.orders = result;
-          console.log('consumer orders: ', result);
+          // console.log('consumer orders: ', result);
           this._orders.next(Object.assign({}, this.dataStore).orders);
         }, error => console.log('could not load order')
       );

@@ -48,7 +48,7 @@ export class DeleteScheduleModalComponent implements OnInit, OnDestroy {
 
   handleSubmitSuccess(res, record) {
     this.submitting = false;
-    console.log('schedule deleted from modal: ', record);
+    // console.log('schedule deleted from modal: ', record);
     this.onScheduleDeleted.emit(record);
 		// close modal
 		this.activeModal.close();

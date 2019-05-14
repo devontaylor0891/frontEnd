@@ -71,7 +71,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges() {
-    console.log('zeroResults: ', this.zeroResults);
+    // console.log('zeroResults: ', this.zeroResults);
   };
 
   ngOnInit() {
@@ -137,7 +137,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-          console.log('place: ', place);
+          // console.log('place: ', place);
           this.fillAddress(place);
         });
       });
@@ -172,7 +172,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
         }
       }
     }
-    console.log('submitted values: ', this.submittedValues);
+    // console.log('submitted values: ', this.submittedValues);
     //then send the submitted values to search service to update the view
     this.searchService.onFilter(this.submittedValues);
   }
@@ -216,7 +216,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     this.parseAddressComponents(place.address_components);
     this.latitude = place.geometry.location.lat();
     this.longitude = place.geometry.location.lng();
-    console.log('lat and long: ', this.latitude + ', ' + this.longitude);
+    // console.log('lat and long: ', this.latitude + ', ' + this.longitude);
     // have location service re-emit the city and province
     this.locationService.updateCityProvince(this.city + ', ' + this.province);
     // have the search service make a new call
@@ -224,6 +224,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     this.searchOptions.longitude = this.longitude;
     this.searchOptions.radius = 25;
     this.searchService.loadAll(this.searchOptions);
+    // pass these lat/long out to map
     this.locationUpdate = !this.locationUpdate;
   };
 

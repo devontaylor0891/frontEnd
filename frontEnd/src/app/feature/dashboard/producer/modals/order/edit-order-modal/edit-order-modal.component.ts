@@ -47,8 +47,8 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     this.buildProductsArray();
     this.buildForm();
     this.submitObject = this.record;
-    console.log('this order: ', this.record);
-    console.log('submitObject: ', this.submitObject);
+    // console.log('this order: ', this.record);
+    // console.log('submitObject: ', this.submitObject);
   }
 
   buildProductsArray() {
@@ -66,9 +66,9 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 		  newProduct.value = array[i].orderValue;
       newProduct.name = this.getProductName(newProduct.id);
       let cloneProduct = {...newProduct};
-      console.log('newProduct: ,', newProduct)
+      // console.log('newProduct: ,', newProduct)
       this.products.push(cloneProduct);
-      console.log('products: ', this.products);
+      // console.log('products: ', this.products);
 	  }
 	  // use the id to get the name from the productList array
   };
@@ -76,7 +76,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
   getProductName(id) {
 	  for (let j = 0; j < this.record.productList.length; j++) {
 		  if (this.record.productList[j].id === id) {
-        console.log('id and name: ', id + ' ' + this.record.productList[j].name);
+        // console.log('id and name: ', id + ' ' + this.record.productList[j].name);
 			  return this.record.productList[j].name;
 		  }
 	  }
@@ -102,7 +102,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     this.submitOrderSub = this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
-          console.log('order accepted and emitted from modal: ', this.submitObject);
+          // console.log('order accepted and emitted from modal: ', this.submitObject);
           this.handleSubmitAcceptSuccess(this.submitObject);
         }, error => {
           this.handleSubmitError(error);
@@ -122,7 +122,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     this.submitOrderSub = this.api.putOrder(this.record.id, this.submitObject)
       .subscribe(
         result => {
-          console.log('order denied and emitted from modal: ', this.submitObject);
+          // console.log('order denied and emitted from modal: ', this.submitObject);
           this.handleSubmitDenySuccess(this.submitObject);
         }, error => {
           this.handleSubmitError(error);
@@ -138,7 +138,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   handleSubmitAcceptSuccess(res) {
     this.submitting = false;
-    console.log('put, accepted!: ', res);
+    // console.log('put, accepted!: ', res);
     this.onOrderAccepted.emit(res);
     // close modal
     this.activeModal.close();
@@ -146,7 +146,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   handleSubmitDenySuccess(res) {
     this.submitting = false;
-    console.log('put, denied!: ', res);
+    // console.log('put, denied!: ', res);
     this.onOrderDenied.emit(res);
     // close modal
     this.activeModal.close();

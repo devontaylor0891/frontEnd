@@ -48,11 +48,30 @@
                     <td>{{ product.quantity }}</td>
                     <td>{{ product.value | currency:'USD':'symbol-narrow':'1.2-2' }}</td>
                   </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td><strong>{{ record.orderDetails.orderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong></td>
-                  </tr>
+                  <tr *ngIf="record.orderDetails.deliveryFee">
+                      <td>Delivery Fee</td>
+                      <td></td>
+                      <td>{{ record.orderDetails.deliveryFee | currency:'USD':'symbol-narrow':'1.2-2' }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="record.orderDetails.deliveryFee">
+                      <td>
+                          <strong>Order Total</strong>
+                      </td>
+                      <td></td>
+                      <td>
+                        <strong>{{ (record.orderDetails.orderValue + record.orderDetails.deliveryFee) | currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!record.orderDetails.deliveryFee">
+                      <td>
+                          <strong>Order Total</strong>
+                      </td>
+                      <td></td>
+                      <td>
+                        <strong>{{ record.orderDetails.orderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                      </td>
+                    </tr>
                 </tbody>
               </table>
             </div>
@@ -140,8 +159,8 @@
                 <strong>Fee Waiver Amount:</strong>
               </div>
               <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                <p *ngIf="record.chosenSchedule.feeWiaver">{{ record.chosenSchedule.feeWaiver | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
-                <p *ngIf="!record.chosenSchedule.feeWiaver">None. Fee applies to all orders.</p>
+                <p *ngIf="record.chosenSchedule.feeWaiver">{{ record.chosenSchedule.feeWaiver | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+                <p *ngIf="!record.chosenSchedule.feeWaiver">None. Fee applies to all orders.</p>
               </div>
             </div>
             

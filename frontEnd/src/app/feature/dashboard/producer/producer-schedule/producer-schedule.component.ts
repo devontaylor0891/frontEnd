@@ -79,7 +79,7 @@ export class ProducerScheduleComponent implements OnInit {
     // this.modal.open(this.modalContent, { size: 'lg' });  
     const modalRef = this.modal.open(AddScheduleModalComponent, { size: 'lg' });
     modalRef.componentInstance.itemCreated.subscribe((schedule) => {
-      console.log('received: ', schedule);
+      // console.log('received: ', schedule);
       this.loadScheds();
     });
   }
@@ -87,7 +87,7 @@ export class ProducerScheduleComponent implements OnInit {
   ngOnInit() {
 
     this.date = new Date().toISOString();
-
+    // console.log('this date: ', this.date);
     this.getScheds();
 
   };
@@ -97,7 +97,7 @@ export class ProducerScheduleComponent implements OnInit {
   };
 
   onScheduleDeleted($event) {
-    console.log('sched deleted event: ', $event);
+    // console.log('sched deleted event: ', $event);
     // remove from upcoming array
     this.upcomingSchedule = this.utilityService.removeByAttribute(this.upcomingSchedule, 'id', $event.id);
   };
@@ -108,7 +108,7 @@ export class ProducerScheduleComponent implements OnInit {
         (schedules) => {
           const upcoming = schedules.filter(schedule => schedule.endDateTime > this.date);
           this.upcomingSchedule = upcoming;
-          console.log('upcoming: ', this.upcomingSchedule);
+          // console.log('upcoming: ', this.upcomingSchedule);
           const completed = schedules.filter(schedule => schedule.endDateTime < this.date);
           this.completedSchedule = completed;
         }

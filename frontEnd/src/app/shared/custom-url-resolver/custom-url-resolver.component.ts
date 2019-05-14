@@ -22,7 +22,7 @@ export class CustomUrlResolverComponent implements OnInit {
 
     // get the route param
     this.routeParam = this.route.snapshot.paramMap.get('customUrl');
-    console.log('routeParam passed in: ', this.routeParam);
+    // console.log('routeParam passed in: ', this.routeParam);
     // if it is 'not-found', nav to not-found
     if (this.routeParam === 'not-found') {
       this.router.navigateByUrl('/not-found');
@@ -30,13 +30,13 @@ export class CustomUrlResolverComponent implements OnInit {
       this.idSub = this.apiService.getProducerIdByCustomUrl(this.routeParam)
         .subscribe(
           result => {
-            console.log('result: ', result);
+            // console.log('result: ', result);
             if (!result[0]) {
               this.navigateToNotFound();
             } else {
               this.resolvedRoute = result;
               this.routeParam = this.routeParam.toLowerCase();
-              console.log('resolved Route: ', this.resolvedRoute);
+              // console.log('resolved Route: ', this.resolvedRoute);
               this.navigateToProducerPage(this.resolvedRoute);
             }            
           }

@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 	  this.userService.getUserType()
 			.subscribe(
 				result => {
-					console.log('usertype result: ', result);
+					// console.log('usertype result: ', result);
 					this.userType = result;
 				}
 			);
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.isAdmin = result;
-					console.log('isAdmin: ', result);
+					// console.log('isAdmin: ', result);
 				}
 			);
 			
@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.id = result;
-					console.log('Auth0 id: ', result);
+					// console.log('Auth0 id: ', result);
 				}
 			);
 
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit, OnChanges {
 			.subscribe(
 				result => {
 					this.user = result;
-					console.log('user: ', result);
+					// console.log('user: ', result);
 				}
 			);
 

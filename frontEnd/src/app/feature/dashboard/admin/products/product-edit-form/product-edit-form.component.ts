@@ -20,7 +20,7 @@ export class ProductEditFormComponent implements OnInit {
 
   onEditProduct(form: NgForm) {
     const value = form.value;
-    console.log(value);
+    // console.log(value);
     
   }
 

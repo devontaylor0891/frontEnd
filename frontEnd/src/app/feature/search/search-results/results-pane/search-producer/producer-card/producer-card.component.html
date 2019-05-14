@@ -25,7 +25,7 @@
 
       <div class="col-12 col-md-5">
         <div class="row justify-content-around">
-          <a class="btn btn-olf-primary btn-sm" [routerLink]="['../producer/' + producer.id + '/schedule']">View Schedule</a>
+          <a class="btn btn-olf-primary btn-sm" pageScroll [pageScrollDuration]="750" [routerLink]="['../producer/' + producer.id + '/']" href="#schedule">View Schedule</a>
           <a class="btn btn-olf-primary btn-sm" [routerLink]="['../producer/' + producer.id]">Visit their Store</a>
         </div>
        

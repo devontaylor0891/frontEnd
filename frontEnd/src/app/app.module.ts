@@ -144,6 +144,10 @@ import { TwitterFeedComponent } from './shared/social-media/twitter/twitter-feed
 import { CustomUrlResolverComponent } from './shared/custom-url-resolver/custom-url-resolver.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { FaqComponent } from './feature/faq/faq.component';
+import { PrivacyComponent } from './shared/privacy/privacy.component';
+import { TandcComponent } from './shared/tandc/tandc.component';
+import { SearchCalendarListComponent } from './feature/search/search-results/results-pane/search-calendar-list/search-calendar-list.component';
+import { SearchMapComponent } from './feature/search/search-results/results-pane/search-map/search-map.component';
 
 @NgModule({
   declarations: [
@@ -241,7 +245,11 @@ import { FaqComponent } from './feature/faq/faq.component';
     TwitterFeedComponent,
     CustomUrlResolverComponent,
     PageNotFoundComponent,
-    FaqComponent
+    FaqComponent,
+    PrivacyComponent,
+    TandcComponent,
+    SearchCalendarListComponent,
+    SearchMapComponent
   ],
   imports: [
     BrowserModule,

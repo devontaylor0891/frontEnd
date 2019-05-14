@@ -52,9 +52,9 @@ export class ConsumerViewOrderModalComponent implements OnInit {
       newProduct.value = array[i].orderValue;
       newProduct.name = this.getProductName(newProduct.id);
       let cloneProduct = {...newProduct};
-      console.log('newProduct: ,', newProduct)
+      // console.log('newProduct: ,', newProduct)
       this.products.push(cloneProduct);
-      console.log('products: ', this.products);
+      // console.log('products: ', this.products);
     }
     // use the id to get the name from the productList array
   };
@@ -62,7 +62,7 @@ export class ConsumerViewOrderModalComponent implements OnInit {
   getProductName(id) {
     for (let j = 0; j < this.record.productList.length; j++) {
       if (this.record.productList[j].id === id) {
-        console.log('id and name: ', id + ' ' + this.record.productList[j].name);
+        // console.log('id and name: ', id + ' ' + this.record.productList[j].name);
         return this.record.productList[j].name;
       }
     }

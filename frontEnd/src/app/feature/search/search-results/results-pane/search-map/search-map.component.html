@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-12">
+
+    <agm-map 
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="false">
+
+      <agm-marker 
+        *ngFor="let m of events; let i = index"
+        (markerClick)="clickedMarker(i)"
+        [latitude]="m.latitude"
+        [longitude]="m.longitude"
+        >
+
+        <!--   
+                  [iconAnchorX]="10"
+        [iconAnchorY]="10"
+        [iconHeight]="20"
+        [iconWidth]="20"
+        [label]="{ color: '#fff', fontFamily:'Arial', text:m.type, labelClass:'className' }"
+          
+        [iconUrl]="{
+          url: 
+            m.type === 'Market Pickup' ? './assets/images/logo.png' : 
+            m.type === 'Door-to-door Delivery' ? './assets/images/logo.png' : 
+            './assets/images/logo.png',
+          scaledSize: {
+              width: 40,
+              height: 60
+          }
+        }"
+             -->
+        
+        <agm-info-window *ngIf="markerClicked">
+          <strong>{{ m.type }}</strong>
+          <p>{{ m.producerName }}</p>
+          <p>{{ m.startDateTime | date:'shortTime' }} - {{ m.endDateTime | date:'shortTime' }}</p>
+          <p>{{ m.description }}</p>
+        </agm-info-window>
+          
+        <!--  <i class="fas fa-store"></i>  <i class="fas fa-truck"></i>  <i class="fas fa-store-alt"></i> -->
+      
+      </agm-marker>
+  
+    </agm-map>
+
+  </div>
+</div>

@@ -45,12 +45,12 @@ export class UserService implements OnInit, OnChanges  {
         result => {
           this.auth0Id = result[0];
           this.userProfile = result[1];
-          console.log('auth0 id: ', this.auth0Id);
+          // console.log('auth0 id: ', this.auth0Id);
           if (this.auth0Id) {
             this.apiService.getUserByAuthId(this.auth0Id)
               .subscribe(
                 result => { 
-                  console.log('result from apiservice getuser: ', result);
+                  // console.log('result from apiservice getuser: ', result);
                   if (result[0]) {
                     // removed from above test: .length > 0
                     this.assignUserValues(result);
@@ -59,12 +59,12 @@ export class UserService implements OnInit, OnChanges  {
                     // this.getUserFromDb();
                   } else {
                     let newUser = this.buildNewUser(this.userProfile);
-                    console.log('trying to create user: ', newUser);
+                    // console.log('trying to create user: ', newUser);
                     this.apiService.createUser(newUser)
                       .subscribe(
                         result => {
-                          console.log('newly created user: ', result);
-                          console.log('result: ', result);
+                          // console.log('newly created user: ', result);
+                          // console.log('result: ', result);
                           this.databaseId = result.insertId;
                           this.isFirstLogin = false;
                           this.getUserFromDb(this.databaseId);
@@ -76,7 +76,7 @@ export class UserService implements OnInit, OnChanges  {
                 //   // if the user isn't yet in the db, add them
                 //   if (error.indexOf('404') > -1) {
                 //     let newUser = this.buildNewUser(this.userProfile);
-                //     console.log('trying to create user1: ', newUser);
+                    // console.log('trying to create user1: ', newUser);
                 //     this.apiService.createUser(newUser)
                 //       .subscribe(
                 //         result => {
@@ -139,7 +139,7 @@ export class UserService implements OnInit, OnChanges  {
     this.apiService.getUserByDBId(id)
       .subscribe(
         result => {
-          console.log('result: ', result);
+          // console.log('result: ', result);
           this.assignUserValues(result);
             
         }
@@ -149,7 +149,7 @@ export class UserService implements OnInit, OnChanges  {
   assignUserValues(result) {
     this.user = result[0];
     this.user$.next(this.user);
-    console.log('user from db: ', this.user);
+    // console.log('user from db: ', this.user);
     this.userType = this.user.role;
     this.userType$.next(this.userType);
     this.firstName = this.user.firstName;
@@ -161,7 +161,7 @@ export class UserService implements OnInit, OnChanges  {
       this.profileIncomplete$.next(false);
     } else {
       this.profileIncomplete = true;
-      console.log('user profile incomplete: ', this.profileIncomplete);
+      // console.log('user profile incomplete: ', this.profileIncomplete);
       this.profileIncomplete$.next(true);
     }
   };
@@ -170,7 +170,7 @@ export class UserService implements OnInit, OnChanges  {
     this.apiService.deleteUser(this.userId, this.user)
       .subscribe(
         result => {
-          console.log('user deleted: ', result);
+          // console.log('user deleted: ', result);
         }
       );
   };

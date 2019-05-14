@@ -12,7 +12,7 @@ export class CartComponent implements OnInit, OnChanges {
   @Input() cart: OrderModel;
 
   ngOnChanges() {
-    console.log('received cart from carts: ', this.cart);
+    // console.log('received cart from carts: ', this.cart);
   }
 
   constructor() { }

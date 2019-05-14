@@ -49,7 +49,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.producer = result[0];
-          console.log('api getProducer result', result);
+          // console.log('api getProducer result', result);
           this._producer.next(Object.assign({}, this.dataStore).producer);
           this.getProductsByProducerId(this.dataStore.producer.id);
           this.getSchedsByProducerId();
@@ -71,7 +71,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.products = result;
-          console.log('producer dashboard products: ', this.dataStore.products);
+          // console.log('producer dashboard products: ', this.dataStore.products);
           this._products.next(Object.assign({}, this.dataStore).products);
         }, error => console.log('could not load products')
       );
@@ -82,7 +82,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.schedules = result;
-          console.log('producer dashboard schedules: ', this.dataStore.schedules);
+          // console.log('producer dashboard schedules: ', this.dataStore.schedules);
           this._schedules.next(Object.assign({}, this.dataStore).schedules);
         }, error => console.log('could not load schedules')
       );
@@ -93,7 +93,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.orders = result;
-          console.log('producer dashboard orders: ', this.dataStore.orders);
+          // console.log('producer dashboard orders: ', this.dataStore.orders);
           this._orders.next(Object.assign({}, this.dataStore).orders);
         }, error => console.log('could not load order')
       );
@@ -123,7 +123,7 @@ export class ProducerDashboardService {
     this.apiService.postProduct(product)
       .subscribe(
         result => {
-          console.log('posted successfully')
+          // console.log('posted successfully')
         }
       );
   };

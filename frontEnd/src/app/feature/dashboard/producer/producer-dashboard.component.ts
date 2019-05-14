@@ -119,11 +119,11 @@ export class ProducerDashboardComponent implements OnInit, OnChanges {
         result => {
           this.producer = result;
           if (this.producer) {
-            console.log('producer id: ', this.producer.id);
+            // console.log('producer id: ', this.producer.id);
             this.apiService.getCustomUrlByProducerId(this.producer.id)
               .subscribe(
                 result => {
-                  console.log('custom result: ', result);
+                  // console.log('custom result: ', result);
                   this.customUrlObject = result[0];
                 }
               )

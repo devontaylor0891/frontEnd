@@ -18,7 +18,7 @@ export class ApiService {
   // apiUrl = 'http://localhost:3000';
   // apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
   // apiUrl = 'http://api-server-env.u4xn8vrpir.us-west-2.elasticbeanstalk.com/api';
-  apiUrl = 'https://api.olfdev.com/api';
+  apiUrl = 'https://api.onlylocalfood.com/api';
 
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
@@ -81,7 +81,7 @@ export class ApiService {
 
   // create a new user
   createUser(user: any): Observable<any> {
-    console.log('create user called: ', user);
+    // console.log('create user called: ', user);
     return this.http
       .post(this.apiUrl + `/users`, user, {
           headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -91,7 +91,7 @@ export class ApiService {
 
   // PATCH user
   patchUser(id: number, newFieldAndValue: Object): Observable<any> {
-    console.log('api patch: ', id, newFieldAndValue);
+    // console.log('api patch: ', id, newFieldAndValue);
     return this.http
       // .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
       .put(this.apiUrl + `/users/${id}/`, newFieldAndValue, {
@@ -247,7 +247,7 @@ export class ApiService {
 
   // PUT existing product - producer or admin only
   putProduct(id: number, product: any): Observable<any> {
-    console.log('id and product: ', id, product);
+    // console.log('id and product: ', id, product);
     return this.http
       .put(this.apiUrl + `/products/${id}/`, product, {
       // .put(`${ENV.BASE_API}products/${id}`, product, {
@@ -439,7 +439,7 @@ export class ApiService {
   putFileToS3(file: any, url: string): Observable<any> {
     return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/jpeg') })
       .map((response: Response) => {
-        console.log('image uploaded response: ', response);
+        // console.log('image uploaded response: ', response);
       });
   };
 

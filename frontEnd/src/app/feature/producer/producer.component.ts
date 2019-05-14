@@ -59,7 +59,7 @@ export class ProducerComponent implements OnInit, OnChanges, OnDestroy {
     //   );
 
     // load the producer's information
-    console.log('loading producer with id: ', id);
+    // console.log('loading producer with id: ', id);
     this.producerService.loadProducerData(id);
 
   }

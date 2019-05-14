@@ -42,13 +42,13 @@ export class ImageService {
     this.imageChangedEvent = event;
     this.imageFile = event.target.files[0];
     this.imageType = event.target.files[0].type;
-    console.log('event files: ', event.target.files[0]);
+    // console.log('event files: ', event.target.files[0]);
     // const url = this.apiService.getPresignedUrl();
     // this.apiService.putFileToS3(event.target.files[0], url)
   };
   imageCropped(image, name) {
     this.imageName = name;
-    console.log('name: ', this.imageName);
+    // console.log('name: ', this.imageName);
     this.previewCroppedImage = image;
     this._previewCroppedImage.next(this.previewCroppedImage);
     // const jpg = image.split(',')[1];
@@ -74,7 +74,7 @@ export class ImageService {
     this.imageUploading = true;
     this._imageUploading.next(this.imageUploading);
     const jpg = this.previewCroppedImage.split(',')[1];
-    console.log('jpg: ', jpg);
+    // console.log('jpg: ', jpg);
     var bs = atob(jpg);
     var buffer = new ArrayBuffer(bs.length);
     var ba = new Uint8Array(buffer);
@@ -90,11 +90,11 @@ export class ImageService {
     let imageNameObj = {
       imageNameAttribute: imageName
     };
-    console.log('imageName: ', imageNameObj);
+    // console.log('imageName: ', imageNameObj);
     this.apiService.getPresignedUrl(imageNameObj)
       .subscribe(
         result => {
-          console.log('presignedUrl: ', result);
+          // console.log('presignedUrl: ', result);
           this.presignedUrl = result;
           this.uploadToS3(this.presignedUrl);
         }
@@ -102,12 +102,12 @@ export class ImageService {
   }
 
   uploadToS3(url: string) {
-    console.log('image: ', this.croppedImage);
-    console.log('url: ', url);
+    // console.log('image: ', this.croppedImage);
+    // console.log('url: ', url);
     this.apiService.putFileToS3(this.croppedImage, url)
       .subscribe(
         response => {
-          console.log('file upload response: ', response);
+          // console.log('file upload response: ', response);
           this.imageUploading = false;
           this._imageUploading.next(this.imageUploading);
         }

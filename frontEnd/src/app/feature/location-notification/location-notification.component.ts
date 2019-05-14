@@ -116,7 +116,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
               return;
             }
   
-            console.log('place: ', place);
+            // console.log('place: ', place);
             this.fillAddress(place);
   
           });
@@ -131,7 +131,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
               this.getUserSub = this.userService.getUser()
                 .subscribe(
                   result => {
-                    console.log('userRecieved: ', result);
+                    // console.log('userRecieved: ', result);
                     this.user = result;
                     if (this.user) {
                       this.getLocationNotificationsSub = this.apiService.getLocationNotifications(result.id)
@@ -140,7 +140,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
                             // this.locationNotificationArray = result;
                             this.currentLocationsArray = result;
                             this.locationsToDisplay = result;
-                            console.log('locations received: ', this.locationNotificationArray);
+                            // console.log('locations received: ', this.locationNotificationArray);
                           }
                         )
                     }
@@ -158,7 +158,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
     };
 
     onLogin(e) {
-      console.log('cart stored from checkout');
+      // console.log('cart stored from checkout');
       this.authService.login('location-notification');
       e.preventDefault();
     }
@@ -167,18 +167,18 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
       this.locationsToDisplay.push(this.currentLocation);
       this.locationsToAdd.push(this.currentLocation);
       // this.locationNotificationArray.push(this.currentLocation);  
-      console.log('locations after add: ', this.locationsToDisplay);
-      console.log('locations to add: ', this.locationsToAdd);
+      // console.log('locations after add: ', this.locationsToDisplay);
+      // console.log('locations to add: ', this.locationsToAdd);
     }
 
     onRemoveLocation(index) {
       if (this.locationsToDisplay[index].id) {
-        console.log('location in database: ', this.locationsToDisplay[index].id);
+        // console.log('location in database: ', this.locationsToDisplay[index].id);
         this.locationsToDelete.push(this.locationsToDisplay[index]);
-        console.log('locationsTodelete: ', this.locationsToDelete);
+        // console.log('locationsTodelete: ', this.locationsToDelete);
       }
       this.locationsToDisplay.splice(index, 1);
-      console.log('locations after remove: ', this.locationsToDisplay);
+      // console.log('locations after remove: ', this.locationsToDisplay);
     }
   
     toggleLocationSearch() {
@@ -198,17 +198,17 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
           this.apiService.addLocationNotifications(this.user.id, this.locationsToAdd[i])
             .subscribe(
               res => {
-                console.log('location sent: ', i);
+                // console.log('location sent: ', i);
                 if (i === this.locationsToAdd.length - 1) {
-                  console.log('additions complete');
+                  // console.log('additions complete');
                   // when done, loop over locations to delete
                   for (let j = 0; j < this.locationsToDelete.length; j++) {
-                    console.log('location to delete: ', this.locationsToDelete[j].id);
+                    // console.log('location to delete: ', this.locationsToDelete[j].id);
                     this.apiService.deleteLocationNotifications(this.user.id, this.locationsToDelete[j].id)
                       .subscribe(
                         res => {
                           if (j === this.locationsToDelete.length - 1) {
-                            console.log('all locations deleted');
+                            // console.log('all locations deleted');
                             this.handleSubmitSuccess(res)
                           } 
                         },
@@ -227,7 +227,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
           this.apiService.addLocationNotifications(this.user.id, this.locationsToAdd[i])
             .subscribe(
               res => {
-                console.log('location sent: ', i);
+                // console.log('location sent: ', i);
                 if (i === this.locationsToAdd.length - 1) {
                   this.handleSubmitSuccess(res)
                 }
@@ -239,12 +239,12 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
       // if locations to delete only
       if (this.locationsToAdd.length < 1 && this.locationsToDelete.length > 0) {
         for (let j = 0; j < this.locationsToDelete.length; j++) {
-          console.log('location to delete: ', this.locationsToDelete[j].id);
+          // console.log('location to delete: ', this.locationsToDelete[j].id);
           this.apiService.deleteLocationNotifications(this.user.id, this.locationsToDelete[j].id)
             .subscribe(
               res => {
                 if (j === this.locationsToDelete.length - 1) {
-                  console.log('all locations deleted');
+                  // console.log('all locations deleted');
                   this.handleSubmitSuccess(res)
                 } 
               },
@@ -283,7 +283,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
           let result = types[j];
           if (result === 'locality' || result === 'sublocality') {
             this.city = components[i].short_name;
-            console.log('city: ', this.city);
+            // console.log('city: ', this.city);
           }
           if (result === 'administrative_area_level_1') {
             this.province = components[i].short_name;
@@ -294,7 +294,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
   
     handleSubmitSuccess(result) {
       this.submitting = false;
-      console.log('locations submitted: ', result);
+      // console.log('locations submitted: ', result);
       this.router.navigateByUrl('/');
     };
   

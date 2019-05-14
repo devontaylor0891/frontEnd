@@ -7,7 +7,8 @@
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 			<a class="dropdown-item" (click)="onClick('products')"> Products</a>
 			<a class="dropdown-item" (click)="onClick('producers')"> Producers</a>
-			<a class="dropdown-item" (click)="onClick('calendar')"> Calendar</a>
+      <!-- <a class="dropdown-item" (click)="onClick('calendar')"> Calendar</a> -->
+      <a class="dropdown-item" (click)="onClick('calendar-list')"> Calendar</a>
 		</div>
 	</div>
 
@@ -36,8 +37,15 @@
 				(click)="onClick('calendar')"
 				placement="top" 
 				ngbTooltip="View the upcoming schedule"
-				>Calendar</button>
-			</div>
+        >Calendar</button>
+        <!-- <button 
+				class="btn-outline-olf-primary btn btn-sm"
+				[ngClass]="{'btn-olf-primary': view === 'map', 'btn-outline-olf-primary': view !== 'map'}" 
+				(click)="onClick('map')"
+				placement="top" 
+				ngbTooltip="View the deliveries and pickups on a map"
+				>Map</button>
+			</div> -->
 		</div>
 
 	</div>
