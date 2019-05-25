@@ -53,7 +53,7 @@
                                 <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Email:</label>
                                 <div class="col-xs-12 col-sm-8 input-group">
                                     <input class="form-input-custom" type="email" id="email" formControlName="email" [(ngModel)]="email">
-                                    <small *ngIf="!userForm.get('user.email').valid && userForm.get('user.email').touched" class="help-block">Please enter your email.</small>
+                                    <small *ngIf="!userForm.get('user.email').valid && userForm.get('user.email').touched" class="help-block">Please enter your email. We'll need this to send you details about your orders and notifications.</small>
                                 </div>
                             </div>
                             <!-- <h5 class="h5-responsive">

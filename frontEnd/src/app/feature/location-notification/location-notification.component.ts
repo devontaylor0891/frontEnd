@@ -274,6 +274,7 @@ export class LocationNotificationComponent implements OnInit, OnChanges, OnDestr
         'province': this.province,
         'dateAdded': new Date().toISOString()
       };
+      this.onAddLocation();
     };
   
     private parseAddressComponents(components) {
