@@ -108,7 +108,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.userForm = this.fb.group({
       firstName: [this.user.firstName, [Validators.required] ],
       email: [this.user.email, [Validators.required] ],
-      role: ['consumer'] 
+      role: [this.user.role] 
     });
 
     // create search FormControl
@@ -482,7 +482,17 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   onAddImage() {
     this.imageName = this.producer.id + '/logo';
     this.addingImage = true;
+    // console.log('form value: ', this.producerForm.value);
+    // console.log('form: ', this.producerForm);
+    // add required validator to form
+    // this.userForm.controls.producer.get('logoUrl').setValidators([Validators.required]);
+    // this.userForm.controls.producer.get('logoUrl').updateValueAndValidity();
   };
+
+  onCancelAddImage() {
+    this.addingImage = false;
+    this.imageService.reset();
+  }
 
   onDeleteUser() {
     // console.log('delete user account clicked');

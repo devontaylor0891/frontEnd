@@ -134,7 +134,7 @@
                                         <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl">
                                         <small class="">If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
                                         <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
-                                        <small *ngIf="customUrlExists" class="help-block">That URL is already taken. Please choose another.</small>
+                                        <small *ngIf="customUrlDuplicateExists" class="help-block">That URL is already taken. Please choose another.</small>
                                         <small *ngIf="customUrl.errors?.pattern" class="help-block">
                                             Only letters, numbers, hyphens, and underscores are allowed.
                                         </small>
@@ -163,6 +163,13 @@
                                             </div>
                                             <div class="col-12">
                                                 <app-logo-cropper [name]="imageName"></app-logo-cropper>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                <button 
+                                                    class="btn btn-olf-primary btn-sm" 
+                                                    (click)="onCancelAddImage()">
+                                                    Cancel Logo Upload
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

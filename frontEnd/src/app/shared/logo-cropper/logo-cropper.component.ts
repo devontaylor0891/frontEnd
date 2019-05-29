@@ -14,6 +14,7 @@ export class LogoCropperComponent implements OnInit, OnChanges {
 
   imageChangedEvent: any = '';
   previewCroppedImage: any;
+  imageLoadFailed: boolean = false;
 
   constructor(private apiService: ApiService,
               private imageService: ImageService) { };
@@ -32,6 +33,7 @@ export class LogoCropperComponent implements OnInit, OnChanges {
   };
   loadImageFailed() {
     // show message
+    this.imageLoadFailed = true;
   };
 
   ngOnInit() {
