@@ -73,7 +73,7 @@
                     <div class="col-6 offset-3">
                         <!-- image exists for product -->
                         <div *ngIf="record.image !== ''" class="text-center">
-                            <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ record.image }}" class="img-thumbnail" alt=""> 
+                            <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ record.image }}?{{ randomNumber }}" class="img-thumbnail" alt=""> 
                             <a (click)="onChangeImage()">Change Image</a>
                         </div>
                         <!-- image does not exist for product -->
@@ -97,6 +97,20 @@
                     </div>
                     <div class="col-12">
                         <app-image-cropper [name]="imageName"></app-image-cropper>
+                    </div>
+                    <div *ngIf="addingImage" class="col-12 text-center">
+                        <button 
+                            class="btn btn-olf-primary btn-sm" 
+                            (click)="onCancelAddImage()">
+                            Cancel Image Upload
+                        </button>
+                    </div>
+                    <div *ngIf="changingImage" class="col-12 text-center">
+                        <button 
+                            class="btn btn-olf-primary btn-sm" 
+                            (click)="onCancelChangeImage()">
+                            Cancel Image Change
+                        </button>
                     </div>
                 </div>
 

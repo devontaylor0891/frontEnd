@@ -13,9 +13,14 @@
         (loadImageFailed)="loadImageFailed()"
     ></image-cropper>
   </div>
-  <div class="col-6" *ngIf="previewCroppedImage">
+  <div class="col-6" *ngIf="previewCroppedImage && !imageLoadFailed">
     <div class="text-center">
         <img class="img-thumbnail" [src]="previewCroppedImage" />  
+    </div>
+  </div>
+  <div class="col-6" *ngIf="imageLoadFailed">
+    <div class="text-center">
+      <p class="help-block">Uh-oh, something ain't right! Please make sure your image is a png or jpg.</p>
     </div>
   </div>
 </div>

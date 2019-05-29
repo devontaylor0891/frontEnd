@@ -71,6 +71,7 @@ export class ImageService {
   };
 
   convertAndUpload() {
+    // console.log('previewCroppedImage value: ', this.previewCroppedImage);
     this.imageUploading = true;
     this._imageUploading.next(this.imageUploading);
     const jpg = this.previewCroppedImage.split(',')[1];

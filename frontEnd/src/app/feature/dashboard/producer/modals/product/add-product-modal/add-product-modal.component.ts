@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, RequiredValidator } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +32,8 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
   imageUploading: boolean;
   addingImage: boolean = false;
   imageUploadingSub: Subscription;
+  imagePreviewSub: Subscription;
+  imagePreviewExists = false;
   submitting: boolean;
   error: any;
 
@@ -63,54 +65,6 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   }
 
-  onSubmit() {
-    this.newItemUploading = true;
-    // console.log(this.form.value);
-    this.form.value.image = this.imageName;
-    this.form.value.producerId = this.producer.producerId;
-    this.form.value.producer.id = this.producer.id;
-    // console.log(this.form.value);
-    // this.dashboardService.addNewProduct(this.form.value);
-    this.submitSub = this.apiService.postProduct(this.form.value)
-      .subscribe(
-          data => this.handleSubmitSuccess(this.form.value),
-			    err => this.handleSubmitError(err)
-      );
-  };
-
-  handleSubmitSuccess(result) {
-    // console.log('new Product result: ', result);
-    this.itemCreated.emit(result);
-    if (this.addingImage) { // upload image and then close the modal
-      this.imageService.convertAndUpload();
-      this.imageService._imageUploading
-        .subscribe(
-          result => {
-            if (!result) {
-              this.newItemUploading = false;
-              this.submitting = false;
-              this.activeModal.close();
-            }
-          }
-        )
-    } else { // no image to upload
-      this.newItemUploading = false; 
-      this.submitting = false;
-      this.activeModal.close();
-    };
-  };
-
-  handleSubmitError(err) {
-    console.error(err);
-    this.submitting = false;
-    this.error = true;
-  };
-
-  onAddImage() {
-    this.imageName = this.producer.id + '/' + new Date().getTime();
-    this.addingImage = true;
-  };
-
   ngOnInit() {
 
     this.dashboardService.getProducer()
@@ -118,7 +72,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
         result => {
           this.producer = result;
           this.imageName = this.producer.id + '/' + new Date().getTime();
-          this.form.value.image = this.imageName;
+          this.form.patchValue({image: this.imageName});
         }
       );
 
@@ -129,11 +83,116 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
         }
       )
 
+    this.imagePreviewSub = this.imageService._previewCroppedImage
+        .subscribe(
+          result => {
+            if (result) {
+              this.imagePreviewExists = true;
+              // create the image name
+              // this.imageName = this.producer.id + '/' + new Date().getTime();
+              this.form.patchValue({image: this.imageName});
+            } else {
+              this.imagePreviewExists = false;
+            }
+          }
+        );
+
   };
+
+  onSubmit() {
+    this.newItemUploading = true;
+    this.submitting = true;
+    // console.log(this.form.value);
+    this.form.value.producerId = this.producer.producerId;
+    this.form.value.producer.id = this.producer.id;
+    // console.log(this.form.value);
+    // if adding image, upload it first
+    if (this.addingImage) {
+      this.imageService.convertAndUpload();
+      this.imageService._imageUploading
+        .subscribe(
+          result => { // when returns false, upload is complete
+            console.log('image upload result: ', result);
+            if (!result) {
+              this.submitSub = this.apiService.postProduct(this.form.value)
+                .subscribe(
+                  data => this.handleSubmitSuccess(this.form.value),
+                  err => this.handleSubmitError(err)
+                );
+            }
+          }
+        )
+    } else {
+      // if not, just post the product
+      this.submitSub = this.apiService.postProduct(this.form.value)
+        .subscribe(
+          data => this.handleSubmitSuccess(this.form.value),
+          err => this.handleSubmitError(err)
+        );
+    }
+  };
+
+  handleSubmitSuccess(result) {
+    // console.log('new Product result: ', result);
+    this.itemCreated.emit(result);
+    // if (this.addingImage) { // upload image and then close the modal
+    //   this.imageService.convertAndUpload();
+    //   this.imageService._imageUploading
+    //     .subscribe(
+    //       result => {
+    //         console.log('image upload result: ', result);
+    //         if (!result) {
+    //           this.newItemUploading = false;
+    //           this.submitting = false;
+    //           this.activeModal.close();
+    //         }
+    //       }
+    //     )
+    // } else { // no image to upload
+      this.newItemUploading = false; 
+      this.submitting = false;
+      this.activeModal.close();
+    // };
+  };
+
+  handleSubmitError(err) {
+    console.error(err);
+    this.submitting = false;
+    this.error = true;
+  };
+
+  onAddImage() {
+    // create the image name
+    // this.imageName = this.producer.id + '/' + new Date().getTime();
+    // this.form.patchValue({image: this.imageName});
+    // show the image cropper
+    this.addingImage = true;
+    console.log('form value: ', this.form.value);
+    console.log('form: ', this.form);
+    // add required validator to form
+    this.form.get('image').setValidators([Validators.required]);
+    this.form.get('image').updateValueAndValidity();
+  };
+
+  onCancelAddImage() {
+    // remove image name
+    // this.imageName = '';
+    this.form.patchValue({image: ''});
+    // hide the image cropper
+    this.addingImage = false;
+    console.log('form value: ', this.form.value);
+    console.log('form: ', this.form);
+    // remove the required validator
+    this.form.get('image').clearValidators();
+    this.form.get('image').updateValueAndValidity();
+    // reset the imageService
+    this.imageService.reset();
+  }
 
   ngOnDestroy() {
     this.imageUploadingSub.unsubscribe();
     this.imageService.reset();
+    this.imagePreviewSub.unsubscribe();
   }
 
 }

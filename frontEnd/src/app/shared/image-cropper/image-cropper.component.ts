@@ -18,6 +18,7 @@ export class ImageCropperComponent implements OnInit, OnChanges {
   // imageFile: any;
   // presignedUrl: string;
   previewCroppedImage: any;
+  imageLoadFailed = false;
 
   constructor(private apiService: ApiService,
               private imageService: ImageService) { };
@@ -52,9 +53,11 @@ export class ImageCropperComponent implements OnInit, OnChanges {
   };
   imageLoaded() {
     // show cropper
+    this.imageLoadFailed = false;
   };
   loadImageFailed() {
     // show message
+    this.imageLoadFailed = true;
   };
 
   // getPresignedUrl(imageName) {

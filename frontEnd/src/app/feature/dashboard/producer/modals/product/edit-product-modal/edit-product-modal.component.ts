@@ -55,6 +55,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   imageUploading: boolean;
   imageUploadingSub: Subscription;
   producerIdSub: Subscription;
+  randomNumber: any;
 
   // if changing existing image
   changingImage: boolean = false;
@@ -70,6 +71,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
               private producerDashboardService: ProducerDashboardService) { }
 
   ngOnInit() {
+    this.randomize();
     // console.log('original record: ', this.record);
     this.submitObject.image = this.record.image;
     this.imageName = this.record.image;
@@ -95,6 +97,10 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.setSubmitObject();
     // console.log('original submitObject: ', this.submitObject);
   }
+
+  randomize() {
+    this.randomNumber = Math.floor(Math.random() * 100) + 1;
+  };
 
   private setInitialProduct() {
     return new ProductModel(
@@ -172,11 +178,29 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.setSubmitObject();
     // console.log('submitted object: ', this.submitObject);
     // console.log('submitted id: ', this.record.id);
-    this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
-      .subscribe(
-        data => this.handleSubmitSuccess(data),
-        err => this.handleSubmitError(err)
-      );
+    if (this.addingImage || this.changingImage) {
+      this.imageService.convertAndUpload();
+      this.imageUploadingSub = this.imageService._imageUploading
+        .subscribe(
+          result => {
+            if (!result) {
+              console.log('image upload result: ', result);
+              this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
+              .subscribe(
+                data => this.handleSubmitSuccess(data),
+                err => this.handleSubmitError(err)
+              );
+            }
+          }
+        );
+    } else {
+      this.submitProductSub = this.api.putProduct(this.record.id, this.submitObject)
+        .subscribe(
+          data => this.handleSubmitSuccess(data),
+          err => this.handleSubmitError(err)
+        );
+    }
+    
   };
 
   onRenew() {
@@ -201,21 +225,8 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
       this.record.qtyAvailable = this.submitObject.qtyAvailable;
       this.onProductInStock.emit(this.record);
     }
-    if (this.addingImage || this.changingImage) {
-      this.imageService.convertAndUpload();
-      this.imageService._imageUploading
-        .subscribe(
-          result => {
-            if (!result) {
-              this.submitting = false;
-              this.activeModal.close();
-            }
-          }
-        )
-    } else {
-      this.submitting = false;
-      this.activeModal.close();
-    };
+    this.submitting = false;
+    this.activeModal.close();
   };
   
   handleSubmitError(err) {
@@ -225,14 +236,51 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   };
 
   onChangeImage() {
-    this.imageName = this.record.image;
+    this.randomize();
+    // this.imageName = this.record.image;
+    // this.productForm.patchValue({image: ''});
     this.changingImage = true;
+    console.log('form value: ', this.productForm.value);
+    console.log('form: ', this.productForm);
+    // add required validator to form
+    this.productForm.get('image').setValidators([Validators.required]);
+    this.productForm.get('image').updateValueAndValidity();
   };
 
   onAddImage() {
     this.imageName = this.record.producer.id + '/' + new Date().getTime();
     this.addingImage = true;
+    console.log('form value: ', this.productForm.value);
+    console.log('form: ', this.productForm);
+    // add required validator to form
+    this.productForm.get('image').setValidators([Validators.required]);
+    this.productForm.get('image').updateValueAndValidity();
   };
+
+  onCancelAddImage() {
+    // remove image name
+    // this.imageName = '';
+    this.productForm.patchValue({image: ''});
+    // hide the image cropper
+    this.addingImage = false;
+    // this.changingImage = false;
+    console.log('form value: ', this.productForm.value);
+    console.log('form: ', this.productForm);
+    // remove the required validator
+    this.productForm.get('image').clearValidators();
+    this.productForm.get('image').updateValueAndValidity();
+    // reset the imageService
+    this.imageService.reset();
+  };
+
+  onCancelChangeImage() {
+    this.changingImage = false;
+    // remove the required validator
+    this.productForm.get('image').clearValidators();
+    this.productForm.get('image').updateValueAndValidity();
+    // reset the imageService
+    this.imageService.reset();
+  }
   
   ngOnDestroy() {
     if (this.submitProductSub) {

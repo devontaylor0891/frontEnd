@@ -13,14 +13,18 @@ export class ViewProductModalComponent implements OnInit {
 
   @Input() record: ProductModel;
   totalPrice: number;
+  randomNumber: any;
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-
+    this.randomize();
     this.totalPrice = this.calculateTotalPrice();
+  };
 
-  }
+  randomize() {
+    this.randomNumber = Math.floor(Math.random() * 100) + 1;
+  };
 
   calculateTotalPrice() {
     return (this.record.pricePerUnit * this.record.unitsPer); 
