@@ -439,7 +439,7 @@ export class ApiService {
   putFileToS3(file: any, url: string): Observable<any> {
     return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/jpeg') })
       .map((response: Response) => {
-        // console.log('image uploaded response: ', response);
+        console.log('image uploaded response: ', response);
       });
   };
 
