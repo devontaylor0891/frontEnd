@@ -95,7 +95,7 @@ export class ImageService {
     this.apiService.getPresignedUrl(imageNameObj)
       .subscribe(
         result => {
-          // console.log('presignedUrl: ', result);
+          console.log('presignedUrl: ', result);
           this.presignedUrl = result;
           this.uploadToS3(this.presignedUrl);
         }
@@ -108,7 +108,7 @@ export class ImageService {
     this.apiService.putFileToS3(this.croppedImage, url)
       .subscribe(
         response => {
-          // console.log('file upload response: ', response);
+          console.log('file upload response: ', response);
           this.imageUploading = false;
           this._imageUploading.next(this.imageUploading);
         }
