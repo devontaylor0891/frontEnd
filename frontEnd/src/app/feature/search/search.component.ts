@@ -48,7 +48,7 @@ export class SearchComponent implements OnInit, OnChanges {
           this.userLocation = response;
           this.searchOptions.latitude = this.userLocation.coords.latitude;
           this.searchOptions.longitude = this.userLocation.coords.longitude;
-          this.searchOptions.radius = 25;
+          this.searchOptions.radius = 50;
           // console.log(this.userLocation.coords.latitude);
           // console.log(this.userLocation.coords.longitude);
           this.locationService.codeLatLng(this.userLocation.coords.latitude, this.userLocation.coords.longitude);

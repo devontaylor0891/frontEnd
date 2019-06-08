@@ -30,7 +30,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
 
   locationUpdate: boolean = false;
   submitting: boolean = false;
-  currentRadius: number = 25;
+  currentRadius: number = 50;
   latitude: number;
   longitude: number;
   cityProvince: string;
@@ -151,7 +151,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   };
 
   onSubmit(form: NgForm) {
-    //empty the submitted values
+    // empty the submitted values
     this.submittedValues = {
       categories: [],
       deliveryTypes: []
@@ -159,12 +159,12 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     // separate and loop through each of the values
     for (let property in form.value) {
       if (form.value.hasOwnProperty(property)) {
-        let propValue = form.value[property]; //get the returned values
+        let propValue = form.value[property]; // get the returned values
         // if the returned value is true
         if (propValue) {
-          //separate the properties by their type (category or delivery)
+          // separate the properties by their type (category or delivery)
           if (property.split('.')[0] === 'c') {
-            //add the property to the appropriate array
+            // add the property to the appropriate array
             this.submittedValues.categories.push(property.split('.')[1]);
           } else {
             this.submittedValues.deliveryTypes.push(property.split('.')[1]);
@@ -173,7 +173,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
       }
     }
     // console.log('submitted values: ', this.submittedValues);
-    //then send the submitted values to search service to update the view
+    // then send the submitted values to search service to update the view
     this.searchService.onFilter(this.submittedValues);
   }
 
