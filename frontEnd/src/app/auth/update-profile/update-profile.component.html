@@ -242,7 +242,7 @@
                         *ngIf="userForm.get('user.role').value === 'producer'" 
                         type="submit" 
                         class="btn btn-olf-primary" 
-                        [disabled]="!userForm.valid || !searchControl.valid">
+                        [disabled]="!userForm.valid || !selectedLocation">
                     Complete Signup</button>
 
                 </div>
