@@ -71,8 +71,8 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
       .subscribe(
         result => {
           this.producer = result;
-          this.imageName = this.producer.id + '/' + new Date().getTime();
-          this.form.patchValue({image: this.imageName});
+          // this.imageName = this.producer.id + '/' + new Date().getTime();
+          // this.form.patchValue({image: this.imageName});
         }
       );
 
@@ -163,7 +163,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   onAddImage() {
     // create the image name
-    // this.imageName = this.producer.id + '/' + new Date().getTime();
+    this.imageName = this.producer.id + '/' + new Date().getTime();
     // this.form.patchValue({image: this.imageName});
     // show the image cropper
     this.addingImage = true;

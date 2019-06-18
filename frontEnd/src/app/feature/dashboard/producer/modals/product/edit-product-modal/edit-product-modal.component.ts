@@ -249,6 +249,7 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
 
   onAddImage() {
     this.imageName = this.record.producer.id + '/' + new Date().getTime();
+    this.productForm.patchValue({image: this.imageName});
     this.addingImage = true;
     console.log('form value: ', this.productForm.value);
     console.log('form: ', this.productForm);

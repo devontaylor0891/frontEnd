@@ -19,9 +19,12 @@
 
         <div class="col-12 form-section-body">
 
-          <div class="row">
-            <div class="col-4 offset-4">
+          <div class="row text-center">
+            <div class="col-4 offset-4" *ngIf="record.image">
               <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ record.image }}?{{ randomNumber }}" class="img-fluid" alt="">
+            </div>
+            <div class="col-4 offset-4" *ngIf="!record.image">
+              <p>No image added.</p>
             </div>
           </div>
 
