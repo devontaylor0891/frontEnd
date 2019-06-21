@@ -3,72 +3,72 @@
     <button type="button" class="close" (click)="activeModal.close()">
         <span aria-hidden="true">&times;</span>
     </button>
-  </div>
+</div>
 
 <div class="modal-body dash-modal-body">
-
+    
     <div *ngIf="record.isObsolete" class="row form-section">
         <p>
             By clicking 'Renew Product' below, you can return {{ record.name }} to your Product List. You will still have to adjust the quantity available, as well as make any other changes you deem fit.
         </p>
-
+        
         <!-- Renew -->
         <button
-            type="button"
-            class="btn btn-olf-primary"
-            (click)="onRenew()"
-            >Renew Product</button>
-    
+        type="button"
+        class="btn btn-olf-primary"
+        (click)="onRenew()"
+        >Renew Product</button>
+        
         <!-- Cancel -->
         <button
-            type="button" 
-            class="btn btn-olf-primary" 
-            (click)="activeModal.close()"
-            >Cancel Renewal</button>
+        type="button" 
+        class="btn btn-olf-primary" 
+        (click)="activeModal.close()"
+        >Cancel Renewal</button>
     </div>
-  
+    
     <form *ngIf="!submitting && record" [formGroup]="productForm" (ngSubmit)="onSubmit()">
-
-    <!-- basic info -->
+        
+        <!-- basic info -->
         <div class="row form-section">
             <div class="col-12 form-section-header">
                 <h4>Basic Product Information</h4>
             </div>
             <div class="col-12 form-section-body">
-            <!-- Name -->
+                <!-- Name -->
                 <div class="row">
                     <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Name:</label>
                     <div class="col-xs-12 col-sm-8 input-group">
                         <input 
-                            id="name"
-                            type="text"
-                            class="form-input-custom" 
-                            formControlName="name">
+                        id="name"
+                        type="text"
+                        class="form-input-custom" 
+                        formControlName="name">
                     </div>
                 </div>
-            
-            <!-- Description -->
+                
+                <!-- Description -->
                 <div class="row">
                     <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description:</label>
                     <div class="col-xs-12 col-sm-8 input-group">
                         <textarea 
-                            type="text"
-                            class="form-input-custom"  
-                            id="description" 
-                            formControlName="description"></textarea>
+                        type="text"
+                        class="form-input-custom"  
+                        id="description" 
+                        formControlName="description"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         
-    <!-- image -->
+        <!-- image -->
         <div class="row form-section">
             <div class="col-12 form-section-header">
                 <h4>Image</h4>
             </div>
             <div class="col-12 form-section-body">
-
-            <!-- current image -->
+                
+                <!-- current image -->
                 <div class="row" *ngIf="!addingImage && !changingImage">
                     <div class="col-6 offset-3">
                         <!-- image exists for product -->
@@ -83,8 +83,8 @@
                         </div>
                     </div>
                 </div>
-
-            <!-- Adding new image or changing current image -->
+                
+                <!-- Adding new image or changing current image -->
                 <div class="row" *ngIf="addingImage || changingImage">
                     <div class="-col-10 offset-1">
                         <p class="small">We recommend that your image have at least 400 pixels as its smallest dimension (width or height).</p>
@@ -100,226 +100,229 @@
                     </div>
                     <div *ngIf="addingImage" class="col-12 text-center">
                         <button 
-                            class="btn btn-olf-primary btn-sm" 
-                            (click)="onCancelAddImage()">
-                            Cancel Image Upload
-                        </button>
-                    </div>
-                    <div *ngIf="changingImage" class="col-12 text-center">
-                        <button 
-                            class="btn btn-olf-primary btn-sm" 
-                            (click)="onCancelChangeImage()">
-                            Cancel Image Change
-                        </button>
-                    </div>
+                        class="btn btn-olf-primary btn-sm" 
+                        (click)="onCancelAddImage()">
+                        Cancel Image Upload
+                    </button>
                 </div>
-
+                <div *ngIf="addingImage && !imagePreviewExists" class="col-12 text-center">
+                    <small class="help-block">Please either upload a product image or cancel the image upload with the button above.</small>
+                </div>
+                <div *ngIf="changingImage" class="col-12 text-center">
+                    <button 
+                    class="btn btn-olf-primary btn-sm" 
+                    (click)="onCancelChangeImage()">
+                    Cancel Image Change
+                </button>
             </div>
         </div>
-
-    <!-- pricing and units -->
-        <div class="row form-section">
-            <div class="col-12 form-section-header">
-                <h4>Pricing and Unit Information</h4>
-            </div>
-            <div class="col-12 form-section-body">
-
-            <!-- price per unit -->
-                <div class="row">
-                    <label for="pricePerUnit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Price Per Unit:</label>
-                    <div class="col-xs-12 col-sm-8 input-group">
-                        <div class="input-group-addon">$</div>
-                        <input 
-                            class="form-control" 
-                            type="number"
-                            min="0"
-                            step="any"
-                            id="pricePerUnit" 
-                            formControlName="pricePerUnit">
-                    </div>
-                </div>
-
-            <!-- unit -->
-                <div class="row">
-                    <label for="unit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Pricing Unit</label>
-                    <div class="col-xs-12 col-sm-8 input-group">
-                        <select class="custom-select form-input-custom float-left" name="unit" formControlName="unit">
-                            <option selected value="">Select a Unit</option>
-                            <option value="lb">Pound</option>
-                            <option value="kg">Kilo</option>
-                            <option value="ea">Each</option>
-                            <option value="pkg">Package</option>
-                        </select>
-                    </div>
-                </div>
-            
-            <!-- units per -->
-                <div class="row">
-                    <label for="unitsPer" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Units Per Final Product</label>
-                    <div class="col-xs-12 col-sm-8 input-group">
-                        <input 
-                            class="form-input-custom" 
-                            type="number"
-                            min="0"
-                            step=".1"
-                            id="unitsPer" 
-                            formControlName="unitsPer">
-                    </div>
-                    <div class="col-xs-12 col-sm-8 offset-sm-4">
-                        <small class="form-text text-muted text-right">If your final product contains more than 1 unit (like a 5 lb chicken), change this to the average number of units per final product. We can use this to calculate an estimated final price for the consumer.</small>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    <!-- categories -->
-        <div class="row form-section">
-            <div class="col-12 form-section-header">
-                <h4>Category Information</h4>
-            </div>
-            <div class="col-12 form-section-body">
-
-            <!-- category -->
-                <div class="row">
-                    <label for="category" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Category:</label>
-                    <div class="col-xs-12 col-sm-8 input-group">
-                        <select 
-                        class="custom-select form-input-custom float-left" 
-                        name="category" 
-                        formControlName="category">
-                            <option selected value="">Choose a Category</option>
-                            <option value="Dairy & Eggs">Dairy & Eggs</option>
-                            <option value="Meat">Meat</option>
-                            <option value="Produce">Produce</option>
-                            <option value="Value-added">Value-added</option>
-                        </select>
-                    </div>
-                </div>
-
-            <!-- subcategory -->
-                <div class="row">
-                    <label for="subcategory" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Subcategory:</label>
-                <!-- dairy/egg subcategories -->
-                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Dairy & Eggs'">
-                            <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
-                                <option selected value="">Choose a Subcategory</option>
-                                <option value="Cheese">Cheese</option>
-                                <option value="Eggs">Eggs</option>
-                                <option value="Yogurt">Yogurt</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                <!-- meat subcategories -->
-                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Meat'">
-                        <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
-                            <option selected value="">Choose a Subcategory</option>
-                            <option value="Beef">Beef</option>
-                            <option value="Bison">Bison</option>
-                            <option value="Chicken">Chicken</option>
-                            <option value="Fish">Fish</option>
-                            <option value="Lamb">Lamb</option>
-                            <option value="Pork">Pork</option>
-                            <option value="Turkey">Turkey</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                <!-- produce subcategories -->
-                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Produce'">
-                        <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
-                            <option selected value="">Choose a Subcategory</option>
-                            <option value="Apples">Apples</option>
-                            <option value="Arugula">Arugula</option>
-                            <option value="Beans">Beans</option>
-                            <option value="Beets">Beets</option>
-                            <option value="Berries">Berries</option>
-                            <option value="Cabbage">Cabbage</option>
-                            <option value="Carrots">Carrots</option>
-                            <option value="Corn">Corn</option>
-                            <option value="Cucumbers">Cucumbers</option>
-                            <option value="Eggplant">Eggplant</option>
-                            <option value="Garlic">Garlic</option>
-                            <option value="Herbs">Herbs</option>
-                            <option value="Kale">Kale</option>
-                            <option value="Leeks">Leeks</option>
-                            <option value="Lentils">Lentils</option>
-                            <option value="Lettuce">Lettuce</option>
-                            <option value="Onions">Onions</option>
-                            <option value="Parsnips">Parsnips</option>
-                            <option value="Peas">Peas</option>
-                            <option value="Peppers">Peppers</option>
-                            <option value="Potatoes">Potatoes</option>
-                            <option value="Pumpkin">Pumpkin</option>
-                            <option value="Radishes">Radishes</option>
-                            <option value="Spinach">Spinach</option>
-                            <option value="Squash">Squash</option>
-                            <option value="Swiss Chard">Swiss Chard</option>
-                            <option value="Tomatoes">Tomatoes</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                <!-- value added subs -->
-                    <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Value-added'">
-                        <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
-                            <option selected value="">Choose a Subcategory</option>
-                            <option value="Baking">Baking</option>
-                            <option value="Flour">Flour</option>
-                            <option value="Grains">Grains</option>
-                            <option value="Honey">Honey</option>
-                            <option value="Perogies">Perogies</option>
-                            <option value="Personal Care">Personal Care</option>
-                            <option value="Preserves">Preserves</option>
-                            <option value="Soup">Soup</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    <!-- quantities -->
-        <div class="row form-section">
-            <div class="col-12 form-section-header">
-                <h4>Inventory Information</h4>
-            </div>
-            <div class="col-12 form-section-body">
-
-            <!-- qty available -->
-                <div class="row">
-                    <label for="qtyAvailable" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Quantity Available:</label>
-                    <div class="col-xs-12 col-sm-8 input-group">
-                        <input 
-                            class="form-input-custom" 
-                            type="number"
-                            min="0"
-                            step="1"
-                            id="qtyAvailable" 
-                            formControlName="qtyAvailable">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-      
-        <!-- Submit -->
-        <div class="form-group text-center" *ngIf="!submitting">
-            <button
-                type="submit"
-                class="btn btn-olf-primary"
-                [attr.disabled]="productForm.invalid || submitting ? true : null"
-            >Submit Changes</button>
-                <!-- https://github.com/angular/angular/issues/11271#issuecomment-289806196 -->
         
-            <!-- API submission error -->
-            <p *ngIf="error" class="mt-3 alert alert-danger">
-                <strong>Error:</strong> There was a problem submitting the product. Please try again.
-            </p>
+    </div>
+</div>
+
+<!-- pricing and units -->
+<div class="row form-section">
+    <div class="col-12 form-section-header">
+        <h4>Pricing and Unit Information</h4>
+    </div>
+    <div class="col-12 form-section-body">
+        
+        <!-- price per unit -->
+        <div class="row">
+            <label for="pricePerUnit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Price Per Unit:</label>
+            <div class="col-xs-12 col-sm-8 input-group">
+                <div class="input-group-addon">$</div>
+                <input 
+                class="form-control" 
+                type="number"
+                min="0"
+                step="any"
+                id="pricePerUnit" 
+                formControlName="pricePerUnit">
+            </div>
         </div>
-    </form>
-  
-    <app-loading *ngIf="submitting"></app-loading>
-  
+        
+        <!-- unit -->
+        <div class="row">
+            <label for="unit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Pricing Unit</label>
+            <div class="col-xs-12 col-sm-8 input-group">
+                <select class="custom-select form-input-custom float-left" name="unit" formControlName="unit">
+                    <option selected value="">Select a Unit</option>
+                    <option value="lb">Pound</option>
+                    <option value="kg">Kilo</option>
+                    <option value="ea">Each</option>
+                    <option value="pkg">Package</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- units per -->
+        <div class="row">
+            <label for="unitsPer" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Units Per Final Product</label>
+            <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                class="form-input-custom" 
+                type="number"
+                min="0"
+                step=".1"
+                id="unitsPer" 
+                formControlName="unitsPer">
+            </div>
+            <div class="col-xs-12 col-sm-8 offset-sm-4">
+                <small class="form-text text-muted text-right">If your final product contains more than 1 unit (like a 5 lb chicken), change this to the average number of units per final product. We can use this to calculate an estimated final price for the consumer.</small>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- categories -->
+<div class="row form-section">
+    <div class="col-12 form-section-header">
+        <h4>Category Information</h4>
+    </div>
+    <div class="col-12 form-section-body">
+        
+        <!-- category -->
+        <div class="row">
+            <label for="category" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Category:</label>
+            <div class="col-xs-12 col-sm-8 input-group">
+                <select 
+                class="custom-select form-input-custom float-left" 
+                name="category" 
+                formControlName="category">
+                <option selected value="">Choose a Category</option>
+                <option value="Dairy & Eggs">Dairy & Eggs</option>
+                <option value="Meat">Meat</option>
+                <option value="Produce">Produce</option>
+                <option value="Value-added">Value-added</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- subcategory -->
+    <div class="row">
+        <label for="subcategory" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Subcategory:</label>
+        <!-- dairy/egg subcategories -->
+        <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Dairy & Eggs'">
+            <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
+                <option selected value="">Choose a Subcategory</option>
+                <option value="Cheese">Cheese</option>
+                <option value="Eggs">Eggs</option>
+                <option value="Yogurt">Yogurt</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <!-- meat subcategories -->
+        <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Meat'">
+            <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
+                <option selected value="">Choose a Subcategory</option>
+                <option value="Beef">Beef</option>
+                <option value="Bison">Bison</option>
+                <option value="Chicken">Chicken</option>
+                <option value="Fish">Fish</option>
+                <option value="Lamb">Lamb</option>
+                <option value="Pork">Pork</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <!-- produce subcategories -->
+        <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Produce'">
+            <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
+                <option selected value="">Choose a Subcategory</option>
+                <option value="Apples">Apples</option>
+                <option value="Arugula">Arugula</option>
+                <option value="Beans">Beans</option>
+                <option value="Beets">Beets</option>
+                <option value="Berries">Berries</option>
+                <option value="Cabbage">Cabbage</option>
+                <option value="Carrots">Carrots</option>
+                <option value="Corn">Corn</option>
+                <option value="Cucumbers">Cucumbers</option>
+                <option value="Eggplant">Eggplant</option>
+                <option value="Garlic">Garlic</option>
+                <option value="Herbs">Herbs</option>
+                <option value="Kale">Kale</option>
+                <option value="Leeks">Leeks</option>
+                <option value="Lentils">Lentils</option>
+                <option value="Lettuce">Lettuce</option>
+                <option value="Onions">Onions</option>
+                <option value="Parsnips">Parsnips</option>
+                <option value="Peas">Peas</option>
+                <option value="Peppers">Peppers</option>
+                <option value="Potatoes">Potatoes</option>
+                <option value="Pumpkin">Pumpkin</option>
+                <option value="Radishes">Radishes</option>
+                <option value="Spinach">Spinach</option>
+                <option value="Squash">Squash</option>
+                <option value="Swiss Chard">Swiss Chard</option>
+                <option value="Tomatoes">Tomatoes</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <!-- value added subs -->
+        <div class="col-xs-12 col-sm-8 input-group" *ngIf="productForm.value.category === 'Value-added'">
+            <select class="custom-select form-input-custom float-left" name="subcategory" formControlName="subcategory">
+                <option selected value="">Choose a Subcategory</option>
+                <option value="Baking">Baking</option>
+                <option value="Flour">Flour</option>
+                <option value="Grains">Grains</option>
+                <option value="Honey">Honey</option>
+                <option value="Perogies">Perogies</option>
+                <option value="Personal Care">Personal Care</option>
+                <option value="Preserves">Preserves</option>
+                <option value="Soup">Soup</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+<!-- quantities -->
+<div class="row form-section">
+    <div class="col-12 form-section-header">
+        <h4>Inventory Information</h4>
+    </div>
+    <div class="col-12 form-section-body">
+        
+        <!-- qty available -->
+        <div class="row">
+            <label for="qtyAvailable" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Quantity Available:</label>
+            <div class="col-xs-12 col-sm-8 input-group">
+                <input 
+                class="form-input-custom" 
+                type="number"
+                min="0"
+                step="1"
+                id="qtyAvailable" 
+                formControlName="qtyAvailable">
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- Submit -->
+<div class="form-group text-center" *ngIf="!submitting">
+    <button
+    type="submit"
+    class="btn btn-olf-primary"
+    [disabled]="productForm.invalid || submitting ? true : null || (changingImage && !imagePreviewExists)"
+    >Submit Changes</button>
+    <!-- https://github.com/angular/angular/issues/11271#issuecomment-289806196 -->
+    
+    <!-- API submission error -->
+    <p *ngIf="error" class="mt-3 alert alert-danger">
+        <strong>Error:</strong> There was a problem submitting the product. Please try again.
+    </p>
+</div>
+</form>
+
+<app-loading *ngIf="submitting"></app-loading>
+
 </div>
 
 <div class="modal-footer justify-content-center">

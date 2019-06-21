@@ -54,6 +54,8 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
   imageName: any;
   imageUploading: boolean;
   imageUploadingSub: Subscription;
+  imagePreviewSub: Subscription;
+  imagePreviewExists = false;
   producerIdSub: Subscription;
   randomNumber: any;
 
@@ -81,17 +83,17 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     };
     this.buildForm();
     this.calculateTotalValue();
-    this.imageUploadingSub = this.imageService._imageUploading
-      .subscribe(
-        result => {
-          this.imageUploading = result;
-        }
-      );
+    // this.imageUploadingSub = this.imageService._imageUploading
+    //   .subscribe(
+    //     result => {
+    //       this.imageUploading = result;
+    //     }
+    //   );
     this.producerIdSub = this.producerDashboardService.getProducer()
       .subscribe(
         result => {
           // console.log('producer result: ', result);
-          this.submitObject.producerId =  result.producerId
+          this.submitObject.producerId = result.producerId;
         }
       );
     this.setSubmitObject();
@@ -235,27 +237,31 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.error = true;
   };
 
-  onChangeImage() {
-    this.randomize();
-    // this.imageName = this.record.image;
-    // this.productForm.patchValue({image: ''});
-    this.changingImage = true;
-    console.log('form value: ', this.productForm.value);
-    console.log('form: ', this.productForm);
-    // add required validator to form
-    this.productForm.get('image').setValidators([Validators.required]);
-    this.productForm.get('image').updateValueAndValidity();
-  };
-
   onAddImage() {
     this.imageName = this.record.producer.id + '/' + new Date().getTime();
-    this.productForm.patchValue({image: this.imageName});
     this.addingImage = true;
-    console.log('form value: ', this.productForm.value);
-    console.log('form: ', this.productForm);
-    // add required validator to form
     this.productForm.get('image').setValidators([Validators.required]);
     this.productForm.get('image').updateValueAndValidity();
+    console.log('form: ', this.productForm);
+    this.imagePreviewSub = this.imageService._previewCroppedImage
+      .subscribe(
+        result => {
+          // console.log('result from img preview sub: ', result);
+          if (result !== '') {
+            this.imagePreviewExists = true;
+            this.productForm.patchValue({image: this.imageName});
+            this.productForm.get('image').updateValueAndValidity();
+            // console.log('form: ', this.form.value);
+          }
+        }
+      );
+
+    // console.log('form value: ', this.productForm.value);
+    // console.log('form: ', this.productForm);
+    // // add required validator to form
+    // this.productForm.patchValue({image: this.imageName});
+    // this.productForm.get('image').setValidators([Validators.required]);
+    // this.productForm.get('image').updateValueAndValidity();
   };
 
   onCancelAddImage() {
@@ -274,11 +280,42 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.imageService.reset();
   };
 
+  onChangeImage() {
+    this.randomize();
+    // disable the submit button while changing, until the preview exists
+    this.changingImage = true;
+    this.imagePreviewExists = false;
+    console.log('change img: ', this.changingImage);
+    console.log('not imagePreview: ', !this.imagePreviewExists);
+    this.imagePreviewSub = this.imageService._previewCroppedImage
+      .subscribe(
+        result => {
+          // console.log('result from img preview sub: ', result);
+          if (result !== '') {
+            this.imagePreviewExists = true;
+            console.log('change img: ', this.changingImage);
+            console.log('not imagePreview: ', !this.imagePreviewExists);
+            // this.productForm.patchValue({image: this.imageName});
+            // this.productForm.get('image').updateValueAndValidity();
+            // console.log('form: ', this.form.value);
+          }
+        }
+      );
+    console.log('form value: ', this.productForm.value);
+    console.log('form: ', this.productForm);
+    // add required validator to form
+    // this.productForm.get('image').setValidators([Validators.required]);
+    // this.productForm.get('image').updateValueAndValidity();
+  };
+
   onCancelChangeImage() {
     this.changingImage = false;
+    this.imagePreviewExists = true;
+    console.log('change img: ', this.changingImage);
+    console.log('not imagePreview: ', !this.imagePreviewExists);
     // remove the required validator
-    this.productForm.get('image').clearValidators();
-    this.productForm.get('image').updateValueAndValidity();
+    // this.productForm.get('image').clearValidators();
+    // this.productForm.get('image').updateValueAndValidity();
     // reset the imageService
     this.imageService.reset();
   }
@@ -293,6 +330,9 @@ export class EditProductModalComponent implements OnInit, OnDestroy {
     this.formChangeSub.unsubscribe();
     if (this.imageUploadingSub) {
       this.imageUploadingSub.unsubscribe();
+    };
+    if (this.imagePreviewSub) {
+      this.imagePreviewSub.unsubscribe();
     };
     this.imageService.reset();
   }

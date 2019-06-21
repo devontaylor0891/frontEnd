@@ -118,9 +118,9 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
 
   onOpenView(record) {
     this.record = record;
-    console.log('recordType: ', this.recordType);
-    console.log('isAdmin: ', this.isAdmin);
-    console.log('isConsumer: ', this.isConsumer);
+    // console.log('recordType: ', this.recordType);
+    // console.log('isAdmin: ', this.isAdmin);
+    // console.log('isConsumer: ', this.isConsumer);
     if (this.recordType === 'product' && this.isAdmin === false) { // producer
       const modalRef = this.modal.open(ViewProductModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;

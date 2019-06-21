@@ -212,6 +212,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
   };
 
   private fillAddress(place) {
+    this.currentRadius = 50;
     // this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.latitude = place.geometry.location.lat();
@@ -222,7 +223,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
     // have the search service make a new call
     this.searchOptions.latitude = this.latitude;
     this.searchOptions.longitude = this.longitude;
-    this.searchOptions.radius = 25;
+    this.searchOptions.radius = 50;
     this.searchService.loadAll(this.searchOptions);
     // pass these lat/long out to map
     this.locationUpdate = !this.locationUpdate;
