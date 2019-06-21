@@ -18,7 +18,7 @@ export class ApiService {
   // apiUrl = 'http://localhost:3000';
   // apiUrl = 'http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api';
   // apiUrl = 'http://api-server-env.u4xn8vrpir.us-west-2.elasticbeanstalk.com/api';
-  apiUrl = 'https://api.olfdev.com/api';
+  apiUrl = 'https://api.onlylocalfood.com/api';
 
   productsUrl = '../../../../assets/api/products/';
   producerUrl = '../../../../assets/api/producer/';
