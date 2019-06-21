@@ -271,7 +271,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
       .subscribe(
         result => {
           this.producer = result;
-          // this.imageName = this.producer.id + '/' + new Date().getTime();
+          this.imageName = this.producer.id + '/' + new Date().getTime();
           // this.form.patchValue({image: this.imageName});
         }
       );
@@ -385,7 +385,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
           if (result !== '') {
             this.imagePreviewExists = true;
             // create the image name
-            this.imageName = this.producer.id + '/' + new Date().getTime();
+            // this.imageName = this.producer.id + '/' + new Date().getTime();
             this.form.patchValue({image: this.imageName});
             // this.form.get('image').setValidators([Validators.required]);
             this.form.get('image').updateValueAndValidity();
@@ -399,7 +399,7 @@ export class AddProductModalComponent implements OnInit, OnDestroy {
 
   onCancelAddImage() {
     this.addingImage = false;
-    this.imageName = '';
+    // this.imageName = '';
     this.imageService.reset();
     this.form.patchValue({image: ''});
     this.form.get('image').clearValidators();
