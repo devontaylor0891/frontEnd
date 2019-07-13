@@ -224,7 +224,7 @@ export class CartService implements OnDestroy {
     // change the product's quantities
     // console.log('productId: ', product.id);
     // console.log('quantity: ', quantity);
-	  // this.makeQtyPending(product.id, quantity);
+	  this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
       // add one to the tempIds variable
@@ -873,7 +873,7 @@ export class CartService implements OnDestroy {
 
   addOne(productId, producerId) {
     // change the product's quantities
-    // this.makeQtyPending(productId, 1);
+    this.makeQtyPending(productId, 1);
     // increase the cartCount
     this.dataStore.cartCount += 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
@@ -896,7 +896,7 @@ export class CartService implements OnDestroy {
 
   minusOne(productId, producerId) {
     // change the product's quantities
-    // this.makeQtyPending(productId, -1);
+    this.makeQtyPending(productId, -1);
     // increase the cartCount
     this.dataStore.cartCount -= 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
