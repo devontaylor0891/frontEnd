@@ -47,7 +47,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     this.buildProductsArray();
     this.buildForm();
     this.submitObject = this.record;
-    // console.log('this order: ', this.record);
+    console.log('this order: ', this.record);
     // console.log('submitObject: ', this.submitObject);
   }
 

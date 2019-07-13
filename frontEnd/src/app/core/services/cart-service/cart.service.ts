@@ -224,7 +224,7 @@ export class CartService implements OnDestroy {
     // change the product's quantities
     // console.log('productId: ', product.id);
     // console.log('quantity: ', quantity);
-	  this.makeQtyPending(product.id, quantity);
+	  // this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
       // add one to the tempIds variable
@@ -338,7 +338,7 @@ export class CartService implements OnDestroy {
     // emit the new carts
     this._carts.next(Object.assign({}, this.dataStore).carts);
     // change the qtyAvailable
-    this.makeQtyAvailable(productId, quantity);
+    // this.makeQtyAvailable(productId, quantity);
     // decrease the cartCount
     this.dataStore.cartCount -= quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
@@ -496,6 +496,7 @@ export class CartService implements OnDestroy {
   };
 
   buildCartAndSendOrder() {
+    console.log('buildCart and send order carts: ', this.dataStore.carts);
     // console.log('sending chosen sched: ', this.sendingChosenSchedule);
     // get the producer's email, subscribe to an api call, then continue with this function
     this.apiService.getProducerById(this.sendingChosenSchedule.userId)
@@ -548,7 +549,7 @@ export class CartService implements OnDestroy {
             productChecked.quantityAvailable = result[0].qtyAvailable;
             productChecked.name = result[0].name;
             productCheckArray.push(productChecked);
-            if (index === (array.length -1)) {
+            if (index === (array.length - 1)) {
               // triggered on last one.
               // console.log('last one');
               this.compareProductQuantities(productCheckArray);
@@ -872,7 +873,7 @@ export class CartService implements OnDestroy {
 
   addOne(productId, producerId) {
     // change the product's quantities
-    this.makeQtyPending(productId, 1);
+    // this.makeQtyPending(productId, 1);
     // increase the cartCount
     this.dataStore.cartCount += 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
@@ -895,7 +896,7 @@ export class CartService implements OnDestroy {
 
   minusOne(productId, producerId) {
     // change the product's quantities
-    this.makeQtyPending(productId, -1);
+    // this.makeQtyPending(productId, -1);
     // increase the cartCount
     this.dataStore.cartCount -= 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);

@@ -39,6 +39,7 @@
         </div>
 
         <div class="col-12 form-section-body">
+          
             <div class="row">
                 <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
                     <strong>Name:</strong>
@@ -47,6 +48,26 @@
                     <p>{{ record.consumer.firstName }}</p>
                 </div>
             </div>
+
+            <div class="row" *ngIf="record.orderDetails.deliveryAddress">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Delivery Address:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ record.orderDetails.deliveryAddress }}</p>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Consumer Comment:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
+                  <p *ngIf="!record.orderDetails.consumerComment">No comments entered.</p>
+              </div>
+            </div>
+
         </div>
 
         <hr>
@@ -60,16 +81,6 @@
         </div>
 
         <div class="col-12 form-section-body">
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                    <strong>Consumer Comment:</strong>
-                </div>
-                <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                    <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
-                    <p *ngIf="!record.orderDetails.consumerComment">No comments entered.</p>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
