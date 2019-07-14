@@ -113,7 +113,7 @@ export class CartService implements OnDestroy {
   }
 
   loadCartById(id) {
-    // console.log('load cart by id called: ', id);
+    console.log('load cart by id called: ', id);
     let cartToLoad: any;
     this.dataStore.carts.forEach(
       (cart) => {
@@ -224,7 +224,7 @@ export class CartService implements OnDestroy {
     // change the product's quantities
     // console.log('productId: ', product.id);
     // console.log('quantity: ', quantity);
-	  this.makeQtyPending(product.id, quantity);
+	  // this.makeQtyPending(product.id, quantity);
     // if cart is empty OR if the producerId is not in the cart, add the info to it
     if ((producerIndex === -1) || (producerIndex === undefined)) {
       // add one to the tempIds variable
@@ -563,7 +563,6 @@ export class CartService implements OnDestroy {
   compareProductQuantities(array) {
     
     let productArray = array.slice();
-    // console.log('array passed in : ', productArray);
     this.orderQuantityOkay = true;
     let orderQuantityNotOkayArray = [];
     for (let i = 0; i < productArray.length; i++) {
@@ -573,18 +572,38 @@ export class CartService implements OnDestroy {
         this.orderQuantityOkay = false;
         orderQuantityNotOkayArray.push(product);
       }
+      if (i === (productArray.length - 1)) {
+        this.orderQtyOkayNotOkay(this.orderQuantityOkay, orderQuantityNotOkayArray, productArray);
+      }
     }
-    if (this.orderQuantityOkay) {
-      this._orderQuantityOkay.next(this.orderQuantityOkay);
+    // if (this.orderQuantityOkay) {
+    //   this._orderQuantityOkay.next(this.orderQuantityOkay);
+    //   // console.log('orderqty ok');
+    //   this.buildCartAndSendOrder();
+    // } else {
+    //   // product stock is low and user must make changes
+    //   this._orderQuantityOkay.next(this.orderQuantityOkay);
+    //   // console.log('products out of stock: ', orderQuantityNotOkayArray);
+    //   this._orderQuantitiesToChange.next(Object.assign(orderQuantityNotOkayArray));
+    // }
+  };
+
+  orderQtyOkayNotOkay (orderQuantityOkay, orderQuantityNotOkayArray, productArray) {
+    if (orderQuantityOkay) {
+      this._orderQuantityOkay.next(orderQuantityOkay);
+      this.updateProductQuantities(productArray);
       // console.log('orderqty ok');
-      this.buildCartAndSendOrder();
     } else {
       // product stock is low and user must make changes
-      this._orderQuantityOkay.next(this.orderQuantityOkay);
+      this._orderQuantityOkay.next(orderQuantityOkay);
       // console.log('products out of stock: ', orderQuantityNotOkayArray);
       this._orderQuantitiesToChange.next(Object.assign(orderQuantityNotOkayArray));
     }
   };
+
+  updateProductQuantities(productArray) {
+    this.buildCartAndSendOrder();
+  }
 
   updateProductQuantitiesToQtyAvailable(cartId, productQuantitiesToUpdate) {
     let cartIndex = this.getCartIndex(cartId);
@@ -609,7 +628,9 @@ export class CartService implements OnDestroy {
     // recalculate the total order value
     this.dataStore.carts[cartIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[cartIndex]);
     // reload the cart
-    this.loadCartById(cartIndex);
+    console.log('reloading cart from updateProductQty: ', cartIndex);
+    console.log('cart: ', this.dataStore.carts[cartIndex]);
+    this.loadCartById(cartId);
     // console.log('new datastore: ', this.dataStore.carts[cartIndex]);
   };
 
@@ -873,7 +894,7 @@ export class CartService implements OnDestroy {
 
   addOne(productId, producerId) {
     // change the product's quantities
-    this.makeQtyPending(productId, 1);
+    // this.makeQtyPending(productId, 1);
     // increase the cartCount
     this.dataStore.cartCount += 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
@@ -896,7 +917,7 @@ export class CartService implements OnDestroy {
 
   minusOne(productId, producerId) {
     // change the product's quantities
-    this.makeQtyPending(productId, -1);
+    // this.makeQtyPending(productId, -1);
     // increase the cartCount
     this.dataStore.cartCount -= 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);

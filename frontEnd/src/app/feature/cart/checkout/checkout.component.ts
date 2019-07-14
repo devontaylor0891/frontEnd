@@ -63,6 +63,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
 
   openModal(orderQuantities) {
     // make the changes in the cart in the background
+    console.log('open modal being called with id: ', this.id);
     this.cartService.updateProductQuantitiesToQtyAvailable(this.id, orderQuantities);
     const modalRef = this.modal.open(CheckoutWarningModalComponent, this.ngbModalOptions);
     // console.log('orderqtys pushed into modal: ', orderQuantities);
@@ -82,6 +83,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
           // this.order = this.cartService.getCartById();
           // if that doesn't work
           // try calling loadCart again
+          console.log('modal changes called, id is: ', this.id);
           this.cartService.loadCartById(this.id);
         }
       );

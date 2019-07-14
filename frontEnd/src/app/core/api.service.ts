@@ -327,6 +327,7 @@ export class ApiService {
 
   // POST order
   postOrder(order: any): Observable<any> {
+    console.log('order sent: ', order);
     return this.http
       .post(this.apiUrl + `/orders/`, order, {
       // .post(`${ENV.BASE_API}orders/`, order, {

@@ -1,0 +1,12 @@
+from checkout - call cartService.confirmAndSendOrder
+
+cartService.confirmAndSendOrder
+  - builds the products Array
+  - calls getProductsCurrentQuantities
+    - this makes a call to the api for each product - returns entire product
+    - after the last call is made, compareProductQuantities is called
+      - compareProductQuantities  - if the qtyOrdered is less than or equal to qtyAvailable, set orderQtyOkay to true and call buildCartAndSendOrder
+                                  - if qtyOrdered is too much, emit the NotOkayArray via the subscription _orderQuantitiesToChange
+        - when _orderQuantitiesToChange is emitted, checkout subscribes - opens a modal to accept changes, reloads cart on accept
+
+- the buildCartAndSendOrder should be called, posts order via the api

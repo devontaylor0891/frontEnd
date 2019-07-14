@@ -1,0 +1,48 @@
+order sent: 
+ 
+{id: null, tempId: 0, chosenSchedule: {…}, producerId: 122121128, producer: {…}, …}
+chosenSchedule: {id: 160, producerId: 123123129, userId: 122121128, type: "On-farm Pickup", description: "test", …}
+consumer: {id: 122121128, firstName: "dfasf", email: "devontaylor0891@gmail.com", registrationDate: "2018-02-24T17:21:30.798Z", role: "producer"}
+consumerId: 122121128
+id: null
+orderDetails:
+consumerComment: "test"
+createdDate: Sat Jul 13 2019 15:06:49 GMT-0600 (Central Standard Time) {}
+deliveryAddress: ""
+deliveryFee: 0
+orderStatus: "pending"
+orderValue: 60.55
+producerComment: ""
+
+productQuantities: Array(3)
+  0: {productId: 75, orderQuantity: 1, orderValue: 4}
+  1: {productId: 56, orderQuantity: 2, orderValue: 40.8}
+  2: {productId: 46, orderQuantity: 3, orderValue: 15.75}
+
+producer: {id: 122121128, name: "Garden Farms"}
+producerId: 122121128
+productList: Array(3)
+
+  0: {id: 75, name: "test", description: "test", image: "122121128/1561139410611", pricePerUnit: 4, …}
+  1:
+    category: "Meat"
+    dateAdded: "2019-01-13T20:07:57.950Z"
+    description: "The chicken (Gallus gallus domesticus) is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 19 billion as of 2011. There are more chickens in the world than any other bird or domesticated fowl."
+    id: 56
+    image: "122121128/1547410111733"
+    isObsolete: false
+    name: "Whole Chicken - 7-8 lbs"
+    pricePerUnit: 2.55
+    producer: {id: 122121128, name: "Garden Farms"}
+    producerId: 123123129
+    qtyAccepted: 1
+    qtyAvailable: 49
+    qtyCompleted: 0
+    qtyPending: 0
+    subcategory: "Chicken"
+    unit: "lb"
+    unitsPer: 8
+    __proto__: Object
+  2: {id: 46, name: "Ground Beef - 1.5 lb package", description: "Ground beef, minced beef or beef mince is beef tha…ed spirits and spices referred to as "mincemeat".", image: "122121128/1547409331034", pricePerUnit: 3.5, …}
+
+tempId: 0
