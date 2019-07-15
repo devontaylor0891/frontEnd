@@ -496,7 +496,7 @@ export class CartService implements OnDestroy {
   };
 
   buildCartAndSendOrder() {
-    console.log('buildCart and send order carts: ', this.dataStore.carts);
+    // console.log('buildCart and send order carts: ', this.dataStore.carts);
     // console.log('sending chosen sched: ', this.sendingChosenSchedule);
     // get the producer's email, subscribe to an api call, then continue with this function
     this.apiService.getProducerById(this.sendingChosenSchedule.userId)
@@ -508,11 +508,11 @@ export class CartService implements OnDestroy {
           // build the cart
           let newOrder = this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress);
           // send the cart via the api
-          // console.log('finished cart: ', newOrder);
+          console.log('finished cart: ', newOrder);
           this.apiService.postOrder(newOrder)
             .subscribe(
               result => {
-                // console.log('successfully posted: ', result);
+                console.log('successfully posted: ', result);
                 this._orderSentSuccessfully.next(true);
                 // remove the cart contents from the cart count
                 this.dataStore.cartCount -= this.getCartCountOfSingleCart(this.sendingCartId); // unnecessary??? throws error on single cart checkout, not sure about multi
