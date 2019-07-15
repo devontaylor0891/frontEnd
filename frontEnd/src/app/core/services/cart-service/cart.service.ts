@@ -458,6 +458,8 @@ export class CartService implements OnDestroy {
 
   // confirm and send the order from consumer to producer
   confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
+    console.log('confirm and send order id: ', cartId);
+    console.log('confirm and send order cart: ', this.dataStore.carts);
     // set the properties
     this.sendingCartId = cartId;
     this.sendingChosenSchedule = chosenSchedule;
@@ -466,33 +468,7 @@ export class CartService implements OnDestroy {
     // create an array of the product id's
     let productsArray = this.dataStore.carts[cartId].orderDetails.productQuantities;
     // get the products' current quantities
-    this.getProductsCurrentQuantities(productsArray);
-
-
-
-    
-    // console.log('productsArray: ', productsChecked);
-    // loop through each product's quantity, test if quantity on order is greater than qty_available
-
-    // 
-
-
-		// // build the cart
-		// let newOrder = this.buildCart(cartId, chosenSchedule, consumerComment, deliveryAddress);
-		// // send the cart via the api
-		// console.log('finished cart: ', newOrder);
-		// this.apiService.postOrder(newOrder)
-		// 	.subscribe(
-		// 		result => {
-          // console.log('successfully posted: ', result);
-    //       // remove the cart contents from the cart count
-		// 			this.dataStore.cartCount -= this.getCartCountOfSingleCart(cartId); // unnecessary??? throws error on single cart checkout, not sure about multi
-		// 			// remove the cart from the dataStore on success
-		// 			this.clearCart(cartId);
-		// 			console.log('new cartCount: ', this.dataStore.cartCount);
-		// 			this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-		// 		}, error => console.log('could not add new order')
-		// 	);
+    this.getProductsCurrentQuantities(productsArray, cartId);
   };
 
   buildCartAndSendOrder() {
@@ -529,14 +505,18 @@ export class CartService implements OnDestroy {
       );
   }
 
-  getProductsCurrentQuantities(productsArray) {
+  getProductsCurrentQuantities(productsArray, cartId) {
     let productCheckArray = [];
-    
+    console.log('carts at product check: ', this.dataStore.carts[cartId]);
+    // empty the productList
+    this.dataStore.carts[cartId].productList = [];
     productsArray.forEach((product, index, array) => {
+      console.log('checking product: ', product);
       let productChecked = {
         'id': null,
         'quantityOrdered': null,
         'quantityAvailable': null,
+        'quantityPending': null,
         'name': null
       };
       // console.log('products passed in: ', product);
@@ -545,14 +525,19 @@ export class CartService implements OnDestroy {
       this.apiService.getProductById(product.productId)
         .subscribe(
           (result) => {
+            // add the refreshed product back into the product list
+            this.dataStore.carts[cartId].productList.push(result);
             // console.log('api result: ', result);
             productChecked.quantityAvailable = result[0].qtyAvailable;
+            productChecked.quantityPending = result[0].qtyPending;
             productChecked.name = result[0].name;
+            console.log('checking product result: ', productChecked);
             productCheckArray.push(productChecked);
             if (index === (array.length - 1)) {
+              console.log('cart refreshed: ', this.dataStore.carts[cartId]);
               // triggered on last one.
               // console.log('last one');
-              this.compareProductQuantities(productCheckArray);
+              this.compareProductQuantities(productCheckArray, cartId);
             };
           }
         )
@@ -560,7 +545,7 @@ export class CartService implements OnDestroy {
     // return productCheckArray;
   };
 
-  compareProductQuantities(array) {
+  compareProductQuantities(array, cartId) {
     
     let productArray = array.slice();
     this.orderQuantityOkay = true;
@@ -573,25 +558,16 @@ export class CartService implements OnDestroy {
         orderQuantityNotOkayArray.push(product);
       }
       if (i === (productArray.length - 1)) {
-        this.orderQtyOkayNotOkay(this.orderQuantityOkay, orderQuantityNotOkayArray, productArray);
+        this.orderQtyOkayNotOkay(this.orderQuantityOkay, orderQuantityNotOkayArray, productArray, cartId);
       }
     }
-    // if (this.orderQuantityOkay) {
-    //   this._orderQuantityOkay.next(this.orderQuantityOkay);
-    //   // console.log('orderqty ok');
-    //   this.buildCartAndSendOrder();
-    // } else {
-    //   // product stock is low and user must make changes
-    //   this._orderQuantityOkay.next(this.orderQuantityOkay);
-    //   // console.log('products out of stock: ', orderQuantityNotOkayArray);
-    //   this._orderQuantitiesToChange.next(Object.assign(orderQuantityNotOkayArray));
-    // }
+
   };
 
-  orderQtyOkayNotOkay (orderQuantityOkay, orderQuantityNotOkayArray, productArray) {
+  orderQtyOkayNotOkay (orderQuantityOkay, orderQuantityNotOkayArray, productArray, cartId) {
     if (orderQuantityOkay) {
       this._orderQuantityOkay.next(orderQuantityOkay);
-      this.updateProductQuantities(productArray);
+      this.updateProductQuantities(productArray, cartId);
       // console.log('orderqty ok');
     } else {
       // product stock is low and user must make changes
@@ -601,8 +577,26 @@ export class CartService implements OnDestroy {
     }
   };
 
-  updateProductQuantities(productArray) {
-    this.buildCartAndSendOrder();
+  updateProductQuantities(productArray, cartId) {
+    console.log('productArray before send: ', productArray);
+    // by now, all the pending order quantities should be ok as far as what is available
+    // loop through the productList in the cart, add to qtyPending, remove from qtyAvailable
+    // then call buildcartandsendorder
+    let productListLength = this.dataStore.carts[cartId].productList.length;
+    // loop over productList in cart
+    for (let i = 0; i < productListLength; i++) {
+      let fullProduct = this.dataStore.carts[cartId].productList[i][0];
+      // loop over productArray (which comes from productQuantities)
+      for (let j = 0; j < productArray.length; j++) {
+        if (fullProduct.id == productArray[j].id) {
+          fullProduct.qtyAvailable -= productArray[j].quantityOrdered;
+          fullProduct.qtyPending += productArray[j].quantityOrdered;
+        }
+      }
+      if (i === (productListLength - 1)) {
+        this.buildCartAndSendOrder();
+      }
+    }
   }
 
   updateProductQuantitiesToQtyAvailable(cartId, productQuantitiesToUpdate) {

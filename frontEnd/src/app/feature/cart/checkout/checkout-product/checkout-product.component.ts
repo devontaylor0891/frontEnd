@@ -20,10 +20,12 @@ export class CheckoutProductComponent implements OnInit, OnChanges {
   getProductIndex() {
     let index;
     for (let i = 0; i < this.productQuantities.length; i++) {
-      if (this.productQuantities[i].productId === this.product.id) {
+      // console.log('i: ', i);
+      if (this.productQuantities[i].productId == this.product.id) {
         index = i;
       }
     }
+    // console.log('index: ', index);
     return index;
   }
 
@@ -34,6 +36,9 @@ export class CheckoutProductComponent implements OnInit, OnChanges {
   ngOnChanges() {}
 
   ngOnInit() {
+
+    // console.log('productQuanitties: ', this.productQuantities);
+    // console.log('product: ', this.product);
 
     //get the quantity ordered of this product
     this.quantityOrdered = this.productQuantities[this.getProductIndex()].orderQuantity;
