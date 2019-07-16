@@ -93,7 +93,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.orders = result;
-          // console.log('producer dashboard orders: ', this.dataStore.orders);
+          console.log('producer dashboard orders: ', this.dataStore.orders);
           this._orders.next(Object.assign({}, this.dataStore).orders);
         }, error => console.log('could not load order')
       );

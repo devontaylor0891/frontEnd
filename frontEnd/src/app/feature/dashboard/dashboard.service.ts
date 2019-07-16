@@ -91,7 +91,7 @@ export class DashboardService {
       .subscribe(
         response => {
           this.dataStore.orders = response;
-          // console.log('this.datastore.orders: ', this.dataStore.orders);
+          console.log('this.datastore.orders: ', this.dataStore.orders);
           this._orders.next(Object.assign({}, this.dataStore).orders);
         }, error => console.log('could not load orders')
       );
