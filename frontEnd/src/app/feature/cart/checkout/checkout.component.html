@@ -1,18 +1,18 @@
 <div class="row my-4 mx-1">
 
-    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2" *ngIf="!isLoggedIn">
-      <div class="row card bg-dark py-5">
-        <div class="col-10 offset-1 bg-light py-2 text-center card-body">
-          <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
-          <button class="btn btn-olf-primary" type="button" (click)="onLogin($event)">Log in or Sign up</button>
-        </div>
+  <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2" *ngIf="!isLoggedIn">
+    <div class="row card bg-dark py-5">
+      <div class="col-10 offset-1 bg-light py-2 text-center card-body">
+        <p>To continue checking out, you need to be logged in so that we can send the proper information to the Producer.</p>
+        <button class="btn btn-olf-primary" type="button" (click)="onLogin($event)">Log in or Sign up</button>
       </div>
     </div>
-  
-    <app-loading *ngIf="!order"></app-loading>
-  
-    <div *ngIf="order && isLoggedIn">
-    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2" >
+  </div>
+
+  <app-loading *ngIf="!order"></app-loading>
+
+  <div *ngIf="order && isLoggedIn" class="col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+    <div class="col mb-2" >
       <div>
         <a (click)="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
       </div>
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 card bg-light mb-2">
+    <div class="col card bg-light mb-2">
       <div class="row grey lighten-2 px-2">
         <h5 class="pt-2 card-title">1. Choose How and When to Get Your Order:</h5>
       </div>
@@ -103,7 +103,7 @@
       </div> 
     </div>
   
-    <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 card bg-light mb-2">
+    <div class="col card bg-light mb-2">
       <div class="row grey lighten-2 px-2">
         <h5 class="pt-2 card-title">2. Review Your Products:</h5>
       </div>
@@ -138,107 +138,109 @@
       </div>
     </div>
   
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-      <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 card bg-light mb-2">
-        <div class="row grey lighten-2 px-2">
-          <h5 class="pt-2 card-title">3. Add Comments and Agree to Terms & Conditions:</h5>
-        </div>
-        <div class="card-body pt-3 px-0">
-          <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
-            <div class="col-12">
-              <blockquote class="blockquote bq-warning p-0">
-                <p class="card-text">You have chosen a door-to-door delivery, which will require a delivery address and may involve a delivery fee.</p>
-              </blockquote>
+    <div class="col">
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+
+        <div class="row">
+          <div class="col card bg-light mb-2">
+            <div class="row grey lighten-2 px-2">
+              <h5 class="pt-2 card-title">3. Add Comments and Agree to Terms & Conditions:</h5>
             </div>
-            <div class="col-12 col-md-4">
-              <label for="deliveryAddress" class="text-muted">
-                Enter the Delivery Address:
-              </label>
-            </div>
-            <div class="col-12 col-md-8">
-              <input
-                class="form-input-custom"
-                type="text" 
-                name="deliveryAddress" 
-                id="deliveryAddress"
-                required
-                #delAddress="ngModel"
-                [(ngModel)]="deliveryAddress">
-                <p class="help-block" *ngIf="delAddress.touched && delAddress.invalid">
-                  Please enter your delivery address so the Producer can find you!
-                </p>
-            </div>
-            <div class="mt-2 col-12">
-              <div class="row">
-                <div class="col-12 col-md-4" *ngIf="order.chosenSchedule.hasFee">
-                  <label class="text-muted">
-                    Delivery Fee:
+            <div class="card-body pt-3 px-0">
+              <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
+                <div class="col-12">
+                  <blockquote class="blockquote bq-warning p-0">
+                    <p class="card-text">You have chosen a door-to-door delivery, which will require a delivery address and may involve a delivery fee.</p>
+                  </blockquote>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label for="deliveryAddress" class="text-muted">
+                    Enter the Delivery Address:
                   </label>
                 </div>
-                <div class="col-12 col-md-8"  *ngIf="order.chosenSchedule.hasFee">
-                  <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>
-                  <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue >= order.chosenSchedule.feeWaiver)" class="card-text">Your order qualifies for free delivery!</p>
-                  <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue < order.chosenSchedule.feeWaiver)" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'CAD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>   
+                <div class="col-12 col-md-8">
+                  <input
+                    class="form-input-custom"
+                    type="text" 
+                    name="deliveryAddress" 
+                    id="deliveryAddress"
+                    required
+                    #delAddress="ngModel"
+                    [(ngModel)]="deliveryAddress">
+                    <p class="help-block" *ngIf="delAddress.touched && delAddress.invalid">
+                      Please enter your delivery address so the Producer can find you!
+                    </p>
                 </div>
+                <div class="mt-2 col-12">
+                  <div class="row">
+                    <div class="col-12 col-md-4" *ngIf="order.chosenSchedule.hasFee">
+                      <label class="text-muted">
+                        Delivery Fee:
+                      </label>
+                    </div>
+                    <div class="col-12 col-md-8"  *ngIf="order.chosenSchedule.hasFee">
+                      <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>
+                      <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue >= order.chosenSchedule.feeWaiver)" class="card-text">Your order qualifies for free delivery!</p>
+                      <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue < order.chosenSchedule.feeWaiver)" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'CAD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>   
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-4">
+                  <label for="consumerComment" class="text-muted">
+                    Enter any comments or special instructions for the producer:
+                  </label>
+                </div>
+                <div class="col-12 col-md-8">
+                  <textarea 
+                    class="form-input-custom"
+                    style="border: solid lightgrey 1px !important;"
+                    name="consumerComment" 
+                    id="consumerComment" 
+                    [(ngModel)]="consumerComment"></textarea>
+                </div>
+              </div>
+              <hr>
+              <div class="form-check pl-0">
+                <label for="agreement" class="custom-control fill-checkbox">
+                  <input 
+                      type="checkbox" 
+                      class="fill-control-input"
+                      id="agreement" 
+                      name="agreement" 
+                      [(ngModel)]="agreement" 
+                      >
+                  <span class="fill-control-indicator">
+                      <i class="fa fa-check"></i>
+                  </span>
+                  <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
+                  <p class="help-block" *ngIf="agreement.touched && agreement.invalid">
+                      Please read and agree to the terms and conditions to complete your order!
+                    </p>
+                </label>
+  
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 col-md-4">
-              <label for="consumerComment" class="text-muted">
-                Enter any comments or special instructions for the producer:
-              </label>
-            </div>
-            <div class="col-12 col-md-8">
-              <textarea 
-                class="form-input-custom"
-                style="border: solid lightgrey 1px !important;"
-                name="consumerComment" 
-                id="consumerComment" 
-                [(ngModel)]="consumerComment"></textarea>
-            </div>
-          </div>
-          <hr>
-          <div class="form-check pl-0">
-            <label for="agreement" class="custom-control fill-checkbox">
-              <input 
-                  type="checkbox" 
-                  class="fill-control-input"
-                  id="agreement" 
-                  name="agreement" 
-                  [(ngModel)]="agreement" 
-                  >
-              <span class="fill-control-indicator">
-                  <i class="fa fa-check"></i>
-              </span>
-              <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
-              <p class="help-block" *ngIf="agreement.touched && agreement.invalid">
-                  Please read and agree to the terms and conditions to complete your order!
-                </p>
-            </label>
 
+        </div>
+
+        <div class="row">
+          <div class="col mb-2">
+            <div class="row mb-3 justify-content-center">
+                <button 
+                  type="submit"
+                  class="btn btn-olf-primary"
+                  [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
+                  >Send Order</button>
+              <!-- </div> -->
+            </div>
           </div>
         </div>
-      </div>
-  
-  
-  
-      <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 mb-2">
-        <div class="row mb-3 justify-content-center">
-          <!-- <div class="col-6 p-2 text-center">
-            <span>Your Order Total: <strong>{{ tempOrderValue | currency:'USD':true:'1.2-2' }}</strong></span>    
-          </div>
-          <div class="col-6 p-0"> -->
-            <button 
-              type="submit"
-              class="btn btn-olf-primary"
-              [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
-              >Send Order</button>
-          <!-- </div> -->
-        </div>
-      </div>
-  
-    </form>
+
+      </form>
+    </div>
   </div>
     
-  </div>
+</div>
