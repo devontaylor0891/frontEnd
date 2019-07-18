@@ -458,8 +458,8 @@ export class CartService implements OnDestroy {
 
   // confirm and send the order from consumer to producer
   confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
-    console.log('confirm and send order id: ', cartId);
-    console.log('confirm and send order cart: ', this.dataStore.carts);
+    // console.log('confirm and send order id: ', cartId);
+    // console.log('confirm and send order cart: ', this.dataStore.carts);
     // set the properties
     this.sendingCartId = cartId;
     this.sendingChosenSchedule = chosenSchedule;
@@ -484,7 +484,7 @@ export class CartService implements OnDestroy {
           // build the cart
           let newOrder = this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress);
           // send the cart via the api
-          console.log('finished cart: ', newOrder);
+          // console.log('finished cart: ', newOrder);
           this.apiService.postOrder(newOrder)
             .subscribe(
               result => {
@@ -507,11 +507,11 @@ export class CartService implements OnDestroy {
 
   getProductsCurrentQuantities(productsArray, cartId) {
     let productCheckArray = [];
-    console.log('carts at product check: ', this.dataStore.carts[cartId]);
+    // console.log('carts at product check: ', this.dataStore.carts[cartId]);
     // empty the productList
     this.dataStore.carts[cartId].productList = [];
     productsArray.forEach((product, index, array) => {
-      console.log('checking product: ', product);
+      // console.log('checking product: ', product);
       let productChecked = {
         'id': null,
         'quantityOrdered': null,
@@ -531,10 +531,10 @@ export class CartService implements OnDestroy {
             productChecked.quantityAvailable = result[0].qtyAvailable;
             productChecked.quantityPending = result[0].qtyPending;
             productChecked.name = result[0].name;
-            console.log('checking product result: ', productChecked);
+            // console.log('checking product result: ', productChecked);
             productCheckArray.push(productChecked);
             if (index === (array.length - 1)) {
-              console.log('cart refreshed: ', this.dataStore.carts[cartId]);
+              // console.log('cart refreshed: ', this.dataStore.carts[cartId]);
               // triggered on last one.
               // console.log('last one');
               this.compareProductQuantities(productCheckArray, cartId);
@@ -578,7 +578,7 @@ export class CartService implements OnDestroy {
   };
 
   updateProductQuantities(productArray, cartId) {
-    console.log('productArray before send: ', productArray);
+    // console.log('productArray before send: ', productArray);
     // by now, all the pending order quantities should be ok as far as what is available
     // loop through the productList in the cart, add to qtyPending, remove from qtyAvailable
     // then call buildcartandsendorder
@@ -622,8 +622,8 @@ export class CartService implements OnDestroy {
     // recalculate the total order value
     this.dataStore.carts[cartIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[cartIndex]);
     // reload the cart
-    console.log('reloading cart from updateProductQty: ', cartIndex);
-    console.log('cart: ', this.dataStore.carts[cartIndex]);
+    // console.log('reloading cart from updateProductQty: ', cartIndex);
+    // console.log('cart: ', this.dataStore.carts[cartIndex]);
     this.loadCartById(cartId);
     // console.log('new datastore: ', this.dataStore.carts[cartIndex]);
   };

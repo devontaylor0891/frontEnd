@@ -40,7 +40,7 @@ export class CheckoutProductComponent implements OnInit, OnChanges {
     // console.log('productQuanitties: ', this.productQuantities);
     // console.log('product: ', this.product);
 
-    //get the quantity ordered of this product
+    // get the quantity ordered of this product
     this.quantityOrdered = this.productQuantities[this.getProductIndex()].orderQuantity;
 
     this.totalPrice = this.calculateTotal();
