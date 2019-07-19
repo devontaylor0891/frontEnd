@@ -36,6 +36,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
   cartIndex: number;
   getCartByIdSub: any;
   communityListSub: any;
+  submitting: boolean = false;
 
   orderQuantityOkaySub: Subscription;
   orderQuantityOkay: boolean;
@@ -124,6 +125,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    this.submitting = true;
     this.cartService.confirmAndSendOrder(this.cartIndex, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
   }
 

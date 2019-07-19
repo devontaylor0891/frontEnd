@@ -104,38 +104,41 @@
     </div>
   
     <div class="col card bg-light mb-2">
+
       <div class="row grey lighten-2 px-2">
         <h5 class="pt-2 card-title">2. Review Your Products:</h5>
       </div>
-      <div class="card-body pt-3 px-0">
-  
+
+      <div class="card-body pt-3 px-0" *ngIf="submitting">
+        <app-loading></app-loading>
+      </div>
+
+      <div class="card-body pt-3 px-0" *ngIf="!submitting">
         <app-checkout-product 
           *ngFor="let product of order.productList" 
           [product]="product" 
           [productQuantities]="order.orderDetails.productQuantities"
           ></app-checkout-product>
-
-          <div *ngIf="order.chosenSchedule">
-            <div class="row" *ngIf="order?.chosenSchedule.type === 'Door-to-door Delivery'">
-              <div class="col-9 col-md-9 col-lg-8 text-right">
-                <p>Delivery Fee:</p> 
-              </div>
-              <div class="col-3 col-md-3 col-lg-2 text-center px-0">
-                <span>{{ order.orderDetails.deliveryFee | currency:'USD':'symbol-narrow':'1.2-2' }}</span>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row">
+        <div *ngIf="order.chosenSchedule">
+          <div class="row" *ngIf="order?.chosenSchedule.type === 'Door-to-door Delivery'">
             <div class="col-9 col-md-9 col-lg-8 text-right">
-              <p>Your Order Total:</p> 
+              <p>Delivery Fee:</p> 
             </div>
             <div class="col-3 col-md-3 col-lg-2 text-center px-0">
-              <span><strong>{{ tempOrderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong></span>
+              <span>{{ order.orderDetails.deliveryFee | currency:'USD':'symbol-narrow':'1.2-2' }}</span>
             </div>
           </div>
-  
+        </div>
+        <div class="row">
+          <div class="col-9 col-md-9 col-lg-8 text-right">
+            <p>Your Order Total:</p> 
+          </div>
+          <div class="col-3 col-md-3 col-lg-2 text-center px-0">
+            <span><strong>{{ tempOrderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong></span>
+          </div>
+        </div>
       </div>
+
     </div>
   
     <div class="col">
