@@ -37,6 +37,8 @@ export class AddToCartComponent implements OnInit, OnChanges {
   }
 
   onAdd() {
+    let message = "You are trying to order this many: " + this.orderQty;
+    alert(message);
     this.cartService.addToCart(this.product, this.orderQty);
     if (this.product.qtyAvailable > 0) { // this will need to update after the orderQty is sent to the cart service
       this.orderQty = 1;
