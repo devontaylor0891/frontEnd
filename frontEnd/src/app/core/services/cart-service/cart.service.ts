@@ -943,24 +943,15 @@ export class CartService implements OnDestroy {
     // get product's index in the cart
     let productIndexInCart = this.findProductIndexInCart(producerIndex, this.dataStore.products[productIndex].id);
     console.log('productIndexin cart: ', productIndexInCart);
-    console.log('datastore carts now: ', this.dataStore.carts);
     let qtyWantingToOrder = this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndexInCart].orderQuantity + quantity;
-    
     console.log('qtyWantingToOrder:, ', qtyWantingToOrder);
-
-
-    // access the productQuantities array
-    // let array = this.dataStore.carts[producerIndex].orderDetails.productQuantities;
-    // // loop through the array and return the index of the appropriate product
-    // let productIndex;
-    // for (let i = 0; i < array.length; i++) {
-    //   if (array[i].productId === productId) {
-    //     productIndex = i;
-    //     console.log('product index in findAndAddMoreQty method: ', i);
-    //   }
-    // }
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
+    this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
+    // increase the cartCount
+    this.dataStore.cartCount += quantity;
+    this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+    console.log('datastore carts now: ', this.dataStore.carts);
   };
 
   addOne(productId, producerId) {

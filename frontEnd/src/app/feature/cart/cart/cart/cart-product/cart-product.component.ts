@@ -15,6 +15,7 @@ export class CartProductComponent implements OnInit, OnChanges {
   @Input() productQuantities: Object[];
   productQuantity: number;
   totalProductValue: number;
+  qtyRemainingAvailable: number;
 
   constructor(private cartService: CartService) { }
 
@@ -25,6 +26,7 @@ export class CartProductComponent implements OnInit, OnChanges {
       this.cartService.addOne(this.product.id, this.product.producer.id);
       this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
       this.totalProductValue = this.calculateTotal();
+      this.calculateQtyRemainingAvailable();
     }
   }
 
@@ -33,6 +35,7 @@ export class CartProductComponent implements OnInit, OnChanges {
       this.cartService.minusOne(this.product.id, this.product.producer.id);
       this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
       this.totalProductValue = this.calculateTotal();
+      this.calculateQtyRemainingAvailable();
     }
   }
 
@@ -46,7 +49,11 @@ export class CartProductComponent implements OnInit, OnChanges {
 
   calculateTotal() {
     return (this.productQuantity) * (this.product.pricePerUnit) * (this.product.unitsPer);
-  }
+  };
+
+  calculateQtyRemainingAvailable() {
+    this.qtyRemainingAvailable = this.product.qtyAvailable - this.productQuantity;
+  };
 
   onDeleteProduct() {
     this.cartService.deleteProduct(this.product.id, this.product.producer.id);
@@ -57,6 +64,10 @@ export class CartProductComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
     this.totalProductValue = this.calculateTotal();
+    this.calculateQtyRemainingAvailable();
+    console.log('prodQty in Cart: ', this.productQuantity);
+    console.log('prod Available: ', this.product.qtyAvailable);
+    console.log('qty remaining available: ', this.qtyRemainingAvailable);
   }
 
 }

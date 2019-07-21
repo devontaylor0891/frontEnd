@@ -47,7 +47,13 @@
             <p class="m-0"><b>{{ totalProductValue | currency:'CAD':'symbol-narrow':'1.2-2' }}</b></p>
           </div>
           <div class="col-3 text-left">
-            <button class="btn btn-outline-olf-primary m-0 p-2" type="button" (click)="addOne()"><i class="fa fa-plus cart-button" aria-hidden="true"></i></button>
+            <button 
+              [disabled]="qtyRemainingAvailable === 0"
+              class="btn btn-outline-olf-primary m-0 p-2" 
+              type="button" 
+              (click)="addOne()">
+              <i class="fa fa-plus cart-button" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
       </div>
