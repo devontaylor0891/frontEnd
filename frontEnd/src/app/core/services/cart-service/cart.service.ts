@@ -82,11 +82,11 @@ export class CartService implements OnDestroy {
   constructor(private apiService: ApiService,
               private authService: AuthService,
               private userService: UserService) {
-    this.dataStore = { 
-      carts: [], 
-      cartCount: 0, 
-      schedulesArray: [{ tempId: null, producerId: null, communityList: [{ city: null, scheduleList: [] }] }], 
-      products: [] 
+    this.dataStore = {
+      carts: [],
+      cartCount: 0,
+      schedulesArray: [{ tempId: null, producerId: null, communityList: [{ city: null, scheduleList: [] }] }],
+      products: []
     };
     this._carts = <BehaviorSubject<OrderModel[]>>new BehaviorSubject([]);
     this._cartCount = <BehaviorSubject<number>>new BehaviorSubject(null);
@@ -102,14 +102,14 @@ export class CartService implements OnDestroy {
     this._orderSentSuccessfully = <BehaviorSubject<boolean>>new BehaviorSubject(this.orderSentSuccessfully);
     this._orderSentFailed = <BehaviorSubject<boolean>>new BehaviorSubject(this.orderSentFailed);
   }
-  
-  
+
+
 // ***********DATE LOADING AND OBSERVABLE CREATION**********
-  
+
   getCarts() {
 	  return this._carts.asObservable();
   }
-  
+
   loadCarts() {
     this._carts.next(Object.assign({}, this.dataStore).carts);
   }
@@ -154,6 +154,46 @@ export class CartService implements OnDestroy {
   
   loadCartCount() {
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+  }
+
+  getCartIdByProducerId(producerId) {
+    for (let i = 0; i < this.dataStore.carts.length; i++) {
+      if (this.dataStore.carts[i].producerId === producerId) {
+        return this.dataStore.carts[i].tempId;
+      }
+    }
+    return -1;
+  };
+
+  getQtyAvailable(productId) {
+    let qtyAvailable;
+    let index = this.findProductIndexInDataStore(productId);
+    qtyAvailable = this.dataStore.products[index].qtyAvailable;
+    return qtyAvailable;
+  };
+
+  getQtyAlreadyInCart(productId, cartId) {
+    console.log('getQtyAlready in cart cart Id: ', cartId);
+    let currentOrderQty;
+    let productIndex = this.findProductIndexInCart(cartId, productId);
+    console.log('productIndex returned: ', productIndex);
+    if (productIndex === -1) {
+      return 0;
+    } else {
+      console.log('carts: ', this.dataStore.carts);
+      currentOrderQty = this.dataStore.carts[cartId].orderDetails.productQuantities[productIndex].orderQuantity;
+      return currentOrderQty;
+    };
+  };
+
+  getProductQuantities(cartId, productId) {
+    let quantities = {
+      quantityAvailable: null,
+      currentQuantityInCart: null
+    }
+    quantities.quantityAvailable = this. getQtyAvailable(productId);
+    quantities.currentQuantityInCart = this.getQtyAlreadyInCart(productId, cartId);
+    return quantities;
   }
 
   getCommunityList() {
@@ -863,38 +903,34 @@ export class CartService implements OnDestroy {
   };
 
   findProductIndexInDataStore(productId) {
-    // if ((this.dataStore.carts[producerIndex] === undefined)) {
-    //   return -1;
-    // } else {
-    //   let j;
-    //   let length = this.dataStore.carts[producerIndex].productList.length;
-    //   for (j = 0; j < length; j++) {
-    //     if ((this.dataStore.carts[producerIndex].productList[j].id) === productId) {
-    //       return j;
-    //     };
-    //   };
-    //   return -1;
-    // };
+
     // if product already in datastore, return index, else return -1
     if (this.dataStore.products === undefined) {
+      console.log('undefined');
       return -1;
     } else {
+      console.log('products in datstore: ', this.dataStore.products);
       for (let i = 0; i < this.dataStore.products.length; i ++) {
-        if ((this.dataStore.products[i].id) === productId) {
+        console.log('product id in datastore: ', this.dataStore.products[i].id)
+        if (this.dataStore.products[i].id === productId) {
           return i;
         }
-        return -1;
       }
+      return -1;
     }
   };
 
-  findProductIndexInCart(producerIndex, productId) {
-    let length = this.dataStore.carts[producerIndex].orderDetails.productQuantities.length;
-    for (let j = 0; j < length; j++) {
-      if ((this.dataStore.carts[producerIndex].orderDetails.productQuantities[j].productId) === productId) {
-        return j;
+  findProductIndexInCart(index, productId) {
+    if (this.dataStore.carts.length === 0) {
+      return -1;
+    } else {
+      let length = this.dataStore.carts[index].orderDetails.productQuantities.length;
+      for (let j = 0; j < length; j++) {
+        if ((this.dataStore.carts[index].orderDetails.productQuantities[j].productId) === productId) {
+          return j;
+        };
       };
-    };
+    }
     return -1;
   };
   
