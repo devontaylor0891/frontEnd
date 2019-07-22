@@ -12,9 +12,7 @@ export class SearchCalendarListComponent implements OnInit {
   scheduleList: any;
   builtDateArray: any = [];
   dateArrays: any = [];
-
-  showParent: number;
-  showChild: number;
+  detailsShown: boolean = false;
 
   constructor(private searchService: SearchService,
               private utilityService: UtilityService) { }
@@ -31,14 +29,12 @@ export class SearchCalendarListComponent implements OnInit {
           this.addScheds(results.schedules);
         }
       );
+
+      // console.log('scheds: ', this.scheduleList);
   }
 
-  setParent(index) {
-    this.showParent = index;
-  };
-
-  setChild(index) {
-    this.showChild = index;
+  showDetails() {
+    this.detailsShown = !this.detailsShown;
   };
 
   // sort dates ascending by start date
