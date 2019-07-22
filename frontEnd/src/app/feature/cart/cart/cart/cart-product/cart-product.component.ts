@@ -65,9 +65,9 @@ export class CartProductComponent implements OnInit, OnChanges {
     this.productQuantity = this.returnQuantity(this.productQuantities, this.product.id);
     this.totalProductValue = this.calculateTotal();
     this.calculateQtyRemainingAvailable();
-    console.log('prodQty in Cart: ', this.productQuantity);
-    console.log('prod Available: ', this.product.qtyAvailable);
-    console.log('qty remaining available: ', this.qtyRemainingAvailable);
+    // console.log('prodQty in Cart: ', this.productQuantity);
+    // console.log('prod Available: ', this.product.qtyAvailable);
+    // console.log('qty remaining available: ', this.qtyRemainingAvailable);
   }
 
 }

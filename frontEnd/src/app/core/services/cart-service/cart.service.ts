@@ -119,7 +119,7 @@ export class CartService implements OnDestroy {
   }
 
   loadCartById(id) {
-    console.log('load cart by id called: ', id);
+    // console.log('load cart by id called: ', id);
     let cartToLoad: any;
     this.dataStore.carts.forEach(
       (cart) => {
@@ -173,14 +173,14 @@ export class CartService implements OnDestroy {
   };
 
   getQtyAlreadyInCart(productId, cartId) {
-    console.log('getQtyAlready in cart cart Id: ', cartId);
+    // console.log('getQtyAlready in cart cart Id: ', cartId);
     let currentOrderQty;
     let productIndex = this.findProductIndexInCart(cartId, productId);
-    console.log('productIndex returned: ', productIndex);
+    // console.log('productIndex returned: ', productIndex);
     if (productIndex === -1) {
       return 0;
     } else {
-      console.log('carts: ', this.dataStore.carts);
+      // console.log('carts: ', this.dataStore.carts);
       currentOrderQty = this.dataStore.carts[cartId].orderDetails.productQuantities[productIndex].orderQuantity;
       return currentOrderQty;
     };
@@ -237,8 +237,8 @@ export class CartService implements OnDestroy {
 
   // on click from any 'add to cart' buttons, add the product and qty to the cart
   addToCart(product, quantity) {
-    console.log('adding to cart datastore: ', this.dataStore);
-    console.log('product added: ', product);
+    // console.log('adding to cart datastore: ', this.dataStore);
+    // console.log('product added: ', product);
 
     // calculate the total value of this addition
   	let productValue = this.calculateProductOrderValue(product, quantity);
@@ -301,9 +301,9 @@ export class CartService implements OnDestroy {
       };
       // push the new order into the cart
       this.dataStore.carts.push(newOrder);
-      console.log('datastore after new product added: ', this.dataStore)
+      // console.log('datastore after new product added: ', this.dataStore)
     } else if (productIndex !== -1) { // producer is in the cart, product is also in the cart, just increase the qty
-      console.log('product exists productIndex: ', productIndex);
+      // console.log('product exists productIndex: ', productIndex);
       this.addMoreQty(productIndex, quantity, producerIndex, productValue);
       this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
     } else { // producerId is already in the cart, product is not yet, push the product into that array,
@@ -906,12 +906,12 @@ export class CartService implements OnDestroy {
 
     // if product already in datastore, return index, else return -1
     if (this.dataStore.products === undefined) {
-      console.log('undefined');
+      // console.log('undefined');
       return -1;
     } else {
-      console.log('products in datstore: ', this.dataStore.products);
+      // console.log('products in datstore: ', this.dataStore.products);
       for (let i = 0; i < this.dataStore.products.length; i ++) {
-        console.log('product id in datastore: ', this.dataStore.products[i].id)
+        // console.log('product id in datastore: ', this.dataStore.products[i].id)
         if (this.dataStore.products[i].id === productId) {
           return i;
         }
@@ -936,22 +936,22 @@ export class CartService implements OnDestroy {
   
   // find the product in the array and add the given qty to the existing qty
   addMoreQty(productIndex, quantity, producerIndex, productValue) {
-    console.log('values passed into addMoreqty: ', productIndex, quantity, producerIndex, productValue);
+    // console.log('values passed into addMoreqty: ', productIndex, quantity, producerIndex, productValue);
     // check if the new total quantity is greater than the dataStore.product's qtyAvailable
     let maxQtyOrderable = this.dataStore.products[productIndex].qtyAvailable;
-    console.log('maxQtyOrderable: ', maxQtyOrderable);
+    // console.log('maxQtyOrderable: ', maxQtyOrderable);
     // get product's index in the cart
     let productIndexInCart = this.findProductIndexInCart(producerIndex, this.dataStore.products[productIndex].id);
-    console.log('productIndexin cart: ', productIndexInCart);
+    // console.log('productIndexin cart: ', productIndexInCart);
     let qtyWantingToOrder = this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndexInCart].orderQuantity + quantity;
-    console.log('qtyWantingToOrder:, ', qtyWantingToOrder);
+    // console.log('qtyWantingToOrder:, ', qtyWantingToOrder);
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderValue += productValue;
     this.dataStore.carts[producerIndex].orderDetails.orderValue = this.calculateTotalOrderValue(this.dataStore.carts[producerIndex]);
     // increase the cartCount
     this.dataStore.cartCount += quantity;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-    console.log('datastore carts now: ', this.dataStore.carts);
+    // console.log('datastore carts now: ', this.dataStore.carts);
   };
 
   addOne(productId, producerId) {
