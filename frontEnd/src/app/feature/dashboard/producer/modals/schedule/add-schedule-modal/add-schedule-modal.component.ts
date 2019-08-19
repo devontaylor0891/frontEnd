@@ -38,6 +38,10 @@ export class AddScheduleModalComponent implements OnInit {
   type: string;
   hasDelFee: boolean = false;
   hasFeeWaiver: boolean = false;
+  repeat = 0;
+  repeatEndDate: string;
+  numberOfWeeks: number;
+  repeatEndChosen: boolean = false;
   streetNumber: string;
   route: string;
   city: string;
@@ -73,6 +77,8 @@ export class AddScheduleModalComponent implements OnInit {
   month: any = this.date.getMonth();
   day: any = this.date.getDate();
   public DateMomentMin: any = new Date(new Date().setDate(new Date().getDate() + 1)); // set minimum date as tomorrow
+  public repeatEndDateMomentMin: any = new Date(new Date().setDate(new Date().getDate() + 8));
+  public repeatEndDateMomentMax: any = new Date(new Date().setMonth(new Date().getMonth() + 3));
   public dateMoment: any = new Date(new Date().setDate(new Date().getDate() + 1)); // somehow this works!
   public dateMoments: any; // throws error if initialized with a date
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
@@ -102,11 +108,11 @@ export class AddScheduleModalComponent implements OnInit {
     this.form = formBuild.group({
       'type': ['', Validators.required],
       'description': ['', Validators.required],
-      'repeat': [this.isRepeat],
       'date': [this.dateMoment],
       'dates': [this.dateMoments],
       'startTime': [this.startTimeMoment],
       'endTime': [this.endTimeMoment],
+      'repeat': [this.repeat],
       'deadlineCalcHours': [12],
       'deadlineDateTime': [this.deadlineDateTime],
       'deadlineDate': [this.deadlineDateMoment],
@@ -400,13 +406,15 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseDate() {
-    // console.log('new dateMoment: ', this.dateMoment);
+    console.log('new dateMoment: ', this.dateMoment);
     // set the scheduled day, month, year
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
     this.schedYear = this.dateMoment.getFullYear();
     // use those to set the order deadline day, month, year
     this.setDeadlineDate();
+    this.setRepeatEndDateMin();
+    this.setRepeatEndDateMax();
   };
 
   setDeadlineDate() {
@@ -420,6 +428,19 @@ export class AddScheduleModalComponent implements OnInit {
     this.deadlineDateTimeMax.setDate(this.schedDay);
     // console.log('new deadline max: ', this.deadlineDateTimeMax);
     this.dateChosen = true;
+  };
+
+  setRepeatEndDateMin() {
+    console.log('setrepeat dateMomentMin: ', this.DateMomentMin);
+    console.log('plus 8: ', this.dateMoment.getDate() + 8);
+    // this.repeatEndDateMomentMin = new Date(new Date().setDate(this.dateMoment.getDate() + 7));
+    this.repeatEndDateMomentMin = new Date(this.schedYear, this.schedMonth, this.schedDay + 7);
+    console.log('new repeat end min: ', this.repeatEndDateMomentMin);
+  };
+
+  setRepeatEndDateMax() {
+    this.repeatEndDateMomentMax = new Date(this.schedYear, this.schedMonth + 3, this.schedDay);
+    console.log('new repeat end max: ', this.repeatEndDateMomentMax);
   };
 
   onChooseMultipleDates(value) {
@@ -479,6 +500,31 @@ export class AddScheduleModalComponent implements OnInit {
   onChooseDeadlineTime() {
     this.deadlineHour = this.deadlineTimeMoment.getHours();
     this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
+  };
+
+  onChooseRepeatEndDateYes() {
+    console.log('end date: ', this.repeatEndDate);
+    console.log('this.repeat value: ', this.repeat);
+  };
+
+  onChooseRepeatEndDateNo() {
+    console.log('end date: ', this.repeatEndDate);
+    console.log('this.repeat value: ', this.repeat);
+    this.repeatEndChosen = false;
+  };
+
+  onChooseRepeatEndDate() {
+    let dateMilli = new Date(this.dateMoment);
+    let repeatEndMilli = new Date(this.repeatEndDate);
+    let difference = repeatEndMilli.getTime() - dateMilli.getTime();
+    // figure out how many instances to create by getting the days between end and start, dividing by 7
+    console.log('dateMomement: ', dateMilli.getTime());
+    console.log('endrepeat moment: ', repeatEndMilli.getTime());
+    this.numberOfWeeks = Math.floor(difference / 604800000) + 1; // add 1 to account for last instance
+    console.log('number of weeks: ', this.numberOfWeeks);
+    console.log('end date: ', this.repeatEndDate);
+    console.log('this.repeat value: ', this.repeat);
+    this.repeatEndChosen = true;
   };
 
   buildRepeatOrderDeadline(date, deadlineHours) {
