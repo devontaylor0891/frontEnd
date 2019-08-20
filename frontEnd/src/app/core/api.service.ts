@@ -305,6 +305,16 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // POST new schedule - producer or admin only
+  postMultiSchedule(schedules: any): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/multiSchedules/`, schedules, {
+      // .post(`${ENV.BASE_API}schedules/`, schedule, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
   // PUT existing schedule - producer or admin only
   putSchedule(id: number, schedule: any): Observable<any> {
     return this.http
