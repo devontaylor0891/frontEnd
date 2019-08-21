@@ -310,7 +310,8 @@ export class ApiService {
     return this.http
       .post(this.apiUrl + `/multiSchedules/`, schedules, {
       // .post(`${ENV.BASE_API}schedules/`, schedule, {
-        headers: new HttpHeaders().set('Authorization', this._authHeader)
+        headers: new HttpHeaders().set('Authorization', this._authHeader),
+        responseType: 'text'
       })
       .catch(this._handleError);
   };
