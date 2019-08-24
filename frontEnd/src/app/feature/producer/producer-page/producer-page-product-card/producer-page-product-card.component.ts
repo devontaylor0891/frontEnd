@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, TemplateRef } from '@angular/core';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductModel } from '../../../../core/models/product.model';
 
@@ -12,14 +14,20 @@ export class ProducerPageProductCardComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
   isOutOfStock: boolean;
 
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+
   ngOnChanges() {};
 
-  constructor() {};
+  constructor(private modal: NgbModal) {};
 
   ngOnInit() {
 
     this.isOutOfStock = this.product.qtyAvailable < 1;
 
+  };
+
+  openModal() {
+    this.modal.open(this.modalContent, { size: 'lg' });
   };
 
 }

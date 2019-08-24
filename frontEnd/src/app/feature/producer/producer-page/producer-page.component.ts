@@ -53,6 +53,9 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
                 this.outOfStockProducts.push(results[i]);
               } else {
                 this.products.push(results[i]);
+                if (results[i].unitsPer !== 1) {
+                  console.log('not 1 unitsPer: ', results[i].unitsPer);
+                }
               }
             }
           }
@@ -66,7 +69,6 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
         }
       );
 
-    // console.log('products: ', this.products);
     // console.log('outof stock: ', this.outOfStockProducts);
   };
 

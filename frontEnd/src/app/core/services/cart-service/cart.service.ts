@@ -1068,12 +1068,12 @@ export class CartService implements OnDestroy {
   };
 
   buildCommunityList(scheduleList) {
-    // console.log('starting sched list: ', scheduleList)
+    console.log('starting sched list: ', scheduleList)
     // first sort the scheduleList by date
     let newSchedList = scheduleList.sort((first, second) => {
       return new Date(first.startDateTime).getTime() - new Date (second.startDateTime).getTime()
     });
-    // console.log('newSchedList: ', newSchedList)
+    console.log('newSchedList: ', newSchedList)
     let city;
     let communityList;
     // for each item in the scheduleList
