@@ -5,7 +5,7 @@
     <div class="col-12 form-section-body">
 
       <div class="row">
-        <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Name:</label>
+        <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Name: *</label>
         <div class="col-xs-12 col-sm-8 input-group">
           <input 
             formControlName="name"
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="row">
-        <label for="email" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Email:</label>
+        <label for="email" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Email: *</label>
         <div class="col-xs-12 col-sm-8 input-group">
           <input 
             formControlName="email"
@@ -41,7 +41,26 @@
         </div>
       </div>
       <div class="row">
-        <label for="message" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Message:</label>
+          <label for="phone" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Phone Number:</label>
+          <div class="col-xs-12 col-sm-8 input-group">
+            <input 
+              formControlName="phone"
+              id="phone"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              type="tel"
+              class="form-input-custom"
+              placeholder="123-456-7890">
+              <small 
+                *ngIf="!myGroup.get('phone').valid && myGroup.get('phone').touched"
+                class="help-block"
+                >Please format your phone number as 123-456-7890.</small>
+              <!-- <div class="row" *ngIf="email.touched && email.invalid"> 
+                Your email is required.
+              </div> -->
+          </div>
+        </div>
+      <div class="row">
+        <label for="message" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Message: *</label>
         <div class="col-xs-12 col-sm-8 input-group">
           <textarea
             formControlName="message"
@@ -58,7 +77,7 @@
         </div>
       </div>
       <div class="row">
-        <label for="recaptcha" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Verify:</label>
+        <label for="recaptcha" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Verify: *</label>
         <div class="col-xs-12 col-sm-8 input-group">
           <ngx-recaptcha2
             [siteKey]="siteKey"

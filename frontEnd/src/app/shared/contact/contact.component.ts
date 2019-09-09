@@ -13,6 +13,7 @@ export class ContactComponent implements OnInit {
   myGroup = new FormGroup({
     name: new FormControl(null, Validators.required),
     email: new FormControl(null, Validators.required),
+    phone: new FormControl(null),
     message: new FormControl(null, Validators.required),
     recaptcha: new FormControl(null, Validators.required),
   });
@@ -38,6 +39,7 @@ export class ContactComponent implements OnInit {
     let emailObject = {
       name: this.myGroup.value.name,
       email: this.myGroup.value.email,
+      phone: this.myGroup.value.phone || 'No number added',
       message: this.myGroup.value.message,
       captchaResponse: this.myGroup.value.recaptcha
     }
