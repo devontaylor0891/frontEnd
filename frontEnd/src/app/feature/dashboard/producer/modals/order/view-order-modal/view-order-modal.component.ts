@@ -49,7 +49,7 @@ export class ViewOrderModalComponent implements OnInit {
       newProduct.value = array[i].orderValue;
       newProduct.name = this.getProductName(newProduct.id);
       let cloneProduct = {...newProduct};
-      // console.log('newProduct: ,', newProduct)
+      console.log('newProduct: ,', newProduct)
       this.products.push(cloneProduct);
       // console.log('products: ', this.products);
     }

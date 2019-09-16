@@ -75,7 +75,9 @@ export class MarkCompleteOrderModalComponent implements OnInit, OnDestroy {
             newProduct.quantity = array[i].orderQuantity;
             newProduct.value = array[i].orderValue;
             newProduct.name = this.getProductName(newProduct.id);
-            this.products.push(newProduct);
+            let cloneProduct = {...newProduct};
+            console.log('newProduct: ,', newProduct)
+            this.products.push(cloneProduct);
         }
         // use the id to get the name from the productList array
     };
