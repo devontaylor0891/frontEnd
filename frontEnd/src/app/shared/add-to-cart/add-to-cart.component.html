@@ -27,7 +27,12 @@
           </div>
       </div>
       <div class="col-6 p-0">
-          <button class="btn btn-olf-primary btn-block px-0 m-0 h-100 rounded-0" [disabled]="product.qtyAvailable < 1" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+        <ng-template #tooltip>
+          There are no upcoming deliveries or pickups. This product cannot be ordered at this time.
+        </ng-template>
+        <span [ngbTooltip]="(noUpcomingScheds) ? tooltip : ''">
+          <button class="btn btn-olf-primary btn-block px-0 m-0 h-100 rounded-0" [disabled]="product.qtyAvailable < 1 || noUpcomingScheds" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+        </span>
       </div>
   </div>
 </form>

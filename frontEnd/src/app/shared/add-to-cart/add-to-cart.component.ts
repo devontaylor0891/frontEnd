@@ -17,6 +17,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   @Input() product: ProductModel;
+  @Input() noUpcomingScheds: boolean;
 
   orderQty: number;
   quantityAlreadyInCart: number;

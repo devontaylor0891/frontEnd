@@ -68,7 +68,7 @@
     <p 
       *ngIf="product.unitsPer !== 1"
       >{{ (product.pricePerUnit * product.unitsPer) | currency:'CAD':'symbol-narrow':'1.2-2' }}/pkg <span style="font-size: 75%">   ({{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }})</span> <i class="fa fa-info-circle" (click)="openModal()"></i></p>
-    <app-add-to-cart [product]="product"></app-add-to-cart>
+    <app-add-to-cart [product]="product" [noUpcomingScheds]="noUpcomingScheds"></app-add-to-cart>
 </div>
 <!--/.Card footer-->
 

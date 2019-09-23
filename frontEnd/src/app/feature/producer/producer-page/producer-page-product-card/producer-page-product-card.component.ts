@@ -12,6 +12,7 @@ import { ProductModel } from '../../../../core/models/product.model';
 export class ProducerPageProductCardComponent implements OnInit, OnChanges {
 
   @Input() product: ProductModel;
+  @Input() noUpcomingScheds: boolean;
   isOutOfStock: boolean;
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;

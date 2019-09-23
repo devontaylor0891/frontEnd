@@ -23,6 +23,9 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
   getAllProductsSub: any;
   getAllScheduleSub: any;
 
+  noUpcomingScheds: boolean = true;
+  now = new Date().toISOString();
+
   constructor(private producerService: ProducerService,
               private title: Title) {}
 
@@ -66,6 +69,18 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         results => {
           this.schedule = results;
+          // console.log('now: ', this.now);
+          // console.log('sched lenght: ', this.schedule.length);
+          for (let i = this.schedule.length - 1; i > 0; i--) {
+            // console.log('index: ', i);
+            // console.log('sched: ', this.schedule[i]);
+            // console.log('order deadline: ', this.schedule[i].orderDeadline);
+            if (this.schedule[i].orderDeadline > this.now) {
+              console.log('no upcoming scheds is false');
+              this.noUpcomingScheds = false;
+              return;
+            }
+          }
         }
       );
 
