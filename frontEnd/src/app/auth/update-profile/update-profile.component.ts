@@ -379,7 +379,7 @@ export class UpdateProfileComponent implements OnInit {
 
   onSubmit(form: any): void {
     this.submitting = true;
-    // console.log('form value: ', form.value);
+    console.log('form value: ', form.value);
     // console.log(this.id);
     this.apiService.patchUser(this.user.id, form.value.user) // update user
       .subscribe(
