@@ -148,6 +148,8 @@ import { PrivacyComponent } from './shared/privacy/privacy.component';
 import { TandcComponent } from './shared/tandc/tandc.component';
 import { SearchCalendarListComponent } from './feature/search/search-results/results-pane/search-calendar-list/search-calendar-list.component';
 import { SearchMapComponent } from './feature/search/search-results/results-pane/search-map/search-map.component';
+import { NgxPrintModule } from 'ngx-print';
+
 
 @NgModule({
   declarations: [
@@ -271,7 +273,8 @@ import { SearchMapComponent } from './feature/search/search-results/results-pane
     RouterModule,
     AppRoutingModule,
     ImageCropperModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    NgxPrintModule
   ],
   providers: [
     UserService,

@@ -46,6 +46,7 @@
     "ng2-page-scroll": "^4.0.0-beta.12",
     "ngx-captcha": "^5.0.2",
     "ngx-image-cropper": "^0.2.6",
+    "ngx-print": "^1.2.0-beta.3",
     "popper.js": "^1.12.3",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",

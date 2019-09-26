@@ -6,19 +6,19 @@
 </div>
 
 <div class="modal-body dash-modal-body">
-
+  
   <div class="row">
-
+    
     <div class="col-12">
-
+      
       <div class="row form-section">
-
+        
         <div class="col-12 form-section-header">
           <h5>Consumer Details</h5>
         </div>
-
+        
         <div class="col-12 form-section-body">
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Name:</strong>
@@ -27,38 +27,38 @@
               <p>{{ record.consumer.firstName }}</p>
             </div>
           </div>
-
+          
           <div class="row" *ngIf="record.orderDetails.deliveryAddress">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                <strong>Delivery Address:</strong>
+              <strong>Delivery Address:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                <p>{{ record.orderDetails.deliveryAddress }}</p>
+              <p>{{ record.orderDetails.deliveryAddress }}</p>
             </div>
           </div>
-  
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                <strong>Consumer Comment:</strong>
+              <strong>Consumer Comment:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
-                <p *ngIf="!record.orderDetails.consumerComment">No comments entered.</p>
+              <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
+              <p *ngIf="!record.orderDetails.consumerComment">No comments entered.</p>
             </div>
           </div>
-
+          
         </div>
-
+        
       </div>
-
+      
       <div class="row form-section">
-
+        
         <div class="col-12 form-section-header">
           <h5>Order Details</h5>
         </div>
-
+        
         <div class="col-12 form-section-body">
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Order Status:</strong>
@@ -67,7 +67,7 @@
               <p>{{ record.orderDetails.orderStatus | uppercase }}</p>
             </div>
           </div>
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Producer Comment:</strong>
@@ -77,17 +77,17 @@
               <p *ngIf="!record.orderDetails.producerComment">No comments entered.</p>
             </div>
           </div>
-
+          
         </div>
-
+        
       </div>
-
+      
       <div class="row form-section">
-
+        
         <div class="col-12 form-section-header">
           <h5>Order Contents</h5>
         </div>
-
+        
         <div class="col-12 form-section-body">
           <div class="row">
             <div class="col-12 col-md-8 offset-md-2 justify-content-center">
@@ -117,17 +117,17 @@
             </div>
           </div>
         </div>
-
+        
       </div>
-
+      
       <div class="row form-section">
-
+        
         <div class="col-12 form-section-header">
           <h5>Schedule Details</h5>
         </div>
-
+        
         <div class="col-12 form-section-body">
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Schedule Type:</strong>
@@ -136,7 +136,7 @@
               <p>{{ record.chosenSchedule.type }}</p>
             </div>
           </div>
-
+          
           <div *ngIf="record.chosenSchedule.address" class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Address:</strong>
@@ -145,7 +145,7 @@
               <p>{{ record.chosenSchedule.address }}</p>
             </div>
           </div>
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Location:</strong>
@@ -154,7 +154,7 @@
               <p>{{ record.chosenSchedule.city }}, {{ record.chosenSchedule.province }}</p>
             </div>
           </div>
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Date:</strong>
@@ -163,66 +163,289 @@
               <p>{{ record.chosenSchedule.startDateTime | date:'mediumDate' }}</p>
             </div>
           </div>
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Time:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
               <p>{{ record.chosenSchedule.startDateTime | date:'shortTime' }} - {{ record.chosenSchedule.endDateTime | date:'shortTime'
+              }}
+            </p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+            <strong>Order Deadline:</strong>
+          </div>
+          <div class="col-xs-12 col-sm-8 input-group col-form-value">
+            <p>{{ record.chosenSchedule.orderDeadline | date:'mediumDate' }} - {{ record.chosenSchedule.orderDeadline | date:'shortTime'
+            }}
+          </p>
+        </div>
+      </div>
+      
+      <div class="row" *ngIf="record.chosenSchedule.description">
+        <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+          <strong>Details:</strong>
+        </div>
+        <div class="col-xs-12 col-sm-8 input-group col-form-value">
+          <p>{{ record.chosenSchedule.description }}</p>
+        </div>
+      </div>
+      
+      <div *ngIf="record.chosenSchedule.type === 'Door-to-door Delivery'">
+        
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+            <strong>Delivery Fee:</strong>
+          </div>
+          <div class="col-xs-12 col-sm-8 input-group col-form-value">
+            <p>{{ record.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+            <strong>Fee Waiver Amount:</strong>
+          </div>
+          <div class="col-xs-12 col-sm-8 input-group col-form-value">
+            <p *ngIf="record.chosenSchedule.feeWaiver">{{ record.chosenSchedule.feeWaiver | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+            <p *ngIf="!record.chosenSchedule.feeWaiver">None. Fee applies to all orders.</p>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+      </div>
+  
+    </div>
+
+    <div *ngIf="record.orderDetails.orderStatus == 'accepted'">
+
+      <div class="col-12">
+        <div class="row form-section">
+          <button printSectionId="print-section" ngxPrint>print</button>
+        </div>
+      </div>
+
+      <div class="col-12" id="print-section">
+        
+        <div class="row form-section">
+          
+          <div class="col-12 form-section-header">
+            <h2>Consumer Details</h2>
+          </div>
+          
+          <div class="col-12 form-section-body">
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Name:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.consumer.firstName }}</p>
+              </div>
+            </div>
+            
+            <div class="row" *ngIf="record.orderDetails.deliveryAddress">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Delivery Address:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.orderDetails.deliveryAddress }}</p>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Consumer Comment:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p *ngIf="record.orderDetails.consumerComment">{{ record.orderDetails.consumerComment }}</p>
+                <p *ngIf="!record.orderDetails.consumerComment">No comments entered.</p>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+        <div class="row form-section">
+          
+          <div class="col-12 form-section-header">
+            <h2>Order Details</h2>
+          </div>
+          
+          <div class="col-12 form-section-body">
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Order Status:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.orderDetails.orderStatus | uppercase }}</p>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Producer Comment:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p *ngIf="record.orderDetails.producerComment">{{ record.orderDetails.producerComment }}</p>
+                <p *ngIf="!record.orderDetails.producerComment">No comments entered.</p>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+        <div class="row form-section">
+          
+          <div class="col-12 form-section-header">
+            <h2>Order Contents</h2>
+          </div>
+          
+          <div class="col-12 form-section-body">
+            <div class="row">
+              <div class="col-12 col-md-8 offset-md-2 justify-content-center">
+                <table class="table form-input-custom">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let product of products">
+                      <td>{{ product.name }}</td>
+                      <td>{{ product.quantity }}</td>
+                      <td>{{ product.value | currency:'USD':'symbol-narrow':'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <strong>{{ record.orderDetails.orderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        <div class="row form-section">
+          
+          <div class="col-12 form-section-header">
+            <h2>Schedule Details</h2>
+          </div>
+          
+          <div class="col-12 form-section-body">
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Schedule Type:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.chosenSchedule.type }}</p>
+              </div>
+            </div>
+            
+            <div *ngIf="record.chosenSchedule.address" class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Address:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.chosenSchedule.address }}</p>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Location:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.chosenSchedule.city }}, {{ record.chosenSchedule.province }}</p>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Date:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.chosenSchedule.startDateTime | date:'mediumDate' }}</p>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                <strong>Time:</strong>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                <p>{{ record.chosenSchedule.startDateTime | date:'shortTime' }} - {{ record.chosenSchedule.endDateTime | date:'shortTime'
                 }}
               </p>
             </div>
           </div>
-
+          
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Order Deadline:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
               <p>{{ record.chosenSchedule.orderDeadline | date:'mediumDate' }} - {{ record.chosenSchedule.orderDeadline | date:'shortTime'
-                }}
-              </p>
-            </div>
+              }}
+            </p>
           </div>
-
-          <div class="row" *ngIf="record.chosenSchedule.description">
+        </div>
+        
+        <div class="row" *ngIf="record.chosenSchedule.description">
+          <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+            <strong>Details:</strong>
+          </div>
+          <div class="col-xs-12 col-sm-8 input-group col-form-value">
+            <p>{{ record.chosenSchedule.description }}</p>
+          </div>
+        </div>
+        
+        <div *ngIf="record.chosenSchedule.type === 'Door-to-door Delivery'">
+          
+          <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-              <strong>Details:</strong>
+              <strong>Delivery Fee:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
-              <p>{{ record.chosenSchedule.description }}</p>
+              <p>{{ record.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
             </div>
           </div>
-
-          <div *ngIf="record.chosenSchedule.type === 'Door-to-door Delivery'">
-
-            <div class="row">
-              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                <strong>Delivery Fee:</strong>
-              </div>
-              <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                <p>{{ record.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
-              </div>
+          
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+              <strong>Fee Waiver Amount:</strong>
             </div>
-
-            <div class="row">
-              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                <strong>Fee Waiver Amount:</strong>
-              </div>
-              <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                <p *ngIf="record.chosenSchedule.feeWaiver">{{ record.chosenSchedule.feeWaiver | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
-                <p *ngIf="!record.chosenSchedule.feeWaiver">None. Fee applies to all orders.</p>
-              </div>
+            <div class="col-xs-12 col-sm-8 input-group col-form-value">
+              <p *ngIf="record.chosenSchedule.feeWaiver">{{ record.chosenSchedule.feeWaiver | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+              <p *ngIf="!record.chosenSchedule.feeWaiver">None. Fee applies to all orders.</p>
             </div>
-
+          </div>
+          
+        </div>
+        
           </div>
 
         </div>
 
       </div>
-
-
 
     </div>
 
