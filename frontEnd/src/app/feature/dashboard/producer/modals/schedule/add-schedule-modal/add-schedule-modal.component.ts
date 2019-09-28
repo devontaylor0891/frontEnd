@@ -222,15 +222,36 @@ export class AddScheduleModalComponent implements OnInit {
     });
   };
 
+  // onSubmit() {
+  //   this.submitting = true;
+  //   this.buildSubmitObject();
+  //   if (!this.repeat) { // if only one, post it to the API
+  //     this.apiService.postSchedule(this.submitObject)
+  //     .subscribe(
+  //       result => this.handleSubmitSuccess(result),
+  //       err => this.handleSubmitError(err)
+  //     );
+  //   } else { // make copies of the submitObject, change date, send array to API
+  //     this.buildRepeatSubmitArray();
+  //   }
+
+  // };
+
   onSubmit() {
     this.submitting = true;
     this.buildSubmitObject();
     if (!this.repeat) { // if only one, post it to the API
-      this.apiService.postSchedule(this.submitObject)
-      .subscribe(
-        result => this.handleSubmitSuccess(result),
-        err => this.handleSubmitError(err)
-      );
+      this.repeatSubmitArray[0] = this.submitObject;
+      this.apiService.postMultiSchedule(this.repeatSubmitArray)
+          .subscribe(
+            result => this.handleSubmitSuccess(result),
+            err => this.handleSubmitError(err)
+          );
+      // this.apiService.postSchedule(this.submitObject)
+      // .subscribe(
+      //   result => this.handleSubmitSuccess(result),
+      //   err => this.handleSubmitError(err)
+      // );
     } else { // make copies of the submitObject, change date, send array to API
       this.buildRepeatSubmitArray();
     }

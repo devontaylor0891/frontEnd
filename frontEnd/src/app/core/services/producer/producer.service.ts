@@ -45,6 +45,9 @@ export class ProducerService implements OnInit {
   public _producerSchedule: BehaviorSubject<ScheduleModel[]>;
   // product - this is bypassing the dataStore step and being populated directly from the Api call right now.
   public _product: BehaviorSubject<ProductModel>;
+  public _noUpcomingScheds:BehaviorSubject<boolean>;
+
+  now = new Date().toISOString();
 
   constructor(private http: Http,
               private apiService: ApiService) { 
@@ -57,6 +60,7 @@ export class ProducerService implements OnInit {
     this._producer = <BehaviorSubject<ProducerModel>>new BehaviorSubject({});
     this._producerProducts = <BehaviorSubject<ProductModel[]>>new BehaviorSubject([]);
     this._producerSchedule = <BehaviorSubject<ScheduleModel[]>>new BehaviorSubject([]);
+    this._noUpcomingScheds = <BehaviorSubject<boolean>>new BehaviorSubject(true);
   }
   
   // **************************** LOAD ALL INTO DATASTORE ************************ 
@@ -87,6 +91,13 @@ export class ProducerService implements OnInit {
         .subscribe(
           response => {
             this.dataStore.schedule = response;
+            for (let i = this.dataStore.schedule.length - 1; i > 0; i--) {
+              if (this.dataStore.schedule[i].orderDeadline > this.now) {
+                // console.log('no upcoming scheds is false');
+                this._noUpcomingScheds.next(false);
+                break;
+              }
+            }
             // make a copy and put it in the appropriate BehaviorSubjects that will become the Observable for the components
             this._producerSchedule.next(Object.assign({}, this.dataStore).schedule);
           }
@@ -115,6 +126,10 @@ export class ProducerService implements OnInit {
   // use this to return a product for now
   getProductById(id) {
     return this._product.asObservable();
+  }
+
+  getNoUpcomingScheds() {
+    return this._noUpcomingScheds.asObservable();
   }
   
   // this is returning the data from Nikki's endpoint
@@ -151,6 +166,7 @@ export class ProducerService implements OnInit {
       this.apiService.getProductById(productId)
       .subscribe(
         response => { 
+          this.loadProducerData(response[0].producer.id);
           this._product.next(Object.assign({}, response[0])); }
       );
     };

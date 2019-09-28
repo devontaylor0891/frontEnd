@@ -7,6 +7,8 @@ import { ProducerModel } from '../../../core/models/producer.model';
 import { ProductModel } from '../../../core/models/product.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
 
+import { Subscription } from 'rxjs/Subscription';
+
 @Component({
   selector: 'app-producer-page',
   templateUrl: './producer-page.component.html',
@@ -24,6 +26,7 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
   getAllScheduleSub: any;
 
   noUpcomingScheds: boolean = true;
+  noUpcomingSchedsSub: Subscription;
   now = new Date().toISOString();
 
   constructor(private producerService: ProducerService,
@@ -56,9 +59,9 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
                 this.outOfStockProducts.push(results[i]);
               } else {
                 this.products.push(results[i]);
-                if (results[i].unitsPer !== 1) {
-                  console.log('not 1 unitsPer: ', results[i].unitsPer);
-                }
+                // if (results[i].unitsPer !== 1) {
+                //   // console.log('not 1 unitsPer: ', results[i].unitsPer);
+                // }
               }
             }
           }
@@ -71,16 +74,24 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
           this.schedule = results;
           // console.log('now: ', this.now);
           // console.log('sched lenght: ', this.schedule.length);
-          for (let i = this.schedule.length - 1; i > 0; i--) {
-            // console.log('index: ', i);
-            // console.log('sched: ', this.schedule[i]);
-            // console.log('order deadline: ', this.schedule[i].orderDeadline);
-            if (this.schedule[i].orderDeadline > this.now) {
-              console.log('no upcoming scheds is false');
-              this.noUpcomingScheds = false;
-              return;
-            }
-          }
+          // for (let i = this.schedule.length - 1; i > 0; i--) {
+          //   // console.log('index: ', i);
+          //   // console.log('sched: ', this.schedule[i]);
+          //   // console.log('order deadline: ', this.schedule[i].orderDeadline);
+          //   if (this.schedule[i].orderDeadline > this.now) {
+          //     // console.log('no upcoming scheds is false');
+          //     this.noUpcomingScheds = false;
+          //     return;
+          //   }
+          // }
+        }
+      );
+
+    this.noUpcomingSchedsSub = this.producerService.getNoUpcomingScheds()
+      .subscribe(
+        results => {
+          // console.log('noUpcomingScheds results: ', results);
+          this.noUpcomingScheds = results;
         }
       );
 
