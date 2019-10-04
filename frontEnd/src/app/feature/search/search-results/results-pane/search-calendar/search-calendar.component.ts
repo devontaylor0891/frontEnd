@@ -129,7 +129,7 @@ export class SearchCalendarComponent implements OnInit, OnChanges {
           let data = result.schedules;
           data.forEach((result) => {
             this.events.push({
-              title: result.type + ' - ' + result.producerName,
+              title: result.type + ' - ' + result.producerName + ' - ' + result.city,
               color: colors.red,
               start: new Date(result.startDateTime),
               meta: {

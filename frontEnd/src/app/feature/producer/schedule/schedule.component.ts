@@ -112,7 +112,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
           let data = result;
           data.forEach((result) => {
             this.events.push({
-              title: result.type,
+              title: result.type + ' - ' + result.city,
               color: colors.green,
               start: new Date(result.startDateTime),
               meta: {
