@@ -601,6 +601,10 @@ p {
 
 // MODALS ********************************************************
 
+.modal {
+    overflow-y: auto !important;
+}
+
 .modal-dialog {
     border-top-left-radius: 0.5rem !important;
     border-top-right-radius: 0.5rem !important;
