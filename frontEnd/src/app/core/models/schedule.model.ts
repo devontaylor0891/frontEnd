@@ -7,6 +7,7 @@ export class ScheduleModel {
         public description: string,
         public startDateTime: string,
         public endDateTime: string,
+        public readableDate: string,
         public hasFee: boolean,
         public hasWaiver: boolean,
         public latitude: number,

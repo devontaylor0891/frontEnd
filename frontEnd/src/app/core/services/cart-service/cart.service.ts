@@ -504,7 +504,7 @@ export class CartService implements OnDestroy {
 
   // confirm and send the order from consumer to producer
   confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
-    // console.log('confirm and send order id: ', cartId);
+    console.log('confirm and send order sched: ', chosenSchedule);
     // console.log('confirm and send order cart: ', this.dataStore.carts);
     // set the properties
     this.sendingCartId = cartId;

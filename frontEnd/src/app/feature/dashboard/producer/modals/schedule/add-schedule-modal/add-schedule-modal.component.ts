@@ -97,6 +97,8 @@ export class AddScheduleModalComponent implements OnInit {
   public deadlineDateTimeMax: any = this.dateMoment;
   dateChosen: boolean = false;
 
+  monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
               public activeModal: NgbActiveModal,
@@ -222,21 +224,6 @@ export class AddScheduleModalComponent implements OnInit {
     });
   };
 
-  // onSubmit() {
-  //   this.submitting = true;
-  //   this.buildSubmitObject();
-  //   if (!this.repeat) { // if only one, post it to the API
-  //     this.apiService.postSchedule(this.submitObject)
-  //     .subscribe(
-  //       result => this.handleSubmitSuccess(result),
-  //       err => this.handleSubmitError(err)
-  //     );
-  //   } else { // make copies of the submitObject, change date, send array to API
-  //     this.buildRepeatSubmitArray();
-  //   }
-
-  // };
-
   onSubmit() {
     this.submitting = true;
     this.buildSubmitObject();
@@ -273,20 +260,21 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   // for repeat dates
-  buildRepeatSubmitObject(i, deadlineHours) {
-    this.clearDatesFromSubmitObject();
-    this.submitObject.producerId = this.producer.id;
-    this.submitObject.type = this.form.value.type;
-    this.submitObject.description = this.form.value.description;
-    this.submitObject.startDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
-    this.submitObject.endDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedEndHour, this.schedEndMinute)
-    this.submitObject.hasFee = this.form.value.hasFee;
-    this.submitObject.hasWaiver = this.form.value.hasWaiver;
-    this.submitObject.orderDeadline = this.buildRepeatOrderDeadline(this.submitObject.startDateTime, deadlineHours);
-    this.submitObject.fee = this.form.value.fee;
-    this.submitObject.feeWaiver = this.form.value.feeWaiver;
-    this.submitObject.orderList = [];
-  };
+  // not used
+  // buildRepeatSubmitObject(i, deadlineHours) {
+  //   this.clearDatesFromSubmitObject();
+  //   this.submitObject.producerId = this.producer.id;
+  //   this.submitObject.type = this.form.value.type;
+  //   this.submitObject.description = this.form.value.description;
+  //   this.submitObject.startDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
+  //   this.submitObject.endDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedEndHour, this.schedEndMinute)
+  //   this.submitObject.hasFee = this.form.value.hasFee;
+  //   this.submitObject.hasWaiver = this.form.value.hasWaiver;
+  //   this.submitObject.orderDeadline = this.buildRepeatOrderDeadline(this.submitObject.startDateTime, deadlineHours);
+  //   this.submitObject.fee = this.form.value.fee;
+  //   this.submitObject.feeWaiver = this.form.value.feeWaiver;
+  //   this.submitObject.orderList = [];
+  // };
 
   buildRepeatSubmitArray() {
     this.repeatSubmitArray[0] = this.submitObject;
@@ -297,6 +285,9 @@ export class AddScheduleModalComponent implements OnInit {
       tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
       tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
       tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
+      console.log('human readable: ', this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate());
+      tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
+
       // push into array
       this.repeatSubmitArray.push(tempSubmitObj);
       if (i === this.numberOfWeeks - 1) {
@@ -319,6 +310,7 @@ export class AddScheduleModalComponent implements OnInit {
       'description': '',
       'startDateTime': '',
       'endDateTime': '',
+      'readableDate': '',
       'hasFee': null,
       'hasWaiver': null,
       'latitude': null,
@@ -334,10 +326,10 @@ export class AddScheduleModalComponent implements OnInit {
     };
   }
 
-  clearDatesFromSubmitObject() {
-    this.submitObject.startDateTime = '';
-    this.submitObject.endDateTime = '';
-  }
+  // clearDatesFromSubmitObject() {
+  //   this.submitObject.startDateTime = '';
+  //   this.submitObject.endDateTime = '';
+  // }
 
   buildSubmitObject() {
     // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
@@ -349,6 +341,8 @@ export class AddScheduleModalComponent implements OnInit {
     // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
     this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
     this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    console.log('human readable: ', this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate());
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
     this.submitObject.hasFee = this.form.value.hasFee;
     this.submitObject.hasWaiver = this.form.value.hasWaiver;
     this.submitObject.orderDeadline = this.deadlineDateTime;
@@ -444,6 +438,12 @@ export class AddScheduleModalComponent implements OnInit {
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
     this.schedYear = this.dateMoment.getFullYear();
+    
+
+    // const d = new Date();
+    // document.write("The current month is " + monthNames[d.getMonth()]);
+    // make date human readable
+    console.log('human readable: ', this.monthNames[this.dateMoment.getMonth()] + ' ' + this.dateMoment.getDate());
     // use those to set the order deadline day, month, year
     this.setDeadlineDate();
     this.setRepeatEndDateMin();
@@ -483,13 +483,16 @@ export class AddScheduleModalComponent implements OnInit {
       let date = {
         schedDay: null,
         schedMonth: null,
-        schedYear: null
+        schedYear: null,
+        humanReadable: null
       };
       date.schedDay = valueArray[i].getDate();
       date.schedMonth = valueArray[i].getMonth();
       date.schedYear = valueArray[i].getFullYear();
+      date.humanReadable = this.monthNames[valueArray[i].getMonth()] + ' ' + valueArray[i].getDate();
       this.datesArray.push(date);
     };
+    console.log('dateArray: ', this.datesArray);
   };
 
   onChooseStartTime() {
