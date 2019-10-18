@@ -189,6 +189,25 @@
                   </div>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-12 col-md-4">
+                  <label for="consumerPhone" class="text-muted">
+                    If you'd like, add your cell number. The producer can contact you if anything changes:
+                  </label>
+                </div>
+                <div class="col-12 col-md-8">
+                  <input 
+                    class="form-input-custom"
+                    type="tel" 
+                    id="consumerPhone" 
+                    name="consumerPhone"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    [(ngModel)]="consumerPhone">
+                  <div class="text-muted"><small>Format: 123-456-7890</small></div>
+                </div>
+              </div>
+              <hr>
               <div class="row">
                 <div class="col-12 col-md-4">
                   <label for="consumerComment" class="text-muted">

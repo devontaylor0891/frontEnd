@@ -65,6 +65,7 @@ export class CartService implements OnDestroy {
   sendingChosenSchedule;
   sendingConsumerComment;
   sendingDeliveryAddress;
+  sendingConsumerPhone;
 
   // properties for use when product quantities have changed on checkout
   orderQuantityOkay: boolean = true;
@@ -398,13 +399,17 @@ export class CartService implements OnDestroy {
 // ***********CART MODIFICATION METHODS**********
 
 	// build the cart
-	buildCart(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
+	buildCart(cartId, chosenSchedule, consumerComment, deliveryAddress?, consumerPhone?) {
 		// add the consumer to the cart
 		this.addConsumer(cartId);
 		// add the chosen schedule to the cart
 		this.selectSchedule(cartId, chosenSchedule);
 		// add the consumer comment to the cart
-		this.addConsumerComment(cartId, consumerComment);
+    this.addConsumerComment(cartId, consumerComment);
+    console.log('consumer phone in build cart: ', consumerPhone);
+    if (consumerPhone) {
+      this.addConsumerPhone(cartId, consumerPhone);
+    };
 		// date stamp the cart
     this.dateStampCart(cartId);
     // add the delivery fee
@@ -415,7 +420,24 @@ export class CartService implements OnDestroy {
 		}
 		// change status to pending
 		this.makeCartPending(cartId);
-		return this.dataStore.carts[cartId];
+    let newOrder = this.dataStore.carts[cartId];
+    console.log('newOrder: ', newOrder);
+    this.apiService.postOrder(newOrder)
+      .subscribe(
+        result => {
+          console.log('successfully posted: ', result);
+          this._orderSentSuccessfully.next(true);
+          // remove the cart contents from the cart count
+          this.dataStore.cartCount -= this.getCartCountOfSingleCart(this.sendingCartId); // unnecessary??? throws error on single cart checkout, not sure about multi
+          // remove the cart from the dataStore on success
+          this.clearCart(this.sendingCartId);
+          // console.log('new cartCount: ', this.dataStore.cartCount);
+          this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
+        }, error => {
+          // console.log('could not add new order');
+          this._orderSentFailed.next(true);
+        }
+      );
 	};
 
   // for each cart in the cart contents, select a schedule
@@ -441,6 +463,10 @@ export class CartService implements OnDestroy {
 
   addConsumerComment(cartId, comment) {
     this.dataStore.carts[cartId].orderDetails.consumerComment = comment || '';
+  };
+
+  addConsumerPhone(cartId, phone) {
+    this.dataStore.carts[cartId].orderDetails.consumerPhone = phone;
   };
 
   addDeliveryAddress(cartId, address) {
@@ -503,7 +529,7 @@ export class CartService implements OnDestroy {
 // ***********ORDER CONFIRMATION**********
 
   // confirm and send the order from consumer to producer
-  confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?) {
+  confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?, consumerPhone?) {
     console.log('confirm and send order sched: ', chosenSchedule);
     // console.log('confirm and send order cart: ', this.dataStore.carts);
     // set the properties
@@ -511,6 +537,7 @@ export class CartService implements OnDestroy {
     this.sendingChosenSchedule = chosenSchedule;
     this.sendingConsumerComment = consumerComment;
     this.sendingDeliveryAddress = deliveryAddress || null;
+    this.sendingConsumerPhone = consumerPhone || null;
     // create an array of the product id's
     let productsArray = this.dataStore.carts[cartId].orderDetails.productQuantities;
     // get the products' current quantities
@@ -528,25 +555,9 @@ export class CartService implements OnDestroy {
           let producerEmail = result[0].email;
           this.sendingChosenSchedule.producerEmail = producerEmail;
           // build the cart
-          let newOrder = this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress);
+          this.buildCart(this.sendingCartId, this.sendingChosenSchedule, this.sendingConsumerComment, this.sendingDeliveryAddress, this.sendingConsumerPhone);
           // send the cart via the api
           // console.log('finished cart: ', newOrder);
-          this.apiService.postOrder(newOrder)
-            .subscribe(
-              result => {
-                console.log('successfully posted: ', result);
-                this._orderSentSuccessfully.next(true);
-                // remove the cart contents from the cart count
-                this.dataStore.cartCount -= this.getCartCountOfSingleCart(this.sendingCartId); // unnecessary??? throws error on single cart checkout, not sure about multi
-                // remove the cart from the dataStore on success
-                this.clearCart(this.sendingCartId);
-                // console.log('new cartCount: ', this.dataStore.cartCount);
-                this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
-              }, error => {
-                // console.log('could not add new order');
-                this._orderSentFailed.next(true);
-              }
-            );
         }
       );
   }

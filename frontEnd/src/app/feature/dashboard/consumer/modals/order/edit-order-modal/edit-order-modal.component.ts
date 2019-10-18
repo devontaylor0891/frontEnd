@@ -99,7 +99,8 @@ export class ConsumerEditOrderModalComponent implements OnInit {
 
   private buildForm() {
     this.orderForm = this.fb.group({
-      consumerComment: [this.record.orderDetails.consumerComment, [Validators.required]]
+      consumerComment: [this.record.orderDetails.consumerComment, [Validators.required]],
+      consumerPhone: [this.record.orderDetails.consumerPhone]
     });
     
     // Subscribe to form value changes
@@ -116,6 +117,8 @@ export class ConsumerEditOrderModalComponent implements OnInit {
     // make it equal to the original record
     this.submitObject = this.record;
     // then add the fields from the form
+    this.submitObject.orderDetails.consumerComment = this.orderForm.value.consumerComment;
+    this.submitObject.orderDetails.consumerPhone = this.orderForm.value.consumerPhone;
     this.submitObject.orderDetails.producerComment = this.orderForm.value.producerComment;
     this.submitObject.orderDetails.orderStatus = this.orderStatusInput;
   }

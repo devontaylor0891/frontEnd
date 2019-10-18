@@ -41,6 +41,16 @@
 
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+              <strong>Your Phone:</strong>
+            </div>
+            <div class="col-xs-12 col-sm-8 input-group col-form-value">
+              <p *ngIf="record.orderDetails.consumerPhone">{{ record.orderDetails.consumerPhone }}</p>
+              <p *ngIf="!record.orderDetails.consumerPhone">No phone number entered.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
               <strong>Producer Comments:</strong>
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">

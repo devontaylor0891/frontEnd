@@ -32,8 +32,9 @@ export class ConsumerViewOrderModalComponent implements OnInit {
 	}
 
   ngOnInit() {
-	  
-	this.buildProductsArray();
+
+    console.log('order: ', this.record);
+    this.buildProductsArray();
 
   }
 
