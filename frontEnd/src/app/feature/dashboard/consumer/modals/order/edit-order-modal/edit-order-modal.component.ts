@@ -14,7 +14,7 @@ import { OrderModel } from '../../../../../../core/models/order.model';
   templateUrl: './edit-order-modal.component.html',
   styleUrls: ['./edit-order-modal.component.scss']
 })
-export class ConsumerEditOrderModalComponent implements OnInit {
+export class ConsumerEditOrderModalComponent implements OnInit, OnDestroy {
 
   @Input() record: OrderModel;
   @Output() onOrderDeleted = new EventEmitter<any>();
@@ -29,9 +29,9 @@ export class ConsumerEditOrderModalComponent implements OnInit {
   products: any;
 
   constructor(private fb: FormBuilder,
-        private router: Router,
-        private api: ApiService,
-        public activeModal: NgbActiveModal) {
+              private router: Router,
+              private api: ApiService,
+              public activeModal: NgbActiveModal) {
 
     // build the products array to use in the table
     this.products = [];
@@ -74,28 +74,6 @@ export class ConsumerEditOrderModalComponent implements OnInit {
       }
     }
   };
-
-  private setInitialOrder() {
-    // return new OrderModel(
-    //   // this.record.id,
-    //   // this.record.name,
-    //   // this.record.description,
-    //   // this.record.image,
-    //   // this.record.pricePerUnit,
-    //   // this.record.unit,
-    //   // this.record.unitsPer,
-    //   // this.record.category,
-    //   // this.record.subcategory,
-    //   // this.record.producer,
-    //   // this.record.dateAdded,
-    //   // this.record.qtyAvailable,
-    //   // this.record.qtyPending,
-    //   // this.record.qtyAccepted,
-    //   // this.record.qtyCompleted,
-    //   // this.record.isObsolete,
-    //   // this.record.scheduleList
-    // );
-  }
 
   private buildForm() {
     this.orderForm = this.fb.group({
