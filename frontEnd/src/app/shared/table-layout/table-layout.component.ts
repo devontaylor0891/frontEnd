@@ -153,7 +153,27 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
       const modalRef = this.modal.open(AdminProducerViewModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
-  }
+  };
+
+  onOpenAcceptDeny(record) {
+    this.record = record;
+    const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+      this.firstModalSubscription = modalRef.componentInstance.onOrderAccepted
+        .subscribe(
+          result => {
+            console.log('here is the accepted result from table layout: ', result);
+            this.orderAccepted.emit(result);
+          }
+        );
+      this.secondModalSubscription = modalRef.componentInstance.onOrderDenied
+        .subscribe(
+          result => {
+            console.log('here is the denied result from table layout: ', result);
+            this.orderDenied.emit(result);
+          }
+        );
+  };
 
   onOpenEdit(record) {
     this.record = record;
@@ -179,24 +199,25 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
       const modalRef = this.modal.open(EditScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
-    if (this.recordType === 'order' && this.isConsumer === false) {
-      const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
-      modalRef.componentInstance.record = record;
-      this.firstModalSubscription = modalRef.componentInstance.onOrderAccepted
-        .subscribe(
-          result => {
-            console.log('here is the accepted result from table layout: ', result);
-            this.orderAccepted.emit(result);
-          }
-        );
-      this.secondModalSubscription = modalRef.componentInstance.onOrderDenied
-        .subscribe(
-          result => {
-            console.log('here is the denied result from table layout: ', result);
-            this.orderDenied.emit(result);
-          }
-        );
-    } else if (this.recordType === 'order' && this.isConsumer === true) {
+    // if (this.recordType === 'order' && this.isConsumer === false) {
+      // const modalRef = this.modal.open(EditOrderModalComponent, { size: 'lg' });
+      // modalRef.componentInstance.record = record;
+      // this.firstModalSubscription = modalRef.componentInstance.onOrderAccepted
+      //   .subscribe(
+      //     result => {
+      //       console.log('here is the accepted result from table layout: ', result);
+      //       this.orderAccepted.emit(result);
+      //     }
+      //   );
+      // this.secondModalSubscription = modalRef.componentInstance.onOrderDenied
+      //   .subscribe(
+      //     result => {
+      //       console.log('here is the denied result from table layout: ', result);
+      //       this.orderDenied.emit(result);
+      //     }
+      //   );
+    // } else if (this.recordType === 'order' && this.isConsumer === true) {
+    if (this.recordType === 'order') {
       const modalRef = this.modal.open(ConsumerEditOrderModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
       this.firstModalSubscription = modalRef.componentInstance.onOrderDeleted

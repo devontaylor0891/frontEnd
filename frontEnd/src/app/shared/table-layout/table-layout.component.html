@@ -24,7 +24,7 @@
                 <a (click)="onOpenEdit(record)">Edit</a>
             </td>
             <td *ngIf="pending">
-                <a (click)="onOpenEdit(record)">Accept/Deny</a>
+                <a (click)="onOpenAcceptDeny(record)">Accept/Deny</a>
             </td>
             <td *ngIf="deletable">
                 <a (click)="onSelectDelete(record)">Delete</a>

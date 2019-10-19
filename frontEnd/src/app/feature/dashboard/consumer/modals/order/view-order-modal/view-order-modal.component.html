@@ -55,7 +55,7 @@
             </div>
             <div class="col-xs-12 col-sm-8 input-group col-form-value">
               <p *ngIf="record.orderDetails.producerComment">{{ record.orderDetails.producerComment }}</p>
-              <p *ngIf="!record.orderDetails.producerComment">No comments entered.</p>
+              <p *ngIf="!record.orderDetails.producerComment || record.orderDetails.producerComment === null || record.orderDetails.producerComment === undefined">No comments entered.</p>
             </div>
           </div>
 

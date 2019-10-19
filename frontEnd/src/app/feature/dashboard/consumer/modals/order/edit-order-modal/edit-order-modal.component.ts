@@ -97,22 +97,12 @@ export class ConsumerEditOrderModalComponent implements OnInit, OnDestroy {
     // then add the fields from the form
     this.submitObject.orderDetails.consumerComment = this.orderForm.value.consumerComment;
     this.submitObject.orderDetails.consumerPhone = this.orderForm.value.consumerPhone;
-    this.submitObject.orderDetails.producerComment = this.orderForm.value.producerComment;
-    this.submitObject.orderDetails.orderStatus = this.orderStatusInput;
-  }
-
-  onAccept() {
-    this.orderStatusInput = 'accepted';
-  }
-
-  onDeny() {
-    this.orderStatusInput = 'denied';
   }
   
   onSubmit() {
     this.submitting = true;
     this.setSubmitObject();
-    // console.log('submitted object: ', this.submitObject);
+    console.log('submitted object: ', this.submitObject);
     this.submitOrderSub = this.api
       .putOrder(this.record.id, this.submitObject)
       .subscribe(
