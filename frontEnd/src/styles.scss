@@ -407,6 +407,21 @@ input[type=number] {
     background-color: white !important;
 }
 
+.dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: #e0e0e0 !important
+}
+
+.dropdown .dropdown-menu .dropdown-item:active  {
+  background-color: #e0e0e0 !important
+}
+
+.dropdown .dropdown-menu .dropdown-item:focus{
+  background-color: #e0e0e0 !important
+}
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #e0e0e0 !important
+}
+
 .outOfStockOverlay {
     z-index: 999999;
     top: 0;

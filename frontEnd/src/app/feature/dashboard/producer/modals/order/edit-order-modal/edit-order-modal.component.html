@@ -30,6 +30,16 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                        <strong>Consumer Phone:</strong>
+                      </div>
+                      <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                        <p *ngIf="record.orderDetails.consumerPhone"><a href="sms:+1-{{ record.orderDetails.consumerPhone }}">{{ record.orderDetails.consumerPhone }}</a> <small>Click to text</small></p>
+                        <p *ngIf="!record.orderDetails.consumerPhone">No phone number entered.</p>
+                      </div>
+                    </div>
+
                     <div class="row" *ngIf="record.orderDetails.deliveryAddress">
                       <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
                           <strong>Delivery Address:</strong>
