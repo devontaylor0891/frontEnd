@@ -90,7 +90,7 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
     this.noUpcomingSchedsSub = this.producerService.getNoUpcomingScheds()
       .subscribe(
         results => {
-          // console.log('noUpcomingScheds results: ', results);
+          console.log('noUpcomingScheds results: ', results);
           this.noUpcomingScheds = results;
         }
       );

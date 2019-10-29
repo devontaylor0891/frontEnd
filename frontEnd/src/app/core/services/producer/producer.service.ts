@@ -91,7 +91,8 @@ export class ProducerService implements OnInit {
         .subscribe(
           response => {
             this.dataStore.schedule = response;
-            for (let i = this.dataStore.schedule.length - 1; i > 0; i--) {
+            console.log('scheds received in service: ', response);
+            for (let i = this.dataStore.schedule.length - 1; i >= 0; i--) {
               if (this.dataStore.schedule[i].orderDeadline > this.now) {
                 // console.log('no upcoming scheds is false');
                 this._noUpcomingScheds.next(false);
