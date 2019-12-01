@@ -29,25 +29,27 @@
 </div>
 
 <!-- SMALL DEVICES -->
-<div class="m-1 hidden-md-up">
+<div class="m-0 hidden-md-up">
 
 <!-- location display -->
 
 <!-- tabs for search options and search results -->
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs nav-fill grey lighten-2" role="tablist">
+	<!-- <ul class="nav nav-tabs nav-fill grey lighten-2" role="tablist">
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="tab" href="#searchOptions" role="tab"><i class="fa fa-search-plus mr-1"></i> Options</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link active" data-toggle="tab" href="#searchResults" role="tab"><i class="fa fa-list-ul mr-1"></i> Results</a>
 		</li>
-	</ul>
+	</ul> -->
 
 	<!-- Tab panels -->
-	<div class="tab-content" style="padding: .25rem;">
+	<div>
+    
 		<!-- Options Panel -->
-		<div class="tab-pane fade" id="searchOptions" role="tabpanel">
+		<div *ngIf="showingSearchOptions">
+      <p>Your search options</p>
 			<app-search-options 
 				[latitude]="userLocation?.coords.latitude" 
 				[longitude]="userLocation?.coords.longitude" 
@@ -55,18 +57,47 @@
 				[zeroResults]="zeroSearchResults"
 				></app-search-options>
 		</div>
-		<!--/ Options Panel-->
+    <!--/ Options Panel-->
+    <div *ngIf="searchResults && showingSearchResults">
+
+      <ngb-tabset justify="fill">
+        <ngb-tab title="Products">
+          <ng-template ngbTabContent>
+            <app-search-product [products]="searchResults.products"></app-search-product>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Producers">
+          <ng-template ngbTabContent>
+            <app-search-producer *ngIf="view === 'producers'"></app-search-producer>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Schedule">
+          <ng-template ngbTabContent>
+            <p>Raw te nisi qui.</p>
+          </ng-template>
+        </ngb-tab>
+        </ngb-tabset>
+
+    </div>
 		<!-- results Panel -->
-		<div class="tab-pane fade in show active" id="searchResults" role="tabpanel">
+		<div *ngIf="showingSearchResults">
 			<app-loading  *ngIf="!searchResults"></app-loading>
-			<app-search-results  
+			<!-- <app-search-results  
 				*ngIf="searchResults" 
 				[searchResults]="searchResults"
 				[zeroResults]="zeroSearchResults"
-				></app-search-results>
+				></app-search-results> -->
 		</div>
-		<!--/ results Panel-->
-	</div>
+    <!--/ results Panel-->
+    
+    
+    <div id="mybutton" *ngIf="searchResults">
+      <!-- <button class="btn-circle btn-md btn-olf-primary" (click)="goToOptions()" *ngIf="showingSearchResults"><i class="fa fa-lg fa-filter"></i></button>
+      <button class="btn-circle btn-md btn-olf-primary" (click)="goToResults()" *ngIf="showingSearchOptions"><i class="fa fa-lg fa-search-plus"></i></button> -->
+      <button class="btn btn-olf-primary w-100 fixed-bottom" (click)="goToOptions()" *ngIf="showingSearchResults"><i class="fa fa-lg fa-filter"></i> Filter</button>
+    </div>
 
+  </div>
+  
 </div>
 		

@@ -149,6 +149,8 @@ import { TandcComponent } from './shared/tandc/tandc.component';
 import { SearchCalendarListComponent } from './feature/search/search-results/results-pane/search-calendar-list/search-calendar-list.component';
 import { SearchMapComponent } from './feature/search/search-results/results-pane/search-map/search-map.component';
 import { NgxPrintModule } from 'ngx-print';
+import { ProductCardMobileComponent } from './shared/product-card-mobile/product-card-mobile.component';
+import { AddToCartMobileComponent } from './shared/add-to-cart-mobile/add-to-cart-mobile.component';
 
 
 @NgModule({
@@ -251,7 +253,9 @@ import { NgxPrintModule } from 'ngx-print';
     PrivacyComponent,
     TandcComponent,
     SearchCalendarListComponent,
-    SearchMapComponent
+    SearchMapComponent,
+    ProductCardMobileComponent,
+    AddToCartMobileComponent
   ],
   imports: [
     BrowserModule,

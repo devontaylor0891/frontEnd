@@ -1,0 +1,71 @@
+<div class="card product-card">
+
+  <div class="row">
+
+    <div class="col-5 pr-0">
+
+
+        <!--Card image-->
+        <div class="view overlay hm-white-slight">
+          <!-- image exists for product -->
+          <img *ngIf="product.image !== ''" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="">
+          <a [routerLink]="['../product/' + product.id]">
+              <div class="mask waves-effect waves-light" style="z-index: 0;"></div>
+          </a>
+
+          <ng-template [ngIf]="product.image === '' && 
+          product.subcategory.toString() === 'Bread' || 
+          product.subcategory.toString() === 'Grains' || 
+          product.subcategory.toString() === 'Honey' || 
+          product.subcategory.toString() === 'Eggs' || 
+          product.subcategory.toString() === 'Beef' || 
+          product.subcategory.toString() === 'Chicken' || 
+          product.subcategory.toString() === 'Pork' || 
+          product.subcategory.toString() === 'Lamb' || 
+          product.subcategory.toString() === 'Fish'" [ngIfElse]="categoryImage">
+          <img [hidden]="product.image !== ''"  
+          src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.subcategory }}.png" class="img-fluid cover" alt="">
+
+          </ng-template>
+          
+          <ng-template #categoryImage>
+              <!-- no image exists, and no subcategory icon exists, then use the icon for the category itself -->
+              <img [hidden]="product.image !== ''" 
+              src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.category }}.png" class="img-fluid cover" alt=""> 
+          </ng-template>
+
+        </div>
+
+        <!-- <app-add-to-cart-mobile [product]="product" class="col add-to-cart-mobile-button-group"></app-add-to-cart-mobile> -->
+
+
+    </div>
+
+    <div class="col-7 text-center pl-0 py-0">
+
+      <div>
+
+          <div class="text-truncate m-0 pt-1 px-1">
+              <h6 class="small">
+                <a [routerLink]="['../producer/' + product.producer.id]">{{ product.producer.name | uppercase }}</a>
+              </h6>
+            </div>
+      
+            <div class="text-truncate text-center m-0 py-3 px-1">
+                <h6 class="small">
+                  <a [routerLink]="['../product/' + product.id]">{{ product.name }}</a>
+                </h6>
+                <p class="m-0">{{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}<span style="font-size: 75%">/{{ product.unit }}</span></p>
+              </div>
+
+      </div>
+
+      
+
+        <app-add-to-cart-mobile [product]="product" class="col add-to-cart-mobile-button-group pl-0"></app-add-to-cart-mobile>
+
+    </div>
+
+  </div>
+
+</div>

@@ -27,6 +27,9 @@ export class SearchComponent implements OnInit, OnChanges {
     radius: null
   };
 
+  showingSearchResults: boolean = true;
+  showingSearchOptions: boolean;
+
   searchResultsReceived: boolean = false;
   zeroSearchResults: boolean;
 
@@ -81,6 +84,16 @@ export class SearchComponent implements OnInit, OnChanges {
         }
       );
 
+  }
+
+  goToOptions() {
+    this.showingSearchOptions = true;
+    this.showingSearchResults = false;
+  };
+
+  goToResults() {
+    this.showingSearchOptions = false;
+    this.showingSearchResults = true;
   }
 
 }
