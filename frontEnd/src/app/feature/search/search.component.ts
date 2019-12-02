@@ -56,6 +56,7 @@ export class SearchComponent implements OnInit, OnChanges {
           // console.log(this.userLocation.coords.longitude);
           this.locationService.codeLatLng(this.userLocation.coords.latitude, this.userLocation.coords.longitude);
           // load all search results
+          console.log('search options passed into search service: ', this.searchOptions);
           this.searchService.loadAll(this.searchOptions);
         }
       );
@@ -72,7 +73,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.searchService.getSearchResults()
       .subscribe(
         results => {
-          // console.log('search comp receiving results...');
+          console.log('search comp receiving results...');
           this.searchResults = results;
           this.searchResultsReceived = true;
           if (results && results.schedules && results.schedules.length < 1) {
@@ -80,7 +81,7 @@ export class SearchComponent implements OnInit, OnChanges {
           } else {
             this.zeroSearchResults = false;
           }
-          // console.log('search comp results: ', this.searchResults);
+          console.log('search comp results: ', this.searchResults);
         }
       );
 
@@ -94,6 +95,11 @@ export class SearchComponent implements OnInit, OnChanges {
   goToResults() {
     this.showingSearchOptions = false;
     this.showingSearchResults = true;
+  };
+
+  switchToSearchResultsHandler($event) {
+    console.log('event: ', $event);
+    this.goToResults();
   }
 
 }

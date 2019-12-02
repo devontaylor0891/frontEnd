@@ -591,10 +591,20 @@ input:focus:not([readonly]) {
   text-align: center; 
 }
 
-#mybutton {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+#nav-tab-mobile > a {
+        background: white;
+        border: none !important;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+        &.active {
+            background: #eeeeee;
+            font-weight: 600;
+            border-top: 2px solid #741b47 !important;
+        }
+    }
+
+.input-group-btn>.btn:hover {
+    z-index: 0;
 }
 
 .custom-control-indicator{

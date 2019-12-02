@@ -47,55 +47,35 @@
 	<!-- Tab panels -->
 	<div>
     
-		<!-- Options Panel -->
+		<!-- SEARCH OPTIONS MOBILE -->
 		<div *ngIf="showingSearchOptions">
-      <p>Your search options</p>
-			<app-search-options 
+			<app-search-options-mobile
 				[latitude]="userLocation?.coords.latitude" 
 				[longitude]="userLocation?.coords.longitude" 
 				[city]="cityProvince"
 				[zeroResults]="zeroSearchResults"
-				></app-search-options>
-		</div>
-    <!--/ Options Panel-->
+				(switchEvent) = "switchToSearchResultsHandler($event)"
+				></app-search-options-mobile>
+		</div>		
+
+		<!-- SEARCH RESULTS MOBILE -->
     <div *ngIf="searchResults && showingSearchResults">
 
-      <ngb-tabset justify="fill">
-        <ngb-tab title="Products">
-          <ng-template ngbTabContent>
-            <app-search-product [products]="searchResults.products"></app-search-product>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Producers">
-          <ng-template ngbTabContent>
-            <app-search-producer *ngIf="view === 'producers'"></app-search-producer>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Schedule">
-          <ng-template ngbTabContent>
-            <p>Raw te nisi qui.</p>
-          </ng-template>
-        </ngb-tab>
-        </ngb-tabset>
-
-    </div>
-		<!-- results Panel -->
-		<div *ngIf="showingSearchResults">
-			<app-loading  *ngIf="!searchResults"></app-loading>
-			<!-- <app-search-results  
-				*ngIf="searchResults" 
+			<app-search-results-mobile
 				[searchResults]="searchResults"
 				[zeroResults]="zeroSearchResults"
-				></app-search-results> -->
-		</div>
-    <!--/ results Panel-->
-    
-    
-    <div id="mybutton" *ngIf="searchResults">
-      <!-- <button class="btn-circle btn-md btn-olf-primary" (click)="goToOptions()" *ngIf="showingSearchResults"><i class="fa fa-lg fa-filter"></i></button>
-      <button class="btn-circle btn-md btn-olf-primary" (click)="goToResults()" *ngIf="showingSearchOptions"><i class="fa fa-lg fa-search-plus"></i></button> -->
-      <button class="btn btn-olf-primary w-100 fixed-bottom" (click)="goToOptions()" *ngIf="showingSearchResults"><i class="fa fa-lg fa-filter"></i> Filter</button>
+				></app-search-results-mobile>
+			
+			<div>
+				<button class="btn btn-olf-primary w-100 fixed-bottom m-0" (click)="goToOptions()"><i class="fa fa-lg fa-filter"></i> Filter</button>
+			</div> 
+
     </div>
+
+		<!-- SEARCH LOADING MOBILE -->
+		<div *ngIf="showingSearchResults">
+			<app-loading  *ngIf="!searchResults"></app-loading>
+		</div>
 
   </div>
   

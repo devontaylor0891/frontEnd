@@ -1203,8 +1203,9 @@ export class SearchService implements OnInit, OnDestroy {
           // console.log('producerIds: ', producerIdArray);
           if (schedLat >= minlat && schedLat <= maxlat) {
             schedLatInCircle = true;
+          
           };
-          if (schedLng >= minlng && schedLng <= maxlng) {
+          if (schedLng <= minlng && schedLng >= maxlng) {
             schedLngInCircle = true;
           };
           if (schedLatInCircle && schedLngInCircle) {

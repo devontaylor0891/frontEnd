@@ -68,7 +68,7 @@ export class LocationService {
                     (position) => {
                         this.lat = position.coords.latitude;
                         this.lng = position.coords.longitude;
-                        // console.log('position: ', position);
+                        console.log('position: ', position);
                         observer.next(position);
                         observer.complete();
                     },

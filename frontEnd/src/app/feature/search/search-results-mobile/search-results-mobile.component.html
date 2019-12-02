@@ -1,0 +1,91 @@
+<div class="card">
+<!--   
+  <div class="card-block" *ngIf="!searchResults || searchResults.length === 0 && !zeroResults">
+    <app-loading></app-loading>
+  </div> -->
+  
+  <div class="card-block grey lighten-3" *ngIf="searchResults.schedules.length < 1">   
+    <p>Sorry, there are no scheduled deliveries or pickups for this search. Please try another location.</p>
+    <br>
+    <div class="card bg-dark text-light p-3">
+      <div class="card-body">
+        <h4 class="card-title">Want to be informed every time deliveries and pickups <i>are</i> scheduled in your area?</h4>
+        <p class="card-text">Sign up for our custom notification system. Select a location or locations, and when a producer schedules something in that area, we'll send you a short email to let you know!</p>
+        <p class="card-text"><strong>Never miss out on local food again!</strong></p>
+        <!-- <button class="btn btn-olf-primary" (click)="onLocationNotificationSignUp()">Add a Location</button> -->
+        <p class="text-center">
+          <a routerLink="/location-notification" class="btn btn-olf-primary">Add a Location</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="searchResults">
+
+    <div class="grey lighten-3" *ngIf="searchResults.schedules.length > 0">   
+      <div class="row m-0">
+        <div class="col-12 p-0">
+          
+          <nav class="sticky-top">
+            <div class="nav nav-tabs nav-fill" id="nav-tab-mobile" role="tablist">
+              <a 
+                class="nav-item nav-link" 
+                id="nav-products-tab" 
+                data-toggle="tab" 
+                href="#nav-products" 
+                role="tab" 
+                aria-controls="nav-products" 
+                aria-selected="true" 
+                (click)="setActive('productsLink')"
+                [ngClass]="activeLink == 'productsLink'  ? 'active' : ''"
+                >Products</a>
+              <a 
+                class="nav-item nav-link" 
+                id="nav-producers-tab" 
+                data-toggle="tab" 
+                href="#nav-producers" 
+                role="tab" 
+                aria-controls="nav-producers" 
+                aria-selected="false" 
+                (click)="setActive('producersLink')"
+                [ngClass]="activeLink == 'producersLink'  ? 'active' : ''"
+                >Producers</a>
+              <a 
+                class="nav-item nav-link" 
+                id="nav-schedule-tab" 
+                data-toggle="tab" 
+                href="#nav-schedule" 
+                role="tab" 
+                aria-controls="nav-schedule" 
+                aria-selected="false" 
+                (click)="setActive('schedulesLink')"
+                [ngClass]="activeLink == 'schedulesLink'  ? 'active' : ''"
+                >Schedule</a>
+            </div>
+          </nav>
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+            <div 
+              class="tab-pane fade" 
+              id="nav-products" 
+              role="tabpanel" 
+              aria-labelledby="nav-products-tab" 
+              [ngClass]="activeLink == 'productsLink'  ? 'active show in' : ''">
+              <app-search-product [products]="searchResults.products"></app-search-product>
+            </div>
+            <div class="tab-pane fade" id="nav-producers" role="tabpanel" aria-labelledby="nav-producers-tab" [ngClass]="activeLink == 'producersLink'  ? 'active show in' : ''">
+              <app-search-producer [producers]="searchResults.producers"></app-search-producer>
+            </div>
+            <div class="tab-pane fade" id="nav-schedule" role="tabpanel" aria-labelledby="nav-schedule-tab" [ngClass]="activeLink == 'schedulesLink'  ? 'active show in' : ''">
+              <app-search-calendar-list [schedules]="searchResults.schedules"></app-search-calendar-list>
+            </div>
+          </div>
+          
+          
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</div>

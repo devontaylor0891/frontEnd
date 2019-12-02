@@ -151,6 +151,8 @@ import { SearchMapComponent } from './feature/search/search-results/results-pane
 import { NgxPrintModule } from 'ngx-print';
 import { ProductCardMobileComponent } from './shared/product-card-mobile/product-card-mobile.component';
 import { AddToCartMobileComponent } from './shared/add-to-cart-mobile/add-to-cart-mobile.component';
+import { SearchResultsMobileComponent } from './feature/search/search-results-mobile/search-results-mobile.component';
+import { SearchOptionsMobileComponent } from './feature/search/search-options-mobile/search-options-mobile.component';
 
 
 @NgModule({
@@ -255,7 +257,9 @@ import { AddToCartMobileComponent } from './shared/add-to-cart-mobile/add-to-car
     SearchCalendarListComponent,
     SearchMapComponent,
     ProductCardMobileComponent,
-    AddToCartMobileComponent
+    AddToCartMobileComponent,
+    SearchResultsMobileComponent,
+    SearchOptionsMobileComponent
   ],
   imports: [
     BrowserModule,
