@@ -45,6 +45,9 @@
         </div>
         <div class="col-12 col-lg-10 offset-lg-1 card-body" *ngIf="showSchedules">
           <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
+          <div>
+              <app-checkout-calendar-mobile [schedules]="selectedSchedulesList"></app-checkout-calendar-mobile>
+          </div>
           <div *ngFor="let schedule of selectedSchedulesList, let i = index">
             <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
               <input 

@@ -1,0 +1,35 @@
+<div class="card product-card">
+  <div class="row">
+
+    <div class="col-5 pr-0">
+      <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.logoUrl? producer.logoUrl : 'global/squareBeet.png' }}" class="img-fluid" alt="">
+      <a [routerLink]="['../producer/' + producer.id]">
+        <div class="mask waves-effect waves-light"></div>
+      </a>
+    </div>
+
+    <div class="col-7 text-center pl-0 py-0">
+      
+      <div>
+
+        <div class="m-0 pt-1 px-1">
+          <h6 class="small">
+            <a [routerLink]="['../producer/' + producer.id]">{{ producer.name | uppercase }}</a>
+          </h6>
+          <h6>
+            <small class="card-text small">{{ producer.location }}, {{ producer.province }}</small>
+          </h6>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="row justify-content-around">
+        <a class="btn btn-olf-primary btn-sm" pageScroll [pageScrollDuration]="750" [routerLink]="['../producer/' + producer.id + '/']" href="#schedule">View Schedule</a>
+        <a class="btn btn-olf-primary btn-sm" [routerLink]="['../producer/' + producer.id]">Visit their Store</a>
+      </div>
+    </div>
+
+  </div>
+</div>

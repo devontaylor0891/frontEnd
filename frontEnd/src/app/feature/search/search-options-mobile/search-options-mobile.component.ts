@@ -185,6 +185,7 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
     // console.log('submitted values: ', this.submittedValues);
     // then send the submitted values to search service to update the view
     this.searchService.onFilter(this.submittedValues);
+    this.switchToResults();
   }
 
   reset(form: NgForm) {

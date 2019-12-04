@@ -99,6 +99,8 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     let selectedCommunity = $event.target.value;
     this.selectedSchedulesList = this.returnSchedules(selectedCommunity);
     this.showSchedules = true;
+    console.log('community selected: ', selectedCommunity);
+    console.log('schedules returned: ', this.selectedSchedulesList);
   }
 
   onSelectSchedule($event) {
