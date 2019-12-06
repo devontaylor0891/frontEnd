@@ -1,3 +1,88 @@
-<p>
-  checkout-calendar-mobile works!
-</p>
+<div class="row">
+  <div class="p-0 w-100">
+
+      <!-- Custom template for day in month view -->
+      <ng-template
+        #defaultTemplate
+        let-day="day"
+        let-openDay="openDay"
+        let-locale="locale"
+        let-tooltipPlacement="tooltipPlacement"
+        let-highlightDay="highlightDay"
+        let-unhighlightDay="unhighlightDay"
+        let-eventClicked="eventClicked"
+        let-tooltipTemplate="tooltipTemplate"
+        let-tooltipAppendToBody="tooltipAppendToBody">
+        <div class="cal-cell-top">
+          <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+          <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+        </div>
+        <div class="cal-events" *ngIf="day.events.length > 0">
+          <div
+            class="cal-event"
+            *ngFor="let event of day.events"
+            
+            [ngClass]="event?.cssClass"
+            (mouseenter)="highlightDay.emit({event: event})"
+            (mouseleave)="unhighlightDay.emit({event: event})"
+            [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+            [tooltipPlacement]="tooltipPlacement"
+            [tooltipEvent]="event"
+            [tooltipTemplate]="tooltipTemplate"
+            [tooltipAppendToBody]="tooltipAppendToBody"
+            mwlDraggable
+            [dropData]="{event: event}"
+            [dragAxis]="{x: event.draggable, y: event.draggable}"
+            (mwlClick)="onEventClick($event, event)">
+          </div>
+        </div>
+      </ng-template>
+        
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="btn-group">
+            <div
+              class="btn btn-sm btn-olf-primary"
+              mwlCalendarPreviousView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="activeDayIsOpen = false">
+              Previous
+            </div>
+
+            <div
+              class="btn btn-sm btn-olf-primary"
+              mwlCalendarNextView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="activeDayIsOpen = false">
+              Next
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 pt-1">
+          <h6>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h6>
+        </div>
+        
+      </div>
+
+      <div >
+          <div [ngSwitch]="view">
+              <mwl-calendar-month-view
+                class="mobile-calendar"
+                *ngSwitchCase="'month'"
+                [viewDate]="viewDate"
+                [events]="events"
+                [refresh]="refresh"
+                [activeDayIsOpen]="activeDayIsOpen"
+                (dayClicked)="dayClicked($event.day)"
+                (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)"
+                [cellTemplate]="defaultTemplate">
+              </mwl-calendar-month-view>
+            </div>
+      </div>
+      
+        
+  </div>
+</div>

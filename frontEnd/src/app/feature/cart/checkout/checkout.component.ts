@@ -54,6 +54,8 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     size: 'lg'
   };
 
+  schedsByDate = [];
+
   constructor(private cartService: CartService,
               private router: Router,
               private route: ActivatedRoute,
@@ -61,7 +63,9 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
               private authService: AuthService,
               private modal: NgbModal) { }
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    console.log('this.schedsbydate: ', this.schedsByDate);
+  }
 
   openModal(orderQuantities) {
     // make the changes in the cart in the background
@@ -118,6 +122,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
 
   returnSchedules(community) {
     // get the index of the community
+    console.log('communityList: ', this.communityList);
     let index;
     for (let i = 0; i < this.communityList.length; i++) {
       if (this.communityList[i].city === community) {

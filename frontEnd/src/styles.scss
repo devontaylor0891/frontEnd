@@ -719,3 +719,47 @@ table td {
 // light purple a66a89
 // pale, background purple ceafbe
 // great dark background - 261D2A
+
+// mobile styles
+
+mwl-calendar-month-view.mobile-calendar {
+  div.cal-month-view {
+    mwl-calendar-month-view-header {
+      div.cal-cell-row.cal-header {
+        font-weight: normal !important;
+      }
+    }
+    div.cal-days {
+      div {
+        div {
+          mwl-calendar-month-cell {
+            min-height: 0px;
+            div.cal-cell-top {
+              min-height: 3rem;
+              span.cal-day-number {
+                font-size: 1rem;
+                font-weight: 400;
+                opacity: 0.75;
+                margin-top: 5px;
+                margin-left: 5px;
+                margin-right: 0px;
+                float: none;
+                margin-bottom: 0px;
+              }
+              span.cal-day-badge {
+                margin: .5rem;
+                float: right;
+              }
+            }
+            div.cal-events {
+              display: none;
+            }
+          }
+        }
+        mwl-calendar-open-day-events {
+          display: none;
+        }
+      }
+    }
+  }
+}
