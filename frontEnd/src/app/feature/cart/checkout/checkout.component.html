@@ -45,10 +45,66 @@
         </div>
         <div class="col-12 col-lg-10 offset-lg-1 card-body" *ngIf="showSchedules">
           <h6 class="card-subtitle mb-2 text-muted">Next, select how and when to get your order: </h6>
-          <div>
-              <app-checkout-calendar-mobile [schedules]="selectedSchedulesList" [schedsByDate]="schedulesListForDate"></app-checkout-calendar-mobile>
+          <div class="hidden-md-up">
+            <div>
+                <app-checkout-calendar-mobile [schedules]="selectedSchedulesList" (schedulesListForDate)="schedsByDateReceived($event)"></app-checkout-calendar-mobile>
+            </div>
+            <div *ngFor="let schedule of mobileSelectedSchedulesList, let i = index">
+              <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
+                <input 
+                  id="{{schedule.id}}" 
+                  [value]='schedule.id' 
+                  type="radio" 
+                  name="{{schedule.id}}" 
+                  [(ngModel)]="radioSelected" 
+                  class="custom-control-input" 
+                  (click)="onSelectSchedule(i)">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description w-100">
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="card-text"><strong>{{ schedule.type }}</strong></p>
+                      <p class="card-text">{{ schedule.startDateTime | date:'fullDate' }}, {{ schedule.startDateTime | date:'shortTime' }} - {{ schedule.endDateTime | date:'shortTime' }}</p>
+                      <div class="row">
+                        <div class="col-12 col-sm-3">
+                          <span class="card-text"><strong>Description:</strong></span>
+                        </div>
+                        <div class="col-12 col-sm-9">
+                          <p class="card-text">{{ schedule.description }}</p>
+                        </div>
+                      </div>
+  
+                      <div 
+                        class="row" 
+                        *ngIf="schedule.type === 'Door-to-door Delivery'">
+                        <div class="col-12 col-sm-3">
+                          <span class="card-text"><strong>Fee:</strong></span>
+                        </div>
+                        <div class="col-12 col-sm-9" *ngIf="(!schedule.hasWaiver) || 
+                        (schedule.feeWaiver > order.orderDetails.orderValue)">
+                          <p class="card-text">{{ schedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+                        </div>
+                        <div class="col-12 col-sm-9" *ngIf="(schedule.hasWaiver && schedule.feeWaiver <= order.orderDetails.orderValue)">
+                          <p class="card-text">$0.00</p>
+                        </div>
+                      </div>
+  
+                      <div class="row">
+                        <div class="col-12 col-sm-3">
+                          <span class="card-text"><strong>Order Deadline:</strong></span>
+                        </div>
+                        <div class="col-12 col-sm-9">
+                          <p class="card-text">{{ schedule.orderDeadline | date: 'medium' }}</p>
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+                  </div> 
+                </span>
+              </label>
+            </div>
           </div>
-          <div *ngFor="let schedule of selectedSchedulesList, let i = index">
+          <div *ngFor="let schedule of selectedSchedulesList, let i = index" class="hidden-sm-down">
             <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
               <input 
                 id="{{schedule.id}}" 

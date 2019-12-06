@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
   communityList: any[];
   showSchedules: boolean = false;
   selectedSchedulesList: ScheduleModel[];
+  mobileSelectedSchedulesList: ScheduleModel[] = [];
   radioSelected: any;
   tempOrderValue: number;
   agreement: boolean = false;
@@ -64,7 +65,6 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
               private modal: NgbModal) { }
 
   ngOnChanges() {
-    console.log('this.schedsbydate: ', this.schedsByDate);
   }
 
   openModal(orderQuantities) {
@@ -95,11 +95,27 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
       );
   };
 
+  schedsByDateReceived(events) {
+    this.clearSelectedSchedules();
+    console.log('event received by parent: ', events);
+    events.forEach(event => {
+      let newSched = event.meta.schedule;
+      this.mobileSelectedSchedulesList.push(newSched);
+      console.log('new events array: ', this.mobileSelectedSchedulesList);
+    });
+  }
+
+  clearSelectedSchedules() {
+    this.mobileSelectedSchedulesList = [];
+    this.order.chosenSchedule = null;
+  }
+
   goBack() {
     this.location.back();
   }
 
   onSelect($event) {
+    this.clearSelectedSchedules();
     let selectedCommunity = $event.target.value;
     this.selectedSchedulesList = this.returnSchedules(selectedCommunity);
     this.showSchedules = true;
