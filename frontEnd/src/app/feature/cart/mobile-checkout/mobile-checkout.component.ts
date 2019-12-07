@@ -11,14 +11,14 @@ import { AuthService } from '../../../auth/auth.service';
 import { OrderModel } from '../../../core/models/order.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
 
-import { CheckoutWarningModalComponent } from './checkout-warning-modal/checkout-warning-modal.component';
+import { CheckoutWarningModalComponent } from '../checkout/checkout-warning-modal/checkout-warning-modal.component';
 
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  selector: 'app-mobile-checkout',
+  templateUrl: './mobile-checkout.component.html',
+  styleUrls: ['./mobile-checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
+export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
 
   order: OrderModel;
   id: any;
@@ -293,3 +293,4 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
   }
 
 }
+

@@ -1,0 +1,89 @@
+<div class="row m-0 grey lighten-3">
+  <div class="col p-0">
+    
+    <div class="row p-0">
+      <div class="col" >
+        <div class="m-2">
+          <a [routerLink]="['../../cart/']"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+        </div>
+        <div class="row olf-primary-color m-0 p-0">
+          <div class="col">
+            <div class="w-100 text-center">
+              <h3 class="h3-responsive text-light pt-2">Checkout</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-2">
+      <div class="row">
+        <div class="col mb-2">
+          <div class="card">
+            <div class="card-block">
+              <h6 class="font-weight-bold">First, choose your community:</h6>
+              <select class="custom-select w-100" (change)="onSelect($event)">
+                  <option selected disabled>Select:</option>
+                  <option 
+                    class="dropdown-item" 
+                    value="{{ community.city }}" 
+                    *ngFor="let community of communityList" 
+                    >{{ community.city }}</option>
+                </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-2">
+      <div class="row">
+        <div class="col mb-2">
+          <div class="card">
+            <div class="card-block">
+              <h6>Now, select a date:</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-2">
+      <div class="row">
+        <div class="col mb-2">
+          <div class="card">
+            <div class="card-block">
+              <h6>And choose your how you'd like to get your order:</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-2">
+      <div class="row">
+        <div class="col mb-2">
+          <div class="card">
+            <div class="card-block">
+              <h6>Review your order:</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-2">
+      <div class="row">
+        <div class="col mb-2">
+          <div class="card">
+            <div class="card-block">
+              <h6>Finally, add the details:</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+

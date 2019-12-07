@@ -156,6 +156,7 @@ import { SearchOptionsMobileComponent } from './feature/search/search-options-mo
 import { ProducerCardMobileComponent } from './feature/search/search-results/results-pane/search-producer/producer-card-mobile/producer-card-mobile.component';
 import { ProducerPageCalendarMobileComponent } from './feature/producer/producer-page/producer-page-calendar-mobile/producer-page-calendar-mobile.component';
 import { CheckoutCalendarMobileComponent } from './feature/cart/checkout/checkout-calendar-mobile/checkout-calendar-mobile.component';
+import { MobileCheckoutComponent } from './feature/cart/mobile-checkout/mobile-checkout.component';
 
 
 @NgModule({
@@ -265,7 +266,8 @@ import { CheckoutCalendarMobileComponent } from './feature/cart/checkout/checkou
     SearchOptionsMobileComponent,
     ProducerCardMobileComponent,
     ProducerPageCalendarMobileComponent,
-    CheckoutCalendarMobileComponent
+    CheckoutCalendarMobileComponent,
+    MobileCheckoutComponent
   ],
   imports: [
     BrowserModule,
