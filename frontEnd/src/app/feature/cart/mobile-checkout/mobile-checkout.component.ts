@@ -27,6 +27,7 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
   selectedSchedulesList: ScheduleModel[];
   mobileSelectedSchedulesList: ScheduleModel[] = [];
   radioSelected: any;
+  scheduleChosen = false;
   tempOrderValue: number;
   agreement: boolean = false;
   consumerComment: string;
@@ -107,6 +108,7 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
   clearSelectedSchedules() {
     this.mobileSelectedSchedulesList = [];
     this.order.chosenSchedule = null;
+    this.scheduleChosen = false;
   }
 
   onSelect($event) {
@@ -119,6 +121,7 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSelectSchedule($event) {
+    this.scheduleChosen = true;
     this.order.orderDetails.deliveryFee = 0;
     let index = $event;
     this.order.chosenSchedule = this.selectedSchedulesList[index];
