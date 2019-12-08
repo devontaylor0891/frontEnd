@@ -239,19 +239,19 @@
                         </div>
                         <hr>
                         <div class="form-check pl-0">
-                          <label for="agreement" class="custom-control fill-checkbox">
+                          <label for="agreementMobile" class="custom-control fill-checkbox">
                             <input 
                                 type="checkbox" 
                                 class="fill-control-input"
-                                id="agreement" 
-                                name="agreement" 
-                                [(ngModel)]="agreement" 
+                                id="agreementMobile" 
+                                name="agreementMobile" 
+                                [(ngModel)]="agreementMobile" 
                                 >
                             <span class="fill-control-indicator">
                                 <i class="fa fa-check"></i>
                             </span>
                             <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
-                            <p class="help-block" *ngIf="agreement.touched && agreement.invalid">
+                            <p class="help-block" *ngIf="agreementMobile.touched && agreementMobile.invalid">
                                 Please read and agree to the terms and conditions to complete your order!
                               </p>
                           </label>
@@ -268,7 +268,7 @@
                           <button 
                             type="submit"
                             class="btn btn-olf-primary"
-                            [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
+                            [disabled]="(!agreementMobile) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
                             >Send Order</button>
                         <!-- </div> -->
                       </div>

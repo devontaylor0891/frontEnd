@@ -30,6 +30,7 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
   scheduleChosen = false;
   tempOrderValue: number;
   agreement: boolean = false;
+  agreementMobile: boolean = false;
   consumerComment: string;
   deliveryAddress: string;
   isLoggedIn: boolean = false;
