@@ -110,17 +110,17 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
       .subscribe(
         results => {
           this.cityProvince = results;
-          console.log('cityProvince: ', this.cityProvince);
+          console.log('searchOptionsMobile cityProvince: ', this.cityProvince);
         }
       );
 
     this.locationService.getLocation()
       .subscribe(
         result => {
-          console.log('getLocation called');
+          console.log('searchOptionsMobile getLocation called');
           this.latitude = result.coords.latitude;
           this.longitude = result.coords.longitude;
-          console.log('getLocation results: ', this.latitude + ' ' + this.longitude);
+          console.log('searchOptionsMobile getLocation results: ', this.latitude + ' ' + this.longitude);
         }
       )
 
@@ -155,6 +155,9 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
   }
 
   setDistance(distance) {
+    console.log('searchOptionsMobile filtering by distance: ', distance);
+    console.log('searchOptionsMobile lat: ', this.latitude);
+    console.log('searchOptionsMobile long: ', this.longitude);
     this.currentRadius = distance;
     this.searchService.filterByDistance(distance, this.latitude, this.longitude);
     this.switchToResults();
@@ -229,9 +232,9 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
     this.parseAddressComponents(place.address_components);
     this.latitude = place.geometry.location.lat();
     this.longitude = place.geometry.location.lng();
-    console.log('lat and long of new location: ', this.latitude + ', ' + this.longitude);
+    console.log('searchOptionsMobile lat and long of new location: ', this.latitude + ', ' + this.longitude);
     // have location service re-emit the city and province
-    console.log('updating city and province in location service');
+    console.log('searchOptionsMobile updating city and province in location service');
     this.locationService.updateCityProvince(this.city + ', ' + this.province);
     // have the search service make a new call
     this.searchOptions.latitude = this.latitude;
@@ -260,7 +263,7 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
 
   setActive(arg) {
     this.activeLink = arg;
-    console.log('activeLink:' , this.activeLink);
+    console.log('searchOptionsMobile activeLink:' , this.activeLink);
   }
 
 }

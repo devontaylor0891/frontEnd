@@ -98,7 +98,7 @@ export class SearchComponent implements OnInit, OnChanges {
   };
 
   switchToSearchResultsHandler($event) {
-    console.log('event: ', $event);
+    console.log('navigating back to results ');
     this.goToResults();
   }
 

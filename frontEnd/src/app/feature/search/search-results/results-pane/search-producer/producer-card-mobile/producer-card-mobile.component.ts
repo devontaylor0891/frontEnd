@@ -15,7 +15,7 @@ export class ProducerCardMobileComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('input producer: ', this.producer);
+    // console.log('input producer: ', this.producer);
   }
 
 }
