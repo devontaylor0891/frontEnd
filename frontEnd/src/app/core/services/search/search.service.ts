@@ -1175,8 +1175,8 @@ export class SearchService implements OnInit, OnDestroy {
         maxlat = latitude + this.radToDegrees(distance / earthRadius);
         minlat = latitude - this.radToDegrees(distance / earthRadius);
         // longitude boundaries (longitude gets smaller when latitude increases)
-        maxlng = longitude + this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
-        minlng = longitude - this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
+        maxlng = longitude + this.radToDegrees(distance / earthRadius / Math.cos(this.degreesToRadians(latitude)));
+        minlng = longitude - this.radToDegrees(distance / earthRadius / Math.cos(this.degreesToRadians(latitude)));
         console.log('maxlat: ', maxlat);
         console.log('maxlng: ', maxlng);
         console.log('minlat: ', minlat);
@@ -1205,7 +1205,7 @@ export class SearchService implements OnInit, OnDestroy {
             schedLatInCircle = true;
           
           };
-          if (schedLng <= minlng && schedLng >= maxlng) {
+          if (schedLng >= minlng && schedLng <= maxlng) {
             schedLngInCircle = true;
           };
           if (schedLatInCircle && schedLngInCircle) {
@@ -1248,113 +1248,6 @@ export class SearchService implements OnInit, OnDestroy {
       }
     }
   };
-
-  // filterByDistance(distance, latitude, longitude) {
-  //   // if distance is 25, simply emit the original datastore results
-  //   if (distance === 25) {
-  //     this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(this.dataStore.originalSearchResults));
-  //     this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
-  //     this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
-  //     this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
-  //     this.dataStore.searchDeliveries = this.dataStore.filteredSearchResults.schedules;
-  //     this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
-  //     this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
-  //     this._categories.next(Object.assign({}, this.dataStore).categories);
-  //     this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
-  //     this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
-  //   } else if (distance === this.currentDistanceSelected) { // distance is unchanged, emit filteredResults
-  //     this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
-  //     this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
-  //     this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
-  //     this.dataStore.searchDeliveries = this.dataStore.filteredSearchResults.schedules;
-  //     this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
-  //     this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
-  //     this._categories.next(Object.assign({}, this.dataStore).categories);
-  //     this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
-  //     this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
-  //   } else { // distance selected is not default and is different from current
-  //     // run the great circle equation on the original datastore search results scheds
-      
-  //     // run the great circle calculation
-  //     let maxlat, maxlng, minlat, minlng;
-  //     // set other parameters (from https://coderwall.com/p/otkscg/geographic-searches-within-a-certain-distance)
-  //     // earth's radius in km = ~6371
-  //     let earthRadius = 6371;
-  //     // latitude boundaries
-  //     maxlat = latitude + this.radToDegrees(distance / earthRadius);
-  //     minlat = latitude - this.radToDegrees(distance / earthRadius);
-  //     // longitude boundaries (longitude gets smaller when latitude increases)
-  //     maxlng = longitude + this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
-  //     minlng = longitude - this.radToDegrees(distance / earthRadius / Math.cos(this.radToDegrees(latitude)));
-  //     // console.log('maxlat: ', maxlat);
-  //     // console.log('maxlng: ', maxlng);
-  //     // console.log('minlat: ', minlat);
-  //     // console.log('minlng: ', minlng);
-  //     // and return the list of scheds
-  //     let returnedScheds = [];
-  //     let producerIdArray = [];
-  //     let returnedProducers = [];
-  //     let returnedProducts = [];
-  //     let schedLat, schedLng;
-  //     let schedLatInCircle: boolean = false;
-  //     let schedLngInCircle: boolean = false;
-  //     // loop through each sched in the current datastore
-  //     this.dataStore.searchResults.schedules.forEach((sched) => {
-  //       // console.log('sched: ', sched);
-  //       schedLat = sched.latitude;
-  //       schedLng = sched.longitude;
-  //       // create an array of producer ids
-  //       if (producerIdArray.length === 0) {
-  //         producerIdArray.push(sched.producerId);
-  //       } else if (producerIdArray.indexOf(sched.producerId) === -1) {
-  //           producerIdArray.push(sched.producerId);
-  //       };
-  //       // console.log('producerIds: ', producerIdArray);
-  //       if (schedLat >= minlat && schedLat <= maxlat) {
-  //         schedLatInCircle = true;
-  //       };
-  //       if (schedLng >= minlng && schedLng <= maxlng) {
-  //         schedLngInCircle = true;
-  //       };
-  //       if (schedLatInCircle && schedLngInCircle) {
-  //         returnedScheds.push(sched);
-  //       };
-  //       // console.log('schedsarray: ', returnedScheds);
-  //       // console.log('datastore check: ', this.dataStore);
-  //     });
-  //     // using the producerIdArray, return the producers
-  //     producerIdArray.forEach((id) => {
-  //       for (let i = 0; i < this.dataStore.searchResults.producers.length; i++) {
-  //         if (id === this.dataStore.searchResults.producers[i].producerId) {
-  //           returnedProducers.push(this.dataStore.searchResults.producers[i])
-  //         }
-  //       };
-  //       // using those producers, return the products
-  //       for (let i = 0; i < this.dataStore.searchResults.products.length; i++) {
-  //         if (id === this.dataStore.searchResults.products[i].producerId) {
-  //           returnedProducts.push(this.dataStore.searchResults.products[i])
-  //         }
-  //       }; 
-  //     });
-  //     // console.log('datastore check: ', this.dataStore);
-  //     // emit the values
-  //     this.dataStore.filteredSearchResults.schedules = returnedScheds;
-  //     this.dataStore.filteredSearchResults.producers = returnedProducers;
-  //     this.dataStore.filteredSearchResults.products = returnedProducts;
-  //     // console.log('datastore check: ', this.dataStore);
-  //     this.dataStore.deliveryTypes = this.addDeliveryTypes(returnedScheds);
-  //     this.dataStore.categories = this.addCategories(returnedProducts);
-  //     this.dataStore.searchProducers = returnedProducers;
-  //     this.dataStore.searchDeliveries = returnedScheds;
-  //     // console.log('datastore check: ', this.dataStore);
-  //     this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
-  //     this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
-  //     this._categories.next(Object.assign({}, this.dataStore).categories);
-  //     this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
-  //     this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
-  //     // console.log('datastore check: ', this.dataStore);
-  //   }
-  // };
 
   radToDegrees (radians) {
     return radians * 180 / Math.PI;
