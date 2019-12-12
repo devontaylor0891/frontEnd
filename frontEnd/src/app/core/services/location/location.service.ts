@@ -27,9 +27,16 @@ export class LocationService {
     city: string;
     province: string;
     cityProvince: string = '';
-    location: any;
     results: any;
     geoCoderResults: any = {};
+
+    dataStore = {
+        location: {
+            latitude: null,
+            longitude: null,
+            cityProvince: ''
+        }
+    };
 
     geoOptions = {
         enableHighAccuracy: false,
@@ -48,8 +55,7 @@ export class LocationService {
     _province: BehaviorSubject<string>;
     _cityProvince: BehaviorSubject<string>;
     _address: BehaviorSubject<string>;
-
-    
+    _location: BehaviorSubject<any>;
 
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone) {
@@ -58,7 +64,42 @@ export class LocationService {
         this._province = <BehaviorSubject<string>>new BehaviorSubject('');
         this._cityProvince = <BehaviorSubject<string>>new BehaviorSubject('');
         this._address = <BehaviorSubject<string>>new BehaviorSubject('');
+        this._location = <BehaviorSubject<any>>new BehaviorSubject(null);
 
+        console.log('location service fired up');
+
+    };
+
+    getUserLocation() {
+      if (window.navigator && window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+            (position) => {
+                // this.lat = position.coords.latitude;
+                // this.lng = position.coords.longitude;
+                this.dataStore.location.latitude = position.coords.latitude;
+                this.dataStore.location.longitude = position.coords.longitude;
+                this.codeLatLng(this.dataStore.location.latitude, this.dataStore.location.longitude);
+                console.log('position: ', position);
+                // observer.next(position);
+                // observer.complete();
+            },
+            (error) => {
+                this.lat = 50.1391360, // fallback lat 
+                this.lng = -101.6659968  // fallback lng
+                alert('Onlylocalfood will now load from a default location. You may update the location at any time.');
+                // console.log("Fallback position: ", this.fallbackPosition);
+                // observer.next(this.fallbackPosition);
+                // observer.error(error)
+                // observer.complete();
+            },
+            this.geoOptions
+        );
+      } else {
+        this.lat = 50.1391360, // fallback lat 
+        this.lng = -101.6659968  // fallback lng
+        alert('Onlylocalfood will now load from a default location. You may update the location at any time.');
+          // observer.error('Unsupported Browser');
+      }
     }
 
     getLocation(): Observable<any> {
@@ -89,56 +130,9 @@ export class LocationService {
         });
     };
 
-    // getLocation(): Observable<any> {
-    //     return Observable.create(observer => {
-    //         if (window.navigator && window.navigator.geolocation) {
-    //             window.navigator.geolocation.getCurrentPosition(this.userLocationFound, this.userLocationNotFound, this.geoOptions);
-    //             setTimeout(function () {
-    //                 if(!this.lat){
-    //                     window.console.log("No confirmation from user, using fallback");
-    //                     this.lat = -41.29247, // fallback lat 
-    //                     this.lng = 174.7732  // fallback lng
-    //                     console.log("Fallback set: ", this.lat, this.lng);
-    //                 }else{
-    //                     // observer.next(Position);
-    //                     // observer.complete();
-    //                     window.console.log("Location was set");
-    //                 }
-    //             }, this.geoOptions.timeout + 1000); // Wait extra second
-    //         } else {
-    //             observer.error('Unsupported Browser');
-    //         }
-    //     });
-    // };
+    updateLocation() {
 
-    // userLocationFound(position) {
-    //     console.log('position: ', position);
-    //     this.lat = position.coords.latitude,
-    //     this.lng = position.coords.longitude
-    //     console.log("User confirmed! Location found: " + this.lat + ", " + this.lng);
-    // };
-
-    // setFallback() {
-    //     this.lat = -41.29247, // fallback lat 
-    //     this.lng = 174.7732  // fallback lng
-    //     console.log("Fallback set: ", this.lat, this.lng);
-    // }
-
-    // userLocationNotFound(error){
-    //     // this.lat = -41.29247, // fallback lat 
-    //     // this.lng = 174.7732  // fallback lng
-    //     // console.log("Fallback set: ", this.lat, this.lng);
-    //     switch(error.code) {
-    //         case error.PERMISSION_DENIED:
-    //             return console.log("User denied the request for Geolocation.")
-    //         case error.POSITION_UNAVAILABLE:
-    //             return console.log("Location information is unavailable.")
-    //         case error.TIMEOUT:
-    //             return console.log("The request to get user location timed out.")
-    //         case error.UNKNOWN_ERROR:
-    //             return console.log("An unknown error occurred.")
-    //     }
-    // };
+    };
 
     getCity(): Observable<string> {
         return this._city.asObservable();
@@ -154,7 +148,11 @@ export class LocationService {
 
     getAddress(): Observable<string> {
         return this._address.asObservable();
-    }
+    };
+
+    getFullLocation(): Observable<any> {
+      return this._location.asObservable();
+    };
 
     codeLatLng(lat, lng) {
         this.mapsAPILoader.load().then(() => {
@@ -211,6 +209,8 @@ export class LocationService {
                                     self._city.next(self.city);
                                     self._province.next(self.province);
                                     self._cityProvince.next(self.cityProvince);
+                                    self.dataStore.location.cityProvince = self.cityProvince;
+                                    self._location.next(self.dataStore.location);
                                     // console.log('self.cityProvince: ', self._cityProvince);
                                     // console.log('self.address: ', self._address);
                                     })

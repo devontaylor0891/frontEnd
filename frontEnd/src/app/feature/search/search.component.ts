@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 import { LocationService } from '../../core/services/location/location.service';
 import { SearchService } from '../../core/services/search/search.service';
@@ -16,6 +17,9 @@ import { ProductModel } from '../../core/models/product.model';
 export class SearchComponent implements OnInit, OnChanges {
 
   pageTitle = 'Your custom search - Onlylocalfood.com';
+
+  userLocationSubscription: Subscription;
+  location: any;
 
   userLocation;
   cityProvince: string;
@@ -42,6 +46,15 @@ export class SearchComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.title.setTitle(this.pageTitle);
+
+    this.locationService.getUserLocation();
+
+    this.userLocationSubscription = this.locationService.getFullLocation()
+      .subscribe(
+        (result) => {
+          console.log('result from sub: ', result);
+        }
+      )
 
     // get the location from the browser window
     this.locationService.getLocation()
