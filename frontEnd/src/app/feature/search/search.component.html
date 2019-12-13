@@ -50,6 +50,7 @@
 		<!-- SEARCH OPTIONS MOBILE -->
 		<div *ngIf="showingSearchOptions">
 			<app-search-options-mobile
+				[location]="location"
 				[latitude]="userLocation?.coords.latitude" 
 				[longitude]="userLocation?.coords.longitude" 
 				[city]="cityProvince"

@@ -25,6 +25,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { AuthService } from './auth/auth.service';
 import { ApiService } from './core/api.service';
 import { LocationService } from './core/services/location/location.service';
+import { SearchService } from './core/services/search/search.service';
 import { CartService } from './core/services/cart-service/cart.service';
 import { UtilityService } from './core/services/utility/utility.service';
 import { ProducerDashboardService } from './feature/dashboard/producer-dashboard.service';
@@ -297,6 +298,7 @@ import { MobileCheckoutComponent } from './feature/cart/mobile-checkout/mobile-c
     AuthService,
     ApiService,
     LocationService,
+    SearchService,
     CartService,
     CurrencyPipe,
     DatePipe,

@@ -673,7 +673,7 @@
 
 // }
 
-// provided in Search Comp
+// provided in App Module
 
 // called in...
 // Search Options Comp
@@ -682,6 +682,7 @@
 // Search Calendar Comp
 // Search Producer Comp
 // Search Comp
+// Location Service
 
 import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -1191,7 +1192,7 @@ export class SearchService implements OnInit, OnDestroy {
         let schedLngInCircle: boolean = false;
         // loop through each sched in the current datastore
         this.dataStore.searchResults.schedules.forEach((sched) => {
-          console.log('sched: ', sched);
+          // console.log('sched: ', sched);
           schedLat = sched.latitude;
           schedLng = sched.longitude;
           // create an array of producer ids
@@ -1200,7 +1201,7 @@ export class SearchService implements OnInit, OnDestroy {
           } else if (producerIdArray.indexOf(sched.producerId) === -1) {
               producerIdArray.push(sched.producerId);
           };
-          console.log('producerIds: ', producerIdArray);
+          // console.log('producerIds: ', producerIdArray);
           if (schedLat >= minlat && schedLat <= maxlat) {
             schedLatInCircle = true;
           
@@ -1211,9 +1212,9 @@ export class SearchService implements OnInit, OnDestroy {
           if (schedLatInCircle && schedLngInCircle) {
             returnedScheds.push(sched);
           };
-          console.log('schedsarray: ', returnedScheds);
-          console.log('datastore check: ', this.dataStore);
+          // console.log('datastore check: ', this.dataStore);
         });
+        console.log('schedsarray: ', returnedScheds);
         // using the producerIdArray, return the producers
         producerIdArray.forEach((id) => {
           for (let i = 0; i < this.dataStore.searchResults.producers.length; i++) {
@@ -1228,7 +1229,7 @@ export class SearchService implements OnInit, OnDestroy {
             }
           }; 
         });
-        console.log('datastore check: ', this.dataStore);
+        // console.log('datastore check: ', this.dataStore);
         // emit the values
         this.dataStore.filteredSearchResults.schedules = returnedScheds;
         this.dataStore.filteredSearchResults.producers = returnedProducers;
@@ -1238,7 +1239,7 @@ export class SearchService implements OnInit, OnDestroy {
         this.dataStore.categories = this.addCategories(returnedProducts);
         this.dataStore.searchProducers = returnedProducers;
         this.dataStore.searchDeliveries = returnedScheds;
-        console.log('datastore check: ', this.dataStore);
+        // console.log('datastore check: ', this.dataStore);
         this._searchResults.next(Object.assign({}, this.dataStore).filteredSearchResults);
         this._deliveryTypes.next(Object.assign({}, this.dataStore).deliveryTypes);
         this._categories.next(Object.assign({}, this.dataStore).categories);

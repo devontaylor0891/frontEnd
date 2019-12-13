@@ -6,11 +6,23 @@
                     <div class="text-center">          
                         <p><em>Item added to cart.</em></p>
                     </div>
+                    <div class="text-center row">
+                        <div class="col-12">
+                            <a class="btn btn-olf-primary btn-sm" [routerLink]="['/cart']" (click)="close()">View Cart</a>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</button>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-outline-olf-primary btn-sm" [routerLink]="['/producer/' + product.producer.id]" (click)="close()">More from this Producer</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <a class="btn btn-olf-primary" [routerLink]="['/cart']" (click)="close()">View Cart</a>
-                    <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Continue Shopping</button>
-                </div>
+                <!-- <div class="modal-footer">
+                    <a class="btn btn-olf-primary btn-sm" [routerLink]="['/cart']" (click)="close()">View Cart</a>
+                    <button type="button" class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</button>
+                </div> -->
+               
             </ng-template>
         </div>
     </div>
