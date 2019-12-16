@@ -312,8 +312,8 @@ textarea.ng-invalid.ng-touched {
 
 .cart-badge-mobile {
   position: relative;
-  left: 1.5rem;
-  top: -2.5rem;
+  left: 1rem;
+  top: -2rem;
 }
 
 // remove spinner arrows on number inputs
@@ -599,7 +599,7 @@ input:focus:not([readonly]) {
         &.active {
             background: #eeeeee;
             font-weight: 600;
-            border-top: 2px solid #741b47 !important;
+            border-bottom: 4px solid #741b47 !important;
         }
     }
 
