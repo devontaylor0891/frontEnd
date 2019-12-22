@@ -68,7 +68,7 @@
   </div>
 </div>
 </nav> -->
-
+<!-- 
 <nav class="navbar navbar-expand-md navbar-toggleable-md grey lighten-2">
   <div class="row">
 
@@ -107,17 +107,33 @@
         <span class="fa fa-bars fa-lg"></span>
       </button>
     </div>
-    
-    <div class="collapse navbar-collapse col-md-8 text-center" id="navbar-collapse-1">
-      <ul class="nav navbar-nav ml-auto">
 
-        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+    <ul class="navbar-nav nav col-md-2">
+      <div ></div>
+      <li class="nav-item hidden-sm-down" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="nav-link" routerLink="/cart">
+          <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+          <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
+        </a>
+      </li>
+
+      <li class="nav-item hidden-sm-down" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="nav-link" routerLink="/search">
+          <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="collapse navbar-collapse col-md-6 text-center" id="navbar-collapse-1">
+      <ul class="nav navbar-nav ml-auto"> -->
+
+        <!-- <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" (click)="openLink('https://www.facebook.com/onlylocalfood')">
             <i class="fa fa-facebook-f fa-2x"></i>
           </a>
-        </li>
+        </li> -->
 
-        <li class="nav-item hidden-sm-down" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <!-- <li class="nav-item hidden-sm-down" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/cart">
             <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
             <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
@@ -125,10 +141,20 @@
         </li>
 
         <li class="nav-item hidden-sm-down" data-toggle="collapse" data-target=".navbar-collapse.show">
-          <a class="nav-link" routerLink="/search">Search</a>
+          <a class="nav-link" routerLink="/search">
+            <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+          </a>
+        </li> -->
+<!-- 
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/learn-more-producer">Looking to Sell?</a>
         </li>
 
-        <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/learn-more-consumer">Looking to Buy?</a>
+        </li> -->
+
+        <!-- <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
             Learn More...
           </a>
@@ -138,8 +164,8 @@
               <a class="dropdown-item" routerLink="/learn-more-producer">For Producers</a>
             </div>
           </div>  
-        </li>
-
+        </li> -->
+<!-- 
         <li class="nav-item" *ngIf="loggedIn && !isAdmin" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/dashboard">My Account</a>
         </li>
@@ -159,4 +185,80 @@
   </div>
 
 </nav>
+ -->
 
+
+ <nav class="navbar navbar-expand-md grey lighten-2">
+    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+    <div class="row">
+
+    <div class="col-4">
+        <a class="navbar-brand m-0 " routerLink="">
+            <img class="w-100" src="../../assets/images/logo.png">
+          </a>
+    </div>
+
+    <div class="col-2">
+        <ul class="navbar-nav">
+            <li class="nav-item " >
+                <a class="nav-link" routerLink="/cart">
+                  <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                  <span class="badge badge-pill olf-primary-color cart-badge">{{ cartCount }}</span>
+                </a>
+              </li>
+        </ul>
+
+    </div>
+
+    <div class="col-2">
+        <ul class="navbar-nav">
+      
+            <li class="nav-item ">
+              <a class="nav-link" routerLink="/search">
+                <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+              </a>
+            </li>
+      </ul>
+    </div>
+    
+
+        
+        
+
+        <button 
+        class="p-2 navbar-toggler navbar-toggler-right btn btn-olf-primary btn-sm" 
+        type="button" 
+        data-toggle="collapse" 
+        data-target="#navbar-collapse-1" 
+        aria-controls="navbar-collapse-1" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation">
+        <span class="fa fa-bars fa-lg"></span>
+      </button>
+  
+    <div class="collapse navbar-collapse col-4" id="navbar-collapse-1">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/learn-more-producer">Looking to Sell?</a>
+            </li>
+    
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/learn-more-consumer">Looking to Buy?</a>
+            </li>
+          <li class="nav-item" *ngIf="loggedIn && !isAdmin" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/dashboard">My Account</a>
+            </li>
+    
+            <li class="nav-item" *ngIf="loggedIn" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a *ngIf="isAdmin" class="nav-link" routerLink="/admin">Admin</a>
+            </li>
+    
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <button class="btn btn-olf-primary btn-sm" *ngIf="!loggedIn" (click)="onLogin($event)">Sign in/Register</button>
+              <button class="btn btn-olf-primary btn-sm" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
+            </li>
+      </ul>
+      
+    </div>
+  </div>
+  </nav>
