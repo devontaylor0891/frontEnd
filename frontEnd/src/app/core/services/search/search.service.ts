@@ -1132,6 +1132,7 @@ export class SearchService implements OnInit, OnDestroy {
     console.log('current dist: ', this.currentDistanceSelected);
     // if distance is currentDistanceSelected, return the filteredResults,
     if (distance === this.currentDistanceSelected) {
+      console.log('distance is currently selected');
       this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
       this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
       this.dataStore.searchProducers = this.dataStore.filteredSearchResults.producers;
@@ -1146,6 +1147,7 @@ export class SearchService implements OnInit, OnDestroy {
       this.currentDistanceSelected = distance;
       // if distance is 100, make api call with the following:
       if (distance === 100) {
+        console.log('distance is 100');
         let options = {
           latitude: latitude,
           longitude: longitude,
@@ -1154,6 +1156,7 @@ export class SearchService implements OnInit, OnDestroy {
         this.loadAll(options);
       // if distance is 50 (default), return original datastore results
       } else if (distance === 50) {
+        console.log('distance is 50');
         this.dataStore.filteredSearchResults = JSON.parse(JSON.stringify(this.dataStore.originalSearchResults));
         this.dataStore.deliveryTypes = this.addDeliveryTypes(this.dataStore.filteredSearchResults.schedules);
         this.dataStore.categories = this.addCategories(this.dataStore.filteredSearchResults.products);
@@ -1165,6 +1168,7 @@ export class SearchService implements OnInit, OnDestroy {
         this._searchProducers.next(Object.assign({}, this.dataStore).searchProducers);
         this._searchDeliveries.next(Object.assign({}, this.dataStore).searchDeliveries);
       } else {
+        console.log('distance is different, doing calculations');
       // else, do the calculations
         // run the great circle equation on the original datastore search results scheds
         // run the great circle calculation
@@ -1192,9 +1196,14 @@ export class SearchService implements OnInit, OnDestroy {
         let schedLngInCircle: boolean = false;
         // loop through each sched in the current datastore
         this.dataStore.searchResults.schedules.forEach((sched) => {
+          // reset schedLatInCircle and Lng
+          schedLatInCircle = false;
+          schedLngInCircle = false;
           // console.log('sched: ', sched);
           schedLat = sched.latitude;
           schedLng = sched.longitude;
+          console.log('schedLat: ', schedLat);
+          console.log('schedlng: ', schedLng);
           // create an array of producer ids
           if (producerIdArray.length === 0) {
             producerIdArray.push(sched.producerId);
@@ -1204,12 +1213,14 @@ export class SearchService implements OnInit, OnDestroy {
           // console.log('producerIds: ', producerIdArray);
           if (schedLat >= minlat && schedLat <= maxlat) {
             schedLatInCircle = true;
-          
+            console.log('schedlat in circle: ', schedLatInCircle);
           };
           if (schedLng >= minlng && schedLng <= maxlng) {
             schedLngInCircle = true;
+            console.log('schedlong in circle: ', schedLngInCircle);
           };
           if (schedLatInCircle && schedLngInCircle) {
+            console.log('pushing sched to array');
             returnedScheds.push(sched);
           };
           // console.log('datastore check: ', this.dataStore);

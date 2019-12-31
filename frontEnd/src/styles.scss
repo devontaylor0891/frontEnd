@@ -619,7 +619,7 @@ input:focus:not([readonly]) {
         --color: #741b47;
 
         .fill-control-input{
-            display: none;
+            // display: none;
             &:checked~.fill-control-indicator{
                 background-color: var(--color);
                 border-color: var(--color);
