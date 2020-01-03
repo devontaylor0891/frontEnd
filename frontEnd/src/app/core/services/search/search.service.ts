@@ -1108,7 +1108,7 @@ export class SearchService implements OnInit, OnDestroy {
       products: []
     };
 
-    resultsArray.products.forEach((product) => { //for each product
+    resultsArray.products.forEach((product) => { // for each product
       // if it does contain the delivery AND it does contain the category
       // if (this.containCategory(product, catArray) && this.containDelivery(product, delArray)) {
       if (this.containCategory(product, catArray)) {

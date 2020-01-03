@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ProducerService } from '../../../core/services/producer/producer.service';
@@ -32,7 +32,9 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private producerService: ProducerService,
               private title: Title) {}
 
-  ngOnChanges() {}
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes in producer page comp: ', changes);
+  }
 
   ngOnInit() {
 
@@ -72,7 +74,7 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         results => {
           this.schedule = results;
-          // console.log('now: ', this.now);
+          console.log('scheds from producer page: ', this.schedule);
           // console.log('sched lenght: ', this.schedule.length);
           // for (let i = this.schedule.length - 1; i > 0; i--) {
           //   // console.log('index: ', i);
@@ -99,6 +101,8 @@ export class ProducerPageComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   ngOnDestroy() {
+    console.log('on Destroy producer page called.');
+    this.producerService.clearDataStore();
     if (this.getProducerSub) {
       this.getProducerSub.unsubscribe();
     };

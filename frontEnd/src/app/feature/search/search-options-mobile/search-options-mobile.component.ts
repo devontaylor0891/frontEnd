@@ -347,7 +347,7 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // console.log('zeroResults: ', this.zeroResults);
-    console.log('location recieved into search options mobile: ', this.location);
+    // console.log('location recieved into search options mobile: ', this.location);
     this.latitude = this.location.latitude;
     this.longitude = this.location.longitude;
     this.cityProvince = this.location.cityProvince;
@@ -382,24 +382,6 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
           };
         }
       );
-    
-    // this.locationService.getCityProvince()
-    //   .subscribe(
-    //     results => {
-    //       this.cityProvince = results;
-    //       console.log('searchOptionsMobile cityProvince: ', this.cityProvince);
-    //     }
-    //   );
-
-    // this.locationService.getLocation()
-    //   .subscribe(
-    //     result => {
-    //       console.log('searchOptionsMobile getLocation called');
-    //       this.latitude = result.coords.latitude;
-    //       this.longitude = result.coords.longitude;
-    //       console.log('searchOptionsMobile getLocation results: ', this.latitude + ' ' + this.longitude);
-    //     }
-    //   )
 
     // create search FormControl
     this.searchControl = new FormControl('');
@@ -435,9 +417,9 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
   }
 
   setDistance(distance) {
-    console.log('searchOptionsMobile filtering by distance: ', distance);
-    console.log('searchOptionsMobile lat: ', this.latitude);
-    console.log('searchOptionsMobile long: ', this.longitude);
+    // console.log('searchOptionsMobile filtering by distance: ', distance);
+    // console.log('searchOptionsMobile lat: ', this.latitude);
+    // console.log('searchOptionsMobile long: ', this.longitude);
     this.currentRadius = distance;
     this.searchService.filterByDistance(distance, this.latitude, this.longitude);
     this.switchToResults();
@@ -491,41 +473,6 @@ export class SearchOptionsMobileComponent implements OnInit, OnChanges {
     this.locationUpdate = !this.locationUpdate;
     // this.runMapLoader();
   };
-
-  // private fillAddress(place) {
-  //   this.currentRadius = 50;
-  //   // this.clearAddress();
-  //   this.parseAddressComponents(place.address_components);
-  //   this.latitude = place.geometry.location.lat();
-  //   this.longitude = place.geometry.location.lng();
-  //   console.log('searchOptionsMobile lat and long of new location: ', this.latitude + ', ' + this.longitude);
-  //   // have location service re-emit the city and province
-  //   console.log('searchOptionsMobile updating city and province in location service');
-  //   this.locationService.updateCityProvince(this.city + ', ' + this.province);
-  //   // have the search service make a new call
-  //   this.searchOptions.latitude = this.latitude;
-  //   this.searchOptions.longitude = this.longitude;
-  //   this.searchOptions.radius = 50;
-  //   this.searchService.loadAll(this.searchOptions);
-  //   // pass these lat/long out to map
-  //   this.locationUpdate = !this.locationUpdate;
-  //   this.switchToResults();
-  // };
-
-  // private parseAddressComponents(components) {
-  //   for (let i = 0; i < components.length; i++) {
-  //     let types = components[i].types;
-  //     for (let j = 0; j < types.length; j++) {
-  //       let result = types[j];
-  //       if (result === 'locality' || result === 'sublocality') {
-  //         this.city = components[i].short_name;
-  //       };
-  //       if (result === 'administrative_area_level_1') {
-  //         this.province = components[i].short_name;
-  //       };
-  //     };
-  //   };
-  // };
 
   setActive(arg) {
     this.activeLink = arg;

@@ -31,6 +31,8 @@ export class ProducerComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
 
+    // console.log('producer scheds on init: ', this.schedule);
+
 	// NOTE - because I've moved the producer page out of this component, this 'id' won't work any more.
 	// maybe move this declaration to the producer page component and then emit it to this component
 	// then, when it is received, call the loadProducerData method

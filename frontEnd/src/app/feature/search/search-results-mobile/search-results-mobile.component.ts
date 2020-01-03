@@ -23,7 +23,7 @@ export class SearchResultsMobileComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('search results: ', this.searchResults);
+    // console.log('search results: ', this.searchResults);
   }
 
   onLocationNotificationSignUp() {
@@ -32,7 +32,7 @@ export class SearchResultsMobileComponent implements OnInit, OnChanges {
 
   setActive(arg) {
     this.activeLink = arg;
-    console.log('activeLink:' , this.activeLink);
+    // console.log('activeLink:' , this.activeLink);
   }
 
 }

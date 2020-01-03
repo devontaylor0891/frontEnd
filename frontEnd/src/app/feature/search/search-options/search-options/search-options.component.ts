@@ -30,7 +30,7 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
 
   locationUpdate: boolean = false;
   submitting: boolean = false;
-  currentRadius: number = 50;
+  currentRadius: number;
   latitude: number;
   longitude: number;
   cityProvince: string;
@@ -67,6 +67,8 @@ export class SearchOptionsComponent implements OnInit, OnChanges {
         checkboxValue: null
       }
     ];
+
+    this.currentRadius = this.searchService.currentDistanceSelected;
 
   };
 

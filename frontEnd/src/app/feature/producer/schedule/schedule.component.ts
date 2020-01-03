@@ -4,9 +4,14 @@ import {
   ViewChild,
   TemplateRef,
   OnInit,
-  OnChanges
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   startOfDay,
@@ -41,9 +46,10 @@ const colors: any = {
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit, OnChanges {
+export class ScheduleComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  // @Input() schedule: any;
 
   path: string;
   pathArray: Array<string>;
@@ -57,19 +63,22 @@ export class ScheduleComponent implements OnInit, OnChanges {
       action: string;
       event: CalendarEvent;
     };
-  
+
     refresh: Subject<any> = new Subject();
 
     events: Array<CalendarEvent<{ schedule: any }>> = [];
-  
+    schedSub: Subscription;
+
     activeDayIsOpen: boolean = true;
-  
+
     constructor(private modal: NgbModal,
                 private route: ActivatedRoute,
                 private producerService: ProducerService) {}
 
-    ngOnChanges() {}
-  
+    // ngOnChanges(changes: SimpleChanges) {
+    //   console.log('changes in schedule comp: ', changes);
+    // }
+
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       if (isSameMonth(date, this.viewDate)) {
         if (
@@ -83,7 +92,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
         }
       }
     }
-  
+
     handleEvent(action: string, event: CalendarEvent): void {
       this.modalData = { event, action };
       this.modal.open(this.modalContent, { size: 'lg' });
@@ -100,15 +109,18 @@ export class ScheduleComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
+    this.events = [];
+
     // test the path in order to display the approprate link in the modal if not on Producer Page
     this.path = window.location.pathname;
     this.pathArray = this.path.split('/');
-    this.isProducerPage = this.pathIsProducerPage(this.pathArray);   
-    
+    this.isProducerPage = this.pathIsProducerPage(this.pathArray);
+
     // subscribe to the get method results
-    this.producerService.getAllSchedule()
+    this.schedSub = this.producerService.getAllSchedule()
       .subscribe(
-        result => { 
+        result => {
+          // console.log('scheds received in sched comp: ', result);
           let data = result;
           data.forEach((result) => {
             this.events.push({
@@ -124,6 +136,12 @@ export class ScheduleComponent implements OnInit, OnChanges {
         }
       );
 
+  };
+
+  ngOnDestroy() {
+    console.log('ondestroy called');
+    this.producerService.clearDataStore();
+    this.schedSub.unsubscribe();
   }
 
 }
