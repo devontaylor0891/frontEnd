@@ -349,6 +349,7 @@ export class CartService implements OnDestroy {
     let cart;
     let cartIndex;
     let productIndex;
+    console.log('dataStore.carts: ', this.dataStore.carts);
     // get the index of the cart and product
     if (this.dataStore.carts.length === 1 ) {
       cart = this.dataStore.carts[0];
@@ -369,11 +370,11 @@ export class CartService implements OnDestroy {
         };
       };
     };
-    // console.log('cart: ', cart); // works
-    // console.log('cartIndex: ', cartIndex); // undefined
-    // console.log('productIndex: ', productIndex); // undefined
+    console.log('cart: ', cart); // works
+    console.log('cartIndex: ', cartIndex); // undefined
+    console.log('productIndex: ', productIndex); // undefined
     // get the quantity
-    // console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
+    console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
     let quantity = cart.orderDetails.productQuantities[productIndex].orderQuantity;
     // splice the product out of the arrays
     this.dataStore.carts[cartIndex].orderDetails.productQuantities.splice(productIndex, 1);
@@ -384,6 +385,7 @@ export class CartService implements OnDestroy {
     if (this.dataStore.carts[cartIndex].productList.length === 0) {
       this.dataStore.carts.splice(cartIndex, 1);
     }
+    console.log('dataStore.carts after removal: ', this.dataStore.carts);
     // emit the new carts
     this._carts.next(Object.assign({}, this.dataStore).carts);
     // change the qtyAvailable
@@ -914,16 +916,17 @@ export class CartService implements OnDestroy {
   };
 
   findProductIndexInDataStore(productId) {
-
+    console.log('product id supplied: ', productId);
     // if product already in datastore, return index, else return -1
     if (this.dataStore.products === undefined) {
       // console.log('undefined');
       return -1;
     } else {
-      // console.log('products in datstore: ', this.dataStore.products);
+      console.log('products in datstore: ', this.dataStore.products);
       for (let i = 0; i < this.dataStore.products.length; i ++) {
-        // console.log('product id in datastore: ', this.dataStore.products[i].id)
+        console.log('product id in datastore: ', this.dataStore.products[i].id)
         if (this.dataStore.products[i].id === productId) {
+          
           return i;
         }
       }
@@ -947,13 +950,15 @@ export class CartService implements OnDestroy {
   
   // find the product in the array and add the given qty to the existing qty
   addMoreQty(productIndex, quantity, producerIndex, productValue) {
-    // console.log('values passed into addMoreqty: ', productIndex, quantity, producerIndex, productValue);
+    console.log('values passed into addMoreqty: ', productIndex, quantity, producerIndex, productValue);
     // check if the new total quantity is greater than the dataStore.product's qtyAvailable
     let maxQtyOrderable = this.dataStore.products[productIndex].qtyAvailable;
     // console.log('maxQtyOrderable: ', maxQtyOrderable);
     // get product's index in the cart
     let productIndexInCart = this.findProductIndexInCart(producerIndex, this.dataStore.products[productIndex].id);
-    // console.log('productIndexin cart: ', productIndexInCart);
+    let productIndexInDataStore = this.findProductIndexInDataStore(this.dataStore.products[productIndex].id);
+    console.log('productIndex in datastore: ', productIndexInDataStore);
+    console.log('productIndexin cart: ', productIndexInCart);
     let qtyWantingToOrder = this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndexInCart].orderQuantity + quantity;
     // console.log('qtyWantingToOrder:, ', qtyWantingToOrder);
     this.dataStore.carts[producerIndex].orderDetails.productQuantities[productIndex].orderQuantity += quantity;
