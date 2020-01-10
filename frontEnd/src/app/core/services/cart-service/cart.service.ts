@@ -340,6 +340,9 @@ export class CartService implements OnDestroy {
 
   // remove a product from the cart
   deleteProduct(productId, producerId) { // not working when hit more than once
+    // remove product from the datastore.products array
+    let dataStoreProductIndex = this.findProductIndexInDataStore(productId);
+    this.dataStore.products.splice(dataStoreProductIndex, 1);
 	  // remove the product from the cart
 	  // return it's quantity to qtyAvailable
 	  // change the cartCount
@@ -349,7 +352,7 @@ export class CartService implements OnDestroy {
     let cart;
     let cartIndex;
     let productIndex;
-    console.log('dataStore.carts: ', this.dataStore.carts);
+    // console.log('dataStore: ', this.dataStore);
     // get the index of the cart and product
     if (this.dataStore.carts.length === 1 ) {
       cart = this.dataStore.carts[0];
@@ -370,11 +373,11 @@ export class CartService implements OnDestroy {
         };
       };
     };
-    console.log('cart: ', cart); // works
-    console.log('cartIndex: ', cartIndex); // undefined
-    console.log('productIndex: ', productIndex); // undefined
+    // console.log('cart: ', cart); // works
+    // console.log('cartIndex: ', cartIndex); // undefined
+    // console.log('productIndex: ', productIndex); // undefined
     // get the quantity
-    console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
+    // console.log('qty: ', cart.orderDetails.productQuantities[productIndex].orderQuantity);
     let quantity = cart.orderDetails.productQuantities[productIndex].orderQuantity;
     // splice the product out of the arrays
     this.dataStore.carts[cartIndex].orderDetails.productQuantities.splice(productIndex, 1);
@@ -385,7 +388,7 @@ export class CartService implements OnDestroy {
     if (this.dataStore.carts[cartIndex].productList.length === 0) {
       this.dataStore.carts.splice(cartIndex, 1);
     }
-    console.log('dataStore.carts after removal: ', this.dataStore.carts);
+    // console.log('dataStore after removal: ', this.dataStore);
     // emit the new carts
     this._carts.next(Object.assign({}, this.dataStore).carts);
     // change the qtyAvailable

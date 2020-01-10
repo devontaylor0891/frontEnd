@@ -47,7 +47,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
     // ****** CARTS EMPTY *****
 
     if (this.cartId === -1) {
-      console.log('cart doesnt exist: ', this.cartId);
+      // console.log('cart doesnt exist: ', this.cartId);
       // cart doesn't exist, add the product
       this.cartService.addToCart(this.product, this.orderQty);
       this.resetOrderQty(this.orderQty);
@@ -55,7 +55,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
 
     // ****** CART EXISTS - PRODUCT IS NOT IN IT *****
 
-      console.log('product index returned: ', this.cartService.findProductIndexInDataStore(this.product.id))
+      // console.log('product index returned: ', this.cartService.findProductIndexInDataStore(this.product.id))
       this.cartService.addToCart(this.product, this.orderQty);
       this.resetOrderQty(this.orderQty);
       // if (this.orderQty === this.product.qtyAvailable) { // reset orderqty
@@ -64,7 +64,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
       //   this.orderQty = 1;
       // }
     } else { // cart exists, so we need to get the quantity already in the cart
-      console.log('cart exists: ', this.cartId);
+      // console.log('cart exists: ', this.cartId);
       this.quantityAlreadyInCart = this.cartService.getQtyAlreadyInCart(this.product.id, this.cartId);
       let productIndex = this.cartService.findProductIndexInDataStore(this.product.id);
       // add that to the orderQty
@@ -73,7 +73,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
 
         // ****** CART EXISTS - PRODUCT IS ALREADY THERE - BUT TRYING TO ORDER TOO MANY *****
 
-        console.log('not enough qty');
+        // console.log('not enough qty');
         this.cartService.addMoreQty(productIndex, (this.product.qtyAvailable - this.quantityAlreadyInCart), this.cartId, ((this.product.qtyAvailable - this.quantityAlreadyInCart) * this.product.pricePerUnit * this.product.unitsPer));
         this.orderQty = 0;
         let message = 'Uh oh! There are only ' + this.product.qtyAvailable + ' available to order. We are adding them all to your cart.';
@@ -82,7 +82,7 @@ export class AddToCartComponent implements OnInit, OnChanges {
 
         // ****** CART EXISTS - PRODUCT IS ALREADY THERE - QTYS ARE GOOD, SO ADD IT TO WHAT'S ALREADY THERE *****
 
-        console.log('enough qty, just adding more');
+        // console.log('enough qty, just adding more');
         this.cartService.addMoreQty(productIndex, this.orderQty, this.cartId, (this.orderQty * this.product.pricePerUnit * this.product.unitsPer));
         this.resetOrderQty(this.orderQty + this.quantityAlreadyInCart);
         if ((this.orderQty + this.quantityAlreadyInCart) === this.product.qtyAvailable) {
