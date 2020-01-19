@@ -41,7 +41,7 @@ export class AddToCartMobileComponent implements OnInit, OnChanges {
   }
 
   onAdd() {
-    this.cartId = this.cartService.getCartIdByProducerId(this.product.producer.id);
+    this.cartId = this.cartService.getCartIndex(this.cartService.getCartIdByProducerId(this.product.producer.id));
     // check if the cart Index is -1 (meaning it doesn't exist)
 
     // ****** CARTS EMPTY *****
