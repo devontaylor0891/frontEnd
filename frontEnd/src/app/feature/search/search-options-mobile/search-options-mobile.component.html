@@ -1,192 +1,161 @@
 <div class="card">
-      
-      <div>
+  
+  <div>
     
-        <div class="grey lighten-3">   
-          <div class="row m-0">
-            <div class="col-12 p-0">
-              
-              <nav class="sticky-top">
-                <div class="nav nav-tabs nav-fill" id="nav-tab-mobile" role="tablist">
-                  <a 
-                    class="nav-item nav-link" 
-                    id="nav-location-tab" 
-                    data-toggle="tab" 
-                    href="#nav-location" 
-                    role="tab" 
-                    aria-controls="nav-location" 
-                    aria-selected="true" 
-                    (click)="setActive('locationLink')"
-                    [ngClass]="activeLink == 'locationLink'  ? 'active' : ''"
-                    >Location</a>
-                  <a 
-                    class="nav-item nav-link" 
-                    id="nav-filters-tab" 
-                    data-toggle="tab" 
-                    href="#nav-filters" 
-                    role="tab" 
-                    aria-controls="nav-filters" 
-                    aria-selected="false" 
-                    (click)="setActive('filtersLink')"
-                    [ngClass]="activeLink == 'filtersLink'  ? 'active' : ''"
-                    >Filters</a>
-                </div>
-              </nav>
-              <div class="tab-content p-2" id="nav-tabContent">
-                <div 
-                  class="tab-pane fade" 
-                  id="nav-location" 
-                  role="tabpanel" 
-                  aria-labelledby="nav-location-tab" 
-                  [ngClass]="activeLink == 'locationLink'  ? 'active show in' : ''">
-
-                  <div class="card-block" *ngIf="cityProvince === ''">
-                      <app-loading></app-loading>
-                  </div>
-              
-                  <!--  LOCATION -->
-                  <div class="card">
-
-                    <div class="card-block" [hidden]="cityProvince === ''">
-                  
-                      <div *ngIf="cityProvince && !locationUpdate">
-                          <p class="text-center"><i class="fa fa-map-marker prefix mr-2"></i>{{ cityProvince }}</p>
-                          <p class="text-right minor-link mb-0"><a (click)="changeCity()">Change Location</a></p>
-                          <hr>
-                          <div class="row">
-                              <div class="col-12 text-center">
-                                  <h5 class="card-title">Search Radius (km)</h5>
-                                  <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 100)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(100)">100</button>
-                                    <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 50)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(50)">50</button>
-                                    <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 25)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(25)">25</button>
-                                    <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 10)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(10)">10</button>
-                                </div>
-                              </div>
-                          </div>
-                      </div>
-                  
-                      <div [hidden]="!locationUpdate">
-                          <p><i class="fa fa-map-marker pr-2"></i>Enter a New Location:</p>
-                          <div>                        
-                              <input  
-                                  autocorrect="off" 
-                                  autocapitalize="off" 
-                                  spellcheck="off" 
-                                  type="text" 
-                                  class="form-input-custom" 
-                                  #search 
-                                  id="search"
-                                  [formControl]="searchControl">
-                          </div>
-                      </div>
-              
-                    </div>
-
-                  </div>
-                  
-                </div>
-
-                <!-- FILTERS - CATEGORIES, TYPES -->
-                <div class="tab-pane fade" id="nav-filters" role="tabpanel" aria-labelledby="nav-filters-tab" [ngClass]="activeLink == 'filtersLink'  ? 'active show in' : ''">
-                  
-                    <div class="card" [hidden]="cityProvince === '' || zeroResults">
-
-                        <div class="card-block">
-                            <p class="card-text">Modify the settings below to narrow your search.</p>
-                            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h5 class="card-title text-center">Categories</h5>
-                                            <div *ngFor="let category of categoriesList; let i = index" class="pl-3">
-                                                <!-- <input type="checkbox" id="c.{{ category.category }}" name="c.{{ category.category }}" [(ngModel)]="category.checkboxValue" [checked]="category.checkboxValue">
-                                                <label for="c.{{ category.category }}">{{ category.category }}</label> -->
-                                                <!-- <label class="custom-control custom-checkbox">
-                                                        <input 
-                                                            class="custom-control-indicator"
-                                                            type="checkbox" 
-                                                            id="c.{{ category.category }}" 
-                                                            name="c.{{ category.category }}" 
-                                                            [(ngModel)]="category.checkboxValue" 
-                                                            [checked]="category.checkboxValue">
-                                                            <span class="custom-control-description">{{ category.category }}</span>
-                                                </label> -->
-                                                <label class="custom-control fill-checkbox">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        class="fill-control-input"
-                                                        id="c.{{ category.category }}" 
-                                                        name="c.{{ category.category }}" 
-                                                        [(ngModel)]="category.checkboxValue" 
-                                                        [checked]="category.checkboxValue"
-                                                        >
-                                                    <!-- <span class="fill-control-indicator">
-                                                        <i class="fa fa-check"></i>
-                                                    </span> -->
-                                                    <span class="fill-control-description">{{ category.category }}</span>
-                                                </label>
-                                            </div>
-                                    </div>
-                
-                                    <div class="col-12">
-                                        <hr>
-                                        <h5 class="card-title text-center">Delivery Types</h5>
-                                        <form-group>
-                                            <div *ngFor="let delivery of deliveryTypes" class="pl-3">
-                                                <label class="custom-control fill-checkbox">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        class="fill-control-input"
-                                                        id="d.{{ delivery.type }}" 
-                                                        name="d.{{ delivery.type }}" 
-                                                        [(ngModel)]="delivery.checkboxValue" 
-                                                        [checked]="delivery.checkboxValue"
-                                                        >
-                                                    <!-- <span class="fill-control-indicator">
-                                                        <i class="fa fa-check"></i>
-                                                    </span> -->
-                                                    <span class="fill-control-description">{{ delivery.type }}</span>
-                                                </label>
-                
-                                                <!-- <label class="custom-control custom-checkbox">
-                                                        <input 
-                                                            class="custom-control-indicator"
-                                                            type="checkbox" 
-                                                            id="d.{{ delivery.type }}" 
-                                                            name="d.{{ delivery.type }}" 
-                                                            [(ngModel)]="delivery.checkboxValue" 
-                                                            [checked]="delivery.checkboxValue">
-                                                            <span class="custom-control-description">{{ delivery.type }}</span>
-                                                    
-                                                </label> -->
-                                            </div>
-                                        </form-group>
-                                    </div>
-                                </div>
-                                <div class="row d-flex align-items-center text-center">
-                                    <div class="col-12 py-2">
-                                        <button type="submit" class="btn btn-olf-primary mx-auto my-1 btn-block">Update Search</button>
-                                    </div>
-                                    <div class="col-12">
-                                        <a (click)="reset(f)" class="minor-link">Reset</a>
-                                    </div>
-                                    <!-- <button type="button" class="btn btn-olf-primary mx-auto" (click)="reset(f)">Reset Search</button> -->
-                                </div>
-                            </form>
-                            
-                        </div>
-                    </div>
-                  
-                </div>
-
+    <div class="grey lighten-3">   
+      <div class="row m-0">
+        <div class="col-12 p-0">
+          
+          <nav class="sticky-top">
+            <div class="nav nav-tabs nav-fill" id="nav-tab-mobile" role="tablist">
+              <a 
+                class="nav-item nav-link" 
+                id="nav-location-tab" 
+                data-toggle="tab" 
+                href="#nav-location" 
+                role="tab" 
+                aria-controls="nav-location" 
+                aria-selected="true" 
+                (click)="setActive('locationLink')"
+                [ngClass]="activeLink == 'locationLink'  ? 'active' : ''"
+                >Location</a>
+              <a 
+                class="nav-item nav-link" 
+                id="nav-filters-tab" 
+                data-toggle="tab" 
+                href="#nav-filters" 
+                role="tab" 
+                aria-controls="nav-filters" 
+                aria-selected="false" 
+                (click)="setActive('filtersLink')"
+                [ngClass]="activeLink == 'filtersLink'  ? 'active' : ''"
+                >Filters</a>
+            </div>
+          </nav>
+          <div class="tab-content p-2" id="nav-tabContent">
+            <div 
+              class="tab-pane fade" 
+              id="nav-location" 
+              role="tabpanel" 
+              aria-labelledby="nav-location-tab" 
+              [ngClass]="activeLink == 'locationLink'  ? 'active show in' : ''">
+            
+              <div class="card-block" *ngIf="cityProvince === ''">
+                <app-loading></app-loading>
               </div>
               
+              <!--  LOCATION -->
+              <div class="card">
+                
+                <div class="card-block" [hidden]="cityProvince === ''">
+                  
+                  <div *ngIf="cityProvince && !locationUpdate">
+                    <p class="text-center"><i class="fa fa-map-marker prefix mr-2"></i>{{ cityProvince }}</p>
+                    <p class="text-right minor-link mb-0"><a (click)="changeCity()">Change Location</a></p>
+                    <hr>
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <h5 class="card-title">Search Radius (km)</h5>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 100)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(100)">100</button>
+                          <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 50)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(50)">50</button>
+                          <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 25)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(25)">25</button>
+                          <button type="button" class="btn btn-sm" [ngClass]="(currentRadius == 10)?'btn-olf-primary':'btn-olf-secondary'" (click)="setDistance(10)">10</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div [hidden]="!locationUpdate">
+                    <p><i class="fa fa-map-marker pr-2"></i>Enter a New Location:</p>
+                    <div>                        
+                      <input  
+                        autocorrect="off" 
+                        autocapitalize="off" 
+                        spellcheck="off" 
+                        type="text" 
+                        class="form-input-custom" 
+                        #search 
+                        id="search"
+                        [formControl]="searchControl">
+                    </div>
+                  </div>
+                  
+                </div>
+                
+              </div>
               
             </div>
+          
+          <!-- FILTERS - CATEGORIES, TYPES -->
+            <div class="tab-pane fade" id="nav-filters" role="tabpanel" aria-labelledby="nav-filters-tab" [ngClass]="activeLink == 'filtersLink'  ? 'active show in' : ''">
+              
+              <div class="card" [hidden]="cityProvince === '' || zeroResults">
+                
+                <div class="card-block">
+                  <p class="card-text">Modify the settings below to narrow your search.</p>
+                  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="card-title text-center">Categories</h5>
+                        <div *ngFor="let category of categoriesList; let i = index" class="pl-3">
+                          <label class="custom-control fill-checkbox">
+                            <input 
+                              type="checkbox" 
+                              class="fill-control-input"
+                              id="c.{{ category.category }}" 
+                              name="c.{{ category.category }}" 
+                              [(ngModel)]="category.checkboxValue" 
+                              [checked]="category.checkboxValue"
+                              >
+                            <span class="fill-control-description">{{ category.category }}</span>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <div class="col-12">
+                        <hr>
+                        <h5 class="card-title text-center">Delivery Types</h5>
+                        <form-group>
+                          <div *ngFor="let delivery of deliveryTypes" class="pl-3">
+                            <label class="custom-control fill-checkbox">
+                              <input 
+                                type="checkbox" 
+                                class="fill-control-input"
+                                id="d.{{ delivery.type }}" 
+                                name="d.{{ delivery.type }}" 
+                                [(ngModel)]="delivery.checkboxValue" 
+                                [checked]="delivery.checkboxValue"
+                                >
+                              <span class="fill-control-description">{{ delivery.type }}</span>
+                            </label>
+                            
+                          </div>
+                        </form-group>
+                      </div>
+                    </div>
+                    <div class="row d-flex align-items-center text-center">
+                      <div class="col-12 py-2">
+                        <button type="submit" class="btn btn-olf-primary mx-auto my-1 btn-block">Update Search</button>
+                      </div>
+                      <div class="col-12">
+                        <a (click)="reset(f)" class="minor-link">Reset</a>
+                      </div>
+                    </div>
+                  </form>
+                  
+                </div>
+              </div>
+              
+            </div>
+              
           </div>
           
         </div>
-        
       </div>
       
     </div>
+    
+  </div>
+
+</div>

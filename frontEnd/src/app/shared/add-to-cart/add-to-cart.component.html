@@ -1,50 +1,50 @@
 <form>
   <div class="row">
-      <div class="col-lg-8 col-offset-lg-2">
-          <ng-template #modalContent let-close="close">
-            <div class="modal-body">
-              <div class="text-center">          
-                  <p><em>Item added to cart.</em></p>
-              </div>
-              <div class="text-center row">
-                  <div class="col-12">
-                      <a class="btn btn-olf-primary btn-sm" [routerLink]="['/cart']" (click)="close()">View Cart</a>
-                  </div>
-                  <div class="col-12">
-                      <!-- <button type="button" class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</button> -->
-                      <a class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</a>
-                  </div>
-                  <div class="col-12">
-                      <a class="btn btn-outline-olf-primary btn-sm" [routerLink]="['/producer/' + product.producer.id]" (click)="close()">More from this Producer</a>
-                  </div>
-              </div>
+    <div class="col-lg-8 col-offset-lg-2">
+      <ng-template #modalContent let-close="close">
+        <div class="modal-body">
+          <div class="text-center">          
+            <p><em>Item added to cart.</em></p>
           </div>
-              <!-- <div class="modal-footer">
-                  <a class="btn btn-olf-primary" [routerLink]="['/cart']" (click)="close()">View Cart</a>
-                  <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Continue Shopping</button>
-              </div> -->
-          </ng-template>
-      </div>
+          <div class="text-center row">
+            <div class="col-12">
+              <a class="btn btn-olf-primary btn-sm" [routerLink]="['/cart']" (click)="close()">View Cart</a>
+            </div>
+            <div class="col-12">
+              <!-- <button type="button" class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</button> -->
+              <a class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</a>
+            </div>
+            <div class="col-12">
+              <a class="btn btn-outline-olf-primary btn-sm" [routerLink]="['/producer/' + product.producer.id]" (click)="close()">More from this Producer</a>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="modal-footer">
+          <a class="btn btn-olf-primary" [routerLink]="['/cart']" (click)="close()">View Cart</a>
+          <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Continue Shopping</button>
+        </div> -->
+      </ng-template>
+    </div>
   </div>
   <div class="row mx-0">
-      <div class="col-6 p-0">
-          <div class="input-group h-100 m-0 p-0">
-              <span class="input-group-btn col-4 p-0">
-                  <button class="btn m-0 p-0 rounded-0" type="button" (click)="lessOne()"><i class="fa fa-minus cart-button" aria-hidden="true"></i></button>
-              </span>
-              <input type="number" class="form-control col-4 p-0 text-center border-0" value="{{ orderQty }}" min="1" max="{{ product.qtyAvailable }}">
-              <span class="input-group-btn col-4 p-0">
-                  <button class="btn m-0 p-0 rounded-0" type="button" (click)="addOne()"><i class="fa fa-plus cart-button" aria-hidden="true"></i></button>
-              </span>
-          </div>
-      </div>
-      <div class="col-6 p-0">
-        <ng-template #tooltip>
-          There are no upcoming deliveries or pickups. This product cannot be ordered at this time.
-        </ng-template>
-        <span [ngbTooltip]="(noUpcomingScheds) ? tooltip : ''">
-          <button class="btn btn-olf-primary btn-block px-0 m-0 h-100 rounded-0" [disabled]="product.qtyAvailable < 1 || noUpcomingScheds" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+    <div class="col-6 p-0">
+      <div class="input-group h-100 m-0 p-0">
+        <span class="input-group-btn col-4 p-0">
+          <button class="btn m-0 p-0 rounded-0" type="button" (click)="lessOne()"><i class="fa fa-minus cart-button" aria-hidden="true"></i></button>
+        </span>
+        <input type="number" class="form-control col-4 p-0 text-center border-0" value="{{ orderQty }}" min="1" max="{{ product.qtyAvailable }}">
+        <span class="input-group-btn col-4 p-0">
+          <button class="btn m-0 p-0 rounded-0" type="button" (click)="addOne()"><i class="fa fa-plus cart-button" aria-hidden="true"></i></button>
         </span>
       </div>
+    </div>
+    <div class="col-6 p-0">
+      <ng-template #tooltip>
+        There are no upcoming deliveries or pickups. This product cannot be ordered at this time.
+      </ng-template>
+      <span [ngbTooltip]="(noUpcomingScheds) ? tooltip : ''">
+        <button class="btn btn-olf-primary btn-block px-0 m-0 h-100 rounded-0" [disabled]="product.qtyAvailable < 1 || noUpcomingScheds" (click)="onAdd()">Add <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+      </span>
+    </div>
   </div>
 </form>

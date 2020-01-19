@@ -136,18 +136,19 @@ export class CartService implements OnDestroy {
   }
 
   getCartIndex(tempId) {
-    let cartIndex;
-    // console.log('getting cart Index');
-    for (let i = 0; i < this.dataStore.carts.length; i++) {
-      // console.log('cart looping now: ', this.dataStore.carts[i]);
-      // console.log('tempId: ', tempId);
-      // console.log('cart temp id: ', this.dataStore.carts[i].tempId);
-      if (this.dataStore.carts[i].tempId === tempId) {
-        cartIndex = i;
+    console.log('tempId: ', tempId);
+    if (tempId === -1) {
+      return -1;
+    } else {
+      let cartIndex;
+      for (let i = 0; i < this.dataStore.carts.length; i++) {
+        if (this.dataStore.carts[i].tempId === tempId) {
+          cartIndex = i;
+        }
       }
-    }
-    return cartIndex;
-  }
+      return cartIndex;
+    };
+  };
 
   getCartCount() {
     return this._cartCount.asObservable();
@@ -174,7 +175,7 @@ export class CartService implements OnDestroy {
   };
 
   getQtyAlreadyInCart(productId, cartId) {
-    // console.log('getQtyAlready in cart cart Id: ', cartId);
+    console.log('getQtyAlready in cart cart Id: ', cartId);
     let currentOrderQty;
     let productIndex = this.findProductIndexInCart(cartId, productId);
     // console.log('productIndex returned: ', productIndex);
@@ -938,6 +939,9 @@ export class CartService implements OnDestroy {
   };
 
   findProductIndexInCart(index, productId) {
+    console.log('this.datastore: ', this.dataStore);
+    console.log('index: ', index);
+    console.log('product id: ', productId);
     if (this.dataStore.carts.length === 0) {
       return -1;
     } else {
@@ -954,6 +958,7 @@ export class CartService implements OnDestroy {
   // find the product in the array and add the given qty to the existing qty
   addMoreQty(productIndex, quantity, producerIndex, productValue) {
     console.log('values passed into addMoreqty: ', productIndex, quantity, producerIndex, productValue);
+    console.log('addmoreqty called');
     // check if the new total quantity is greater than the dataStore.product's qtyAvailable
     let maxQtyOrderable = this.dataStore.products[productIndex].qtyAvailable;
     // console.log('maxQtyOrderable: ', maxQtyOrderable);
@@ -977,6 +982,7 @@ export class CartService implements OnDestroy {
     // change the product's quantities
     // this.makeQtyPending(productId, 1);
     // increase the cartCount
+    console.log('addOne called');
     this.dataStore.cartCount += 1;
     this._cartCount.next(Object.assign({}, this.dataStore).cartCount);
     let producerIndex = this.findProducerIndex(producerId);
@@ -997,6 +1003,7 @@ export class CartService implements OnDestroy {
   }
 
   minusOne(productId, producerId) {
+    console.log('minusOne called');
     // change the product's quantities
     // this.makeQtyPending(productId, -1);
     // increase the cartCount
