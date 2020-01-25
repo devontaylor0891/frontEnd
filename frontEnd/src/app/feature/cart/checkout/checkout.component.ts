@@ -128,7 +128,7 @@ export class CheckoutComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.tempOrderValue = this.order.orderDetails.orderValue;
     }
-    // console.log('order: ', this.order);
+    console.log('order: ', this.order);
   }
 
   returnSchedules(community) {
