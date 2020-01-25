@@ -388,11 +388,13 @@ export class UpdateProfileComponent implements OnInit {
           if (form.value.user.role === 'producer') { // if producer
             this.buildProducerSubmitObject(form.value);
             // console.log('producer submit object: ', this.submitObject);
+            console.log('adding image value: ', this.addingImage);
             if (this.addingImage) { // if adding logo, add it first
-              this.imageService.convertAndUpload();
+              // this.imageService.convertAndUpload();
               this.imageUploadingSub = this.imageService._imageUploading
                 .subscribe(
                   result => {
+                    console.log('result from imageUploading sub: ', result);
                     if (!result) { // image uploaded, continue
                       this.apiService.createProducer(this.submitObject) // create producer profile
                         .subscribe(
@@ -412,6 +414,7 @@ export class UpdateProfileComponent implements OnInit {
                     }
                   }
                 );
+              this.imageService.convertAndUpload();
             } else { // if not adding logo, just create producer and custom url by themselves
               this.apiService.createProducer(this.submitObject)
                 .subscribe(
@@ -532,7 +535,7 @@ export class UpdateProfileComponent implements OnInit {
 
   onCancelAddImage() {
     // remove image name
-    // this.imageName = '';
+    this.imageName = '';
     this.userForm.patchValue({producer:{logoUrl: ''}});    // hide the image cropper
     this.addingImage = false;
     console.log('form value: ', this.userForm.value);

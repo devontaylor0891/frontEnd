@@ -110,7 +110,9 @@ export class ImageService {
         response => {
           console.log('file upload response: ', response);
           this.imageUploading = false;
+          console.log('imageuploading: ', this.imageUploading);
           this._imageUploading.next(this.imageUploading);
+          console.log('imageuploading sub: ', this._imageUploading);
         }
       );
   };

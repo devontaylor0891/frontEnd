@@ -83,7 +83,7 @@ export class ApiService {
 
   // create a new user
   createUser(user: any): Observable<any> {
-    // console.log('create user called: ', user);
+    console.log('create user called: ', user);
     return this.http
       .post(this.apiUrl + `/users`, user, {
           headers: new HttpHeaders().set('Authorization', this._authHeader)
@@ -93,7 +93,7 @@ export class ApiService {
 
   // PATCH user
   patchUser(id: number, newFieldAndValue: Object): Observable<any> {
-    // console.log('api patch: ', id, newFieldAndValue);
+    console.log('api patch: ', id, newFieldAndValue);
     return this.http
       // .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
       .put(this.apiUrl + `/users/${id}/`, newFieldAndValue, {
@@ -157,6 +157,7 @@ export class ApiService {
 
   // POST a new producer
   createProducer(producer: any): Observable<any> {
+    console.log('create new producer: ', producer);
     return this.http
       .post(this.apiUrl + `/producers/`, producer, {
       // .post(`${ENV.BASE_API}producer/`, producer, {
@@ -191,6 +192,7 @@ export class ApiService {
 
   // POST new customUrl
   createCustomUrl(customUrlObject: any): Observable<any> {
+    console.log('create custom url: ', customUrlObject);
     return this.http
       .post(this.apiUrl + `/customUrl/`, customUrlObject, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
