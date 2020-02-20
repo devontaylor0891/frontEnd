@@ -13,6 +13,8 @@ import { LearnMoreProducerComponent } from './feature/learn-more/learn-more-prod
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { ProducerComponent } from './feature/producer/producer.component';
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
+import { MarketComponent } from './feature/market/market.component';
+import { MarketPageComponent } from './feature/market/market-page/market-page.component';
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartsComponent } from './feature/cart/cart/carts.component';
@@ -73,6 +75,11 @@ const appRoutes: Routes = [
     path: 'producer/:id', component: ProducerComponent, children: [
       { path: '', component: ProducerPageComponent },
       { path: 'schedule', component: ScheduleComponent }
+    ]
+  },
+  {
+    path: 'market/:id', component: MarketComponent, children: [
+      { path: '', component: MarketPageComponent }
     ]
   },
   { path: 'product/:id', component: ProductComponent },

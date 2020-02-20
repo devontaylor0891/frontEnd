@@ -27,7 +27,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './update-profile.component.html',
   styleUrls: ['./update-profile.component.scss']
 })
-export class UpdateProfileComponent implements OnInit {
+export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   user: any;
   id: any;
@@ -58,16 +58,16 @@ export class UpdateProfileComponent implements OnInit {
   province: string;
   postalCode: string;
   country: string;
-  submitObject: ProducerModel;
+  submitObject: any;
 
   customUrlObject: any;
   checkCustomUrlSubscription: Subscription;
   postCustomUrlSubscription: Subscription;
   getCustomUrlSubscription: Subscription;
-  customUrlExists: boolean = false;
-  noSpacesFormat = "[^/s]*";
-  customUrlChanged: boolean = false;
-  customUrlDuplicateExists: boolean = false;
+  customUrlExists = false;
+  noSpacesFormat = '[^/s]*';
+  customUrlChanged = false;
+  customUrlDuplicateExists = false;
 
   selectedAddress: any;
   selectedCityProvince: any;
@@ -82,15 +82,15 @@ export class UpdateProfileComponent implements OnInit {
   getAddressSub: Subscription;
 
   // image properties
-  imageName: string = '';
-  addingImage: boolean = false;
+  imageName = '';
+  addingImage = false;
   imageUploading: boolean;
   imageUploadingSub: Subscription;
   imagePreviewSub: Subscription;
-  newItemUploading: boolean = false;
-  imagePreviewExists: boolean = false;
+  newItemUploading = false;
+  imagePreviewExists = false;
 
-  submitting: boolean = false;
+  submitting = false;
   error: any;
 
   constructor(private auth: AuthService,
@@ -134,7 +134,7 @@ export class UpdateProfileComponent implements OnInit {
     this.agmMap.triggerResize();
   }
 
-  ngOnInit() { 
+  ngOnInit() {
 
     this.getUserSub = this.userService.getUser()
       .subscribe(
@@ -165,7 +165,7 @@ export class UpdateProfileComponent implements OnInit {
         result => {
           // console.log('result: ', result);
           this.selectedCityProvince = result;
-          
+
           if (!this.selectedAddress) {
             this.selectedLocation = this.selectedCityProvince;
           }
@@ -197,7 +197,7 @@ export class UpdateProfileComponent implements OnInit {
           // } else {
           //   console.log('no address returned')
           }
-          
+
         }
       );
 
@@ -206,7 +206,7 @@ export class UpdateProfileComponent implements OnInit {
         result => {
           if (result) {
             this.imagePreviewExists = true;
-            this.userForm.patchValue({ producer:{ logoUrl: this.imageName } });
+            this.userForm.patchValue({ producer: { logoUrl: this.imageName } });
           } else {
             this.imagePreviewExists = false;
           }
@@ -227,13 +227,13 @@ export class UpdateProfileComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["geocode"]
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['geocode']
       });
-      autocomplete.addListener("place_changed", () => {
+      autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           // get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
           // verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -290,11 +290,20 @@ export class UpdateProfileComponent implements OnInit {
         description: new FormControl(''),
         logoUrl: new FormControl('')
       }),
+      market: new FormGroup({
+        id: new FormControl(this.id),
+        name: new FormControl('', [Validators.required]),
+        customUrl: new FormControl('', [Validators.pattern('[0-9a-zA-Z_-]*')]),
+        description: new FormControl(''),
+        logoUrl: new FormControl(''),
+        multipleLocations: new FormControl('', [Validators.required])
+      }),
       status: new FormControl('active')
     });
 
     // set producer fields to disabled
     this.disableProducerFields();
+    this.disableMarketFields();
 
     // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
     this.checkCustomUrlSubscription = this.userForm['controls'].producer['controls'].customUrl.valueChanges
@@ -329,21 +338,40 @@ export class UpdateProfileComponent implements OnInit {
     this.searchControl.disable();
   };
 
+  disableMarketFields() {
+    this.userForm.controls.market.disable();
+    this.searchControl.disable();
+  };
+
   enableProducerFields() {
     this.userForm.controls.producer.enable();
     this.searchControl.enable();
   };
 
+  enableMarketFields() {
+    this.userForm.controls.market.enable();
+    this.searchControl.enable();
+  };
+
   onSelectConsumer() {
     this.role = 'consumer';
-    this.userForm.patchValue({user:{role: 'consumer'}});
+    this.userForm.patchValue({user: {role: 'consumer'}});
     this.disableProducerFields();
+    this.disableMarketFields();
   };
 
   onSelectProducer() {
     this.role = 'producer';
-    this.userForm.patchValue({user:{role: 'producer'}});
+    this.userForm.patchValue({user: {role: 'producer'}});
     this.enableProducerFields();
+    this.disableMarketFields();
+  };
+
+  onSelectMarket() {
+    this.role = 'market';
+    this.userForm.patchValue({user: {role: 'market'}});
+    this.disableProducerFields();
+    this.enableMarketFields();
   };
 
   buildProducerSubmitObject(form) {
@@ -366,16 +394,42 @@ export class UpdateProfileComponent implements OnInit {
     if (form.producer.customUrl) {
       this.customUrlObject = {
         userId: this.user.id,
-        customUrl: form.producer.customUrl.toLowerCase()
+        customUrl: form.producer.customUrl.toLowerCase(),
+        userType: 'producer'
       };
     } else {
       this.customUrlObject = {
         userId: this.user.id,
-        customUrl: this.user.id
+        customUrl: this.user.id,
+        userType: 'producer'
       };
     }
     ;
   }
+
+  buildMarketSubmitObject(form) {
+    this.submitObject = {
+      id: this.user.id,
+      name: form.market.name,
+      description: form.market.description,
+      logoUrl: this.imageName,
+      multipleLocations: form.market.multipleLocations
+    };
+    if (form.market.customUrl) {
+      this.customUrlObject = {
+        userId: this.user.id,
+        customUrl: form.market.customUrl.toLowerCase(),
+        userType: 'market'
+      };
+    } else {
+      this.customUrlObject = {
+        userId: this.user.id,
+        customUrl: this.user.id,
+        userType: 'market'
+      };
+    }
+    ;
+  };
 
   onSubmit(form: any): void {
     this.submitting = true;
@@ -393,18 +447,18 @@ export class UpdateProfileComponent implements OnInit {
               // this.imageService.convertAndUpload();
               this.imageUploadingSub = this.imageService._imageUploading
                 .subscribe(
-                  result => {
-                    console.log('result from imageUploading sub: ', result);
-                    if (!result) { // image uploaded, continue
+                  result5 => {
+                    console.log('result from imageUploading sub: ', result5);
+                    if (!result5) { // image uploaded, continue
                       this.apiService.createProducer(this.submitObject) // create producer profile
                         .subscribe(
-                          result => {
+                          result1 => {
                             // console.log('producer profile created: ', result);
                             this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject) // create custom url
                               .subscribe(
-                                result => {
+                                result2 => {
                                   // console.log('custom url submitted: ', result);
-                                  this.handleSubmitSuccess(result);
+                                  this.handleSubmitSuccess(result2);
                                 },
                                 err => this.handleSubmitError(err)
                               );
@@ -418,13 +472,13 @@ export class UpdateProfileComponent implements OnInit {
             } else { // if not adding logo, just create producer and custom url by themselves
               this.apiService.createProducer(this.submitObject)
                 .subscribe(
-                  result => {
+                  result3 => {
                     // console.log('producer profile created: ', result);
                     this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject)
                       .subscribe(
-                        result => {
+                        result4 => {
                           // console.log('custom url submitted: ', result);
-                          this.handleSubmitSuccess(result);
+                          this.handleSubmitSuccess(result4);
                         },
                         err => this.handleSubmitError(err)
                       );
@@ -432,26 +486,55 @@ export class UpdateProfileComponent implements OnInit {
                   err => this.handleSubmitError(err)
                 );
             }
-            // this.apiService.createProducer(this.submitObject)
-            //   .subscribe(
-            //     result => {
-            //       // console.log('producer profile created: ', result);
-            //       this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject)
-            //         .subscribe(
-            //           result => {
-            //             // console.log('custom url submitted: ', result);
-            //             this.handleSubmitSuccess(result);
-            //           },
-            //           err => this.handleSubmitError(err)
-            //         );
-            //     },
-            //     err => this.handleSubmitError(err)
-            //   );
+          } else if (form.value.user.role === 'market') {
+            this.buildMarketSubmitObject(form.value);
+            console.log('market selected: ', this.submitObject);
+            console.log('adding image value: ', this.addingImage);
+            if (this.addingImage) { // if adding logo, add it first
+              // this.imageService.convertAndUpload();
+              this.imageUploadingSub = this.imageService._imageUploading
+                .subscribe(
+                  result5 => {
+                    console.log('result from imageUploading sub: ', result5);
+                    if (!result5) { // image uploaded, continue
+                      this.apiService.createMarket(this.submitObject) // create producer profile
+                        .subscribe(
+                          result1 => {
+                            // console.log('producer profile created: ', result);
+                            this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject) // create custom url
+                              .subscribe(
+                                result2 => {
+                                  // console.log('custom url submitted: ', result);
+                                  this.handleSubmitSuccess(result2);
+                                },
+                                err => this.handleSubmitError(err)
+                              );
+                          },
+                          err => this.handleSubmitError(err)
+                        );
+                    }
+                  }
+                );
+              this.imageService.convertAndUpload();
+            } else { // if not adding logo, just create producer and custom url by themselves
+              this.apiService.createMarket(this.submitObject)
+                .subscribe(
+                  result3 => {
+                    // console.log('producer profile created: ', result);
+                    this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject)
+                      .subscribe(
+                        result4 => {
+                          // console.log('custom url submitted: ', result);
+                          this.handleSubmitSuccess(result4);
+                        },
+                        err => this.handleSubmitError(err)
+                      );
+                  },
+                  err => this.handleSubmitError(err)
+                );
+            }
           };
           this.handleSubmitSuccess(result)
-          // mark profile complete and get the full profile
-          // this.userService.profileIncomplete$.next(false);
-          // this.userService.getUserFromDb(this.user.id);
         },
         err => this.handleSubmitError(err)
       );
@@ -476,9 +559,9 @@ export class UpdateProfileComponent implements OnInit {
 
   private parseAddressComponents(components) {
     for (let i = 0; i < components.length; i++) {
-      let types = components[i].types;
+      const types = components[i].types;
       for (let j = 0; j < types.length; j++) {
-        let result = types[j];
+        const result = types[j];
         if (result === 'street_number') {
           this.streetNumber = components[i].short_name;
         }
@@ -510,7 +593,7 @@ export class UpdateProfileComponent implements OnInit {
     this.longitude = this.markerLongitude;
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   }
-  
+
   markerDragEnd($event: AgmMouseEvent) {
     this.clearAddress();
     this.selectedCityProvince = '';
@@ -524,7 +607,6 @@ export class UpdateProfileComponent implements OnInit {
 
   onAddImage() {
     this.imageName = this.user.id + '/logo';
-    // this.userForm.patchValue({ producer:{ logoUrl: this.imageName } });
     this.addingImage = true;
     console.log('form value: ', this.userForm.value);
     console.log('form: ', this.userForm);
@@ -536,12 +618,11 @@ export class UpdateProfileComponent implements OnInit {
   onCancelAddImage() {
     // remove image name
     this.imageName = '';
-    this.userForm.patchValue({producer:{logoUrl: ''}});    // hide the image cropper
+    this.userForm.patchValue({producer: {logoUrl: ''}});    // hide the image cropper
     this.addingImage = false;
     console.log('form value: ', this.userForm.value);
     console.log('form: ', this.userForm);
     // remove the required validator
-    // this.userForm.get('producer').('image').clearValidators();
     this.userForm.controls.producer.get('logoUrl').clearValidators();
     this.userForm.controls.producer.get('logoUrl').updateValueAndValidity();
     // reset the imageService
@@ -549,31 +630,12 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   handleSubmitSuccess(result) {
-    // if (this.addingImage) { // upload image and then close the modal
-    //   this.imageService.convertAndUpload();
-    //   this.imageUploadingSub = this.imageService._imageUploading
-    //     .subscribe(
-    //       result => {
-    //         if (!result) {
-    //           this.newItemUploading = false;
-    //           this.submitting = false;
-    //           // mark profile complete and get the full profile
-    //           this.userService.profileIncomplete$.next(false);
-    //           this.userService.getUserFromDb(this.user.id);
-    //           this.router.navigate(['']);
-    //           // this.activeModal.close();
-    //         }
-    //       }
-    //     )
-    // } else { // no image to upload
-      this.newItemUploading = false; 
-      this.submitting = false;
-      // mark profile complete and get the full profile
-      this.userService.profileIncomplete$.next(false);
-      this.userService.getUserFromDb(this.user.id);
-      this.router.navigate(['']);
-      // this.activeModal.close();
-    // };
+    this.newItemUploading = false;
+    this.submitting = false;
+    // mark profile complete and get the full proproducer
+    this.userService.profileIncomplete$.next(false)
+    this.userService.getUserFromDb(this.user.id);
+    this.router.navigate(['']);
   };
 
   handleSubmitError(err) {
@@ -589,7 +651,7 @@ export class UpdateProfileComponent implements OnInit {
     this.route = '';
     this.selectedAddress = '';
     this.selectedLocation = '';
-  }
+  };
 
   ngOnDestroy() {
     if (this.getUserSub) {

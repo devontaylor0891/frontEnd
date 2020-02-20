@@ -159,6 +159,8 @@ import { ProducerPageCalendarMobileComponent } from './feature/producer/producer
 import { CheckoutCalendarMobileComponent } from './feature/cart/checkout/checkout-calendar-mobile/checkout-calendar-mobile.component';
 import { MobileCheckoutComponent } from './feature/cart/mobile-checkout/mobile-checkout.component';
 import { ProducerPageProductCardMobileComponent } from './feature/producer/producer-page/producer-page-product-card-mobile/producer-page-product-card-mobile.component';
+import { MarketComponent } from './feature/market/market.component';
+import { MarketPageComponent } from './feature/market/market-page/market-page.component';
 
 
 @NgModule({
@@ -270,7 +272,9 @@ import { ProducerPageProductCardMobileComponent } from './feature/producer/produ
     ProducerPageCalendarMobileComponent,
     CheckoutCalendarMobileComponent,
     MobileCheckoutComponent,
-    ProducerPageProductCardMobileComponent
+    ProducerPageProductCardMobileComponent,
+    MarketComponent,
+    MarketPageComponent
   ],
   imports: [
     BrowserModule,

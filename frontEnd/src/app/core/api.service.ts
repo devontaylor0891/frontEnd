@@ -166,6 +166,17 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // POST a new market
+  createMarket(market: any): Observable<any> {
+    console.log('create new market: ', market);
+    return this.http
+      .post(this.apiUrl + `/markets/`, market, {
+      // .post(`${ENV.BASE_API}producer/`, producer, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
   // PATCH producer info
   patchProducer(id: number, newFieldAndValue: Object): Observable<any> {
     return this.http
@@ -227,16 +238,16 @@ export class ApiService {
       .get(this.apiUrl + `/products/` + productId)
       // .get(`${ENV.BASE_API}products/` + productId)
       // .get(this.producerUrl + producerId + '/products/' + productId + '.json')
-      .catch(this._handleError); 
+      .catch(this._handleError);
   };
-  
+
   // GET all products from a single producer
   getProductsByProducerId(id): Observable<any> {
   return this.http
     .get(this.apiUrl + `/producersProducts/` + id)
     // .get(`${ENV.BASE_API}producer/` + id + '/products')
-		// .get(this.producerUrl + id + '/products.json')
-		.catch(this._handleError);
+    // .get(this.producerUrl + id + '/products.json')
+    .catch(this._handleError);
   };
 
   // POST new product - producer or admin only
@@ -272,7 +283,7 @@ export class ApiService {
   };
 
 // ***************** SCHEDULES ****************
-  
+
   // get all schedules for admin
   getSchedules(): Observable<any> {
     return this.http
@@ -450,7 +461,7 @@ export class ApiService {
     // return Observable.of(url);
   };
 
-// ***************** upload image to S3 ***************  
+// ***************** upload image to S3 ***************
   putFileToS3(file: any, url: string): Observable<any> {
     return this.http.put(url, file, { headers: new HttpHeaders().set('Content-Type', 'image/jpeg') })
       .map((response: Response) => {

@@ -18,7 +18,7 @@ export class CustomUrlResolverComponent implements OnInit {
               private route: ActivatedRoute,
               private apiService: ApiService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
 
     // get the route param
     this.routeParam = this.route.snapshot.paramMap.get('customUrl');
@@ -30,19 +30,25 @@ export class CustomUrlResolverComponent implements OnInit {
       this.idSub = this.apiService.getProducerIdByCustomUrl(this.routeParam)
         .subscribe(
           result => {
-            // console.log('result: ', result);
+            console.log('result: ', result);
             if (!result[0]) {
               this.navigateToNotFound();
-            } else {
-              this.resolvedRoute = result;
+            } else if (result[0].userType === 'producer') {
+              this.resolvedRoute = result[0].userId;
               this.routeParam = this.routeParam.toLowerCase();
               // console.log('resolved Route: ', this.resolvedRoute);
               this.navigateToProducerPage(this.resolvedRoute);
-            }            
+            } else if (result[0].userType === 'market') {
+              this.resolvedRoute = result[0].userId;
+              this.routeParam = this.routeParam.toLowerCase();
+              // console.log('resolved Route: ', this.resolvedRoute);
+              this.navigateToMarketPage(this.resolvedRoute);
+            } else {
+              this.navigateToNotFound();
+            }
           }
         );
     };
-    
 
   }
 
@@ -50,8 +56,12 @@ export class CustomUrlResolverComponent implements OnInit {
     this.router.navigateByUrl('/producer/' + id);
   };
 
+  navigateToMarketPage(id) {
+    this.router.navigateByUrl('/market/' + id);
+  };
+
   navigateToNotFound() {
     this.router.navigateByUrl('not-found');
-  }
+  };
 
 }
