@@ -51,6 +51,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   };
   multipleLocations = [];
   isMultipleLocation: boolean;
+  showAddMarketLocation = true;
 
   // to transition the form between consumer and producer
   role: string;
@@ -682,6 +683,16 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     this.route = '';
     this.selectedAddress = '';
     this.selectedLocation = '';
+  };
+
+  showAddLocation() {
+    this.showAddMarketLocation = true;
+  };
+
+  pushNewLocation(value) {
+    this.multipleLocations.push(value);
+    this.showAddMarketLocation = false;
+    console.log('multiLoc; ', this.multipleLocations);
   };
 
   ngOnDestroy() {

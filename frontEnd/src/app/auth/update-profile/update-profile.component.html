@@ -301,20 +301,25 @@
 
               <div class="col-12 form-section-body my-5">
 
-                  <div *ngIf="multipleLocations.length >= 0">
-                
-                    <p>Locations populated here.</p>
+                <div *ngIf="multipleLocations.length > 0">
+
+                  <div *ngFor="let location of multipleLocations">
+                    <p>{{ location.timeframe }}</p>
+                  </div>
+              
+                  <hr>
+
+                  <div *ngIf="!showAddMarketLocation">
                     <p class="text-center">
-                      <button class="btn btn-olf-primary btn-sm">
+                      <button class="btn btn-olf-primary btn-sm" (click)="showAddLocation()">
                         <i class="fas fa-plus"></i> Add another location
                       </button>
                     </p>
-                   
-                    <hr>
-
                   </div>
 
-                <app-add-market-location *ngIf="multipleLocations.length < 1 || isMultipleLocation"></app-add-market-location>
+                </div>
+
+                <app-add-market-location *ngIf="showAddMarketLocation" (addLocation)="pushNewLocation($event)"></app-add-market-location>
 
               </div>
             

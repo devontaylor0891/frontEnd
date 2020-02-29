@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { google } from '@google/maps';
@@ -25,6 +25,8 @@ export class AddMarketLocationComponent implements OnInit {
     city: null,
     province: null
   }
+
+  @Output() public addLocation = new EventEmitter<any>();
 
   @ViewChild('locationSearch') public searchElementRef: ElementRef;
   public locationSearchControl: FormControl;
@@ -164,6 +166,7 @@ export class AddMarketLocationComponent implements OnInit {
     this.locationObject.address = this.selectedAddress;
     this.locationObject.city = this.city;
     this.locationObject.province = this.province;
+    this.addLocation.emit(this.locationObject);
     console.log('locationObj: ', this.locationObject);
   };
 
