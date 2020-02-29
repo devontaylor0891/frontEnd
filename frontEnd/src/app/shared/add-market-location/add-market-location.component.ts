@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { google } from '@google/maps';
@@ -15,15 +15,15 @@ export class AddMarketLocationComponent implements OnInit {
 
   locationsForm: FormGroup;
 
-  locationObject: {
-    locationName?: string,
-    description?: string,
-    timeframe: string,
-    latitude: number,
-    longitude: number,
-    address: string,
-    city: string,
-    province: string
+  locationObject = {
+    locationName: null,
+    description: null,
+    timeframe: null,
+    latitude: null,
+    longitude: null,
+    address: null,
+    city: null,
+    province: null
   }
 
   @ViewChild('locationSearch') public searchElementRef: ElementRef;
@@ -156,14 +156,15 @@ export class AddMarketLocationComponent implements OnInit {
   };
 
   buildLocationObject() {
-    this.locationObject.locationName = this.locationsForm.value.locationName;
-    this.locationObject.description = this.locationsForm.value.description;
+    this.locationObject.locationName = this.locationsForm.value.locationName || '';
+    this.locationObject.description = this.locationsForm.value.description || '';
     this.locationObject.timeframe = this.locationsForm.value.timeframe;
     this.locationObject.latitude = this.lat;
     this.locationObject.longitude = this.lng;
     this.locationObject.address = this.selectedAddress;
     this.locationObject.city = this.city;
     this.locationObject.province = this.province;
+    console.log('locationObj: ', this.locationObject);
   };
 
 }

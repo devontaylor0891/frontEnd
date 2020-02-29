@@ -1,4 +1,4 @@
-<form [formGroup]="locationsForm" (ngSubmit)="onLocationSubmit()">
+<form [formGroup]="locationsForm">
 
   <div class="form-section-body">
 
@@ -41,7 +41,7 @@
     </div>
   
     <button 
-      type="submit"
+      (click)="onLocationSubmit()"
       class="btn btn-olf-primary btn-block" 
       [disabled]="!locationsForm.valid || !selectedLocation">
         <i class="fas fa-plus"></i> Add this location
