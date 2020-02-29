@@ -161,6 +161,7 @@ import { MobileCheckoutComponent } from './feature/cart/mobile-checkout/mobile-c
 import { ProducerPageProductCardMobileComponent } from './feature/producer/producer-page/producer-page-product-card-mobile/producer-page-product-card-mobile.component';
 import { MarketComponent } from './feature/market/market.component';
 import { MarketPageComponent } from './feature/market/market-page/market-page.component';
+import { AddMarketLocationComponent } from './shared/add-market-location/add-market-location.component';
 
 
 @NgModule({
@@ -274,7 +275,8 @@ import { MarketPageComponent } from './feature/market/market-page/market-page.co
     MobileCheckoutComponent,
     ProducerPageProductCardMobileComponent,
     MarketComponent,
-    MarketPageComponent
+    MarketPageComponent,
+    AddMarketLocationComponent
   ],
   imports: [
     BrowserModule,

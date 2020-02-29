@@ -1,0 +1,52 @@
+<form [formGroup]="locationsForm" (ngSubmit)="onLocationSubmit()">
+
+  <div class="form-section-body">
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+          <label for="timeframe">Timeframe *:</label>
+      </div>
+      <div class="col-xs-12 col-sm-8 input-group">
+        <textarea class="form-input-custom" type="text" id="timeframe" formControlName="timeframe" placeholder="Tuesdays from late May thru September"></textarea>
+        <small *ngIf="!locationsForm.get('timeframe').valid && locationsForm.get('timeframe').touched" class="help-block">Please describe the general timeframe of your market - eg. "Tuesdays from late May thru September".</small>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="locationName" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location Name <small>(optional)</small>:</label>
+      <div class="col-xs-12 col-sm-8 input-group">
+        <input class="form-input-custom" type="text" id="locationName">
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Describe the Market <small>(optional)</small>:</label>
+      <div class="col-xs-12 col-sm-8 input-group">
+        <textarea class="form-input-custom" type="text" id="description" formControlName="description"></textarea>
+      </div>
+    </div>
+    
+    <div class="row">
+      <label for="locationSearch" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location Search *:</label>
+      <div class="col-xs-12 col-sm-8 input-group">
+        <input autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-input-custom" #locationSearch id="locationSearch" [formControl]="locationSearchControl">
+      </div>
+    </div>
+    
+    <div class="row">
+      <label for="selectedLocation" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Selected Location:</label>
+      <div class="col-xs-12 col-sm-8 input-group col-form-label">
+        <p>{{ selectedLocation }}</p>
+      </div>
+    </div>
+  
+    <button 
+      type="submit"
+      class="btn btn-olf-primary btn-block" 
+      [disabled]="!locationsForm.valid || !selectedLocation">
+        <i class="fas fa-plus"></i> Add this location
+    </button>
+  
+  </div>
+</form>
+
