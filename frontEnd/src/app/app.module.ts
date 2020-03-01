@@ -162,6 +162,7 @@ import { ProducerPageProductCardMobileComponent } from './feature/producer/produ
 import { MarketComponent } from './feature/market/market.component';
 import { MarketPageComponent } from './feature/market/market-page/market-page.component';
 import { AddMarketLocationComponent } from './shared/add-market-location/add-market-location.component';
+import { AddNewMarketComponent } from './auth/update-profile/add-new-market/add-new-market.component';
 
 
 @NgModule({
@@ -276,7 +277,8 @@ import { AddMarketLocationComponent } from './shared/add-market-location/add-mar
     ProducerPageProductCardMobileComponent,
     MarketComponent,
     MarketPageComponent,
-    AddMarketLocationComponent
+    AddMarketLocationComponent,
+    AddNewMarketComponent
   ],
   imports: [
     BrowserModule,

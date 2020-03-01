@@ -1,0 +1,103 @@
+<div formGroupName="market" class="col-12">
+            
+    <div class="row form-section">
+      
+      <div class="col-12 form-section-header">
+        <h5>Market Details</h5>
+      </div>
+      
+      <div class="col-12 form-section-body">
+        
+        <div class="row">
+          <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Market Name:</label>
+          <div class="col-xs-12 col-sm-8 input-group">
+            <input class="form-input-custom" type="text" id="name" formControlName="name">
+            <small *ngIf="!userForm.get('market.name').valid && userForm.get('market.name').touched" class="help-block">Please enter the farmers market name.</small>
+          </div>
+        </div>
+        
+        <div class="row">
+          <label for="customUrl" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Custom Url:</label>
+          <div class="col-xs-12 col-sm-8 input-group">
+            <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl">
+            <small class="">If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
+            <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
+            <small *ngIf="customUrlDuplicateExists" class="help-block">That URL is already taken. Please choose another.</small>
+            <small *ngIf="customUrl.errors?.pattern" class="help-block">
+              Only letters, numbers, hyphens, and underscores are allowed.
+            </small>
+          </div>
+        </div>
+        
+        <div class="row">
+          <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Describe the Market:</label>
+          <div class="col-xs-12 col-sm-8 input-group">
+            <textarea class="form-input-custom" type="text" id="description" formControlName="description"></textarea>
+          </div>
+        </div>
+        
+        <div class="row">
+          <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Logo:</label>
+          <div class="col-xs-12 col-sm-8 input-group">
+            <div *ngIf="!addingImage">
+              <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
+            </div>
+            <div class="row" *ngIf="addingImage">
+              <div class="col-6">
+                <label class="col-form-label text-center">Upload and Crop:</label>
+              </div>
+              <div class="col-6">
+                <label class="col-form-label text-center">Preview:</label>
+              </div>
+              <div class="col-12">
+                <app-logo-cropper [name]="imageName"></app-logo-cropper>
+              </div>
+              <div class="col-12 text-center">
+                <button 
+                class="btn btn-olf-primary btn-sm" 
+                (click)="onCancelAddImage()">
+                Cancel Logo Upload
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      </div>
+
+    </div>
+
+    <div class="row form-section">
+
+      <div class="col-12 form-section-header">
+        <h5>Location Details</h5>
+      </div>      
+
+      <div class="col-12 form-section-body my-5">
+
+        <div *ngIf="multipleLocations.length > 0">
+
+          <div *ngFor="let location of multipleLocations">
+            <p>{{ location.timeframe }}</p>
+          </div>
+      
+          <hr>
+
+          <div *ngIf="!showAddMarketLocation">
+            <p class="text-center">
+              <button class="btn btn-olf-primary btn-sm" (click)="showAddLocation()">
+                <i class="fas fa-plus"></i> Add another location
+              </button>
+            </p>
+          </div>
+
+        </div>
+
+        <app-add-market-location *ngIf="showAddMarketLocation" (addLocation)="pushNewLocation($event)"></app-add-market-location>
+
+      </div>
+    
+    </div>
+  
+  </div>
