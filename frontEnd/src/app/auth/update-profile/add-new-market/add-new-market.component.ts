@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 
 import { ImageService } from '../../../core/services/image/image.service';
 import { UserService } from '../../../core/services/user/user.service';
+import { ApiService } from '../../../core/api.service';
+
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -14,6 +16,9 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
 
   user: any;
   getUserSub: Subscription;
+
+  // reactive form
+  marketForm: FormGroup;
 
   singleLocation = {
     name: '',
@@ -52,6 +57,7 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
 
   constructor(private ngZone: NgZone,
               private fb: FormBuilder,
+              private apiService: ApiService,
               private imageService: ImageService,
               private userService: UserService) { }
 
@@ -61,15 +67,25 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
       .subscribe(
         result => {
           this.user = result;
+          console.log('user: ', result);
         }
       );
+
+    this.marketForm = this.fb.group({
+      id: [this.user.id],
+      name: ['', [Validators.required]],
+      customUrl: ['', [Validators.pattern('[0-9a-zA-Z_-]*')]],
+      description: [''],
+      logoUrl: [''],
+      status: ['active']
+    });
 
     this.imagePreviewSub = this.imageService._previewCroppedImage
       .subscribe(
         result => {
           if (result) {
             this.imagePreviewExists = true;
-            // this.userForm.patchValue({ producer: { logoUrl: this.imageName } });
+            this.marketForm.patchValue({ logoUrl: this.imageName });
           } else {
             this.imagePreviewExists = false;
           }
@@ -77,7 +93,7 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
       );
 
     // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
-    this.checkCustomUrlSubscription = this.userForm['controls'].producer['controls'].customUrl.valueChanges
+    this.checkCustomUrlSubscription = this.marketForm['controls'].customUrl.valueChanges
       .filter(val => val.length >= 2) // after 2 characters at least
       .debounceTime(500) // after waiting half a second
       .switchMap( // call the api, but cancel the call if a new call is made
@@ -98,6 +114,58 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
         })
       .subscribe(valid => console.log('valid: ', valid));
 
-  }
+  };
+
+  onAddImage() {
+    this.imageName = this.user.id + '/logo';
+    this.addingImage = true;
+    console.log('form value: ', this.marketForm.value);
+    console.log('form: ', this.marketForm);
+    // add required validator to form
+    this.marketForm.get('logoUrl').setValidators([Validators.required]);
+    this.marketForm.get('logoUrl').updateValueAndValidity();
+  };
+
+  onCancelAddImage() {
+    // remove image name
+    this.imageName = '';
+    this.marketForm.patchValue({logoUrl: ''});    // hide the image cropper
+    this.addingImage = false;
+    console.log('form value: ', this.marketForm.value);
+    console.log('form: ', this.marketForm);
+    // remove the required validator
+    this.marketForm.get('logoUrl').clearValidators();
+    this.marketForm.get('logoUrl').updateValueAndValidity();
+    // reset the imageService
+    this.imageService.reset();
+  };
+
+  showAddLocation() {
+    this.showAddMarketLocation = true;
+  };
+
+  pushNewLocation(value) {
+    this.multipleLocations.push(value);
+    this.showAddMarketLocation = false;
+    console.log('multiLoc; ', this.multipleLocations);
+  };
+
+  ngOnDestroy() {
+    if (this.getUserSub) {
+      this.getUserSub.unsubscribe();
+    };
+    if (this.postCustomUrlSubscription) {
+      this.postCustomUrlSubscription.unsubscribe();
+    };
+    if (this.checkCustomUrlSubscription) {
+      this.checkCustomUrlSubscription.unsubscribe();
+    };
+    if (this.getCustomUrlSubscription) {
+      this.getCustomUrlSubscription.unsubscribe();
+    };
+    if (this.imageUploadingSub) {
+      this.imageUploadingSub.unsubscribe();
+    };
+  };
 
 }

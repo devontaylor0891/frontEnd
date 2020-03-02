@@ -156,7 +156,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         result => {
           this.user = result;
-          // console.log('userfrom service: ', this.user);
+          console.log('userfrom service: ', this.user);
         }
       );
 

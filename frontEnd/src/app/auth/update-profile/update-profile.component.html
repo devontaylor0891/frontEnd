@@ -212,7 +212,7 @@
         </div>
 
         <!-- Market Form -->
-        <div [class.hidden]="role !== 'market'" class="row">
+        <div [class.hidden]="role !== 'market'" class="row" *ngIf="role === 'market'">
           
           <div class="col-12">
             <h2 class="h2-responsive">
@@ -225,7 +225,7 @@
           
           <!-- Market Form Group -->
           
-          <div formGroupName="market" class="col-12">
+          <!-- <div formGroupName="market" class="col-12">
             
             <div class="row form-section">
               
@@ -327,7 +327,7 @@
             
             </div>
           
-          </div>
+          </div> -->
           
           <!-- market form group end -->
         
