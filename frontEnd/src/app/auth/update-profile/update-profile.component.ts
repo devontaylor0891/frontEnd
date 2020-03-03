@@ -146,9 +146,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {}
 
-  resizeMap() {
-    this.agmMap.triggerResize();
-  }
+  // resizeMap() {
+  //   this.agmMap.triggerResize();
+  // }
 
   ngOnInit() {
 
@@ -160,62 +160,62 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
         }
       );
 
-    this.getCitySub = this.locationService.getCity()
-      .subscribe(
-        result => {
-          // console.log('result: ', result);
-          this.city = result;
-        }
-      );
+    // this.getCitySub = this.locationService.getCity()
+    //   .subscribe(
+    //     result => {
+    //       // console.log('result: ', result);
+    //       this.city = result;
+    //     }
+    //   );
 
-    this.getProvinceSub = this.locationService.getProvince()
-      .subscribe(
-        result => {
-          // console.log('result: ', result);
-          this.province = result;
-        }
-      );
+    // this.getProvinceSub = this.locationService.getProvince()
+    //   .subscribe(
+    //     result => {
+    //       // console.log('result: ', result);
+    //       this.province = result;
+    //     }
+    //   );
 
-    this.getCityProvinceSub = this.locationService.getCityProvince()
-      .subscribe(
-        result => {
-          // console.log('result: ', result);
-          this.selectedCityProvince = result;
+    // this.getCityProvinceSub = this.locationService.getCityProvince()
+    //   .subscribe(
+    //     result => {
+    //       // console.log('result: ', result);
+    //       this.selectedCityProvince = result;
 
-          if (!this.selectedAddress) {
-            this.selectedLocation = this.selectedCityProvince;
-          }
-          if (this.selectedAddress) {
-            this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
-          }
-          // console.log('selectedLocation: ', this.selectedLocation);
-          // console.log('city: ', this.city);
-          // console.log('province: ', this.province);
-          // console.log('streetNumber: ', this.streetNumber);
-          // console.log('route: ', this.route);
-          // console.log('selectedAddress: ', this.selectedAddress);
-          if (this.searchElementRef) {
-            // this.searchElementRef.nativeElement.value = this.selectedLocation;
-            this.searchControl.setValue(this.selectedLocation);
-            // console.log('form: ', this.userForm);
-          }
-        }
-      );
+    //       if (!this.selectedAddress) {
+    //         this.selectedLocation = this.selectedCityProvince;
+    //       }
+    //       if (this.selectedAddress) {
+    //         this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
+    //       }
+    //       // console.log('selectedLocation: ', this.selectedLocation);
+    //       // console.log('city: ', this.city);
+    //       // console.log('province: ', this.province);
+    //       // console.log('streetNumber: ', this.streetNumber);
+    //       // console.log('route: ', this.route);
+    //       // console.log('selectedAddress: ', this.selectedAddress);
+    //       if (this.searchElementRef) {
+    //         // this.searchElementRef.nativeElement.value = this.selectedLocation;
+    //         this.searchControl.setValue(this.selectedLocation);
+    //         // console.log('form: ', this.userForm);
+    //       }
+    //     }
+    //   );
 
-    this.getAddressSub = this.locationService.getAddress()
-      .subscribe(
-        result => {
-          this.clearAddress();
-          if (result) {
-            this.selectedAddress = result;
-            this.address = result;
-            // console.log('address service: ', result);
-          // } else {
-          //   console.log('no address returned')
-          }
+    // this.getAddressSub = this.locationService.getAddress()
+    //   .subscribe(
+    //     result => {
+    //       this.clearAddress();
+    //       if (result) {
+    //         this.selectedAddress = result;
+    //         this.address = result;
+    //         // console.log('address service: ', result);
+    //       // } else {
+    //       //   console.log('no address returned')
+    //       }
 
-        }
-      );
+    //     }
+    //   );
 
     this.imagePreviewSub = this.imageService._previewCroppedImage
       .subscribe(
@@ -231,83 +231,83 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
     // ***** LOCATION INIT CODE ******
     // set google maps defaults
-    this.zoom = 8;
-    this.latitude = 50.5555;
-    this.longitude = -100.5555;
+    // this.zoom = 8;
+    // this.latitude = 50.5555;
+    // this.longitude = -100.5555;
 
-    // create search FormControl
-    this.searchControl = new FormControl('', [Validators.required]);
+    // // create search FormControl
+    // this.searchControl = new FormControl('', [Validators.required]);
 
-    // set current position
-    // this.setCurrentPosition();
+    // // set current position
+    // // this.setCurrentPosition();
 
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['geocode']
-      });
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+    // // load Places Autocomplete
+    // this.mapsAPILoader.load().then(() => {
+    //   const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+    //     types: ['geocode']
+    //   });
+    //   autocomplete.addListener('place_changed', () => {
+    //     this.ngZone.run(() => {
+    //       // get the place result
+    //       const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
+    //       // verify result
+    //       if (place.geometry === undefined || place.geometry === null) {
+    //         return;
+    //       }
 
-          // console.log('place: ', place);
-          this.fillAddress(place);
+    //       // console.log('place: ', place);
+    //       this.fillAddress(place);
 
-          // set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.markerLatitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.markerLongitude = place.geometry.location.lng();
-          this.zoom = 12;
-        });
-      });
-    });
+    //       // set latitude, longitude and zoom
+    //       this.latitude = place.geometry.location.lat();
+    //       this.markerLatitude = place.geometry.location.lat();
+    //       this.longitude = place.geometry.location.lng();
+    //       this.markerLongitude = place.geometry.location.lng();
+    //       this.zoom = 12;
+    //     });
+    //   });
+    // });
 
-    // get the basic info for the user
-    this.auth.getParsedId()
-      .subscribe(
-        result => {
-          this.id = result;
-        }
-      );
+    // // get the basic info for the user
+    // this.auth.getParsedId()
+    //   .subscribe(
+    //     result => {
+    //       this.id = result;
+    //     }
+    //   );
 
-    this.userService.getFirstName()
-      .subscribe(
-        result => {
-          this.firstName = result;
-          // console.log('firstName: ', this.firstName);
-        }
-      );
+    // this.userService.getFirstName()
+    //   .subscribe(
+    //     result => {
+    //       this.firstName = result;
+    //       // console.log('firstName: ', this.firstName);
+    //     }
+    //   );
 
-    this.userService.getEmail()
-      .subscribe(
-        result => {
-          this.email = result;
-        }
-      );
+    // this.userService.getEmail()
+    //   .subscribe(
+    //     result => {
+    //       this.email = result;
+    //     }
+    //   );
 
     // instantiate the formgroup
     this.userForm = new FormGroup({
       user: new FormGroup({
-        firstName: new FormControl(this.firstName, [Validators.required]),
-        email: new FormControl(this.email, [Validators.required]),
+        firstName: new FormControl(this.user.firstName, [Validators.required]),
+        email: new FormControl(this.user.email, [Validators.required]),
         role: new FormControl('', [Validators.required])
       }),
       producer: new FormGroup({
-        id: new FormControl(this.id),
+        id: new FormControl(this.user.id),
         name: new FormControl('', [Validators.required]),
         customUrl: new FormControl('', [Validators.pattern('[0-9a-zA-Z_-]*')]),
         description: new FormControl(''),
         logoUrl: new FormControl('')
       }),
       market: new FormGroup({
-        id: new FormControl(this.id),
+        id: new FormControl(this.user.id),
         name: new FormControl('', [Validators.required]),
         customUrl: new FormControl('', [Validators.pattern('[0-9a-zA-Z_-]*')]),
         description: new FormControl(''),
@@ -350,7 +350,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   disableProducerFields() {
     this.userForm.controls.producer.disable();
-    this.searchControl.disable();
+    // this.searchControl.disable();
   };
 
   disableMarketFields() {
@@ -359,7 +359,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   enableProducerFields() {
     this.userForm.controls.producer.enable();
-    this.searchControl.enable();
+    // this.searchControl.enable();
   };
 
   enableMarketFields() {
@@ -572,70 +572,70 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
       );
   };
 
-  fillAddress(place) {
-    this.clearAddress();
-    this.parseAddressComponents(place.address_components);
-    this.lat = place.geometry.location.lat();
-    this.lng = place.geometry.location.lng();
-    this.selectedLocation = this.city + ', ' + this.province;
-    this.searchControl.setValue(this.selectedLocation);
-    if (this.streetNumber && this.route) {
-      this.address = this.streetNumber + ' ' + this.route;
-      this.selectedAddress = this.streetNumber + ' ' + this.route;
-      this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
-      this.searchControl.setValue(this.selectedLocation);
-    };
-    this.latitude = this.lat;
-    this.longitude = this.lng;
-  };
+  // fillAddress(place) {
+  //   this.clearAddress();
+  //   this.parseAddressComponents(place.address_components);
+  //   this.lat = place.geometry.location.lat();
+  //   this.lng = place.geometry.location.lng();
+  //   this.selectedLocation = this.city + ', ' + this.province;
+  //   this.searchControl.setValue(this.selectedLocation);
+  //   if (this.streetNumber && this.route) {
+  //     this.address = this.streetNumber + ' ' + this.route;
+  //     this.selectedAddress = this.streetNumber + ' ' + this.route;
+  //     this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
+  //     this.searchControl.setValue(this.selectedLocation);
+  //   };
+  //   this.latitude = this.lat;
+  //   this.longitude = this.lng;
+  // };
 
-  private parseAddressComponents(components) {
-    for (let i = 0; i < components.length; i++) {
-      const types = components[i].types;
-      for (let j = 0; j < types.length; j++) {
-        const result = types[j];
-        if (result === 'street_number') {
-          this.streetNumber = components[i].short_name;
-        }
-        if (result === 'route') {
-          this.route = components[i].short_name;
-        }
-        if (result === 'locality' || result === 'sublocality') {
-          this.city = components[i].short_name;
-        }
-        if (result === 'administrative_area_level_1') {
-          this.province = components[i].short_name;
-        }
-        if (result === 'postal_code') {
-          this.postalCode = components[i].short_name;
-        }
-        if (result === 'country') {
-          this.country = components[i].short_name;
-        }
-      }
-    }
-  };
+  // private parseAddressComponents(components) {
+  //   for (let i = 0; i < components.length; i++) {
+  //     const types = components[i].types;
+  //     for (let j = 0; j < types.length; j++) {
+  //       const result = types[j];
+  //       if (result === 'street_number') {
+  //         this.streetNumber = components[i].short_name;
+  //       }
+  //       if (result === 'route') {
+  //         this.route = components[i].short_name;
+  //       }
+  //       if (result === 'locality' || result === 'sublocality') {
+  //         this.city = components[i].short_name;
+  //       }
+  //       if (result === 'administrative_area_level_1') {
+  //         this.province = components[i].short_name;
+  //       }
+  //       if (result === 'postal_code') {
+  //         this.postalCode = components[i].short_name;
+  //       }
+  //       if (result === 'country') {
+  //         this.country = components[i].short_name;
+  //       }
+  //     }
+  //   }
+  // };
 
-  mapClicked($event: AgmMouseEvent) {
-    this.clearAddress();
-    this.selectedCityProvince = '';
-    this.markerLatitude = $event.coords.lat
-    this.markerLongitude =  $event.coords.lng;
-    this.latitude = this.markerLatitude;
-    this.longitude = this.markerLongitude;
-    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
-  }
+  // mapClicked($event: AgmMouseEvent) {
+  //   this.clearAddress();
+  //   this.selectedCityProvince = '';
+  //   this.markerLatitude = $event.coords.lat
+  //   this.markerLongitude =  $event.coords.lng;
+  //   this.latitude = this.markerLatitude;
+  //   this.longitude = this.markerLongitude;
+  //   this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  // }
 
-  markerDragEnd($event: AgmMouseEvent) {
-    this.clearAddress();
-    this.selectedCityProvince = '';
-    // console.log('dragEnd');
-    this.markerLatitude = $event.coords.lat
-    this.markerLongitude =  $event.coords.lng;
-    this.latitude = this.markerLatitude;
-    this.longitude = this.markerLongitude;
-    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
-  };
+  // markerDragEnd($event: AgmMouseEvent) {
+  //   this.clearAddress();
+  //   this.selectedCityProvince = '';
+  //   // console.log('dragEnd');
+  //   this.markerLatitude = $event.coords.lat
+  //   this.markerLongitude =  $event.coords.lng;
+  //   this.latitude = this.markerLatitude;
+  //   this.longitude = this.markerLongitude;
+  //   this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  // };
 
   onAddImage() {
     this.imageName = this.user.id + '/logo';
@@ -676,14 +676,14 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     this.error = true;
   };
 
-  clearAddress() {
-    this.city = '';
-    this.province = '';
-    this.streetNumber = null;
-    this.route = '';
-    this.selectedAddress = '';
-    this.selectedLocation = '';
-  };
+  // clearAddress() {
+  //   this.city = '';
+  //   this.province = '';
+  //   this.streetNumber = null;
+  //   this.route = '';
+  //   this.selectedAddress = '';
+  //   this.selectedLocation = '';
+  // };
 
   showAddLocation() {
     this.showAddMarketLocation = true;

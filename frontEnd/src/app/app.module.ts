@@ -163,6 +163,7 @@ import { MarketComponent } from './feature/market/market.component';
 import { MarketPageComponent } from './feature/market/market-page/market-page.component';
 import { AddMarketLocationComponent } from './shared/add-market-location/add-market-location.component';
 import { AddNewMarketComponent } from './auth/update-profile/add-new-market/add-new-market.component';
+import { AddNewProducerComponent } from './auth/update-profile/add-new-producer/add-new-producer.component';
 
 
 @NgModule({
@@ -278,7 +279,8 @@ import { AddNewMarketComponent } from './auth/update-profile/add-new-market/add-
     MarketComponent,
     MarketPageComponent,
     AddMarketLocationComponent,
-    AddNewMarketComponent
+    AddNewMarketComponent,
+    AddNewProducerComponent
   ],
   imports: [
     BrowserModule,

@@ -42,7 +42,7 @@
               <div class="row">
                 <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Email:</label>
                 <div class="col-xs-12 col-sm-8 input-group">
-                  <input class="form-input-custom" type="email" id="email" formControlName="email" [(ngModel)]="email">
+                  <input class="form-input-custom" type="email" id="email" formControlName="email">
                   <small *ngIf="!userForm.get('user.email').valid && userForm.get('user.email').touched" class="help-block">Please enter your email. We'll need this to send you details about your orders and notifications.</small>
                 </div>
               </div>
@@ -67,12 +67,12 @@
                 
                 <label class="pr-3">
                   Producer:
-                  <input type="radio" formControlName="role" value="producer" (change)="resizeMap(); onSelectProducer()" />
+                  <input type="radio" formControlName="role" value="producer" (change)=" onSelectProducer()" />
                 </label>
                 
                 <label>
                   Market:
-                  <input type="radio" formControlName="role" value="market" (change)="resizeMap(); onSelectMarket()" />
+                  <input type="radio" formControlName="role" value="market" (change)="onSelectMarket()" />
                 </label>
                 
               </div>
@@ -92,122 +92,7 @@
             <p>We're always happy to have new producers.</p>
           </div>
           
-          <!-- Producer Form Group -->
-          
-          <div class="col-12">
-            
-            <div formGroupName="producer" class="row form-section">
-              
-              <div class="col-12 form-section-header">
-                <h5>Business Details</h5>
-              </div>
-              
-              <div class="col-12 form-section-body">
-                
-                <div class="row">
-                  <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Business Name:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <input class="form-input-custom" type="text" id="name" formControlName="name">
-                    <small *ngIf="!userForm.get('producer.name').valid && userForm.get('producer.name').touched" class="help-block">Please enter your business name.</small>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <label for="customUrl" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Custom Url:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl">
-                    <small class="">If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
-                    <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
-                    <small *ngIf="customUrlDuplicateExists" class="help-block">That URL is already taken. Please choose another.</small>
-                    <small *ngIf="customUrl.errors?.pattern" class="help-block">
-                      Only letters, numbers, hyphens, and underscores are allowed.
-                    </small>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Describe your Business:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <textarea class="form-input-custom" type="text" id="description" formControlName="description"></textarea>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Logo:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <div *ngIf="!addingImage">
-                      <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
-                    </div>
-                    <div class="row" *ngIf="addingImage">
-                      <div class="col-6">
-                        <label class="col-form-label text-center">Upload and Crop:</label>
-                      </div>
-                      <div class="col-6">
-                        <label class="col-form-label text-center">Preview:</label>
-                      </div>
-                      <div class="col-12">
-                        <app-logo-cropper [name]="imageName"></app-logo-cropper>
-                      </div>
-                      <div class="col-12 text-center">
-                        <button 
-                        class="btn btn-olf-primary btn-sm" 
-                        (click)="onCancelAddImage()">
-                        Cancel Logo Upload
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              
-            </div>
-            
-          </div>
-          
-        </div>
-        
-        <!-- producer form group end -->
-        <div class="col-12">
-          
-          <div class="row form-section">
-            
-            <div class="col-12 form-section-header">
-              <h5>Location Details</h5>
-            </div>
-            
-            <div class="col-12 form-section-body">
-              
-              <p>If you only do deliveries and off-farm pickups, your city or town is specific enough. But if you plan on offering the option of scheduled farmgate pickups, then we'll need an address.</p>
-              
-              <!-- location -->
-              
-              <div class="row">
-                <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location Search:</label>
-                <div class="col-xs-12 col-sm-8 input-group">
-                  <input autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-input-custom" #search id="search"
-                  [formControl]="searchControl">
-                </div>
-              </div>
-              
-              <div class="row">
-                <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Selected Location:</label>
-                <div class="col-xs-12 col-sm-8 input-group">
-                  <p>{{ selectedLocation }}</p>
-                </div>
-              </div>
-              
-              <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)">
-                <agm-marker [latitude]="markerLatitude" [longitude]="markerLongitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
-                  <!-- <agm-info-window>Börk</agm-info-window> -->
-                </agm-marker>
-              </agm-map>
-              
-              
-            </div>
-            
-          </div>
-          
-        </div>
+          <app-add-new-producer [producerForm]="userForm.controls.producer"></app-add-new-producer>
         
         </div>
 
@@ -221,115 +106,7 @@
             <p>We're always happy to have new markets.</p>
           </div>
 
-          <app-add-new-market></app-add-new-market>
-          
-          <!-- Market Form Group -->
-          
-          <!-- <div formGroupName="market" class="col-12">
-            
-            <div class="row form-section">
-              
-              <div class="col-12 form-section-header">
-                <h5>Market Details</h5>
-              </div>
-              
-              <div class="col-12 form-section-body">
-                
-                <div class="row">
-                  <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Market Name:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <input class="form-input-custom" type="text" id="name" formControlName="name">
-                    <small *ngIf="!userForm.get('market.name').valid && userForm.get('market.name').touched" class="help-block">Please enter the farmers market name.</small>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <label for="customUrl" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Custom Url:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <input (keydown.space)="$event.preventDefault()" class="form-input-custom" type="text" id="customUrl" formControlName="customUrl">
-                    <small class="">If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
-                    <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
-                    <small *ngIf="customUrlDuplicateExists" class="help-block">That URL is already taken. Please choose another.</small>
-                    <small *ngIf="customUrl.errors?.pattern" class="help-block">
-                      Only letters, numbers, hyphens, and underscores are allowed.
-                    </small>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Describe the Market:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <textarea class="form-input-custom" type="text" id="description" formControlName="description"></textarea>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Logo:</label>
-                  <div class="col-xs-12 col-sm-8 input-group">
-                    <div *ngIf="!addingImage">
-                      <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Add Logo</button>
-                    </div>
-                    <div class="row" *ngIf="addingImage">
-                      <div class="col-6">
-                        <label class="col-form-label text-center">Upload and Crop:</label>
-                      </div>
-                      <div class="col-6">
-                        <label class="col-form-label text-center">Preview:</label>
-                      </div>
-                      <div class="col-12">
-                        <app-logo-cropper [name]="imageName"></app-logo-cropper>
-                      </div>
-                      <div class="col-12 text-center">
-                        <button 
-                        class="btn btn-olf-primary btn-sm" 
-                        (click)="onCancelAddImage()">
-                        Cancel Logo Upload
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              
-              </div>
-
-            </div>
-
-            <div class="row form-section">
-
-              <div class="col-12 form-section-header">
-                <h5>Location Details</h5>
-              </div>      
-
-              <div class="col-12 form-section-body my-5">
-
-                <div *ngIf="multipleLocations.length > 0">
-
-                  <div *ngFor="let location of multipleLocations">
-                    <p>{{ location.timeframe }}</p>
-                  </div>
-              
-                  <hr>
-
-                  <div *ngIf="!showAddMarketLocation">
-                    <p class="text-center">
-                      <button class="btn btn-olf-primary btn-sm" (click)="showAddLocation()">
-                        <i class="fas fa-plus"></i> Add another location
-                      </button>
-                    </p>
-                  </div>
-
-                </div>
-
-                <app-add-market-location *ngIf="showAddMarketLocation" (addLocation)="pushNewLocation($event)"></app-add-market-location>
-
-              </div>
-            
-            </div>
-          
-          </div> -->
-          
-          <!-- market form group end -->
+          <app-add-new-market #addNewMarket></app-add-new-market>
         
         </div>
         
@@ -344,18 +121,25 @@
           </p>
           
           <button 
-          *ngIf="userForm.get('user.role').value === 'consumer'" 
-          type="submit" 
-          class="btn btn-olf-primary" 
-          [disabled]="!userForm.valid">
-          Complete Signup</button>
+            *ngIf="userForm.get('user.role').value === 'consumer'" 
+            type="submit" 
+            class="btn btn-olf-primary" 
+            [disabled]="!userForm.valid">
+            Complete Signup</button>
           
           <button 
-          *ngIf="userForm.get('user.role').value === 'producer' || 'market'" 
-          type="submit" 
-          class="btn btn-olf-primary" 
-          [disabled]="!userForm.valid || multipleLocations < 1">
-          Complete Signup</button>
+            *ngIf="userForm.get('user.role').value === 'producer'" 
+            type="submit" 
+            class="btn btn-olf-primary" 
+            [disabled]="!userForm.valid || !userForm.controls.producer.valid">
+            Complete Signup</button>
+
+          <button 
+            *ngIf="userForm.get('user.role').value === 'market'" 
+            type="submit" 
+            class="btn btn-olf-primary" 
+            [disabled]="!userForm.valid || multipleLocations.length < 1">
+            Complete Signup</button>
           
         </div>
       </form> 
