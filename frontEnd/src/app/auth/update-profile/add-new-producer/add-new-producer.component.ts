@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, NgZone } from '@angula
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { LocationService } from '../../../core/services/location/location.service';
+import { ImageService } from '../../../core/services/image/image.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -51,7 +52,17 @@ export class AddNewProducerComponent implements OnInit {
 
   mapLocation: any;
 
+  // image properties
+  imageName = '';
+  addingImage = false;
+  imageUploading: boolean;
+  imageUploadingSub: Subscription;
+  imagePreviewSub: Subscription;
+  newItemUploading = false;
+  imagePreviewExists = false;
+
   constructor(private locationService: LocationService,
+              private imageService: ImageService,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone) {}
 
@@ -163,17 +174,23 @@ export class AddNewProducerComponent implements OnInit {
     this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
+    this.producerForm.patchValue({ latitude: this.lat });
     this.lng = place.geometry.location.lng();
+    this.producerForm.patchValue({ longitude: this.lng });
     this.selectedLocation = this.city + ', ' + this.province;
+    this.producerForm.patchValue({ location: this.city });
+    this.producerForm.patchValue({ province: this.province });
     this.searchControl.setValue(this.selectedLocation);
     if (this.streetNumber && this.route) {
       this.address = this.streetNumber + ' ' + this.route;
+      this.producerForm.patchValue({ address: this.address });
       this.selectedAddress = this.streetNumber + ' ' + this.route;
       this.selectedLocation = this.address + ', ' + this.city + ', ' + this.province;
       this.searchControl.setValue(this.selectedLocation);
     };
     this.latitude = this.lat;
     this.longitude = this.lng;
+    console.log('form: ', this.producerForm.value);
   };
 
   private parseAddressComponents(components) {
@@ -211,7 +228,7 @@ export class AddNewProducerComponent implements OnInit {
     this.latitude = this.markerLatitude;
     this.longitude = this.markerLongitude;
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
-  }
+  };
 
   markerDragEnd($event: AgmMouseEvent) {
     this.clearAddress();
@@ -223,6 +240,29 @@ export class AddNewProducerComponent implements OnInit {
     this.longitude = this.markerLongitude;
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   };
+
+  onAddImage() {
+    this.imageName = this.producerForm.value.id + '/logo';
+    this.producerForm.patchValue({ logoUrl: this.imageName });
+    this.addingImage = true;
+    // add required validator to form
+    this.producerForm.get('logoUrl').setValidators([Validators.required]);
+    this.producerForm.get('logoUrl').updateValueAndValidity();
+    console.log('form value: ', this.producerForm.value);
+  };
+
+  onCancelAddImage() {
+    // remove image name
+    this.imageName = '';
+    this.producerForm.patchValue( {logoUrl: ''});    // hide the image cropper
+    this.addingImage = false;
+    // remove the required validator
+    this.producerForm.get('logoUrl').clearValidators();
+    this.producerForm.get('logoUrl').updateValueAndValidity();
+    // reset the imageService
+    this.imageService.reset();
+    console.log('form value: ', this.producerForm.value);
+  }
 
   clearAddress() {
     this.city = '';

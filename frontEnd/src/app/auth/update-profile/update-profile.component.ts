@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router'
@@ -304,7 +303,12 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
         name: new FormControl('', [Validators.required]),
         customUrl: new FormControl('', [Validators.pattern('[0-9a-zA-Z_-]*')]),
         description: new FormControl(''),
-        logoUrl: new FormControl('')
+        logoUrl: new FormControl(''),
+        location: new FormControl('', [Validators.required]),
+        province: new FormControl('', [Validators.required]),
+        address: new FormControl(''),
+        longitude: new FormControl('', [Validators.required]),
+        latitude: new FormControl('', [Validators.required]),
       }),
       market: new FormGroup({
         id: new FormControl(this.user.id),
@@ -444,24 +448,24 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     ;
   };
 
-  onSelectMultipleLocations(result) {
-    this.resetMarketLocations();
-    this.isMultipleLocation = result;
-  };
+  // onSelectMultipleLocations(result) {
+  //   this.resetMarketLocations();
+  //   this.isMultipleLocation = result;
+  // };
 
-  resetMarketLocations() {
-    this.singleLocation = {
-      name: '',
-      city: '',
-      province: '',
-      latitude: null,
-      longitude: null,
-      address: '',
-      description: '',
-      timeframe: ''
-    };
-    this.multipleLocations = [];
-  }
+  // resetMarketLocations() {
+  //   this.singleLocation = {
+  //     name: '',
+  //     city: '',
+  //     province: '',
+  //     latitude: null,
+  //     longitude: null,
+  //     address: '',
+  //     description: '',
+  //     timeframe: ''
+  //   };
+  //   this.multipleLocations = [];
+  // }
 
   onSubmit(form: any): void {
     this.submitting = true;
@@ -637,29 +641,29 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   //   this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   // };
 
-  onAddImage() {
-    this.imageName = this.user.id + '/logo';
-    this.addingImage = true;
-    console.log('form value: ', this.userForm.value);
-    console.log('form: ', this.userForm);
-    // add required validator to form
-    this.userForm.controls.producer.get('logoUrl').setValidators([Validators.required]);
-    this.userForm.controls.producer.get('logoUrl').updateValueAndValidity();
-  };
+  // onAddImage() {
+  //   this.imageName = this.user.id + '/logo';
+  //   this.addingImage = true;
+  //   console.log('form value: ', this.userForm.value);
+  //   console.log('form: ', this.userForm);
+  //   // add required validator to form
+  //   this.userForm.controls.producer.get('logoUrl').setValidators([Validators.required]);
+  //   this.userForm.controls.producer.get('logoUrl').updateValueAndValidity();
+  // };
 
-  onCancelAddImage() {
-    // remove image name
-    this.imageName = '';
-    this.userForm.patchValue({producer: {logoUrl: ''}});    // hide the image cropper
-    this.addingImage = false;
-    console.log('form value: ', this.userForm.value);
-    console.log('form: ', this.userForm);
-    // remove the required validator
-    this.userForm.controls.producer.get('logoUrl').clearValidators();
-    this.userForm.controls.producer.get('logoUrl').updateValueAndValidity();
-    // reset the imageService
-    this.imageService.reset();
-  }
+  // onCancelAddImage() {
+  //   // remove image name
+  //   this.imageName = '';
+  //   this.userForm.patchValue({producer: {logoUrl: ''}});    // hide the image cropper
+  //   this.addingImage = false;
+  //   console.log('form value: ', this.userForm.value);
+  //   console.log('form: ', this.userForm);
+  //   // remove the required validator
+  //   this.userForm.controls.producer.get('logoUrl').clearValidators();
+  //   this.userForm.controls.producer.get('logoUrl').updateValueAndValidity();
+  //   // reset the imageService
+  //   this.imageService.reset();
+  // }
 
   handleSubmitSuccess(result) {
     this.newItemUploading = false;
@@ -685,15 +689,15 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   //   this.selectedLocation = '';
   // };
 
-  showAddLocation() {
-    this.showAddMarketLocation = true;
-  };
+  // showAddLocation() {
+  //   this.showAddMarketLocation = true;
+  // };
 
-  pushNewLocation(value) {
-    this.multipleLocations.push(value);
-    this.showAddMarketLocation = false;
-    console.log('multiLoc; ', this.multipleLocations);
-  };
+  // pushNewLocation(value) {
+  //   this.multipleLocations.push(value);
+  //   this.showAddMarketLocation = false;
+  //   console.log('multiLoc; ', this.multipleLocations);
+  // };
 
   ngOnDestroy() {
     if (this.getUserSub) {
