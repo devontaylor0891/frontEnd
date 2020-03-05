@@ -83,6 +83,8 @@ export class AddNewProducerComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+      console.log('form before placechange: ', this.producerForm.value);
+
       this.resizeMap();
 
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -90,6 +92,8 @@ export class AddNewProducerComponent implements OnInit {
       });
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
+          console.log('form after placechange: ', this.producerForm.value);
+          console.log('imageName: ', this.imageName);
           // get the place result
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
@@ -111,10 +115,9 @@ export class AddNewProducerComponent implements OnInit {
       });
     });
 
-     this.getCitySub = this.locationService.getCity()
+    this.getCitySub = this.locationService.getCity()
       .subscribe(
         result => {
-          // console.log('result: ', result);
           this.city = result;
         }
       );
@@ -122,7 +125,6 @@ export class AddNewProducerComponent implements OnInit {
     this.getProvinceSub = this.locationService.getProvince()
       .subscribe(
         result => {
-          // console.log('result: ', result);
           this.province = result;
         }
       );
@@ -130,25 +132,15 @@ export class AddNewProducerComponent implements OnInit {
     this.getCityProvinceSub = this.locationService.getCityProvince()
       .subscribe(
         result => {
-          // console.log('result: ', result);
           this.selectedCityProvince = result;
-
           if (!this.selectedAddress) {
             this.selectedLocation = this.selectedCityProvince;
           }
           if (this.selectedAddress) {
             this.selectedLocation = this.selectedAddress + ', ' + this.selectedCityProvince;
           }
-          // console.log('selectedLocation: ', this.selectedLocation);
-          // console.log('city: ', this.city);
-          // console.log('province: ', this.province);
-          // console.log('streetNumber: ', this.streetNumber);
-          // console.log('route: ', this.route);
-          // console.log('selectedAddress: ', this.selectedAddress);
           if (this.searchElementRef) {
-            // this.searchElementRef.nativeElement.value = this.selectedLocation;
             this.searchControl.setValue(this.selectedLocation);
-            // console.log('form: ', this.userForm);
           }
         }
       );
@@ -160,17 +152,14 @@ export class AddNewProducerComponent implements OnInit {
           if (result) {
             this.selectedAddress = result;
             this.address = result;
-            // console.log('address service: ', result);
-          // } else {
-          //   console.log('no address returned')
           }
-
         }
       );
 
   };
 
   fillAddress(place) {
+    console.log('fill address form: ', this.producerForm.value);
     this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
@@ -190,7 +179,9 @@ export class AddNewProducerComponent implements OnInit {
     };
     this.latitude = this.lat;
     this.longitude = this.lng;
-    console.log('form: ', this.producerForm.value);
+    // make sure logoUrl is populated
+    this.producerForm.patchValue({ logoUrl: this.imageName });
+    console.log('after fill address form: ', this.producerForm.value);
   };
 
   private parseAddressComponents(components) {
