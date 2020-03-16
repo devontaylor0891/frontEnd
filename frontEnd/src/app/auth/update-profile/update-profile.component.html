@@ -83,7 +83,7 @@
         </div>
         
         <!-- Producer form -->
-        <div [class.hidden]="role !== 'producer'" class="row">
+        <div class="row" *ngIf="role === 'producer'">
           
           <div class="col-12">
             <h2 class="h2-responsive">
@@ -97,7 +97,7 @@
         </div>
 
         <!-- Market Form -->
-        <div [class.hidden]="role !== 'market'" class="row" *ngIf="role === 'market'">
+        <div class="row" *ngIf="role === 'market'">
           
           <div class="col-12">
             <h2 class="h2-responsive">
