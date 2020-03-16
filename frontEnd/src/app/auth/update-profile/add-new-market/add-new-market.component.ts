@@ -1,9 +1,7 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 
 import { ImageService } from '../../../core/services/image/image.service';
-import { UserService } from '../../../core/services/user/user.service';
-import { ApiService } from '../../../core/api.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -15,10 +13,9 @@ import { Subscription } from 'rxjs/Subscription';
 export class AddNewMarketComponent implements OnInit, OnDestroy {
 
   user: any;
-  getUserSub: Subscription;
 
   // reactive form
-  marketForm: FormGroup;
+  @Input() marketForm: FormGroup;
 
   singleLocation = {
     name: '',
@@ -52,69 +49,10 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
   newItemUploading = false;
   imagePreviewExists = false;
 
-  submitting = false;
-  error: any;
+  constructor(private fb: FormBuilder,
+              private imageService: ImageService) { }
 
-  constructor(private ngZone: NgZone,
-              private fb: FormBuilder,
-              private apiService: ApiService,
-              private imageService: ImageService,
-              private userService: UserService) { }
-
-  ngOnInit() {
-
-    this.getUserSub = this.userService.getUser()
-      .subscribe(
-        result => {
-          this.user = result;
-          console.log('user: ', result);
-        }
-      );
-
-    this.marketForm = this.fb.group({
-      id: [this.user.id],
-      name: ['', [Validators.required]],
-      customUrl: ['', [Validators.pattern('[0-9a-zA-Z_-]*')]],
-      description: [''],
-      logoUrl: [''],
-      status: ['active']
-    });
-
-    this.imagePreviewSub = this.imageService._previewCroppedImage
-      .subscribe(
-        result => {
-          if (result) {
-            this.imagePreviewExists = true;
-            this.marketForm.patchValue({ logoUrl: this.imageName });
-          } else {
-            this.imagePreviewExists = false;
-          }
-        }
-      );
-
-    // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
-    this.checkCustomUrlSubscription = this.marketForm['controls'].customUrl.valueChanges
-      .filter(val => val.length >= 2) // after 2 characters at least
-      .debounceTime(500) // after waiting half a second
-      .switchMap( // call the api, but cancel the call if a new call is made
-        val => {
-          this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
-            .subscribe(
-              result => {
-                if (result[0] && result[0] !== this.user.id && result[0].length !== 0) {
-                  // console.log('producerId returned on check: ', result);
-                  this.customUrlDuplicateExists = true;
-                  // this.userForm['controls'].producer['controls'].customUrl.setErrors({ 'invalid': true });
-                } else {
-                  this.customUrlDuplicateExists = false;
-                }
-              }
-            );
-          return val;
-        })
-      .subscribe(valid => console.log('valid: ', valid));
-
-  };
+  ngOnInit() {};
 
   onAddImage() {
     this.imageName = this.user.id + '/logo';
@@ -150,10 +88,23 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
     console.log('multiLoc; ', this.multipleLocations);
   };
 
+  addNewLocation(value) {
+    const location = this.marketForm.controls.locations as FormArray;
+    location.push(this.fb.group({
+      'locationName': value.locationName || '',
+      'description': value.description || '',
+      'timeframe': value.timeframe,
+      'latitude': value.latitude,
+      'longitude': value.longitude,
+      'address': value.address,
+      'city': value.city,
+      'province': value.province
+    }))
+    console.log('marketform.value: ', this.marketForm.value);
+    this.showAddMarketLocation = false;
+  };
+
   ngOnDestroy() {
-    if (this.getUserSub) {
-      this.getUserSub.unsubscribe();
-    };
     if (this.postCustomUrlSubscription) {
       this.postCustomUrlSubscription.unsubscribe();
     };

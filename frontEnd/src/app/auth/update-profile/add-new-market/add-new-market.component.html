@@ -1,6 +1,5 @@
-<form [formGroup]="marketForm">
-<div class="col-12">
-            
+  <div class="col-12" [formGroup]="marketForm">
+    
     <div class="row form-section">
       
       <div class="col-12 form-section-header">
@@ -66,25 +65,25 @@
       
       
       </div>
-
+    
     </div>
-
+    
     <div class="row form-section">
-
+      
       <div class="col-12 form-section-header">
         <h5>Location Details</h5>
       </div>      
-
+      
       <div class="col-12 form-section-body my-5">
-
-        <div *ngIf="multipleLocations.length > 0">
-
-          <div *ngFor="let location of multipleLocations">
+        
+        <div *ngIf="marketForm.value.locations">
+          
+          <div *ngFor="let location of marketForm.value.locations">
             <p>{{ location.timeframe }}</p>
           </div>
-      
+          
           <hr>
-
+          
           <div *ngIf="!showAddMarketLocation">
             <p class="text-center">
               <button class="btn btn-olf-primary btn-sm" (click)="showAddLocation()">
@@ -92,15 +91,14 @@
               </button>
             </p>
           </div>
-
+          
         </div>
-
-        <app-add-market-location *ngIf="showAddMarketLocation" (addLocation)="pushNewLocation($event)"></app-add-market-location>
-
+        
+        <app-add-market-location *ngIf="showAddMarketLocation" (addLocation)="addNewLocation($event)"></app-add-market-location>
+        
       </div>
-    
+      
     </div>
-  
+    
   </div>
 
-</form>

@@ -39,6 +39,12 @@
         <p>{{ selectedLocation }}</p>
       </div>
     </div>
+
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)">
+      <agm-marker [latitude]="markerLatitude" [longitude]="markerLongitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
+        <!-- <agm-info-window>Börk</agm-info-window> -->
+      </agm-marker>
+    </agm-map>
   
     <button 
       type="button"

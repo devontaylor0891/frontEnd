@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
+import { LocationService } from '../../core/services/location/location.service';
+
+
 import { google } from '@google/maps';
 declare var google: any;
 import { MapsAPILoader } from '@agm/core';
@@ -29,6 +32,7 @@ export class AddMarketLocationComponent implements OnInit {
   @Output() public addLocation = new EventEmitter<any>();
 
   @ViewChild('locationSearch') public searchElementRef: ElementRef;
+  @ViewChild(AgmMap) public agmMap: AgmMap;
   public locationSearchControl: FormControl;
   public latitude: number;
   public longitude: number;
@@ -51,7 +55,8 @@ export class AddMarketLocationComponent implements OnInit {
 
   constructor(private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private locationService: LocationService) { }
 
   ngOnInit() {
 
@@ -168,6 +173,31 @@ export class AddMarketLocationComponent implements OnInit {
     this.locationObject.province = this.province;
     this.addLocation.emit(this.locationObject);
     console.log('locationObj: ', this.locationObject);
+  };
+
+  resizeMap() {
+    this.agmMap.triggerResize();
+  };
+
+  mapClicked($event: AgmMouseEvent) {
+    this.clearAddress();
+    this.selectedCityProvince = '';
+    this.markerLatitude = $event.coords.lat
+    this.markerLongitude =  $event.coords.lng;
+    this.latitude = this.markerLatitude;
+    this.longitude = this.markerLongitude;
+    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
+  };
+
+  markerDragEnd($event: AgmMouseEvent) {
+    this.clearAddress();
+    this.selectedCityProvince = '';
+    // console.log('dragEnd');
+    this.markerLatitude = $event.coords.lat
+    this.markerLongitude =  $event.coords.lng;
+    this.latitude = this.markerLatitude;
+    this.longitude = this.markerLongitude;
+    this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   };
 
 }
