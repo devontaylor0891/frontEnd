@@ -78,10 +78,14 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   newItemUploading = false;
   imagePreviewExists = false;
 
+  customUrlObject: any;
+  postCustomUrlSubscription: Subscription;
+
   submitting = false;
   error: any;
 
   constructor(private userService: UserService,
+              private apiService: ApiService,
               private router: Router,
               private imageService: ImageService) {
 
@@ -154,7 +158,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
         logoUrl: new FormControl(''),
         locations: new FormArray([
 
-        ])
+        ], [Validators.required])
       }),
       status: new FormControl('active')
     });
@@ -203,16 +207,179 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   onSubmit(form: any): void {
-    // this.submitting = true;
+    console.log('form passed into onsubmit: ', form.value);
+    this.submitting = true;
     console.log('userform: ', this.userForm.value);
+    
     // update user with patchUser
-    // if producer
-      // if imageUploading - upload then createProducer
-      // !imageUploading - createProducer
-    // if market
-      // if imageUploading - upload then createMarket
-      // !imageUploading - create Market
-    // handle success or erro
+    this.apiService.patchUser(this.user.id, form.value.user) // update user
+      .subscribe(
+        result => {
+          console.log('user updated: ', result);
+          // if producer
+            // if imageUploading - upload then createProducer
+            // !imageUploading - createProducer
+          if (form.value.user.role === 'producer') { // if producer
+                this.buildProducerSubmitObject(form.value);
+                // console.log('producer submit object: ', this.submitObject);
+                console.log('adding image value: ', this.addingImage);
+                if (this.addingImage) { // if adding logo, add it first
+                  // this.imageService.convertAndUpload();
+                  this.imageUploadingSub = this.imageService._imageUploading
+                    .subscribe(
+                      result5 => {
+                        console.log('result from imageUploading sub: ', result5);
+                        if (!result5) { // image uploaded, continue
+                          this.apiService.createProducer(this.submitObject) // create producer profile
+                            .subscribe(
+                              result1 => {
+                                // console.log('producer profile created: ', result);
+                                this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject) // create custom url
+                                  .subscribe(
+                                    result2 => {
+                                      // console.log('custom url submitted: ', result);
+                                      this.handleSubmitSuccess(result2);
+                                    },
+                                    err => this.handleSubmitError(err)
+                                  );
+                              },
+                              err => this.handleSubmitError(err)
+                            );
+                        }
+                      }
+                    );
+                  this.imageService.convertAndUpload();
+                } else { // if not adding logo, just create producer and custom url by themselves
+                  this.apiService.createProducer(this.submitObject)
+                    .subscribe(
+                      result3 => {
+                        // console.log('producer profile created: ', result);
+                        this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject)
+                          .subscribe(
+                            result4 => {
+                              // console.log('custom url submitted: ', result);
+                              this.handleSubmitSuccess(result4);
+                            },
+                            err => this.handleSubmitError(err)
+                          );
+                      },
+                      err => this.handleSubmitError(err)
+                    );
+                }
+              } else if (form.value.user.role === 'market') {
+                // if market
+            // if imageUploading - upload then createMarket
+            // !imageUploading - create Market
+                this.buildMarketSubmitObject(form.value);
+                console.log('market selected: ', this.submitObject);
+                console.log('adding image value: ', this.addingImage);
+                if (this.addingImage) { // if adding logo, add it first
+                  // this.imageService.convertAndUpload();
+                  this.imageUploadingSub = this.imageService._imageUploading
+                    .subscribe(
+                      result5 => {
+                        console.log('result from imageUploading sub: ', result5);
+                        if (!result5) { // image uploaded, continue
+                          this.apiService.createMarket(this.submitObject) // create producer profile
+                            .subscribe(
+                              result1 => {
+                                // console.log('producer profile created: ', result);
+                                this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject) // create custom url
+                                  .subscribe(
+                                    result2 => {
+                                      // console.log('custom url submitted: ', result);
+                                      this.handleSubmitSuccess(result2);
+                                    },
+                                    err => this.handleSubmitError(err)
+                                  );
+                              },
+                              err => this.handleSubmitError(err)
+                            );
+                        }
+                      }
+                    );
+                  this.imageService.convertAndUpload();
+                } else { // if not adding logo, just create producer and custom url by themselves
+                  this.apiService.createMarket(this.submitObject)
+                    .subscribe(
+                      result3 => {
+                        // console.log('producer profile created: ', result);
+                        this.postCustomUrlSubscription = this.apiService.createCustomUrl(this.customUrlObject)
+                          .subscribe(
+                            result4 => {
+                              console.log('custom url submitted: ', result);
+                              this.handleSubmitSuccess(result4);
+                            },
+                            err => this.handleSubmitError(err)
+                          );
+                      },
+                      err => this.handleSubmitError(err)
+                    );
+                }
+              };
+              this.handleSubmitSuccess(result)
+            },
+            err => this.handleSubmitError(err)
+          );
+  };
+
+  buildProducerSubmitObject(form) {
+    console.log('build producer form object: ', form);
+    // this.submitObject = {
+    //   id: this.user.id,
+    //   name: form.producer.name,
+    //   location: form.producer.city,
+    //   province: form.producer.province,
+    //   address: this.selectedAddress || '',
+    //   description: form.producer.description,
+    //   email: form.user.email,
+    //   logoUrl: this.imageName,
+    //   // longitude: this.longitude,
+    //   // latitude: this.latitude,
+    //   firstName: form.user.firstName,
+    //   status: 'active',
+    //   products: [],
+    //   schedule: []
+    // };
+    this.submitObject = form.producer;
+    if (form.producer.customUrl) {
+      this.customUrlObject = {
+        userId: this.user.id,
+        customUrl: form.producer.customUrl.toLowerCase(),
+        userType: 'producer'
+      };
+    } else {
+      this.customUrlObject = {
+        userId: this.user.id,
+        customUrl: this.user.id,
+        userType: 'producer'
+      };
+    }
+    ;
+  };
+
+  buildMarketSubmitObject(form) {
+    // this.submitObject = {
+    //   id: this.user.id,
+    //   name: form.market.name,
+    //   description: form.market.description,
+    //   logoUrl: this.imageName,
+    //   multipleLocations: form.market.multipleLocations
+    // };
+    this.submitObject = form.market;
+    if (form.market.customUrl) {
+      this.customUrlObject = {
+        userId: this.user.id,
+        customUrl: form.market.customUrl.toLowerCase(),
+        userType: 'market'
+      };
+    } else {
+      this.customUrlObject = {
+        userId: this.user.id,
+        customUrl: this.user.id,
+        userType: 'market'
+      };
+    };
   };
 
   // onSubmit(form: any): void {

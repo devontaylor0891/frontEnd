@@ -138,7 +138,7 @@
             *ngIf="userForm.get('user.role').value === 'market'" 
             type="submit" 
             class="btn btn-olf-primary" 
-            [disabled]="!userForm.valid || multipleLocations.length < 1">
+            [disabled]="!userForm.valid">
             Complete Signup</button>
           
         </div>
@@ -148,4 +148,5 @@
     </div>
 
   </div>
+  
 </div>

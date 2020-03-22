@@ -55,13 +55,13 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
   ngOnInit() {};
 
   onAddImage() {
-    this.imageName = this.user.id + '/logo';
+    this.imageName = this.marketForm.value.id + '/logo';
+    this.marketForm.patchValue({ logoUrl: this.imageName });
     this.addingImage = true;
-    console.log('form value: ', this.marketForm.value);
-    console.log('form: ', this.marketForm);
     // add required validator to form
     this.marketForm.get('logoUrl').setValidators([Validators.required]);
     this.marketForm.get('logoUrl').updateValueAndValidity();
+    console.log('form value: ', this.marketForm.value);
   };
 
   onCancelAddImage() {
@@ -100,7 +100,7 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
       'city': value.city,
       'province': value.province
     }))
-    console.log('marketform.value: ', this.marketForm.value);
+    console.log('marketform: ', this.marketForm);
     this.showAddMarketLocation = false;
   };
 
