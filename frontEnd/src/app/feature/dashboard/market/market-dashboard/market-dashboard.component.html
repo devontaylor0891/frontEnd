@@ -1,0 +1,40 @@
+<div class="mx-1 my-4">
+  
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs nav-justified tabs-2 grey lighten-2 flex-column flex-sm-row hidden-md-down dash-nav" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#deliveries" role="tab" (click)="setActive('schedulesLink')"><i class="fa fa-truck mr-1"></i> Schedule</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#accountInfo" role="tab" (click)="setActive('accountInfoLink')"><i class="fa fa-info-circle mr-1"></i> Account Info</a>
+    </li>
+  </ul>
+  
+  <div class="dropdown hidden-lg-up">
+    <button class="btn btn-olf-primary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Choose your Section
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" data-toggle="tab" href="#deliveries" role="tab" [ngClass]="activeLink == 'schedulesLink'  ? 'active' : ''" (click)="setActive('schedulesLink')">Schedule</a>
+      <a class="dropdown-item" data-toggle="tab" href="#accountInfo" role="tab" [ngClass]="activeLink == 'accountInfoLink'  ? 'active' : ''" (click)="setActive('accountInfoLink')">Account Info</a>
+    </div>
+  </div>
+  
+  <!-- Tab panels -->
+  <div class="tab-content" style="padding: 1em;">
+    
+    <!-- Deliveries Panel -->
+    <div class="tab-pane fade" id="deliveries" role="tabpanel"  [ngClass]="activeLink == 'schedulesLink'  ? 'active show in' : ''">
+      <app-market-schedule></app-market-schedule>
+    </div>
+    <!--/ Deliveries Panel-->
+    
+    <!-- Account Panel -->
+    <div class="tab-pane fade" id="accountInfo" role="tabpanel" [ngClass]="activeLink == 'accountInfoLink'  ? 'active show in' : ''">
+      <app-account-info [user]="user" [market]="market"  [customUrlObject]="customUrlObject"></app-account-info>
+    </div>
+    <!--/ Account Panel-->
+    
+  </div>
+  
+</div>

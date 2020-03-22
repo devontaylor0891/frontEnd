@@ -29,6 +29,8 @@ import { SearchService } from './core/services/search/search.service';
 import { CartService } from './core/services/cart-service/cart.service';
 import { UtilityService } from './core/services/utility/utility.service';
 import { ProducerDashboardService } from './feature/dashboard/producer-dashboard.service';
+import { MarketDashboardService } from './feature/dashboard/market-dashboard.service';
+
 import { PlacesService } from './core/services/places/places.service';
 import { UserService } from './core/services/user/user.service';
 import { ImageService } from './core/services/image/image.service';
@@ -164,6 +166,8 @@ import { MarketPageComponent } from './feature/market/market-page/market-page.co
 import { AddMarketLocationComponent } from './shared/add-market-location/add-market-location.component';
 import { AddNewMarketComponent } from './auth/update-profile/add-new-market/add-new-market.component';
 import { AddNewProducerComponent } from './auth/update-profile/add-new-producer/add-new-producer.component';
+import { MarketDashboardComponent } from './feature/dashboard/market/market-dashboard/market-dashboard.component';
+import { MarketScheduleComponent } from './feature/dashboard/market/market-schedule/market-schedule.component';
 
 
 @NgModule({
@@ -280,7 +284,9 @@ import { AddNewProducerComponent } from './auth/update-profile/add-new-producer/
     MarketPageComponent,
     AddMarketLocationComponent,
     AddNewMarketComponent,
-    AddNewProducerComponent
+    AddNewProducerComponent,
+    MarketDashboardComponent,
+    MarketScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -316,7 +322,8 @@ import { AddNewProducerComponent } from './auth/update-profile/add-new-producer/
     DatePipe,
     UpperCasePipe,
     UtilityService,
-    ProducerDashboardService,
+    ProducerDashboardService,,
+    MarketDashboardService,
     EditProductModalComponent,
     NgbActiveModal,
     ViewProductModalComponent,

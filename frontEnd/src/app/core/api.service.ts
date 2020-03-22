@@ -142,7 +142,6 @@ export class ApiService {
   getProducers(): Observable<any> {
     return this.http
       .get(this.apiUrl + `/producers/`)
-      // .get(`${ENV.BASE_API}producer/`)
       .catch(this._handleError);
   };
 
@@ -150,8 +149,13 @@ export class ApiService {
   getProducerById(id): Observable<any> {
     return this.http
       .get(this.apiUrl + `/producers/` + id)
-      // .get(`${ENV.BASE_API}producer/` + id)
-      // .get('http://onlylocalfood-api.a3jw4x3uey.us-west-2.elasticbeanstalk.com/api/producers/' + id)
+      .catch(this._handleError);
+  };
+
+  // GET one market by id
+  getMarketById(id): Observable<any> {
+    return this.http
+      .get(this.apiUrl + `/markets/` + id)
       .catch(this._handleError);
   };
 
@@ -160,7 +164,6 @@ export class ApiService {
     console.log('create new producer: ', producer);
     return this.http
       .post(this.apiUrl + `/producers/`, producer, {
-      // .post(`${ENV.BASE_API}producer/`, producer, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -297,6 +300,13 @@ export class ApiService {
     return this.http
     .get(this.apiUrl + `/producersSchedules/` + id)
       // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
+      .catch(this._handleError);
+  };
+
+   // GET entire schedule from a single market
+   getScheduleByMarketId(id): Observable<any> {
+    return this.http
+    .get(this.apiUrl + `/marketsSchedules/` + id)
       .catch(this._handleError);
   };
 

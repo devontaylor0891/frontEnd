@@ -210,7 +210,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
     console.log('form passed into onsubmit: ', form.value);
     this.submitting = true;
     console.log('userform: ', this.userForm.value);
-    
+
     // update user with patchUser
     this.apiService.patchUser(this.user.id, form.value.user) // update user
       .subscribe(

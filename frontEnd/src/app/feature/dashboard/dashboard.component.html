@@ -3,5 +3,6 @@
     <app-admin-dashboard *ngIf="this.isAdmin" [id]="id" [user]="user"></app-admin-dashboard>
     <app-consumer-dashboard *ngIf="this.userType === 'consumer'" [id]="user.id" [user]="user"></app-consumer-dashboard>
     <app-producer-dashboard *ngIf="this.userType === 'producer'" [id]="user.id" [user]="user"></app-producer-dashboard>
+    <app-market-dashboard *ngIf="this.userType === 'market'" [id]="user.id" [user]="user"></app-market-dashboard>
         
 </div>
