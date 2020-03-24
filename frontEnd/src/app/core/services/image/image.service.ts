@@ -9,7 +9,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ApiService } from '../../api.service';
 
@@ -28,9 +28,8 @@ export class ImageService {
 
   imageUploading: boolean;
   _imageUploading: BehaviorSubject<boolean>;
-  
 
-  constructor(private apiService: ApiService) { 
+  constructor(private apiService: ApiService) {
 
     this.imageUploading = false;
     this._imageUploading = <BehaviorSubject<boolean>>new BehaviorSubject(this.imageUploading);
@@ -48,7 +47,7 @@ export class ImageService {
   };
   imageCropped(image, name) {
     this.imageName = name;
-    // console.log('name: ', this.imageName);
+    console.log('name: ', this.imageName);
     this.previewCroppedImage = image;
     this._previewCroppedImage.next(this.previewCroppedImage);
     // const jpg = image.split(',')[1];
@@ -76,10 +75,10 @@ export class ImageService {
     this._imageUploading.next(this.imageUploading);
     const jpg = this.previewCroppedImage.split(',')[1];
     // console.log('jpg: ', jpg);
-    var bs = atob(jpg);
-    var buffer = new ArrayBuffer(bs.length);
-    var ba = new Uint8Array(buffer);
-    for (var i = 0; i < bs.length; i++) {
+    const bs = atob(jpg);
+    const buffer = new ArrayBuffer(bs.length);
+    const ba = new Uint8Array(buffer);
+    for (let i = 0; i < bs.length; i++) {
         ba[i] = bs.charCodeAt(i);
     };
     this.croppedImage = new Blob([ba], { type: 'image/jpeg' });
@@ -88,10 +87,10 @@ export class ImageService {
   }
 
   getPresignedUrl(imageName) {
-    let imageNameObj = {
+    const imageNameObj = {
       imageNameAttribute: imageName
     };
-    // console.log('imageName: ', imageNameObj);
+    console.log('imageName: ', imageNameObj);
     this.apiService.getPresignedUrl(imageNameObj)
       .subscribe(
         result => {
@@ -104,7 +103,7 @@ export class ImageService {
 
   uploadToS3(url: string) {
     // console.log('image: ', this.croppedImage);
-    // console.log('url: ', url);
+    console.log('url: ', url);
     this.apiService.putFileToS3(this.croppedImage, url)
       .subscribe(
         response => {

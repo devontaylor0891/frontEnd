@@ -15,7 +15,7 @@ export class ScheduleModel {
         public city: string,
         public province: string,
         public orderDeadline: string,
-        public address?: string,        
+        public address?: string,
         public fee?: number,
         public feeWaiver?: number,
         public orderCount?: number

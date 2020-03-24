@@ -9,7 +9,7 @@ import { UtilityService } from '../../../../core/services/utility/utility.servic
 
 import { ColumnSettingModel } from '../../../../shared/table-layout/layout.model';
 
-// import { AddScheduleModalComponent } from '../modals/schedule/add-schedule-modal/add-schedule-modal.component';
+import { AddMarketScheduleModalComponent } from '../modals/schedules/add-market-schedule-modal/add-market-schedule-modal.component';
 
 @Component({
   selector: 'app-market-schedule',
@@ -26,7 +26,7 @@ export class MarketScheduleComponent implements OnInit {
 
   schedSubscription: Subscription;
 
-  projectSettings: ColumnSettingModel[] = 
+  projectSettings: ColumnSettingModel[] =
   [
       {
         primaryKey: 'type',
@@ -77,11 +77,11 @@ export class MarketScheduleComponent implements OnInit {
   openModal() {
     console.log('open modal');
     // this.modal.open(this.modalContent, { size: 'lg' });
-    // const modalRef = this.modal.open(AddScheduleModalComponent, { size: 'lg' });
-    // modalRef.componentInstance.itemCreated.subscribe((schedule) => {
-    //   // console.log('received: ', schedule);
-    //   this.loadScheds();
-    // });
+    const modalRef = this.modal.open(AddMarketScheduleModalComponent, { size: 'lg' });
+    modalRef.componentInstance.itemCreated.subscribe((schedule) => {
+      // console.log('received: ', schedule);
+      this.loadScheds();
+    });
   }
 
   ngOnInit() {

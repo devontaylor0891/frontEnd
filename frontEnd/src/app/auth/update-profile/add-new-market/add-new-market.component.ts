@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 
 import { ImageService } from '../../../core/services/image/image.service';
@@ -42,7 +42,6 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
 
   // image properties
   imageName = '';
-  addingImage = false;
   imageUploading: boolean;
   imageUploadingSub: Subscription;
   imagePreviewSub: Subscription;
@@ -57,7 +56,7 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
   onAddImage() {
     this.imageName = this.marketForm.value.id + '/logo';
     this.marketForm.patchValue({ logoUrl: this.imageName });
-    this.addingImage = true;
+    this.marketForm.patchValue({ addingImage: true });
     // add required validator to form
     this.marketForm.get('logoUrl').setValidators([Validators.required]);
     this.marketForm.get('logoUrl').updateValueAndValidity();
@@ -67,8 +66,9 @@ export class AddNewMarketComponent implements OnInit, OnDestroy {
   onCancelAddImage() {
     // remove image name
     this.imageName = '';
-    this.marketForm.patchValue({logoUrl: ''});    // hide the image cropper
-    this.addingImage = false;
+    this.marketForm.patchValue({logoUrl: ''});
+    // hide the image cropper
+    this.marketForm.patchValue({ addingImage: false });
     console.log('form value: ', this.marketForm.value);
     console.log('form: ', this.marketForm);
     // remove the required validator

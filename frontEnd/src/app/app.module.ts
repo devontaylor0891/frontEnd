@@ -168,6 +168,10 @@ import { AddNewMarketComponent } from './auth/update-profile/add-new-market/add-
 import { AddNewProducerComponent } from './auth/update-profile/add-new-producer/add-new-producer.component';
 import { MarketDashboardComponent } from './feature/dashboard/market/market-dashboard/market-dashboard.component';
 import { MarketScheduleComponent } from './feature/dashboard/market/market-schedule/market-schedule.component';
+import { AddMarketScheduleModalComponent } from './feature/dashboard/market/modals/schedules/add-market-schedule-modal/add-market-schedule-modal.component';
+import { EditMarketScheduleModalComponent } from './feature/dashboard/market/modals/schedules/edit-market-schedule-modal/edit-market-schedule-modal.component';
+import { ViewMarketScheduleModalComponent } from './feature/dashboard/market/modals/schedules/view-market-schedule-modal/view-market-schedule-modal.component';
+import { DeleteMarketScheduleModalComponent } from './feature/dashboard/market/modals/schedules/delete-market-schedule-modal/delete-market-schedule-modal.component';
 
 
 @NgModule({
@@ -286,7 +290,11 @@ import { MarketScheduleComponent } from './feature/dashboard/market/market-sched
     AddNewMarketComponent,
     AddNewProducerComponent,
     MarketDashboardComponent,
-    MarketScheduleComponent
+    MarketScheduleComponent,
+    AddMarketScheduleModalComponent,
+    EditMarketScheduleModalComponent,
+    ViewMarketScheduleModalComponent,
+    DeleteMarketScheduleModalComponent
   ],
   imports: [
     BrowserModule,
@@ -322,7 +330,7 @@ import { MarketScheduleComponent } from './feature/dashboard/market/market-sched
     DatePipe,
     UpperCasePipe,
     UtilityService,
-    ProducerDashboardService,,
+    ProducerDashboardService,
     MarketDashboardService,
     EditProductModalComponent,
     NgbActiveModal,
@@ -364,7 +372,11 @@ import { MarketScheduleComponent } from './feature/dashboard/market/market-sched
     AdminProductViewModalComponent,
     AdminScheduleViewModalComponent,
     CheckoutWarningModalComponent,
-    LocationNotificationSignUpModalComponent
+    LocationNotificationSignUpModalComponent,
+    AddMarketScheduleModalComponent,
+    EditMarketScheduleModalComponent,
+    ViewMarketScheduleModalComponent,
+    DeleteMarketScheduleModalComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -53,7 +53,7 @@ export class ProducerDashboardService {
           this._producer.next(Object.assign({}, this.dataStore).producer);
           this.getProductsByProducerId(this.dataStore.producer.id);
           this.getSchedsByProducerId();
-          this.getOrdersByProducerId(this.dataStore.producer.producerId);        
+          this.getOrdersByProducerId(this.dataStore.producer.producerId);
         }, error => console.log('could not load producer')
       );
     this.userSub = this.apiService.getUserById(id)
@@ -131,5 +131,5 @@ export class ProducerDashboardService {
   reloadData() {
     this.getSchedsByProducerId();
   }
-  
+
 }

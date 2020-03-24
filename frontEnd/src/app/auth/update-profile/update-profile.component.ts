@@ -71,7 +71,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   // image properties
   imageName = '';
-  addingImage = false;
   imageUploading: boolean;
   imageUploadingSub: Subscription;
   imagePreviewSub: Subscription;
@@ -149,6 +148,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
         address: new FormControl(''),
         longitude: new FormControl('', [Validators.required]),
         latitude: new FormControl('', [Validators.required]),
+        addingImage: new FormControl(false, [Validators.required])
       }),
       market: new FormGroup({
         id: new FormControl(this.user.id),
@@ -158,7 +158,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
         logoUrl: new FormControl(''),
         locations: new FormArray([
 
-        ], [Validators.required])
+        ], [Validators.required]),
+        addingImage: new FormControl(false, [Validators.required])
       }),
       status: new FormControl('active')
     });
@@ -222,8 +223,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
           if (form.value.user.role === 'producer') { // if producer
                 this.buildProducerSubmitObject(form.value);
                 // console.log('producer submit object: ', this.submitObject);
-                console.log('adding image value: ', this.addingImage);
-                if (this.addingImage) { // if adding logo, add it first
+                console.log('adding image value: ', form.value.producer.addingImage);
+                if (form.value.producer.addingImage) { // if adding logo, add it first
                   // this.imageService.convertAndUpload();
                   this.imageUploadingSub = this.imageService._imageUploading
                     .subscribe(
@@ -272,8 +273,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
             // !imageUploading - create Market
                 this.buildMarketSubmitObject(form.value);
                 console.log('market selected: ', this.submitObject);
-                console.log('adding image value: ', this.addingImage);
-                if (this.addingImage) { // if adding logo, add it first
+                console.log('adding image value: ', form.value.market.addingImage);
+                if (form.value.market.addingImage) { // if adding logo, add it first
                   // this.imageService.convertAndUpload();
                   this.imageUploadingSub = this.imageService._imageUploading
                     .subscribe(
