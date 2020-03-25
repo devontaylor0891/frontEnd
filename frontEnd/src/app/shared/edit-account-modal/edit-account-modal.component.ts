@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';// Avoid name not found warnings
+import { Component, OnInit, Input, OnChanges, NgZone, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 import { Router } from '@angular/router';
 // import { } from 'googlemaps';
@@ -10,13 +10,12 @@ import { MapsAPILoader } from '@agm/core';
 import { AgmMap, MouseEvent as AgmMouseEvent } from '@agm/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService } from '../../core/api.service';
 import { ImageService } from '../../core/services/image/image.service';
-import { UserService } from '../../core/services/user/user.service';
 import { LocationService } from '../../core/services/location/location.service';
 
 import { UserModel } from '../../core/models/user.model';
@@ -33,11 +32,13 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   @Input() user: UserModel;
   @Input() producer: ProducerModel;
   @Input() customUrlObject: any;
+  @Input() market: any;
 
   userForm: FormGroup;
   producerForm: FormGroup;
+  marketForm: FormGroup;
 
-  locationSearchDisplay: boolean = false;
+  locationSearchDisplay = false;
 
   public latitude: number;
   public longitude: number;
@@ -62,9 +63,10 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   checkCustomUrlSubscription: Subscription;
   postCustomUrlSubscription: Subscription;
   getCustomUrlSubscription: Subscription;
-  customUrlDuplicateExists: boolean = false;
+  customUrlDuplicateExists = false;
   producerCustomUrlExists: boolean;
-  customUrlChanged: boolean = false;
+  marketCustomUrlExists: boolean;
+  customUrlChanged = false;
   customUrlId: number;
   // customUrlRegex = '[a-zA-Z0-9]*$';
 
@@ -82,12 +84,12 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
   logoExists: boolean;
 
-  imageName: string = '';
-  addingImage: boolean = false;
+  imageName = '';
+  addingImage = false;
   imageUploading: boolean;
   imageUploadingSub: Subscription;
-  newItemUploading: boolean = false;
-  submitting: boolean = false;
+  newItemUploading = false;
+  submitting = false;
   error: any;
   @Output() imageUploaded = new EventEmitter<boolean>();
   @Output() accountEdited = new EventEmitter<boolean>();
@@ -108,7 +110,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.userForm = this.fb.group({
       firstName: [this.user.firstName, [Validators.required] ],
       email: [this.user.email, [Validators.required] ],
-      role: [this.user.role] 
+      role: [this.user.role]
     });
 
     // create search FormControl
@@ -168,12 +170,65 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           // };
         })
         .subscribe(valid => {return true});
-    }
+    };
+
+    if (this.market) {
+      if (this.customUrlObject) {
+        this.marketCustomUrlExists = true;
+        this.marketForm = this.fb.group({
+          firstName: [this.user.firstName, [Validators.required] ],
+          email: [this.user.email, [Validators.required] ],
+          id: new FormControl(this.user.id),
+          name: new FormControl(this.market.name, [Validators.required]),
+          customUrl: new FormControl(this.customUrlObject.customUrl, [Validators.pattern('[0-9a-zA-Z_-]*')]),
+          description: new FormControl(this.market.description)
+        });
+      } else {
+        this.marketCustomUrlExists = false;
+        this.marketForm = this.fb.group({
+          firstName: [this.user.firstName, [Validators.required] ],
+          email: [this.user.email, [Validators.required] ],
+          id: new FormControl(this.user.id),
+          name: new FormControl(this.market.name, [Validators.required]),
+          customUrl: new FormControl('', [Validators.pattern('[0-9a-zA-Z_-]*')]),
+          description: new FormControl(this.market.description)
+        });
+      };
+      this.enableMarketFields();
+      // set current map marker location
+      // this.markerLatitude = this.market.latitude;
+      // this.markerLongitude = this.market.longitude;
+        // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
+      this.checkCustomUrlSubscription = this.marketForm['controls'].customUrl.valueChanges
+        .debounceTime(500) // after waiting half a second
+        .filter(val => val.length >= 2) // after 2 characters at least
+        .switchMap( // call the api, but cancel the call if a new call is made
+          val => {
+              this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
+                .subscribe(
+                  result => {
+                    this.customUrlChanged = true;
+                    if (result[0] && result[0] !== this.market.id && result[0].length !== 0) {
+                      // console.log('producerId returned on check: ', result);
+                      this.customUrlDuplicateExists = true;
+                      this.marketForm['controls'].customUrl.setErrors({ 'invalid': true });
+                    } else {
+                      // console.log('custom url not returned');
+                      this.customUrlDuplicateExists = false;
+                    }
+                  });
+              return val;
+            // } else {
+            //   return val;
+            // };
+          })
+          .subscribe(valid => {return true});
+    };
 
     this.getCitySub = this.locationService.getCity()
       .subscribe(
         result => {
-          // console.log('result: ', result);
+          // console.log('getcity result: ', result);
           this.city = result;
         }
       );
@@ -181,7 +236,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.getProvinceSub = this.locationService.getProvince()
       .subscribe(
         result => {
-          // console.log('result: ', result);
+          // console.log('get location result: ', result);
           this.province = result;
         }
       );
@@ -191,7 +246,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         result => {
           // console.log('getting cityProvince sub');
           this.selectedCityProvince = result;
-          
+
           if (!this.selectedAddress) {
             this.selectedLocation = this.selectedCityProvince;
           }
@@ -221,10 +276,10 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           // } else {
             console.log('no address returned')
           }
-          
+
         }
       );
-    
+
     // ***** LOCATION INIT CODE ******
     // set google maps defaults
     this.zoom = 8;
@@ -240,19 +295,15 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       if (this.producer && this.producer.logoUrl !== '') {
         this.logoExists = true;
       }
-    };
-    
-    
-
-    // load Places Autocomplete
+       // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["geocode"]
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['geocode']
       });
-      autocomplete.addListener("place_changed", () => {
+      autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           // get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
           // verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -270,13 +321,16 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           this.zoom = 12;
         });
       });
-    });    
-    
+    });
+    };
+
+   
+
   };
 
-  get customUrl() { 
-    return this.producerForm.get('customUrl'); 
-  };
+  // get customUrl() {
+  //   return this.producerForm.get('customUrl');
+  // };
 
   disableProducerFields() {
     this.producerForm.disable();
@@ -286,6 +340,16 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   enableProducerFields() {
     this.producerForm.enable();
     this.searchControl.enable();
+  };
+
+  enableMarketFields() {
+    this.marketForm.enable();
+    this.searchControl.enable();
+  };
+
+  disableMarketFields() {
+    this.marketForm.disable();
+    this.searchControl.disable();
   };
 
   toggleLocationSearch() {
@@ -308,12 +372,12 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           err => this.handleSubmitError(err)
         );
     } else if (userType === 'producer') { // if producer - break apart the user/producer info, call both patches
-      let userData = {
+      const userData = {
         'firstName': form.value.firstName,
         'email': form.value.email,
         'role': 'producer'
       };
-      let producerData = {
+      const producerData = {
         'firstName': form.value.firstName,
         'email': form.value.email,
         'name': form.value.name,
@@ -325,7 +389,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
         'latitude': this.latitude,
         'longitude': this.longitude
       };
-      let customUrlData = {
+      const customUrlData = {
         'userId': this.user.id,
         'customUrl': form.value.customUrl,
       };
@@ -343,18 +407,18 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
                 // console.log('custom url update id: ', this.customUrlId)
                 // console.log('custom url update data: ', this.customUrlObject)
                 // console.log('custom url update result: ', result)
-              }
-            ),
-            err => this.handleSubmitError(err)
+              },
+              err => this.handleSubmitError(err)
+            )
         } else {
           this.apiService.createCustomUrl(customUrlData)
           .subscribe(
             result => {
               // console.log('custom url update data: ', this.customUrlObject)
               // console.log('custom url update result: ', result)
-            }
-          ),
-          err => this.handleSubmitError(err)
+            },
+            err => this.handleSubmitError(err)
+          )
         }
       };
       this.apiService.patchUser(this.user.id, userData)
@@ -371,8 +435,66 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
               );
           }
         )
+    } else if (userType === 'market') {
+      const userData = {
+        'firstName': form.value.firstName,
+        'email': form.value.email,
+        'role': 'market'
+      };
+      const marketData = {
+        'firstName': form.value.firstName,
+        'email': form.value.email,
+        'name': form.value.name,
+        'description': form.value.description,
+        'logoUrl': this.market.logoUrl || this.imageName
+      };
+      const customUrlData = {
+        'userId': this.user.id,
+        'customUrl': form.value.customUrl,
+      };
+      if (this.customUrlObject) {
+        this.customUrlId = this.customUrlObject.id;
+      }
+      if (this.customUrlChanged) {
+        if (this.producerCustomUrlExists) {
+          this.apiService.updateCustomUrl(this.customUrlId, customUrlData)
+            .subscribe(
+              result => {
+                // console.log('custom url update id: ', this.customUrlId)
+                // console.log('custom url update data: ', this.customUrlObject)
+                // console.log('custom url update result: ', result)
+              },
+              err => this.handleSubmitError(err)
+            )
+        } else {
+          this.apiService.createCustomUrl(customUrlData)
+          .subscribe(
+            result => {
+              // console.log('custom url update data: ', this.customUrlObject)
+              // console.log('custom url update result: ', result)
+            },
+            err => this.handleSubmitError(err)
+          )
+        }
+      };
+      this.apiService.patchUser(this.user.id, userData)
+        .subscribe(
+          result => {
+            console.log('successfully patched user: ', result);
+            console.log('user.id: ', this.user.id);
+            console.log('makretData: ', marketData);
+            this.apiService.patchMarket(this.user.id, marketData)
+              .subscribe(
+                res => {
+                  console.log('market successfully patched: ', res);
+                  this.handleSubmitSuccess(res)
+                },
+                err => this.handleSubmitError(err)
+              );
+          }
+        )
     };
-    
+
   };
 
   private fillAddress(place) {
@@ -402,9 +524,9 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
   private parseAddressComponents(components) {
     for (let i = 0; i < components.length; i++) {
-      let types = components[i].types;
+      const types = components[i].types;
       for (let j = 0; j < types.length; j++) {
-        let result = types[j];
+        const result = types[j];
         if (result === 'street_number') {
           this.streetNumber = components[i].short_name;
         }
@@ -433,8 +555,8 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       this.imageService.convertAndUpload();
       this.imageUploadingSub = this.imageService._imageUploading
         .subscribe(
-          result => {
-            if (!result) {
+          results => {
+            if (!results) {
               this.newItemUploading = false;
               this.submitting = false;
               this.imageUploaded.emit(true);
@@ -445,7 +567,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           }
         )
     } else { // no image to upload
-      this.newItemUploading = false; 
+      this.newItemUploading = false;
       this.submitting = false;
       this.accountEdited.emit(true);
       this.activeModal.close();
@@ -467,7 +589,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
     this.longitude = this.markerLongitude;
     this.locationService.codeLatLng(this.markerLatitude, this.markerLongitude);
   }
-  
+
   markerDragEnd($event: AgmMouseEvent) {
     this.clearAddress();
     this.selectedCityProvince = '';

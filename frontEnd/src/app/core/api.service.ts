@@ -91,6 +91,17 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // initial PATCH user after acct creation
+  patchUserInitial(id: number, newFieldAndValue: Object): Observable<any> {
+    console.log('api patch: ', id, newFieldAndValue);
+    return this.http
+      // .patch(`${ENV.BASE_API}users/${id}/`, newFieldAndValue, {
+      .put(this.apiUrl + `/users/initial/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
   // PATCH user
   patchUser(id: number, newFieldAndValue: Object): Observable<any> {
     console.log('api patch: ', id, newFieldAndValue);
@@ -184,6 +195,16 @@ export class ApiService {
   patchProducer(id: number, newFieldAndValue: Object): Observable<any> {
     return this.http
       .put(this.apiUrl + `/producers/${id}/`, newFieldAndValue, {
+      // .patch(`${ENV.BASE_API}producer/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  // PATCH market info
+  patchMarket(id: number, newFieldAndValue: Object): Observable<any> {
+    return this.http
+      .put(this.apiUrl + `/markets/${id}/`, newFieldAndValue, {
       // .patch(`${ENV.BASE_API}producer/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
@@ -298,7 +319,7 @@ export class ApiService {
   // GET entire schedule from a single producers
   getScheduleByProducerId(id): Observable<any> {
     return this.http
-    .get(this.apiUrl + `/producersSchedules/` + id)
+      .get(this.apiUrl + `/producersSchedules/` + id)
       // .get(`${ENV.BASE_API}producer/`+ id + '/schedules')
       .catch(this._handleError);
   };
@@ -306,7 +327,14 @@ export class ApiService {
    // GET entire schedule from a single market
    getScheduleByMarketId(id): Observable<any> {
     return this.http
-    .get(this.apiUrl + `/marketsSchedules/` + id)
+      .get(this.apiUrl + `/marketsSchedules/` + id)
+      .catch(this._handleError);
+  };
+
+  // GET locations from a single market
+  getLocationsByMarketId(id): Observable<any> {
+    return this.http
+      .get(this.apiUrl + `/marketsLocations/` + id)
       .catch(this._handleError);
   };
 

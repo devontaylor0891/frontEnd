@@ -10,11 +10,13 @@ export class MarketDashboardService {
   marketSub: Subscription;
   userSub: Subscription;
   scheduleSub: Subscription;
+  locationSub: Subscription;
 
   // dataStore
   dataStore: {
     market: any,
     user: any,
+    locations: any[],
     schedules: any[]
   };
 
@@ -22,11 +24,13 @@ export class MarketDashboardService {
   public _market: BehaviorSubject<any>;
   public _user: BehaviorSubject<any>;
   public _schedules: BehaviorSubject<any[]>;
+  public _locations: BehaviorSubject<any[]>;
 
   constructor(private apiService: ApiService) {
-    this.dataStore = { market: null, user: null, schedules: [] };
+    this.dataStore = { market: null, user: null, locations: [], schedules: [] };
     this._market = <BehaviorSubject<any>>new BehaviorSubject(null);
     this._user = <BehaviorSubject<any>>new BehaviorSubject(null);
+    this._locations = <BehaviorSubject<any[]>>new BehaviorSubject([]);
     this._schedules = <BehaviorSubject<any[]>>new BehaviorSubject([]);
   }
 
@@ -35,12 +39,13 @@ export class MarketDashboardService {
       .subscribe(
         result => {
           this.dataStore.market = result[0];
+          console.log('market received in service: ', this.dataStore.market);
           this._market.next(Object.assign({}, this.dataStore).market);
           this.getSchedsByMarketId();
+          this.getLocationsByMarketId();
         }, error => console.log('could not load market')
       );
     this.userSub = this.apiService.getUserById(id)
-    // add a new product via the add-product component, push it to the appropriate array
       .subscribe(
         result => {
           this.dataStore.user = result;
@@ -49,8 +54,21 @@ export class MarketDashboardService {
       );
   };
 
+  getLocationsByMarketId() {
+    console.log('market id: ', this.dataStore.market);
+    this.locationSub = this.apiService.getLocationsByMarketId(this.dataStore.market.marketId)
+      .subscribe(
+        result => {
+          console.log('market lcoations received: ', result);
+          this.dataStore.locations = result;
+          console.log('market dashboard locations: ', this.dataStore.locations);
+          this._locations.next(Object.assign({}, this.dataStore).locations);
+        }, error => console.log('could not load locations')
+      );
+  };
+
   getSchedsByMarketId() {
-    this.scheduleSub = this.apiService.getScheduleByMarketId(this.dataStore.market.id)
+    this.scheduleSub = this.apiService.getScheduleByMarketId(this.dataStore.market.marketId)
       .subscribe(
         result => {
           this.dataStore.schedules = result;
@@ -58,7 +76,6 @@ export class MarketDashboardService {
           this._schedules.next(Object.assign({}, this.dataStore).schedules);
         }, error => console.log('could not load schedules')
       );
-
   };
 
   getMarket() {
@@ -67,6 +84,10 @@ export class MarketDashboardService {
 
   getUserData() {
     return this._user.asObservable();
+  };
+
+  getLocations() {
+    return this._locations.asObservable();
   };
 
   getSchedules() {

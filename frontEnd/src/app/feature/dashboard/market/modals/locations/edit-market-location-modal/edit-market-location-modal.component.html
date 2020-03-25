@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h5 class="modal-title">Please review and edit your Account Information as necessary</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="modal-body dash-modal-body">
+  
+    <app-loading *ngIf="submitting"></app-loading>
+
+  
+  </div>
+  
+  <div class="modal-footer justify-content-center">
+    <div class="row text-center">
+      <div class="col-12">
+        <a (click)="activeModal.close()">Cancel Changes</a>
+      </div>
+    </div>
+  </div>

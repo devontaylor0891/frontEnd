@@ -235,7 +235,7 @@ export class AddNewProducerComponent implements OnInit {
   onAddImage() {
     this.imageName = this.producerForm.value.id + '/logo';
     this.producerForm.patchValue({ logoUrl: this.imageName });
-    this.addingImage = true;
+    this.producerForm.patchValue({ addingImage: true });
     // add required validator to form
     this.producerForm.get('logoUrl').setValidators([Validators.required]);
     this.producerForm.get('logoUrl').updateValueAndValidity();
@@ -245,8 +245,9 @@ export class AddNewProducerComponent implements OnInit {
   onCancelAddImage() {
     // remove image name
     this.imageName = '';
-    this.producerForm.patchValue( {logoUrl: ''});    // hide the image cropper
-    this.addingImage = false;
+    this.producerForm.patchValue( {logoUrl: ''});
+    // hide the image cropper
+    this.producerForm.patchValue({ addingImage: false });
     // remove the required validator
     this.producerForm.get('logoUrl').clearValidators();
     this.producerForm.get('logoUrl').updateValueAndValidity();

@@ -13,6 +13,7 @@ export class MarketDashboardComponent implements OnInit, OnChanges {
   @Input() id: number;
   @Input() user: any;
   market: any;
+  locations: any[];
   customUrlObject: any;
   activeLink = 'schedulesLink';
 
@@ -28,13 +29,21 @@ export class MarketDashboardComponent implements OnInit, OnChanges {
         result => {
           this.market = result;
           if (this.market) {
-            this.apiService.getCustomUrlByProducerId(this.market.id)
+            this.apiService.getCustomUrlByProducerId(this.id)
               .subscribe(
                 results => {
                   this.customUrlObject = results[0];
                 }
               )
           }
+        }
+      );
+
+    this.dashboardService.getLocations()
+      .subscribe(
+        result => {
+          this.locations = result;
+          console.log('locations passed in: ', this.locations);
         }
       );
 

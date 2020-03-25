@@ -9,6 +9,8 @@ import { UserModel } from '../../core/models/user.model';
 import { ProducerModel } from '../../core/models/producer.model';
 
 import { EditAccountModalComponent } from '../edit-account-modal/edit-account-modal.component';
+import { EditMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/edit-market-location-modal/edit-market-location-modal.component';
+import { DeleteMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/delete-market-location-modal/delete-market-location-modal.component';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -25,11 +27,14 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
   @Input() user: UserModel;
   @Input() producer: ProducerModel;
   @Input() market: any;
+  @Input() locations: any[];
   @Input() customUrlObject: any;
   logoExists = false;
 
   logoUploadSubscription: Subscription;
   accountEditedSubscription: Subscription;
+  locationEditedSubscription: Subscription;
+  locationDeletedSubscription: Subscription;
 
   currentLogo: any;
 
@@ -98,12 +103,27 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
           result => {
             if (result) { // if account was edited, reload the data in the service
               this.userService.getUserFromDb(this.user.id);
-              this.marketService.loadData(this.market.id);
+              this.marketService.loadData(this.user.id);
             };
           }
         );
     };
   };
+
+  onOpenEditLocation(loc) {
+    console.log('edit location:, ', loc);
+    const modalRef = this.modal.open(EditMarketLocationModalComponent, { size: 'lg' });
+    modalRef.componentInstance.location = loc;
+    this.locationEditedSubscription = modalRef.componentInstance.locationEdited
+      .subscribe(
+        result => {
+          this.marketService.loadData(this.user.id);          }
+      );
+  };
+
+  onOpenDeleteLocation(loc) {
+    console.log('delete this one: ', loc);
+  }
 
   ngOnDestroy() {
     if (this.logoUploadSubscription) {

@@ -1,198 +1,264 @@
 <div class="row">
-    <div class="col col-xs-12">
-        <div role="tablist" aria-multiselectable="true">
-            
-            <div class="col-12 col-md-8 mx-auto my-2">
-                <div class="jumbotron">
-                    <div>
-                        <h2 class="h2-responsive">
-                            <img src="{{profile?.picture}}" class="avatar" alt="avatar" class="img-thumbnail">
-                            <strong>Your Profile</strong>
-                        </h2>
-                        <p></p>
-                        
-                        <div class="card-block">
-                            
-                            <div class="row mb-1">
-                                <div class="col-12 col-md-4">
-                                    <h5 class="h5-responsive">
-                                        <i class="fa fa-user prefix mr-3"></i>Name:
-                                    </h5>
-                                </div>
-                                
-                                <div class="pl-3 col-12 col-md-8">
-                                    <p>{{ user.firstName }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-1">
-                                <div class="col-12 col-md-4">
-                                    <h5 class="h5-responsive">
-                                        <i class="fa fa-at prefix mr-3"></i>Email:
-                                    </h5>
-                                </div>
-                                
-                                <div class="pl-3 col-12 col-md-8">
-                                    <p>{{ user.email }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-1">
-                                <div class="col-12 col-md-4">
-                                    <h5 class="h5-responsive">
-                                        <i class="fa fa-adjust prefix mr-3"></i>Role:
-                                    </h5>
-                                </div>
-                                
-                                <div class="pl-3 col-12 col-md-8">
-                                    <p>{{ user.role | firstCharacterToUppercase }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-1">
-                                <p>You have been a member of OLF since {{ user.registrationDate | date:'fullDate' }}.</p>
-                            </div>
-                            
-                            <div *ngIf="user?.role === 'producer'">
-                                <hr>
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-id-card prefix mr-3"></i>Business Name:
-                                        </h5>
-                                    </div>
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ producer?.name }}</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-map-marker prefix mr-3"></i>Location:
-                                        </h5>
-                                    </div>
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ producer?.location }}, {{ producer?.province }}</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-1" *ngIf="producer?.address">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-map-marker prefix mr-3"></i>Address:
-                                        </h5>
-                                    </div>
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ producer.address }}</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-1" *ngIf="producer?.description">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-align-justify prefix mr-3"></i>Description:
-                                        </h5>
-                                    </div>
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p>{{ producer.description }}</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-globe prefix mr-3"></i>Custom Url:
-                                        </h5>
-                                    </div>
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <p *ngIf="customUrlObject"><a routerLink="/{{ customUrlObject.customUrl }}">onlylocalfood.com/{{ customUrlObject.customUrl }}</a></p>
-                                        <p *ngIf="!customUrlObject">No Custom Url set up.</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <div class="col-12 col-md-4">
-                                        <h5 class="h5-responsive">
-                                            <i class="fa fa-image prefix mr-3"></i>Logo:
-                                        </h5>
-                                    </div>
-                                    <div class="pl-3 col-12 col-md-8">
-                                        <img *ngIf="logoExists" class="img-thumbnail" [src]="currentLogo" alt="">
-                                        <p *ngIf="!logoExists">No logo uploaded.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div *ngIf="user?.role === 'market'">
-                              <hr>
-                              <div class="row mb-1">
-                                  <div class="col-12 col-md-4">
-                                      <h5 class="h5-responsive">
-                                          <i class="fa fa-id-card prefix mr-3"></i>Business Name:
-                                      </h5>
-                                  </div>
-                                  <div class="pl-3 col-12 col-md-8">
-                                      <p>{{ market?.name }}</p>
-                                  </div>
-                              </div>
-                              <div class="row mb-1" *ngIf="market?.description">
-                                  <div class="col-12 col-md-4">
-                                      <h5 class="h5-responsive">
-                                          <i class="fa fa-align-justify prefix mr-3"></i>Description:
-                                      </h5>
-                                  </div>
-                                  <div class="pl-3 col-12 col-md-8">
-                                      <p>{{ market.description }}</p>
-                                  </div>
-                              </div>
-                              <div class="row mb-1">
-                                  <div class="col-12 col-md-4">
-                                      <h5 class="h5-responsive">
-                                          <i class="fa fa-globe prefix mr-3"></i>Custom Url:
-                                      </h5>
-                                  </div>
-                                  <div class="pl-3 col-12 col-md-8">
-                                      <p *ngIf="customUrlObject"><a routerLink="/{{ customUrlObject.customUrl }}">onlylocalfood.com/{{ customUrlObject.customUrl }}</a></p>
-                                      <p *ngIf="!customUrlObject">No Custom Url set up.</p>
-                                  </div>
-                              </div>
-                              <div class="row mb-1">
-                                  <div class="col-12 col-md-4">
-                                      <h5 class="h5-responsive">
-                                          <i class="fa fa-image prefix mr-3"></i>Logo:
-                                      </h5>
-                                  </div>
-                                  <div class="pl-3 col-12 col-md-8">
-                                      <img *ngIf="logoExists" class="img-thumbnail" [src]="currentLogo" alt="">
-                                      <p *ngIf="!logoExists">No logo uploaded.</p>
-                                  </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                <div class="col-xs">
-                                  <h3>
-                                    Location(s)
-                                  </h3>
-                                  
-                                </div>
-                              </div>
-                          </div>
-                            
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()"><i class="fa fa-edit prefix mr-3"></i>Edit</button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <p>
-                                    <a routerLink="/location-notification" class="btn btn-olf-primary">Manage My Location Notifications</a>
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
+  <div class="col col-xs-12">
+    <div role="tablist" aria-multiselectable="true">
+      
+      <div class="col-12 col-md-8 mx-auto my-2">
+        
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5>
+              <img src="{{ profile?.picture }}" class="avatar" alt="avatar" class="img-thumbnail">
+              <strong>
+                Your Profile
+              </strong>
+            </h5>
+          </div>
+          
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Name:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{ user.firstName }}</p>
+                  </div>
                 </div>
-            </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Email:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{ user.email }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Role:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{ user.role | firstCharacterToUppercase }}</p>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <p>You have been a member of OLF since {{ user.registrationDate | date:'fullDate' }}.</p>
+                  </div>
+                </div>
+                
+              </li>
+              
+              <li class="list-group-item" *ngIf="user?.role === 'producer'">
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Business Name:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{  producer?.name }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Location:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{ producer?.location }}, {{ producer?.province }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1" *ngIf="producer?.address">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Address:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{  producer.address }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1" *ngIf="producer?.description">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Description:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{  producer.description }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Custom Url:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p *ngIf="customUrlObject"><a routerLink="/{{ customUrlObject.customUrl }}">onlylocalfood.com/{{ customUrlObject.customUrl }}</a></p>
+                    <p *ngIf="!customUrlObject">No Custom Url set up.</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Logo:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <img *ngIf="logoExists" class="img-thumbnail" [src]="currentLogo" alt="">
+                    <p *ngIf="!logoExists">No logo uploaded.</p>
+                  </div>
+                </div>
+                
+                
+              </li>
+              
+              <li class="list-group-item" *ngIf="user?.role === 'market'">
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Market Name:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{  market?.name }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1" *ngIf="market?.description">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Description:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p>{{  market.description }}</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Custom Url:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p *ngIf="customUrlObject"><a routerLink="/{{ customUrlObject.customUrl }}">onlylocalfood.com/{{ customUrlObject.customUrl }}</a></p>
+                    <p *ngIf="!customUrlObject">No Custom Url set up.</p>
+                  </div>
+                </div>
+                
+                <div class="row mb-1">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Logo:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <img *ngIf="logoExists" class="img-thumbnail" [src]="currentLogo" alt="">
+                    <p *ngIf="!logoExists">No logo uploaded.</p>
+                  </div>
+                </div>
+                
+              </li>
+              
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()" type="button"><i class="fa fa-edit prefix mr-3"></i>EDIT PROFILE</button>
+                  </div>
+                </div>
+                
+              </li>
+              
+              
+            </ul>
+            
+            
+            
+            
+            
+            
+            
+          </div>
+          
+          
+          
         </div>
+        
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5>
+              <strong>
+                <i class="fas fa-map-marked-alt mr-3"></i>Your Locations
+              </strong>
+            </h5>
+          </div>
+          <div class="card-body">
+              <ul class="list-group list-group-flush" *ngFor="let location of locations">
+                  <li class="list-group-item">
+                    <div class="row mb-1" *ngIf="location.locationName">
+                      <div class="col-12 col-md-4">
+                        <p class="float-lg-right"><strong>Name:</strong></p>
+                      </div>
+                      <div class="pl-3 col-12 col-md-8">
+                        <p>{{ location.locationName }}</p>
+                      </div>
+                    </div>
+                    <div class="row mb-1">
+                      <div class="col-12 col-md-4">
+                        <p class="float-lg-right"><strong>Timeframe:</strong></p>
+                      </div>
+                      <div class="pl-3 col-12 col-md-8">
+                        <p>{{ location.timeframe }}</p>
+                      </div>
+                    </div>
+                    <div class="row mb-1" *ngIf="location.description">
+                      <div class="col-12 col-md-4">
+                        <p class="float-lg-right"><strong>Description:</strong></p>
+                      </div>
+                      <div class="pl-3 col-12 col-md-8">
+                        <p>{{ location.description }}</p>
+                      </div>
+                    </div>
+                    <div class="row mb-1">
+                      <div class="col-12 col-md-4">
+                        <p class="float-lg-right"><strong>Address:</strong></p>
+                      </div>
+                      <div class="pl-3 col-12 col-md-8">
+                        <p>{{ location.address }}</p>
+                      </div>
+                    </div>
+                    <div class="row mb-1">
+                      <div class="col-12 col-md-4">
+                        <p class="float-lg-right"><strong>City:</strong></p>
+                      </div>
+                      <div class="pl-3 col-12 col-md-8">
+                        <p>{{ location.city }}, {{ location.province }}</p>
+                      </div>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                      <button class="btn btn-olf-primary" type="button" ngbTooltip="Edit" (click)="onOpenEditLocation(location)">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-danger" type="button" ngbTooltip="Delete" (click)="onOpenDeleteLocation(location)">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+          </div>
+          
+          
+          
+        </div>
+        
+        <div class="card">
+          <div class="row">
+            <div class="col-12 text-center">
+              <p>
+                <a routerLink="/location-notification" class="btn btn-olf-primary">Manage My Location Notifications</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
     </div>
+  </div>
 </div>
