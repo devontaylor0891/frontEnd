@@ -174,6 +174,7 @@ import { ViewMarketScheduleModalComponent } from './feature/dashboard/market/mod
 import { DeleteMarketScheduleModalComponent } from './feature/dashboard/market/modals/schedules/delete-market-schedule-modal/delete-market-schedule-modal.component';
 import { EditMarketLocationModalComponent } from './feature/dashboard/market/modals/locations/edit-market-location-modal/edit-market-location-modal.component';
 import { DeleteMarketLocationModalComponent } from './feature/dashboard/market/modals/locations/delete-market-location-modal/delete-market-location-modal.component';
+import { AddMarketLocationModalComponent } from './feature/dashboard/market/modals/locations/add-market-location-modal/add-market-location-modal.component';
 
 
 @NgModule({
@@ -298,7 +299,8 @@ import { DeleteMarketLocationModalComponent } from './feature/dashboard/market/m
     ViewMarketScheduleModalComponent,
     DeleteMarketScheduleModalComponent,
     EditMarketLocationModalComponent,
-    DeleteMarketLocationModalComponent
+    DeleteMarketLocationModalComponent,
+    AddMarketLocationModalComponent
   ],
   imports: [
     BrowserModule,
@@ -382,7 +384,8 @@ import { DeleteMarketLocationModalComponent } from './feature/dashboard/market/m
     ViewMarketScheduleModalComponent,
     DeleteMarketScheduleModalComponent,
     EditMarketLocationModalComponent,
-    DeleteMarketLocationModalComponent
+    DeleteMarketLocationModalComponent,
+    AddMarketLocationModalComponent
   ],
   bootstrap: [AppComponent]
 })

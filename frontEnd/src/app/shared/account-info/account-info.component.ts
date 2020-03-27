@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
+import { ApiService } from '../../core/api.service';
 import { UserService } from '../../core/services/user/user.service';
 import { ProducerDashboardService } from '../../feature/dashboard/producer-dashboard.service';
 import { MarketDashboardService } from '../../feature/dashboard/market-dashboard.service';
@@ -11,6 +12,7 @@ import { ProducerModel } from '../../core/models/producer.model';
 import { EditAccountModalComponent } from '../edit-account-modal/edit-account-modal.component';
 import { EditMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/edit-market-location-modal/edit-market-location-modal.component';
 import { DeleteMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/delete-market-location-modal/delete-market-location-modal.component';
+import { AddMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/add-market-location-modal/add-market-location-modal.component';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -35,8 +37,12 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
   accountEditedSubscription: Subscription;
   locationEditedSubscription: Subscription;
   locationDeletedSubscription: Subscription;
+  locationAddedSubscription: Subscription;
+  getLocationNotificationsSub: Subscription;
 
   currentLogo: any;
+
+  currentLocationNotifsArray: any;
 
   ngOnChanges() {
 
@@ -56,7 +62,8 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
               private userService: UserService,
               private producerService: ProducerDashboardService,
               private marketService: MarketDashboardService,
-              private modal: NgbModal) { };
+              private modal: NgbModal,
+              private apiService: ApiService) { };
 
   ngOnInit() {
 
@@ -65,6 +72,14 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
     };
 
     console.log('market passed in: ', this.market);
+
+    this.getLocationNotificationsSub = this.apiService.getLocationNotifications(this.user.id)
+      .subscribe(
+        result => {
+          this.currentLocationNotifsArray = result;
+          console.log('locations received: ', this.currentLocationNotifsArray);
+        }
+      )
 
   };
 
@@ -111,19 +126,54 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   onOpenEditLocation(loc) {
-    console.log('edit location:, ', loc);
+    // console.log('edit location:, ', loc);
     const modalRef = this.modal.open(EditMarketLocationModalComponent, { size: 'lg' });
     modalRef.componentInstance.location = loc;
     this.locationEditedSubscription = modalRef.componentInstance.locationEdited
       .subscribe(
         result => {
-          this.marketService.loadData(this.user.id);          }
+          if (result ) {
+            console.log('location edited');
+            this.marketService.loadData(this.user.id);
+          } else {
+            console.log('edits cancelled');
+          }
+        }
       );
   };
 
   onOpenDeleteLocation(loc) {
     console.log('delete this one: ', loc);
-  }
+    const modalRef = this.modal.open(DeleteMarketLocationModalComponent, { size: 'lg' });
+    modalRef.componentInstance.locationId = loc.id;
+    this.locationDeletedSubscription = modalRef.componentInstance.locationDeleted
+      .subscribe(
+        result => {
+          if (result ) {
+            console.log('location deleted');
+            this.marketService.loadData(this.user.id);
+          } else {
+            console.log('delete cancelled');
+          }
+        }
+      );
+  };
+
+  onAddLocation() {
+    const modalRef = this.modal.open(AddMarketLocationModalComponent, { size: 'lg' });
+    modalRef.componentInstance.marketId = this.market.marketId;
+    this.locationAddedSubscription = modalRef.componentInstance.locationAdded
+      .subscribe(
+        result => {
+          if (result ) {
+            console.log('location added');
+            this.marketService.loadData(this.user.id);
+          } else {
+            console.log('add cancelled');
+          }
+        }
+      );
+  };
 
   ngOnDestroy() {
     if (this.logoUploadSubscription) {

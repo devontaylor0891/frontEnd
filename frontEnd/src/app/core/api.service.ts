@@ -195,7 +195,6 @@ export class ApiService {
   patchProducer(id: number, newFieldAndValue: Object): Observable<any> {
     return this.http
       .put(this.apiUrl + `/producers/${id}/`, newFieldAndValue, {
-      // .patch(`${ENV.BASE_API}producer/${id}/`, newFieldAndValue, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);
@@ -205,7 +204,33 @@ export class ApiService {
   patchMarket(id: number, newFieldAndValue: Object): Observable<any> {
     return this.http
       .put(this.apiUrl + `/markets/${id}/`, newFieldAndValue, {
-      // .patch(`${ENV.BASE_API}producer/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  createMarketLocation(location: any): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/marketsLocations/`, location, {
+      // .post(`${ENV.BASE_API}producer/`, producer, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  // PATCH market location
+  patchMarketLocation(id: number, newFieldAndValue: Object): Observable<any> {
+    return this.http
+      .put(this.apiUrl + `/marketsLocations/${id}/`, newFieldAndValue, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  // DELETE market location
+  deleteMarketLocation(id: number): Observable<any> {
+    return this.http
+      .delete(this.apiUrl + `/marketsLocations/${id}/`, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);

@@ -1,16 +1,10 @@
 import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-// import { } from 'googlemaps';
-import { google } from '@google/maps';
-import { MapsAPILoader } from '@agm/core';
-
-declare var google: any;
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as cloneDeep from 'lodash/cloneDeep';
-
-import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 
 import { MarketDashboardService } from '../../../../market-dashboard.service';
 import { ApiService } from '../../../../../../core/api.service';
@@ -22,19 +16,21 @@ import { ApiService } from '../../../../../../core/api.service';
 })
 export class AddMarketScheduleModalComponent implements OnInit {
 
-  public latitude: number;
-  public longitude: number;
-  public searchControl: FormControl;
-  public zoom: number;
+  market: any;
+  marketSub: Subscription;
+  locations: any;
+  locationsSub: Subscription;
 
-  @ViewChild('search') public searchElementRef: ElementRef;
+  radioSelected = true;
+
+  scheduleSubmitObject: any;
+
   @ViewChild('date') public datePickerRef: ElementRef;
 
-  @Output() itemCreated = new EventEmitter<ScheduleModel>();
+  @Output() itemCreated = new EventEmitter<any>();
 
   form: FormGroup; // this will hold our form data in a js object
 
-  market: any;
   type: string;
   hasDelFee = false;
   hasFeeWaiver = false;
@@ -101,7 +97,6 @@ export class AddMarketScheduleModalComponent implements OnInit {
   constructor(private dashboardService: MarketDashboardService,
               private formBuild: FormBuilder,
               public activeModal: NgbActiveModal,
-              private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
               private apiService: ApiService,
               private cdRef: ChangeDetectorRef) {
@@ -109,6 +104,7 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.buildBlankSubmitObject();
 
     this.form = formBuild.group({
+      'id': [2],
       'type': ['', Validators.required],
       'description': ['', Validators.required],
       'date': [this.dateMoment],
@@ -135,58 +131,47 @@ export class AddMarketScheduleModalComponent implements OnInit {
 
   ngOnInit() {
 
+    this.marketSub = this.dashboardService.getMarket()
+      .subscribe(
+        result => {
+          console.log('market recd: ', result);
+          this.market = result;
+        }
+      );
+
+    this.locationsSub = this.dashboardService.getLocations()
+      .subscribe(
+        result => {
+          console.log('locations recd: ', result);
+          this.locations = result;
+        }
+      );
+
+    this.scheduleSubmitObject = {
+      type: 'market',
+      description: '',
+      startDateTime: '',
+      endDateTime: '',
+      readableDate: '',
+      hasFee: false,
+      hasWaiver: false,
+      latitude: null,
+      longitude: null,
+      city: '',
+      province: '',
+      orderDeadline: '',
+      address: '',
+      fee: 0,
+      feeWaiver: 0,
+      marketId: this.market.marketId
+    };
+
     // console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
     // console.log('startTime (noon): ', this.startTimeMoment);
     // console.log('endTime (1pm): ', this.endTimeMoment);
     // console.log('deadline (12am tomorrow): ', this.deadlineDateTime);
     // console.log('minimum date (tomorrow): ', this.DateMomentMin);
     // console.log('max deadline (same as dateMoment): ', this.deadlineDateTimeMax);
-
-    // set google maps defaults
-    this.zoom = 4;
-
-    // create search FormControl
-    this.searchControl = new FormControl();
-
-    // set current position
-    // this.setCurrentPosition();
-
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      // console.log('google.maps: ', google.maps);
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['geocode']
-      });
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          // console.log('place: ', place);
-          this.fillAddress(place);
-
-          // set latitude, longitude and zoom
-          // this.latitude = place.geometry.location.lat();
-          // this.longitude = place.geometry.location.lng();
-          // this.zoom = 12;
-        });
-      });
-    });
-
-    this.dashboardService.getMarket()
-      .subscribe(
-        result => {
-          console.log('market data received: ', result);
-          this.market = result;
-          this.latitude = result.latitude;
-          this.longitude = result.longitude;
-        }
-      );
 
     this.setSchedDefaultValues();
 
@@ -196,33 +181,7 @@ export class AddMarketScheduleModalComponent implements OnInit {
 
   };
 
-  onChanges() {
-    this.form.get('type').valueChanges.subscribe(val => {
-      if (val === 'On-farm Pickup') {
-        console.log('on farm pickup selected, form value before: ', this.form.value);
-        // this.submitObject.latitude = this.latitude;
-        // this.submitObject.longitude = this.longitude;
-        // this.submitObject.address = this.producer.address;
-        // this.submitObject.city = this.producer.location;
-        // this.submitObject.province = this.producer.province;
-        // this.submitObject.producerName = this.producer.name;
-        // this.form.patchValue({
-        //   latitude: this.latitude,
-        //   longitude: this.longitude,
-        //   address: this.producer.address,
-        //   city: this.producer.location,
-        //   province: this.producer.province
-        // });
-        // console.log('on farm pickup selected, form value after: ', this.form.value);
-      }
-    });
-    this.form.get('hasFee').valueChanges.subscribe(val => {
-      // console.log('has fee changed: ', this.form.value);
-    });
-    this.form.get('hasWaiver').valueChanges.subscribe(val => {
-      // console.log('has delfee changed: ', this.form.value);
-    });
-  };
+  onChanges() {};
 
   onSubmit() {
     this.submitting = true;
@@ -352,84 +311,6 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.submitObject.orderList = [];
     this.submitObject.userId = this.market.id;
     // console.log('submit obj built: ', this.submitObject);
-  };
-
-  private fillAddress(place) {
-    this.clearAddress();
-    this.parseAddressComponents(place.address_components);
-    this.lat = place.geometry.location.lat();
-    this.lng = place.geometry.location.lng();
-    this.form.value.latitude = this.lat;
-    this.form.value.longitude = this.lng;
-    this.form.patchValue({
-      latitude: this.lat,
-      longitude: this.lng
-    });
-    // console.log('lat fn: ', place.geometry.location.lat());
-    if (this.streetNumber && this.route) {
-      this.noAddress = false;
-      this.form.value.address = this.streetNumber + ' ' + this.route;
-      this.submitObject.address = this.streetNumber + ' ' + this.route;
-    };
-    if (this.route && !this.streetNumber) {
-      // console.log('no streetnumber');
-      this.noAddress = true;
-    };
-    // this.form.value.city = this.city;
-    this.form.controls['city'].setValue(this.city);
-    this.submitObject.city = this.city; // still not working
-    // this.form.value.province = this.province;
-    this.form.controls['province'].setValue(this.province);
-    this.submitObject.province = this.province;
-    // this.form.value.latitude = this.lat;
-    // this.form.value.longitude = this.lng;
-    this.submitObject.latitude = this.lat;
-    this.submitObject.longitude = this.lng;
-    // console.log('lat in submit obj: ', this.submitObject.latitude);
-    // console.log('form after location choice: ', this.form);
-  };
-
-  private clearAddress() {
-    this.submitObject.address = '';
-    this.submitObject.city = '';
-    this.submitObject.province = '';
-    this.submitObject.latitude = null;
-    this.submitObject.longitude = null;
-    this.streetNumber = '';
-    this.route = '';
-    this.city = '';
-    this.province = '';
-    this.postalCode = '';
-    this.country = '';
-    this.lat = null;
-    this.lng = null;
-  }
-
-  private parseAddressComponents(components) {
-    for (let i = 0; i < components.length; i++) {
-      const types = components[i].types;
-      for (let j = 0; j < types.length; j++) {
-        const result = types[j];
-        if (result === 'street_number') {
-          this.streetNumber = components[i].short_name;
-        }
-        if (result === 'route') {
-          this.route = components[i].short_name;
-        }
-        if (result === 'locality' || result === 'sublocality') {
-          this.city = components[i].short_name;
-        }
-        if (result === 'administrative_area_level_1') {
-          this.province = components[i].short_name;
-        }
-        if (result === 'postal_code') {
-          this.postalCode = components[i].short_name;
-        }
-        if (result === 'country') {
-          this.country = components[i].short_name;
-        }
-      }
-    }
   };
 
   onChooseDate() {
@@ -580,7 +461,11 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.schedStartMinute = this.startTimeMoment.getMinutes();
     this.schedEndHour = this.endTimeMoment.getHours();
     this.schedEndMinute = this.endTimeMoment.getMinutes();
-  }
+  };
+
+  onSelectLocation(index) {
+    console.log('index of location selected: ', index);
+  };
 
 }
 

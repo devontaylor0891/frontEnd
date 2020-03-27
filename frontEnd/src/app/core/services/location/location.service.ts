@@ -7,7 +7,7 @@
 
 import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { SearchService } from '../search/search.service';
 
@@ -25,10 +25,10 @@ export class LocationService {
     geocoder: any;
     lat: any;
     lng: any;
-    address: string = '';
+    address = '';
     city: string;
     province: string;
-    cityProvince: string = '';
+    cityProvince = '';
     results: any;
     geoCoderResults: any = {};
 
@@ -84,18 +84,12 @@ export class LocationService {
       if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
-                // this.lat = position.coords.latitude;
-                // this.lng = position.coords.longitude;
                 this.dataStore.location.latitude = position.coords.latitude;
                 this.dataStore.location.longitude = position.coords.longitude;
                 this.codeLatLng(this.dataStore.location.latitude, this.dataStore.location.longitude);
-                // console.log('position getUserLocation: ', position);
-                
-                // observer.next(position);
-                // observer.complete();
             },
             (error) => {
-                this.lat = 50.1391360, // fallback lat 
+                this.lat = 50.1391360, // fallback lat
                 this.lng = -101.6659968  // fallback lng
                 this.dataStore.location.latitude = 50.1391360;
                 this.dataStore.location.longitude = -101.6659968;
@@ -109,7 +103,7 @@ export class LocationService {
             this.geoOptions
         );
       } else {
-        this.lat = 50.1391360, // fallback lat 
+        this.lat = 50.1391360, // fallback lat
         this.lng = -101.6659968  // fallback lng
         this.dataStore.location.latitude = 50.1391360;
         this.dataStore.location.longitude = -101.6659968;
@@ -133,7 +127,7 @@ export class LocationService {
                         observer.complete();
                     },
                     (error) => {
-                        this.lat = 50.1391360, // fallback lat 
+                        this.lat = 50.1391360, // fallback lat
                         this.lng = -101.6659968  // fallback lng
                         alert('Onlylocalfood will now load from a default location. You may update the location at any time.');
                         // console.log("Fallback position: ", this.fallbackPosition);
@@ -175,7 +169,7 @@ export class LocationService {
         this.dataStore.location.latitude = place.geometry.location.lat();
         this.dataStore.location.longitude = place.geometry.location.lng();
         this.parseAddressComponents(place.address_components);
-        
+
         // console.log('searchOptionsMobile lat and long of new location: ', this.latitude + ', ' + this.longitude);
         // have location service re-emit the city and province
         // console.log('searchOptionsMobile updating city and province in location service');
@@ -190,13 +184,13 @@ export class LocationService {
         // this.locationUpdate = !this.locationUpdate;
         // this.switchToResults();
     };
-    
+
     private parseAddressComponents(components) {
         let city, province;
         for (let i = 0; i < components.length; i++) {
-            let types = components[i].types;
+            const types = components[i].types;
             for (let j = 0; j < types.length; j++) {
-                let result = types[j];
+              const result = types[j];
                 if (result === 'locality' || result === 'sublocality') {
                     city = components[i].short_name;
                 };
@@ -214,8 +208,8 @@ export class LocationService {
         this.mapsAPILoader.load().then(() => {
             // console.log('google.maps from location service: ', google.maps);
             this.geocoder = new google.maps.Geocoder();
-            let latlng = new google.maps.LatLng(lat, lng);
-            let self = this;
+            const latlng = new google.maps.LatLng(lat, lng);
+            const self = this;
             this.results = this.geocoder.geocode({'location': latlng}, function(results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                     self.geoCoderResults = results;
@@ -226,11 +220,11 @@ export class LocationService {
                     this.province = '';
                     // console.log('geocoerresults: ', self);
                     if (results[1]) {
-                        let components = results[1].address_components;
+                      const components = results[1].address_components;
                         for (let i = 0; i < components.length; i++) {
-                            let types = components[i].types;
+                          const types = components[i].types;
                             for (let j = 0; j < types.length; j++) {
-                                let result = types[j];
+                              const result = types[j];
                                 if (result === 'street_number') {
                                     this.streetNumber = components[i].short_name;
                                 }
@@ -272,7 +266,7 @@ export class LocationService {
                                     // console.log('self.address: ', self._address);
                                     })
                                 }
-                                
+
                             //   this.ngZone.run(() => {
                             //       this.cityProvince = components[i].short_name + ', ' + components[i].short_name;
                             //       this._cityProvince.next(this.cityProvince);
@@ -280,10 +274,10 @@ export class LocationService {
                             }
                           }
                     } else {
-                    alert("No results found");
+                    alert('No results found');
                     };
                 } else {
-                    alert("Geocoder failed due to: " + status);
+                    alert('Geocoder failed due to: ' + status);
                 };
             });
         });

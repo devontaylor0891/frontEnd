@@ -156,15 +156,6 @@
                 
               </li>
               
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-12 text-center">
-                    <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()" type="button"><i class="fa fa-edit prefix mr-3"></i>EDIT PROFILE</button>
-                  </div>
-                </div>
-                
-              </li>
-              
               
             </ul>
             
@@ -174,6 +165,14 @@
             
             
             
+          </div>
+
+          <div class="card-footer">
+              <div class="row">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()" type="button"><i class="fa fa-edit prefix mr-3"></i>EDIT PROFILE</button>
+                  </div>
+                </div>
           </div>
           
           
@@ -189,71 +188,100 @@
             </h5>
           </div>
           <div class="card-body">
+            <div class="text-center" *ngIf="locations.length === 0">
+              <p class="lead">
+                You have no locations listed. Please add at least one so that your vendors can add it to their schedule.
+              </p>
+            </div>
+            <div *ngIf="locations.length > 0">
               <ul class="list-group list-group-flush" *ngFor="let location of locations">
-                  <li class="list-group-item">
-                    <div class="row mb-1" *ngIf="location.locationName">
-                      <div class="col-12 col-md-4">
-                        <p class="float-lg-right"><strong>Name:</strong></p>
-                      </div>
-                      <div class="pl-3 col-12 col-md-8">
-                        <p>{{ location.locationName }}</p>
+                <li class="list-group-item">
+                  <div class="row mb-1" *ngIf="location.locationName">
+                    <div class="col-12 col-md-4">
+                      <p class="float-lg-right"><strong>Name:</strong></p>
+                    </div>
+                    <div class="pl-3 col-12 col-md-8">
+                      <p>{{ location.locationName }}</p>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-12 col-md-4">
+                      <p class="float-lg-right"><strong>Timeframe:</strong></p>
+                    </div>
+                    <div class="pl-3 col-12 col-md-8">
+                      <p>{{ location.timeframe }}</p>
+                    </div>
+                  </div>
+                  <div class="row mb-1" *ngIf="location.description">
+                    <div class="col-12 col-md-4">
+                      <p class="float-lg-right"><strong>Description:</strong></p>
+                    </div>
+                    <div class="pl-3 col-12 col-md-8">
+                      <p>{{ location.description }}</p>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-12 col-md-4">
+                      <p class="float-lg-right"><strong>Address:</strong></p>
+                    </div>
+                    <div class="pl-3 col-12 col-md-8">
+                      <p>{{ location.address }}</p>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-12 col-md-4">
+                      <p class="float-lg-right"><strong>City:</strong></p>
+                    </div>
+                    <div class="pl-3 col-12 col-md-8">
+                      <p>{{ location.city }}, {{ location.province }}</p>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-end">
+                    <div class="btn-toolbar" role="toolbar" aria-label="...">
+                      <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                        <button class="btn btn-olf-primary" type="button" ngbTooltip="Edit" (click)="onOpenEditLocation(location)">
+                          <i class="fas fa-edit mx-2"></i>
+                        </button>
+                        <button class="btn btn-danger " type="button" ngbTooltip="Delete" (click)="onOpenDeleteLocation(location)">
+                          <i class="fas fa-times mx-2"></i>
+                        </button>                          
                       </div>
                     </div>
-                    <div class="row mb-1">
-                      <div class="col-12 col-md-4">
-                        <p class="float-lg-right"><strong>Timeframe:</strong></p>
-                      </div>
-                      <div class="pl-3 col-12 col-md-8">
-                        <p>{{ location.timeframe }}</p>
-                      </div>
-                    </div>
-                    <div class="row mb-1" *ngIf="location.description">
-                      <div class="col-12 col-md-4">
-                        <p class="float-lg-right"><strong>Description:</strong></p>
-                      </div>
-                      <div class="pl-3 col-12 col-md-8">
-                        <p>{{ location.description }}</p>
-                      </div>
-                    </div>
-                    <div class="row mb-1">
-                      <div class="col-12 col-md-4">
-                        <p class="float-lg-right"><strong>Address:</strong></p>
-                      </div>
-                      <div class="pl-3 col-12 col-md-8">
-                        <p>{{ location.address }}</p>
-                      </div>
-                    </div>
-                    <div class="row mb-1">
-                      <div class="col-12 col-md-4">
-                        <p class="float-lg-right"><strong>City:</strong></p>
-                      </div>
-                      <div class="pl-3 col-12 col-md-8">
-                        <p>{{ location.city }}, {{ location.province }}</p>
-                      </div>
-                    </div>
-                    <div class="row d-flex justify-content-end">
-                      <button class="btn btn-olf-primary" type="button" ngbTooltip="Edit" (click)="onOpenEditLocation(location)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="btn btn-danger" type="button" ngbTooltip="Delete" (click)="onOpenDeleteLocation(location)">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                  </li>
-                </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            
           </div>
-          
-          
-          
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-12 text-center">
+                <button class="btn btn-sm btn-olf-primary" type="button" (click)="onAddLocation()"><i class="fas fa-plus mr-3"></i>Add New Location</button>
+                
+              </div>
+            </div>
+          </div>
         </div>
         
         <div class="card">
-          <div class="row">
-            <div class="col-12 text-center">
-              <p>
-                <a routerLink="/location-notification" class="btn btn-olf-primary">Manage My Location Notifications</a>
-              </p>
-            </div>
+          <div class="card-header">
+            <h5>
+              <strong>
+                <i class="fas fa-envelope-open-text mr-3"></i>Your Location Notifications
+              </strong>
+            </h5>
+          </div>
+          <div class="card-body" *ngIf="currentLocationNotifsArray">
+              <p *ngIf="currentLocationNotifsArray.length < 1">You don't currently have any notifications set up. Choose 'Manage' below to add some.</p>
+              <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-center align-items-center" *ngFor="let location of currentLocationNotifsArray, let i = index">
+                      {{ location.city }}, {{ location.province }}
+                  </li>
+              </ul>
+          </div>
+          <div class="card-footer text-center">
+                  <a routerLink="/location-notification" class="btn btn-olf-primary btn-sm">Manage My Location Notifications</a>
           </div>
         </div>
         

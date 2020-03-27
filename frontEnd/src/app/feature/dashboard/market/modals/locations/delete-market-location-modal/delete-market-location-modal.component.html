@@ -1,3 +1,20 @@
-<p>
-  delete-market-location-modal works!
-</p>
+<div class="modal-body dash-modal-body" *ngIf="submitting">
+  
+  <app-loading ></app-loading>
+  
+</div>
+
+<div class="modal-body dash-modal-body text-center" *ngIf="!submitting">
+  
+  <p class="lead">This will permanently delete this location?</p>
+  <button class="btn btn-danger" type="button" (click)="onConfirmDelete()">CONFIRM DELETE</button>
+  
+</div>
+
+<div class="modal-footer justify-content-center">
+  <div class="row text-center">
+    <div class="col-12">
+      <a (click)="activeModal.close()">Cancel Changes</a>
+    </div>
+  </div>
+</div>

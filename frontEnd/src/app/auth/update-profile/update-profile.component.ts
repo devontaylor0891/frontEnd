@@ -326,22 +326,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   buildProducerSubmitObject(form) {
     console.log('build producer form object: ', form);
-    // this.submitObject = {
-    //   id: this.user.id,
-    //   name: form.producer.name,
-    //   location: form.producer.city,
-    //   province: form.producer.province,
-    //   address: this.selectedAddress || '',
-    //   description: form.producer.description,
-    //   email: form.user.email,
-    //   logoUrl: this.imageName,
-    //   // longitude: this.longitude,
-    //   // latitude: this.latitude,
-    //   firstName: form.user.firstName,
-    //   status: 'active',
-    //   products: [],
-    //   schedule: []
-    // };
     this.submitObject = form.producer;
     if (form.producer.customUrl) {
       this.customUrlObject = {
@@ -360,13 +344,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   buildMarketSubmitObject(form) {
-    // this.submitObject = {
-    //   id: this.user.id,
-    //   name: form.market.name,
-    //   description: form.market.description,
-    //   logoUrl: this.imageName,
-    //   multipleLocations: form.market.multipleLocations
-    // };
+    console.log('build market form object: ', form);
     this.submitObject = form.market;
     if (form.market.customUrl) {
       this.customUrlObject = {
@@ -380,11 +358,10 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
         customUrl: this.user.id,
         userType: 'market'
       };
-    };
+    }
+    ;
   };
 
-  // onSubmit(form: any): void {
-  //   this.submitting = true;
   //   console.log('form value: ', form.value);
   //   // console.log(this.id);
   //   this.apiService.patchUser(this.user.id, form.value.user) // update user

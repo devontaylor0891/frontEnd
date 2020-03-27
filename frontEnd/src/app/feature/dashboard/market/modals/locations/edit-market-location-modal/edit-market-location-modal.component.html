@@ -1,17 +1,117 @@
 <div class="modal-header">
-    <h5 class="modal-title">Please review and edit your Account Information as necessary</h5>
-    <button type="button" class="close" (click)="activeModal.close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  
-  <div class="modal-body dash-modal-body">
-  
-    <app-loading *ngIf="submitting"></app-loading>
+  <h5 class="modal-title">Please review and edit your Account Information as necessary</h5>
+  <button type="button" class="close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
+<div class="modal-body dash-modal-body" *ngIf="submitting">
+
+  <app-loading ></app-loading>
+
+</div>
+
+<div *ngIf="!submitting">
+
+  <div class="modal-body dash-modal-body">
+
+      <form [formGroup]="locationForm">
+
+          <div class="form-section-body">
+        
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <label for="timeframe">Timeframe *:</label>
+              </div>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <textarea class="form-input-custom" type="text" id="timeframe" formControlName="timeframe" placeholder="Tuesdays from late May thru September"></textarea>
+                <small *ngIf="!locationForm.get('timeframe').valid && locationForm.get('timeframe').touched" class="help-block">Please describe the general timeframe of your market - eg. "Tuesdays from late May thru September".</small>
+              </div>
+            </div>
+        
+            <div class="row">
+              <label for="locationName" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location Name <small>(optional)</small>:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <input class="form-input-custom" type="text" id="locationName" formControlName="locationName">
+              </div>
+            </div>
+        
+            <div class="row">
+              <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Describe the Market <small>(optional)</small>:</label>
+              <div class="col-xs-12 col-sm-8 input-group">
+                <textarea class="form-input-custom" type="text" id="description" formControlName="description"></textarea>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="selectedAddress && !locationSearchDisplay">
+                <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Address:</label>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ selectedAddress }}</p>
+                </div>
+              </div>
   
+              <div class="row" *ngIf="!locationSearchDisplay">
+                <label for="name" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location:</label>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ selectedLocation }}</p>
+                </div>
+              </div>
+  
+              <div class="row" *ngIf="!locationSearchDisplay">
+                <div class="col-12 text-center">
+                  <a (click)="toggleLocationSearch()">Change Address</a>
+                </div>
+              </div>
+
+              <div class="row" [hidden]="!locationSearchDisplay">
+    
+                  <label for="locationSearch" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Location Search:</label>
+                  <div class="col-xs-12 col-sm-8 input-group">
+                    <input autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-input-custom" #locationSearch id="locationSearch"
+                    [formControl]="locationSearchControl">
+                  </div>
+    
+                  <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Selected Location *:</label>
+                  <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                    <p>{{ selectedLocation }}</p>
+                  </div>
+    
+                  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)">
+                    <agm-marker [latitude]="markerLatitude" [longitude]="markerLongitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
+                    </agm-marker>
+                  </agm-map>
+    
+                </div>
+
+            <!--             
+            <div class="row">
+              <label for="selectedLocation" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Selected Location:</label>
+              <div class="col-xs-12 col-sm-8 input-group col-form-label">
+                <p>{{ selectedLocation }}</p>
+              </div>
+            </div>
+        
+            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)">
+              <agm-marker [latitude]="markerLatitude" [longitude]="markerLongitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
+              </agm-marker>
+            </agm-map> -->
+          
+            <div class="row d-flex justify-content-center">
+                <button 
+                type="button"
+                (click)="onLocationSubmit()"
+                class="btn btn-olf-primary" 
+                [disabled]="!locationForm.valid || !selectedLocation">
+                  CONFIRM UPDATES
+              </button>
+            </div>
+            
+          
+          </div>
+        </form>
+
   </div>
-  
+
   <div class="modal-footer justify-content-center">
     <div class="row text-center">
       <div class="col-12">
@@ -19,3 +119,5 @@
       </div>
     </div>
   </div>
+
+</div>
