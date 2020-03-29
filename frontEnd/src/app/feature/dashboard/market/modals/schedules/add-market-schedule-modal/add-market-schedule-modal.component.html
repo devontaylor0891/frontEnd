@@ -9,7 +9,7 @@
   
   <div class="modal-body dash-modal-body">
     
-    <app-submitting *ngIf="submitting"></app-submitting>
+    <app-loading *ngIf="submitting"></app-loading>
     
     <div *ngIf="!submitting">
       
@@ -17,104 +17,127 @@
         <div class="col-12 form-section-header">
           <h5>Location Details</h5>
         </div>
-
+        
         <div class="col-12 form-section-body" *ngIf="locations.length === 0">
-
-            <ul class="list-group">
-                <li *ngFor="let location of locations" class="list-group-item">
-
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                          <strong>Name:</strong>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                          <p>{{ location.locationName }}</p>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                          <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                            <strong>Timeframe:</strong>
-                          </div>
-                          <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                            <p>{{ location.timeframe }}</p>
-                          </div>
-                        </div>
-                  
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                          <strong>Details:</strong>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                          <p>{{ location.description }}</p>
-                        </div>
-                      </div>
-            
-                      <div *ngIf="location.address" class="row">
-                        <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                          <strong>Address:</strong>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                          <p>{{ location.address }}</p>
-                        </div>
-                      </div>
-            
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                          <strong>Location:</strong>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                          <p>{{ location.city }}, {{ location.province }}</p>
-                        </div>
-                      </div>
-
-
-                </li>
-              </ul>
-  
-            
-  
-          </div>
-
-          <div class="col-12 form-section-body" *ngIf="locations.length > 0">
-<p class="lead">
-  Choose the location:
-</p>
-<div >
-
-    <div *ngFor="let location of locations, let i = index">
-      <label for="{{location.id}}" class="custom-control custom-radio w-100">
-        <input 
-          id="{{location.id}}" 
-          [value]='location.id' 
-          type="radio" 
-          formControlName="id"
-          [(ngModel)]="radioSelected" 
-          class="custom-control-input" 
-          (click)="onSelectLocation(i)">
-        <span class="custom-control-indicator"></span>
-        <span class="custom-control-description w-100">
-          <div class="row">
-            <div class="col-12">
-              <p class="card-text"><strong>{{ location.locationName }}</strong></p>
+          
+          <ul class="list-group">
+            <li *ngFor="let location of locations" class="list-group-item">
+              
               <div class="row">
-                <div class="col-12 col-sm-3">
-                  <span class="card-text"><strong>Description:</strong></span>
+                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Name:</strong>
                 </div>
-                <div class="col-12 col-sm-9">
-                  <p class="card-text">{{ location.description }}</p>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ location.locationName }}</p>
                 </div>
               </div>
-              <hr>
-            </div>
-          </div> 
-        </span>
-      </label>
-    </div>
-  </div>
-          </div>
+              
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Timeframe:</strong>
+                </div>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ location.timeframe }}</p>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Details:</strong>
+                </div>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ location.description }}</p>
+                </div>
+              </div>
+              
+              <div *ngIf="location.address" class="row">
+                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Address:</strong>
+                </div>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ location.address }}</p>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                  <strong>Location:</strong>
+                </div>
+                <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                  <p>{{ location.city }}, {{ location.province }}</p>
+                </div>
+              </div>
+              
+              
+            </li>
+          </ul>
+          
+        </div>
         
+        <div class="col-12 form-section-body" *ngIf="locations.length > 0">
 
+          <p>
+            Choose the location:
+          </p>            
+          <div>
+            <select class="custom-select w-100" (change)="onSelect($event.target.value)">
+              <option 
+              class="dropdown-item" 
+              value="{{ i }}" 
+              *ngFor="let location of locations, let i = index" 
+              >{{ location.locationName }} - {{ location.timeframe }}</option>
+            </select>
+            
+          </div>
+
+          <div>
+              <div class="row" *ngIf="locations[selectedLocationIndex].locationName">
+                  <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                    <strong>Name:</strong>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                    <p>{{ locations[selectedLocationIndex].locationName }}</p>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                    <strong>Timeframe:</strong>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                    <p>{{ locations[selectedLocationIndex].timeframe }}</p>
+                  </div>
+                </div>
+                
+                <div class="row" *ngIf="locations[selectedLocationIndex].description">
+                  <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                    <strong>Details:</strong>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                    <p>{{ locations[selectedLocationIndex].description }}</p>
+                  </div>
+                </div>
+                
+                <div *ngIf="locations[selectedLocationIndex].address" class="row">
+                  <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                    <strong>Address:</strong>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                    <p>{{ locations[selectedLocationIndex].address }}</p>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+                    <strong>Location:</strong>
+                  </div>
+                  <div class="col-xs-12 col-sm-8 input-group col-form-value">
+                    <p>{{ locations[selectedLocationIndex].city }}, {{ locations[selectedLocationIndex].province }}</p>
+                  </div>
+                </div>
+          </div>
+            
+        </div>
         
       </div>
       
@@ -224,7 +247,7 @@
               ></owl-date-time>
             </div>
           </div>
-            
+          
           <!-- REPEAT SCHEDULE OPTION RADIO -->
           <div class="row">
             <label for="repeatYes" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Does this repeat?</label>
@@ -254,7 +277,7 @@
               </div>
             </div>
           </div>
-
+          
           <!-- REPEAT END DATE - USES DATEPICKER MODULE -->
           <div *ngIf="repeat" class="row">
             <label for="date" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Repeat once per week until:</label>
@@ -286,153 +309,28 @@
         </div>
         
       </div>
-        
-      <!-- options only for D2D deliveries -->
-      <div class="row form-section" *ngIf="type == 'Door-to-door Delivery'">
-        <div class="col-12 form-section-header">
-          <h5>Door-to-door Delivery Details</h5>
-        </div>
-        
-        <div class="col-12 form-section-body">
-          
-          <div class="row">
-            <label for="unit" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Does this delivery have a fee?</label>
-            <div class="col-xs-12 col-sm-8 input-group pl-5">
-              <div class="form-check form-check-inline">
-                <input 
-                [formControl]="form.controls['hasFee']" 
-                type="radio" 
-                name="hasFee" 
-                [(ngModel)]="hasDelFee"
-                id="feeYes" 
-                [value]=1>
-                <label class="form-check-label" for="feeYes">Yes</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input 
-                [formControl]="form.controls['hasFee']" 
-                type="radio" 
-                name="hasFee"
-                [(ngModel)]="hasDelFee" 
-                id="feeNo" 
-                [value]=0>
-                <label class="form-check-label" for="feeNo">No</label>
-              </div>
-            </div>
-          </div>
-          
-          <div *ngIf="hasDelFee">
-            <div class="row">
-              <label for="fee" class="col-xs-12 col-sm-4 col-form-label text-sm-right">What is the fee?</label>
-              <div class="col-xs-12 col-sm-8 input-group">
-                <div class="input-group-addon">$</div>
-                <input 
-                class="form-control" 
-                type="number"
-                min="0"
-                step="1"
-                id="fee" 
-                [formControl]="form.controls['fee']">
-              </div>
-            </div>
-            
-            <br>
-            
-            <div class="row">
-              <label for="hasWaiver" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Is there an order value at which you will waive the fee?</label>
-              <div class="col-xs-12 col-sm-8 input-group pl-5">
-                <div class="form-check form-check-inline">
-                  <input 
-                  [formControl]="form.controls['hasWaiver']" 
-                  type="radio" 
-                  name="hasWaiver" 
-                  [(ngModel)]="hasFeeWaiver"
-                  id="waiverYes" 
-                  [value]=1>
-                  <label class="form-check-label" for="waiverYes">Yes</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input 
-                  [formControl]="form.controls['hasWaiver']" 
-                  type="radio" 
-                  name="hasWaiver"
-                  [(ngModel)]="hasFeeWaiver" 
-                  id="waiverNo" 
-                  [value]=0>
-                  <label class="form-check-label" for="waiverNo">No</label>
-                </div>
-              </div>
-            </div>
-            
-            <div *ngIf="hasFeeWaiver">
-              <div class="row">
-                <label for="feeWaiver" class="col-xs-12 col-sm-4 col-form-label text-sm-right">What is the order amount?</label>
-                <div class="col-xs-12 col-sm-8 input-group">
-                  <div class="input-group-addon">$</div>
-                  <input 
-                  class="form-control" 
-                  type="number"
-                  min="0"
-                  step="1"
-                  id="feeWaiver" 
-                  [formControl]="form.controls['feeWaiver']">
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          
-        </div>
-        
-      </div>
-      
-      <!-- options only for farmgate -->
-      <div class="row form-section" *ngIf="type == 'On-farm Pickup'">
-        <div class="col-12 form-section-header">
-          <h5>On-farm Pickup Details</h5>
-        </div>
-        
-        <div class="col-12 form-section-body">
-          
-          <div class="row">
-            <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Your Address:</label>
-            <div class="col-xs-12 col-sm-8 input-group col-form-value">
-              <p>{{ market.address }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">City, Province:</label>
-            <div class="col-xs-12 col-sm-8 input-group col-form-value">
-              <p>{{ market.location }}, {{ market.province }}</p>
-            </div>
-          </div>
-          
-        </div>
-        
-      </div>
       
       <!-- SUBMIT BUTTONS -->
       <div class="row justify-content-center">
         <button *ngIf="!repeat"
-          class="btn btn-olf-primary" 
-          type="submit"
-          [disabled]="(form.invalid)"
-          >Add to Schedule</button>
+        class="btn btn-olf-primary" 
+        type="submit"
+        [disabled]="(form.invalid)"
+        >Add to Schedule</button>
         <button *ngIf="repeat"
-          class="btn btn-olf-primary" 
-          type="submit"
-          [disabled]="(form.invalid)"
-          >Add All to Schedule</button>
+        class="btn btn-olf-primary" 
+        type="submit"
+        [disabled]="(form.invalid)"
+        >Add All to Schedule</button>
       </div>
-        
+      
     </div>
   </div>
-
+  
   <div class="modal-footer justify-content-center">
     <div class="row">
       <a (click)="onCancel()">Cancel Changes</a>
     </div>
   </div>
-
+  
 </form>
-    

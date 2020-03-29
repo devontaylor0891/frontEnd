@@ -21,9 +21,9 @@ export class AddMarketScheduleModalComponent implements OnInit {
   locations: any;
   locationsSub: Subscription;
 
-  radioSelected = true;
+  selectedLocationIndex = 0;
 
-  scheduleSubmitObject: any;
+  submitObject: any;
 
   @ViewChild('date') public datePickerRef: ElementRef;
 
@@ -46,7 +46,6 @@ export class AddMarketScheduleModalComponent implements OnInit {
   country: string;
   lat: number;
   lng: number;
-  submitObject: any;
   repeatSubmitArray: any = [];
   submitting = false;
   isRepeat = false;
@@ -101,12 +100,9 @@ export class AddMarketScheduleModalComponent implements OnInit {
               private apiService: ApiService,
               private cdRef: ChangeDetectorRef) {
 
-    this.buildBlankSubmitObject();
+    // this.buildBlankSubmitObject();
 
     this.form = formBuild.group({
-      'id': [2],
-      'type': ['', Validators.required],
-      'description': ['', Validators.required],
       'date': [this.dateMoment],
       'dates': [this.dateMoments],
       'startTime': [this.startTimeMoment],
@@ -115,16 +111,7 @@ export class AddMarketScheduleModalComponent implements OnInit {
       'deadlineCalcHours': [12],
       'deadlineDateTime': [this.deadlineDateTime],
       'deadlineDate': [this.deadlineDateMoment],
-      'deadlineTime': [this.deadlineTimeMoment],
-      'hasFee': [false],
-      'fee': [0.00],
-      'hasWaiver': [false],
-      'feeWaiver': [0.00],
-      'latitude': [null, Validators.required],
-      'longitude': [null, Validators.required],
-      'city': ['', Validators.required],
-      'address': [''],
-      'province': ['', Validators.required]
+      'deadlineTime': [this.deadlineTimeMoment]
     });
 
   }
@@ -147,8 +134,10 @@ export class AddMarketScheduleModalComponent implements OnInit {
         }
       );
 
-    this.scheduleSubmitObject = {
-      type: 'market',
+    this.submitObject = {
+      marketId: this.market.marketId,
+      marketName: this.market.name,
+      type: 'Market Pickup',
       description: '',
       startDateTime: '',
       endDateTime: '',
@@ -162,8 +151,7 @@ export class AddMarketScheduleModalComponent implements OnInit {
       orderDeadline: '',
       address: '',
       fee: 0,
-      feeWaiver: 0,
-      marketId: this.market.marketId
+      feeWaiver: 0
     };
 
     // console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
@@ -186,21 +174,21 @@ export class AddMarketScheduleModalComponent implements OnInit {
   onSubmit() {
     this.submitting = true;
     this.buildSubmitObject();
-    if (!this.repeat) { // if only one, post it to the API
-      this.repeatSubmitArray[0] = this.submitObject;
-      this.apiService.postMultiSchedule(this.repeatSubmitArray)
-          .subscribe(
-            result => this.handleSubmitSuccess(result),
-            err => this.handleSubmitError(err)
-          );
-      // this.apiService.postSchedule(this.submitObject)
-      // .subscribe(
-      //   result => this.handleSubmitSuccess(result),
-      //   err => this.handleSubmitError(err)
-      // );
-    } else { // make copies of the submitObject, change date, send array to API
-      this.buildRepeatSubmitArray();
-    }
+    // if (!this.repeat) { // if only one, post it to the API
+    //   this.repeatSubmitArray[0] = this.submitObject;
+    //   this.apiService.postMultiSchedule(this.repeatSubmitArray)
+    //       .subscribe(
+    //         result => this.handleSubmitSuccess(result),
+    //         err => this.handleSubmitError(err)
+    //       );
+    //   // this.apiService.postSchedule(this.submitObject)
+    //   // .subscribe(
+    //   //   result => this.handleSubmitSuccess(result),
+    //   //   err => this.handleSubmitError(err)
+    //   // );
+    // } else { // make copies of the submitObject, change date, send array to API
+    //   this.buildRepeatSubmitArray();
+    // }
 
   };
 
@@ -261,27 +249,23 @@ export class AddMarketScheduleModalComponent implements OnInit {
 
   buildBlankSubmitObject() {
     this.submitObject = {
-      'id': null,
-      'producerId': null,
-      'producerName': '',
-      'productList': [],
-      'type': '',
-      'description': '',
-      'startDateTime': '',
-      'endDateTime': '',
-      'readableDate': '',
-      'hasFee': null,
-      'hasWaiver': null,
-      'latitude': null,
-      'longitude': null,
-      'city': '',
-      'province': '',
-      'orderDeadline': '',
-      'address': '',
-      'fee': null,
-      'feeWaiver': null,
-      'orderList': [],
-      'userId': null
+      marketId: this.market.marketId,
+      marketName: this.market.name,
+      type: 'Market Pickup',
+      description: '',
+      startDateTime: '',
+      endDateTime: '',
+      readableDate: '',
+      hasFee: false,
+      hasWaiver: false,
+      latitude: null,
+      longitude: null,
+      city: '',
+      province: '',
+      orderDeadline: '',
+      address: '',
+      fee: 0,
+      feeWaiver: 0
     };
   }
 
@@ -291,26 +275,18 @@ export class AddMarketScheduleModalComponent implements OnInit {
   // }
 
   buildSubmitObject() {
-    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
-    this.submitObject.marketId = this.market.id;
-    this.submitObject.marketName = this.market.name;
-    this.submitObject.type = this.form.value.type;
-    this.submitObject.description = this.form.value.description;
-    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
-    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
+    this.submitObject.description = this.locations[this.selectedLocationIndex].locationName + ' - ' + this.locations[this.selectedLocationIndex].description;
     this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
     this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
-    console.log('human readable: ', this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate());
     this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
-    this.submitObject.hasFee = this.form.value.hasFee;
-    this.submitObject.hasWaiver = this.form.value.hasWaiver;
     this.submitObject.orderDeadline = this.deadlineDateTime;
-    // this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-    this.submitObject.fee = this.form.value.fee;
-    this.submitObject.feeWaiver = this.form.value.feeWaiver;
-    this.submitObject.orderList = [];
-    this.submitObject.userId = this.market.id;
-    // console.log('submit obj built: ', this.submitObject);
+    this.submitObject.latitude = this.locations[this.selectedLocationIndex].latitude;
+    this.submitObject.longitude = this.locations[this.selectedLocationIndex].longitude;
+    this.submitObject.address = this.locations[this.selectedLocationIndex].address;
+    this.submitObject.city = this.locations[this.selectedLocationIndex].city;
+    this.submitObject.province = this.locations[this.selectedLocationIndex].province;
+    this.submitObject.latitude = this.locations[this.selectedLocationIndex].latitude;
+    console.log('submit obj built: ', this.submitObject);
   };
 
   onChooseDate() {
@@ -463,8 +439,8 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.schedEndMinute = this.endTimeMoment.getMinutes();
   };
 
-  onSelectLocation(index) {
-    console.log('index of location selected: ', index);
+  onSelect(value) {
+    this.selectedLocationIndex = value;
   };
 
 }
