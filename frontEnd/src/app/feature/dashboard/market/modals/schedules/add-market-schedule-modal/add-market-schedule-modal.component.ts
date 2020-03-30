@@ -174,31 +174,15 @@ export class AddMarketScheduleModalComponent implements OnInit {
   onSubmit() {
     this.submitting = true;
     this.buildSubmitObject();
-    // if (!this.repeat) { // if only one, post it to the API
-    //   this.repeatSubmitArray[0] = this.submitObject;
-    //   this.apiService.postMultiSchedule(this.repeatSubmitArray)
-    //       .subscribe(
-    //         result => this.handleSubmitSuccess(result),
-    //         err => this.handleSubmitError(err)
-    //       );
-    //   // this.apiService.postSchedule(this.submitObject)
-    //   // .subscribe(
-    //   //   result => this.handleSubmitSuccess(result),
-    //   //   err => this.handleSubmitError(err)
-    //   // );
-    // } else { // make copies of the submitObject, change date, send array to API
-    //   this.buildRepeatSubmitArray();
-    // }
-
   };
 
   handleSubmitSuccess(result) {
     console.log('new multischeds result: ', result);
-    this.itemCreated.emit(result);
     this.buildBlankSubmitObject();
-    this.submitting = false;
     this.repeatSubmitArray = [];
+    this.itemCreated.emit(result);
     this.activeModal.close();
+    this.submitting = false;
   };
 
   handleSubmitError(err) {
@@ -224,7 +208,6 @@ export class AddMarketScheduleModalComponent implements OnInit {
   // };
 
   buildRepeatSubmitArray() {
-    this.repeatSubmitArray[0] = this.submitObject;
     let tempSubmitObj;
     for (let i = 1; i < this.numberOfWeeks; i++) {
       tempSubmitObj = cloneDeep(this.submitObject);
@@ -232,13 +215,11 @@ export class AddMarketScheduleModalComponent implements OnInit {
       tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
       tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
       tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
-      console.log('human readable: ', this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate());
       tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
-
       // push into array
       this.repeatSubmitArray.push(tempSubmitObj);
       if (i === this.numberOfWeeks - 1) {
-        this.apiService.postMultiSchedule(this.repeatSubmitArray)
+        this.apiService.postMultiMarketSchedule(this.repeatSubmitArray)
           .subscribe(
             result => this.handleSubmitSuccess(result),
             err => this.handleSubmitError(err)
@@ -287,6 +268,16 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.submitObject.province = this.locations[this.selectedLocationIndex].province;
     this.submitObject.latitude = this.locations[this.selectedLocationIndex].latitude;
     console.log('submit obj built: ', this.submitObject);
+    this.repeatSubmitArray[0] = this.submitObject;
+    if (!this.repeat) { // if only one, post it to the API
+      this.apiService.postMultiMarketSchedule(this.repeatSubmitArray)
+        .subscribe(
+          result => this.handleSubmitSuccess(result),
+          err => this.handleSubmitError(err)
+        );
+    } else { // make copies of the submitObject, change date, send array to API
+      this.buildRepeatSubmitArray();
+    }
   };
 
   onChooseDate() {

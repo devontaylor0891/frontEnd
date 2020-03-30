@@ -392,6 +392,15 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  postMultiMarketSchedule(schedules: any): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/marketsMultiSchedules/`, schedules, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader),
+        responseType: 'text'
+      })
+      .catch(this._handleError);
+  };
+
   // PUT existing schedule - producer or admin only
   putSchedule(id: number, schedule: any): Observable<any> {
     return this.http
