@@ -35,6 +35,7 @@
                           [settings]="projectSettings"
                           [editable]="true"
                           [deletable]="true"
+                          [isMarket]="true"
                           (scheduleDeleted)="onScheduleDeleted($event)">
                       </app-table-layout>
                       <div *ngIf="upcomingSchedule.length < 1">
@@ -66,7 +67,8 @@
                           [recordType]="recordType"
                           [settings]="projectSettings"
                           [editable]="false"
-                          [deletable]="false">
+                          [deletable]="false"
+                          [isMarket]="true">
                       </app-table-layout>
                   </div>
               </div>

@@ -7,7 +7,9 @@ import { EditProductModalComponent } from '../../feature/dashboard/producer/moda
 import { ViewProductModalComponent } from '../../feature/dashboard/producer/modals/product/view-product-modal/view-product-modal.component';
 import { DeleteProductModalComponent } from '../../feature/dashboard/producer/modals/product/delete-product-modal/delete-product-modal.component';
 import { EditScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/edit-schedule-modal/edit-schedule-modal.component';
+import { EditMarketScheduleModalComponent } from '../../feature/dashboard/market/modals/schedules/edit-market-schedule-modal/edit-market-schedule-modal.component';
 import { ViewScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/view-schedule-modal/view-schedule-modal.component';
+import { ViewMarketScheduleModalComponent } from '../../feature/dashboard/market/modals/schedules/view-market-schedule-modal/view-market-schedule-modal.component';
 import { DeleteScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
 import { EditOrderModalComponent } from '../../feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
 import { ViewOrderModalComponent } from '../../feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
@@ -46,8 +48,9 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   @Input() deletable: boolean; // display of Delete button
   @Input() pending: boolean; // for orders that are pending
   @Input() accepted: boolean; // for orders that are accepted
-  @Input() isConsumer: boolean = false; // to display the proper modals if a consumer
-  @Input() isAdmin: boolean = false; // to display the proper modals if admin
+  @Input() isConsumer = false; // to display the proper modals if a consumer
+  @Input() isAdmin = false; // to display the proper modals if admin
+  @Input() isMarket = false;
   record: Object; // single record
   @Input() recordType: string; // this will hold the type of record so that the proper modals can be shown
   sortedRecords: any[];
@@ -68,9 +71,9 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   @Output() productRenewed = new EventEmitter<any>();
 
   // for pagination
-  recordsCount: number = 0; // total quantity of records
-  currentPage: number = 1; // current page number
-  perPage: number = 5; // number of records to show per page
+  recordsCount = 0; // total quantity of records
+  currentPage = 1; // current page number
+  perPage = 5; // number of records to show per page
   paginatedRecords: any[]; // the array that will hold the current page's records
 
   iterableDiffer: any;
@@ -93,7 +96,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   }
 
   ngDoCheck() { // update the pagination count when a record is added.
-    let changes = this.iterableDiffer.diff(this.records);
+    const changes = this.iterableDiffer.diff(this.records);
     if (changes) {
       this.recordsCount = this.records.length;
     }
@@ -128,10 +131,13 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
       const modalRef = this.modal.open(AdminProductViewModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
-    if (this.recordType === 'schedule' && this.isAdmin === false) { // producer
+    if (this.recordType === 'schedule' && !this.isAdmin && this.isMarket) { // producer
+      const modalRef = this.modal.open(ViewMarketScheduleModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    } else if (this.recordType === 'schedule' && !this.isAdmin) { // producer
       const modalRef = this.modal.open(ViewScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
-    } else if (this.recordType === 'schedule' && this.isAdmin === true) {  //  admin
+    } else if (this.recordType === 'schedule' && this.isAdmin) {  //  admin
       const modalRef = this.modal.open(AdminScheduleViewModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
@@ -195,7 +201,10 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
           }
         );
     }
-    if (this.recordType === 'schedule') {
+    if (this.recordType === 'schedule' && this.isMarket) {
+      const modalRef = this.modal.open(EditMarketScheduleModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+    } else if (this.recordType === 'schedule') {
       const modalRef = this.modal.open(EditScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
     }
@@ -284,11 +293,11 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   onSort(map) {
     this.setSortDirection(map);
     // get the sorting column
-    let sortColumn = map.primaryKey;
+    const sortColumn = map.primaryKey;
     // get the sort direction
-    let currentSortDirection = this.sortDirection[this.getSortDirectionIndex(sortColumn)].direction;
+    const currentSortDirection = this.sortDirection[this.getSortDirectionIndex(sortColumn)].direction;
     // see if column contains numbers
-    let isTypeOfNumber = this.isNumber(sortColumn);
+    const isTypeOfNumber = this.isNumber(sortColumn);
 
     // if nested sortPath exists
     if (map.nested && !isTypeOfNumber) {
@@ -384,7 +393,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   sortDescending(array, sortColumn) {
     return array.sort(function (a, b) {
       let first;
-      let second; 
+      let second;
       // if the sortColumn is an Object
       if (typeof a[sortColumn] === 'object') {
         first = a[sortColumn].name.toLowerCase();
@@ -431,7 +440,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
         }
       }
     }
-    let key = map.primaryKey;
+    const key = map.primaryKey;
     // set the sort direction of this column
     if (!this.sortDirection) {
       this.sortDirection = [{ key: key, direction: 'ascending' }];
@@ -460,8 +469,8 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     if (this.recordsCount <= this.perPage) {
       this.paginatedRecords = this.sortedRecords;
     } else {
-      let startIndex = ((pageNumber * this.perPage) - this.perPage);
-      let endIndex = (pageNumber * this.perPage || this.recordsCount);
+      const startIndex = ((pageNumber * this.perPage) - this.perPage);
+      const endIndex = (pageNumber * this.perPage || this.recordsCount);
       this.paginatedRecords = this.sortedRecords.slice(startIndex, endIndex);
     }
   };

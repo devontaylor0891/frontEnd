@@ -14,30 +14,24 @@ import { ScheduleModel } from '../../../../../../core/models/schedule.model';
   templateUrl: './edit-schedule-modal.component.html',
   styleUrls: ['./edit-schedule-modal.component.scss']
 })
-export class EditScheduleModalComponent implements OnInit {
-	
+export class EditScheduleModalComponent implements OnInit, OnDestroy {
 
-	// 2. build the form from the incoming record, including the date changes needed
-	// 3. what has to be done to dates/times in order to build the form?
-	// 4. build process flow for changing dates/times. What is the logic?
-	// 5. build submit object and submit method
-	
-	// what can actually be modified in this form?
-	// dates, times, only if no orders
-	// description, fee, waiver 
+  // what can actually be modified in this form?
+  // dates, times, only if no orders
+  // description, fee, waiver
 
   @Input() record: ScheduleModel;
   scheduleForm: FormGroup;
   formChangeSub: Subscription;
   submitScheduleSub: Subscription;
-  submitting: boolean = false;
+  submitting = false;
   submitObject: ScheduleModel;
   error: boolean;
-  hasOrders: boolean = false;
+  hasOrders = false;
   hasDelFee: boolean;
   hasFeeWaiver: boolean;
   delFee: number;
-  
+
   schedDay: number;
   schedMonth: number;
   schedYear: number;
@@ -50,7 +44,7 @@ export class EditScheduleModalComponent implements OnInit {
   deadlineDateYear: number;
   deadlineHour: number;
   deadlineMinute: number;
-  
+
   // DATE/TIME PICKER SETTINGS
   public moment: any = new Date();
   dateMoment: any = new Date();
@@ -64,20 +58,20 @@ export class EditScheduleModalComponent implements OnInit {
   deadlineTimeMoment: any = new Date();
 
   constructor(private formBuild: FormBuilder,
-				private router: Router,
-				private api: ApiService,
-				public activeModal: NgbActiveModal) { }
+              private router: Router,
+              private api: ApiService,
+              public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     // console.log('this sched: ', this.record);
-    	  // break out the dates/times from the incoming record so they can be used in the form
+    // break out the dates/times from the incoming record so they can be used in the form
     this.breakUpDatesTimes();
-	  this.setHasOrders();
-	  this.hasDelFee = this.record.hasFee;
+    this.setHasOrders();
+    this.hasDelFee = this.record.hasFee;
     this.hasFeeWaiver = this.record.hasWaiver;
     this.delFee = this.record.fee || 0.00;
-	  // build the form with the incoming record and the date/time defaults
-	  this.buildForm();
+    // build the form with the incoming record and the date/time defaults
+    this.buildForm();
   }
 
   setDeliveryFeeToZero() {
@@ -89,17 +83,17 @@ export class EditScheduleModalComponent implements OnInit {
     this.record.feeWaiver = 0.00;
     this.scheduleForm.value.feeWaiver = 0.00;
   };
-  
+
   private setHasOrders() {
     // console.log('record: ', this.record);
-	  if (this.record.orderCount > 0) {
-		  this.hasOrders = true;
-	  } else {
-		  this.hasOrders = false;
+    if (this.record.orderCount > 0) {
+      this.hasOrders = true;
+    } else {
+      this.hasOrders = false;
     }
     // console.log('hasOrders: ', this.hasOrders);
   }
-  
+
   private setDateTimes() {
     this.dateMoment = new Date(this.schedYear, this.schedMonth, this.schedDay, 0, 0, 0, 0);
     this.startTimeMoment = new Date(0, 0, 0, this.schedStartHour, this.schedStartMinute, 0, 0);
@@ -107,14 +101,14 @@ export class EditScheduleModalComponent implements OnInit {
     this.deadlineDateMoment = new Date(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, 0, 0, 0, 0);
     this.deadlineTimeMoment = new Date(0, 0, 0, this.deadlineHour, this.deadlineMinute, 0, 0);
   };
-  
+
   breakUpDatesTimes() {
     this.schedDay = new Date(this.record.startDateTime).getDate();
     this.schedMonth = new Date(this.record.startDateTime).getMonth();
     this.schedYear = new Date(this.record.startDateTime).getFullYear();
-	  this.schedStartHour = new Date(this.record.startDateTime).getHours();
+    this.schedStartHour = new Date(this.record.startDateTime).getHours();
     this.schedStartMinute = new Date(this.record.startDateTime).getMinutes();
-	  this.schedEndHour = new Date(this.record.endDateTime).getHours();
+    this.schedEndHour = new Date(this.record.endDateTime).getHours();
     this.schedEndMinute = new Date(this.record.endDateTime).getMinutes();
     this.deadlineDateDay = new Date(this.record.orderDeadline).getDate();
     this.deadlineDateMonth = new Date(this.record.orderDeadline).getMonth();
@@ -122,59 +116,57 @@ export class EditScheduleModalComponent implements OnInit {
     this.deadlineHour = new Date(this.record.orderDeadline).getHours();
     this.deadlineMinute = new Date(this.record.orderDeadline).getMinutes();
     // set those dates/times into the datepicker defaults
-	  this.setDateTimes();
+    this.setDateTimes();
   };
 
   private buildForm() {
-	  this.scheduleForm = this.formBuild.group({
-		  description: [this.record.description],
-		  date: [this.dateMoment, Validators.required],
-		  startTime: [this.startTimeMoment, Validators.required],
-		  endTime: [this.endTimeMoment, Validators.required],
-		  deadlineDate: [this.deadlineDateMoment, Validators.required],
-		  deadlineTime: [this.deadlineTimeMoment, Validators.required],
-		  hasFee: [this.record.hasFee, Validators.required],
-		  fee: [this.record.fee],
-		  hasWaiver: [this.record.hasWaiver, Validators.required],
+    this.scheduleForm = this.formBuild.group({
+      description: [this.record.description],
+      date: [this.dateMoment, Validators.required],
+      startTime: [this.startTimeMoment, Validators.required],
+      endTime: [this.endTimeMoment, Validators.required],
+      deadlineDate: [this.deadlineDateMoment, Validators.required],
+      deadlineTime: [this.deadlineTimeMoment, Validators.required],
+      hasFee: [this.record.hasFee, Validators.required],
+      fee: [this.record.fee],
+      hasWaiver: [this.record.hasWaiver, Validators.required],
       feeWaiver: [this.record.feeWaiver]
     });
-		
-	  // Subscribe to form value changes
+
+    // Subscribe to form value changes
     this.formChangeSub = this.scheduleForm
       .valueChanges
       .subscribe(data => this.onValueChanged());
 
     // console.log('form: ', this.scheduleForm);
-  };
-  
-  onValueChanged() {
-	//   maybe this is where I'll need to reset date/time minimums, etc
-  };
-  
+  }
+
+  onValueChanged() {};
+
   setSubmitObject() {
-	  // make it equal to the original record
-	  this.submitObject = this.record;
-	  // then add the fields from the form
-	  this.submitObject.description = this.scheduleForm.value.description;
-	  this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
-	  this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
-	  this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-	  this.submitObject.hasFee = this.scheduleForm.value.hasFee;
-	  this.submitObject.fee = this.scheduleForm.value.fee;
-	  this.submitObject.hasWaiver = this.scheduleForm.value.hasWaiver;
-	  this.submitObject.feeWaiver = this.scheduleForm.value.feeWaiver;
+    // make it equal to the original record
+    this.submitObject = this.record;
+    // then add the fields from the form
+    this.submitObject.description = this.scheduleForm.value.description;
+    this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
+    this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
+    this.submitObject.hasFee = this.scheduleForm.value.hasFee;
+    this.submitObject.fee = this.scheduleForm.value.fee;
+    this.submitObject.hasWaiver = this.scheduleForm.value.hasWaiver;
+    this.submitObject.feeWaiver = this.scheduleForm.value.feeWaiver;
   };
-  
+
   onSubmit() {
-	  this.submitting = true;
+    this.submitting = true;
     this.setSubmitObject();
     // console.log('submitted object: ', this.submitObject);
-		this.submitScheduleSub = this.api
-			.putSchedule(this.record.id, this.submitObject)
-			.subscribe(
-			  data => this.handleSubmitSuccess(data),
-			  err => this.handleSubmitError(err)
-			);
+    this.submitScheduleSub = this.api
+      .putSchedule(this.record.id, this.submitObject)
+        .subscribe(
+          data => this.handleSubmitSuccess(data),
+          err => this.handleSubmitError(err)
+        );
   };
 
   onChooseDate() {
@@ -208,7 +200,7 @@ export class EditScheduleModalComponent implements OnInit {
     this.deadlineDateMonth = this.deadlineDateMoment.getMonth();
     this.deadlineDateYear = this.deadlineDateMoment.getFullYear();
   };
-  
+
   onChooseDeadlineTime() {
     this.deadlineHour = this.deadlineTimeMoment.getHours();
     this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
@@ -217,27 +209,27 @@ export class EditScheduleModalComponent implements OnInit {
   buildStartDateTime(year, month, day, hour, minute) {
     return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   };
-  
+
   buildEndDateTime(year, month, day, hour, minute) {
     return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   };
-  
+
   buildOrderDeadline(year, month, day, hour, minute) {
     return new Date(year, month, day, hour, minute, 0, 0).toISOString();
   };
-  
+
   handleSubmitSuccess(res) {
-		this.submitting = false;
-		// close modal
-		this.activeModal.close();
+    this.submitting = false;
+    // close modal
+    this.activeModal.close();
   };
-  
+
   handleSubmitError(err) {
-		console.error(err);
-		this.submitting = false;
-		this.error = true;
+    console.error(err);
+    this.submitting = false;
+    this.error = true;
   };
-  
+
   ngOnDestroy() {
     if (this.submitScheduleSub) {
       this.submitScheduleSub.unsubscribe();

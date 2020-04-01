@@ -1,3 +1,145 @@
-<p>
-  view-market-schedule-modal works!
-</p>
+<div class="modal-header">
+	<h5 class="modal-title">View Schedule</h5>
+	<button type="button" class="close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+<div class="modal-body dash-modal-body">
+
+	<div class="row">
+
+		<div class="col-12">
+
+			<div class="row form-section">
+
+				<div class="col-12 form-section-header">
+					<h5>Details</h5>
+				</div>
+
+				<div class="col-12 form-section-body">
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Schedule Type:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.type }}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Details:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.description }}</p>
+						</div>
+					</div>
+
+					<div *ngIf="record.address" class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Address:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.address }}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Location:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.city }}, {{ record.province }}</p>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row form-section">
+
+				<div class="col-12 form-section-header">
+					<h5>Date & Time</h5>
+				</div>
+
+				<div class="col-12 form-section-body">
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Date:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.startDateTime | date:'mediumDate' }}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Time:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.startDateTime | date:'shortTime' }} - {{ record.endDateTime | date:'shortTime' }}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Order Deadline:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p>{{ record.orderDeadline | date:'mediumDate' }} - {{ record.orderDeadline | date:'shortTime' }}</p>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row form-section" *ngIf="record.type === 'Door-to-door Delivery'">
+
+				<div class="col-12 form-section-header">
+					<h5>Delivery Details</h5>
+				</div>
+
+				<div class="col-12 form-section-body">
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Delivery Fee:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p *ngIf="record.hasFee">{{ record.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+							<p *ngIf="!record.hasFee">None.</p>
+						</div>
+					</div>
+
+					<div class="row" *ngIf="record.hasFee">
+						<div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
+							<strong>Fee Waiver Amount:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-8 input-group col-form-value">
+							<p *ngIf="record.hasWaiver">{{ record.feeWaiver | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+							<p *ngIf="!record.hasWaiver">None. Fee applies to all orders.</p>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class="modal-footer justify-content-center">
+	<div class="row">
+		<div>
+			<a (click)="activeModal.close()">Close</a>
+		</div>
+	</div>
+</div>
