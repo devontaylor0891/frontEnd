@@ -11,6 +11,7 @@ import { EditMarketScheduleModalComponent } from '../../feature/dashboard/market
 import { ViewScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/view-schedule-modal/view-schedule-modal.component';
 import { ViewMarketScheduleModalComponent } from '../../feature/dashboard/market/modals/schedules/view-market-schedule-modal/view-market-schedule-modal.component';
 import { DeleteScheduleModalComponent } from '../../feature/dashboard/producer/modals/schedule/delete-schedule-modal/delete-schedule-modal.component';
+import { DeleteMarketScheduleModalComponent } from '../../feature/dashboard/market/modals/schedules/delete-market-schedule-modal/delete-market-schedule-modal.component';
 import { EditOrderModalComponent } from '../../feature/dashboard/producer/modals/order/edit-order-modal/edit-order-modal.component';
 import { ViewOrderModalComponent } from '../../feature/dashboard/producer/modals/order/view-order-modal/view-order-modal.component';
 import { MarkCompleteOrderModalComponent } from '../../feature/dashboard/producer/modals/order/mark-complete-order-modal/mark-complete-order-modal.component';
@@ -258,7 +259,16 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
           }
         )
     }
-    if (this.recordType === 'schedule') {
+    if (this.recordType === 'schedule' && this.isMarket) {
+      const modalRef = this.modal.open(DeleteMarketScheduleModalComponent, { size: 'lg' });
+      modalRef.componentInstance.record = record;
+      this.firstModalSubscription = modalRef.componentInstance.onScheduleDeleted
+        .subscribe(
+          result => {
+            this.scheduleDeleted.emit(result);
+          }
+        );
+    } else {
       const modalRef = this.modal.open(DeleteScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
       this.firstModalSubscription = modalRef.componentInstance.onScheduleDeleted

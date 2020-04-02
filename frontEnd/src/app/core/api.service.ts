@@ -411,9 +411,27 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  // PUT existing schedule - market
+  putMarketSchedule(id: number, schedule: any): Observable<any> {
+    return this.http
+      .put(this.apiUrl + `/marketsSchedules/${id}/`, schedule, {
+      // .put(`${ENV.BASE_API}schedules/${id}`, schedule, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
   deleteSchedule(id: number): Observable<any> {
     return this.http
       .delete(this.apiUrl + `/schedules/${id}/`, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
+      .catch(this._handleError);
+  };
+
+  deleteMarketSchedule(id: number): Observable<any> {
+    return this.http
+      .delete(this.apiUrl + `/marketsSchedules/${id}/`, {
         headers: new HttpHeaders().set('Authorization', this._authHeader)
       })
       .catch(this._handleError);

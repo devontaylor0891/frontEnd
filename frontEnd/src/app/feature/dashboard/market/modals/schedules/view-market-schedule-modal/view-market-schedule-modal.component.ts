@@ -10,13 +10,20 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ViewMarketScheduleModalComponent implements OnInit, OnChanges {
 
   @Input() record: any;
+  producerArray = [];
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    this.getUniqueProducers();
   }
 
   ngOnChanges() {
+  }
+
+  getUniqueProducers() {
+    this.producerArray = this.record.producerSchedules.filter((x, i, a) => a.indexOf(x) === i);
+    console.log('producerArray: ', this.producerArray);
   }
 
 }

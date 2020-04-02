@@ -20,7 +20,8 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
   // dates, times, only if no orders
   // description, fee, waiver
 
-  @Input() record: ScheduleModel;
+  @Input() record: any;
+  producerArray = [];
   scheduleForm: FormGroup;
   formChangeSub: Subscription;
   submitScheduleSub: Subscription;
@@ -57,12 +58,15 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
   public deadlineDateTimeMax: any = this.dateMoment;
   deadlineTimeMoment: any = new Date();
 
+  monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
   constructor(private formBuild: FormBuilder,
               private router: Router,
               private api: ApiService,
               public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    this.getUniqueProducers();
     // console.log('this sched: ', this.record);
     // break out the dates/times from the incoming record so they can be used in the form
     this.breakUpDatesTimes();
@@ -150,6 +154,7 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
     this.submitObject.description = this.scheduleForm.value.description;
     this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
     this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
     this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
     this.submitObject.hasFee = this.scheduleForm.value.hasFee;
     this.submitObject.fee = this.scheduleForm.value.fee;
@@ -160,9 +165,9 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitting = true;
     this.setSubmitObject();
-    // console.log('submitted object: ', this.submitObject);
+    console.log('submitted object: ', this.submitObject);
     this.submitScheduleSub = this.api
-      .putSchedule(this.record.id, this.submitObject)
+      .putMarketSchedule(this.record.id, this.submitObject)
         .subscribe(
           data => this.handleSubmitSuccess(data),
           err => this.handleSubmitError(err)
@@ -188,6 +193,8 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
       0
     );
     this.endTimeMoment = new Date(this.endTimeMin);
+    this.onChooseEndTime();
+    console.log('endtime: : ', this.endTimeMoment);
   };
 
   onChooseEndTime() {
@@ -228,6 +235,11 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
     console.error(err);
     this.submitting = false;
     this.error = true;
+  };
+
+  getUniqueProducers() {
+    this.producerArray = this.record.producerSchedules.filter((x, i, a) => a.indexOf(x) === i);
+    console.log('producerArray: ', this.producerArray);
   };
 
   ngOnDestroy() {
