@@ -1,3 +1,123 @@
-<p>
-  market-page works!
-</p>
+<div class="m-4" *ngIf="market.marketId; else loading">
+    <div class="row align-items-center">
+      <div class="col-8 offset-2 col-sm-4 offset-sm-0 col-lg-2 offset-lg-3">
+          <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ market.logoUrl? market.logoUrl : 'global/squareBeet.png' }}" class="img-fluid" alt="food">
+      </div>
+      <div class="col-12 col-sm-8 col-lg-4 text-center mt-3">
+        <h2>{{ market.name | uppercase }}</h2>
+        <a pageScroll [pageScrollDuration]="750" href="#producers" class="btn btn-olf-primary">Jump to Producers</a>
+        <a pageScroll [pageScrollDuration]="750" href="#locations" class="btn btn-olf-primary">Jump to Locations</a>
+        <a pageScroll [pageScrollDuration]="750" href="#schedule" class="btn btn-olf-primary">Jump to Schedule</a>
+        <app-fb-share></app-fb-share>
+      </div>
+    </div>
+      
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3 pt-4">
+        <p>{{ market.description }}</p>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12">
+        <div class="divider-new">
+          <h3 id="schedule">UPCOMING SCHEDULE</h3>
+        </div>
+        <app-market-page-schedule [schedule]="schedule"></app-market-page-schedule>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-8 mx-auto">
+        <div class="divider-new text-center">
+          <h3 id="producers">OUR PRODUCERS</h3>
+        </div>
+        <div class="row card">
+          <div class="text-center" *ngIf="producers.length === 0">
+            <p class="lead">
+              There are no producers with currently scheduled market pickups.
+            </p>
+          </div>
+          <div *ngIf="producers.length > 0" class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let producer of producers">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <p class="float-lg-right"><strong>Name:</strong></p>
+                  </div>
+                  <div class="pl-3 col-12 col-md-8">
+                    <p><a [routerLink]="['../../producer/' +  producer.producerUserId]">{{  producer.producerName }}</a></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+          <div class="divider-new text-center">
+            <h3 id="locations">OUR LOCATIONS</h3>
+          </div>
+          <div class="row card">
+              <div class="text-center" *ngIf="locations.length === 0">
+                  <p class="lead">
+                    You have no locations listed. Please add at least one so that your vendors can add it to their schedule.
+                  </p>
+                </div>
+                <div *ngIf="locations.length > 0" class="card-body">
+                  <ul class="list-group list-group-flush" >
+                    <li class="list-group-item" *ngFor="let location of locations">
+                      <div class="row mb-1" *ngIf="location.locationName">
+                        <div class="col-12 col-md-4">
+                          <p class="float-lg-right"><strong>Name:</strong></p>
+                        </div>
+                        <div class="pl-3 col-12 col-md-8">
+                          <p>{{ location.locationName }}</p>
+                        </div>
+                      </div>
+                      <div class="row mb-1">
+                        <div class="col-12 col-md-4">
+                          <p class="float-lg-right"><strong>Timeframe:</strong></p>
+                        </div>
+                        <div class="pl-3 col-12 col-md-8">
+                          <p>{{ location.timeframe }}</p>
+                        </div>
+                      </div>
+                      <div class="row mb-1" *ngIf="location.description">
+                        <div class="col-12 col-md-4">
+                          <p class="float-lg-right"><strong>Description:</strong></p>
+                        </div>
+                        <div class="pl-3 col-12 col-md-8">
+                          <p>{{ location.description }}</p>
+                        </div>
+                      </div>
+                      <div class="row mb-1">
+                        <div class="col-12 col-md-4">
+                          <p class="float-lg-right"><strong>Address:</strong></p>
+                        </div>
+                        <div class="pl-3 col-12 col-md-8">
+                          <p>{{ location.address }}</p>
+                        </div>
+                      </div>
+                      <div class="row mb-1">
+                        <div class="col-12 col-md-4">
+                          <p class="float-lg-right"><strong>City:</strong></p>
+                        </div>
+                        <div class="pl-3 col-12 col-md-8">
+                          <p>{{ location.city }}, {{ location.province }}</p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+            
+          </div>
+        </div>
+      </div>
+
+  </div>
+  
+  <ng-template #loading><app-loading></app-loading></ng-template>

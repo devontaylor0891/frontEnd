@@ -35,6 +35,7 @@ import { PlacesService } from './core/services/places/places.service';
 import { UserService } from './core/services/user/user.service';
 import { ImageService } from './core/services/image/image.service';
 import { ProducerService } from './core/services/producer/producer.service';
+import { MarketService } from './core/services/market/market.service';
 
 // PIPES
 import { FormatCellPipe } from './shared/pipes/format-cell.pipe';
@@ -175,6 +176,7 @@ import { DeleteMarketScheduleModalComponent } from './feature/dashboard/market/m
 import { EditMarketLocationModalComponent } from './feature/dashboard/market/modals/locations/edit-market-location-modal/edit-market-location-modal.component';
 import { DeleteMarketLocationModalComponent } from './feature/dashboard/market/modals/locations/delete-market-location-modal/delete-market-location-modal.component';
 import { AddMarketLocationModalComponent } from './feature/dashboard/market/modals/locations/add-market-location-modal/add-market-location-modal.component';
+import { MarketPageScheduleComponent } from './feature/market/market-page/market-page-schedule/market-page-schedule.component';
 
 
 @NgModule({
@@ -300,7 +302,8 @@ import { AddMarketLocationModalComponent } from './feature/dashboard/market/moda
     DeleteMarketScheduleModalComponent,
     EditMarketLocationModalComponent,
     DeleteMarketLocationModalComponent,
-    AddMarketLocationModalComponent
+    AddMarketLocationModalComponent,
+    MarketPageScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -354,7 +357,8 @@ import { AddMarketLocationModalComponent } from './feature/dashboard/market/moda
     PlacesService,
     Title,
     ImageService,
-    ProducerService
+    ProducerService,
+    MarketService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [

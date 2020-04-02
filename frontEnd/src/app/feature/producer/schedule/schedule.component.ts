@@ -54,26 +54,26 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   path: string;
   pathArray: Array<string>;
   isProducerPage: boolean;
-  
-    view: string = 'month';
-  
-    viewDate: Date = new Date();
-  
-    modalData: {
-      action: string;
-      event: CalendarEvent;
-    };
 
-    refresh: Subject<any> = new Subject();
+  view = 'month';
 
-    events: Array<CalendarEvent<{ schedule: any }>> = [];
-    schedSub: Subscription;
+  viewDate: Date = new Date();
 
-    activeDayIsOpen: boolean = true;
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  };
 
-    constructor(private modal: NgbModal,
-                private route: ActivatedRoute,
-                private producerService: ProducerService) {}
+  refresh: Subject<any> = new Subject();
+
+  events: Array<CalendarEvent<{ schedule: any }>> = [];
+  schedSub: Subscription;
+
+  activeDayIsOpen = true;
+
+  constructor(private modal: NgbModal,
+    private route: ActivatedRoute,
+    private producerService: ProducerService) {}
 
     // ngOnChanges(changes: SimpleChanges) {
     //   console.log('changes in schedule comp: ', changes);
@@ -107,28 +107,28 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     }
 
 
-  ngOnInit() {
+    ngOnInit() {
 
-    this.events = [];
+      this.events = [];
 
-    // test the path in order to display the approprate link in the modal if not on Producer Page
-    this.path = window.location.pathname;
-    this.pathArray = this.path.split('/');
-    this.isProducerPage = this.pathIsProducerPage(this.pathArray);
+      // test the path in order to display the approprate link in the modal if not on Producer Page
+      this.path = window.location.pathname;
+      this.pathArray = this.path.split('/');
+      this.isProducerPage = this.pathIsProducerPage(this.pathArray);
 
-    // subscribe to the get method results
-    this.schedSub = this.producerService.getAllSchedule()
+      // subscribe to the get method results
+      this.schedSub = this.producerService.getAllSchedule()
       .subscribe(
         result => {
           // console.log('scheds received in sched comp: ', result);
-          let data = result;
-          data.forEach((result) => {
+          const data = result;
+          data.forEach((datum) => {
             this.events.push({
-              title: result.type + ' - ' + result.city,
+              title: datum.type + ' - ' + datum.city,
               color: colors.green,
-              start: new Date(result.startDateTime),
+              start: new Date(datum.startDateTime),
               meta: {
-                schedule: result
+                schedule: datum
               }
             } )
           })
@@ -136,12 +136,12 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         }
       );
 
-  };
+    };
 
-  ngOnDestroy() {
-    console.log('ondestroy called');
-    this.producerService.clearDataStore();
-    this.schedSub.unsubscribe();
+    ngOnDestroy() {
+      console.log('ondestroy called');
+      this.producerService.clearDataStore();
+      this.schedSub.unsubscribe();
+    }
+
   }
-
-}
