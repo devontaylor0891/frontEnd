@@ -5,9 +5,19 @@
       </div>
       <div class="col-12 col-sm-8 col-lg-4 text-center mt-3">
         <h2>{{ market.name | uppercase }}</h2>
-        <a pageScroll [pageScrollDuration]="750" href="#producers" class="btn btn-olf-primary">Jump to Producers</a>
-        <a pageScroll [pageScrollDuration]="750" href="#locations" class="btn btn-olf-primary">Jump to Locations</a>
-        <a pageScroll [pageScrollDuration]="750" href="#schedule" class="btn btn-olf-primary">Jump to Schedule</a>
+        <a pageScroll [pageScrollDuration]="750" href="#producers" class="btn btn-sm btn-olf-primary inline">Jump to Producers
+            <i class="fas fa-user-friends ml-2"></i>
+        </a>
+        <a pageScroll [pageScrollDuration]="750" href="#locations" class="btn btn-sm btn-olf-primary inline">Jump to Locations
+            <i class="fas fa-map-marked-alt ml-2"></i>
+        </a>
+        <a pageScroll [pageScrollDuration]="750" href="#schedule" class="btn btn-sm btn-olf-primary inline">Jump to Schedule
+            <i class="fas fa-calendar-alt ml-2"></i>
+        </a>
+        <!-- <button class="btn btn-olf-primary btn-sm" type="button"><i class="fas fa-user-friends pr-3"></i><a pageScroll [pageScrollDuration]="750" href="#producers" >Jump to Producers</a></button> -->
+        <!-- <a pageScroll [pageScrollDuration]="750" href="#producers" ><i class="fas fa-user-friends pr-3"></i>Jump to Producers</a>
+        <a pageScroll [pageScrollDuration]="750" href="#locations" class="btn btn-olf-primary btn-sm"><i class="fas fa-map-marked-alt pr-3"></i>Jump to Locations</a>
+        <a pageScroll [pageScrollDuration]="750" href="#schedule" class="btn btn-olf-primary btn-sm"><i class="fas fa-calendar-alt pr-3"></i>Jump to Schedule</a> -->
         <app-fb-share></app-fb-share>
       </div>
     </div>
