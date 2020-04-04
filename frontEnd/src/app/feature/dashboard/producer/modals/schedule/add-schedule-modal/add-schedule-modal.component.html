@@ -23,7 +23,7 @@
           <div class="row">
             <label for="type" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Schedule Type</label>
             <div class="col-xs-12 col-sm-8 input-group">
-              <select class="custom-select form-input-custom float-left" name="type" [(ngModel)]="type" [formControl]="form.controls['type']">
+              <select (change)="onChooseType($event.target.value)" class="custom-select form-input-custom float-left" name="type" [(ngModel)]="type" [formControl]="form.controls['type']">
                 <option selected value="">Select a Type</option>
                 <option value="Door-to-door Delivery">Door-to-door Delivery</option>
                 <option value="Market Pickup">Market Pickup</option>
@@ -54,9 +54,14 @@
             </div>
             
           </div>
+
+          <!-- MARKETS ONLY -->
+          <div *ngIf="isMarket">
+            <p>only markets</p>
+          </div>
           
           <!-- options required for ALL types -->
-          <div *ngIf="type">
+          <div *ngIf="type && type !== 'Market Pickup'">
             
             <!-- options for EVERYTHING EXCEPT FARMGATE -->
             <div *ngIf="type !== 'On-farm Pickup'">
@@ -103,7 +108,7 @@
         
       </div>
       
-      <div class="row form-section">
+      <div class="row form-section" *ngIf="type">
         <div class="col-12 form-section-header">
           <h5>Dates and Times</h5>
         </div>

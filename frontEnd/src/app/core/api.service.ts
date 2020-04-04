@@ -218,6 +218,12 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  getMarketsByLocation(searchOptions: any): Observable<any> {
+    return this.http
+      .post(this.apiUrl + `/marketsLocationsSearch/`, searchOptions)
+      .catch(this._handleError);
+  };
+
   // PATCH market location
   patchMarketLocation(id: number, newFieldAndValue: Object): Observable<any> {
     return this.http

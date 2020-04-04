@@ -56,6 +56,7 @@ export class AddScheduleModalComponent implements OnInit {
   submitting: boolean = false;
   isRepeat: boolean = false;
   noAddress: boolean = false;
+  isMarket = false;
 
   // properties to hold dates chosen, used in build methods
   schedDay: number; // default to dateMoment day
@@ -385,6 +386,18 @@ export class AddScheduleModalComponent implements OnInit {
     // this.form.value.longitude = this.lng;
     this.submitObject.latitude = this.lat;
     this.submitObject.longitude = this.lng;
+    if (this.isMarket) {
+      const locationsSearchOptions = {
+        lat: this.lat,
+        lng: this.lng
+      };
+      this.apiService.getMarketsByLocation(locationsSearchOptions)
+        .subscribe(
+          result => {
+            console.log('results from get markets by location: ', result);
+          }
+        );
+    }
     // console.log('lat in submit obj: ', this.submitObject.latitude);
     // console.log('form after location choice: ', this.form);
   };
@@ -567,6 +580,15 @@ export class AddScheduleModalComponent implements OnInit {
     let originalDeadline = new Date(date);
     let newDeadline = new Date(originalDeadline.setHours(originalDeadline.getHours() - deadlineHours));
     return newDeadline.toISOString();
+  };
+
+  onChooseType(targetValue) {
+    console.log('select chosen: ', targetValue);
+    if (targetValue === 'Market Pickup') {
+      this.isMarket = true;
+    } else {
+      this.isMarket = false;
+    }
   };
 
   onCancel() {

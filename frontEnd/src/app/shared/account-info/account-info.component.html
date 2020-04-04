@@ -5,9 +5,10 @@
       <div class="col-12 col-md-8 mx-auto my-2">
         
         <div class="card mb-4">
+
           <div class="card-header">
             <h5>
-              <img src="{{ profile?.picture }}" class="avatar" alt="avatar" class="img-thumbnail">
+              <img src="{{ profile?.picture }}" alt="avatar" class="img-thumbnail avatar">
               <strong>
                 Your Profile
               </strong>
@@ -16,6 +17,7 @@
           
           <div class="card-body">
             <ul class="list-group list-group-flush">
+
               <li class="list-group-item">
                 
                 <div class="row mb-1">
@@ -156,30 +158,21 @@
                 
               </li>
               
-              
             </ul>
             
-            
-            
-            
-            
-            
-            
           </div>
-
+          
           <div class="card-footer">
-              <div class="row">
-                  <div class="col-12 text-center">
-                    <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()" type="button"><i class="fa fa-edit prefix mr-3"></i>EDIT PROFILE</button>
-                  </div>
-                </div>
+            <div class="row">
+              <div class="col-12 text-center">
+                <button class="btn btn-olf-primary btn-sm" (click)="onOpenEdit()" type="button"><i class="fa fa-edit prefix mr-3"></i>EDIT PROFILE</button>
+              </div>
+            </div>
           </div>
-          
-          
           
         </div>
         
-        <div class="card mb-4">
+        <div class="card mb-4" *ngIf="user?.role === 'market'">
           <div class="card-header">
             <h5>
               <strong>
@@ -273,15 +266,15 @@
             </h5>
           </div>
           <div class="card-body" *ngIf="currentLocationNotifsArray">
-              <p *ngIf="currentLocationNotifsArray.length < 1">You don't currently have any notifications set up. Choose 'Manage' below to add some.</p>
-              <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-center align-items-center" *ngFor="let location of currentLocationNotifsArray, let i = index">
-                      {{ location.city }}, {{ location.province }}
-                  </li>
-              </ul>
+            <p *ngIf="currentLocationNotifsArray.length < 1">You don't currently have any notifications set up. Choose 'Manage' below to add some.</p>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-center align-items-center" *ngFor="let location of currentLocationNotifsArray, let i = index">
+                {{ location.city }}, {{ location.province }}
+              </li>
+            </ul>
           </div>
           <div class="card-footer text-center">
-                  <a routerLink="/location-notification" class="btn btn-olf-primary btn-sm">Manage My Location Notifications</a>
+            <a routerLink="/location-notification" class="btn btn-olf-primary btn-sm">Manage My Location Notifications</a>
           </div>
         </div>
         

@@ -775,5 +775,7 @@ div.tab-content {
 }
 
 .img-thumbnail {
-  max-width: 4rem !important;
+    &.avatar {
+    max-width: 4rem !important;
+  }
 }
