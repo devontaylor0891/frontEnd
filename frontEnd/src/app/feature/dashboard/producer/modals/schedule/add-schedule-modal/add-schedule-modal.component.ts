@@ -57,6 +57,7 @@ export class AddScheduleModalComponent implements OnInit {
   isRepeat: boolean = false;
   noAddress: boolean = false;
   isMarket = false;
+  marketSearchResults = [];
 
   // properties to hold dates chosen, used in build methods
   schedDay: number; // default to dateMoment day
@@ -395,6 +396,7 @@ export class AddScheduleModalComponent implements OnInit {
         .subscribe(
           result => {
             console.log('results from get markets by location: ', result);
+            this.marketSearchResults = result;
           }
         );
     }

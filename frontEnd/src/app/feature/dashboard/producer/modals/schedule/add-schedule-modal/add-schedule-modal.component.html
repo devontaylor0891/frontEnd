@@ -56,8 +56,11 @@
           </div>
 
           <!-- MARKETS ONLY -->
-          <div *ngIf="isMarket">
+          <div *ngIf="isMarket && marketSearchResults.length > 0">
             <p>only markets</p>
+            <ul>
+              <li *ngFor="let market of marketSearchResults">{{ market.marketName }}</li>
+            </ul>
           </div>
           
           <!-- options required for ALL types -->
