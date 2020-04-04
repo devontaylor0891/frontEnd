@@ -24,6 +24,7 @@ export class ViewMarketScheduleModalComponent implements OnInit, OnChanges {
   getUniqueProducers() {
     this.producerArray = this.record.producerSchedules.filter((x, i, a) => a.indexOf(x) === i);
     console.log('producerArray: ', this.producerArray);
+    console.log('record recd: ', this.record);
   }
 
 }

@@ -1,13 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ApiService } from '../../../../../../core/api.service';
-
-import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 
 @Component({
   selector: 'app-edit-market-schedule-modal',
@@ -16,22 +13,14 @@ import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 })
 export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
 
-  // what can actually be modified in this form?
-  // dates, times, only if no orders
-  // description, fee, waiver
-
   @Input() record: any;
   producerArray = [];
   scheduleForm: FormGroup;
   formChangeSub: Subscription;
   submitScheduleSub: Subscription;
   submitting = false;
-  submitObject: ScheduleModel;
+  submitObject: any;
   error: boolean;
-  hasOrders = false;
-  hasDelFee: boolean;
-  hasFeeWaiver: boolean;
-  delFee: number;
 
   schedDay: number;
   schedMonth: number;
@@ -40,11 +29,6 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
   schedStartMinute: number;
   schedEndHour: number;
   schedEndMinute: number;
-  deadlineDateDay: number;
-  deadlineDateMonth: number;
-  deadlineDateYear: number;
-  deadlineHour: number;
-  deadlineMinute: number;
 
   // DATE/TIME PICKER SETTINGS
   public moment: any = new Date();
@@ -53,15 +37,10 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
   startTimeMoment: any;
   endTimeMoment: any;
   endTimeMin: any;
-  deadlineDateMoment: any = new Date();
-  public deadlineDateTimeMin: any = new Date(new Date().setDate(new Date().getDate() + 1));
-  public deadlineDateTimeMax: any = this.dateMoment;
-  deadlineTimeMoment: any = new Date();
 
   monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   constructor(private formBuild: FormBuilder,
-              private router: Router,
               private api: ApiService,
               public activeModal: NgbActiveModal) { }
 
@@ -70,40 +49,15 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
     // console.log('this sched: ', this.record);
     // break out the dates/times from the incoming record so they can be used in the form
     this.breakUpDatesTimes();
-    this.setHasOrders();
-    this.hasDelFee = this.record.hasFee;
-    this.hasFeeWaiver = this.record.hasWaiver;
-    this.delFee = this.record.fee || 0.00;
     // build the form with the incoming record and the date/time defaults
     this.buildForm();
-  }
-
-  setDeliveryFeeToZero() {
-    this.record.fee = 0.00;
-    this.scheduleForm.value.fee = 0.00;
-  };
-
-  setFeeWaiverToZero() {
-    this.record.feeWaiver = 0.00;
-    this.scheduleForm.value.feeWaiver = 0.00;
-  };
-
-  private setHasOrders() {
-    // console.log('record: ', this.record);
-    if (this.record.orderCount > 0) {
-      this.hasOrders = true;
-    } else {
-      this.hasOrders = false;
-    }
-    // console.log('hasOrders: ', this.hasOrders);
+    console.log('edit sched record: ', this.record);
   }
 
   private setDateTimes() {
     this.dateMoment = new Date(this.schedYear, this.schedMonth, this.schedDay, 0, 0, 0, 0);
     this.startTimeMoment = new Date(0, 0, 0, this.schedStartHour, this.schedStartMinute, 0, 0);
     this.endTimeMoment = new Date(0, 0, 0, this.schedEndHour, this.schedEndMinute, 0, 0);
-    this.deadlineDateMoment = new Date(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, 0, 0, 0, 0);
-    this.deadlineTimeMoment = new Date(0, 0, 0, this.deadlineHour, this.deadlineMinute, 0, 0);
   };
 
   breakUpDatesTimes() {
@@ -114,11 +68,6 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
     this.schedStartMinute = new Date(this.record.startDateTime).getMinutes();
     this.schedEndHour = new Date(this.record.endDateTime).getHours();
     this.schedEndMinute = new Date(this.record.endDateTime).getMinutes();
-    this.deadlineDateDay = new Date(this.record.orderDeadline).getDate();
-    this.deadlineDateMonth = new Date(this.record.orderDeadline).getMonth();
-    this.deadlineDateYear = new Date(this.record.orderDeadline).getFullYear();
-    this.deadlineHour = new Date(this.record.orderDeadline).getHours();
-    this.deadlineMinute = new Date(this.record.orderDeadline).getMinutes();
     // set those dates/times into the datepicker defaults
     this.setDateTimes();
   };
@@ -128,13 +77,7 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
       description: [this.record.description],
       date: [this.dateMoment, Validators.required],
       startTime: [this.startTimeMoment, Validators.required],
-      endTime: [this.endTimeMoment, Validators.required],
-      deadlineDate: [this.deadlineDateMoment, Validators.required],
-      deadlineTime: [this.deadlineTimeMoment, Validators.required],
-      hasFee: [this.record.hasFee, Validators.required],
-      fee: [this.record.fee],
-      hasWaiver: [this.record.hasWaiver, Validators.required],
-      feeWaiver: [this.record.feeWaiver]
+      endTime: [this.endTimeMoment, Validators.required]
     });
 
     // Subscribe to form value changes
@@ -155,11 +98,6 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
     this.submitObject.endDateTime = this.buildEndDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
     this.submitObject.startDateTime = this.buildStartDateTime(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
     this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
-    this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-    this.submitObject.hasFee = this.scheduleForm.value.hasFee;
-    this.submitObject.fee = this.scheduleForm.value.fee;
-    this.submitObject.hasWaiver = this.scheduleForm.value.hasWaiver;
-    this.submitObject.feeWaiver = this.scheduleForm.value.feeWaiver;
   };
 
   onSubmit() {
@@ -178,7 +116,6 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
     this.schedYear = this.dateMoment.getFullYear();
-    this.deadlineDateTimeMax = new Date(this.dateMoment);
   };
 
   onChooseStartTime() {
@@ -200,17 +137,6 @@ export class EditMarketScheduleModalComponent implements OnInit, OnDestroy {
   onChooseEndTime() {
     this.schedEndHour = this.endTimeMoment.getHours();
     this.schedEndMinute = this.endTimeMoment.getMinutes();
-  };
-
-  onChooseDeadlineDate() {
-    this.deadlineDateDay = this.deadlineDateMoment.getDate();
-    this.deadlineDateMonth = this.deadlineDateMoment.getMonth();
-    this.deadlineDateYear = this.deadlineDateMoment.getFullYear();
-  };
-
-  onChooseDeadlineTime() {
-    this.deadlineHour = this.deadlineTimeMoment.getHours();
-    this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
   };
 
   buildStartDateTime(year, month, day, hour, minute) {

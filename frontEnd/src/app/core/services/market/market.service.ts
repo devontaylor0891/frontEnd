@@ -168,7 +168,8 @@ export class MarketService implements OnInit {
       this.dataStore = {
         market: null,
         schedule: [],
-        locations: []
+        locations: [],
+        producers: []
       };
       this._marketSchedule.next(Object.assign({}, this.dataStore).schedule);
       this._marketLocations.next(Object.assign({}, this.dataStore).locations);

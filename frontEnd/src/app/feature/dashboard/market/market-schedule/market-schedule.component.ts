@@ -55,18 +55,6 @@ export class MarketScheduleComponent implements OnInit {
         primaryKey: 'city',
         header: 'Location',
         sortable: true
-      },
-      {
-        primaryKey: 'orderDeadline',
-        header: 'Deadline Date',
-        format: 'mediumDate',
-        sortable: true
-      },
-      {
-        primaryKey: 'orderDeadline',
-        header: 'Deadline Time',
-        format: 'shortTime',
-        sortable: false
       }
   ];
 
@@ -108,7 +96,7 @@ export class MarketScheduleComponent implements OnInit {
         (schedules) => {
           const upcoming = schedules.filter(schedule => schedule.endDateTime > this.date);
           this.upcomingSchedule = upcoming;
-          // console.log('upcoming: ', this.upcomingSchedule);
+          console.log('upcoming: ', this.upcomingSchedule);
           const completed = schedules.filter(schedule => schedule.endDateTime < this.date);
           this.completedSchedule = completed;
         }

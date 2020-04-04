@@ -59,13 +59,13 @@ export class AddMarketScheduleModalComponent implements OnInit {
   schedStartMinute: number;
   schedEndHour: number;
   schedEndMinute: number;
-  deadlineDateDay: number;
-  deadlineDateMonth: number;
-  deadlineDateYear: number;
-  deadlineHour: number;
-  deadlineMinute: number;
+  // deadlineDateDay: number;
+  // deadlineDateMonth: number;
+  // deadlineDateYear: number;
+  // deadlineHour: number;
+  // deadlineMinute: number;
   datesArray: Array<any> = []; // to hold dates if repeat is selected
-  deadlineCalcHours: number;
+  // deadlineCalcHours: number;
 
   // DATE/TIME PICKER SETTINGS
   date: any = new Date();
@@ -80,15 +80,15 @@ export class AddMarketScheduleModalComponent implements OnInit {
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
   public endTimeMoment: any = new Date(0, 0, 0, 13, 0, 0, 0); // default end time is 1pm
   public endTimeMin: any = new Date(0, 0, 0, 13, 0, 0, 0);
-  public deadlineDateMoment: any = new Date(); // default is now because date is tomorrow, just for ease of coding
-  public deadlineTimeMoment: any = new Date(0, 0, 0, 0, 0, 0, 0); // defaults to 3 hours before start time
-  public deadlineDateTime: any = new Date(
-    this.dateMoment.getFullYear(),
-    this.dateMoment.getMonth(),
-    this.dateMoment.getDate(),
-    0, 0, 0, 0);
-  public deadlineDateTimeMin: any = new Date();
-  public deadlineDateTimeMax: any = this.dateMoment;
+  // public deadlineDateMoment: any = new Date(); // default is now because date is tomorrow, just for ease of coding
+  // public deadlineTimeMoment: any = new Date(0, 0, 0, 0, 0, 0, 0); // defaults to 3 hours before start time
+  // public deadlineDateTime: any = new Date(
+    // this.dateMoment.getFullYear(),
+    // this.dateMoment.getMonth(),
+    // this.dateMoment.getDate(),
+    // 0, 0, 0, 0);
+  // public deadlineDateTimeMin: any = new Date();
+  // public deadlineDateTimeMax: any = this.dateMoment;
   dateChosen = false;
 
   monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -100,18 +100,16 @@ export class AddMarketScheduleModalComponent implements OnInit {
               private apiService: ApiService,
               private cdRef: ChangeDetectorRef) {
 
-    // this.buildBlankSubmitObject();
-
     this.form = formBuild.group({
       'date': [this.dateMoment],
       'dates': [this.dateMoments],
       'startTime': [this.startTimeMoment],
       'endTime': [this.endTimeMoment],
-      'repeat': [this.repeat],
-      'deadlineCalcHours': [12],
-      'deadlineDateTime': [this.deadlineDateTime],
-      'deadlineDate': [this.deadlineDateMoment],
-      'deadlineTime': [this.deadlineTimeMoment]
+      'repeat': [this.repeat]
+      // 'deadlineCalcHours': [12]
+      // 'deadlineDateTime': [this.deadlineDateTime],
+      // 'deadlineDate': [this.deadlineDateMoment],
+      // 'deadlineTime': [this.deadlineTimeMoment]
     });
 
   }
@@ -136,36 +134,17 @@ export class AddMarketScheduleModalComponent implements OnInit {
 
     this.submitObject = {
       marketId: this.market.marketId,
-      marketName: this.market.name,
       type: 'Market Pickup',
       description: '',
       startDateTime: '',
       endDateTime: '',
       readableDate: '',
-      hasFee: false,
-      hasWaiver: false,
-      latitude: null,
-      longitude: null,
-      city: '',
-      province: '',
-      orderDeadline: '',
-      address: '',
-      fee: 0,
-      feeWaiver: 0
+      locationId: null
     };
-
-    // console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
-    // console.log('startTime (noon): ', this.startTimeMoment);
-    // console.log('endTime (1pm): ', this.endTimeMoment);
-    // console.log('deadline (12am tomorrow): ', this.deadlineDateTime);
-    // console.log('minimum date (tomorrow): ', this.DateMomentMin);
-    // console.log('max deadline (same as dateMoment): ', this.deadlineDateTimeMax);
 
     this.setSchedDefaultValues();
 
     this.onChanges();
-
-    // console.log('form value: ', this.form.value);
 
   };
 
@@ -190,23 +169,6 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.submitting = false;
   };
 
-  // for repeat dates
-  // not used
-  // buildRepeatSubmitObject(i, deadlineHours) {
-  //   this.clearDatesFromSubmitObject();
-  //   this.submitObject.producerId = this.producer.id;
-  //   this.submitObject.type = this.form.value.type;
-  //   this.submitObject.description = this.form.value.description;
-  //   this.submitObject.startDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
-  //   this.submitObject.endDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedEndHour, this.schedEndMinute)
-  //   this.submitObject.hasFee = this.form.value.hasFee;
-  //   this.submitObject.hasWaiver = this.form.value.hasWaiver;
-  //   this.submitObject.orderDeadline = this.buildRepeatOrderDeadline(this.submitObject.startDateTime, deadlineHours);
-  //   this.submitObject.fee = this.form.value.fee;
-  //   this.submitObject.feeWaiver = this.form.value.feeWaiver;
-  //   this.submitObject.orderList = [];
-  // };
-
   buildRepeatSubmitArray() {
     let tempSubmitObj;
     for (let i = 1; i < this.numberOfWeeks; i++) {
@@ -214,7 +176,7 @@ export class AddMarketScheduleModalComponent implements OnInit {
       // change start/end date in submit object
       tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
       tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
-      tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
+      // tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
       tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
       // push into array
       this.repeatSubmitArray.push(tempSubmitObj);
@@ -231,42 +193,21 @@ export class AddMarketScheduleModalComponent implements OnInit {
   buildBlankSubmitObject() {
     this.submitObject = {
       marketId: this.market.marketId,
-      marketName: this.market.name,
       type: 'Market Pickup',
       description: '',
       startDateTime: '',
       endDateTime: '',
       readableDate: '',
-      hasFee: false,
-      hasWaiver: false,
-      latitude: null,
-      longitude: null,
-      city: '',
-      province: '',
-      orderDeadline: '',
-      address: '',
-      fee: 0,
-      feeWaiver: 0
+      locationId: null
     };
-  }
-
-  // clearDatesFromSubmitObject() {
-  //   this.submitObject.startDateTime = '';
-  //   this.submitObject.endDateTime = '';
-  // }
+  };
 
   buildSubmitObject() {
     this.submitObject.description = this.locations[this.selectedLocationIndex].locationName + ' - ' + this.locations[this.selectedLocationIndex].description;
     this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
     this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
     this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
-    this.submitObject.orderDeadline = this.deadlineDateTime;
-    this.submitObject.latitude = this.locations[this.selectedLocationIndex].latitude;
-    this.submitObject.longitude = this.locations[this.selectedLocationIndex].longitude;
-    this.submitObject.address = this.locations[this.selectedLocationIndex].address;
-    this.submitObject.city = this.locations[this.selectedLocationIndex].city;
-    this.submitObject.province = this.locations[this.selectedLocationIndex].province;
-    this.submitObject.latitude = this.locations[this.selectedLocationIndex].latitude;
+    this.submitObject.locationId = this.locations[this.selectedLocationIndex].id;
     console.log('submit obj built: ', this.submitObject);
     this.repeatSubmitArray[0] = this.submitObject;
     if (!this.repeat) { // if only one, post it to the API
@@ -292,23 +233,23 @@ export class AddMarketScheduleModalComponent implements OnInit {
     // make date human readable
     console.log('human readable: ', this.monthNames[this.dateMoment.getMonth()] + ' ' + this.dateMoment.getDate());
     // use those to set the order deadline day, month, year
-    this.setDeadlineDate();
+    // this.setDeadlineDate();
     this.setRepeatEndDateMin();
     this.setRepeatEndDateMax();
   };
 
-  setDeadlineDate() {
-    this.deadlineDateTime.setFullYear(this.schedYear);
-    this.deadlineDateTime.setMonth(this.schedMonth);
-    this.deadlineDateTime.setDate(this.schedDay);
-    this.deadlineDateTime = new Date(this.deadlineDateTime);
-    // console.log('new deadline: ', this.deadlineDateTime);
-    this.deadlineDateTimeMax.setFullYear(this.schedYear);
-    this.deadlineDateTimeMax.setMonth(this.schedMonth);
-    this.deadlineDateTimeMax.setDate(this.schedDay);
-    // console.log('new deadline max: ', this.deadlineDateTimeMax);
-    this.dateChosen = true;
-  };
+  // setDeadlineDate() {
+  //   this.deadlineDateTime.setFullYear(this.schedYear);
+  //   this.deadlineDateTime.setMonth(this.schedMonth);
+  //   this.deadlineDateTime.setDate(this.schedDay);
+  //   this.deadlineDateTime = new Date(this.deadlineDateTime);
+  //   // console.log('new deadline: ', this.deadlineDateTime);
+  //   this.deadlineDateTimeMax.setFullYear(this.schedYear);
+  //   this.deadlineDateTimeMax.setMonth(this.schedMonth);
+  //   this.deadlineDateTimeMax.setDate(this.schedDay);
+  //   // console.log('new deadline max: ', this.deadlineDateTimeMax);
+  //   this.dateChosen = true;
+  // };
 
   setRepeatEndDateMin() {
     console.log('setrepeat dateMomentMin: ', this.DateMomentMin);
@@ -347,17 +288,17 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.schedStartHour = this.startTimeMoment.getHours();
     this.schedStartMinute = this.startTimeMoment.getMinutes();
     // create new deadline date object to update the view
-    this.deadlineDateTime = new Date(
-      this.deadlineDateTime.getFullYear(),
-      this.deadlineDateTime.getMonth(),
-      this.deadlineDateTime.getDate(),
-      this.schedStartHour - 3,
-      this.schedStartMinute,
-      0
-    );
+    // this.deadlineDateTime = new Date(
+    //   this.deadlineDateTime.getFullYear(),
+    //   this.deadlineDateTime.getMonth(),
+    //   this.deadlineDateTime.getDate(),
+    //   this.schedStartHour - 3,
+    //   this.schedStartMinute,
+    //   0
+    // );
     // console.log('new deadline datetime: ', this.deadlineDateTime);
-    this.deadlineDateTimeMax.setHours(this.schedStartHour);
-    this.deadlineDateTimeMax.setMinutes(this.schedStartMinute);
+    // this.deadlineDateTimeMax.setHours(this.schedStartHour);
+    // this.deadlineDateTimeMax.setMinutes(this.schedStartMinute);
     // console.log('new deadline max: ', this.deadlineDateTimeMax);
     // set end time and end time min
     this.endTimeMoment = new Date(0, 0, 0, this.schedStartHour + 1, this.schedStartMinute, 0, 0);
@@ -374,16 +315,16 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.schedEndMinute = this.endTimeMoment.getMinutes();
   };
 
-  onChooseDeadlineDate() {
-    this.deadlineDateDay = this.deadlineDateMoment.getDate();
-    this.deadlineDateMonth = this.deadlineDateMoment.getMonth();
-    this.deadlineDateYear = this.deadlineDateMoment.getFullYear();
-  };
+  // onChooseDeadlineDate() {
+  //   this.deadlineDateDay = this.deadlineDateMoment.getDate();
+  //   this.deadlineDateMonth = this.deadlineDateMoment.getMonth();
+  //   this.deadlineDateYear = this.deadlineDateMoment.getFullYear();
+  // };
 
-  onChooseDeadlineTime() {
-    this.deadlineHour = this.deadlineTimeMoment.getHours();
-    this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
-  };
+  // onChooseDeadlineTime() {
+  //   this.deadlineHour = this.deadlineTimeMoment.getHours();
+  //   this.deadlineMinute = this.deadlineTimeMoment.getMinutes();
+  // };
 
   onChooseRepeatEndDateYes() {
     console.log('end date: ', this.repeatEndDate);
@@ -410,11 +351,11 @@ export class AddMarketScheduleModalComponent implements OnInit {
     this.repeatEndChosen = true;
   };
 
-  buildRepeatOrderDeadline(date, deadlineHours) {
-    const originalDeadline = new Date(date);
-    const newDeadline = new Date(originalDeadline.setHours(originalDeadline.getHours() - deadlineHours));
-    return newDeadline.toISOString();
-  };
+  // buildRepeatOrderDeadline(date, deadlineHours) {
+  //   const originalDeadline = new Date(date);
+  //   const newDeadline = new Date(originalDeadline.setHours(originalDeadline.getHours() - deadlineHours));
+  //   return newDeadline.toISOString();
+  // };
 
   onCancel() {
     this.activeModal.close();
