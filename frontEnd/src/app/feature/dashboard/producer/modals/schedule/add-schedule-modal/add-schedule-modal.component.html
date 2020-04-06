@@ -40,7 +40,7 @@
           <!-- AFTER TYPE SELECTED, GOOGLE MAPS API SEARCH FOR COMMUNITY -->
           <!-- Note: this has to be hidden, if locked in an ngIf it will throw an error in the console -->
           <div class="row" [class.hidden]="!type || type === 'On-farm Pickup'">
-            <label for="search" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Search for Community:</label>
+            <label for="search" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Search for Address/Community:</label>
             <div class="col-xs-12 col-sm-8 input-group">
               <input  
               autocorrect="off" 
@@ -56,15 +56,80 @@
           </div>
 
           <!-- MARKETS ONLY -->
-          <div *ngIf="isMarket && marketSearchResults.length > 0">
-            <p>only markets</p>
-            <ul>
-              <li *ngFor="let market of marketSearchResults">{{ market.marketName }}</li>
+          <div *ngIf="isMarket && uniqueMarketArray.length > 0">
+
+              <p>
+                Choose from Existing Markets or Build your Own:
+              </p>            
+              <div>
+                <select class="custom-select w-100" (change)="onSelectMarket($event.target.value)">
+                  <option value="">Choose a Market Option</option>
+                  <option value="ownMarket">Build my own Market Pickup</option>
+                  <option 
+                  class="dropdown-item" 
+                  value="{{ market.marketId }}" 
+                  *ngFor="let market of uniqueMarketArray, let i = index" 
+                  >{{ market.marketName }}</option>
+                </select>
+                
+              </div>
+
+          </div>
+
+          <div *ngIf="type === 'Market Pickup' && showMarketLocations && !ownMarket">
+            <p>
+              Choose from this Market's Locations:
+            </p> 
+            <ul class="list-group">
+              <li  *ngFor="let location of uniqueLocationArray" class="list-group-item">
+                <div class="form-check">
+                  <input 
+                    type="radio" 
+                    class="form-check-input" 
+                    id="{{ location.locationId }}" 
+                    name="locationArrayRadios"
+                    (click)="onChooseMarketLocation(location.locationId)">
+                  <label class="form-check-label w-100 tight-text" for="{{ location.locationId }}">
+                    <p>{{ location.locationName }}</p>
+                    <p>{{ location.timeframe }}</p>
+                    <p *ngIf="location.address">{{ location.address }} - {{ location.city }}</p>
+                    <p *ngIf="!location.address">{{ location.city }}</p>
+                  </label>
+                </div>
+              </li>
             </ul>
+          </div>
+
+          <div *ngIf="locationScheduleArray.length === 1" class="tight-text">
+              <p>
+                  This market date is available:
+                </p> 
+            <p>{{ locationScheduleArray[0].startDateTime | date:'E, MMM dd' }}</p>
+            <p>{{ locationScheduleArray[0].startDateTime | date:'shortTime' }} - {{ locationScheduleArray[0].endDateTime | date:'shortTime' }}</p>
+          </div>
+
+          <div *ngIf="locationScheduleArray.length > 1" class="tight-text">
+            <p>
+              Now select the dates you'd like to include in your schedule:
+              </p> 
+
+            <ul class="list-group">
+                <label *ngFor="let locationSched of locationScheduleArray; let i = index" class="form-check-label w-100" for="{{ locationSched.marketScheduleId }}">
+              <li   class="list-group-item">
+                <div class="form-check">
+                  <input class="form-check-input" mdbInputDirective type="checkbox" value="{{ locationSched.id }}" (click)="setCheckbox($event)" id="{{ locationSched.marketScheduleId }}">
+                  
+                    <p>{{ locationSched.startDateTime | date:'E, MMM dd' }} - {{ locationSched.startDateTime | date:'shortTime' }} - {{ locationSched.endDateTime | date:'shortTime' }}</p>
+                  
+                </div>
+              </li>
+            </label>
+            </ul>
+             
           </div>
           
           <!-- options required for ALL types -->
-          <div *ngIf="type && type !== 'Market Pickup'">
+          <div *ngIf="type && (type !== 'Market Pickup' || ownMarket)">
             
             <!-- options for EVERYTHING EXCEPT FARMGATE -->
             <div *ngIf="type !== 'On-farm Pickup'">
@@ -111,7 +176,7 @@
         
       </div>
       
-      <div class="row form-section" *ngIf="type">
+      <div class="row form-section" *ngIf="(type && type !== 'Market Pickup') || (type && type === 'Market Pickup' && ownMarket)">
         <div class="col-12 form-section-header">
           <h5>Dates and Times</h5>
         </div>

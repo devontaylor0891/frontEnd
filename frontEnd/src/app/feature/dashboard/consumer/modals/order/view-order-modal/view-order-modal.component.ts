@@ -12,24 +12,24 @@ import { OrderModel } from '../../../../../../core/models/order.model';
   styleUrls: ['./view-order-modal.component.scss']
 })
 export class ConsumerViewOrderModalComponent implements OnInit {
-	
-	@Input() record: OrderModel;
-	products: any;
+
+  @Input() record: OrderModel;
+  products: any;
 
   constructor(private api: ApiService,
-				public activeModal: NgbActiveModal) {
+              public activeModal: NgbActiveModal) {
 
-	 // build the products array to use in the table
-		this.products = [
-		  {
-			id: null,
-			name: '',
-			quantity: null,
-			value: null
-		  }
-		];
+    // build the products array to use in the table
+    this.products = [
+      {
+        id: null,
+        name: '',
+        quantity: null,
+        value: null
+      }
+    ];
 
-	}
+  }
 
   ngOnInit() {
 
@@ -39,20 +39,20 @@ export class ConsumerViewOrderModalComponent implements OnInit {
   }
 
   buildProductsArray() {
-    let newProduct = {
+    const newProduct = {
       id: null,
       name: '',
       quantity: null,
       value: null
     };
-    let array = this.record.orderDetails.productQuantities;
+    const array = this.record.orderDetails.productQuantities;
     // for each product in the productQuantities array, get the id, qty and value
     for (let i = 0; i < array.length; i++) {
       newProduct.id = array[i].productId;
       newProduct.quantity = array[i].orderQuantity;
       newProduct.value = array[i].orderValue;
       newProduct.name = this.getProductName(newProduct.id);
-      let cloneProduct = {...newProduct};
+      const cloneProduct = {...newProduct};
       // console.log('newProduct: ,', newProduct)
       this.products.push(cloneProduct);
       // console.log('products: ', this.products);

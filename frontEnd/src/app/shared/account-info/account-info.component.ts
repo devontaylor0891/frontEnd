@@ -71,13 +71,13 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
       this.profile = this.auth.userProfile;
     };
 
-    console.log('market passed in: ', this.market);
+    // console.log('market passed in: ', this.market);
 
     this.getLocationNotificationsSub = this.apiService.getLocationNotifications(this.user.id)
       .subscribe(
         result => {
           this.currentLocationNotifsArray = result;
-          console.log('locations received: ', this.currentLocationNotifsArray);
+          // console.log('locations received: ', this.currentLocationNotifsArray);
         }
       )
 

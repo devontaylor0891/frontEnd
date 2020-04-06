@@ -9,6 +9,7 @@ declare var google: any;
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as cloneDeep from 'lodash/cloneDeep';
+import * as pick from 'lodash/pick';
 
 import { ScheduleModel } from '../../../../../../core/models/schedule.model';
 import { ProducerModel } from '../../../../../../core/models/producer.model';
@@ -28,8 +29,8 @@ export class AddScheduleModalComponent implements OnInit {
   public searchControl: FormControl;
   public zoom: number;
 
-  @ViewChild("search") public searchElementRef: ElementRef;
-  @ViewChild("date") public datePickerRef: ElementRef;
+  @ViewChild('search') public searchElementRef: ElementRef;
+  @ViewChild('date') public datePickerRef: ElementRef;
 
   @Output() itemCreated = new EventEmitter<ScheduleModel>();
 
@@ -37,12 +38,12 @@ export class AddScheduleModalComponent implements OnInit {
 
   producer: ProducerModel;
   type: string;
-  hasDelFee: boolean = false;
-  hasFeeWaiver: boolean = false;
+  hasDelFee = false;
+  hasFeeWaiver = false;
   repeat = 0;
   repeatEndDate: string;
   numberOfWeeks: number;
-  repeatEndChosen: boolean = false;
+  repeatEndChosen = false;
   streetNumber: string;
   route: string;
   city: string;
@@ -53,11 +54,19 @@ export class AddScheduleModalComponent implements OnInit {
   lng: number;
   submitObject: any;
   repeatSubmitArray: any = [];
-  submitting: boolean = false;
-  isRepeat: boolean = false;
-  noAddress: boolean = false;
+  submitting = false;
+  isRepeat = false;
+  noAddress = false;
   isMarket = false;
   marketSearchResults = [];
+  uniqueMarketArray = [];
+  tempMarkets = [];
+  ownMarket = false;
+  showMarketLocations = false;
+  marketLocationArray = [];
+  uniqueLocationArray = [];
+  locationScheduleArray = [];
+  chosenLocationScheduleArray = [];
 
   // properties to hold dates chosen, used in build methods
   schedDay: number; // default to dateMoment day
@@ -97,9 +106,9 @@ export class AddScheduleModalComponent implements OnInit {
     0, 0, 0, 0);
   public deadlineDateTimeMin: any = new Date();
   public deadlineDateTimeMax: any = this.dateMoment;
-  dateChosen: boolean = false;
+  dateChosen = false;
 
-  monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
@@ -157,13 +166,13 @@ export class AddScheduleModalComponent implements OnInit {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       // console.log('google.maps: ', google.maps);
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["geocode"]
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['geocode']
       });
-      autocomplete.addListener("place_changed", () => {
+      autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           // get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
           // verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -357,6 +366,7 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   private fillAddress(place) {
+    console.log('place: ', place.address_components);
     this.clearAddress();
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
@@ -397,12 +407,80 @@ export class AddScheduleModalComponent implements OnInit {
           result => {
             console.log('results from get markets by location: ', result);
             this.marketSearchResults = result;
+            if (this.marketSearchResults.length === 0) {
+              this.ownMarket = true;
+            } else {
+              this.buildUniqueMarketArray();
+            };
           }
         );
-    }
-    // console.log('lat in submit obj: ', this.submitObject.latitude);
-    // console.log('form after location choice: ', this.form);
+    };
   };
+
+  buildUniqueMarketArray() {
+    const result = [];
+    const map = new Map();
+    for (const item of this.marketSearchResults) {
+        if (!map.has(item.marketId)) {
+            map.set(item.marketId, true);    // set any value to Map
+            result.push({
+                marketId: item.marketId,
+                marketName: item.marketName
+            });
+        }
+    }
+    console.log('result: ', result);
+    this.uniqueMarketArray = result;
+  };
+
+  onSelectMarket(value) {
+    this.marketLocationArray = [];
+    // console.log('value: ', value);
+    if (value === 'ownMarket') { // if ownMarket, go to regular setup
+      this.ownMarket = true;
+    } else { // else, build array with matching value
+      this.ownMarket = false;
+      this.showMarketLocations = true;
+      this.buildMarketLocationArray(value);
+    }
+  };
+
+  buildMarketLocationArray(id) {
+    for (let i = 0; i < this.marketSearchResults.length; i++) {
+      if (this.marketSearchResults[i].marketId == id) {
+        this.marketLocationArray.push(this.marketSearchResults[i]);
+      }
+    }
+    // console.log('marketLocationArray: ', this.marketLocationArray);
+    this.uniqueLocationArray = this.marketLocationArray.filter ((e, i) => this.marketLocationArray.findIndex(a => a.locationId === e.locationId) === i);
+    console.log('uniques locations: ', this.uniqueLocationArray);
+    // if marketLocation array is only 1 loc, fill form automatically, else give option
+
+  };
+
+  onChooseMarketLocation(locationId) {
+    this.locationScheduleArray = [];
+    this.chosenLocationScheduleArray = [];
+    console.log('loczation chosen: ', locationId);
+    this.marketLocationArray.forEach(market => {
+      if (market.locationId === locationId) {
+        this.locationScheduleArray.push(market);
+      }
+    });
+    // sort by start date
+    this.locationScheduleArray = this.locationScheduleArray.slice().sort((a, b) => b.startDateTime - a.startDateTime)
+    console.log('loc sched array: ', this.locationScheduleArray);
+  };
+
+  setCheckbox(event: any) {
+    console.log('event.target: ', this.chosenLocationScheduleArray.indexOf(event.target.id));
+    this.chosenLocationScheduleArray.indexOf(event.target.id) === -1 ? this.chosenLocationScheduleArray.push(event.target.id) : this.chosenLocationScheduleArray.splice(this.chosenLocationScheduleArray.indexOf(event.target.id), 1);
+    console.log('chosenlocationschedarray: ', this.chosenLocationScheduleArray);
+    // if (event.target.checked)
+    //   this.options.push(value)
+    // else
+    //   this.options= this.options.filter(val => val != value);
+ }
 
   private clearAddress() {
     this.submitObject.address = '';
@@ -418,13 +496,13 @@ export class AddScheduleModalComponent implements OnInit {
     this.country = '';
     this.lat = null;
     this.lng = null;
-  }
+  };
 
   private parseAddressComponents(components) {
     for (let i = 0; i < components.length; i++) {
-      let types = components[i].types;
+      const types = components[i].types;
       for (let j = 0; j < types.length; j++) {
-        let result = types[j];
+        const result = types[j];
         if (result === 'street_number') {
           this.streetNumber = components[i].short_name;
         }
@@ -453,10 +531,6 @@ export class AddScheduleModalComponent implements OnInit {
     this.schedDay = this.dateMoment.getDate();
     this.schedMonth = this.dateMoment.getMonth();
     this.schedYear = this.dateMoment.getFullYear();
-    
-
-    // const d = new Date();
-    // document.write("The current month is " + monthNames[d.getMonth()]);
     // make date human readable
     console.log('human readable: ', this.monthNames[this.dateMoment.getMonth()] + ' ' + this.dateMoment.getDate());
     // use those to set the order deadline day, month, year
@@ -492,10 +566,10 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseMultipleDates(value) {
-    let valueArray = this.form.controls['dates'].value;
+    const valueArray = this.form.controls['dates'].value;
     // for each object in valueArray, get its year, month, and day separated
     for (let i = 0; i < valueArray.length; i++) {
-      let date = {
+      const date = {
         schedDay: null,
         schedMonth: null,
         schedYear: null,
@@ -565,9 +639,9 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   onChooseRepeatEndDate() {
-    let dateMilli = new Date(this.dateMoment);
-    let repeatEndMilli = new Date(this.repeatEndDate);
-    let difference = repeatEndMilli.getTime() - dateMilli.getTime();
+    const dateMilli = new Date(this.dateMoment);
+    const repeatEndMilli = new Date(this.repeatEndDate);
+    const difference = repeatEndMilli.getTime() - dateMilli.getTime();
     // figure out how many instances to create by getting the days between end and start, dividing by 7
     console.log('dateMomement: ', dateMilli.getTime());
     console.log('endrepeat moment: ', repeatEndMilli.getTime());
@@ -579,8 +653,8 @@ export class AddScheduleModalComponent implements OnInit {
   };
 
   buildRepeatOrderDeadline(date, deadlineHours) {
-    let originalDeadline = new Date(date);
-    let newDeadline = new Date(originalDeadline.setHours(originalDeadline.getHours() - deadlineHours));
+    const originalDeadline = new Date(date);
+    const newDeadline = new Date(originalDeadline.setHours(originalDeadline.getHours() - deadlineHours));
     return newDeadline.toISOString();
   };
 
