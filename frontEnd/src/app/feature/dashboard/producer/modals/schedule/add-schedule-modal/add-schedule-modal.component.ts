@@ -476,10 +476,6 @@ export class AddScheduleModalComponent implements OnInit {
     console.log('event.target: ', this.chosenLocationScheduleArray.indexOf(event.target.id));
     this.chosenLocationScheduleArray.indexOf(event.target.id) === -1 ? this.chosenLocationScheduleArray.push(event.target.id) : this.chosenLocationScheduleArray.splice(this.chosenLocationScheduleArray.indexOf(event.target.id), 1);
     console.log('chosenlocationschedarray: ', this.chosenLocationScheduleArray);
-    // if (event.target.checked)
-    //   this.options.push(value)
-    // else
-    //   this.options= this.options.filter(val => val != value);
  }
 
   private clearAddress() {
