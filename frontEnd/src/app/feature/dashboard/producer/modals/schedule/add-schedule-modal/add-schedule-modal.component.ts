@@ -1,18 +1,16 @@
-import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef, Output, EventEmitter, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 // import { } from 'googlemaps';
 import { google } from '@google/maps';
 import { MapsAPILoader } from '@agm/core';
-
 declare var google: any;
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as cloneDeep from 'lodash/cloneDeep';
 import * as pick from 'lodash/pick';
-
-import { ScheduleModel } from '../../../../../../core/models/schedule.model';
-import { ProducerModel } from '../../../../../../core/models/producer.model';
 
 import { ProducerDashboardService } from '../../../../producer-dashboard.service';
 import { ApiService } from '../../../../../../core/api.service';
@@ -22,42 +20,28 @@ import { ApiService } from '../../../../../../core/api.service';
   templateUrl: './add-schedule-modal.component.html',
   styleUrls: ['./add-schedule-modal.component.scss']
 })
-export class AddScheduleModalComponent implements OnInit {
+export class AddScheduleModalComponent implements OnInit, OnDestroy {
 
-  public latitude: number;
-  public longitude: number;
-  public searchControl: FormControl;
-  public zoom: number;
+  submitting = false;
+  producer: any;
+  getProducerSub: Subscription;
 
-  @ViewChild('search') public searchElementRef: ElementRef;
-  @ViewChild('date') public datePickerRef: ElementRef;
-
-  @Output() itemCreated = new EventEmitter<ScheduleModel>();
-
-  form: FormGroup; // this will hold our form data in a js object
-
-  producer: ProducerModel;
-  type: string;
+  typeChosen = false;
+  isDelivery = false;
+  isMarket = false;
+  isOnFarm = false;
+  isOffFarm = false;
+  locationChosen = false;
   hasDelFee = false;
   hasFeeWaiver = false;
-  repeat = 0;
-  repeatEndDate: string;
-  numberOfWeeks: number;
-  repeatEndChosen = false;
-  streetNumber: string;
-  route: string;
-  city: string;
-  province: string;
-  postalCode: string;
-  country: string;
-  lat: number;
-  lng: number;
-  submitObject: any;
-  repeatSubmitArray: any = [];
-  submitting = false;
-  isRepeat = false;
   noAddress = false;
-  isMarket = false;
+
+  scheduleForm: FormGroup;
+  deliveryForm: FormGroup;
+  marketForm: FormGroup;
+  onFarmForm: FormGroup;
+  offFarmForm: FormGroup;
+
   marketSearchResults = [];
   uniqueMarketArray = [];
   tempMarkets = [];
@@ -66,25 +50,27 @@ export class AddScheduleModalComponent implements OnInit {
   marketLocationArray = [];
   uniqueLocationArray = [];
   locationScheduleArray = [];
-  chosenLocationScheduleArray = [];
+  chosenLocationScheduleArray = []
 
-  // properties to hold dates chosen, used in build methods
-  schedDay: number; // default to dateMoment day
-  schedMonth: number;
-  schedYear: number;
-  schedStartHour: number;
-  schedStartMinute: number;
-  schedEndHour: number;
-  schedEndMinute: number;
-  deadlineDateDay: number;
-  deadlineDateMonth: number;
-  deadlineDateYear: number;
-  deadlineHour: number;
-  deadlineMinute: number;
-  datesArray: Array<any> = []; // to hold dates if repeat is selected
-  deadlineCalcHours: number;
+  @Output() itemCreated = new EventEmitter<any>();  
 
-  // DATE/TIME PICKER SETTINGS
+  // LOCATION DETAILS
+  @ViewChild('search') public searchElementRef: ElementRef;
+  public latitude: number;
+  public longitude: number;
+  public searchControl: FormControl;
+  public zoom: number;
+  streetNumber: string;
+  route: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  country: string;
+  lat: number;
+  lng: number;
+
+  // DATE DETAILS
+  @ViewChild('date') public datePickerRef: ElementRef;
   date: any = new Date();
   year: any = this.date.getFullYear();
   month: any = this.date.getMonth();
@@ -93,7 +79,6 @@ export class AddScheduleModalComponent implements OnInit {
   public repeatEndDateMomentMin: any = new Date(new Date().setDate(new Date().getDate() + 8));
   public repeatEndDateMomentMax: any = new Date(new Date().setMonth(new Date().getMonth() + 3));
   public dateMoment: any = new Date(new Date().setDate(new Date().getDate() + 1)); // somehow this works!
-  public dateMoments: any; // throws error if initialized with a date
   public startTimeMoment: any = new Date(0, 0, 0, 12, 0, 0, 0); // default start time is noon
   public endTimeMoment: any = new Date(0, 0, 0, 13, 0, 0, 0); // default end time is 1pm
   public endTimeMin: any = new Date(0, 0, 0, 13, 0, 0, 0);
@@ -107,8 +92,39 @@ export class AddScheduleModalComponent implements OnInit {
   public deadlineDateTimeMin: any = new Date();
   public deadlineDateTimeMax: any = this.dateMoment;
   dateChosen = false;
-
   monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  schedDay: number; // default to dateMoment day
+  schedMonth: number;
+  schedYear: number;
+  schedStartHour: number;
+  schedStartMinute: number;
+  schedEndHour: number;
+  schedEndMinute: number;
+  deadlineDateDay: number;
+  deadlineDateMonth: number;
+  deadlineDateYear: number;
+  deadlineHour: number;
+  deadlineMinute: number;
+  deadlineCalcHours: number;
+  
+
+
+
+  // old stuff ***********************************************************************
+
+  form: FormGroup;
+
+  type: string;
+  
+  repeat = 0;
+  repeatEndDate: string;
+  numberOfWeeks: number;
+  repeatEndChosen = false;
+ 
+  submitObject: any;
+  repeatSubmitArray: any = [];
+  
+  isRepeat = false;
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
@@ -124,7 +140,6 @@ export class AddScheduleModalComponent implements OnInit {
       'type': ['', Validators.required],
       'description': ['', Validators.required],
       'date': [this.dateMoment],
-      'dates': [this.dateMoments],
       'startTime': [this.startTimeMoment],
       'endTime': [this.endTimeMoment],
       'repeat': [this.repeat],
@@ -143,26 +158,101 @@ export class AddScheduleModalComponent implements OnInit {
       'province': ['', Validators.required]
     });
 
-  }
+  };
 
   ngOnInit() {
 
-    // console.log('dateMoment (tomorrow at this time): ', this.dateMoment);
-    // console.log('startTime (noon): ', this.startTimeMoment);
-    // console.log('endTime (1pm): ', this.endTimeMoment);
-    // console.log('deadline (12am tomorrow): ', this.deadlineDateTime);
-    // console.log('minimum date (tomorrow): ', this.DateMomentMin);
-    // console.log('max deadline (same as dateMoment): ', this.deadlineDateTimeMax);
+    // once we have the producer, initialize form
+    this.getProducerSub = this.dashboardService.getProducer()
+      .subscribe(
+        result => {
+          this.producer = result;
+          console.log('producer recd: ', this.producer);
+          this.latitude = this.producer.latitude;
+          this.longitude = this.producer.longitude;
+          this.scheduleForm = new FormGroup({
+            producerId: new FormControl(this.producer.producerId, [Validators.required]),
+            type: new FormControl('', [Validators.required]),
+            description: new FormControl('', [Validators.required]),
+            date: new FormControl(this.dateMoment),
+            startTime: new FormControl(this.startTimeMoment),
+            endTime: new FormControl(this.endTimeMoment),
+            repeat: new FormControl(this.repeat),
+            deadlineCalcHours: new FormControl(12),
+            deadlineDateTime: new FormControl(this.deadlineDateTime),
+            deadlineDate: new FormControl(this.deadlineDateMoment),
+            deadlineTime: new FormControl(this.deadlineTimeMoment),
+            readableDate: new FormControl('', [Validators.required]),
+            hasFee: new FormControl(false, [Validators.required]),
+            hasWaiver: new FormControl(false, [Validators.required]),
+            latitude: new FormControl('', [Validators.required]),
+            longitude: new FormControl('', [Validators.required]),
+            city: new FormControl('', [Validators.required]),
+            province: new FormControl('', [Validators.required]),
+            orderDeadline: new FormControl('', [Validators.required]),
+            address: new FormControl(''),
+            fee: new FormControl(0, [Validators.required]),
+            feeWaiver: new FormControl(0, [Validators.required]),
+            userId: new FormControl(this.producer.id, [Validators.required])
+          });
+        }
+      );
 
+    this.setSchedDefaultValues();
+
+    this.onChanges();
+
+  };
+
+  onChooseScheduleType(value) {
+    this.clearChosenSchedType();
+    this.typeChosen = true;
+    if(value != 'On-farm Pickup') {
+      this.initializeSearch();
+    };
+    if (value === 'Door-to-door Delivery') {
+      this.isDelivery = true;
+      this.scheduleForm.patchValue({
+        type: 'Door-to-door Delivery'
+      });
+    } else if (value === 'Market Pickup') {
+      this.isMarket = true;
+      this.scheduleForm.patchValue({
+        type: 'Market Pickup'
+      });    
+    } else if (value === 'On-farm Pickup') {
+      this.isOnFarm = true;
+      this.scheduleForm.patchValue({
+        type: 'On-farm Pickup',
+        latitude: this.producer.latitude,
+        longitude: this.producer.longitude,
+        address: this.producer.address,
+        city: this.producer.location,
+        province: this.producer.province
+      });    
+    } else {
+      this.isOffFarm = true;
+      this.scheduleForm.patchValue({
+        type: 'Off-farm Pickup'
+      });    
+    };
+    console.log('form value: ', this.scheduleForm.value);
+  };
+
+  clearChosenSchedType() {
+    this.typeChosen = false;
+    this.isDelivery = false;
+    this.isMarket = false;
+    this.isOnFarm = false;
+    this.isOffFarm = false;
+    this.locationChosen = false;
+  };
+
+  initializeSearch() {
     // set google maps defaults
     this.zoom = 4;
-
     // create search FormControl
     this.searchControl = new FormControl();
-
-    // set current position
-    // this.setCurrentPosition();
-
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       // console.log('google.maps: ', google.maps);
@@ -189,181 +279,7 @@ export class AddScheduleModalComponent implements OnInit {
         });
       });
     });
-
-    this.dashboardService.getProducer()
-      .subscribe(
-        result => {
-          this.producer = result;
-          this.latitude = this.producer.latitude;
-          this.longitude = this.producer.longitude;
-        }
-      );
-
-    this.setSchedDefaultValues();
-
-    this.onChanges();
-
-    // console.log('form value: ', this.form.value);
-
-  };
-
-  onChanges() {
-    this.form.get('type').valueChanges.subscribe(val => {
-      if (val === 'On-farm Pickup') {
-        // console.log('on farm pickup selected, form value before: ', this.form.value);
-        this.submitObject.latitude = this.latitude;
-        this.submitObject.longitude = this.longitude;
-        this.submitObject.address = this.producer.address;
-        this.submitObject.city = this.producer.location;
-        this.submitObject.province = this.producer.province;
-        this.submitObject.producerName = this.producer.name;
-        this.form.patchValue({
-          latitude: this.latitude,
-          longitude: this.longitude,
-          address: this.producer.address,
-          city: this.producer.location,
-          province: this.producer.province
-        });
-        // console.log('on farm pickup selected, form value after: ', this.form.value);
-      }
-    });
-    this.form.get('hasFee').valueChanges.subscribe(val => {
-      // console.log('has fee changed: ', this.form.value);
-    });
-    this.form.get('hasWaiver').valueChanges.subscribe(val => {
-      // console.log('has delfee changed: ', this.form.value);
-    });
-  };
-
-  onSubmit() {
-    this.submitting = true;
-    this.buildSubmitObject();
-    if (!this.repeat) { // if only one, post it to the API
-      this.repeatSubmitArray[0] = this.submitObject;
-      this.apiService.postMultiSchedule(this.repeatSubmitArray)
-          .subscribe(
-            result => this.handleSubmitSuccess(result),
-            err => this.handleSubmitError(err)
-          );
-      // this.apiService.postSchedule(this.submitObject)
-      // .subscribe(
-      //   result => this.handleSubmitSuccess(result),
-      //   err => this.handleSubmitError(err)
-      // );
-    } else { // make copies of the submitObject, change date, send array to API
-      this.buildRepeatSubmitArray();
-    }
-
-  };
-
-  handleSubmitSuccess(result) {
-    console.log('new multischeds result: ', result);
-    this.itemCreated.emit(result);
-    this.buildBlankSubmitObject();
-    this.submitting = false;
-    this.repeatSubmitArray = [];
-    this.activeModal.close();
-  };
-
-  handleSubmitError(err) {
-    console.error(err);
-    this.submitting = false;
-  };
-
-  // for repeat dates
-  // not used
-  // buildRepeatSubmitObject(i, deadlineHours) {
-  //   this.clearDatesFromSubmitObject();
-  //   this.submitObject.producerId = this.producer.id;
-  //   this.submitObject.type = this.form.value.type;
-  //   this.submitObject.description = this.form.value.description;
-  //   this.submitObject.startDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedStartHour, this.schedStartMinute);
-  //   this.submitObject.endDateTime = this.buildDate(this.datesArray[i].schedYear, this.datesArray[i].schedMonth, this.datesArray[i].schedDay, this.schedEndHour, this.schedEndMinute)
-  //   this.submitObject.hasFee = this.form.value.hasFee;
-  //   this.submitObject.hasWaiver = this.form.value.hasWaiver;
-  //   this.submitObject.orderDeadline = this.buildRepeatOrderDeadline(this.submitObject.startDateTime, deadlineHours);
-  //   this.submitObject.fee = this.form.value.fee;
-  //   this.submitObject.feeWaiver = this.form.value.feeWaiver;
-  //   this.submitObject.orderList = [];
-  // };
-
-  buildRepeatSubmitArray() {
-    this.repeatSubmitArray[0] = this.submitObject;
-    let tempSubmitObj;
-    for (let i = 1; i < this.numberOfWeeks; i++) {
-      tempSubmitObj = cloneDeep(this.submitObject);
-      // change start/end date in submit object
-      tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
-      tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
-      tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
-      console.log('human readable: ', this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate());
-      tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
-
-      // push into array
-      this.repeatSubmitArray.push(tempSubmitObj);
-      if (i === this.numberOfWeeks - 1) {
-        this.apiService.postMultiSchedule(this.repeatSubmitArray)
-          .subscribe(
-            result => this.handleSubmitSuccess(result),
-            err => this.handleSubmitError(err)
-          );
-      }
-    }
-  };
-
-  buildBlankSubmitObject() {
-    this.submitObject = {
-      'id': null,
-      'producerId': null,
-      'producerName': '',
-      'productList': [],
-      'type': '',
-      'description': '',
-      'startDateTime': '',
-      'endDateTime': '',
-      'readableDate': '',
-      'hasFee': null,
-      'hasWaiver': null,
-      'latitude': null,
-      'longitude': null,
-      'city': '',
-      'province': '',
-      'orderDeadline': '',
-      'address': '',
-      'fee': null,
-      'feeWaiver': null,
-      'orderList': [],
-      'userId': null
-    };
   }
-
-  // clearDatesFromSubmitObject() {
-  //   this.submitObject.startDateTime = '';
-  //   this.submitObject.endDateTime = '';
-  // }
-
-  buildSubmitObject() {
-    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
-    this.submitObject.producerId = this.producer.producerId;
-    this.submitObject.producerName = this.producer.name;
-    this.submitObject.type = this.form.value.type;
-    this.submitObject.description = this.form.value.description;
-    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
-    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
-    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
-    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
-    console.log('human readable: ', this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate());
-    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
-    this.submitObject.hasFee = this.form.value.hasFee;
-    this.submitObject.hasWaiver = this.form.value.hasWaiver;
-    this.submitObject.orderDeadline = this.deadlineDateTime;
-    // this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
-    this.submitObject.fee = this.form.value.fee;
-    this.submitObject.feeWaiver = this.form.value.feeWaiver;
-    this.submitObject.orderList = [];
-    this.submitObject.userId = this.producer.id;
-    // console.log('submit obj built: ', this.submitObject);
-  };
 
   private fillAddress(place) {
     console.log('place: ', place.address_components);
@@ -371,32 +287,25 @@ export class AddScheduleModalComponent implements OnInit {
     this.parseAddressComponents(place.address_components);
     this.lat = place.geometry.location.lat();
     this.lng = place.geometry.location.lng();
-    this.form.value.latitude = this.lat;
-    this.form.value.longitude = this.lng;
-    this.form.patchValue({
+    this.scheduleForm.patchValue({
       latitude: this.lat,
       longitude: this.lng
     });
     // console.log('lat fn: ', place.geometry.location.lat());
+    this.locationChosen = true;
     if (this.streetNumber && this.route) {
       this.noAddress = false;
-      this.form.value.address = this.streetNumber + ' ' + this.route;
-      this.submitObject.address = this.streetNumber + ' ' + this.route;
+      // this.submitObject.address = this.streetNumber + ' ' + this.route;
     };
     if (this.route && !this.streetNumber) {
-      // console.log('no streetnumber');
       this.noAddress = true;
     };
-    // this.form.value.city = this.city;
     this.form.controls['city'].setValue(this.city);
-    this.submitObject.city = this.city; // still not working
-    // this.form.value.province = this.province;
     this.form.controls['province'].setValue(this.province);
-    this.submitObject.province = this.province;
-    // this.form.value.latitude = this.lat;
-    // this.form.value.longitude = this.lng;
-    this.submitObject.latitude = this.lat;
-    this.submitObject.longitude = this.lng;
+    // this.submitObject.city = this.city;
+    // this.submitObject.province = this.province;
+    // this.submitObject.latitude = this.lat;
+    // this.submitObject.longitude = this.lng;
     if (this.isMarket) {
       const locationsSearchOptions = {
         lat: this.lat,
@@ -415,6 +324,49 @@ export class AddScheduleModalComponent implements OnInit {
           }
         );
     };
+  };
+
+  private clearAddress() {
+    this.submitObject.address = '';
+    this.submitObject.city = '';
+    this.submitObject.province = '';
+    this.submitObject.latitude = null;
+    this.submitObject.longitude = null;
+    this.streetNumber = '';
+    this.route = '';
+    this.city = '';
+    this.province = '';
+    this.postalCode = '';
+    this.country = '';
+    this.lat = null;
+    this.lng = null;
+  };
+
+  private parseAddressComponents(components) {
+    for (let i = 0; i < components.length; i++) {
+      const types = components[i].types;
+      for (let j = 0; j < types.length; j++) {
+        const result = types[j];
+        if (result === 'street_number') {
+          this.streetNumber = components[i].short_name;
+        }
+        if (result === 'route') {
+          this.route = components[i].short_name;
+        }
+        if (result === 'locality' || result === 'sublocality') {
+          this.city = components[i].short_name;
+        }
+        if (result === 'administrative_area_level_1') {
+          this.province = components[i].short_name;
+        }
+        if (result === 'postal_code') {
+          this.postalCode = components[i].short_name;
+        }
+        if (result === 'country') {
+          this.country = components[i].short_name;
+        }
+      }
+    }
   };
 
   buildUniqueMarketArray() {
@@ -476,50 +428,249 @@ export class AddScheduleModalComponent implements OnInit {
     console.log('event.target: ', this.chosenLocationScheduleArray.indexOf(event.target.id));
     this.chosenLocationScheduleArray.indexOf(event.target.id) === -1 ? this.chosenLocationScheduleArray.push(event.target.id) : this.chosenLocationScheduleArray.splice(this.chosenLocationScheduleArray.indexOf(event.target.id), 1);
     console.log('chosenlocationschedarray: ', this.chosenLocationScheduleArray);
- }
-
-  private clearAddress() {
-    this.submitObject.address = '';
-    this.submitObject.city = '';
-    this.submitObject.province = '';
-    this.submitObject.latitude = null;
-    this.submitObject.longitude = null;
-    this.streetNumber = '';
-    this.route = '';
-    this.city = '';
-    this.province = '';
-    this.postalCode = '';
-    this.country = '';
-    this.lat = null;
-    this.lng = null;
   };
 
-  private parseAddressComponents(components) {
-    for (let i = 0; i < components.length; i++) {
-      const types = components[i].types;
-      for (let j = 0; j < types.length; j++) {
-        const result = types[j];
-        if (result === 'street_number') {
-          this.streetNumber = components[i].short_name;
-        }
-        if (result === 'route') {
-          this.route = components[i].short_name;
-        }
-        if (result === 'locality' || result === 'sublocality') {
-          this.city = components[i].short_name;
-        }
-        if (result === 'administrative_area_level_1') {
-          this.province = components[i].short_name;
-        }
-        if (result === 'postal_code') {
-          this.postalCode = components[i].short_name;
-        }
-        if (result === 'country') {
-          this.country = components[i].short_name;
-        }
+  onSubmit() {
+    console.log('form value: ', this.scheduleForm.value);
+  };
+
+// old stuff
+
+  onChanges() {
+    this.form.get('type').valueChanges.subscribe(val => {
+      if (val === 'On-farm Pickup') {
+        // console.log('on farm pickup selected, form value before: ', this.form.value);
+        this.submitObject.latitude = this.latitude;
+        this.submitObject.longitude = this.longitude;
+        this.submitObject.address = this.producer.address;
+        this.submitObject.city = this.producer.location;
+        this.submitObject.province = this.producer.province;
+        this.submitObject.producerName = this.producer.name;
+        this.form.patchValue({
+          latitude: this.latitude,
+          longitude: this.longitude,
+          address: this.producer.address,
+          city: this.producer.location,
+          province: this.producer.province
+        });
+        // console.log('on farm pickup selected, form value after: ', this.form.value);
+      }
+    });
+    this.form.get('hasFee').valueChanges.subscribe(val => {
+      // console.log('has fee changed: ', this.form.value);
+    });
+    this.form.get('hasWaiver').valueChanges.subscribe(val => {
+      // console.log('has delfee changed: ', this.form.value);
+    });
+  };
+
+  // onSubmit() {
+  //   this.submitting = true;
+  //   this.buildSubmitObject();
+  //   if (!this.repeat) { // if only one, post it to the API
+  //     this.repeatSubmitArray[0] = this.submitObject;
+  //     console.log('this.submitObject: ', this.submitObject);
+  //     // this.apiService.postMultiSchedule(this.repeatSubmitArray)
+  //     //     .subscribe(
+  //     //       result => this.handleSubmitSuccess(result),
+  //     //       err => this.handleSubmitError(err)
+  //     //     );
+  //     // this.apiService.postSchedule(this.submitObject)
+  //     // .subscribe(
+  //     //   result => this.handleSubmitSuccess(result),
+  //     //   err => this.handleSubmitError(err)
+  //     // );
+  //   } else { // make copies of the submitObject, change date, send array to API
+  //     this.buildRepeatSubmitArray();
+  //   }
+
+  // };
+
+  handleSubmitSuccess(result) {
+    console.log('new multischeds result: ', result);
+    this.itemCreated.emit(result);
+    this.buildBlankSubmitObject();
+    this.submitting = false;
+    this.repeatSubmitArray = [];
+    this.activeModal.close();
+  };
+
+  handleSubmitError(err) {
+    console.error(err);
+    this.submitting = false;
+  };
+
+  buildRepeatSubmitArray() {
+    this.repeatSubmitArray[0] = this.submitObject;
+    let tempSubmitObj;
+    for (let i = 1; i < this.numberOfWeeks; i++) {
+      tempSubmitObj = cloneDeep(this.submitObject);
+      // change start/end date in submit object
+      tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
+      tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
+      tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
+      console.log('human readable: ', this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate());
+      tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
+
+      // push into array
+      this.repeatSubmitArray.push(tempSubmitObj);
+      
+      if (i === this.numberOfWeeks - 1) {
+        console.log('multi submit: ', this.repeatSubmitArray);
+        // this.apiService.postMultiSchedule(this.repeatSubmitArray)
+        //   .subscribe(
+        //     result => this.handleSubmitSuccess(result),
+        //     err => this.handleSubmitError(err)
+        //   );
       }
     }
   };
+
+  buildBlankSubmitObject() {
+    this.submitObject = {
+      'id': null,
+      'producerId': null,
+      'producerName': '',
+      'productList': [],
+      'type': '',
+      'description': '',
+      'startDateTime': '',
+      'endDateTime': '',
+      'readableDate': '',
+      'hasFee': null,
+      'hasWaiver': null,
+      'latitude': null,
+      'longitude': null,
+      'city': '',
+      'province': '',
+      'orderDeadline': '',
+      'address': '',
+      'fee': null,
+      'feeWaiver': null,
+      'orderList': [],
+      'userId': null
+    };
+  }
+
+  buildSubmitObject() {
+    // this.submitObject.id = this.generateRandomId(); // remove for production as API should do this for us
+    this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
+    this.submitObject.type = this.form.value.type;
+    this.submitObject.description = this.form.value.description;
+    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    // console.log('start date values: ', this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute);
+    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    console.log('human readable: ', this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate());
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
+    this.submitObject.hasFee = this.form.value.hasFee;
+    this.submitObject.hasWaiver = this.form.value.hasWaiver;
+    this.submitObject.orderDeadline = this.deadlineDateTime;
+    // this.submitObject.orderDeadline = this.buildOrderDeadline(this.deadlineDateYear, this.deadlineDateMonth, this.deadlineDateDay, this.deadlineHour, this.deadlineMinute);
+    this.submitObject.fee = this.form.value.fee;
+    this.submitObject.feeWaiver = this.form.value.feeWaiver;
+    this.submitObject.orderList = [];
+    this.submitObject.userId = this.producer.id;
+    // console.log('submit obj built: ', this.submitObject);
+  };
+
+  // private fillAddress(place) {
+  //   console.log('place: ', place.address_components);
+  //   this.clearAddress();
+  //   this.parseAddressComponents(place.address_components);
+  //   this.lat = place.geometry.location.lat();
+  //   this.lng = place.geometry.location.lng();
+  //   this.form.value.latitude = this.lat;
+  //   this.form.value.longitude = this.lng;
+  //   this.form.patchValue({
+  //     latitude: this.lat,
+  //     longitude: this.lng
+  //   });
+  //   // console.log('lat fn: ', place.geometry.location.lat());
+  //   if (this.streetNumber && this.route) {
+  //     this.noAddress = false;
+  //     this.form.value.address = this.streetNumber + ' ' + this.route;
+  //     this.submitObject.address = this.streetNumber + ' ' + this.route;
+  //   };
+  //   if (this.route && !this.streetNumber) {
+  //     // console.log('no streetnumber');
+  //     this.noAddress = true;
+  //   };
+  //   // this.form.value.city = this.city;
+  //   this.form.controls['city'].setValue(this.city);
+  //   this.submitObject.city = this.city; // still not working
+  //   // this.form.value.province = this.province;
+  //   this.form.controls['province'].setValue(this.province);
+  //   this.submitObject.province = this.province;
+  //   // this.form.value.latitude = this.lat;
+  //   // this.form.value.longitude = this.lng;
+  //   this.submitObject.latitude = this.lat;
+  //   this.submitObject.longitude = this.lng;
+  //   if (this.isMarket) {
+  //     const locationsSearchOptions = {
+  //       lat: this.lat,
+  //       lng: this.lng
+  //     };
+  //     this.apiService.getMarketsByLocation(locationsSearchOptions)
+  //       .subscribe(
+  //         result => {
+  //           console.log('results from get markets by location: ', result);
+  //           this.marketSearchResults = result;
+  //           if (this.marketSearchResults.length === 0) {
+  //             this.ownMarket = true;
+  //           } else {
+  //             this.buildUniqueMarketArray();
+  //           };
+  //         }
+  //       );
+  //   };
+  // };
+
+  
+
+  // private clearAddress() {
+  //   this.submitObject.address = '';
+  //   this.submitObject.city = '';
+  //   this.submitObject.province = '';
+  //   this.submitObject.latitude = null;
+  //   this.submitObject.longitude = null;
+  //   this.streetNumber = '';
+  //   this.route = '';
+  //   this.city = '';
+  //   this.province = '';
+  //   this.postalCode = '';
+  //   this.country = '';
+  //   this.lat = null;
+  //   this.lng = null;
+  // };
+
+  // private parseAddressComponents(components) {
+  //   for (let i = 0; i < components.length; i++) {
+  //     const types = components[i].types;
+  //     for (let j = 0; j < types.length; j++) {
+  //       const result = types[j];
+  //       if (result === 'street_number') {
+  //         this.streetNumber = components[i].short_name;
+  //       }
+  //       if (result === 'route') {
+  //         this.route = components[i].short_name;
+  //       }
+  //       if (result === 'locality' || result === 'sublocality') {
+  //         this.city = components[i].short_name;
+  //       }
+  //       if (result === 'administrative_area_level_1') {
+  //         this.province = components[i].short_name;
+  //       }
+  //       if (result === 'postal_code') {
+  //         this.postalCode = components[i].short_name;
+  //       }
+  //       if (result === 'country') {
+  //         this.country = components[i].short_name;
+  //       }
+  //     }
+  //   }
+  // };
 
   onChooseDate() {
     console.log('new dateMoment: ', this.dateMoment);
@@ -559,25 +710,6 @@ export class AddScheduleModalComponent implements OnInit {
   setRepeatEndDateMax() {
     this.repeatEndDateMomentMax = new Date(this.schedYear, this.schedMonth + 3, this.schedDay);
     console.log('new repeat end max: ', this.repeatEndDateMomentMax);
-  };
-
-  onChooseMultipleDates(value) {
-    const valueArray = this.form.controls['dates'].value;
-    // for each object in valueArray, get its year, month, and day separated
-    for (let i = 0; i < valueArray.length; i++) {
-      const date = {
-        schedDay: null,
-        schedMonth: null,
-        schedYear: null,
-        humanReadable: null
-      };
-      date.schedDay = valueArray[i].getDate();
-      date.schedMonth = valueArray[i].getMonth();
-      date.schedYear = valueArray[i].getFullYear();
-      date.humanReadable = this.monthNames[valueArray[i].getMonth()] + ' ' + valueArray[i].getDate();
-      this.datesArray.push(date);
-    };
-    console.log('dateArray: ', this.datesArray);
   };
 
   onChooseStartTime() {
@@ -675,6 +807,12 @@ export class AddScheduleModalComponent implements OnInit {
     this.schedStartMinute = this.startTimeMoment.getMinutes();
     this.schedEndHour = this.endTimeMoment.getHours();
     this.schedEndMinute = this.endTimeMoment.getMinutes();
-  }
+  };
+
+  ngOnDestroy() {
+    if (this.getProducerSub) {
+      this.getProducerSub.unsubscribe();
+    };
+  };
 
 }
