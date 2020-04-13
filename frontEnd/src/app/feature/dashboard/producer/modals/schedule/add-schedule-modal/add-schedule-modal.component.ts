@@ -207,9 +207,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   onChooseScheduleType(value) {
     this.clearChosenSchedType();
     this.typeChosen = true;
-    if(value != 'On-farm Pickup') {
-      this.initializeSearch();
-    };
+    this.initializeSearch();
     if (value === 'Door-to-door Delivery') {
       this.isDelivery = true;
       this.scheduleForm.patchValue({

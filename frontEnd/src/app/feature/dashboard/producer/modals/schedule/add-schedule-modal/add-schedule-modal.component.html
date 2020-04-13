@@ -79,6 +79,7 @@
 
       </div>
 
+      <!-- LOCATION DETIALS - ALL OTHER TYPES - HIDDEN DUE TO SEARCHELEMENT ERROR WHEN SWITCHING TYPES -->
       <div class="row form-section" *ngIf="typeChosen" [hidden]="isOnFarm">
         
         <div class="col-12 form-section-header">
@@ -458,21 +459,30 @@
 
       <!-- SUBMIT BUTTONS -->
       <div class="row justify-content-center">
-        <button *ngIf="!repeat"
-          class="btn btn-olf-primary" 
-          type="submit"
-          [disabled]="(form.invalid)"
-          >Add to Schedule</button>
-        <button *ngIf="repeat"
-          class="btn btn-olf-primary" 
-          type="submit"
-          [disabled]="(form.invalid)"
-          >Add All to Schedule</button>
-        <button *ngIf="isMarket && !ownMarket"
-          type="submit"
-          class="btn btn-olf-primary"
-          [disabled]="(locationScheduleArray.length === 0)"
-          >Add Markets to Schedule</button>
+
+        <!-- REPEAT VS !REPEAT - ALL TYPES EXCEPT ISMARKET && !OWNMARKET -->
+        <div *ngIf="!isMarket || ownMarket">
+          <button *ngIf="!repeat"
+            class="btn btn-olf-primary" 
+            type="submit"
+            
+            >Add to Schedule</button>
+            <!-- [disabled]="(scheduleForm.invalid)" -->
+          <button *ngIf="repeat"
+            class="btn btn-olf-primary" 
+            type="submit"
+            >Add All to Schedule</button>
+        </div>
+        <!-- FARMERS MARKET ADDITIONS -->
+        <div *ngIf="isMarket && !ownMarket">
+          <button
+            type="submit"
+            class="btn btn-olf-primary"
+            
+            >Add Markets to Schedule</button>
+            <!-- [disabled]="(locationScheduleArray.length === 0)" -->
+        </div>
+        
       </div>
 
     </div>
