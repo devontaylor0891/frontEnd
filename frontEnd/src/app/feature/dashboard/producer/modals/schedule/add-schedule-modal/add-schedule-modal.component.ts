@@ -52,7 +52,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   locationScheduleArray = [];
   chosenLocationScheduleArray = []
 
-  @Output() itemCreated = new EventEmitter<any>();  
+  @Output() itemCreated = new EventEmitter<any>();
 
   // LOCATION DETAILS
   @ViewChild('search') public searchElementRef: ElementRef;
@@ -106,7 +106,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   deadlineHour: number;
   deadlineMinute: number;
   deadlineCalcHours: number;
-  
+
 
 
 
@@ -115,15 +115,15 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   type: string;
-  
+
   repeat = 0;
   repeatEndDate: string;
   numberOfWeeks: number;
   repeatEndChosen = false;
- 
+
   submitObject: any;
   repeatSubmitArray: any = [];
-  
+
   isRepeat = false;
 
   constructor(private dashboardService: ProducerDashboardService,
@@ -167,6 +167,9 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
       .subscribe(
         result => {
           this.producer = result;
+          if (this.producer.address === '') {
+            this.noAddress = true;
+          };
           console.log('producer recd: ', this.producer);
           this.latitude = this.producer.latitude;
           this.longitude = this.producer.longitude;
@@ -217,7 +220,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
       this.isMarket = true;
       this.scheduleForm.patchValue({
         type: 'Market Pickup'
-      });    
+      });
     } else if (value === 'On-farm Pickup') {
       this.isOnFarm = true;
       this.scheduleForm.patchValue({
@@ -227,12 +230,12 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
         address: this.producer.address,
         city: this.producer.location,
         province: this.producer.province
-      });    
+      });
     } else {
       this.isOffFarm = true;
       this.scheduleForm.patchValue({
         type: 'Off-farm Pickup'
-      });    
+      });
     };
     console.log('form value: ', this.scheduleForm.value);
   };
@@ -384,10 +387,12 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   };
 
   onSelectMarket(value) {
-    this.marketLocationArray = [];
+    this.marketLocationArray.length = 0;
+    this.locationScheduleArray.length = 0;
     // console.log('value: ', value);
     if (value === 'ownMarket') { // if ownMarket, go to regular setup
       this.ownMarket = true;
+      this.showMarketLocations = false;
     } else { // else, build array with matching value
       this.ownMarket = false;
       this.showMarketLocations = true;
@@ -409,8 +414,8 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   };
 
   onChooseMarketLocation(locationId) {
-    this.locationScheduleArray = [];
-    this.chosenLocationScheduleArray = [];
+    this.locationScheduleArray.length = 0; // ensure array is emptied
+    this.chosenLocationScheduleArray.length = 0;
     console.log('loczation chosen: ', locationId);
     this.marketLocationArray.forEach(market => {
       if (market.locationId === locationId) {
@@ -512,7 +517,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
 
       // push into array
       this.repeatSubmitArray.push(tempSubmitObj);
-      
+
       if (i === this.numberOfWeeks - 1) {
         console.log('multi submit: ', this.repeatSubmitArray);
         // this.apiService.postMultiSchedule(this.repeatSubmitArray)
@@ -625,7 +630,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   //   };
   // };
 
-  
+
 
   // private clearAddress() {
   //   this.submitObject.address = '';

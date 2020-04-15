@@ -48,9 +48,6 @@
         </div>
 
         <div class="col-12 form-section-body">
-
-          <!-- ON FARM ONLY - LOCATION DISPLAY -->
-          <div *ngIf="isOnFarm">
               
             <div *ngIf="producer.address" class="row">
               <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Address:</label>
@@ -62,7 +59,7 @@
             <div *ngIf="noAddress" class="row">
               <label for="address" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Address:</label>
               <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                <p>Uh oh! It doesn't look like that address exists. Please choose another or omit the address from the search and add it to the description below.</p>
+                <p>We've noticed you don't have a particular address (you're probably on a farm). In order for your customers to pick up their order, please include directions to the pickup location in the description below. Thanks!</p>
               </div>
             </div>
             
@@ -72,8 +69,6 @@
                 <p>{{ producer.location }}, {{ producer.province }}</p>
               </div>
             </div>
-            
-          </div>
 
         </div>
 
@@ -146,7 +141,7 @@
               </ul>
             </div>
   
-            <div *ngIf="locationScheduleArray.length === 1" class="tight-text" class="row mb-3">
+            <div *ngIf="showMarketLocations && locationScheduleArray.length === 1" class="tight-text" class="row mb-3">
                 <p>
                     This market date is available:
                   </p> 
@@ -154,7 +149,7 @@
               <p>{{ locationScheduleArray[0].startDateTime | date:'shortTime' }} - {{ locationScheduleArray[0].endDateTime | date:'shortTime' }}</p>
             </div>
   
-            <div *ngIf="locationScheduleArray.length > 1" class="tight-text" class="row mb-3">
+            <div *ngIf="showMarketLocations && locationScheduleArray.length > 1" class="tight-text" class="row mb-3">
               <label class="col-xs-12 col-sm-4 col-form-label text-sm-right">Choose the Dates to add to your Schedule:</label>
               <ul class="list-group col-xs-12 col-sm-8 input-group">
                   <label *ngFor="let locationSched of locationScheduleArray; let i = index" class="form-check-label w-100 p-0" for="{{ locationSched.marketScheduleId }}">
@@ -472,15 +467,15 @@
             class="btn btn-olf-primary" 
             type="submit"
             >Add All to Schedule</button>
+            <!-- [disabled]="(scheduleForm.invalid)" -->
         </div>
         <!-- FARMERS MARKET ADDITIONS -->
         <div *ngIf="isMarket && !ownMarket">
           <button
             type="submit"
             class="btn btn-olf-primary"
-            
+            [disabled]="(!showMarketLocations || chosenLocationScheduleArray.length < 1)"
             >Add Markets to Schedule</button>
-            <!-- [disabled]="(locationScheduleArray.length === 0)" -->
         </div>
         
       </div>
