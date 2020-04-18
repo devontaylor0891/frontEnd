@@ -49,7 +49,7 @@ export class ProducerDashboardService {
       .subscribe(
         result => {
           this.dataStore.producer = result[0];
-          // console.log('api getProducer result', result);
+          console.log('api getProducer result', result);
           this._producer.next(Object.assign({}, this.dataStore).producer);
           this.getProductsByProducerId(this.dataStore.producer.id);
           this.getSchedsByProducerId();

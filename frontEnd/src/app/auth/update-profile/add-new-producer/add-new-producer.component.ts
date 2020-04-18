@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, NgZone, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { LocationService } from '../../../core/services/location/location.service';
 import { ImageService } from '../../../core/services/image/image.service';
+import { ApiService } from '../../../core/api.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -18,7 +19,7 @@ import { AgmMap, MouseEvent as AgmMouseEvent } from '@agm/core';
   templateUrl: './add-new-producer.component.html',
   styleUrls: ['./add-new-producer.component.scss']
 })
-export class AddNewProducerComponent implements OnInit {
+export class AddNewProducerComponent implements OnInit, OnDestroy {
 
   @Input() producerForm: FormGroup;
 
@@ -61,10 +62,20 @@ export class AddNewProducerComponent implements OnInit {
   newItemUploading = false;
   imagePreviewExists = false;
 
+  customUrlObject: any;
+  checkCustomUrlSubscription: Subscription;
+  postCustomUrlSubscription: Subscription;
+  getCustomUrlSubscription: Subscription;
+  customUrlExists = false;
+  noSpacesFormat = '[^/s]*';
+  customUrlChanged = false;
+  customUrlDuplicateExists = false;
+
   constructor(private locationService: LocationService,
               private imageService: ImageService,
               private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone) {}
+              private ngZone: NgZone,
+              private apiService: ApiService) {}
 
   ngOnInit() {
 
@@ -155,6 +166,34 @@ export class AddNewProducerComponent implements OnInit {
           }
         }
       );
+
+    this.checkCustomUrlSubscription = this.producerForm['controls'].customUrl.valueChanges
+      .debounceTime(500) // after waiting half a second
+      // .filter(val => !this.producerForm['controls'].customUrl.errors.pattern) // check for pattern error
+      .filter(val => val.length >= 2) // after 2 characters at least
+      .switchMap( // call the api, but cancel the call if a new call is made
+        val => {
+          // if (!this.producerForm['controls'].customUrl.errors.pattern) {
+            this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
+              .subscribe(
+                result => {
+                  this.customUrlChanged = true;
+                  if (result[0] && result[0] !== this.producerForm['controls'].id.value && result[0].length !== 0) {
+                    // console.log('producerId returned on check: ', result);
+                    this.customUrlDuplicateExists = true;
+                    this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
+                  } else {
+                    // console.log('custom url not returned');
+                    this.customUrlDuplicateExists = false;
+                    // this.producerForm['controls'].customUrl.setErrors(null);
+                  }
+                });
+            return val;
+          // } else {
+          //   return val;
+          // };
+        })
+        .subscribe(valid => {return true});
 
   };
 
@@ -267,6 +306,18 @@ export class AddNewProducerComponent implements OnInit {
 
   resizeMap() {
     this.agmMap.triggerResize();
-  }
+  };
+
+  ngOnDestroy() {
+    if (this.postCustomUrlSubscription) {
+      this.postCustomUrlSubscription.unsubscribe();
+    };
+    if (this.checkCustomUrlSubscription) {
+      this.checkCustomUrlSubscription.unsubscribe();
+    };
+    if (this.getCustomUrlSubscription) {
+      this.getCustomUrlSubscription.unsubscribe();
+    };
+  };
 
 }

@@ -6,9 +6,6 @@ import { UserService } from '../../core/services/user/user.service';
 import { ProducerDashboardService } from '../../feature/dashboard/producer-dashboard.service';
 import { MarketDashboardService } from '../../feature/dashboard/market-dashboard.service';
 
-import { UserModel } from '../../core/models/user.model';
-import { ProducerModel } from '../../core/models/producer.model';
-
 import { EditAccountModalComponent } from '../edit-account-modal/edit-account-modal.component';
 import { EditMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/edit-market-location-modal/edit-market-location-modal.component';
 import { DeleteMarketLocationModalComponent } from '../../feature/dashboard/market/modals/locations/delete-market-location-modal/delete-market-location-modal.component';
@@ -26,8 +23,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
 
   profile: any;
-  @Input() user: UserModel;
-  @Input() producer: ProducerModel;
+  @Input() user: any;
+  @Input() producer: any;
   @Input() market: any;
   @Input() locations: any[];
   @Input() customUrlObject: any;
@@ -56,6 +53,8 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
       this.logoExists = true;
     };
 
+    console.log('this.producer: ', this.producer);
+
   }
 
   constructor(private auth: AuthService,
@@ -79,7 +78,7 @@ export class AccountInfoComponent implements OnInit, OnChanges, OnDestroy {
           this.currentLocationNotifsArray = result;
           // console.log('locations received: ', this.currentLocationNotifsArray);
         }
-      )
+      );
 
   };
 

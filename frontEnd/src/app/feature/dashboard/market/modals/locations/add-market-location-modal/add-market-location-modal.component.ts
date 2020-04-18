@@ -67,4 +67,8 @@ export class AddMarketLocationModalComponent implements OnInit {
     this.activeModal.close();
   };
 
+  close() {
+    this.activeModal.close();
+  };
+
 }

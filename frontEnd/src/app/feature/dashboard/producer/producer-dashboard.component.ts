@@ -3,9 +3,6 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ProducerDashboardService } from '../producer-dashboard.service';
 import { ApiService } from '../../../core/api.service';
 
-import { UserModel } from '../../../core/models/user.model';
-import { ProducerModel } from '../../../core/models/producer.model';
-
 @Component({
   selector: 'app-producer-dashboard',
   templateUrl: './producer-dashboard.component.html',
@@ -15,8 +12,8 @@ import { ProducerModel } from '../../../core/models/producer.model';
 export class ProducerDashboardComponent implements OnInit, OnChanges {
 
   @Input() id: number;
-  @Input() user: UserModel;
-  producer: ProducerModel;
+  @Input() user: any;
+  producer: any;
   customUrlObject: any;
   activeLink = 'productsLink';
 

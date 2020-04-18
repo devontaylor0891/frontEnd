@@ -17,7 +17,7 @@ export class DeleteMarketLocationModalComponent implements OnInit {
   submitting = false;
 
   constructor(private apiService: ApiService,
-              private activeModal: NgbActiveModal) { }
+              public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
@@ -33,6 +33,10 @@ export class DeleteMarketLocationModalComponent implements OnInit {
           this.activeModal.close();
         }
       )
+  };
+
+  close() {
+    this.activeModal.close();
   };
 
 }

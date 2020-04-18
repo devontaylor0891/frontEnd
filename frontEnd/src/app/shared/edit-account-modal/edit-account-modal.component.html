@@ -152,7 +152,7 @@
                   <small>If you choose, this will be a URL that you can give your consumers to take them directly to your storefront on OLF. It will be formatted as 'www.onlylocalfood.com/yourCustomUrl'.</small>
                   <small>Hint: Keep it simple, yet descriptive. If you're full business name is 'Bob's Market, Corn Maze, and Petrified Manure Museum Ltd', simplify your URL to 'bobsmarket'.</small>
                   <small *ngIf="customUrlExists" class="help-block">That URL is already taken. Please choose another.</small>
-                  <small *ngIf="customUrl.errors?.pattern" class="help-block">
+                  <small *ngIf="customUrl?.errors?.pattern" class="help-block">
                       Only letters, numbers, hyphens, and underscores are allowed.
                   </small>
               </div>

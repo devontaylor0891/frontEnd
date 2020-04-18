@@ -18,9 +18,6 @@ import { ApiService } from '../../core/api.service';
 import { ImageService } from '../../core/services/image/image.service';
 import { LocationService } from '../../core/services/location/location.service';
 
-import { UserModel } from '../../core/models/user.model';
-import { ProducerModel } from '../../core/models/producer.model';
-
 @Component({
   selector: 'app-edit-account-modal',
   templateUrl: './edit-account-modal.component.html',
@@ -29,8 +26,8 @@ import { ProducerModel } from '../../core/models/producer.model';
 
 export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() user: UserModel;
-  @Input() producer: ProducerModel;
+  @Input() user: any;
+  @Input() producer: any;
   @Input() customUrlObject: any;
   @Input() market: any;
 
@@ -144,32 +141,32 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       this.markerLongitude = this.producer.longitude;
         // from https://medium.com/@kahlil/asynchronous-validation-with-angular-reactive-forms-1a392971c062
       this.checkCustomUrlSubscription = this.producerForm['controls'].customUrl.valueChanges
-      .debounceTime(500) // after waiting half a second
-      // .filter(val => !this.producerForm['controls'].customUrl.errors.pattern) // check for pattern error
-      .filter(val => val.length >= 2) // after 2 characters at least
-      .switchMap( // call the api, but cancel the call if a new call is made
-        val => {
-          // if (!this.producerForm['controls'].customUrl.errors.pattern) {
-            this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
-              .subscribe(
-                result => {
-                  this.customUrlChanged = true;
-                  if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
-                    // console.log('producerId returned on check: ', result);
-                    this.customUrlDuplicateExists = true;
-                    this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
-                  } else {
-                    // console.log('custom url not returned');
-                    this.customUrlDuplicateExists = false;
-                    // this.producerForm['controls'].customUrl.setErrors(null);
-                  }
-                });
-            return val;
-          // } else {
-          //   return val;
-          // };
-        })
-        .subscribe(valid => {return true});
+        .debounceTime(500) // after waiting half a second
+        // .filter(val => !this.producerForm['controls'].customUrl.errors.pattern) // check for pattern error
+        .filter(val => val.length >= 2) // after 2 characters at least
+        .switchMap( // call the api, but cancel the call if a new call is made
+          val => {
+            // if (!this.producerForm['controls'].customUrl.errors.pattern) {
+              this.getCustomUrlSubscription = this.apiService.getProducerIdByCustomUrl(val)
+                .subscribe(
+                  result => {
+                    this.customUrlChanged = true;
+                    if (result[0] && result[0] !== this.producer.id && result[0].length !== 0) {
+                      // console.log('producerId returned on check: ', result);
+                      this.customUrlDuplicateExists = true;
+                      this.producerForm['controls'].customUrl.setErrors({ 'invalid': true });
+                    } else {
+                      // console.log('custom url not returned');
+                      this.customUrlDuplicateExists = false;
+                      // this.producerForm['controls'].customUrl.setErrors(null);
+                    }
+                  });
+              return val;
+            // } else {
+            //   return val;
+            // };
+          })
+          .subscribe(valid => {return true});
     };
 
     if (this.market) {

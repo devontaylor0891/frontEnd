@@ -127,7 +127,7 @@
     </div>
   </div>
   
-  <form *ngIf="!submitting && producerArray < 1" [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+  <form *ngIf="!submitting && producerArray.length < 1" [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
     
     <div class="row">
       
