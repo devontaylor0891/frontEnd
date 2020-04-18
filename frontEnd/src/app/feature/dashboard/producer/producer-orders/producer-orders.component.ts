@@ -29,15 +29,15 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
       format: 'null,firstName',
       sortable: true,
       sortPath: 'firstName',
-      nested: false
+      nested: true
     },
     {
       primaryKey: 'orderDetails',
       header: 'Order Date',
       format: 'mediumDate,createdDate',
       sortable: true,
-      sortPath: '',
-      nested: false
+      sortPath: 'createdDate',
+      nested: true
     },
     {
       primaryKey: 'orderDetails',
@@ -53,23 +53,23 @@ export class ProducerOrdersComponent implements OnInit, OnChanges {
       format: 'null,city',
       sortable: true,
       sortPath: 'city',
-      nested: false
+      nested: true
     },
     {
       primaryKey: 'chosenSchedule',
       header: 'Schedule Date',
       format: 'mediumDate,startDateTime',
       sortable: true,
-      sortPath: '',
-      nested: false
+      sortPath: 'startDateTime',
+      nested: true
     },
     {
       primaryKey: 'orderDetails',
       header: 'Order Total',
       format: 'currency,orderValue',
       sortable: true,
-      sortPath: '',
-      nested: false
+      sortPath: 'orderValue',
+      nested: true
     }
   ];
 

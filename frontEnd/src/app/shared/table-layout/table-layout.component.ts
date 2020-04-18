@@ -304,6 +304,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     this.setSortDirection(map);
     // get the sorting column
     const sortColumn = map.primaryKey;
+    // console.log('map: ', map);
     // get the sort direction
     const currentSortDirection = this.sortDirection[this.getSortDirectionIndex(sortColumn)].direction;
     // see if column contains numbers
@@ -388,6 +389,8 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
     return array.sort(function (a, b) {
       let first;
       let second;
+      // console.log('a[sortcolumn]: ', a[sortColumn]);
+      // console.log('a[sortcolumn][sortPath]: ', a[sortColumn][sortPath]);
       first = a[sortColumn][sortPath].toLowerCase();
       second = b[sortColumn][sortPath].toLowerCase();
       if (first > second) {

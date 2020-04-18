@@ -1,16 +1,30 @@
-<div class="row olf-primary-color">
-  <div class="col ">
-    <h3 class="h3-responsive text-light pt-2">{{ cart.producer.name | uppercase }}</h3>
+
+<div class="card my-4">
+
+  <div class="card-header">
+    <h5><strong>{{ cart.producer.name | uppercase }}</strong></h5>
   </div>
-</div>
-<br>
-<app-cart-product *ngFor="let product of cart.productList" [product]="product" [productQuantities]="cart.orderDetails.productQuantities"></app-cart-product>
-<div class="row grey lighten-2 mb-3">
-  <div class="col-6 p-2 text-center">
-    <span><strong>{{ cart.orderDetails.orderValue | currency:'CAD':'symbol-narrow':'1.2-2' }}</strong></span>    
+
+  <div class="card-body">    
+    
+    <ul class="list-group list-group-flush" *ngFor="let product of cart.productList">
+      <li class="list-group-item">
+        <app-cart-product  [product]="product" [productQuantities]="cart.orderDetails.productQuantities"></app-cart-product>
+      </li>
+    </ul>
+    
   </div>
-  <div class="col-6 p-0">
-      <a class="btn btn-olf-primary btn-block px-0 m-0 h-100" [routerLink]="['../checkout/' + cart.tempId]">Go to Checkout</a>
+
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-6 p-2 text-center">
+        <span><strong>{{ cart.orderDetails.orderValue | currency:'CAD':'symbol-narrow':'1.2-2' }}</strong></span>    
+      </div>
+      <div class="col-6 p-0">
+        <a class="btn btn-olf-primary btn-block px-0 m-0 h-100" [routerLink]="['../checkout/' + cart.tempId]">Go to Checkout</a>
+      </div>
+    </div>
   </div>
+
 </div>
 

@@ -1,20 +1,27 @@
-<div class="row mx-1 my-4">
-  <div class="w-100 text-center">
-      <h3 *ngIf="carts.length > 1">Your Carts</h3>
-      <h3 *ngIf="carts.length == 1">Your Cart</h3>
-  </div>
-  <div class="col-12 col-lg-6 offset-lg-3">
+<div class="row">
+  <div class="col-12 col-md-8 mx-auto my-2 bg-white">
+    <div class="row olf-primary-color py-3" *ngIf="carts.length > 0">
+      <div class="col text-center">
+        <h5 *ngIf="carts.length > 1" class="text-light"><strong>Your Carts</strong></h5>
+        <h5 *ngIf="carts.length == 1" class="text-light"><strong>Your Cart</strong></h5>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="carts.length == 0">
+      <div class="col-12 m-4">
+        <p class="text-center">You have nothing in your cart.</p>
+      </div>
+    </div>
+
     <blockquote class="blockquote bq-warning p-0" *ngIf="carts.length > 1">
-        <p class="bq-title pb-0">Please Note:</p>
-        <p>You have products from {{ carts.length }} producers. You will need to select how to get each order separately.</p>
+      <p class="bq-title pb-0">Please Note:</p>
+      <p>You have products from {{ carts.length }} producers. You will need to select how to get each order separately.</p>
     </blockquote>
-  </div>
-  <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-    <app-cart *ngFor="let cart of carts" [cart]="cart"></app-cart>      
-  </div>
-</div>
-<div class="row m-4" *ngIf="carts.length == 0">
-  <div class="col-12">
-    <p class="text-center">You have nothing in your cart.</p>
+
+    <div *ngIf="carts.length > 0">
+      <app-cart *ngFor="let cart of carts" [cart]="cart"></app-cart>      
+    </div>
+
   </div>
 </div>
+
