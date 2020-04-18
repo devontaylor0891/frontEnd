@@ -75,7 +75,7 @@
       </div>
 
       <!-- LOCATION DETIALS - ALL OTHER TYPES - HIDDEN DUE TO SEARCHELEMENT ERROR WHEN SWITCHING TYPES -->
-      <div class="row form-section" *ngIf="typeChosen" [hidden]="isOnFarm">
+      <div class="row form-section" [hidden]="isOnFarm || !typeChosen">
         
         <div class="col-12 form-section-header">
           <h5>Now, add the location details:</h5>
@@ -84,7 +84,7 @@
         <div class="col-12 form-section-body">
 
           <!-- LOCATION SEARCH BAR - ANYTHING EXCEPT ON FARM -->
-          <div class="row" [class.hidden]="isOnFarm">
+          <div class="row">
             <label for="search" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Search for Community:</label>
             <div class="col-xs-12 col-sm-8 input-group">
               <input  
@@ -153,9 +153,9 @@
               <label class="col-xs-12 col-sm-4 col-form-label text-sm-right">Choose the Dates to add to your Schedule:</label>
               <ul class="list-group col-xs-12 col-sm-8 input-group">
                   <label *ngFor="let locationSched of locationScheduleArray; let i = index" class="form-check-label w-100 p-0" for="{{ locationSched.marketScheduleId }}">
-                <li   class="list-group-item">
+                <li class="list-group-item">
                   <div class="form-check tight-text">
-                    <input class="form-check-input" mdbInputDirective type="checkbox" value="{{ locationSched.id }}" (click)="setCheckbox($event)" id="{{ locationSched.marketScheduleId }}">
+                    <input class="form-check-input" mdbInputDirective type="checkbox" value="{{ locationSched.marketScheduleId }}" (click)="setCheckbox(locationSched)" id="{{ locationSched.marketScheduleId }}">
                       <p>{{ locationSched.startDateTime | date:'E, MMM dd' }} - {{ locationSched.startDateTime | date:'shortTime' }} - {{ locationSched.endDateTime | date:'shortTime' }}</p>
                   </div>
                 </li>
@@ -164,8 +164,6 @@
             </div>
 
           </div>
-
-          
 
         </div>
 
@@ -182,7 +180,7 @@
 
           <!-- ALL -->
           <div class="row">
-            <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description</label>
+            <label for="description" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Description:</label>
             <div class="col-xs-12 col-sm-8 input-group">
               <textarea 
               class="form-input-custom" 
@@ -190,7 +188,22 @@
               id="description" 
               [formControl]="scheduleForm.controls['description']"></textarea>
             </div>
-            <div *ngIf="isMarket && !ownMarket" class="col-12 text-center"><p class="small">This description will be added before the description added by the market itself.</p></div>
+            <div *ngIf="isMarket && !ownMarket" class="col-12 text-center"><p class="small">This will be included before the description that the market added.</p></div>
+          </div>
+
+          <div class="row" *ngIf="isMarket && !ownMarket">
+            <label for="deadlineCalcHours" class="col-xs-12 col-sm-4 col-form-label text-sm-right">Deadline Hours:</label>
+            <div class="col-xs-12 col-sm-8 input-group">
+              <input 
+                class="form-control" 
+                type="number"
+                min="1"
+                step="1"
+                [formControl]="scheduleForm.controls['deadlineCalcHours']" 
+                name="deadlineCalcHours" 
+                [(ngModel)]="deadlineCalcHours"
+                id="deadlineCalcHours" >
+            </div>
           </div>
 
           <div *ngIf="isDelivery">

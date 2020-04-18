@@ -25,6 +25,9 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   submitting = false;
   producer: any;
   getProducerSub: Subscription;
+  submitSub: Subscription;
+  submitObject: any;
+  submitArray = [];
 
   typeChosen = false;
   isDelivery = false;
@@ -118,13 +121,12 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
 
   repeat = 0;
   repeatEndDate: string;
-  numberOfWeeks: number;
+  numberOfWeeks = 1;
   repeatEndChosen = false;
 
-  submitObject: any;
   repeatSubmitArray: any = [];
 
-  isRepeat = false;
+  // isRepeat = false;
 
   constructor(private dashboardService: ProducerDashboardService,
               private formBuild: FormBuilder,
@@ -161,6 +163,8 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
+
+    this.typeChosen = false;
 
     // once we have the producer, initialize form
     this.getProducerSub = this.dashboardService.getProducer()
@@ -201,16 +205,22 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
         }
       );
 
+    this.initializeSearch();
+
     this.setSchedDefaultValues();
 
     this.onChanges();
 
+    console.log('typeChosen: ', this.typeChosen);
+
   };
 
   onChooseScheduleType(value) {
+    this.reset();
     this.clearChosenSchedType();
     this.typeChosen = true;
-    this.initializeSearch();
+    // this.initializeSearch();
+    console.log('typeChosen: ', this.typeChosen);
     if (value === 'Door-to-door Delivery') {
       this.isDelivery = true;
       this.scheduleForm.patchValue({
@@ -238,6 +248,7 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
       });
     };
     console.log('form value: ', this.scheduleForm.value);
+    console.log('typeChosen: ', this.typeChosen);
   };
 
   clearChosenSchedType() {
@@ -297,12 +308,13 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
     if (this.streetNumber && this.route) {
       this.noAddress = false;
       // this.submitObject.address = this.streetNumber + ' ' + this.route;
+      this.scheduleForm.controls['address'].setValue(this.streetNumber + ' ' + this.route);
     };
     if (this.route && !this.streetNumber) {
       this.noAddress = true;
     };
-    this.form.controls['city'].setValue(this.city);
-    this.form.controls['province'].setValue(this.province);
+    this.scheduleForm.controls['city'].setValue(this.city);
+    this.scheduleForm.controls['province'].setValue(this.province);
     // this.submitObject.city = this.city;
     // this.submitObject.province = this.province;
     // this.submitObject.latitude = this.lat;
@@ -428,14 +440,247 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
   };
 
   setCheckbox(event: any) {
-    console.log('event.target: ', this.chosenLocationScheduleArray.indexOf(event.target.id));
-    this.chosenLocationScheduleArray.indexOf(event.target.id) === -1 ? this.chosenLocationScheduleArray.push(event.target.id) : this.chosenLocationScheduleArray.splice(this.chosenLocationScheduleArray.indexOf(event.target.id), 1);
+    console.log('event passed in: ', event);
+    console.log('start: ', event.startDateTime);
+    console.log('subtractHours: ', this.subtractHours(event.startDateTime, 3));
+    // console.log('event.target: ', this.chosenLocationScheduleArray.indexOf(event.target.id));
+    this.chosenLocationScheduleArray.indexOf(event) === -1 ? this.chosenLocationScheduleArray.push(event) : this.chosenLocationScheduleArray.splice(this.chosenLocationScheduleArray.indexOf(event), 1);
     console.log('chosenlocationschedarray: ', this.chosenLocationScheduleArray);
   };
 
   onSubmit() {
-    console.log('form value: ', this.scheduleForm.value);
+    // this.submitting = true;
+    console.log('onsubmit form value: ', this.scheduleForm.value);
+    if (this.isMarket && !this.ownMarket && this.chosenLocationScheduleArray.length > 0) {
+      console.log('multimarket farmers market triggered');
+      this.buildMultiMarketSubmitArray();
+    } else if (this.isMarket && this.ownMarket) {
+      console.log('own market triggered');
+      this.buildOwnMarketSubmitArray();
+    } else if (this.isDelivery) {
+      console.log('d2d triggered');
+      this.buildDeliverySubmitArray();
+    } else if (this.isOffFarm) {
+      console.log('offfarm triggered');
+      this.buildOffFarmSubmitArray();
+    } else {
+      console.log('onfarm triggered');
+      this.buildOnFarmSubmitArray();
+    }
   };
+
+  buildMultiMarketSubmitArray() {
+    this.submitting = true;
+    let tempSubmitObj;
+    let tempSched;
+    for (let i = 0; i < this.chosenLocationScheduleArray.length; i++) {
+      tempSched = this.chosenLocationScheduleArray[i];
+      tempSubmitObj = {
+        type: 'Market Pickup',
+        address: tempSched.address,
+        city: tempSched.city,
+        description: this.scheduleForm.controls.description.value + ' -- ' + tempSched.scheduleDescription,
+        endDateTime: tempSched.endDateTime,
+        fee: 0,
+        feeWaiver: 0,
+        hasFee: false,
+        hasWaiver: false,
+        latitude: tempSched.latitude,
+        longitude: tempSched.longitude,
+        orderDeadline : this.subtractHours(tempSched.startDateTime, this.scheduleForm.controls.deadlineCalcHours.value),
+        producerId: this.producer.producerId,
+        producerName: this.producer.name,
+        province: tempSched.province,
+        readableDate: tempSched.readableDate,
+        startDateTime: tempSched.startDateTime,
+        userId: this.producer.id,
+        marketId: tempSched.marketId,
+        locationId: tempSched.locationId,
+        marketScheduleId: tempSched.marketScheduleId
+      }
+      this.submitArray.push(tempSubmitObj);
+      if ((i + 1) === (this.chosenLocationScheduleArray.length)) {
+        console.log('last iteration, submit array: ', this.submitArray);
+        this.submitSub = this.apiService.postMultiSchedule(this.submitArray)
+          .subscribe(
+            result => {
+              console.log('results from api call: ', result);
+              this.submitting = false;
+              this.activeModal.close();
+            }
+          );
+      }
+    };
+  };
+
+  buildOwnMarketSubmitArray() {
+    // add info to submit object from form
+    this.submitObject.address = this.scheduleForm.controls.address.value;
+    this.submitObject.city = this.scheduleForm.controls.city.value;
+    this.submitObject.province = this.scheduleForm.controls.province.value;
+    this.submitObject.description = this.scheduleForm.controls.description.value;
+    this.submitObject.latitude = this.scheduleForm.controls.latitude.value;
+    this.submitObject.longitude = this.scheduleForm.controls.longitude.value;
+    this.submitObject.type = this.scheduleForm.controls.type.value;
+    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    this.submitObject.orderDeadline = this.deadlineDateTime.toISOString();
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
+    this.submitObject.fee = 0;
+    this.submitObject.feeWaiver = 0;
+    this.submitObject.hasFee = false;
+    this.submitObject.hasWaiver = false;
+    this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
+    this.submitObject.userId = this.producer.id;
+    this.buildRepeatSubmitArray();
+  };
+
+  buildDeliverySubmitArray() {
+    // add info to submit object from form
+    this.submitObject.address = this.scheduleForm.controls.address.value;
+    this.submitObject.city = this.scheduleForm.controls.city.value;
+    this.submitObject.province = this.scheduleForm.controls.province.value;
+    this.submitObject.description = this.scheduleForm.controls.description.value;
+    this.submitObject.latitude = this.scheduleForm.controls.latitude.value;
+    this.submitObject.longitude = this.scheduleForm.controls.longitude.value;
+    this.submitObject.type = this.scheduleForm.controls.type.value;
+    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    this.submitObject.orderDeadline = this.deadlineDateTime.toISOString();
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
+    this.submitObject.fee = this.scheduleForm.controls.fee.value;
+    this.submitObject.feeWaiver = this.scheduleForm.controls.feeWaiver.value;
+    this.submitObject.hasFee = this.scheduleForm.controls.hasFee.value;
+    this.submitObject.hasWaiver = this.scheduleForm.controls.hasWaiver.value;
+    this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
+    this.submitObject.userId = this.producer.id;
+    this.buildRepeatSubmitArray();
+  };
+
+  buildOffFarmSubmitArray() {
+    // add info to submit object from form
+    this.submitObject.address = this.scheduleForm.controls.address.value;
+    this.submitObject.city = this.scheduleForm.controls.city.value;
+    this.submitObject.province = this.scheduleForm.controls.province.value;
+    this.submitObject.description = this.scheduleForm.controls.description.value;
+    this.submitObject.latitude = this.scheduleForm.controls.latitude.value;
+    this.submitObject.longitude = this.scheduleForm.controls.longitude.value;
+    this.submitObject.type = this.scheduleForm.controls.type.value;
+    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    this.submitObject.orderDeadline = this.deadlineDateTime.toISOString();
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
+    this.submitObject.fee = 0;
+    this.submitObject.feeWaiver = 0;
+    this.submitObject.hasFee = false;
+    this.submitObject.hasWaiver = false;
+    this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
+    this.submitObject.userId = this.producer.id;
+    this.buildRepeatSubmitArray();
+  };
+
+  buildOnFarmSubmitArray() {
+    // add info to submit object from form
+    this.submitObject.address = this.scheduleForm.controls.address.value;
+    this.submitObject.city = this.scheduleForm.controls.city.value;
+    this.submitObject.province = this.scheduleForm.controls.province.value;
+    this.submitObject.description = this.scheduleForm.controls.description.value;
+    this.submitObject.latitude = this.scheduleForm.controls.latitude.value;
+    this.submitObject.longitude = this.scheduleForm.controls.longitude.value;
+    this.submitObject.type = this.scheduleForm.controls.type.value;
+    this.submitObject.startDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedStartHour, this.schedStartMinute);
+    this.submitObject.endDateTime = this.buildDate(this.schedYear, this.schedMonth, this.schedDay, this.schedEndHour, this.schedEndMinute)
+    this.submitObject.orderDeadline = this.deadlineDateTime.toISOString();
+    this.submitObject.readableDate = this.monthNames[new Date(this.submitObject.startDateTime).getMonth()] + ' ' + new Date(this.submitObject.startDateTime).getDate();
+    this.submitObject.fee = 0;
+    this.submitObject.feeWaiver = 0;
+    this.submitObject.hasFee = false;
+    this.submitObject.hasWaiver = false;
+    this.submitObject.producerId = this.producer.producerId;
+    this.submitObject.producerName = this.producer.name;
+    this.submitObject.userId = this.producer.id;
+    this.buildRepeatSubmitArray();
+  };
+
+  handleSubmitSuccess(result) {
+    console.log('new multischeds result: ', result);
+    this.itemCreated.emit(result);
+    this.buildBlankSubmitObject();
+    this.submitting = false;
+    this.repeatSubmitArray = [];
+    this.activeModal.close();
+  };
+
+  handleSubmitError(err) {
+    console.error(err);
+    this.submitting = false;
+  };
+
+  buildRepeatSubmitArray() {
+    if (this.numberOfWeeks === 1) {
+      console.log('submit object at build repeat array: ', this.submitObject);
+      this.repeatSubmitArray[0] = this.submitObject;
+      this.apiService.postMultiSchedule(this.repeatSubmitArray)
+        .subscribe(
+          result => this.handleSubmitSuccess(result),
+          err => this.handleSubmitError(err)
+        );
+    };
+    // this.buildSubmitObject();
+    this.repeatSubmitArray[0] = this.submitObject;
+    let tempSubmitObj;
+    for (let i = 1; i < this.numberOfWeeks; i++) {
+      tempSubmitObj = cloneDeep(this.submitObject);
+      // change start/end date in submit object
+      tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
+      tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
+      tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
+      // console.log('human readable: ', this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate());
+      tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
+
+      // push into array
+      this.repeatSubmitArray.push(tempSubmitObj);
+
+      if (i === this.numberOfWeeks - 1) {
+        console.log('multi submit: ', this.repeatSubmitArray);
+        this.apiService.postMultiSchedule(this.repeatSubmitArray)
+          .subscribe(
+            result => this.handleSubmitSuccess(result),
+            err => this.handleSubmitError(err)
+          );
+      }
+    }
+  };
+
+  subtractHours(dateObj, hours) {
+    const orderDead = new Date(dateObj);
+    orderDead.setHours(orderDead.getHours() - hours);
+    const newDeadline = orderDead.toISOString();
+    return newDeadline;
+  };
+
+  reset() {
+    this.clearChosenSchedType();
+    this.chosenLocationScheduleArray.length = 0;
+    this.locationScheduleArray.length = 0;
+    this.marketLocationArray.length = 0;
+    this.repeatSubmitArray.length = 0;
+  }
+
+  ngOnDestroy() {
+    this.reset();
+    if (this.getProducerSub) {
+      this.getProducerSub.unsubscribe();
+    };
+    if (this.submitSub) {
+      this.submitSub.unsubscribe();
+    };
+  };
+
+
 
 // old stuff
 
@@ -489,45 +734,6 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
 
   // };
 
-  handleSubmitSuccess(result) {
-    console.log('new multischeds result: ', result);
-    this.itemCreated.emit(result);
-    this.buildBlankSubmitObject();
-    this.submitting = false;
-    this.repeatSubmitArray = [];
-    this.activeModal.close();
-  };
-
-  handleSubmitError(err) {
-    console.error(err);
-    this.submitting = false;
-  };
-
-  buildRepeatSubmitArray() {
-    this.repeatSubmitArray[0] = this.submitObject;
-    let tempSubmitObj;
-    for (let i = 1; i < this.numberOfWeeks; i++) {
-      tempSubmitObj = cloneDeep(this.submitObject);
-      // change start/end date in submit object
-      tempSubmitObj.startDateTime = new Date(Date.parse(this.submitObject.startDateTime) + (6.048e+8 * i)).toISOString();
-      tempSubmitObj.endDateTime = new Date((Date.parse(this.submitObject.endDateTime)) + (6.048e+8 * i)).toISOString();
-      tempSubmitObj.orderDeadline = new Date(Date.parse(this.submitObject.orderDeadline) + (6.048e+8 * i)).toISOString();
-      console.log('human readable: ', this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate());
-      tempSubmitObj.readableDate = this.monthNames[new Date(tempSubmitObj.startDateTime).getMonth()] + ' ' + new Date(tempSubmitObj.startDateTime).getDate();
-
-      // push into array
-      this.repeatSubmitArray.push(tempSubmitObj);
-
-      if (i === this.numberOfWeeks - 1) {
-        console.log('multi submit: ', this.repeatSubmitArray);
-        // this.apiService.postMultiSchedule(this.repeatSubmitArray)
-        //   .subscribe(
-        //     result => this.handleSubmitSuccess(result),
-        //     err => this.handleSubmitError(err)
-        //   );
-      }
-    }
-  };
 
   buildBlankSubmitObject() {
     this.submitObject = {
@@ -789,16 +995,17 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
     return newDeadline.toISOString();
   };
 
-  onChooseType(targetValue) {
-    console.log('select chosen: ', targetValue);
-    if (targetValue === 'Market Pickup') {
-      this.isMarket = true;
-    } else {
-      this.isMarket = false;
-    }
-  };
+  // onChooseType(targetValue) {
+  //   console.log('select chosen: ', targetValue);
+  //   if (targetValue === 'Market Pickup') {
+  //     this.isMarket = true;
+  //   } else {
+  //     this.isMarket = false;
+  //   }
+  // };
 
   onCancel() {
+    this.reset();
     this.activeModal.close();
   };
 
@@ -810,12 +1017,6 @@ export class AddScheduleModalComponent implements OnInit, OnDestroy {
     this.schedStartMinute = this.startTimeMoment.getMinutes();
     this.schedEndHour = this.endTimeMoment.getHours();
     this.schedEndMinute = this.endTimeMoment.getMinutes();
-  };
-
-  ngOnDestroy() {
-    if (this.getProducerSub) {
-      this.getProducerSub.unsubscribe();
-    };
   };
 
 }
