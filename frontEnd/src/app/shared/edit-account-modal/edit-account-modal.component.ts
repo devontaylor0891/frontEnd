@@ -55,7 +55,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   province: string;
   postalCode: string;
   country: string;
-  submitObject: ProducerModel;
+  submitObject: any;
 
   checkCustomUrlSubscription: Subscription;
   postCustomUrlSubscription: Subscription;
