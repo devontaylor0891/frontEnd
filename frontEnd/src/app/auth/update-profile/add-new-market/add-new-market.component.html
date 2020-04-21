@@ -78,12 +78,14 @@
       <div class="col-12 form-section-body my-5">
         
         <div *ngIf="marketForm.value.locations">
-          
-          <div *ngFor="let location of marketForm.value.locations">
-            <p>{{ location.timeframe }}</p>
+          <div class="row">
+            <ul class="list-group col-xs-12 col-sm-8 offset-sm-2" *ngFor="let location of marketForm.value.locations; let i = index">
+              <li class="list-group-item tight-text">
+                <p>{{ location.locationName }} - {{ location.timeframe }}</p>
+                <p>{{ location.city }}, {{ location.province }}</p>
+              </li>
+            </ul>
           </div>
-          
-          <hr>
           
           <div *ngIf="!showAddMarketLocation">
             <p class="text-center">

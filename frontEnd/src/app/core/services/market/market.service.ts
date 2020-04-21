@@ -15,6 +15,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
+// import * as uniqBy from 'lodash';
+import * as _ from 'lodash';
 
 import { ApiService } from '../../api.service';
 
@@ -131,28 +133,26 @@ export class MarketService implements OnInit {
     buildProducers() {
       // using scheds, build a unique producers array
       // assign to behsubj
-      let producers = [];
-      let uniques;
+      const producers = [];
       this.dataStore.schedule.forEach(
         sched => {
-          uniques = sched.producerSchedules.filter((x, i, a) => a.indexOf(x) === i);
-          producers = producers.concat(uniques);
-          console.log('filtering scheds: ', sched);
-          // producers.concat(sched.producerSchedules)
+          for (let i = 0; i < sched.producerSchedules.length; i++) {
+            producers.push(sched.producerSchedules[i]);
+          }
         }
       );
-      // const uniqueProducers = producers.filter((x, i, a) => a.indexOf(x) === i);
-      this.dataStore.producers = producers;
+      console.log('prods: ', producers);
+      const uniques = _.uniqBy(producers, function(o) {
+        return o.producerId;
+      });
+      console.log('uniques: ', uniques);
+      this.dataStore.producers = uniques;
       this._marketProducers.next(Object.assign(this.dataStore).producers);
     };
 
     getUniqueProducers() {
       return this._marketProducers.asObservable();
     };
-
-      //     const ages = [26, 27, 26, 26, 28, 28, 29, 29, 30]
-      // const uniqueAges = ages.filter((x, i, a) => a.indexOf(x) == i)
-      // console.log(uniqueAges)
 
     findInArray(array, id) {
       let index = -1;

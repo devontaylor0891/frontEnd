@@ -61,7 +61,7 @@ export class AddMarketLocationComponent implements OnInit {
   ngOnInit() {
 
     this.locationsForm = new FormGroup({
-      locationName: new FormControl(''),
+      locationName: new FormControl('', [Validators.required]),
       description: new FormControl(''),
       timeframe: new FormControl('', [Validators.required])
     });

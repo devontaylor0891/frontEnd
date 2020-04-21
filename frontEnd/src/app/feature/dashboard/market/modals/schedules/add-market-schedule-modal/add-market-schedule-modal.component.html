@@ -7,7 +7,13 @@
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()"> <!-- this binds the viewed form to the form we build in the component class --> 
   
-  <div class="modal-body dash-modal-body">
+  <div class="modal-body dash-modal-body" *ngIf="locations.length === 0">
+    <div class="col-12 form-section-body">
+      <blockquote class="blockquote bq-warning">It looks like you haven't set up any locations. You'll need to do so in the 'Account Info' tab. Then you'll be able to update your schedule!</blockquote>
+    </div>
+  </div>
+
+  <div class="modal-body dash-modal-body" *ngIf="locations.length > 0">
     
     <app-loading *ngIf="submitting"></app-loading>
     
@@ -18,63 +24,7 @@
           <h5>Location Details</h5>
         </div>
         
-        <div class="col-12 form-section-body" *ngIf="locations.length === 0">
-          
-          <ul class="list-group">
-            <li *ngFor="let location of locations" class="list-group-item">
-              
-              <div class="row">
-                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                  <strong>Name:</strong>
-                </div>
-                <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                  <p>{{ location.locationName }}</p>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                  <strong>Timeframe:</strong>
-                </div>
-                <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                  <p>{{ location.timeframe }}</p>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                  <strong>Details:</strong>
-                </div>
-                <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                  <p>{{ location.description }}</p>
-                </div>
-              </div>
-              
-              <div *ngIf="location.address" class="row">
-                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                  <strong>Address:</strong>
-                </div>
-                <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                  <p>{{ location.address }}</p>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-xs-12 col-sm-4 col-form-label text-sm-right">
-                  <strong>Location:</strong>
-                </div>
-                <div class="col-xs-12 col-sm-8 input-group col-form-value">
-                  <p>{{ location.city }}, {{ location.province }}</p>
-                </div>
-              </div>
-              
-              
-            </li>
-          </ul>
-          
-        </div>
-        
-        <div class="col-12 form-section-body" *ngIf="locations.length > 0">
+        <div class="col-12 form-section-body">
 
           <p>
             Choose the location:

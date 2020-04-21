@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../core/api.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class ContactComponent implements OnInit {
     message: new FormControl(null, Validators.required),
     recaptcha: new FormControl(null, Validators.required),
   });
-  siteKey = "6Le1SnEUAAAAADu0R-EM9sg2Yt75HIpRAICj7hge";
+  siteKey = '6Le1SnEUAAAAADu0R-EM9sg2Yt75HIpRAICj7hge';
 
 
 
@@ -36,7 +36,7 @@ export class ContactComponent implements OnInit {
 
   handleSubmit() {
     // console.log('form: ', this.myGroup);
-    let emailObject = {
+    const emailObject = {
       name: this.myGroup.value.name,
       email: this.myGroup.value.email,
       phone: this.myGroup.value.phone || 'No number added',
