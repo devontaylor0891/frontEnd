@@ -7,7 +7,6 @@ import { AdminGuard } from './auth/auth-guards/admin.guard';
 
 import { LandingContentComponent } from './landing-content/landing-content.component';
 import { SearchComponent } from './feature/search/search.component';
-import { LearnMoreComponent } from './feature/learn-more/learn-more.component';
 import { LearnMoreConsumerComponent } from './feature/learn-more/learn-more-consumer/learn-more-consumer.component';
 import { LearnMoreProducerComponent } from './feature/learn-more/learn-more-producer/learn-more-producer.component';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
@@ -15,6 +14,7 @@ import { ProducerComponent } from './feature/producer/producer.component';
 import { ProducerPageComponent } from './feature/producer/producer-page/producer-page.component';
 import { MarketComponent } from './feature/market/market.component';
 import { MarketPageComponent } from './feature/market/market-page/market-page.component';
+import { MarketLocationScheduleComponent } from './feature/market/market-location-schedule/market-location-schedule.component';
 import { ProductComponent } from './feature/producer/product/product.component';
 import { ScheduleComponent } from './feature/producer/schedule/schedule.component';
 import { CartsComponent } from './feature/cart/cart/carts.component';
@@ -79,7 +79,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'market/:id', component: MarketComponent, children: [
-      { path: '', component: MarketPageComponent }
+      { path: '', component: MarketPageComponent },
+      { path: 'schedule/:id', component: MarketLocationScheduleComponent }
     ]
   },
   { path: 'product/:id', component: ProductComponent },

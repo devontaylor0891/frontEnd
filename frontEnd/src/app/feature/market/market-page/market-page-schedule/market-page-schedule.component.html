@@ -1,15 +1,13 @@
 <div class="row">
-    <div class="col-12 col-md-8 card mx-auto py-2">
+    <div class="col-12">
         <ng-template #modalContent let-close="close">
           <div class="modal-header">
-            <h5 class="modal-title">{{ modalData.event.meta.schedule.type }}</h5>
+            <h5 class="modal-title">{{ modalData.event.meta.schedule.locationData[0].locationName }}</h5>
             <button type="button" class="close" (click)="close()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <h4>Event Details:</h4> 
-            <br>
 
             <div class="row">
               <div class="col-12">
@@ -26,17 +24,22 @@
               </div>
             </div>
             <div *ngIf="modalData.event.meta.schedule.producerSchedules.length > 0" class="row">
-              <div class="col-12">
+              <div class="col-12 col-md-2">
                 <p><b>Producers:</b></p>
               </div>
-              <div class="col-10 offset-2" *ngFor="let producerSchedule of modalData.event.meta.schedule.producerSchedules">
+              <div class="col-12 col-md-10" *ngFor="let producerSchedule of modalData.event.meta.schedule.producerSchedules">
                 <p><a (click)="close()" [routerLink]="['../../producer/' +  producerSchedule.producerUserId]">{{  producerSchedule.producerName }}</a></p>
+              </div>
+            </div>
+            <div class="row" *ngIf="modalData.event.meta.schedule.producerSchedules.length === 0">
+              <div class="col-12">
+                <p>Unfortunately, no producers have joined this event yet.</p>
               </div>
             </div>
             
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-olf-primary" (click)="close()">Close</button>
+              <a class="btn btn-olf-primary mx-auto h-100" [routerLink]="['schedule/' + modalData.event.meta.schedule.id]" (click)="close()">Shop for this Market</a>
           </div>
         </ng-template>
   

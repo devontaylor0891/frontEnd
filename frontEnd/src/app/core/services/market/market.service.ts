@@ -9,7 +9,7 @@
 // Product Component
 // Schedule Component
 
-import { Injectable, OnInit, EventEmitter } from '@angular/core';
+import { Injectable, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
@@ -26,7 +26,7 @@ import { ProductModel } from '../../models/product.model';
 import { ScheduleModel } from '../../models/schedule.model';
 
 @Injectable()
-export class MarketService implements OnInit {
+export class MarketService implements OnInit, OnDestroy {
 
   // DATASTORE - using to store info about a single producer and their accompanying arrays. This should help response time when dealing with one single producer's information (producer page)
   private dataStore: {
@@ -67,7 +67,7 @@ export class MarketService implements OnInit {
     // GET the producer and store the info in the dataStore, if it's not already in there
     loadMarketData(id) {
       console.log('id: ', id);
-      // console.log('datastore: ', this.dataStore);
+      console.log('datastore: ', this.dataStore);
       if ((this.dataStore.market === null) || (id !== this.dataStore.market.id)) {
         this.apiService.getMarketById(id)
           .subscribe(
@@ -123,10 +123,12 @@ export class MarketService implements OnInit {
       // **************************** MULTIPLE SCHEDULES ************************
 
     getAllSchedule() {
+      console.log('get all scheds datastore: ', this.dataStore);
       return this._marketSchedule.asObservable();
     };
 
     getAllLocations() {
+      console.log('get all locs datastore: ', this.dataStore);
       return this._marketLocations.asObservable();
     };
 
@@ -154,16 +156,6 @@ export class MarketService implements OnInit {
       return this._marketProducers.asObservable();
     };
 
-    findInArray(array, id) {
-      let index = -1;
-      for (let i = 0; i < array.length; i++) {
-        if (array[i].id === id) {
-          index = i;
-        }
-      };
-      return index;
-    };
-
     clearDataStore() {
       this.dataStore = {
         market: null,
@@ -174,5 +166,9 @@ export class MarketService implements OnInit {
       this._marketSchedule.next(Object.assign({}, this.dataStore).schedule);
       this._marketLocations.next(Object.assign({}, this.dataStore).locations);
     };
+
+    ngOnDestroy() {
+      console.log('market service destroyed **********************************')
+    }
 
 }

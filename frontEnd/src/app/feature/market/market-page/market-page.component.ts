@@ -52,7 +52,7 @@ export class MarketPageComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   ngOnDestroy() {
-    this.marketService.clearDataStore();
+    // this.marketService.clearDataStore();
     if (this.getMarketSub) {
       this.getMarketSub.unsubscribe();
     };

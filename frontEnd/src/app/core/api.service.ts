@@ -427,6 +427,12 @@ export class ApiService {
       .catch(this._handleError);
   };
 
+  getMarketScheduleById(id: number): Observable<any> {
+    return this.http
+      .get(this.apiUrl + `/marketsSchedulesById/` + id)
+      .catch(this._handleError);
+  };
+
   deleteSchedule(id: number): Observable<any> {
     return this.http
       .delete(this.apiUrl + `/schedules/${id}/`, {

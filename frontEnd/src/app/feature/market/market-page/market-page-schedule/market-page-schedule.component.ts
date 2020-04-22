@@ -81,7 +81,7 @@ export class MarketPageScheduleComponent implements OnInit, OnChanges, OnDestroy
           console.log('scheds from market page: ', this.schedules);
           this.schedules.forEach((result) => {
             this.events.push({
-              title: result.type + ' - ' + result.city,
+              title: result.locationData[0].locationName + ' - ' + result.city + ' - Quick View',
               color: colors.green,
               start: new Date(result.startDateTime),
               meta: {

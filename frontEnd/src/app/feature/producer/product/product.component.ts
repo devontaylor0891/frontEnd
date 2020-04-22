@@ -26,7 +26,6 @@ export class ProductComponent implements OnInit, OnChanges {
 
   constructor(private route: ActivatedRoute,
               private producerService: ProducerService) { }
-  
   ngOnChanges() {  }
 
   ngOnInit() {
@@ -37,7 +36,7 @@ export class ProductComponent implements OnInit, OnChanges {
 
     // note - the snapshot method being used here won't work if the user can navigate directly between product pages
     // see https://angular.io/guide/router#activated-route-in-action
-    let id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     // console.log(id);
 
     // subscribe to the get method results
@@ -61,6 +60,5 @@ export class ProductComponent implements OnInit, OnChanges {
       );
 
   }
-  
 
 }
