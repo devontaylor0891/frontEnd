@@ -41,9 +41,17 @@
           <h3 id="schedule">UPCOMING SCHEDULE</h3>
         </div>
         <div class="row">
+          
           <div class="col-12 col-lg-8 offset-lg-2">
             <div class="card">
               <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="lead">
+                            Open up an event and if our vendors are accepting orders you'll be able to click the 'Shop' button, where you can see what's available!
+                          </p>
+                    </div>
+                </div>
                   <app-market-page-schedule [schedule]="schedule"></app-market-page-schedule>
               </div>
             </div>
@@ -62,23 +70,21 @@
         <div class="row">
             <div class="col-12 col-lg-8 offset-lg-2">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <div class="text-center" *ngIf="producers.length === 0">
                         <p class="lead">
                           There are no producers with currently scheduled market pickups.
                         </p>
                       </div>
-                      <div *ngIf="producers.length > 0">
+                      <div *ngIf="producers.length > 0" >
+                          <p class="lead">
+                              These producers have 1 or more market pickups scheduled with us.
+                            </p>
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item" *ngFor="let producer of producers">
-                            <div class="row">
-                              <div class="col-12 col-md-4">
-                                <p class="float-lg-right"><strong>Name:</strong></p>
-                              </div>
-                              <div class="pl-3 col-12 col-md-8">
+
                                 <p><a [routerLink]="['../../producer/' +  producer.producerUserId]">{{  producer.producerName }}</a></p>
-                              </div>
-                            </div>
+
                           </li>
                         </ul>
                       </div>
@@ -108,46 +114,15 @@
                         <div *ngIf="locations.length > 0">
                           <ul class="list-group list-group-flush" >
                             <li class="list-group-item" *ngFor="let location of locations">
-                              <div class="row mb-1" *ngIf="location.locationName">
-                                <div class="col-12 col-md-4">
-                                  <p class="float-lg-right"><strong>Name:</strong></p>
-                                </div>
-                                <div class="pl-3 col-12 col-md-8">
-                                  <p>{{ location.locationName }}</p>
-                                </div>
-                              </div>
-                              <div class="row mb-1">
-                                <div class="col-12 col-md-4">
-                                  <p class="float-lg-right"><strong>Timeframe:</strong></p>
-                                </div>
-                                <div class="pl-3 col-12 col-md-8">
+                              <div class="row mb-1 tight-text" *ngIf="location.locationName">
+                                <div class="col-12 col-md-8 offset-md-2">
+                                  <h4>{{ location.locationName }}</h4>
                                   <p>{{ location.timeframe }}</p>
-                                </div>
-                              </div>
-                              <div class="row mb-1" *ngIf="location.description">
-                                <div class="col-12 col-md-4">
-                                  <p class="float-lg-right"><strong>Description:</strong></p>
-                                </div>
-                                <div class="pl-3 col-12 col-md-8">
                                   <p>{{ location.description }}</p>
+                                  <p>{{ location.address }} - {{ location.city }}, {{ location.province }}</p>
                                 </div>
                               </div>
-                              <div class="row mb-1">
-                                <div class="col-12 col-md-4">
-                                  <p class="float-lg-right"><strong>Address:</strong></p>
-                                </div>
-                                <div class="pl-3 col-12 col-md-8">
-                                  <p>{{ location.address }}</p>
-                                </div>
-                              </div>
-                              <div class="row mb-1">
-                                <div class="col-12 col-md-4">
-                                  <p class="float-lg-right"><strong>City:</strong></p>
-                                </div>
-                                <div class="pl-3 col-12 col-md-8">
-                                  <p>{{ location.city }}, {{ location.province }}</p>
-                                </div>
-                              </div>
+                              
                             </li>
                           </ul>
                         </div>

@@ -410,7 +410,7 @@
                 <!-- image does not exist for product -->
                 <div class="text-center row">
                   <div class="col-6 offset-3" *ngIf="logoExists">
-                    <img class="img-thumbnail" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ producer.id }}/logo" alt="">
+                    <img class="img-thumbnail" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ market.id }}/logo" alt="">
                     <button class="btn btn-olf-primary btn-sm" (click)="onAddImage()">Change Logo</button>
                   </div>
                   <div class="col-12" *ngIf="!logoExists">

@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ProductCardCompactComponent implements OnInit, OnChanges {
 
   @Input() product: any;
+  @Input() isMarket = false;
 
   modalData: any;
 

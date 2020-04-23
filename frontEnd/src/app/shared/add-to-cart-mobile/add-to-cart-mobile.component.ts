@@ -18,6 +18,7 @@ export class AddToCartMobileComponent implements OnInit, OnChanges {
 
   @Input() product: ProductModel;
   @Input() noUpcomingScheds: boolean;
+  @Input() isMarket: false;
 
   orderQty: number;
   quantityAlreadyInCart: number;

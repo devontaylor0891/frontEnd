@@ -121,6 +121,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   };
 
   onOpenView(record) {
+    console.log('on select view: ', this.recordType);
     this.record = record;
     // console.log('recordType: ', this.recordType);
     // console.log('isAdmin: ', this.isAdmin);
@@ -183,6 +184,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   };
 
   onOpenEdit(record) {
+    console.log('on select edit: ', this.recordType);
     this.record = record;
     if (this.recordType === 'product') {
       const modalRef = this.modal.open(EditProductModalComponent, { size: 'lg' });
@@ -241,6 +243,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
   }
 
   onSelectDelete(record) {
+    console.log('on select delete: ', this.recordType);
     this.record = record;
     if (this.recordType === 'product') {
       const modalRef = this.modal.open(DeleteProductModalComponent, { size: 'lg' });
@@ -258,8 +261,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
             this.productDeleted.emit(result);
           }
         )
-    }
-    if (this.recordType === 'schedule' && this.isMarket) {
+    } else if (this.recordType === 'schedule' && this.isMarket) {
       const modalRef = this.modal.open(DeleteMarketScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
       this.firstModalSubscription = modalRef.componentInstance.onScheduleDeleted
@@ -268,7 +270,7 @@ export class TableLayoutComponent implements OnInit, OnChanges, DoCheck, OnDestr
             this.scheduleDeleted.emit(result);
           }
         );
-    } else {
+    } else if (this.recordType === 'schedule' && !this.isMarket) {
       const modalRef = this.modal.open(DeleteScheduleModalComponent, { size: 'lg' });
       modalRef.componentInstance.record = record;
       this.firstModalSubscription = modalRef.componentInstance.onScheduleDeleted

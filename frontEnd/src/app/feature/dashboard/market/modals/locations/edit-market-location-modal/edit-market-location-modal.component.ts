@@ -67,7 +67,7 @@ export class EditMarketLocationModalComponent implements OnInit {
     this.selectedLocation = this.location.city + ', ' + this.location.province;
 
     this.locationForm = new FormGroup({
-      locationName: new FormControl(this.location.locationName),
+      locationName: new FormControl(this.location.locationName, [Validators.required]),
       description: new FormControl(this.location.description),
       timeframe: new FormControl(this.location.timeframe, [Validators.required]),
       latitude: new FormControl(this.location.latitude, [Validators.required]),

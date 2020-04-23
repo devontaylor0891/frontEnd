@@ -28,6 +28,7 @@ export class MarketDashboardComponent implements OnInit, OnChanges {
       .subscribe(
         result => {
           this.market = result;
+          console.log('market passed in from dash service: ', this.market);
           if (this.market) {
             this.apiService.getCustomUrlByProducerId(this.id)
               .subscribe(

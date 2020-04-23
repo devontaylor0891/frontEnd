@@ -65,9 +65,7 @@
 <!--Card footer-->
 <div class="card-footer text-center px-0 pb-0">
     <p *ngIf="product.unitsPer === 1">{{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}<span style="font-size: 75%">/{{ product.unit }}</span></p>
-    <p 
-      *ngIf="product.unitsPer !== 1"
-      >{{ (product.pricePerUnit * product.unitsPer) | currency:'CAD':'symbol-narrow':'1.2-2' }}/pkg <span style="font-size: 75%">   ({{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }})</span> <i class="fa fa-info-circle" (click)="openModal()"></i></p>
+    <p (click)="openModal()" style="cursor: pointer" *ngIf="product.unitsPer !== 1">{{ (product.pricePerUnit * product.unitsPer) | currency:'CAD':'symbol-narrow':'1.2-2' }}/pkg <span style="font-size: 75%"> ({{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}/{{ product.unit }})</span> <i class="fas fa-info-circle"></i></p>
     <app-add-to-cart [product]="product" [noUpcomingScheds]="noUpcomingScheds"></app-add-to-cart>
 </div>
 <!--/.Card footer-->

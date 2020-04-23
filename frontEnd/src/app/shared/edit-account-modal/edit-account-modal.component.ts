@@ -289,39 +289,76 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       this.address = this.producer.address;
       this.city = this.producer.location;
       this.province = this.producer.province;
-      if (this.producer && this.producer.logoUrl !== '') {
+      if ((this.producer && this.producer.logoUrl !== '') || this.market && this.market.logoUrl !== '') {
         this.logoExists = true;
       }
        // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['geocode']
-      });
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+      this.mapsAPILoader.load().then(() => {
+        const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+          types: ['geocode']
+        });
+        autocomplete.addListener('place_changed', () => {
+          this.ngZone.run(() => {
+            // get the place result
+            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
+            // verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
 
-          // console.log('place: ', place);
-          this.fillAddress(place);
+            // console.log('place: ', place);
+            this.fillAddress(place);
 
-          // set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.markerLatitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.markerLongitude = place.geometry.location.lng();
-          this.zoom = 12;
+            // set latitude, longitude and zoom
+            this.latitude = place.geometry.location.lat();
+            this.markerLatitude = place.geometry.location.lat();
+            this.longitude = place.geometry.location.lng();
+            this.markerLongitude = place.geometry.location.lng();
+            this.zoom = 12;
+          });
         });
       });
-    });
-    };
+    } else if (this.market) {
+      this.latitude = this.market.latitude;
+      this.longitude = this.market.longitude;
+      // initialize the producer values
+      this.lat = this.market.latitude;
+      this.lng = this.market.longitude;
+      this.address = this.market.address;
+      this.city = this.market.location;
+      this.province = this.market.province;
+      if ( this.market && this.market.logoUrl !== '') {
+        this.logoExists = true;
+      }
+       // load Places Autocomplete
+      // this.mapsAPILoader.load().then(() => {
+      //   const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      //     types: ['geocode']
+      //   });
+      //   autocomplete.addListener('place_changed', () => {
+      //     this.ngZone.run(() => {
+      //       // get the place result
+      //       const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-   
+      //       // verify result
+      //       if (place.geometry === undefined || place.geometry === null) {
+      //         return;
+      //       }
+
+      //       // console.log('place: ', place);
+      //       this.fillAddress(place);
+
+      //       // set latitude, longitude and zoom
+      //       this.latitude = place.geometry.location.lat();
+      //       this.markerLatitude = place.geometry.location.lat();
+      //       this.longitude = place.geometry.location.lng();
+      //       this.markerLongitude = place.geometry.location.lng();
+      //       this.zoom = 12;
+      //     });
+      //   });
+      // });
+    };
 
   };
 
@@ -389,6 +426,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       const customUrlData = {
         'userId': this.user.id,
         'customUrl': form.value.customUrl,
+        'userType': 'producer'
       };
 
       if (this.customUrlObject) {
@@ -448,18 +486,19 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       const customUrlData = {
         'userId': this.user.id,
         'customUrl': form.value.customUrl,
+        'userType': 'market'
       };
       if (this.customUrlObject) {
         this.customUrlId = this.customUrlObject.id;
       }
       if (this.customUrlChanged) {
-        if (this.producerCustomUrlExists) {
+        if (this.marketCustomUrlExists) {
           this.apiService.updateCustomUrl(this.customUrlId, customUrlData)
             .subscribe(
               result => {
                 // console.log('custom url update id: ', this.customUrlId)
                 // console.log('custom url update data: ', this.customUrlObject)
-                // console.log('custom url update result: ', result)
+                console.log('custom url update result: ', result)
               },
               err => this.handleSubmitError(err)
             )
@@ -468,7 +507,7 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
           .subscribe(
             result => {
               // console.log('custom url update data: ', this.customUrlObject)
-              // console.log('custom url update result: ', result)
+              console.log('custom url create result: ', result)
             },
             err => this.handleSubmitError(err)
           )
@@ -477,13 +516,13 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
       this.apiService.patchUser(this.user.id, userData)
         .subscribe(
           result => {
-            console.log('successfully patched user: ', result);
-            console.log('user.id: ', this.user.id);
-            console.log('makretData: ', marketData);
+            // console.log('successfully patched user: ', result);
+            // console.log('user.id: ', this.user.id);
+            // console.log('makretData: ', marketData);
             this.apiService.patchMarket(this.user.id, marketData)
               .subscribe(
                 res => {
-                  console.log('market successfully patched: ', res);
+                  // console.log('market successfully patched: ', res);
                   this.handleSubmitSuccess(res)
                 },
                 err => this.handleSubmitError(err)
@@ -599,7 +638,11 @@ export class EditAccountModalComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   onAddImage() {
-    this.imageName = this.producer.id + '/logo';
+    if (this.producer) {
+      this.imageName = this.producer.id + '/logo';
+    } else {
+      this.imageName = this.market.id + '/logo';
+    }
     this.addingImage = true;
     // console.log('form value: ', this.producerForm.value);
     // console.log('form: ', this.producerForm);

@@ -12,10 +12,9 @@
               <a class="btn btn-olf-primary btn-sm" [routerLink]="['/cart']" (click)="close()">View Cart</a>
             </div>
             <div class="col-12">
-              <!-- <button type="button" class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</button> -->
               <a class="btn btn-outline-olf-primary btn-sm" (click)="close()">Continue Shopping</a>
             </div>
-            <div class="col-12">
+            <div class="col-12" *ngIf="!isMarket">
               <a class="btn btn-outline-olf-primary btn-sm" [routerLink]="['/producer/' + product.producer.id]" (click)="close()">More from this Producer</a>
             </div>
           </div>

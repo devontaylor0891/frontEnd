@@ -39,7 +39,8 @@ export class MarketDashboardService {
       .subscribe(
         result => {
           this.dataStore.market = result[0];
-          console.log('market received in service: ', this.dataStore.market);
+          console.log('id used: ', id);
+          console.log('result received in service: ', result);
           this._market.next(Object.assign({}, this.dataStore).market);
           this.getSchedsByMarketId();
           this.getLocationsByMarketId();
