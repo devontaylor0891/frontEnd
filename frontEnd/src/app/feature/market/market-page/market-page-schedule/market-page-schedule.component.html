@@ -28,7 +28,7 @@
                 <p><b>Producers:</b></p>
               </div>
               <div class="col-12 col-md-10" *ngFor="let producerSchedule of modalData.event.meta.schedule.producerSchedules">
-                <p><a (click)="close()" [routerLink]="['../../producer/' +  producerSchedule.producerUserId]">{{  producerSchedule.producerName }}</a></p>
+                <p>{{  producerSchedule.producerName }}</p>
               </div>
             </div>
             <div class="row" *ngIf="modalData.event.meta.schedule.producerSchedules.length === 0">
@@ -38,7 +38,7 @@
             </div>
             
           </div>
-          <div class="modal-footer">
+          <div *ngIf="modalData.event.meta.schedule.producerSchedules.length > 0" class="modal-footer">
               <a class="btn btn-olf-primary mx-auto h-100" [routerLink]="['schedule/' + modalData.event.meta.schedule.id]" (click)="close()">Shop for this Market</a>
           </div>
         </ng-template>

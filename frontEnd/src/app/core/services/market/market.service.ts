@@ -66,8 +66,8 @@ export class MarketService implements OnInit, OnDestroy {
     // **************************** LOAD ALL INTO DATASTORE ************************
     // GET the producer and store the info in the dataStore, if it's not already in there
     loadMarketData(id) {
-      console.log('id: ', id);
-      console.log('datastore: ', this.dataStore);
+      // console.log('id: ', id);
+      // console.log('datastore: ', this.dataStore);
       if ((this.dataStore.market === null) || (id !== this.dataStore.market.id)) {
         this.apiService.getMarketById(id)
           .subscribe(
@@ -123,12 +123,12 @@ export class MarketService implements OnInit, OnDestroy {
       // **************************** MULTIPLE SCHEDULES ************************
 
     getAllSchedule() {
-      console.log('get all scheds datastore: ', this.dataStore);
+      // console.log('get all scheds datastore: ', this.dataStore);
       return this._marketSchedule.asObservable();
     };
 
     getAllLocations() {
-      console.log('get all locs datastore: ', this.dataStore);
+      // console.log('get all locs datastore: ', this.dataStore);
       return this._marketLocations.asObservable();
     };
 

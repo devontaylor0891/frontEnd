@@ -1,3 +1,96 @@
-<p>
-  market-location-schedule works!
-</p>
+<div class="m-4">
+
+  <app-loading *ngIf="!market || !schedule"></app-loading>
+
+  <div *ngIf="market && schedule">
+
+    <div class="row">
+      <div class="col-12 col-lg-8 offset-lg-2">
+
+        <div class="card">
+          <div class="card-body">
+
+            <div class="row align-items-center">
+
+              <div class="col-8 offset-2 col-sm-4 offset-sm-0 col-md-3 offset-md-1">
+                  <img src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ market.logoUrl ? market.logoUrl : 'global/squareBeet.png' }}" class="img-fluid" alt="food">
+              </div>
+        
+              <div class="col-12 col-sm-8 col-md-7 text-center mt-3">
+                <h2>{{ market.name | uppercase }}</h2>
+                <p>{{ schedule.startDateTime | date: 'mediumDate' }}</p>
+                <p>{{ schedule.startDateTime | date: 'shortTime' }} - {{ schedule.endDateTime | date: 'shortTime' }}</p>
+              </div>
+
+              <div class="col-12 pt-4">
+                <p>{{ schedule.description }}</p>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+          <div class="divider-new">
+              <h3 id="schedule">PRODUCERS AND PRODUCTS</h3>
+            </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg-8 offset-lg-2">
+
+        <div class="card">
+
+          <div class="card-body">
+
+            <p>Browse what our producers have to offer and add items to your cart.</p>
+            <p>If you order from more than one producer, you will have to checkout each cart separately (as each producer on OLF operates their own store).</p>
+
+            <div *ngIf="productsLoaded">
+              <div class="row" *ngFor="let producer of producers;">
+                <div class="col-12">
+
+                  <div id="faqBasicsAccordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <a class="faq-toggle" data-toggle="collapse" data-parent="#faqBasicsAccordion" href="#faqBasicsCollapse" aria-expanded="false" aria-controls="faqBasicsCollapse">
+
+                      <div class="card-header dash-accordion" role="tab" id="faqBasicsHeading">
+                        <h5 class="mb-0 text-white">
+                            <span class="faq-icon-collapsed"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></span>
+                            <span class="faq-icon-expanded"><i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></span>
+                            {{ producer.producerInfo.producerName }}
+                        
+                        </h5>
+                      </div>  </a>
+                      <div id="faqBasicsCollapse" class="collapse" role="tabpanel" aria-labelledby="faqBasicsHeading" >
+                        <div class="card-block">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 mb-2 px-1" *ngFor="let product of producer.products">
+                              <app-product-card-compact [product]="product"></app-product-card-compact>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div> 
+
+  </div>
+
+</div>

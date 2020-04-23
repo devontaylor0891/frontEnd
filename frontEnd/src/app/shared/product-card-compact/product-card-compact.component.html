@@ -1,0 +1,130 @@
+<ng-template #modalContent let-close="close">
+
+  <div class="modal-header">
+    <h5>{{ product.name }}</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="card product-card p-2">
+  
+        <div class="row">
+      
+          <div class="col-4 pr-0">
+            <div class="view overlay hm-white-slight" style="cursor: pointer">
+      
+              <img *ngIf="product.image !== ''" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="">
+              
+              <ng-template [ngIf]="product.image === '' && 
+                product.subcategory.toString() === 'Bread' || 
+                product.subcategory.toString() === 'Grains' || 
+                product.subcategory.toString() === 'Honey' || 
+                product.subcategory.toString() === 'Eggs' || 
+                product.subcategory.toString() === 'Beef' || 
+                product.subcategory.toString() === 'Chicken' || 
+                product.subcategory.toString() === 'Pork' || 
+                product.subcategory.toString() === 'Lamb' || 
+                product.subcategory.toString() === 'Fish'" [ngIfElse]="categoryImage">
+              <img [hidden]="product.image !== ''"  
+                src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.subcategory }}.png" 
+                class="img-fluid cover" 
+                alt="">
+              </ng-template>
+              
+              <ng-template #categoryImage>
+                <img [hidden]="product.image !== ''" 
+                src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.category }}.png" class="img-fluid cover" alt=""> 
+              </ng-template>
+      
+            </div>
+          </div>
+          
+          <div class="col-8 pt-1">
+            <div class="row">
+      
+              <div class="col-12 text-center">
+                <h5><strong>{{ product.name }}</strong></h5>
+                
+                <p class="my-2">{{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}<span style="font-size: 75%">/{{ product.unit }}</span></p>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-8 offset-sm-2">
+                      <app-add-to-cart-mobile [product]="product"></app-add-to-cart-mobile>
+                  </div>
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+          
+          <div class="col-12 m-2">
+      
+              <p class="text-left">{{ product.description }}</p>
+          
+          </div>
+          
+        </div>
+      
+      </div>
+
+  </div>
+
+</ng-template>
+
+<div class="card product-card">
+  
+  <div class="row">
+
+    <div class="col-4 pr-0" (click)="openProductModal()">
+      <div class="view overlay hm-white-slight" style="cursor: pointer">
+
+        <img *ngIf="product.image !== ''" src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/{{ product.image }}" class="img-fluid cover" alt="">
+        
+        <ng-template [ngIf]="product.image === '' && 
+          product.subcategory.toString() === 'Bread' || 
+          product.subcategory.toString() === 'Grains' || 
+          product.subcategory.toString() === 'Honey' || 
+          product.subcategory.toString() === 'Eggs' || 
+          product.subcategory.toString() === 'Beef' || 
+          product.subcategory.toString() === 'Chicken' || 
+          product.subcategory.toString() === 'Pork' || 
+          product.subcategory.toString() === 'Lamb' || 
+          product.subcategory.toString() === 'Fish'" [ngIfElse]="categoryImage">
+        <img [hidden]="product.image !== ''"  
+          src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.subcategory }}.png" 
+          class="img-fluid cover" 
+          alt="">
+        </ng-template>
+        
+        <ng-template #categoryImage>
+          <img [hidden]="product.image !== ''" 
+          src="https://s3-us-west-2.amazonaws.com/onlylocalfood-images/global/{{ product.category }}.png" class="img-fluid cover" alt=""> 
+        </ng-template>
+
+      </div>
+    </div>
+    
+    <div class="col-8 pt-1" (click)="openProductModal()" style="cursor: pointer">
+      <div class="row">
+
+        <div class="col-12 tight-text text-center">
+          <h6 class="text-truncate small"><strong>{{ product.name }}</strong></h6>
+          <p class="text-left text-truncate small">{{ product.description }}</p>
+          <p class="m-0">{{ product.pricePerUnit | currency:'CAD':'symbol-narrow':'1.2-2' }}<span style="font-size: 75%">/{{ product.unit }}</span></p>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="col-12">
+
+      <app-add-to-cart-mobile [product]="product"></app-add-to-cart-mobile>
+    
+    </div>
+    
+  </div>
+
+</div>

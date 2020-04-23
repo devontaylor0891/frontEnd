@@ -78,7 +78,7 @@ export class MarketPageScheduleComponent implements OnInit, OnChanges, OnDestroy
       .subscribe(
         results => {
           this.schedules = results;
-          console.log('scheds from market page: ', this.schedules);
+          // console.log('scheds from market page: ', this.schedules);
           this.schedules.forEach((result) => {
             this.events.push({
               title: result.locationData[0].locationName + ' - ' + result.city + ' - Quick View',
@@ -96,7 +96,7 @@ export class MarketPageScheduleComponent implements OnInit, OnChanges, OnDestroy
     this.noUpcomingSchedsSub = this.marketService.getNoUpcomingScheds()
       .subscribe(
         results => {
-          console.log('noUpcomingScheds results: ', results);
+          // console.log('noUpcomingScheds results: ', results);
           this.noUpcomingScheds = results;
         }
       );

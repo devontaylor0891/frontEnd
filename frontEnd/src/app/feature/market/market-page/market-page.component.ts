@@ -30,7 +30,7 @@ export class MarketPageComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         result => {
           this.market = result;
-          console.log('market result: ', this.market);
+          // console.log('market result: ', this.market);
           this.title.setTitle(this.market.name + ' on Onlylocalfood.com');
         }
       );
@@ -38,14 +38,14 @@ export class MarketPageComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         results => {
           this.locations = results;
-          console.log('lcoations recd: ', this.locations);
+          // console.log('lcoations recd: ', this.locations);
         }
       );
     this.getProducersSub = this.marketService.getUniqueProducers()
       .subscribe(
         results => {
           this.producers = results;
-          console.log('producers recd: ', this.producers);
+          // console.log('producers recd: ', this.producers);
         }
       );
 
