@@ -29,7 +29,7 @@
           <nav class="sticky-top">
             <div class="nav nav-tabs nav-fill" id="nav-tab-mobile" role="tablist">
               <a 
-                class="nav-item nav-link" 
+                class="nav-item nav-link px-0" 
                 id="nav-products-tab" 
                 data-toggle="tab" 
                 href="#nav-products" 
@@ -38,9 +38,9 @@
                 aria-selected="true" 
                 (click)="setActive('productsLink')"
                 [ngClass]="activeLink == 'productsLink'  ? 'active' : ''"
-                >Products</a>
+                >Products<small> ({{ searchResults.products.length }})</small></a>
               <a 
-                class="nav-item nav-link" 
+                class="nav-item nav-link px-0" 
                 id="nav-producers-tab" 
                 data-toggle="tab" 
                 href="#nav-producers" 
@@ -49,9 +49,9 @@
                 aria-selected="false" 
                 (click)="setActive('producersLink')"
                 [ngClass]="activeLink == 'producersLink'  ? 'active' : ''"
-                >Producers</a>
+                >Producers<small> ({{ searchResults.producers.length }})</small></a>
               <a 
-                class="nav-item nav-link" 
+                class="nav-item nav-link px-0" 
                 id="nav-schedule-tab" 
                 data-toggle="tab" 
                 href="#nav-schedule" 
@@ -60,7 +60,7 @@
                 aria-selected="false" 
                 (click)="setActive('schedulesLink')"
                 [ngClass]="activeLink == 'schedulesLink'  ? 'active' : ''"
-                >Schedule</a>
+                >Schedule<small> ({{ searchResults.schedules.length }})</small></a>
             </div>
           </nav>
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">

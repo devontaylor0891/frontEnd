@@ -592,16 +592,16 @@ input:focus:not([readonly]) {
 }
 
 #nav-tab-mobile > a {
-        background: white;
-        border: none !important;
-        border-top-right-radius: 0;
-        border-top-left-radius: 0;
-        &.active {
-            background: #eeeeee;
-            font-weight: 600;
-            border-bottom: 4px solid #741b47 !important;
-        }
+  background: #eeeeee;
+  border-top: 4px solid gray !important;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+    &.active {
+      background: white;
+      font-weight: 600;
+      border-top: 4px solid #741b47 !important;
     }
+}
 
 .input-group-btn>.btn:hover {
     z-index: 0;

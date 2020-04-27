@@ -13,7 +13,7 @@
 
   <app-loading *ngIf="!order"></app-loading>
 
-  <div class="hidden-sm-down row my-4 mx-1">
+  <!-- <div class="hidden-sm-down row my-4 mx-1">
     <div *ngIf="order && isLoggedIn" class="col-md-10 offset-md-1 col-lg-6 offset-lg-3">
       <div class="col mb-2" >
         <div>
@@ -295,9 +295,7 @@
                         name="agreement" 
                         [(ngModel)]="agreement" 
                         >
-                    <!-- <span class="fill-control-indicator">
-                        <i class="fa fa-check"></i>
-                    </span> -->
+
                     <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
                     <p class="help-block" *ngIf="agreement.touched && agreement.invalid">
                         Please read and agree to the terms and conditions to complete your order!
@@ -318,7 +316,6 @@
                     class="btn btn-olf-primary"
                     [disabled]="(!agreement) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
                     >Send Order</button>
-                <!-- </div> -->
               </div>
             </div>
           </div>
@@ -326,9 +323,9 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div  *ngIf="order && isLoggedIn" class="hidden-md-up w-100">
+  <div  *ngIf="order && isLoggedIn" class="w-100">
     <app-mobile-checkout></app-mobile-checkout>
   </div>
     

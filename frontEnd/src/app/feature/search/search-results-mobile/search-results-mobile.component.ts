@@ -23,7 +23,7 @@ export class SearchResultsMobileComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // console.log('search results: ', this.searchResults);
+    console.log('search results: ', this.searchResults);
   }
 
   onLocationNotificationSignUp() {

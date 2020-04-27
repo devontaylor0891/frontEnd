@@ -39,7 +39,7 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
   getCartByIdSub: any;
   communityListSub: any;
   submitting: boolean = false;
-  consumerPhone: string;
+  consumerPhone = '';
 
   orderQuantityOkaySub: Subscription;
   orderQuantityOkay: boolean;
@@ -132,7 +132,8 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.tempOrderValue = this.order.orderDetails.orderValue;
     }
-    // console.log('order: ', this.order);
+    console.log('order: ', this.order);
+    console.log('schedChosen: ', this.scheduleChosen);
   }
 
   returnSchedules(community) {
@@ -148,8 +149,13 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    console.log('consumerPhone: ', this.consumerPhone);
     this.submitting = true;
-    this.cartService.confirmAndSendOrder(this.cartIndex, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress, this.consumerPhone);
+    if (!this.consumerPhone || this.consumerPhone == 'undefined') {
+      this.cartService.confirmAndSendOrder(this.cartIndex, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress);
+    } else {
+      this.cartService.confirmAndSendOrder(this.cartIndex, this.order.chosenSchedule, this.consumerComment, this.deliveryAddress, this.consumerPhone);
+    }
   }
 
   storeCart() {
@@ -210,6 +216,7 @@ export class MobileCheckoutComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         result => {
           this.communityList = result;
+          console.log('community list from cartservice: ', this.communityList);
         }
       );
 

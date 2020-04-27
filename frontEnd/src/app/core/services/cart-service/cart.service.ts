@@ -415,6 +415,8 @@ export class CartService implements OnDestroy {
     console.log('consumer phone in build cart: ', consumerPhone);
     if (consumerPhone) {
       this.addConsumerPhone(cartId, consumerPhone);
+    } else {
+      this.addConsumerPhone(cartId);
     };
 		// date stamp the cart
     this.dateStampCart(cartId);
@@ -471,8 +473,12 @@ export class CartService implements OnDestroy {
     this.dataStore.carts[cartId].orderDetails.consumerComment = comment || '';
   };
 
-  addConsumerPhone(cartId, phone) {
-    this.dataStore.carts[cartId].orderDetails.consumerPhone = phone;
+  addConsumerPhone(cartId, phone?) {
+    if (phone) {
+      this.dataStore.carts[cartId].orderDetails.consumerPhone = phone;
+    } else {
+      this.dataStore.carts[cartId].orderDetails.consumerPhone = '';
+    }
   };
 
   addDeliveryAddress(cartId, address) {
@@ -536,7 +542,7 @@ export class CartService implements OnDestroy {
 
   // confirm and send the order from consumer to producer
   confirmAndSendOrder(cartId, chosenSchedule, consumerComment, deliveryAddress?, consumerPhone?) {
-    console.log('confirm and send order sched: ', chosenSchedule);
+    // console.log('confirm and send order sched: ', chosenSchedule);
     // console.log('confirm and send order cart: ', this.dataStore.carts);
     // set the properties
     this.sendingCartId = cartId;

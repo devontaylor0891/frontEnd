@@ -1,11 +1,291 @@
 <div class="row m-0 grey lighten-3">
-  <div class="col p-0">
-    
+
+  <div class="col-12 m-2">
+    <a [routerLink]="['../../cart/']"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+  </div>
+
+  <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 mx-auto my-2 bg-white">
+
+    <div class="row olf-primary-color py-3">
+      <div class="col text-center">
+        <h5 class="text-light"><strong>Checkout</strong></h5>
+      </div>
+    </div>
+
+    <div class="p-2">
+        <div class="row">
+          <div class="col mb-2">
+            <div class="card">
+              <div class="card-block">
+                <h6 class="font-weight-bold">First, choose your community:</h6>
+                <select class="custom-select w-100" (change)="onSelect($event)">
+                    <option selected disabled>Select:</option>
+                    <option 
+                      class="dropdown-item" 
+                      value="{{ community.city }}" 
+                      *ngFor="let community of communityList" 
+                      >{{ community.city }}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-2" *ngIf="showSchedules">
+        <div class="row">
+          <div class="col mb-2">
+            <div class="card">
+              <div class="card-block">
+                <h6 class="font-weight-bold">Now, select a date:</h6>
+                <app-checkout-calendar-mobile [schedules]="selectedSchedulesList" (schedulesListForDate)="schedsByDateReceived($event)"></app-checkout-calendar-mobile>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-2" *ngIf="mobileSelectedSchedulesList.length > 0">
+        <div class="row">
+          <div class="col mb-2">
+            <div class="card">
+              <div class="card-block">
+                <h6 class="font-weight-bold">And choose your how you'd like to get your order:</h6>
+                <div *ngFor="let schedule of mobileSelectedSchedulesList, let i = index">
+                  <label for="{{schedule.id}}" class="custom-control custom-radio w-100">
+                    <input 
+                      id="{{schedule.id}}" 
+                      [value]='schedule.id' 
+                      type="radio" 
+                      name="{{schedule.id}}" 
+                      [(ngModel)]="radioSelected" 
+                      class="custom-control-input" 
+                      (click)="onSelectSchedule(i)">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description w-100">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="card-text"><strong>{{ schedule.type }}</strong></p>
+                          <p class="card-text">{{ schedule.startDateTime | date:'fullDate' }}, {{ schedule.startDateTime | date:'shortTime' }} - {{ schedule.endDateTime | date:'shortTime' }}</p>
+                          <div class="row">
+                            <div class="col-12 col-sm-3">
+                              <span class="card-text"><strong>Description:</strong></span>
+                            </div>
+                            <div class="col-12 col-sm-9">
+                              <p class="card-text">{{ schedule.description }}</p>
+                            </div>
+                          </div>
+      
+                          <div 
+                            class="row" 
+                            *ngIf="schedule.type === 'Door-to-door Delivery'">
+                            <div class="col-12 col-sm-3">
+                              <span class="card-text"><strong>Fee:</strong></span>
+                            </div>
+                            <div class="col-12 col-sm-9" *ngIf="(!schedule.hasWaiver) || 
+                            (schedule.feeWaiver > order.orderDetails.orderValue)">
+                              <p class="card-text">{{ schedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }}</p>
+                            </div>
+                            <div class="col-12 col-sm-9" *ngIf="(schedule.hasWaiver && schedule.feeWaiver <= order.orderDetails.orderValue)">
+                              <p class="card-text">$0.00</p>
+                            </div>
+                          </div>
+      
+                          <div class="row">
+                            <div class="col-12 col-sm-3">
+                              <span class="card-text"><strong>Order Deadline:</strong></span>
+                            </div>
+                            <div class="col-12 col-sm-9">
+                              <p class="card-text">{{ schedule.orderDeadline | date: 'medium' }}</p>
+                            </div>
+                          </div>
+                          <hr>
+                        </div>
+                      </div> 
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-2" *ngIf="scheduleChosen">
+        <div class="row">
+          <div class="col mb-2">
+            <div class="card">
+              <div class="card-block">
+                <h6 class="font-weight-bold">Review your order:</h6>
+                <div class="card-body pt-3 px-0" *ngIf="!submitting">
+                  <app-checkout-product 
+                    *ngFor="let product of order.productList" 
+                    [product]="product" 
+                    [productQuantities]="order.orderDetails.productQuantities"
+                    ></app-checkout-product>
+                  <div *ngIf="order.chosenSchedule">
+                    <div class="row" *ngIf="order?.chosenSchedule.type === 'Door-to-door Delivery'">
+                      <div class="col-9 col-md-9 col-lg-8 text-right">
+                        <p>Delivery Fee:</p> 
+                      </div>
+                      <div class="col-3 col-md-3 col-lg-2 text-center px-0">
+                        <span>{{ order.orderDetails.deliveryFee | currency:'USD':'symbol-narrow':'1.2-2' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-9 col-md-9 col-lg-8 text-right">
+                      <p>Your Order Total:</p> 
+                    </div>
+                    <div class="col-3 col-md-3 col-lg-2 text-center px-0">
+                      <span><strong>{{ tempOrderValue | currency:'USD':'symbol-narrow':'1.2-2' }}</strong></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-2" *ngIf="scheduleChosen">
+        <div class="row">
+          <div class="col mb-2">
+            <div class="card">
+              <div class="card-block">
+                <h6 class="font-weight-bold">Finally, add the details:</h6>
+                <div class="col">
+                  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+          
+                    <div class="row">
+                      <div class="col">
+                        <div class="">
+                          <div class="row" *ngIf="(order.chosenSchedule) && (order.chosenSchedule.type === 'Door-to-door Delivery')">
+                            <div class="col-12">
+                              <blockquote class="blockquote bq-warning p-0">
+                                <p class="card-text">You have chosen a door-to-door delivery, which will require a delivery address and may involve a delivery fee.</p>
+                              </blockquote>
+                            </div>
+                            <div class="col-12 col-md-4">
+                              <label for="deliveryAddress" class="text-muted">
+                                Enter the Delivery Address:
+                              </label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                              <input
+                                class="form-input-custom"
+                                type="text" 
+                                name="deliveryAddress" 
+                                id="deliveryAddress"
+                                required
+                                #delAddress="ngModel"
+                                [(ngModel)]="deliveryAddress">
+                                <p class="help-block" *ngIf="delAddress.touched && delAddress.invalid">
+                                  Please enter your delivery address so the Producer can find you!
+                                </p>
+                            </div>
+                            <div class="mt-2 col-12">
+                              <div class="row">
+                                <div class="col-12 col-md-4" *ngIf="order.chosenSchedule.hasFee">
+                                  <label class="text-muted">
+                                    Delivery Fee:
+                                  </label>
+                                </div>
+                                <div class="col-12 col-md-8"  *ngIf="order.chosenSchedule.hasFee">
+                                  <p *ngIf="!order.chosenSchedule.feeWaiver" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'USD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>
+                                  <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue >= order.chosenSchedule.feeWaiver)" class="card-text">Your order qualifies for free delivery!</p>
+                                  <p *ngIf="order.chosenSchedule.feeWaiver && (order.orderDetails.orderValue < order.chosenSchedule.feeWaiver)" class="card-text">A delivery fee of {{ order.chosenSchedule.fee | currency:'CAD':'symbol-narrow':'1.2-2' }} has been added to your order.</p>   
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+          
+                          <div class="row">
+                            <div class="col-12 col-md-4">
+                              <label for="consumerPhone" class="text-muted">
+                                If you'd like, add your cell number. The producer can contact you if anything changes:
+                              </label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                              <input 
+                                class="form-input-custom"
+                                type="tel" 
+                                id="consumerPhone" 
+                                name="consumerPhone"
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                [(ngModel)]="consumerPhone">
+                              <div class="text-muted"><small>Format: 123-456-7890</small></div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-12 col-md-4">
+                              <label for="consumerComment" class="text-muted">
+                                Enter any comments or special instructions for the producer:
+                              </label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                              <textarea 
+                                class="form-input-custom"
+                                style="border: solid lightgrey 1px !important;"
+                                name="consumerComment" 
+                                id="consumerComment" 
+                                [(ngModel)]="consumerComment"></textarea>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-check pl-0">
+                            <label for="agreementMobile" class="custom-control fill-checkbox">
+                              <input 
+                                  type="checkbox" 
+                                  class="fill-control-input"
+                                  id="agreementMobile" 
+                                  name="agreementMobile" 
+                                  [(ngModel)]="agreementMobile" 
+                                  >
+                              <!-- <span class="fill-control-indicator">
+                                  <i class="fa fa-check"></i>
+                              </span> -->
+                              <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
+                              <p class="help-block" *ngIf="agreementMobile.touched && agreementMobile.invalid">
+                                  Please read and agree to the terms and conditions to complete your order!
+                                </p>
+                            </label>
+              
+                          </div>
+                        </div>
+                      </div>
+          
+                    </div>
+          
+                    <div class="row">
+                      <div class="col mb-2">
+                        <div class="row mb-3 justify-content-center">
+                            <button 
+                              type="submit"
+                              class="btn btn-olf-primary"
+                              [disabled]="(!agreementMobile) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
+                              >Send Order</button>
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                    </div>
+          
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <!-- <div class="col-xs-12 col-sm-10 col-md-6 p-0 mx-auto">
+
     <div class="row p-0">
       <div class="col" >
-        <div class="m-2">
-          <a [routerLink]="['../../cart/']"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
-        </div>
+        
         <div class="row olf-primary-color m-0 p-0">
           <div class="col">
             <div class="w-100 text-center">
@@ -247,9 +527,7 @@
                                 name="agreementMobile" 
                                 [(ngModel)]="agreementMobile" 
                                 >
-                            <!-- <span class="fill-control-indicator">
-                                <i class="fa fa-check"></i>
-                            </span> -->
+
                             <p class="card-text">I understand that Onlylocalfood.com is providing an estimated price only. The calculated total of the shopping cart above is based on information provided by the Producer and Onlylocalfood Inc. is not responsible for it's accuracy.</p>
                             <p class="help-block" *ngIf="agreementMobile.touched && agreementMobile.invalid">
                                 Please read and agree to the terms and conditions to complete your order!
@@ -270,7 +548,6 @@
                             class="btn btn-olf-primary"
                             [disabled]="(!agreementMobile) || (!order.chosenSchedule) || (f.invalid) || (!isLoggedIn)"
                             >Send Order</button>
-                        <!-- </div> -->
                       </div>
                     </div>
                   </div>
@@ -283,6 +560,7 @@
       </div>
     </div>
     
-  </div>
+  </div> -->
+  
 </div>
 
