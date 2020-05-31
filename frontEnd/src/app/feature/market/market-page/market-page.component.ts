@@ -14,7 +14,7 @@ export class MarketPageComponent implements OnInit, OnChanges, OnDestroy {
 
   market: any;
   getMarketSub: Subscription;
-  locations: any[];
+  locations: any[] = [];
   getLocationsSub: Subscription;
   producers: any[];
   getProducersSub: Subscription;

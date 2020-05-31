@@ -133,21 +133,29 @@ export class MarketService implements OnInit, OnDestroy {
     };
 
     buildProducers() {
+      const now = new Date().toISOString();
+      // console.log('now: ', now);
       // using scheds, build a unique producers array
       // assign to behsubj
       const producers = [];
       this.dataStore.schedule.forEach(
         sched => {
-          for (let i = 0; i < sched.producerSchedules.length; i++) {
-            producers.push(sched.producerSchedules[i]);
+          // console.log('sched: ', sched);
+
+          if (sched.startDateTime > now) {
+            // console.log('yep');
+            for (let i = 0; i < sched.producerSchedules.length; i++) {
+              producers.push(sched.producerSchedules[i]);
+            }
           }
+        
         }
       );
-      console.log('prods: ', producers);
+      // console.log('prods: ', producers);
       const uniques = _.uniqBy(producers, function(o) {
         return o.producerId;
       });
-      console.log('uniques: ', uniques);
+      // console.log('uniques: ', uniques);
       this.dataStore.producers = uniques;
       this._marketProducers.next(Object.assign(this.dataStore).producers);
     };
