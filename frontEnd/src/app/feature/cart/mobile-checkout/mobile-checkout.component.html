@@ -203,7 +203,7 @@
                           <div class="row">
                             <div class="col-12 col-md-4">
                               <label for="consumerPhone" class="text-muted">
-                                If you'd like, add your cell number. The producer can contact you if anything changes:
+                                Please add a contact number so the producer can contact you in case something changes:
                               </label>
                             </div>
                             <div class="col-12 col-md-8">
@@ -213,8 +213,12 @@
                                 id="consumerPhone" 
                                 name="consumerPhone"
                                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                                [(ngModel)]="consumerPhone">
+                                [(ngModel)]="consumerPhone"
+                                required>
                               <div class="text-muted"><small>Format: 123-456-7890</small></div>
+                              <p class="help-block" *ngIf="consumerPhone.touched && consumerPhone.invalid">
+                                Please enter your number in case the producer needs to contact you!
+                              </p>
                             </div>
                           </div>
                           <hr>
