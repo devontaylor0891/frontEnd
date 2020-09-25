@@ -212,13 +212,14 @@
                                 type="tel" 
                                 id="consumerPhone" 
                                 name="consumerPhone"
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                 [(ngModel)]="consumerPhone"
                                 required>
-                              <div class="text-muted"><small>Format: 123-456-7890</small></div>
+                              <!-- <div class="text-muted"><small>Format: 123-456-7890</small></div> -->
                               <p class="help-block" *ngIf="consumerPhone.touched && consumerPhone.invalid">
                                 Please enter your number in case the producer needs to contact you!
                               </p>
+                                                              <!-- pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" -->
+
                             </div>
                           </div>
                           <hr>
